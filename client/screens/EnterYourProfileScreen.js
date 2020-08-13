@@ -13,9 +13,6 @@ import {
   Platform
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-// import * as ImagePicker from 'expo-image-picker';
-// import Constants from 'expo-constants';
-// import * as Permissions from 'expo-permissions';
 import ImagePicker from 'react-native-image-crop-picker';
 import axios from 'axios';
 
@@ -25,19 +22,6 @@ import NoProfileIcon from '../assets/EnterYourProfileScreen/noProfileIcon.svg';
 //Component
 import SaveAndContinueButton from '../components/PublicComponent/BigButton';
 
-const getPermission = async () => {
-  try {
-    if (Constants.platform.ios) {
-      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-      if (status !== 'granted') {
-        alert('Sorry, we need camera roll permissions');
-      };
-    };
-  } catch (error) {
-    console.log(error)
-  }
-};
-
 const EnterYourProfileScreen = ({ navigation }) => {
   const [profileImage, setProfileImage] = useState('');
   const [fullName, setFullName] = useState('');
@@ -45,6 +29,7 @@ const EnterYourProfileScreen = ({ navigation }) => {
   const [birthDate, setBirthDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
+  const [imageFile, setImageFile] = useState('');
 
   const uploadProfileImage = () => {
     ImagePicker.openPicker({
@@ -54,6 +39,7 @@ const EnterYourProfileScreen = ({ navigation }) => {
     }).then(image => {
       console.log(image);
       setProfileImage(image.path)
+      setImageFile(image)
     })
     .catch(error => {
       console.log(error)
@@ -68,17 +54,20 @@ const EnterYourProfileScreen = ({ navigation }) => {
       let type = match ? `image/${match[1]}` : `image`;
 
       let formData = new FormData();
+      
 
-      formData.append('profile_photo_path', { uri: profileImage, name: filename, type });
+      formData.append('profile_photo_path', {uri: profileImage, name: filename, type});
       formData.append('birth_date', `${birthDate}`);
       formData.append('name', fullName)
+
+      console.log(formData._parts[0], profileImage)
 
       let enterProfileRequest = await axios({
         method: 'put',
         url: 'https://dev.entervalhalla.tech/api/tannoi/v1/users/profile/edit',
         headers: {
           'Content-Type': 'multipart/form-data',
-          'token': access_token
+          'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjAsImlhdCI6MTU5NzI5NTQ1OH0.cwJwCxoyRTyNtrdY-Zqrsohpjxq7RMfhYeQFSvPW8gU'
         },
         data: formData
       });
