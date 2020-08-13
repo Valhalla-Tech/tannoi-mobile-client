@@ -47,19 +47,19 @@ const RegisterPage = ({ navigation }) => {
   }, [])
 
   const emailConfirmation = async () => {
-    try {
-      let registerRequest = await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/register', {
-        name: fullName,
-        email: emailRegister,
-        password: passwordRegister
-      });
+    // try {
+    //   let registerRequest = await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/register', {
+    //     name: fullName,
+    //     email: emailRegister,
+    //     password: passwordRegister
+    //   });
       
-      if (registerRequest.data) {
+    //   if (registerRequest.data) {
         setOpenConfirmationModal(!openConfirmationModal);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   const closeConfirmationModal = () => {

@@ -29,7 +29,6 @@ const EnterYourProfileScreen = ({ navigation }) => {
   const [birthDate, setBirthDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
-  const [imageFile, setImageFile] = useState('');
 
   const uploadProfileImage = () => {
     ImagePicker.openPicker({
@@ -39,7 +38,6 @@ const EnterYourProfileScreen = ({ navigation }) => {
     }).then(image => {
       console.log(image);
       setProfileImage(image.path)
-      setImageFile(image)
     })
     .catch(error => {
       console.log(error)
@@ -60,7 +58,7 @@ const EnterYourProfileScreen = ({ navigation }) => {
       formData.append('birth_date', `${birthDate}`);
       formData.append('name', fullName)
 
-      console.log(formData._parts[0], profileImage)
+      console.log(formData)
 
       let enterProfileRequest = await axios({
         method: 'put',
