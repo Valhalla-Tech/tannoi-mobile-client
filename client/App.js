@@ -1,13 +1,5 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -20,12 +12,22 @@ import LoginScreen from './screens/LoginScreen';
 import LoginWithEmailScreen from './screens/LoginWithEmailScreen';
 import ResetPasswordWithEmailScreen from './screens/ResetPasswordWithEmailScreen';
 import ResetPasswordWithEmailVerificationScreen from './screens/ResetPasswordWithEmailVerificationScreen';
+import CreateNewPasswordScreen from './screens/CreateNewPasswordScreen';
 
 const Stack = createStackNavigator();
 
 const App = () => {
+  const linking = {
+    prefixes: ['https://tannoi.com', 'tannoi://'],
+    config: {
+      screens: {
+        CreateNewPasswordScreen: 'createnewpassword'
+      }
+    }
+  };
+
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linking}>
       <Stack.Navigator
       screenOptions={{
         headerShown: false
@@ -38,6 +40,7 @@ const App = () => {
         <Stack.Screen name="LoginWithEmailScreen" component={LoginWithEmailScreen} />
         <Stack.Screen name="ResetPasswordWithEmailScreen" component={ResetPasswordWithEmailScreen} />
         <Stack.Screen name="ResetPasswordWithEmailVerificationScreen" component={ResetPasswordWithEmailVerificationScreen} />
+        <Stack.Screen name="CreateNewPasswordScreen" component={CreateNewPasswordScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

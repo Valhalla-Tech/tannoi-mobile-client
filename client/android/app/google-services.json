@@ -1,72 +1,50 @@
 {
   "project_info": {
-    "project_number": "1045738319375",
-    "firebase_url": "https://tannoi-client-valhalla.firebaseio.com",
-    "project_id": "tannoi-client-valhalla",
-    "storage_bucket": "tannoi-client-valhalla.appspot.com"
+    "project_number": "1036887341767",
+    "firebase_url": "https://tannoi.firebaseio.com",
+    "project_id": "tannoi",
+    "storage_bucket": "tannoi.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1045738319375:android:aeb8c8d99931f69792bd7a",
+        "mobilesdk_app_id": "1:1036887341767:android:6cdfe5f9aad0f28ea45ce2",
         "android_client_info": {
-          "package_name": "client.client"
+          "package_name": "tannoi.client"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1045738319375-48vl1tjb4pfpunugeo8upthk2luhtutk.apps.googleusercontent.com",
+          "client_id": "1036887341767-j1tmjmulmhh5ar0hi301embeatnn0a8a.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "client.client",
+            "package_name": "tannoi.client",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
         {
-          "client_id": "1045738319375-88ag8752q2pes2fjmd37lnr98g9521gh.apps.googleusercontent.com",
+          "client_id": "1036887341767-4foinu1uvd66srmivikbplncka4ind72.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA-xqaRc921yNGI3eLks7t81etKf-sE6Xc"
+          "current_key": "AIzaSyBr-YdQnJbDZPc3urjILVvQR2G4u3hrQyo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1045738319375-88ag8752q2pes2fjmd37lnr98g9521gh.apps.googleusercontent.com",
+              "client_id": "1036887341767-7rf3phle071q36tcdtc90fguevlrubo2.apps.googleusercontent.com",
               "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1045738319375:android:2cabd11ea1f6c16f92bd7a",
-        "android_client_info": {
-          "package_name": "com.client"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1045738319375-88ag8752q2pes2fjmd37lnr98g9521gh.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyA-xqaRc921yNGI3eLks7t81etKf-sE6Xc"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
+            },
             {
-              "client_id": "1045738319375-88ag8752q2pes2fjmd37lnr98g9521gh.apps.googleusercontent.com",
-              "client_type": 3
+              "client_id": "1036887341767-8st29lm4inmbfncv8id51lvclb7cs51c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "host.exp.exponent"
+              }
             }
           ]
         }

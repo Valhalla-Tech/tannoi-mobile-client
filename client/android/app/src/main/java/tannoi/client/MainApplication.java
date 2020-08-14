@@ -1,4 +1,4 @@
-package client.client;
+package tannoi.client;
 
 import android.app.Application;
 import android.content.Context;

@@ -65,7 +65,7 @@ const EnterYourProfileScreen = ({ navigation }) => {
         url: 'https://dev.entervalhalla.tech/api/tannoi/v1/users/profile/edit',
         headers: {
           'Content-Type': 'multipart/form-data',
-          'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjAsImlhdCI6MTU5NzI5NTQ1OH0.cwJwCxoyRTyNtrdY-Zqrsohpjxq7RMfhYeQFSvPW8gU'
+          'token': access_token
         },
         data: formData
       });

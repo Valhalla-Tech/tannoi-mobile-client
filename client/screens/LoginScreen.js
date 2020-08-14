@@ -4,17 +4,21 @@ import {
   View,
   Text
 } from 'react-native';
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from '@react-native-community/google-signin';
+import { LoginManager, AccessToken } from "react-native-fbsdk";
 import axios from 'axios';
-// import * as Google from 'expo-google-app-auth';
-// import * as Facebook from 'expo-facebook';
 
-//Component
+//Components
 import BackButton from '../components/PublicComponent/BackButton';
 import LoginScreenButton from '../components/PublicComponent/BigButton';
 
 const LoginScreen = ({ navigation }) => {
 
-  const loginWithGoogle = async googleAccessToken => {
+  const googleSignInSubmit = async googleAccessToken => {
     try {
       let googleSigninRequest = await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/login/google', {
         token: googleAccessToken
@@ -22,50 +26,59 @@ const LoginScreen = ({ navigation }) => {
 
       console.log(googleSigninRequest.data);
     } catch (error) {
-      console.log(error)
+      console.log(error) 
     };
   };
 
-  // const googleSignIn = async () => {
-  //   try {
-  //     const result = await Google.logInAsync({
-  //       iosClientId: '1036887341767-8st29lm4inmbfncv8id51lvclb7cs51c.apps.googleusercontent.com',
-  //       scopes: ['profile', 'email'],
-  //     });
+  const googleSignIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      googleSignInSubmit(userInfo.idToken)
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (e.g. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+      } else {
+        // some other error happened
+      }
+    }
+  };
 
-  //     if (result.type === 'success') {
-  //       loginWithGoogle(result.idToken)
-  //     } else {
-  //       return { cancelled: true };
-  //     }
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // };
+  const facebookSignInSubmit = async facebookAccessToken => {
+    try {
+      let facebookSigninRequest = await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/login/facebook', {
+        token: facebookAccessToken
+      });
 
-  // async function facebookSignIn() {
-  //   try {
-  //     await Facebook.initializeAsync('277585429990268');
-  //     const {
-  //       type,
-  //       token,
-  //       expires,
-  //       permissions,
-  //       declinedPermissions,
-  //     } = await Facebook.logInWithReadPermissionsAsync({
-  //       permissions: ['public_profile'],
-  //     });
+      console.log(facebookSigninRequest.data);
+    } catch (error) {
+      console.log(error) 
+    };
+  };
 
-  //     if (type === 'success') {
-  //       console.log(token)
-        
-  //     } else {
-  //       // type === 'cancel'
-  //     }
-  //   } catch ({ message }) {
-  //     alert(`Facebook Login Error: ${message}`);
-  //   }
-  // }
+  const facebookSignIn = async () => {
+    LoginManager.logInWithPermissions(['public_profile']).then(
+      function(result) {
+        if (result.isCancelled) {
+          console.log("Login cancelled");
+        } else {
+          AccessToken.getCurrentAccessToken().then(
+            (data) => {
+              console.log(data.accessToken.toString());
+              facebookSignInSubmit(data.accessToken.toString())
+            }
+          )
+        }
+      },
+      function(error) {
+        console.log("Login fail with error: " + error);
+      }
+    );
+  };
 
   return (
     <View style={styles.loginScreenContainerStyle}>
@@ -100,7 +113,7 @@ const LoginScreen = ({ navigation }) => {
         navigation={navigation}
         buttonIconTitle="facebook"
         buttonType="buttonFunction"
-        // buttonFunction={facebookSignIn}
+        buttonFunction={facebookSignIn}
       />
       <LoginScreenButton 
         buttonTitle="Continue with Google"
@@ -116,7 +129,7 @@ const LoginScreen = ({ navigation }) => {
         navigation={navigation}
         buttonIconTitle="google"
         buttonType="buttonFunction"
-        // buttonFunction={googleSignIn}
+        buttonFunction={googleSignIn}
       />
     </View>
   )

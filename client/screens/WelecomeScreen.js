@@ -11,10 +11,13 @@ import {
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-community/google-signin';
+import { LoginManager, AccessToken } from "react-native-fbsdk";
 import axios from 'axios';
 
-//Image
+//Images
 import welcomeImage from '../assets/WelcomeScreen/welcomeImage.png';
+
+//Component
 import WelcomePageButton from '../components/PublicComponent/BigButton';
 
 const WelcomeScreen = ({ navigation }) => {
@@ -27,7 +30,7 @@ const WelcomeScreen = ({ navigation }) => {
 
       console.log(googleSigninRequest.data);
     } catch (error) {
-      console.log(error)
+      console.log(error) 
     };
   };
 
@@ -48,11 +51,44 @@ const WelcomeScreen = ({ navigation }) => {
       }
     }
   };
+
+  const facebookSignInSubmit = async facebookAccessToken => {
+    try {
+      let facebookSigninRequest = await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/login/facebook', {
+        token: facebookAccessToken
+      });
+
+      console.log(facebookSigninRequest.data);
+    } catch (error) {
+      console.log(error) 
+    };
+  };
+  
+
+  const facebookSignIn = async () => {
+    LoginManager.logInWithPermissions(['public_profile']).then(
+      function(result) {
+        if (result.isCancelled) {
+          console.log("Login cancelled");
+        } else {
+          AccessToken.getCurrentAccessToken().then(
+            (data) => {
+              console.log(data.accessToken.toString());
+              facebookSignInSubmit(data.accessToken.toString())
+            }
+          )
+        }
+      },
+      function(error) {
+        console.log("Login fail with error: " + error);
+      }
+    );
+  };
   
   useEffect(() => {
     GoogleSignin.configure({
       scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
-      webClientId: '1045738319375-88ag8752q2pes2fjmd37lnr98g9521gh.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
+      webClientId: '1036887341767-4foinu1uvd66srmivikbplncka4ind72.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
       offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
       // hostedDomain: '', // specifies a hosted domain restriction
       // loginHint: '', // [iOS] The user's ID, or email address, to be prefilled in the authentication UI if possible. [See docs here](https://developers.google.com/identity/sign-in/ios/api/interface_g_i_d_sign_in.html#a0a68c7504c31ab0b728432565f6e33fd)
@@ -117,8 +153,8 @@ const WelcomeScreen = ({ navigation }) => {
           }
           buttonType="navigationButton"
           buttonIconTitle="facebook"
-          // buttonType="buttonFunction"
-          // buttonFunction={facebookSignIn}
+          buttonType="buttonFunction"
+          buttonFunction={facebookSignIn}
         />
         <WelcomePageButton 
           buttonTitle="Continue with Google"

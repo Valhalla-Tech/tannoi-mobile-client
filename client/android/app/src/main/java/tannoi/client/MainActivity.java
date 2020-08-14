@@ -1,4 +1,4 @@
-package client.client;
+package tannoi.client;
 
 import com.facebook.react.ReactActivity;
 

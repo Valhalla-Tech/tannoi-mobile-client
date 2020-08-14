@@ -25,7 +25,6 @@ const FollowSomeTopicsScreen = ({ navigation }) => {
     try {
       let access_token = await AsyncStorage.getItem('access_token');
       setAccessToken(access_token);
-      console.log(access_token)
   
       let getTopicRequest = await axios({
         url: 'https://dev.entervalhalla.tech/api/tannoi/v1/topics',

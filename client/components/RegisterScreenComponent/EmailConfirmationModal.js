@@ -41,16 +41,16 @@ const EmailConfirmationModal = props => {
   };
 
   const emailVerified = async () => {
-    // try {
-    //   let emailActivationRequest = await axios.get(`https://dev.entervalhalla.tech/api/tannoi/v1/users/activation?token=${getCode()}`);
-    //   if(emailActivationRequest.data.msg === 'Email Activated'){
+    try {
+      let emailActivationRequest = await axios.get(`https://dev.entervalhalla.tech/api/tannoi/v1/users/activation?token=${getCode()}`);
+      if(emailActivationRequest.data.msg === 'Email Activated'){
         emailConfirmed();
-        // await AsyncStorage.setItem('access_token', emailActivationRequest.data.access_token)
+        await AsyncStorage.setItem('access_token', emailActivationRequest.data.access_token)
         navigation.navigate('EnterYourProfileScreen');
-    //   };
-    // } catch (error) {
-    //   console.log(error)
-    // }
+      };
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   
