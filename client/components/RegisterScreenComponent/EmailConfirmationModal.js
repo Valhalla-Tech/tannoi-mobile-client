@@ -31,7 +31,8 @@ const EmailConfirmationModal = props => {
     closeEmailConfirmationModal,
     emailAddress,
     navigation,
-    emailConfirmed
+    emailConfirmed,
+    userId
   } = props;
 
   const getCode = () => {
@@ -50,6 +51,16 @@ const EmailConfirmationModal = props => {
       };
     } catch (error) {
       console.log(error)
+    }
+  };
+
+  const resendCode = async () => {
+    try {
+      console.log(userId)
+      let resendCodeRequest = await axios.get(`https://dev.entervalhalla.tech/api/tannoi/v1/users/generate/${userId}`);
+      console.log(resendCodeRequest.data)
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -129,7 +140,9 @@ const EmailConfirmationModal = props => {
           </View>
           <View style={styles.sendAgainEmailContainerStyle}>
             <Text>Dind't get an email? </Text>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={resendCode}
+            >
               <Text style={styles.sendAgainEmailButtonStyle}>Send again</Text>
             </TouchableOpacity>
           </View>

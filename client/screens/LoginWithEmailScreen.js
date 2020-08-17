@@ -30,8 +30,8 @@ const LoginWithEmailScreen = ({ navigation }) => {
   const userLogin = async () => {
     try {
       let loginRequest = await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/login', {
-          email: emailLogin,
-          password: passwordLogin
+        email: emailLogin,
+        password: passwordLogin
       })
 
       console.log(loginRequest.data);

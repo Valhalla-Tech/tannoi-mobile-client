@@ -11,7 +11,6 @@ import {
   KeyboardAvoidingView
 } from 'react-native';
 import axios from 'axios';
-import { Header } from '@react-navigation/stack'
 
 //Components
 import FormInput from '../components/PublicComponent/FormInput';
@@ -25,6 +24,7 @@ const RegisterPage = ({ navigation }) => {
   const [passwordRegister, setPasswordRegister] = useState('');
   const [fullName, setFullName] = useState('');
   const [openConfirmationModal, setOpenConfirmationModal] = useState(false);
+  const [userId, setUserId] = useState('');
 
   const emailInput = emailData => {
     setEmailRegister(emailData);
@@ -44,22 +44,23 @@ const RegisterPage = ({ navigation }) => {
 
   useEffect(() => {
     clearStorage
-  }, [])
+  }, []);
 
   const emailConfirmation = async () => {
-    // try {
-    //   let registerRequest = await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/register', {
-    //     name: fullName,
-    //     email: emailRegister,
-    //     password: passwordRegister
-    //   });
+    try {
+      let registerRequest = await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/register', {
+        name: fullName,
+        email: emailRegister,
+        password: passwordRegister
+      });
       
-    //   if (registerRequest.data) {
+      if (registerRequest.data) {
         setOpenConfirmationModal(!openConfirmationModal);
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
+        setUserId(registerRequest.data.user_data.id);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const closeConfirmationModal = () => {
@@ -68,7 +69,7 @@ const RegisterPage = ({ navigation }) => {
 
   const emailConfirmed = () => {
     setOpenConfirmationModal(false);
-  }
+  };
 
 
   return (
@@ -130,6 +131,7 @@ const RegisterPage = ({ navigation }) => {
             emailAddress={emailRegister}
             navigation={navigation}
             emailConfirmed={emailConfirmed}
+            userId={userId}
           />
         </View>
       </KeyboardAvoidingView>

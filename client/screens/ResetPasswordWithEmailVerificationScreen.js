@@ -5,10 +5,23 @@ import {
   Text,
   TouchableOpacity
 } from 'react-native';
+import axios from 'axios';
 
 import BackButton from '../components/PublicComponent/BackButton';
 
-const ResetPasswordWithEmailVerificationScreen = ({navigation }) => {
+const ResetPasswordWithEmailVerificationScreen = ({ route, navigation }) => {
+
+  const {url} = route.params;
+
+  const resendEmail = async () => {
+    let resetPasswordRequest =  await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/password/send-reset-token', {
+      link: url
+    });
+    if (resetPasswordRequest.data.msg === 'Success') {
+      console.log(`resend email: ${resetPasswordRequest.data.msg}`);
+    };
+  };
+
   return (
     <View style={styles.resetPasswordWithEmailVerificationScreenContainerStyle}>
       <BackButton navigation={navigation} />
@@ -18,7 +31,9 @@ const ResetPasswordWithEmailVerificationScreen = ({navigation }) => {
       </Text>
       <View style={styles.sendAgainEmailContainerStyle}>
         <Text style={styles.sendAgainEmailButtonTitleStyle}>Didn’t receive the link? </Text>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={resendEmail}
+        >
           <Text style={styles.sendAgainEmailButtonStyle}>Send again</Text>
         </TouchableOpacity>
       </View>

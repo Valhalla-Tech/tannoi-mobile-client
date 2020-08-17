@@ -36,7 +36,6 @@ const EnterYourProfileScreen = ({ navigation }) => {
       height: 400,
       cropping: true
     }).then(image => {
-      console.log(image);
       setProfileImage(image.path)
     })
     .catch(error => {
@@ -56,9 +55,7 @@ const EnterYourProfileScreen = ({ navigation }) => {
 
       formData.append('profile_photo_path', {uri: profileImage, name: filename, type});
       formData.append('birth_date', `${birthDate}`);
-      formData.append('name', fullName)
-
-      console.log(formData)
+      formData.append('name', fullName);
 
       let enterProfileRequest = await axios({
         method: 'put',
@@ -114,7 +111,7 @@ const EnterYourProfileScreen = ({ navigation }) => {
           <View style={styles.uploadProfilePhotoContainerStyle}>
             {
               profileImage ? (
-                <Image source={{uri:profileImage}} style={{ width: 100, height: 100, borderRadius: 50 }} />
+                <Image source={{uri:profileImage}} style={styles.profileImageStyle} />
               ) : (
                 <NoProfileIcon />
               )
@@ -195,6 +192,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "600",
     color: "#464D60"
+  },
+
+  profileImageStyle: {
+    width: 100, 
+    height: 100, 
+    borderRadius: 50
   },
 
   uploadProfilePhotoContainerStyle: {

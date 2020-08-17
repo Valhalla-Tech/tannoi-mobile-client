@@ -25,13 +25,21 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
         <intent-filter>
+          <data android:scheme="tannoi" />
           <action android:name="android.intent.action.VIEW" />
           <category android:name="android.intent.category.DEFAULT" />
           <category android:name="android.intent.category.BROWSABLE" />
-          <data android:scheme="tannoi" />
+        </intent-filter>
+         <intent-filter android:autoVerify="true">
+          <action android:name="android.intent.action.VIEW" />
+          <category android:name="android.intent.category.DEFAULT" />
+          <category android:name="android.intent.category.BROWSABLE" />
+          <data android:scheme="https" android:host="tannoi.app.link" />
         </intent-filter>
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+      <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_hmO2tLPlllQj83KCcnBC3dfnvCihnYF2"/>
+      <meta-data android:name="io.branch.sdk.BranchKey.test" android:value="key_test_bcS4AIGmggRg59RAkfCz2bmdxtpik9Sl"/>
     </application>
 
 </manifest>

@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard
 } from 'react-native';
+import branch, { BranchEvent } from 'react-native-branch'
 import axios from 'axios';
 
 //Components
@@ -24,16 +25,49 @@ const ResetPasswordWithEmailScreen = ({ navigation }) => {
 
   const resetPassword = async () => {
     try {
-      let resetPasswordRequest =  await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/password/reset-send-token', {
+      let getResetPasswordToken = await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/password/get-reset-token', {
         email: resetPasswordEmail
       });
       
-      if (resetPasswordRequest.data.msg === 'Success') {
-        navigation.navigate('ResetPasswordWithEmailVerificationScreen');
-      }
+      if (getResetPasswordToken.data.token) {
+        let branchUniversalObject = await branch.createBranchUniversalObject('canonicalIdentifier', {
+          locallyIndex: true,
+          title: 'Reset Your Password',
+          contentDescription: 'This is a link to reset password',
+          contentMetadata: {
+            ratingAverage: 4.2,
+            customMetadata: {
+              screen: 'CreateNewPasswordScreen',
+              token: getResetPasswordToken.data.token
+            }
+          }
+        });
+        
+        let linkProperties = {
+          feature: 'reset password',
+          channel: 'tannoi'
+        };
+        
+        let controlParams = {
+          $desktop_url: 'https://www.entervalhalla.tech/'
+        };
+        
+        let {url} = await branchUniversalObject.generateShortUrl(linkProperties, controlParams);
+        
+        let resetPasswordRequest =  await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/password/send-reset-token', {
+          link: url
+        });
+        
+        if (resetPasswordRequest.data.msg === 'Success') {
+          navigation.navigate('ResetPasswordWithEmailVerificationScreen', {
+            url: url
+          });
+        };
+      };
+
     } catch (error) {
-      console.log(error)
-    }
+      console.log(error);
+    };
   };
 
   return (

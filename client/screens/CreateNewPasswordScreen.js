@@ -17,7 +17,7 @@ const CreateNewPasswordScreen = ({ route, navigation }) => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfrimPassword] = useState('');
 
-  // const { token } = route.params;
+  const { token } = route.params;
 
   const inputNewPassword = newPasswordData => {
     setNewPassword(newPasswordData);

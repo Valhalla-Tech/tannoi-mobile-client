@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -17,17 +17,9 @@ import CreateNewPasswordScreen from './screens/CreateNewPasswordScreen';
 const Stack = createStackNavigator();
 
 const App = () => {
-  const linking = {
-    prefixes: ['https://tannoi.com', 'tannoi://'],
-    config: {
-      screens: {
-        CreateNewPasswordScreen: 'createnewpassword'
-      }
-    }
-  };
-
+  
   return (
-    <NavigationContainer linking={linking}>
+    <NavigationContainer>
       <Stack.Navigator
       screenOptions={{
         headerShown: false

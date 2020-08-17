@@ -30,7 +30,7 @@ const FollowSomeTopicsScreen = ({ navigation }) => {
         url: 'https://dev.entervalhalla.tech/api/tannoi/v1/topics',
         method: 'get',
         headers: {
-          'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTk3MjUxMzA1fQ.lofcE5u5-1XlFgijIvTAPXbod53rnkyHFj0h6tghr9c'
+          'token': access_token
         }
       });
   
