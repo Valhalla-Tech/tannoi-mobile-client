@@ -4,7 +4,8 @@ import {
   View,
   Text,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
+  Alert
 } from 'react-native';
 import axios from 'axios';
 
@@ -28,12 +29,31 @@ const CreateNewPasswordScreen = ({ route, navigation }) => {
   };
 
   const submitNewPassword = async () => {
-    if (newPassword === confirmPassword) {
-      let submitNewPasswordRequest = await axios.post(`https://dev.entervalhalla.tech/api/tannoi/v1/users/password/reset?token=${token}`, {
-        new_password: newPassword
-      });
-      console.log(submitNewPasswordRequest.data.msg);
-    };
+    try {
+      if (newPassword === confirmPassword) {
+        let submitNewPasswordRequest = await axios.post(`https://dev.entervalhalla.tech/api/tannoi/v1/users/password/reset?token=${token}`, {
+          new_password: newPassword
+        });
+
+        console.log(submitNewPasswordRequest.data.msg);
+
+        Alert.alert(
+          'Reset Password Success',
+          'Reset Password success, welcome to Tannoi',
+          [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel'
+            },
+            { text: 'OK', onPress: () => navigation.navigate('WelcomeScreen') }
+          ],
+          { cancelable: false }
+        );
+      };
+    }  catch (error) {
+      console.log(error)
+    }
   };
 
   return (

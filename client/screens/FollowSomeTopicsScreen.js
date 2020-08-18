@@ -5,7 +5,8 @@ import {
   Text,
   ScrollView,
   FlatList,
-  AsyncStorage
+  AsyncStorage,
+  Alert
 } from 'react-native';
 import axios from 'axios';
 
@@ -82,6 +83,20 @@ const FollowSomeTopicsScreen = ({ navigation }) => {
       });
 
       console.log(followSomeTopicRequest.data);
+
+      Alert.alert(
+        'Register Success',
+        'Register success, welcome to Tannoi',
+        [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel'
+          },
+          { text: 'OK', onPress: () => navigation.navigate('WelcomeScreen') }
+        ],
+        { cancelable: false }
+      );
     } catch (error) {
       console.log(error)
     }

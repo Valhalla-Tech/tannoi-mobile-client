@@ -55,7 +55,8 @@ const ResetPasswordWithEmailScreen = ({ navigation }) => {
         let {url} = await branchUniversalObject.generateShortUrl(linkProperties, controlParams);
         
         let resetPasswordRequest =  await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/password/send-reset-token', {
-          link: url
+          link: url,
+          email: resetPasswordEmail
         });
         
         if (resetPasswordRequest.data.msg === 'Success') {

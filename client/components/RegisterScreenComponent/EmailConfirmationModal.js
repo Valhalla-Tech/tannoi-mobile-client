@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   StyleSheet,
   Modal,
@@ -56,9 +56,7 @@ const EmailConfirmationModal = props => {
 
   const resendCode = async () => {
     try {
-      console.log(userId)
       let resendCodeRequest = await axios.get(`https://dev.entervalhalla.tech/api/tannoi/v1/users/generate/${userId}`);
-      console.log(resendCodeRequest.data)
     } catch (error) {
       console.log(error);
     }
@@ -69,10 +67,6 @@ const EmailConfirmationModal = props => {
     emailVerified();
     setCode4('');
   };
-
-  useEffect(() => {
-
-  }, [])
 
   return (
     <Modal

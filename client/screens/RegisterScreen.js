@@ -78,25 +78,24 @@ const RegisterPage = ({ navigation }) => {
     >
       <KeyboardAvoidingView 
         style={styles.registerPageContainerStyle}
-        behavior="height"
+        keyboardVerticalOffset={120} 
+        behavior="padding"
       >
         <View>
           <BackButton navigation={navigation} />
           <Text style={styles.registerTitleStyle}>Sign up to TannOi</Text>
-          <View>
-            <FormInput 
-              formInputTitle="Email address"
-              dataInput={emailInput}
-            />
-            <FormInput 
-              formInputTitle="Password"
-              dataInput={passwordInput}
-            />
-            <FormInput 
-              formInputTitle="Full Name"
-              dataInput={fullNameInput}
-            />
-          </View>
+          <FormInput 
+            formInputTitle="Email address"
+            dataInput={emailInput}
+          />
+          <FormInput 
+            formInputTitle="Password"
+            dataInput={passwordInput}
+          />
+          <FormInput 
+            formInputTitle="Full Name"
+            dataInput={fullNameInput}
+          />
           <View style={styles.signupButtonContainerStyle}>
             {
               emailRegister && passwordRegister && fullName ? (

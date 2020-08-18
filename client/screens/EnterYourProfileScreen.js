@@ -105,8 +105,11 @@ const EnterYourProfileScreen = ({ navigation }) => {
         Keyboard.dismiss();
       }}
     >
-      <KeyboardAvoidingView style={styles.enterYourProfileScreenContainerStyle} behavior="padding">
-        <View>
+      <KeyboardAvoidingView 
+        style={styles.enterYourProfileScreenContainerStyle}
+        keyboardVerticalOffset={50}
+        behavior="padding"
+      >
           <Text style={styles.enterYourProfileScreenTitleStyle}>Enter your profile</Text>
           <View style={styles.uploadProfilePhotoContainerStyle}>
             {
@@ -126,39 +129,31 @@ const EnterYourProfileScreen = ({ navigation }) => {
               Square JPG or PNG images work best. Your photo will be visible to anyone.
             </Text>
           </View>
-          <View style={styles.enterYourProfilePageFormContainerStyle}>
-            <View>
-              <Text style={styles.formInputTitleStyle}>Full name</Text>
-              <TextInput 
-                style={styles.formInputStyle}
-                onChangeText={value => setFullName(value)}
+          <Text style={{...styles.formInputTitleStyle}}>Full name</Text>
+          <TextInput 
+            style={styles.formInputStyle}
+            onChangeText={value => setFullName(value)}
+          />
+          <Text style={{...styles.formInputTitleStyle}}>Date of birth</Text>
+          {
+            show ? (
+              <DateTimePicker 
+                testID="dateTimePicker"
+                value={birthDate}
+                mode={mode}
+                is24Hour={true}
+                display="default"
+                onChange={dateInput}
               />
-            </View>
-          </View>
-          <View style={styles.enterYourProfilePageFormContainerStyle}>
-            <View>
-              <Text style={styles.formInputTitleStyle}>Date of birth</Text>
-              {
-                show ? (
-                  <DateTimePicker 
-                    testID="dateTimePicker"
-                    value={birthDate}
-                    mode={mode}
-                    is24Hour={true}
-                    display="default"
-                    onChange={dateInput}
-                  />
-                ) : (
-                  <TouchableOpacity
-                    style={styles.formInputStyle}
-                    onPress={showDatepicker}
-                  >
-                    <Text style={{fontSize: 16}}>{birthDateDisplay}</Text>
-                  </TouchableOpacity>
-                )
-              }
-            </View>
-          </View>
+            ) : (
+              <TouchableOpacity
+                style={styles.formInputStyle}
+                onPress={showDatepicker}
+              >
+                <Text style={{fontSize: 16}}>{birthDateDisplay}</Text>
+              </TouchableOpacity>
+            )
+          }
           <SaveAndContinueButton 
             buttonTitle="Save and Continue"
             buttonStyle={
@@ -174,7 +169,6 @@ const EnterYourProfileScreen = ({ navigation }) => {
             buttonType="functionButton"
             buttonFunction={enterYourProfileRequest}
           />
-        </View>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
@@ -228,12 +222,9 @@ const styles = StyleSheet.create({
     color: "#73798C"
   },
 
-  enterYourProfilePageFormContainerStyle: {
-    marginTop: 32
-  },
-
   formInputTitleStyle: {
     color: "#73798C",
+    marginTop: 32
   },
 
   formInputStyle: {

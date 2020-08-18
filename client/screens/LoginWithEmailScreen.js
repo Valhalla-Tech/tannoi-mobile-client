@@ -5,7 +5,8 @@ import {
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
+  Alert
 } from 'react-native';
 import axios from 'axios';
 
@@ -35,6 +36,20 @@ const LoginWithEmailScreen = ({ navigation }) => {
       })
 
       console.log(loginRequest.data);
+
+      Alert.alert(
+        'You are logged in',
+        loginRequest.data.user_data.name,
+        [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel'
+          },
+          { text: 'OK', onPress: () => console.log('OK Pressed') }
+        ],
+        { cancelable: false }
+      );
     } catch (error) {
       console.log(error);
     }

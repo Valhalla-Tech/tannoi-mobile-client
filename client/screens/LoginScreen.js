@@ -2,7 +2,8 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  Text
+  Text,
+  Alert
 } from 'react-native';
 import {
   GoogleSignin,
@@ -25,6 +26,20 @@ const LoginScreen = ({ navigation }) => {
       });
 
       console.log(googleSigninRequest.data);
+
+      Alert.alert(
+        'Google Login',
+        'Google login success, welcome to Tannoi',
+        [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel'
+          },
+          { text: 'OK', onPress: () => console.log('OK Pressed') }
+        ],
+        { cancelable: false }
+      );
     } catch (error) {
       console.log(error) 
     };
@@ -55,6 +70,20 @@ const LoginScreen = ({ navigation }) => {
       });
 
       console.log(facebookSigninRequest.data);
+
+      Alert.alert(
+        'Facebook Login',
+        'Facebook login success, welcome to Tannoi',
+        [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel'
+          },
+          { text: 'OK', onPress: () => console.log('OK Pressed') }
+        ],
+        { cancelable: false }
+      );
     } catch (error) {
       console.log(error) 
     };
