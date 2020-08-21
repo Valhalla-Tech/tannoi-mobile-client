@@ -65,6 +65,7 @@ const RegisterPage = ({ navigation }) => {
         setPasswordCheck(!passwordCheck);
       }
     } catch (error) {
+      setIsLoading(false);
        if (error.response.data.msg[0] === 'Must enter a valid email') {
         setEmailCheck(!emailCheck);
        } else if (error.response.data.msg === 'Email already registered') {

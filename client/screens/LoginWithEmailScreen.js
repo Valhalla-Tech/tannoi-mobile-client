@@ -16,11 +16,13 @@ import LoginButton from '../components/PublicComponent/BigButton';
 import FormInput from '../components/PublicComponent/FormInput';
 import NotActiveButton from '../components/PublicComponent/NotActiveButton';
 import LoadingSpinner from '../components/PublicComponent/LoadingSpinner';
+import ErrorMessage from '../components/PublicComponent/ErrorMessage';
 
 const LoginWithEmailScreen = ({ navigation }) => {
   const [emailLogin, setEmailLogin] = useState('');
   const [passwordLogin, setPasswordLogin] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [loginValidation, setLoginValidation] = useState(false)
 
   const emailInput = emailData => {
     setEmailLogin(emailData);
@@ -56,7 +58,10 @@ const LoginWithEmailScreen = ({ navigation }) => {
         );
       }
     } catch (error) {
-      console.log(error);
+      if (error.response.data.msg) {
+        setIsLoading(false);
+        setLoginValidation(true);
+      }
     }
   };
 
@@ -68,6 +73,11 @@ const LoginWithEmailScreen = ({ navigation }) => {
         <View style={styles.loginWithEmailScreenContainerStyle}>
           <BackButton navigation={navigation} />
           <Text style={styles.loginTitleStyle}>Login to TannOi</Text>
+          {
+            loginValidation && (
+              <ErrorMessage message="Wrong username/password" />
+            )
+          }
           <FormInput 
             formInputTitle="Email address"
             dataInput={emailInput}
