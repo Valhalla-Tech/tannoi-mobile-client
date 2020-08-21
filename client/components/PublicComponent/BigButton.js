@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
-    borderWidth: 1
+    borderWidth: 1,
   },
 
   buttonTitleStyle: {

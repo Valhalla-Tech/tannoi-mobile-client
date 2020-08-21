@@ -70,29 +70,31 @@ const LoginWithEmailScreen = ({ navigation }) => {
           formInputTitle="Password"
           dataInput={passwordInput}
         />
-        {
-          emailLogin && passwordLogin ? (
-            <LoginButton
-                buttonTitle="Log in"
-                buttonStyle={
-                  {
-                    backgroundColor: "#5152D0",
-                    borderColor: "#5152D0",
-                    color: "#FFFFFF",
-                    width: "100%",
-                    height: "6.5%"
+        <View style={styles.loginWithEmailButtonContainerStyle}>
+          {
+            emailLogin && passwordLogin ? (
+              <LoginButton
+                  buttonTitle="Log in"
+                  buttonStyle={
+                    {
+                      backgroundColor: "#5152D0",
+                      borderColor: "#5152D0",
+                      color: "#FFFFFF",
+                      width: "100%",
+                      height: "100%"
+                    }
                   }
-                }
-                buttonType="funtionButton"
-                buttonFunction={userLogin}
-            />
-          ) : (
-            <NotActiveButton 
-              buttonTitle="Log in"
-              buttonHeight="6.5%"
-            />
-          )
-        }
+                  buttonType="funtionButton"
+                  buttonFunction={userLogin}
+              />
+            ) : (
+              <NotActiveButton 
+                buttonTitle="Log in"
+                buttonHeight="100%"
+              />
+            )
+          }
+        </View>
         <View style={styles.forgotPasswordButtonContainer}>
           <Text style={styles.loginButtonTextStyle}>
             Forgot password?
@@ -123,6 +125,10 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: "bold",
     marginBottom: 44
+  },
+
+  loginWithEmailButtonContainerStyle: {
+    height: 50
   },
 
   forgotPasswordButtonContainer: {

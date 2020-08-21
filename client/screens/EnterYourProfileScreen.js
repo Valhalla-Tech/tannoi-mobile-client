@@ -45,30 +45,35 @@ const EnterYourProfileScreen = ({ navigation }) => {
 
   const enterYourProfileRequest = async () => {
     try {
-      let access_token = await AsyncStorage.getItem('access_token');
-      let filename = profileImage.split('/').pop();
-      let match = /\.(\w+)$/.exec(filename);
-      let type = match ? `image/${match[1]}` : `image`;
-
-      let formData = new FormData();
-      
-
-      formData.append('profile_photo_path', {uri: profileImage, name: filename, type});
-      formData.append('birth_date', `${birthDate}`);
-      formData.append('name', fullName);
-
-      let enterProfileRequest = await axios({
-        method: 'put',
-        url: 'https://dev.entervalhalla.tech/api/tannoi/v1/users/profile/edit',
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'token': access_token
-        },
-        data: formData
-      });
-
-      if (enterProfileRequest.data.msg === 'Update Success') {
-        navigation.navigate('FollowSomeTopicsScreen');
+      if (profileImage || birthDate || fullName) {
+        let access_token = await AsyncStorage.getItem('access_token');
+        let filename = profileImage.split('/').pop();
+        let match = /\.(\w+)$/.exec(filename);
+        let type = match ? `image/${match[1]}` : `image`;
+  
+        let formData = new FormData();
+        
+        if (profileImage) {
+          formData.append('profile_photo_path', {uri: profileImage, name: filename, type});
+        } else if (birthDate) {
+          formData.append('birth_date', `${birthDate}`);
+        } else if (fullName) {
+          formData.append('name', fullName);
+        }
+  
+        let enterProfileRequest = await axios({
+          method: 'put',
+          url: 'https://dev.entervalhalla.tech/api/tannoi/v1/users/profile/edit',
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'token': access_token
+          },
+          data: formData
+        });
+  
+        if (enterProfileRequest.data.msg === 'Update Success') {
+          navigation.navigate('FollowSomeTopicsScreen');
+        }
       }
     } catch (error) {
       console.log(error);

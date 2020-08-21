@@ -133,7 +133,7 @@ const EmailConfirmationModal = props => {
             />
           </View>
           <View style={styles.sendAgainEmailContainerStyle}>
-            <Text>Dind't get an email? </Text>
+            <Text>Didn't get an email? </Text>
             <TouchableOpacity
               onPress={resendCode}
             >

@@ -18,13 +18,16 @@ import SaveAndContinueButton from '../components/PublicComponent/BigButton';
 import EmailConfirmationModal from '../components/RegisterScreenComponent/EmailConfirmationModal';
 import BackButton from '../components/PublicComponent/BackButton';
 import NotActiveButton from '../components/PublicComponent/NotActiveButton';
+import ErrorMessage from '../components/PublicComponent/ErrorMessage';
 
 const RegisterPage = ({ navigation }) => {
   const [emailRegister, setEmailRegister] = useState('');
   const [passwordRegister, setPasswordRegister] = useState('');
-  const [fullName, setFullName] = useState('');
   const [openConfirmationModal, setOpenConfirmationModal] = useState(false);
   const [userId, setUserId] = useState('');
+  const [emailCheck, setEmailCheck] = useState(false)
+  const [passwordCheck, setPasswordCheck] = useState(false);
+  const [emailAlreadyRegistered, setEmailAlreadyRegistered] = useState(false);
 
   const emailInput = emailData => {
     setEmailRegister(emailData);
@@ -32,10 +35,6 @@ const RegisterPage = ({ navigation }) => {
 
   const passwordInput = passwordData => {
     setPasswordRegister(passwordData);
-  };
-
-  const fullNameInput = fullNameData => {
-    setFullName(fullNameData);
   };
 
   const clearStorage = async () => {
@@ -48,18 +47,25 @@ const RegisterPage = ({ navigation }) => {
 
   const emailConfirmation = async () => {
     try {
-      let registerRequest = await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/register', {
-        name: fullName,
-        email: emailRegister,
-        password: passwordRegister
-      });
-      
-      if (registerRequest.data) {
-        setOpenConfirmationModal(!openConfirmationModal);
-        setUserId(registerRequest.data.user_data.id);
+      if (passwordRegister.length >= 5 && passwordRegister.length <= 20) {
+        let registerRequest = await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/register', {
+          email: emailRegister,
+          password: passwordRegister
+        });
+        
+        if (registerRequest.data) {
+          setOpenConfirmationModal(!openConfirmationModal);
+          setUserId(registerRequest.data.user_data.id);
+        }
+      } else {
+        setPasswordCheck(!passwordCheck);
       }
     } catch (error) {
-      console.log(error);
+       if (error.response.data.msg[0] === 'Must enter a valid email') {
+        setEmailCheck(!emailCheck);
+       } else if (error.response.data.msg === 'Email already registered') {
+        setEmailAlreadyRegistered(!emailAlreadyRegistered);
+       }
     }
   };
 
@@ -78,27 +84,35 @@ const RegisterPage = ({ navigation }) => {
     >
       <KeyboardAvoidingView 
         style={styles.registerPageContainerStyle}
-        keyboardVerticalOffset={120} 
+        keyboardVerticalOffset={120}
         behavior="padding"
       >
-        <View>
+        <View style={{flex: 1}}>
           <BackButton navigation={navigation} />
           <Text style={styles.registerTitleStyle}>Sign up to TannOi</Text>
+          {
+            emailCheck ? (
+              <ErrorMessage message="Must enter a valid email" />
+            ) : emailAlreadyRegistered && (
+              <ErrorMessage message="Email already registered" />
+            )
+          }
           <FormInput 
             formInputTitle="Email address"
             dataInput={emailInput}
           />
-          <FormInput 
+          {
+            passwordCheck && (
+              <ErrorMessage message="Password must be 5 - 20 charachters" />
+            )
+          }
+          <FormInput
             formInputTitle="Password"
             dataInput={passwordInput}
           />
-          <FormInput 
-            formInputTitle="Full Name"
-            dataInput={fullNameInput}
-          />
           <View style={styles.signupButtonContainerStyle}>
             {
-              emailRegister && passwordRegister && fullName ? (
+              emailRegister && passwordRegister.length >= 5 ? (
                 <SaveAndContinueButton
                   buttonTitle="Save and Continue"
                   buttonStyle={
@@ -107,7 +121,7 @@ const RegisterPage = ({ navigation }) => {
                       borderColor: "#5152D0",
                       color: "#FFFFFF",
                       width: "100%",
-                      height: "25%"
+                      height: "100%"
                     }
                   }
                   buttonType="funtionButton"
@@ -116,7 +130,7 @@ const RegisterPage = ({ navigation }) => {
               ) : (
                 <NotActiveButton 
                   buttonTitle="Save and Continue" 
-                  buttonHeight="25%"
+                  buttonHeight="100%"
                 />
               )
             }
@@ -161,7 +175,8 @@ const styles = StyleSheet.create({
   },
 
   signupButtonContainerStyle: {
-    alignItems:"center"
+    alignItems:"center",
+    height: 50
   },
   signupTermsAndPrivacyStyle: {
     fontSize: 12,
