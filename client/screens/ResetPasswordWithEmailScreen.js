@@ -16,10 +16,12 @@ import SendResetPasswordButton from '../components/PublicComponent/BigButton';
 import FormInput from '../components/PublicComponent/FormInput';
 import NotActiveButton from '../components/PublicComponent/NotActiveButton';
 import ErrorMessage from '../components/PublicComponent/ErrorMessage';
+import LoadingSpinner from '../components/PublicComponent/LoadingSpinner';
 
 const ResetPasswordWithEmailScreen = ({ navigation }) => {
   const [resetPasswordEmail, setResetPasswordEmail] = useState('');
   const [emailCheck, setEmailCheck] = useState(false);
+  const [isLoading, setIsloading] = useState(false);
 
   const emailInput = emailData => {
     setResetPasswordEmail(emailData);
@@ -27,6 +29,8 @@ const ResetPasswordWithEmailScreen = ({ navigation }) => {
 
   const resetPassword = async () => {
     try {
+      setIsloading(!isLoading);
+
       let getResetPasswordToken = await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/password/get-reset-token', {
         email: resetPasswordEmail
       });
@@ -62,6 +66,7 @@ const ResetPasswordWithEmailScreen = ({ navigation }) => {
         });
         
         if (resetPasswordRequest.data.msg === 'Success') {
+          setIsloading(false);
           navigation.navigate('ResetPasswordWithEmailVerificationScreen', {
             url: url
           });
@@ -78,48 +83,55 @@ const ResetPasswordWithEmailScreen = ({ navigation }) => {
     <TouchableWithoutFeedback
       onPress={() => Keyboard.dismiss()}
     >
-      <View style={styles.resetPasswordWithEmailScreenContainerStyle}>
-        <BackButton navigation={navigation} />
-        <Text style={styles.resetPasswordWithEmailTitleStyle}>Reset password</Text>
-        <Text style={styles.resetPasswordWithEmailScreenInstructionStyle}>
-          Enter the email address you used when you joined, and we’ll send you the link to reset your password.
-        </Text>
-        {
-          emailCheck && (
-            <ErrorMessage message="Email address does not exist" />
-          )
-        }
-        <FormInput 
-          formInputTitle="Email address"
-          dataInput={emailInput}
-        />
-        <View>
-        </View>
-        <View style={styles.resetPasswordWithEmailbuttonContainerStyle}>
+      <View style={{flex: 1}}>
+        <View style={styles.resetPasswordWithEmailScreenContainerStyle}>
+          <BackButton navigation={navigation} />
+          <Text style={styles.resetPasswordWithEmailTitleStyle}>Reset password</Text>
+          <Text style={styles.resetPasswordWithEmailScreenInstructionStyle}>
+            Enter the email address you used when you joined, and we’ll send you the link to reset your password.
+          </Text>
           {
-            resetPasswordEmail ? (
-              <SendResetPasswordButton
-                  buttonTitle="Send"
-                  buttonStyle={
-                    {
-                      backgroundColor: "#5152D0",
-                      borderColor: "#5152D0",
-                      color: "#FFFFFF",
-                      width: "100%",
-                      height: "100%"
-                    }
-                  }
-                  buttonType="functionButton"
-                  buttonFunction={resetPassword}
-              />
-            ) : (
-              <NotActiveButton 
-                buttonTitle="Send"
-                buttonHeight="100%"
-              />
+            emailCheck && (
+              <ErrorMessage message="Email address does not exist" />
             )
           }
+          <FormInput 
+            formInputTitle="Email address"
+            dataInput={emailInput}
+          />
+          <View>
+          </View>
+          <View style={styles.resetPasswordWithEmailbuttonContainerStyle}>
+            {
+              resetPasswordEmail ? (
+                <SendResetPasswordButton
+                    buttonTitle="Send"
+                    buttonStyle={
+                      {
+                        backgroundColor: "#5152D0",
+                        borderColor: "#5152D0",
+                        color: "#FFFFFF",
+                        width: "100%",
+                        height: "100%"
+                      }
+                    }
+                    buttonType="functionButton"
+                    buttonFunction={resetPassword}
+                />
+              ) : (
+                <NotActiveButton 
+                  buttonTitle="Send"
+                  buttonHeight="100%"
+                />
+              )
+            }
+          </View>
         </View>
+        {
+          isLoading && (
+            <LoadingSpinner />
+          )
+        }
       </View>
     </TouchableWithoutFeedback>
   );

@@ -57,12 +57,13 @@ const EmailConfirmationModal = props => {
   const resendCode = async () => {
     try {
       let resendCodeRequest = await axios.get(`https://dev.entervalhalla.tech/api/tannoi/v1/users/generate/${userId}`);
+      
+      dconsole.log(resendCodeRequest);
     } catch (error) {
       console.log(error);
     }
   };
 
-  
   if (code4 !== '') {
     emailVerified();
     setCode4('');

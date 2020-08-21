@@ -26,7 +26,8 @@ const EnterYourProfileScreen = ({ navigation }) => {
   const [profileImage, setProfileImage] = useState('');
   const [fullName, setFullName] = useState('');
   const [birthDateDisplay, setBirthDateDisplay] = useState('');
-  const [birthDate, setBirthDate] = useState(new Date(1598051730000));
+  const [birthDate, setBirthDate] = useState('');
+  const [currentDate, setCurrentDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
 
@@ -45,35 +46,39 @@ const EnterYourProfileScreen = ({ navigation }) => {
 
   const enterYourProfileRequest = async () => {
     try {
-      if (profileImage || birthDate || fullName) {
-        let access_token = await AsyncStorage.getItem('access_token');
-        let filename = profileImage.split('/').pop();
-        let match = /\.(\w+)$/.exec(filename);
-        let type = match ? `image/${match[1]}` : `image`;
-  
-        let formData = new FormData();
-        
-        if (profileImage) {
-          formData.append('profile_photo_path', {uri: profileImage, name: filename, type});
-        } else if (birthDate) {
-          formData.append('birth_date', `${birthDate}`);
-        } else if (fullName) {
-          formData.append('name', fullName);
-        }
-  
-        let enterProfileRequest = await axios({
-          method: 'put',
-          url: 'https://dev.entervalhalla.tech/api/tannoi/v1/users/profile/edit',
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            'token': access_token
-          },
-          data: formData
-        });
-  
-        if (enterProfileRequest.data.msg === 'Update Success') {
-          navigation.navigate('FollowSomeTopicsScreen');
-        }
+      let access_token = await AsyncStorage.getItem('access_token');
+      let filename = profileImage.split('/').pop();
+      let match = /\.(\w+)$/.exec(filename);
+      let type = match ? `image/${match[1]}` : `image`;
+      
+      let formData = new FormData();
+      
+      if (profileImage) {
+        formData.append('profile_photo_path', {uri: profileImage, name: filename, type});
+      }
+
+      if (birthDate !== '') {
+        formData.append('birth_date', `${birthDate}`);
+      }
+
+      if (fullName !== '') {
+        formData.append('name', fullName);
+      } else {
+        formData.append('name', '');
+      }
+      
+      let enterProfileRequest = await axios({
+        method: 'put',
+        url: 'https://dev.entervalhalla.tech/api/tannoi/v1/users/profile/edit',
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'token': access_token
+        },
+        data: formData
+      });
+
+      if (enterProfileRequest.data.msg === 'Update Success') {
+        navigation.navigate('FollowSomeTopicsScreen');
       }
     } catch (error) {
       console.log(error);
@@ -81,9 +86,10 @@ const EnterYourProfileScreen = ({ navigation }) => {
   };
 
   const dateInput = (event, selectedDate) => {
-    const currentDate = selectedDate || birthDate;
+    const inputDate = selectedDate || currentDate;
     setShow(Platform.OS === 'ios');
-    setBirthDate(currentDate);
+    setBirthDate(inputDate);
+    setCurrentDate(inputDate);
     if (selectedDate !== undefined) {
       let selectedBirthDate = selectedDate.toDateString().split(' ').slice(1, 4);
       if (selectedBirthDate[1][0] === '0') {
@@ -91,7 +97,6 @@ const EnterYourProfileScreen = ({ navigation }) => {
       };
       let birthDateDisplay = `${selectedBirthDate[1]} ${selectedBirthDate[0]} ${selectedBirthDate[2]}`;
       setBirthDateDisplay(birthDateDisplay);
-      console.log(birthDateDisplay)
     }
   };
 
@@ -111,10 +116,11 @@ const EnterYourProfileScreen = ({ navigation }) => {
       }}
     >
       <KeyboardAvoidingView 
-        style={styles.enterYourProfileScreenContainerStyle}
+        style={{flex: 1}}
         keyboardVerticalOffset={50}
         behavior="padding"
       >
+        <View style={styles.enterYourProfileScreenContainerStyle}>
           <Text style={styles.enterYourProfileScreenTitleStyle}>Enter your profile</Text>
           <View style={styles.uploadProfilePhotoContainerStyle}>
             {
@@ -144,7 +150,7 @@ const EnterYourProfileScreen = ({ navigation }) => {
             show ? (
               <DateTimePicker 
                 testID="dateTimePicker"
-                value={birthDate}
+                value={currentDate}
                 mode={mode}
                 is24Hour={true}
                 display="default"
@@ -159,21 +165,24 @@ const EnterYourProfileScreen = ({ navigation }) => {
               </TouchableOpacity>
             )
           }
-          <SaveAndContinueButton 
-            buttonTitle="Save and Continue"
-            buttonStyle={
-              {
-                backgroundColor: "#5152D0",
-                borderColor: "#5152D0",
-                color: "#FFFFFF",
-                width: "100%",
-                height: "10%",
-                marginTop: 24
+          <View style={styles.enterYourProfileScreenButtonContainerStyle}>
+            <SaveAndContinueButton 
+              buttonTitle="Save and Continue"
+              buttonStyle={
+                {
+                  backgroundColor: "#5152D0",
+                  borderColor: "#5152D0",
+                  color: "#FFFFFF",
+                  width: "100%",
+                  height: "100%",
+                  marginTop: 24
+                }
               }
-            }
-            buttonType="functionButton"
-            buttonFunction={enterYourProfileRequest}
-          />
+              buttonType="functionButton"
+              buttonFunction={enterYourProfileRequest}
+            />
+            </View>
+        </View>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
@@ -239,6 +248,10 @@ const styles = StyleSheet.create({
     borderBottomColor: "#E3E6EB",
     fontSize: 16,
     justifyContent: "center"
+  },
+
+  enterYourProfileScreenButtonContainerStyle: {
+    height: 50
   }
 })
 

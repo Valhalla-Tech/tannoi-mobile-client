@@ -15,10 +15,12 @@ import BackButton from '../components/PublicComponent/BackButton';
 import LoginButton from '../components/PublicComponent/BigButton';
 import FormInput from '../components/PublicComponent/FormInput';
 import NotActiveButton from '../components/PublicComponent/NotActiveButton';
+import LoadingSpinner from '../components/PublicComponent/LoadingSpinner';
 
 const LoginWithEmailScreen = ({ navigation }) => {
   const [emailLogin, setEmailLogin] = useState('');
   const [passwordLogin, setPasswordLogin] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const emailInput = emailData => {
     setEmailLogin(emailData);
@@ -30,26 +32,29 @@ const LoginWithEmailScreen = ({ navigation }) => {
 
   const userLogin = async () => {
     try {
+      setIsLoading(!isLoading);
       let loginRequest = await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/login', {
         email: emailLogin,
         password: passwordLogin
       })
 
-      console.log(loginRequest.data);
+      if (loginRequest.data) {
+        setIsLoading(false);
 
-      Alert.alert(
-        'You are logged in',
-        loginRequest.data.user_data.name,
-        [
-          {
-            text: 'Cancel',
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel'
-          },
-          { text: 'OK', onPress: () => console.log('OK Pressed') }
-        ],
-        { cancelable: false }
-      );
+        Alert.alert(
+          'You are logged in',
+          loginRequest.data.user_data.name,
+          [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel'
+            },
+            { text: 'OK', onPress: () => console.log('OK Pressed') }
+          ],
+          { cancelable: false }
+        );
+      }
     } catch (error) {
       console.log(error);
     }
@@ -59,55 +64,62 @@ const LoginWithEmailScreen = ({ navigation }) => {
     <TouchableWithoutFeedback
       onPress={() => Keyboard.dismiss()}
     >
-      <View style={styles.loginWithEmailScreenContainerStyle}>
-        <BackButton navigation={navigation} />
-        <Text style={styles.loginTitleStyle}>Login to TannOi</Text>
-        <FormInput 
-          formInputTitle="Email address"
-          dataInput={emailInput}
-        />
-        <FormInput 
-          formInputTitle="Password"
-          dataInput={passwordInput}
-        />
-        <View style={styles.loginWithEmailButtonContainerStyle}>
-          {
-            emailLogin && passwordLogin ? (
-              <LoginButton
-                  buttonTitle="Log in"
-                  buttonStyle={
-                    {
-                      backgroundColor: "#5152D0",
-                      borderColor: "#5152D0",
-                      color: "#FFFFFF",
-                      width: "100%",
-                      height: "100%"
+      <View style={{flex: 1}}>
+        <View style={styles.loginWithEmailScreenContainerStyle}>
+          <BackButton navigation={navigation} />
+          <Text style={styles.loginTitleStyle}>Login to TannOi</Text>
+          <FormInput 
+            formInputTitle="Email address"
+            dataInput={emailInput}
+          />
+          <FormInput 
+            formInputTitle="Password"
+            dataInput={passwordInput}
+          />
+          <View style={styles.loginWithEmailButtonContainerStyle}>
+            {
+              emailLogin && passwordLogin ? (
+                <LoginButton
+                    buttonTitle="Log in"
+                    buttonStyle={
+                      {
+                        backgroundColor: "#5152D0",
+                        borderColor: "#5152D0",
+                        color: "#FFFFFF",
+                        width: "100%",
+                        height: "100%"
+                      }
                     }
-                  }
-                  buttonType="funtionButton"
-                  buttonFunction={userLogin}
-              />
-            ) : (
-              <NotActiveButton 
-                buttonTitle="Log in"
-                buttonHeight="100%"
-              />
-            )
-          }
+                    buttonType="funtionButton"
+                    buttonFunction={userLogin}
+                />
+              ) : (
+                <NotActiveButton 
+                  buttonTitle="Log in"
+                  buttonHeight="100%"
+                />
+              )
+            }
+          </View>
+          <View style={styles.forgotPasswordButtonContainer}>
+            <Text style={styles.loginButtonTextStyle}>
+              Forgot password?
+            </Text>
+            <TouchableOpacity 
+              style={{marginLeft: 5}}
+              onPress={() => {
+                navigation.navigate('ResetPasswordWithEmailScreen');
+              }}
+            >
+              <Text style={{...styles.forgotPasswordButtonTextStyle, fontWeight:"bold"}}>Reset password</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={styles.forgotPasswordButtonContainer}>
-          <Text style={styles.loginButtonTextStyle}>
-            Forgot password?
-          </Text>
-          <TouchableOpacity 
-            style={{marginLeft: 5}}
-            onPress={() => {
-              navigation.navigate('ResetPasswordWithEmailScreen');
-            }}
-          >
-            <Text style={{...styles.forgotPasswordButtonTextStyle, fontWeight:"bold"}}>Reset password</Text>
-          </TouchableOpacity>
-        </View>
+        {
+          isLoading && (
+            <LoadingSpinner />
+          )
+        }
       </View>
     </TouchableWithoutFeedback>
   );

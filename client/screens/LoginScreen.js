@@ -110,56 +110,58 @@ const LoginScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.loginScreenContainerStyle}>
-      <BackButton navigation={navigation} />
-      <Text style={styles.loginTitleStyle}>Login to TannOi</Text>
-      <LoginScreenButton 
-          buttonTitle="Log in with email"
+    <View style={{flex: 1}}>
+      <View style={styles.loginScreenContainerStyle}>
+        <BackButton navigation={navigation} />
+        <Text style={styles.loginTitleStyle}>Login to TannOi</Text>
+        <LoginScreenButton 
+            buttonTitle="Log in with email"
+            buttonStyle={
+              {
+                backgroundColor: "#5152D0",
+                borderColor: "#5152D0",
+                color: "#FFFFFF",
+                width: "100%",
+                height: "10%"
+              }
+            }
+            navigation={navigation}
+            navigationPage="LoginWithEmailScreen"
+            buttonType="navigationButton"
+          />
+        <LoginScreenButton 
+          buttonTitle="Continue with Facebook"
           buttonStyle={
             {
-              backgroundColor: "#5152D0",
-              borderColor: "#5152D0",
+              backgroundColor: "#3B5998",
+              borderColor: "#3B5998",
               color: "#FFFFFF",
               width: "100%",
               height: "10%"
             }
           }
           navigation={navigation}
-          navigationPage="LoginWithEmailScreen"
-          buttonType="navigationButton"
+          buttonIconTitle="facebook"
+          buttonType="buttonFunction"
+          buttonFunction={facebookSignIn}
         />
-      <LoginScreenButton 
-        buttonTitle="Continue with Facebook"
-        buttonStyle={
-          {
-            backgroundColor: "#3B5998",
-            borderColor: "#3B5998",
-            color: "#FFFFFF",
-            width: "100%",
-            height: "10%"
+        <LoginScreenButton 
+          buttonTitle="Continue with Google"
+          buttonStyle={
+            {
+              backgroundColor: "#FFFFFF",
+              borderColor: "#E2E2E2",
+              color: "#464D60",
+              width: "100%",
+              height: "10%"
+            }
           }
-        }
-        navigation={navigation}
-        buttonIconTitle="facebook"
-        buttonType="buttonFunction"
-        buttonFunction={facebookSignIn}
-      />
-      <LoginScreenButton 
-        buttonTitle="Continue with Google"
-        buttonStyle={
-          {
-            backgroundColor: "#FFFFFF",
-            borderColor: "#E2E2E2",
-            color: "#464D60",
-            width: "100%",
-            height: "10%"
-          }
-        }
-        navigation={navigation}
-        buttonIconTitle="google"
-        buttonType="buttonFunction"
-        buttonFunction={googleSignIn}
-      />
+          navigation={navigation}
+          buttonIconTitle="google"
+          buttonType="buttonFunction"
+          buttonFunction={googleSignIn}
+        />
+      </View>
     </View>
   )
 };

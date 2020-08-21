@@ -19,6 +19,7 @@ import EmailConfirmationModal from '../components/RegisterScreenComponent/EmailC
 import BackButton from '../components/PublicComponent/BackButton';
 import NotActiveButton from '../components/PublicComponent/NotActiveButton';
 import ErrorMessage from '../components/PublicComponent/ErrorMessage';
+import LoadingSpinner from '../components/PublicComponent/LoadingSpinner';
 
 const RegisterPage = ({ navigation }) => {
   const [emailRegister, setEmailRegister] = useState('');
@@ -28,6 +29,7 @@ const RegisterPage = ({ navigation }) => {
   const [emailCheck, setEmailCheck] = useState(false)
   const [passwordCheck, setPasswordCheck] = useState(false);
   const [emailAlreadyRegistered, setEmailAlreadyRegistered] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const emailInput = emailData => {
     setEmailRegister(emailData);
@@ -48,14 +50,16 @@ const RegisterPage = ({ navigation }) => {
   const emailConfirmation = async () => {
     try {
       if (passwordRegister.length >= 5 && passwordRegister.length <= 20) {
+        setIsLoading(!isLoading);
         let registerRequest = await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/register', {
           email: emailRegister,
           password: passwordRegister
         });
-        
+
         if (registerRequest.data) {
+          setIsLoading(!isLoading);
           setOpenConfirmationModal(!openConfirmationModal);
-          setUserId(registerRequest.data.user_data.id);
+          setUserId(registerRequest.data.id);
         }
       } else {
         setPasswordCheck(!passwordCheck);
@@ -71,6 +75,7 @@ const RegisterPage = ({ navigation }) => {
 
   const closeConfirmationModal = () => {
     setOpenConfirmationModal(!openConfirmationModal);
+    setIsLoading(!isLoading);
   };
 
   const emailConfirmed = () => {
@@ -83,11 +88,11 @@ const RegisterPage = ({ navigation }) => {
       onPress={() => Keyboard.dismiss()}
     >
       <KeyboardAvoidingView 
-        style={styles.registerPageContainerStyle}
+        style={{flex: 1}}
         keyboardVerticalOffset={120}
         behavior="padding"
       >
-        <View style={{flex: 1}}>
+        <View style={styles.registerPageContainerStyle}>
           <BackButton navigation={navigation} />
           <Text style={styles.registerTitleStyle}>Sign up to TannOi</Text>
           {
@@ -147,6 +152,11 @@ const RegisterPage = ({ navigation }) => {
             userId={userId}
           />
         </View>
+        {
+          isLoading && (
+            <LoadingSpinner />
+          )
+        }
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
