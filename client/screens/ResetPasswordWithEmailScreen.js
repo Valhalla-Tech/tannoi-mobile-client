@@ -29,7 +29,7 @@ const ResetPasswordWithEmailScreen = ({ navigation }) => {
 
   const resetPassword = async () => {
     try {
-      setIsloading(!isLoading);
+      setIsloading(true);
 
       let getResetPasswordToken = await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/password/get-reset-token', {
         email: resetPasswordEmail
@@ -74,6 +74,7 @@ const ResetPasswordWithEmailScreen = ({ navigation }) => {
       };
 
     } catch (error) {
+      setIsloading(false);
       console.log(error);
       setEmailCheck(!emailCheck)
     };
