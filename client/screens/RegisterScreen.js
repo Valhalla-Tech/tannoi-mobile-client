@@ -57,7 +57,7 @@ const RegisterPage = ({ navigation }) => {
         });
 
         if (registerRequest.data) {
-          setIsLoading(!isLoading);
+          setIsLoading(false);
           setOpenConfirmationModal(!openConfirmationModal);
           setUserId(registerRequest.data.id);
         }

@@ -15,11 +15,15 @@ import axios from 'axios';
 //Icon
 import CloseButton from '../../assets/ModalComponent/closeIcon.svg';
 
+//Component
+import LoadingSpinner from '../PublicComponent/LoadingSpinner';
+
 const EmailConfirmationModal = props => {
   const [code1, setCode1] = useState('');
   const [code2, setCode2] = useState('');
   const [code3, setCode3] = useState('');
   const [code4, setCode4] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const codeBox1 = useRef(null);
   const codeBox2 = useRef(null);
@@ -43,14 +47,16 @@ const EmailConfirmationModal = props => {
 
   const emailVerified = async () => {
     try {
+      setIsLoading(true);
       let emailActivationRequest = await axios.get(`https://dev.entervalhalla.tech/api/tannoi/v1/users/activation?token=${getCode()}`);
       if(emailActivationRequest.data.msg === 'Email Activated'){
+        setIsLoading(false);
         emailConfirmed();
         await AsyncStorage.setItem('access_token', emailActivationRequest.data.access_token)
         navigation.navigate('EnterYourProfileScreen');
       };
     } catch (error) {
-      console.log(error)
+      console.log(error.response.data)
     }
   };
 
@@ -143,6 +149,11 @@ const EmailConfirmationModal = props => {
           </View>
         </View>
       </TouchableWithoutFeedback>
+      {
+        isLoading && (
+          <LoadingSpinner />
+        )
+      }
     </Modal>
   );
 };

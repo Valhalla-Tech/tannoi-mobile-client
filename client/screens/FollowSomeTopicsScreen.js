@@ -14,6 +14,7 @@ import axios from 'axios';
 import BackButton from '../components/PublicComponent/BackButton';
 import Card from '../components/FollowSomeTopicsScreen/Card';
 import DoneButton from '../components/PublicComponent/BigButton';
+import LoadingSpinner from '../components/PublicComponent/LoadingSpinner';
 
 const numColumns = 3
 
@@ -21,6 +22,7 @@ const FollowSomeTopicsScreen = ({ navigation }) => {
   const [allTopics, setAllTopics] = useState('');
   const [selectedTopic, setSelectedTopic] = useState([]);
   const [accessToken, setAccessToken] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const getTopics = async () => {
     try {
@@ -71,6 +73,8 @@ const FollowSomeTopicsScreen = ({ navigation }) => {
 
   const followSomeTopicSubmit = async () => {
     try {
+      setIsLoading(true);
+
       let followSomeTopicRequest = await axios({
         method: 'post',
         url: 'https://dev.entervalhalla.tech/api/tannoi/v1/topics/preferred-many',
@@ -81,6 +85,7 @@ const FollowSomeTopicsScreen = ({ navigation }) => {
           topics_id: selectedTopic
         }
       });
+      setIsLoading(false);
 
       console.log(followSomeTopicRequest.data);
 
@@ -98,7 +103,8 @@ const FollowSomeTopicsScreen = ({ navigation }) => {
         { cancelable: false }
       );
     } catch (error) {
-      console.log(error)
+      setIsLoading(false);
+      console.log(error);
     }
   };
 
@@ -112,49 +118,56 @@ const FollowSomeTopicsScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.followSomeTopicsScreenContainerStyle}>
-      <View style={styles.backButtonAndTitleContainer}>
-        <BackButton navigation={navigation} />
-        <Text style={styles.followSomeTopicsScreenTitleStyle}>
-          Follow some topics
+    <View style={{flex: 1}}>
+      <View style={styles.followSomeTopicsScreenContainerStyle}>
+        <View style={styles.backButtonAndTitleContainer}>
+          <BackButton navigation={navigation} />
+          <Text style={styles.followSomeTopicsScreenTitleStyle}>
+            Follow some topics
+          </Text>
+        </View>
+        <Text style={styles.FollowSomeTopicsScreenInstructionStyle}>
+          Select 5 topics that interest you to get started
         </Text>
-      </View>
-      <Text style={styles.FollowSomeTopicsScreenInstructionStyle}>
-        Select 5 topics that interest you to get started
-      </Text>
-      <FlatList
-        data={lastRow(allTopics, numColumns)}
-        contentContainerStyle={styles.cardsContainerStyle}
-        numColumns={numColumns}
-        renderItem={itemData => (
-          <Card 
-            cardData={itemData.item.name} 
-            isEmpty={itemData.item.empty}
-            isSelected={isSelected}
-            topicKey={itemData.item.id}
-            selectTopic={selectTopic}
-            deselectTopic={deselectTopic}
-          />
-        )}
-      />
-      <DoneButton 
-        buttonTitle="Done"
-        buttonStyle={
-          {
-            position: "absolute",
-            marginHorizontal: 24,
-            bottom: 35,
-            backgroundColor: "#5152D0",
-            borderColor: "#5152D0",
-            color: "#FFFFFF",
-            width: "100%",
-            height: "7%",
-            marginTop: 24
+        <FlatList
+          data={lastRow(allTopics, numColumns)}
+          contentContainerStyle={styles.cardsContainerStyle}
+          numColumns={numColumns}
+          renderItem={itemData => (
+            <Card 
+              cardData={itemData.item.name} 
+              isEmpty={itemData.item.empty}
+              isSelected={isSelected}
+              topicKey={itemData.item.id}
+              selectTopic={selectTopic}
+              deselectTopic={deselectTopic}
+            />
+          )}
+        />
+        <DoneButton 
+          buttonTitle="Done"
+          buttonStyle={
+            {
+              position: "absolute",
+              marginHorizontal: 24,
+              bottom: 35,
+              backgroundColor: "#5152D0",
+              borderColor: "#5152D0",
+              color: "#FFFFFF",
+              width: "100%",
+              height: "7%",
+              marginTop: 24
+            }
           }
-        }
-        buttonType="functionButton"
-        buttonFunction={followSomeTopicSubmit}
-      />
+          buttonType="functionButton"
+          buttonFunction={followSomeTopicSubmit}
+        />
+      </View>
+      {
+        isLoading && (
+          <LoadingSpinner />
+        )
+      }
     </View>
   );
 };

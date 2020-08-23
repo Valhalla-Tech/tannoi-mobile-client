@@ -19,8 +19,9 @@ import axios from 'axios';
 //Icon
 import NoProfileIcon from '../assets/EnterYourProfileScreen/noProfileIcon.svg';
 
-//Component
+//Components
 import SaveAndContinueButton from '../components/PublicComponent/BigButton';
+import LoadingSpinner from '../components/PublicComponent/LoadingSpinner';
 
 const EnterYourProfileScreen = ({ navigation }) => {
   const [profileImage, setProfileImage] = useState('');
@@ -30,6 +31,7 @@ const EnterYourProfileScreen = ({ navigation }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const uploadProfileImage = () => {
     ImagePicker.openPicker({
@@ -46,6 +48,8 @@ const EnterYourProfileScreen = ({ navigation }) => {
 
   const enterYourProfileRequest = async () => {
     try {
+      setIsLoading(true);
+
       let access_token = await AsyncStorage.getItem('access_token');
       let filename = profileImage.split('/').pop();
       let match = /\.(\w+)$/.exec(filename);
@@ -78,9 +82,11 @@ const EnterYourProfileScreen = ({ navigation }) => {
       });
 
       if (enterProfileRequest.data.msg === 'Update Success') {
+        setIsLoading(false);
         navigation.navigate('FollowSomeTopicsScreen');
       }
     } catch (error) {
+      setIsLoading(false);
       console.log(error);
     }
   };
@@ -183,6 +189,11 @@ const EnterYourProfileScreen = ({ navigation }) => {
             />
             </View>
         </View>
+        {
+          isLoading && (
+            <LoadingSpinner />
+          )
+        }
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
