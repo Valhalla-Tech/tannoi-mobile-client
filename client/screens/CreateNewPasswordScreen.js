@@ -75,20 +75,22 @@ const CreateNewPasswordScreen = ({ route, navigation }) => {
             dataInput={inputConfirmPassword}
           />
         </View>
-        <LoginButton
-          buttonTitle="Login"
-          buttonStyle={
-            {
-              backgroundColor: "#5152D0",
-              borderColor: "#5152D0",
-              color: "#FFFFFF",
-              width: "100%",
-              height: "7%"
+        <View style={{height: 50}}>
+          <LoginButton
+            buttonTitle="Change Password & Login"
+            buttonStyle={
+              {
+                backgroundColor: "#5152D0",
+                borderColor: "#5152D0",
+                color: "#FFFFFF",
+                width: "100%",
+                height: "100%"
+              }
             }
-          }
-          buttonType="functionButton"
-          buttonFunction={submitNewPassword}
-        />
+            buttonType="functionButton"
+            buttonFunction={submitNewPassword}
+          />
+        </View>
       </View>
     </TouchableWithoutFeedback>
   );

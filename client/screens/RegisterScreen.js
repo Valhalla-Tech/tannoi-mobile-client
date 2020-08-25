@@ -20,6 +20,7 @@ import BackButton from '../components/PublicComponent/BackButton';
 import NotActiveButton from '../components/PublicComponent/NotActiveButton';
 import ErrorMessage from '../components/PublicComponent/ErrorMessage';
 import LoadingSpinner from '../components/PublicComponent/LoadingSpinner';
+import TermsOfServiceModal from '../components/RegisterScreenComponent/TermsOfServiceModal';
 
 const RegisterPage = ({ navigation }) => {
   const [emailRegister, setEmailRegister] = useState('');
@@ -30,6 +31,7 @@ const RegisterPage = ({ navigation }) => {
   const [passwordCheck, setPasswordCheck] = useState(false);
   const [emailAlreadyRegistered, setEmailAlreadyRegistered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [termsOfServiceModalIsOpen, setTermsOfServiceModalIsOpen] = useState(false);
 
   const emailInput = emailData => {
     setEmailRegister(emailData);
@@ -76,13 +78,16 @@ const RegisterPage = ({ navigation }) => {
 
   const closeConfirmationModal = () => {
     setOpenConfirmationModal(!openConfirmationModal);
-    setIsLoading(!isLoading);
+    setIsLoading(false);
   };
 
   const emailConfirmed = () => {
     setOpenConfirmationModal(false);
   };
 
+  const closeTermsOfServiceModal = () => {
+    setTermsOfServiceModalIsOpen(false);
+  }
 
   return (
     <TouchableWithoutFeedback
@@ -135,14 +140,24 @@ const RegisterPage = ({ navigation }) => {
                 />
               ) : (
                 <NotActiveButton 
-                  buttonTitle="Save and Continue" 
+                  buttonTitle="Continue" 
                   buttonHeight="100%"
                 />
               )
             }
-          <Text style={styles.signupTermsAndPrivacyStyle}>
-            By signing up, you agree to our Terms of service and Privacy policy and to receive notice on event and services.
-          </Text>
+          <View style={styles.termsOfServiceContainerStyle}>  
+            <Text style={styles.signupTermsAndPrivacyStyle}>By signing up, you agree to our </Text>
+            <TouchableOpacity
+              onPress={() => setTermsOfServiceModalIsOpen(true)}
+            >
+              <Text style={{...styles.signupTermsAndPrivacyStyle, color: "#2f3dfa"}}>
+                Terms of Service, Privacy Policies
+              </Text>
+            </TouchableOpacity>
+            <Text style={styles.signupTermsAndPrivacyStyle}>
+              and to receive notice on events and services.
+            </Text>
+          </View>
           </View>
           <EmailConfirmationModal 
             openEmailConfirmationModal={openConfirmationModal}
@@ -151,6 +166,10 @@ const RegisterPage = ({ navigation }) => {
             navigation={navigation}
             emailConfirmed={emailConfirmed}
             userId={userId}
+          />
+          <TermsOfServiceModal
+            openTermsOfServiceModal={termsOfServiceModalIsOpen}
+            closeTermsOfServiceModal={closeTermsOfServiceModal}
           />
         </View>
         {
@@ -189,6 +208,14 @@ const styles = StyleSheet.create({
     alignItems:"center",
     height: 50
   },
+
+  termsOfServiceContainerStyle: {
+    flexDirection: 'row', 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    flexWrap: "wrap"
+  },
+
   signupTermsAndPrivacyStyle: {
     fontSize: 12,
     textAlign: "center"

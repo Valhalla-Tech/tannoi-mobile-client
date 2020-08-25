@@ -12,11 +12,10 @@ import {
 } from 'react-native';
 import axios from 'axios';
 
-//Icon
-import CloseButton from '../../assets/ModalComponent/closeIcon.svg';
-
-//Component
+//Components
 import LoadingSpinner from '../PublicComponent/LoadingSpinner';
+import ErrorMessage from '../PublicComponent/ErrorMessage';
+import CloseButton from '../PublicComponent/CloseButton';
 
 const EmailConfirmationModal = props => {
   const [code1, setCode1] = useState('');
@@ -24,6 +23,7 @@ const EmailConfirmationModal = props => {
   const [code3, setCode3] = useState('');
   const [code4, setCode4] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [codeValidation, setCodeValidation] = useState(false);
 
   const codeBox1 = useRef(null);
   const codeBox2 = useRef(null);
@@ -56,6 +56,8 @@ const EmailConfirmationModal = props => {
         navigation.navigate('EnterYourProfileScreen');
       };
     } catch (error) {
+      setIsLoading(false);
+      setCodeValidation(true);
       console.log(error.response.data)
     }
   };
@@ -88,13 +90,14 @@ const EmailConfirmationModal = props => {
         <View
           style={styles.confirmationModalStyle}
         >
-          <TouchableOpacity
-            onPress={closeEmailConfirmationModal}
-          >
-            <CloseButton />
-          </TouchableOpacity>
+          <CloseButton closeFunction={closeEmailConfirmationModal} />
           <Text style={styles.confirmationEmailModalTitleStyle}>Confirm your email</Text>
           <Text style={styles.confirmationEmailModalInstructionStyle}>Enter the 4-digit code tannOi just sent to {emailAddress}</Text>
+          {
+            codeValidation && (
+              <ErrorMessage message="Wrong code" />
+            )
+          }
           <View style={styles.codeBoxStyle}>
             <TextInput
               ref={codeBox1}
@@ -186,6 +189,7 @@ const styles = StyleSheet.create({
 
   confirmationEmailModalInstructionStyle: {
     marginTop: 16,
+    marginBottom: 5,
     fontSize: 16,
     lineHeight: 24,
     color: "#73798C"
