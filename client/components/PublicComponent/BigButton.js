@@ -2,7 +2,6 @@ import React from 'react';
 import { 
   StyleSheet, 
   Text,
-  Image,
   TouchableOpacity 
 } from 'react-native';
 
@@ -12,8 +11,7 @@ import GoogleLogo from '../../assets/PublicAsset/googleIcon.svg';
 const WelcomePageButton = props => {
   const { 
     buttonTitle, 
-    buttonStyle, 
-    buttonIcon,
+    buttonStyle,
     navigation,
     navigationPage,
     buttonFunction,
