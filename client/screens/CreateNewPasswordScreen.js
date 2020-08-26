@@ -13,10 +13,14 @@ import axios from 'axios';
 import BackButton from '../components/PublicComponent/BackButton';
 import FormInput from '../components/PublicComponent/FormInput';
 import LoginButton from '../components/PublicComponent/BigButton';
+import NotActiveButton from '../components/PublicComponent/NotActiveButton';
+import ErrorMessage from '../components/PublicComponent/ErrorMessage';
 
 const CreateNewPasswordScreen = ({ route, navigation }) => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfrimPassword] = useState('');
+  const [confirmPasswordValidation, setConfirmPasswordValidation] = useState(false);
+  const [passwordValidation, setPasswordValidation] = useState(false);
 
   const { token } = route.params;
 
@@ -31,28 +35,45 @@ const CreateNewPasswordScreen = ({ route, navigation }) => {
   const submitNewPassword = async () => {
     try {
       if (newPassword === confirmPassword) {
-        let submitNewPasswordRequest = await axios.post(`https://dev.entervalhalla.tech/api/tannoi/v1/users/password/reset?token=${token}`, {
-          new_password: newPassword
-        });
+        setConfirmPasswordValidation(false);
+        setPasswordValidation(false);
 
-        console.log(submitNewPasswordRequest.data.msg);
+        if (newPassword.length >=5 && newPassword.length <= 20) {
+          let submitNewPasswordRequest = await axios.post(`https://dev.entervalhalla.tech/api/tannoi/v1/users/password/reset?token=${token}`, {
+            new_password: newPassword
+          });
+  
+          console.log(submitNewPasswordRequest.data.msg);
+  
+          Alert.alert(
+            'Reset Password Success',
+            'Reset Password success, welcome to Tannoi',
+            [
+              {
+                text: 'Cancel',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel'
+              },
+              { text: 'OK', onPress: () => navigation.navigate('WelcomeScreen') }
+            ],
+            { cancelable: false }
+          );
 
-        Alert.alert(
-          'Reset Password Success',
-          'Reset Password success, welcome to Tannoi',
-          [
-            {
-              text: 'Cancel',
-              onPress: () => console.log('Cancel Pressed'),
-              style: 'cancel'
-            },
-            { text: 'OK', onPress: () => navigation.navigate('WelcomeScreen') }
-          ],
-          { cancelable: false }
-        );
+        } else {
+          setPasswordValidation(true);
+        };
+      } else {
+
+        if (newPassword.length >= 5 && newPassword.length <= 20) {
+          setPasswordValidation(false);
+        } else {
+          setPasswordValidation(true);
+        }
+
+        setConfirmPasswordValidation(true);
       };
     }  catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 
@@ -65,6 +86,16 @@ const CreateNewPasswordScreen = ({ route, navigation }) => {
         <Text style={styles.createNewPasswordTitleStyle}>
           Create new password
         </Text>
+        {
+          passwordValidation && (
+            <ErrorMessage message="Password must be 5 - 20 characters" />
+          )
+        }
+        {
+          confirmPasswordValidation && (
+            <ErrorMessage message="Passwords do not match" />
+          )
+        }
         <View>
           <FormInput 
             formInputTitle="New password"
@@ -76,20 +107,29 @@ const CreateNewPasswordScreen = ({ route, navigation }) => {
           />
         </View>
         <View style={{height: 50}}>
-          <LoginButton
-            buttonTitle="Change Password & Login"
-            buttonStyle={
-              {
-                backgroundColor: "#5152D0",
-                borderColor: "#5152D0",
-                color: "#FFFFFF",
-                width: "100%",
-                height: "100%"
-              }
-            }
-            buttonType="functionButton"
-            buttonFunction={submitNewPassword}
-          />
+          {
+            newPassword.length >= 5 && confirmPassword.length >= 5 ? (
+              <LoginButton
+                buttonTitle="Change Password & Login"
+                buttonStyle={
+                  {
+                    backgroundColor: "#5152D0",
+                    borderColor: "#5152D0",
+                    color: "#FFFFFF",
+                    width: "100%",
+                    height: "100%"
+                  }
+                }
+                buttonType="functionButton"
+                buttonFunction={submitNewPassword}
+              />
+            ) : (
+              <NotActiveButton
+                buttonTitle="Change Password & Login"
+                buttonHeight="100%"
+              />
+            )
+          }
         </View>
       </View>
     </TouchableWithoutFeedback>

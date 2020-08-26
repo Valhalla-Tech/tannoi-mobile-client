@@ -3,11 +3,10 @@ import {
   StyleSheet,
   View,
   Text,
-  ScrollView,
   FlatList,
-  AsyncStorage,
   Alert
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 
 //Components

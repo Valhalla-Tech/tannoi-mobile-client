@@ -8,10 +8,10 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
-  AsyncStorage,
   KeyboardAvoidingView,
   Platform
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import ImagePicker from 'react-native-image-crop-picker';
 import axios from 'axios';
@@ -70,6 +70,8 @@ const EnterYourProfileScreen = ({ navigation }) => {
       } else {
         formData.append('name', '');
       }
+
+      console.log(access_token)
       
       let enterProfileRequest = await axios({
         method: 'put',
