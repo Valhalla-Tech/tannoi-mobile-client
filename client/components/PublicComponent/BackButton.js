@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   backButtonStyle: {
     marginTop: 56,
     marginBottom: 44
-  },
+  }
 });
 
 export default BackButton;

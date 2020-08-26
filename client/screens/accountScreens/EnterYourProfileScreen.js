@@ -17,11 +17,11 @@ import ImagePicker from 'react-native-image-crop-picker';
 import axios from 'axios';
 
 //Icon
-import NoProfileIcon from '../assets/EnterYourProfileScreen/noProfileIcon.svg';
+import NoProfileIcon from '../../assets/EnterYourProfileScreen/noProfileIcon.svg';
 
 //Components
-import SaveAndContinueButton from '../components/PublicComponent/BigButton';
-import LoadingSpinner from '../components/PublicComponent/LoadingSpinner';
+import SaveAndContinueButton from '../../components/PublicComponent/BigButton';
+import LoadingSpinner from '../../components/PublicComponent/LoadingSpinner';
 
 const EnterYourProfileScreen = ({ navigation }) => {
   const [profileImage, setProfileImage] = useState('');
@@ -70,8 +70,6 @@ const EnterYourProfileScreen = ({ navigation }) => {
       } else {
         formData.append('name', '');
       }
-
-      console.log(access_token)
       
       let enterProfileRequest = await axios({
         method: 'put',

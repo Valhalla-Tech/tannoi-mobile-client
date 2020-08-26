@@ -3,18 +3,21 @@ import {
   StyleSheet,
   View,
   Text,
+  TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
   Alert
 } from 'react-native';
 import axios from 'axios';
 
+//Icon
+import BackButtonIcon from '../../assets/PublicAsset/back-button.svg';
+
 //Components
-import BackButton from '../components/PublicComponent/BackButton';
-import FormInput from '../components/PublicComponent/FormInput';
-import LoginButton from '../components/PublicComponent/BigButton';
-import NotActiveButton from '../components/PublicComponent/NotActiveButton';
-import ErrorMessage from '../components/PublicComponent/ErrorMessage';
+import FormInput from '../../components/PublicComponent/FormInput';
+import LoginButton from '../../components/PublicComponent/BigButton';
+import NotActiveButton from '../../components/PublicComponent/NotActiveButton';
+import ErrorMessage from '../../components/PublicComponent/ErrorMessage';
 
 const CreateNewPasswordScreen = ({ route, navigation }) => {
   const [newPassword, setNewPassword] = useState('');
@@ -47,7 +50,7 @@ const CreateNewPasswordScreen = ({ route, navigation }) => {
   
           Alert.alert(
             'Reset Password Success',
-            'Reset Password success, welcome to Tannoi',
+            'Reset password success, welcome to Tannoi',
             [
               {
                 text: 'Cancel',
@@ -82,7 +85,13 @@ const CreateNewPasswordScreen = ({ route, navigation }) => {
       onPress={() => Keyboard.dismiss()}
     >
       <View style={styles.createNewPasswordScreenContainerStyle}>
-        <BackButton navigation={navigation} />
+        <TouchableOpacity
+          onPress={() => navigation.navigate('WelcomeScreen')}
+        >
+          <BackButtonIcon 
+            style={styles.backButtonStyle}
+          />
+        </TouchableOpacity>
         <Text style={styles.createNewPasswordTitleStyle}>
           Create new password
         </Text>
@@ -148,6 +157,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 16
   },
+
+  backButtonStyle: {
+    marginTop: 56,
+    marginBottom: 44
+  }
 });
 
 export default CreateNewPasswordScreen;

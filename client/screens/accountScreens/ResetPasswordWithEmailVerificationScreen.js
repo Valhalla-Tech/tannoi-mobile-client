@@ -8,7 +8,7 @@ import {
 import axios from 'axios';
 
 //Component
-import BackButton from '../components/PublicComponent/BackButton';
+import BackButton from '../../components/PublicComponent/BackButton';
 
 const ResetPasswordWithEmailVerificationScreen = ({ route, navigation }) => {
 

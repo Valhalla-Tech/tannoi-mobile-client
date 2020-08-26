@@ -10,10 +10,10 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 
 //Components
-import BackButton from '../components/PublicComponent/BackButton';
-import Card from '../components/FollowSomeTopicsScreen/Card';
-import DoneButton from '../components/PublicComponent/BigButton';
-import LoadingSpinner from '../components/PublicComponent/LoadingSpinner';
+import BackButton from '../../components/PublicComponent/BackButton';
+import Card from '../../components/FollowSomeTopicsScreen/Card';
+import DoneButton from '../../components/PublicComponent/BigButton';
+import LoadingSpinner from '../../components/PublicComponent/LoadingSpinner';
 
 const numColumns = 3
 

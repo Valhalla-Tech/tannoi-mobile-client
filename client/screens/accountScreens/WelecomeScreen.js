@@ -17,10 +17,10 @@ import SplashScreen from 'react-native-splash-screen'
 import axios from 'axios';
 
 //Image
-import welcomeImage from '../assets/WelcomeScreen/welcomeImage.png';
+import welcomeImage from '../../assets/WelcomeScreen/welcomeImage.png';
 
 //Component
-import WelcomePageButton from '../components/PublicComponent/BigButton';
+import WelcomePageButton from '../../components/PublicComponent/BigButton';
 
 const WelcomeScreen = ({ navigation }) => {
 

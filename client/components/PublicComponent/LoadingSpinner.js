@@ -8,7 +8,7 @@ import { Spinner } from 'native-base';
 const LoadingSpinner = () => {
   return (
     <View style={styles.loadingSpinnerContainerStyle}>
-      <Spinner color="black" />
+      <Spinner color="blue" />
     </View>
   );
 };
