@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 //Component
-import CloseButton from '../PublicComponent/CloseButton';
+import CloseButton from '../../PublicComponent/CloseButton';
 
 const TermsOfServiceModal = props => {
   const {

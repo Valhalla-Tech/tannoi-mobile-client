@@ -5,8 +5,8 @@ import {
   TouchableOpacity 
 } from 'react-native';
 
-import FacebookLogo from '../../../assets/PublicAsset/facebookIcon.svg';
-import GoogleLogo from '../../../assets/PublicAsset/googleIcon.svg';
+import FacebookLogo from '../../assets/PublicAsset/facebookIcon.svg';
+import GoogleLogo from '../../assets/PublicAsset/googleIcon.svg';
 
 const WelcomePageButton = props => {
   const { 

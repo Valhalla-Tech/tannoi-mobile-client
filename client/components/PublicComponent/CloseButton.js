@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 
 //Icon
-import CloseIcon from '../../../assets/ModalComponent/closeIcon.svg';
+import CloseIcon from '../../assets/accountAssets/ModalComponent/closeIcon.svg';
 
 const CloseButton = props => {
   const {closeFunction} = props;

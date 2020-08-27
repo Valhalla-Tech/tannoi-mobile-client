@@ -14,10 +14,10 @@ import axios from 'axios';
 import BackButtonIcon from '../../assets/PublicAsset/back-button.svg';
 
 //Components
-import FormInput from '../../components/accountComponents/PublicComponent/FormInput';
-import LoginButton from '../../components/accountComponents/PublicComponent/BigButton';
-import NotActiveButton from '../../components/accountComponents/PublicComponent/NotActiveButton';
-import ErrorMessage from '../../components/accountComponents/PublicComponent/ErrorMessage';
+import FormInput from '../../components/PublicComponent/FormInput';
+import LoginButton from '../../components/PublicComponent/BigButton';
+import NotActiveButton from '../../components/PublicComponent/NotActiveButton';
+import ErrorMessage from '../../components/PublicComponent/ErrorMessage';
 
 const CreateNewPasswordScreen = ({ route, navigation }) => {
   const [newPassword, setNewPassword] = useState('');

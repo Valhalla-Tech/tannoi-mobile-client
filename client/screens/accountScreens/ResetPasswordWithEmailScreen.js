@@ -10,12 +10,12 @@ import branch, { BranchEvent } from 'react-native-branch'
 import axios from 'axios';
 
 //Components
-import BackButton from '../../components/accountComponents/PublicComponent/BackButton';
-import SendResetPasswordButton from '../../components/accountComponents/PublicComponent/BigButton';
-import FormInput from '../../components/accountComponents/PublicComponent/FormInput';
-import NotActiveButton from '../../components/accountComponents/PublicComponent/NotActiveButton';
-import ErrorMessage from '../../components/accountComponents/PublicComponent/ErrorMessage';
-import LoadingSpinner from '../../components/accountComponents/PublicComponent/LoadingSpinner';
+import BackButton from '../../components/PublicComponent/BackButton';
+import SendResetPasswordButton from '../../components/PublicComponent/BigButton';
+import FormInput from '../../components/PublicComponent/FormInput';
+import NotActiveButton from '../../components/PublicComponent/NotActiveButton';
+import ErrorMessage from '../../components/PublicComponent/ErrorMessage';
+import LoadingSpinner from '../../components/PublicComponent/LoadingSpinner';
 
 const ResetPasswordWithEmailScreen = ({ navigation }) => {
   const [resetPasswordEmail, setResetPasswordEmail] = useState('');
