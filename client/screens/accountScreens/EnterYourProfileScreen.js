@@ -20,8 +20,8 @@ import axios from 'axios';
 import NoProfileIcon from '../../assets/EnterYourProfileScreen/noProfileIcon.svg';
 
 //Components
-import SaveAndContinueButton from '../../components/PublicComponent/BigButton';
-import LoadingSpinner from '../../components/PublicComponent/LoadingSpinner';
+import SaveAndContinueButton from '../../components/accountComponents/PublicComponent/BigButton';
+import LoadingSpinner from '../../components/accountComponents/PublicComponent/LoadingSpinner';
 
 const EnterYourProfileScreen = ({ navigation }) => {
   const [profileImage, setProfileImage] = useState('');

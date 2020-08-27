@@ -20,7 +20,7 @@ import axios from 'axios';
 import welcomeImage from '../../assets/WelcomeScreen/welcomeImage.png';
 
 //Component
-import WelcomePageButton from '../../components/PublicComponent/BigButton';
+import WelcomePageButton from '../../components/accountComponents/PublicComponent/BigButton';
 
 const WelcomeScreen = ({ navigation }) => {
 

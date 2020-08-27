@@ -8,21 +8,28 @@ import {
   Keyboard,
   Alert
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+import {
+  useDispatch
+} from 'react-redux';
+import { userLogin } from '../../store/actions/LoginAction';
 import axios from 'axios';
 
 //Components
-import BackButton from '../../components/PublicComponent/BackButton';
-import LoginButton from '../../components/PublicComponent/BigButton';
-import FormInput from '../../components/PublicComponent/FormInput';
-import NotActiveButton from '../../components/PublicComponent/NotActiveButton';
-import LoadingSpinner from '../../components/PublicComponent/LoadingSpinner';
-import ErrorMessage from '../../components/PublicComponent/ErrorMessage';
+import BackButton from '../../components/accountComponents/PublicComponent/BackButton';
+import LoginButton from '../../components/accountComponents/PublicComponent/BigButton';
+import FormInput from '../../components/accountComponents/PublicComponent/FormInput';
+import NotActiveButton from '../../components/accountComponents/PublicComponent/NotActiveButton';
+import LoadingSpinner from '../../components/accountComponents/PublicComponent/LoadingSpinner';
+import ErrorMessage from '../../components/accountComponents/PublicComponent/ErrorMessage';
 
 const LoginWithEmailScreen = ({ navigation }) => {
   const [emailLogin, setEmailLogin] = useState('');
   const [passwordLogin, setPasswordLogin] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [loginValidation, setLoginValidation] = useState(false)
+
+  const dispatch = useDispatch();
 
   const emailInput = emailData => {
     setEmailLogin(emailData);
@@ -32,7 +39,7 @@ const LoginWithEmailScreen = ({ navigation }) => {
     setPasswordLogin(passwordData);
   };
 
-  const userLogin = async () => {
+  const login = async () => {
     try {
       setIsLoading(!isLoading);
       let loginRequest = await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/login', {
@@ -42,20 +49,8 @@ const LoginWithEmailScreen = ({ navigation }) => {
 
       if (loginRequest.data) {
         setIsLoading(false);
-
-        Alert.alert(
-          'You are logged in',
-          loginRequest.data.user_data.name,
-          [
-            {
-              text: 'Cancel',
-              onPress: () => console.log('Cancel Pressed'),
-              style: 'cancel'
-            },
-            { text: 'OK', onPress: () => console.log('OK Pressed') }
-          ],
-          { cancelable: false }
-        );
+        await AsyncStorage.setItem('access_token', loginRequest.data.access_token);
+        dispatch(userLogin());
       }
     } catch (error) {
       if (error.response.data.msg) {
@@ -101,7 +96,7 @@ const LoginWithEmailScreen = ({ navigation }) => {
                       }
                     }
                     buttonType="funtionButton"
-                    buttonFunction={userLogin}
+                    buttonFunction={login}
                 />
               ) : (
                 <NotActiveButton 

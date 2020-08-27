@@ -14,8 +14,8 @@ import { LoginManager, AccessToken } from "react-native-fbsdk";
 import axios from 'axios';
 
 //Components
-import BackButton from '../../components/PublicComponent/BackButton';
-import LoginScreenButton from '../../components/PublicComponent/BigButton';
+import BackButton from '../../components/accountComponents/PublicComponent/BackButton';
+import LoginScreenButton from '../../components/accountComponents/PublicComponent/BigButton';
 
 const LoginScreen = ({ navigation }) => {
 

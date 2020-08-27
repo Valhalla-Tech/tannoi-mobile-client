@@ -12,14 +12,14 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 
 //Components
-import FormInput from '../../components/PublicComponent/FormInput';
-import SaveAndContinueButton from '../../components/PublicComponent/BigButton';
-import EmailConfirmationModal from '../../components/RegisterScreenComponent/EmailConfirmationModal';
-import BackButton from '../../components/PublicComponent/BackButton';
-import NotActiveButton from '../../components/PublicComponent/NotActiveButton';
-import ErrorMessage from '../../components/PublicComponent/ErrorMessage';
-import LoadingSpinner from '../../components/PublicComponent/LoadingSpinner';
-import TermsOfServiceModal from '../../components/RegisterScreenComponent/TermsOfServiceModal';
+import FormInput from '../../components/accountComponents/PublicComponent/FormInput';
+import SaveAndContinueButton from '../../components/accountComponents/PublicComponent/BigButton';
+import EmailConfirmationModal from '../../components/accountComponents/RegisterScreenComponent/EmailConfirmationModal';
+import BackButton from '../../components/accountComponents/PublicComponent/BackButton';
+import NotActiveButton from '../../components/accountComponents/PublicComponent/NotActiveButton';
+import ErrorMessage from '../../components/accountComponents/PublicComponent/ErrorMessage';
+import LoadingSpinner from '../../components/accountComponents/PublicComponent/LoadingSpinner';
+import TermsOfServiceModal from '../../components/accountComponents/RegisterScreenComponent/TermsOfServiceModal';
 
 const RegisterPage = ({ navigation }) => {
   const [emailRegister, setEmailRegister] = useState('');

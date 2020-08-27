@@ -7,7 +7,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import testImage from '../../assets/PublicAsset/base.png';
+import testImage from '../../../assets/PublicAsset/base.png';
 
 const Card = props => {
   const { 
