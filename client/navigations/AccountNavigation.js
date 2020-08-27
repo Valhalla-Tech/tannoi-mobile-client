@@ -17,9 +17,10 @@ const Stack = createStackNavigator();
 const AccountNavigation = () => {
   return (
     <Stack.Navigator
-    screenOptions={{
-      headerShown: false
-    }}>
+      screenOptions={{
+        headerShown: false
+      }}
+    >
       <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
       <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
       <Stack.Screen name="EnterYourProfileScreen" component={EnterYourProfileScreen} />
