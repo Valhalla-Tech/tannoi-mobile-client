@@ -14,32 +14,23 @@ import MainAppNavigation from './MainAppNavigation';
 const Stack = createStackNavigator();
 
 const NavigationIndex = () => {
-  const [isToken, setIsToken] = useState('');
-
   const isLoggedIn = useSelector(state => state.LoginReducer.isLoggedIn);
   const dispatch = useDispatch();
 
   const checkToken = async () => {
     let getToken = await AsyncStorage.getItem('access_token');
-    if (getToken) {
-      setIsToken(true)
-    } else {
-      setIsToken(false)
-    };
-  };
 
-  const changeLoginStatus = () => {
-    if (isToken) {
+    if (getToken) {
       dispatch(userLogin());
     } else {
       dispatch(userLogout());
-    }
-  }
+    };
+  };
 
   useEffect(() => {
-    AsyncStorage.clear();
+    // Uncomment to clear AsyncStorage
+    // AsyncStorage.clear();
     checkToken();
-    changeLoginStatus();
   }, [])
 
   return (
