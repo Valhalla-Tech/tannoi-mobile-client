@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 //Profile picture example
-import ProfilePictureExample from '../../assets/homeAssets/profilePictureExample2.png';
+import ProfilePictureExample from '../../assets/homeAssets/bigProfilePicture.png';
 
 //Component
 import DiscussionOfTheWeekCard from './DiscussionOfTheWeekCard';
@@ -68,8 +68,8 @@ const DiscussionOfTheWeek = () => {
         )}
       />
       <View style={{flex: 1, alignItems: "center"}}>
-        <TouchableOpacity style={{position: "absolute", borderWidth: 1.5, borderColor: "#5152D0", paddingHorizontal: 20, paddingVertical: 4, borderRadius: 25, top: 10, backgroundColor: "#FFFFFF"}}>
-          <Text style={{color: "#5152D0", fontSize: 14}}>More</Text>
+        <TouchableOpacity style={styles.moreButton}>
+          <Text style={styles.moreButtonTextStyle}>More</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -92,6 +92,22 @@ const styles = StyleSheet.create({
     color: "#464D60",
     marginVertical: "4%",
     marginLeft: "5%"
+  },
+
+  moreButton: {
+    position: "absolute", 
+    borderWidth: 1.5, 
+    borderColor: "#5152D0", 
+    paddingHorizontal: 20, 
+    paddingVertical: 4, 
+    borderRadius: 25, 
+    top: 10, 
+    backgroundColor: "#FFFFFF"
+  },
+
+  moreButtonTextStyle: {
+    color: "#5152D0", 
+    fontSize: 14
   }
 });
 

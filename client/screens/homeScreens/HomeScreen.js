@@ -6,12 +6,12 @@ import {
   ScrollView,
   FlatList
 } from 'react-native';
-import SplashScreen from 'react-native-splash-screen';
 
 //Components
 import SearchBar from '../../components/homeComponents/SearchBar';
 import ProfileBar from '../../components/homeComponents/ProfileBar';
 import DiscussionOfTheWeek from '../../components/homeComponents/DiscussionOfTheWeek';
+import TopUsers from '../../components/homeComponents/TopUsers';
 
 const HomeScreen = () => {
 
@@ -23,6 +23,7 @@ const HomeScreen = () => {
           <ProfileBar />
           <SearchBar />
           <DiscussionOfTheWeek />
+          <TopUsers />
         </View>
       }
     />

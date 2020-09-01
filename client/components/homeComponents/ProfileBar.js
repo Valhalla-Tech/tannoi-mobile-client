@@ -8,14 +8,14 @@ import {
 
 //Profile picture examples
 import ProfilePictureExample from '../../assets/homeAssets/profilePictureExample.svg';
-import ProfilePictureExample2 from '../../assets/homeAssets/profilePictureExample2.png';
+import ProfilePictureExample2 from '../../assets/homeAssets/bigProfilePicture.png';
 
 const ProfileBar = props => {
   return (
     <View style={styles.profileBarContainerStyle}>
       {/* Use SVG only for example */}
       {/* <ProfilePictureExample /> */}
-      <Image source={ProfilePictureExample2} style={styles.profilePictureStyle}  />
+      <Image source={ProfilePictureExample2} style={styles.profilePictureStyle} resizeMode="stretch" />
       <Text style={styles.profileBarTextStyle}>Richard Hendricks</Text>
     </View>
   )

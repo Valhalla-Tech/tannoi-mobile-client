@@ -20,7 +20,7 @@ const NavigationIndex = () => {
 
   const checkToken = async () => {
     let getToken = await AsyncStorage.getItem('access_token');
-    console.log(getToken)
+    
     if (getToken) {
       dispatch(userLogin());
     } else {

@@ -38,7 +38,7 @@ const DiscussionOfTheWeek = props => {
     <TouchableOpacity style={styles.discussionOfTheWeekCardStyle}>
       <View>
         <View style={styles.profileContainerStyle}>
-          <Image source={imageUrl} />
+          <Image source={imageUrl} style={{height: 24, width: 24, borderRadius: 50}} resizeMode="stretch" />
           <Text style={styles.nameTextStyle}>{name}</Text>
         </View>
         <Text style={styles.titleTextStyle}>{title}</Text>
