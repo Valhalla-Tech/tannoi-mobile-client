@@ -115,20 +115,20 @@ const LoginScreen = ({ navigation }) => {
         <BackButton navigation={navigation} />
         <Text style={styles.loginTitleStyle}>Login to TannOi</Text>
         <LoginScreenButton 
-            buttonTitle="Log in with email"
-            buttonStyle={
-              {
-                backgroundColor: "#5152D0",
-                borderColor: "#5152D0",
-                color: "#FFFFFF",
-                width: "100%",
-                height: "10%"
-              }
+          buttonTitle="Log in with email"
+          buttonStyle={
+            {
+              backgroundColor: "#5152D0",
+              borderColor: "#5152D0",
+              color: "#FFFFFF",
+              width: "100%",
+              height: "10%"
             }
-            navigation={navigation}
-            navigationPage="LoginWithEmailScreen"
-            buttonType="navigationButton"
-          />
+          }
+          navigation={navigation}
+          navigationPage="LoginWithEmailScreen"
+          buttonType="navigationButton"
+        />
         <LoginScreenButton 
           buttonTitle="Continue with Facebook"
           buttonStyle={

@@ -1,29 +1,32 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
   Text,
-  ScrollView
+  ScrollView,
+  FlatList
 } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 
 //Components
 import SearchBar from '../../components/homeComponents/SearchBar';
 import ProfileBar from '../../components/homeComponents/ProfileBar';
+import DiscussionOfTheWeek from '../../components/homeComponents/DiscussionOfTheWeek';
 
 const HomeScreen = () => {
-  
-  useEffect(() => {
-    SplashScreen.hide();
-  }, [])
 
   return (
-    <ScrollView>
-      <View style={styles.homeScreenContainerStyle}>
-        <ProfileBar />
-        <SearchBar />
-      </View>
-    </ScrollView>
+    // <ScrollView>
+    <FlatList
+      ListHeaderComponent={
+        <View style={styles.homeScreenContainerStyle}>
+          <ProfileBar />
+          <SearchBar />
+          <DiscussionOfTheWeek />
+        </View>
+      }
+    />
+    // </ScrollView>
   );
 };
 

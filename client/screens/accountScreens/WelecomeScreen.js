@@ -13,7 +13,6 @@ import {
 } from '@react-native-community/google-signin';
 import { LoginManager, AccessToken } from "react-native-fbsdk";
 import branch, { BranchEvent } from 'react-native-branch';
-import SplashScreen from 'react-native-splash-screen';
 import axios from 'axios';
 
 //Image
@@ -116,8 +115,6 @@ const WelcomeScreen = ({ navigation }) => {
   };
   
   useEffect(() => {
-    SplashScreen.hide();
-
     GoogleSignin.configure({
       // scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
       webClientId: '1036887341767-4foinu1uvd66srmivikbplncka4ind72.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)

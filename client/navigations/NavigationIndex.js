@@ -6,6 +6,7 @@ import {
 } from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
 import { userLogin, userLogout } from '../store/actions/LoginAction';
+import SplashScreen from 'react-native-splash-screen';
 
 //Navigations
 import AccountNavigation from './AccountNavigation';
@@ -19,12 +20,13 @@ const NavigationIndex = () => {
 
   const checkToken = async () => {
     let getToken = await AsyncStorage.getItem('access_token');
-
+    console.log(getToken)
     if (getToken) {
       dispatch(userLogin());
     } else {
       dispatch(userLogout());
     };
+    SplashScreen.hide();
   };
 
   useEffect(() => {
