@@ -11,7 +11,7 @@ import {
 import ActivePlayButton from '../../assets/homeAssets/activePlayButton.svg';
 import PlayButton from '../../assets/homeAssets/playButton.svg';
 
-const DiscussionOfTheWeek = props => {
+const HomeListCard = props => {
   const {
     imageUrl,
     name,
@@ -35,17 +35,17 @@ const DiscussionOfTheWeek = props => {
   };
 
   return (
-    <TouchableOpacity style={styles.discussionOfTheWeekCardStyle}>
+    <TouchableOpacity style={styles.homeListCardContainerStyle}>
       <View>
         <View style={styles.profileContainerStyle}>
-          <Image source={imageUrl} style={{height: 24, width: 24, borderRadius: 50}} resizeMode="stretch" />
+          <Image source={imageUrl} style={styles.profilePictureStyle} resizeMode="stretch" />
           <Text style={styles.nameTextStyle}>{name}</Text>
         </View>
         <Text style={styles.titleTextStyle}>{title}</Text>
-        <View style={{flexDirection: "row"}}>
-          <Text style={styles.cardInfoContainerStyle}>{numberConverter(votes)} Votes</Text>
-          <Text style={styles.cardInfoContainerStyle}>{numberConverter(replies)} Replies</Text>
-          <Text style={{...styles.cardInfoContainerStyle}}>{numberConverter(plays)} Plays</Text>
+        <View style={styles.cardInfoContainerStyle}>
+          <Text style={styles.cardInfoStyle}>{numberConverter(votes)} Votes</Text>
+          <Text style={styles.cardInfoStyle}>{numberConverter(replies)} Replies</Text>
+          <Text style={{...styles.cardInfoStyle}}>{numberConverter(plays)} Plays</Text>
         </View>
       </View>
       <View style={styles.playButtonAndDurationContainerStyle}>
@@ -59,7 +59,7 @@ const DiscussionOfTheWeek = props => {
 };
 
 const styles = StyleSheet.create({
-  discussionOfTheWeekCardStyle:{
+  homeListCardContainerStyle:{
     flexDirection: "row",
     padding: "5%",
     borderBottomWidth: 1,
@@ -71,6 +71,12 @@ const styles = StyleSheet.create({
     flexDirection: "row", 
     alignItems: "center", 
     marginBottom: "3.8%"
+  },
+
+  profilePictureStyle: {
+    height: 24, 
+    width: 24, 
+    borderRadius: 50
   },
 
   nameTextStyle: {
@@ -88,6 +94,10 @@ const styles = StyleSheet.create({
   },
 
   cardInfoContainerStyle: {
+    flexDirection: "row"
+  },
+
+  cardInfoStyle: {
     marginRight: 16, 
     fontSize: 12, 
     color: "#73798C"
@@ -105,4 +115,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default DiscussionOfTheWeek;
+export default HomeListCard;
