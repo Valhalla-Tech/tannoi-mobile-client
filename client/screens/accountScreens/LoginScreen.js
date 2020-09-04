@@ -2,8 +2,7 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  Text,
-  Alert
+  Text
 } from 'react-native';
 import {
   GoogleSignin,
@@ -11,6 +10,11 @@ import {
   statusCodes,
 } from '@react-native-community/google-signin';
 import { LoginManager, AccessToken } from "react-native-fbsdk";
+import {
+  useDispatch
+} from 'react-redux';
+import { userLogin } from '../../store/actions/LoginAction';
+import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 
 //Components
@@ -19,27 +23,18 @@ import LoginScreenButton from '../../components/PublicComponent/BigButton';
 
 const LoginScreen = ({ navigation }) => {
 
+  const dispatch = useDispatch();
+
   const googleSignInSubmit = async googleAccessToken => {
     try {
       let googleSigninRequest = await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/login/google', {
         token: googleAccessToken
       });
 
-      console.log(googleSigninRequest.data);
-
-      Alert.alert(
-        'Google Login',
-        'Google login success, welcome to Tannoi',
-        [
-          {
-            text: 'Cancel',
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel'
-          },
-          { text: 'OK', onPress: () => console.log('OK Pressed') }
-        ],
-        { cancelable: false }
-      );
+      if (googleSigninRequest.data.access_token) {
+        await AsyncStorage.setItem('access_token', googleSigninRequest.data.access_token);
+        dispatch(userLogin());
+      };
     } catch (error) {
       console.log(error) 
     };
@@ -69,21 +64,10 @@ const LoginScreen = ({ navigation }) => {
         token: facebookAccessToken
       });
 
-      console.log(facebookSigninRequest.data);
-
-      Alert.alert(
-        'Facebook Login',
-        'Facebook login success, welcome to Tannoi',
-        [
-          {
-            text: 'Cancel',
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel'
-          },
-          { text: 'OK', onPress: () => console.log('OK Pressed') }
-        ],
-        { cancelable: false }
-      );
+      if (facebookSigninRequest.data.access_token) {
+        await AsyncStorage.setItem('access_token', facebookSigninRequest.data.access_token);
+        dispatch(userLogin());
+      };
     } catch (error) {
       console.log(error) 
     };
@@ -97,7 +81,6 @@ const LoginScreen = ({ navigation }) => {
         } else {
           AccessToken.getCurrentAccessToken().then(
             (data) => {
-              console.log(data.accessToken.toString());
               facebookSignInSubmit(data.accessToken.toString())
             }
           )

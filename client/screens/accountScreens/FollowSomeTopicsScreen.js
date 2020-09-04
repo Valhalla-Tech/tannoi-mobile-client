@@ -7,6 +7,10 @@ import {
   Alert
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import {
+  useDispatch
+} from 'react-redux';
+import { userLogin } from '../../store/actions/LoginAction';
 import axios from 'axios';
 
 //Components
@@ -22,6 +26,8 @@ const FollowSomeTopicsScreen = ({ navigation }) => {
   const [selectedTopic, setSelectedTopic] = useState([]);
   const [accessToken, setAccessToken] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  const dispatch = useDispatch();
 
   const getTopics = async () => {
     try {
@@ -86,21 +92,9 @@ const FollowSomeTopicsScreen = ({ navigation }) => {
       });
       setIsLoading(false);
 
-      console.log(followSomeTopicRequest.data);
-
-      Alert.alert(
-        'Register Success',
-        'Register success, welcome to Tannoi',
-        [
-          {
-            text: 'Cancel',
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel'
-          },
-          { text: 'OK', onPress: () => navigation.navigate('WelcomeScreen') }
-        ],
-        { cancelable: false }
-      );
+      if (followSomeTopicRequest.data.msg === 'Success') {
+        dispatch(userLogin());
+      }
     } catch (error) {
       setIsLoading(false);
       console.log(error);
