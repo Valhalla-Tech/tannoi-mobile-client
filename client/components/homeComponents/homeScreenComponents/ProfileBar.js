@@ -7,8 +7,8 @@ import {
 } from 'react-native';
 
 //Profile picture examples
-import ProfilePictureExample from '../../assets/homeAssets/profilePictureExample.svg';
-import ProfilePictureExample2 from '../../assets/homeAssets/bigProfilePicture.png';
+import ProfilePictureExample from '../../../assets/homeAssets/profilePictureExample.svg';
+import ProfilePictureExample2 from '../../../assets/homeAssets/bigProfilePicture.png';
 
 const ProfileBar = props => {
   return (

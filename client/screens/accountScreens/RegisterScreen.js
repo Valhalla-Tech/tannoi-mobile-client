@@ -13,12 +13,12 @@ import axios from 'axios';
 //Components
 import FormInput from '../../components/PublicComponent/FormInput';
 import SaveAndContinueButton from '../../components/PublicComponent/BigButton';
-import EmailConfirmationModal from '../../components/accountComponents/RegisterScreenComponent/EmailConfirmationModal';
+import EmailConfirmationModal from '../../components/accountComponents/RegisterScreenComponents/EmailConfirmationModal';
 import BackButton from '../../components/PublicComponent/BackButton';
 import NotActiveButton from '../../components/PublicComponent/NotActiveButton';
 import ErrorMessage from '../../components/PublicComponent/ErrorMessage';
 import LoadingSpinner from '../../components/PublicComponent/LoadingSpinner';
-import TermsOfServiceModal from '../../components/accountComponents/RegisterScreenComponent/TermsOfServiceModal';
+import TermsOfServiceModal from '../../components/accountComponents/RegisterScreenComponents/TermsOfServiceModal';
 
 const RegisterPage = ({ navigation }) => {
   const [emailRegister, setEmailRegister] = useState('');

@@ -1,5 +1,5 @@
 import React from 'react';
-import NavigationBar from '../components/homeComponents/NavigationBar';
+import NavigationBar from '../components/PublicComponent/NavigationBar';
 
 const MainAppNavigation = () => {
   return (

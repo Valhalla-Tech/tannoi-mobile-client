@@ -8,8 +8,8 @@ import {
 } from 'react-native';
 
 //Icons
-import ActivePlayButton from '../../assets/homeAssets/activePlayButton.svg';
-import PlayButton from '../../assets/homeAssets/playButton.svg';
+import ActivePlayButton from '../../../assets/homeAssets/activePlayButton.svg';
+import PlayButton from '../../../assets/homeAssets/playButton.svg';
 
 const HomeListCard = props => {
   const {

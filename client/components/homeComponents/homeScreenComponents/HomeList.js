@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 //Icon
-import DownArrow from '../../assets/homeAssets/downArrow.svg';
+import DownArrow from '../../../assets/homeAssets/downArrow.svg';
 
 //Component
 import HomeListCard from './HomeListCard';

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
@@ -14,11 +14,11 @@ import carsTopicIcon from '../../assets/homeAssets/carsTopicIcon.png';
 
 //Components
 import SearchBar from '../../components/homeComponents/SearchBar';
-import ProfileBar from '../../components/homeComponents/ProfileBar';
-import DiscussionOfTheWeek from '../../components/homeComponents/HomeList';
-import TopUsers from '../../components/homeComponents/TopUsers';
-import Trending from '../../components/homeComponents/HomeList';
-import RecommendedTopics from '../../components/homeComponents/RecommendedTopics';
+import ProfileBar from '../../components/homeComponents/homeScreenComponents/ProfileBar';
+import DiscussionOfTheWeek from '../../components/homeComponents/homeScreenComponents/HomeList';
+import TopUsers from '../../components/homeComponents/homeScreenComponents/TopUsers';
+import Trending from '../../components/homeComponents/homeScreenComponents/HomeList';
+import RecommendedTopics from '../../components/homeComponents/homeScreenComponents/RecommendedTopics';
 
 const DISCUSSION_OF_THE_WEEK_DATA = [
   {
@@ -163,44 +163,29 @@ const RECOMMENDED_TOPICS_DATA = [
   }
 ]
 
-const HomeScreen = () => {
-  const [searchBarIsOpen, setSearchBarIsOpen] = useState(false);
-
-  const setOpenSearchBar = searchBarStatus => {
-    setSearchBarIsOpen(searchBarStatus);
-  };
+const HomeScreen = ({ navigation }) => {
 
   return (
     <FlatList
       ListHeaderComponent={
         <View style={styles.homeScreenContainerStyle}>
-          {
-            !searchBarIsOpen && (
-              <ProfileBar />
-            )
-          }
+            <ProfileBar />
           <SearchBar
-            openSearchBar={setOpenSearchBar}
-            searchBarIsOpen={searchBarIsOpen}
+            searchBarIsOpen={false}
+            navigation={navigation}
           />
-          {
-            !searchBarIsOpen && (
-              <>
-                <DiscussionOfTheWeek
-                  listTitle="Discussion of the week"
-                  listData={DISCUSSION_OF_THE_WEEK_DATA}
-                />
-                <TopUsers />
-                <Trending 
-                  listTitle="Trending"
-                  listData={TRENDING_DATA}
-                />
-                <RecommendedTopics
-                  topicData={RECOMMENDED_TOPICS_DATA}
-                />
-              </>
-            )
-          }
+          <DiscussionOfTheWeek
+            listTitle="Discussion of the week"
+            listData={DISCUSSION_OF_THE_WEEK_DATA}
+          />
+          <TopUsers />
+          <Trending 
+            listTitle="Trending"
+            listData={TRENDING_DATA}
+          />
+          <RecommendedTopics
+            topicData={RECOMMENDED_TOPICS_DATA}
+          />
         </View>
       }
     />

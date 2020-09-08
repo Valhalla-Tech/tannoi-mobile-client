@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  StyleSheet,
   View,
   Text
 } from 'react-native';
@@ -9,8 +8,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 //Icons
 import HomeIcon from '../../assets/homeAssets/homeIcon.svg';
 
-//Screens
-import HomeScreen from '../../screens/homeScreens/HomeScreen';
+//Navigations
+import HomeNavigation from '../../navigations/HomeNavigation';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,12 +21,13 @@ const NavigationBar = () => {
           backgroundColor: "#464D60",
           height: 65,
           padding: 5
-        }
+        },
+        keyboardHidesTabBar: true
       }}
     >
       <Tab.Screen 
         name="Home" 
-        component={HomeScreen}
+        component={HomeNavigation}
         options={{
           tabBarLabel: "",
           tabBarIcon: () => (

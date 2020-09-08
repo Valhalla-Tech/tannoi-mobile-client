@@ -15,7 +15,7 @@ import axios from 'axios';
 
 //Components
 import BackButton from '../../components/PublicComponent/BackButton';
-import Card from '../../components/accountComponents/FollowSomeTopicsScreen/Card';
+import Card from '../../components/accountComponents/FollowSomeTopicsScreenComponents/Card';
 import DoneButton from '../../components/PublicComponent/BigButton';
 import LoadingSpinner from '../../components/PublicComponent/LoadingSpinner';
 

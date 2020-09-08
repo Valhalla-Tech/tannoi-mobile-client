@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 //Profile picture example
-import profilePictureExample from '../../assets/homeAssets/bigProfilePicture.png';
+import profilePictureExample from '../../../assets/homeAssets/bigProfilePicture.png';
 
 const TOP_USERS_DATA = [
   {

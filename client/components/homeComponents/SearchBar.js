@@ -4,7 +4,8 @@ import {
   View,
   Text,
   TouchableOpacity,
-  FlatList
+  FlatList,
+  TextInput
 } from 'react-native';
 
 //Icons
@@ -45,8 +46,8 @@ const SearchBar = props => {
   const [currentSelectedDiscussion, setCurrentSelectedDiscussion] = useState('All discussions');
 
   const {
-    openSearchBar,
-    searchBarIsOpen
+    searchBarIsOpen,
+    navigation
   } = props;
 
   const changeSelectedDiscussion = discussion => {
@@ -60,19 +61,29 @@ const SearchBar = props => {
           searchBarIsOpen && (
             <TouchableOpacity 
               style={styles.backButtonStyle}
-              onPress={() => openSearchBar(false)}
+              onPress={() => navigation.navigate('HomeScreen')}
             >
               <BackButtonIcon />
             </TouchableOpacity>
           )
         }
-        <TouchableOpacity
-          style={styles.searchBoxStyle}
-          onPress={() => openSearchBar(true)}
-        >
-          <SearchIcon />
-          <Text style={styles.searchBoxTextStyle}>Search</Text>
-        </TouchableOpacity>
+        {
+          !searchBarIsOpen ? (
+            <TouchableOpacity
+              style={styles.searchBoxStyle}
+              onPress={() => navigation.navigate('SearchScreen')}
+            >
+              <SearchIcon />
+              <Text style={styles.searchBoxTextStyle}>Search</Text>
+            </TouchableOpacity>
+          ) : (
+            <TextInput
+              autoFocus={true}
+              style={styles.searchBoxStyle}
+              placeholder="Search"
+            />
+          )
+        }
       </View>
       {
         !searchBarIsOpen && (
