@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
-  KeyboardAvoidingView,
   Platform
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -121,11 +120,7 @@ const EnterYourProfileScreen = ({ navigation }) => {
         Keyboard.dismiss();
       }}
     >
-      <KeyboardAvoidingView 
-        style={{flex: 1}}
-        keyboardVerticalOffset={50}
-        behavior="padding"
-      >
+      <View style={{flex: 1}}>
         <View style={styles.enterYourProfileScreenContainerStyle}>
           <Text style={styles.enterYourProfileScreenTitleStyle}>Enter your profile</Text>
           <View style={styles.uploadProfilePhotoContainerStyle}>
@@ -194,7 +189,7 @@ const EnterYourProfileScreen = ({ navigation }) => {
             <LoadingSpinner />
           )
         }
-      </KeyboardAvoidingView>
+      </View>
     </TouchableWithoutFeedback>
   );
 };

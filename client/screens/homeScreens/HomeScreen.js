@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -164,25 +164,43 @@ const RECOMMENDED_TOPICS_DATA = [
 ]
 
 const HomeScreen = () => {
+  const [searchBarIsOpen, setSearchBarIsOpen] = useState(false);
+
+  const setOpenSearchBar = searchBarStatus => {
+    setSearchBarIsOpen(searchBarStatus);
+  };
 
   return (
     <FlatList
       ListHeaderComponent={
         <View style={styles.homeScreenContainerStyle}>
-          <ProfileBar />
-          <SearchBar />
-          <DiscussionOfTheWeek
-            listTitle="Discussion of the week"
-            listData={DISCUSSION_OF_THE_WEEK_DATA}
+          {
+            !searchBarIsOpen && (
+              <ProfileBar />
+            )
+          }
+          <SearchBar
+            openSearchBar={setOpenSearchBar}
+            searchBarIsOpen={searchBarIsOpen}
           />
-          <TopUsers />
-          <Trending 
-            listTitle="Trending"
-            listData={TRENDING_DATA}
-          />
-          <RecommendedTopics
-            topicData={RECOMMENDED_TOPICS_DATA}
-          />
+          {
+            !searchBarIsOpen && (
+              <>
+                <DiscussionOfTheWeek
+                  listTitle="Discussion of the week"
+                  listData={DISCUSSION_OF_THE_WEEK_DATA}
+                />
+                <TopUsers />
+                <Trending 
+                  listTitle="Trending"
+                  listData={TRENDING_DATA}
+                />
+                <RecommendedTopics
+                  topicData={RECOMMENDED_TOPICS_DATA}
+                />
+              </>
+            )
+          }
         </View>
       }
     />

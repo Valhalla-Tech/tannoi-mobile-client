@@ -5,8 +5,7 @@ import {
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  Keyboard,
-  KeyboardAvoidingView
+  Keyboard
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
@@ -92,11 +91,7 @@ const RegisterPage = ({ navigation }) => {
     <TouchableWithoutFeedback
       onPress={() => Keyboard.dismiss()}
     >
-      <KeyboardAvoidingView 
-        style={{flex: 1}}
-        keyboardVerticalOffset={120}
-        behavior="padding"
-      >
+      <View style={{flex: 1}}>
         <View style={styles.registerPageContainerStyle}>
           <BackButton navigation={navigation} />
           <Text style={styles.registerTitleStyle}>Sign up to TannOi</Text>
@@ -176,7 +171,7 @@ const RegisterPage = ({ navigation }) => {
             <LoadingSpinner />
           )
         }
-      </KeyboardAvoidingView>
+      </View>
     </TouchableWithoutFeedback>
   );
 };

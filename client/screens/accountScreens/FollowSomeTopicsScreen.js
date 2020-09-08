@@ -187,11 +187,12 @@ const styles = StyleSheet.create({
     textAlign: "center", 
     fontSize: 16, 
     color: "#464D60", 
-    lineHeight: 24
+    lineHeight: 24,
+    marginBottom: 10
   },
 
   cardsContainerStyle: {
-    marginTop: 32
+    marginTop: 25
   }
 });
 

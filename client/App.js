@@ -6,6 +6,9 @@ import {
   Provider
 } from 'react-redux';
 import store from './store';
+import {
+  KeyboardAvoidingView
+} from 'react-native';
 
 // //Navigation
 import NavigationIndex from './navigations/NavigationIndex';
@@ -15,15 +18,21 @@ const Stack = createStackNavigator();
 const App = () => {
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false
-          }}
-        >
-          <Stack.Screen name="NavigationIndex" component={NavigationIndex} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <KeyboardAvoidingView
+        style={{flex: 1}}
+        keyboardVerticalOffset={-20}
+        behavior="padding"
+      >
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false
+            }}
+          >
+            <Stack.Screen name="NavigationIndex" component={NavigationIndex} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </KeyboardAvoidingView>
     </Provider>
   );
 };
