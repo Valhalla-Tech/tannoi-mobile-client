@@ -168,7 +168,7 @@ const FollowSomeTopicsScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   followSomeTopicsScreenContainerStyle: {
     flex: 1,
-    paddingHorizontal: 24
+    paddingHorizontal: 24,
   },
 
   backButtonAndTitleContainer: {
@@ -192,7 +192,8 @@ const styles = StyleSheet.create({
   },
 
   cardsContainerStyle: {
-    marginTop: 25
+    marginTop: 25,
+    paddingBottom: 100
   }
 });
 
