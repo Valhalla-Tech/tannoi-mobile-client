@@ -81,7 +81,7 @@ const LoginScreen = ({ navigation }) => {
         } else {
           AccessToken.getCurrentAccessToken().then(
             (data) => {
-              facebookSignInSubmit(data.accessToken.toString())
+              facebookSignInSubmit(data.accessToken.toString());
             }
           )
         }

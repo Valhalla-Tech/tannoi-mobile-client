@@ -3,10 +3,27 @@ import {
   StyleSheet,
   View,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  FlatList
 } from 'react-native';
 
+const RECENT_SEARCHES_DATA = [
+  {
+    id: "1",
+    name: "Bob Brownfoot"
+  },
+  {
+    id: "2",
+    name: "Apple"
+  },
+  {
+    id: "3",
+    name: "Newcastle United"
+  },
+]
+
 const RecentSearches = () => {
+
   return (
     <View style={styles.recentSearchesContainerStyle}>
       <View style={styles.recentSearchesTitleAndClearAllButtonContainerStyle}>
@@ -15,6 +32,14 @@ const RecentSearches = () => {
           <Text style={styles.clearAllButtonTextStyle}>Clear all</Text>
         </TouchableOpacity>
       </View>
+      <FlatList
+        data={RECENT_SEARCHES_DATA}
+        renderItem={itemData => (
+          <TouchableOpacity style={styles.recentSearchesCardStyle}>
+            <Text style={styles.cardTitleStyle}>{itemData.item.name}</Text>
+          </TouchableOpacity>
+        )}
+      />
     </View>
   );
 };
@@ -42,6 +67,18 @@ const styles = StyleSheet.create({
   clearAllButtonTextStyle: {
     fontSize: 14,
     color: "#0E4EF4"
+  },
+
+  recentSearchesCardStyle: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: "#F5F7F9"
+  },
+
+  cardTitleStyle: {
+    color: "#464D60",
+    fontSize: 16
   }
 });
 

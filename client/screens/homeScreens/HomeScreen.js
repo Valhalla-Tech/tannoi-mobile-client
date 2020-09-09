@@ -166,29 +166,31 @@ const RECOMMENDED_TOPICS_DATA = [
 const HomeScreen = ({ navigation }) => {
 
   return (
-    <FlatList
-      ListHeaderComponent={
-        <View style={styles.homeScreenContainerStyle}>
-            <ProfileBar />
-          <SearchBar
-            searchBarIsOpen={false}
-            navigation={navigation}
-          />
-          <DiscussionOfTheWeek
-            listTitle="Discussion of the week"
-            listData={DISCUSSION_OF_THE_WEEK_DATA}
-          />
-          <TopUsers />
-          <Trending 
-            listTitle="Trending"
-            listData={TRENDING_DATA}
-          />
-          <RecommendedTopics
-            topicData={RECOMMENDED_TOPICS_DATA}
-          />
-        </View>
-      }
-    />
+    <View>
+      <ProfileBar />
+      <FlatList
+        ListHeaderComponent={
+          <View style={styles.homeScreenContainerStyle}>
+            <SearchBar
+              searchBarIsOpen={false}
+              navigation={navigation}
+            />
+            <DiscussionOfTheWeek
+              listTitle="Discussion of the week"
+              listData={DISCUSSION_OF_THE_WEEK_DATA}
+            />
+            <TopUsers />
+            <Trending 
+              listTitle="Trending"
+              listData={TRENDING_DATA}
+            />
+            <RecommendedTopics
+              topicData={RECOMMENDED_TOPICS_DATA}
+            />
+          </View>
+        }
+      />
+    </View>
   );
 };
 

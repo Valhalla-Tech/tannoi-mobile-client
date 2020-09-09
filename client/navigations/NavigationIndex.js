@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import {
   useSelector,
@@ -31,7 +31,7 @@ const NavigationIndex = () => {
 
   useEffect(() => {
     // Uncomment to clear AsyncStorage
-    // AsyncStorage.clear();
+    AsyncStorage.clear();
     checkToken();
   }, [])
 

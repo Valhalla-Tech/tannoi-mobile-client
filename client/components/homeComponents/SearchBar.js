@@ -44,10 +44,13 @@ const DATA = [
 
 const SearchBar = props => {
   const [currentSelectedDiscussion, setCurrentSelectedDiscussion] = useState('All discussions');
+  const [searchBoxIsFilled, setSearchBoxIsFilled] = useState(false);
+  const [currentCategory, setCurrentCategory] = useState('Discussions');
 
   const {
     searchBarIsOpen,
-    navigation
+    navigation,
+    searchBoxInput
   } = props;
 
   const changeSelectedDiscussion = discussion => {
@@ -81,6 +84,16 @@ const SearchBar = props => {
               autoFocus={true}
               style={styles.searchBoxStyle}
               placeholder="Search"
+              onChangeText={value => {
+                searchBoxInput(value);
+
+                if (value) {
+                  setSearchBoxIsFilled(true);
+                } else {
+                  setSearchBoxIsFilled(false);
+                  setCurrentCategory('Discussions');
+                }
+              }}
             />
           )
         }
@@ -102,6 +115,43 @@ const SearchBar = props => {
           />
         )
       }
+      {
+        searchBoxIsFilled && (
+          <View style={styles.searchResultCategoryContainerStyle}>
+            {
+              currentCategory === 'Discussions' ? (
+                <>
+                  <View style={{...styles.searchCategoryStyle, borderBottomColor: "#5152D0", borderRightWidth: 1, borderRightColor: "#F5F7F9"}}>
+                    <Text style={{...styles.searchCategoryTitleStyle, color: "#5152D0"}}>Discussions</Text>
+                  </View>
+                  <TouchableOpacity 
+                    style={{...styles.searchCategoryStyle, borderBottomColor: "#F5F7F9"}}
+                    onPress={() => {
+                      setCurrentCategory('User');
+                    }}
+                  >
+                    <Text style={{...styles.searchCategoryTitleStyle, color: "#464D60"}}>User</Text>
+                  </TouchableOpacity>
+                </>
+              ) : (
+                <>
+                  <TouchableOpacity 
+                    style={{...styles.searchCategoryStyle, borderBottomColor: "#F5F7F9", borderRightWidth: 1, borderRightColor: "#F5F7F9"}}
+                    onPress={() => {
+                      setCurrentCategory('Discussions');
+                    }}
+                  >
+                    <Text style={{...styles.searchCategoryTitleStyle, color: "#464D60"}}>Discussions</Text>
+                  </TouchableOpacity>
+                  <View style={{...styles.searchCategoryStyle, borderBottomColor: "#5152D0"}}>
+                    <Text style={{...styles.searchCategoryTitleStyle, color: "#5152D0"}}>User</Text>
+                  </View>
+                </>
+              )
+            }
+          </View>
+        )
+      }
     </View>
   );
 };
@@ -117,7 +167,7 @@ const styles = StyleSheet.create({
 
   searchBarStyle: {
     marginHorizontal: 16,
-    marginTop: 16,
+    marginTop: 8,
     marginBottom: 8,
     flexDirection: "row",
     alignItems: "center"
@@ -142,6 +192,24 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     paddingVertical: 8,
     paddingRight: 20
+  },
+
+  searchResultCategoryContainerStyle: {
+    flexDirection: "row"
+  },
+
+  searchCategoryStyle: {
+    paddingHorizontal: 48,
+    paddingVertical: 12,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    borderBottomWidth: 1
+  },
+
+  searchCategoryTitleStyle: {
+    fontSize: 16,
+    fontWeight: "bold"
   }
 });
 

@@ -13,10 +13,10 @@ import ProfilePictureExample2 from '../../../assets/homeAssets/bigProfilePicture
 const ProfileBar = props => {
   return (
     <View style={styles.profileBarContainerStyle}>
-      {/* Use SVG only for example */}
-      {/* <ProfilePictureExample /> */}
-      <Image source={ProfilePictureExample2} style={styles.profilePictureStyle} resizeMode="stretch" />
-      <Text style={styles.profileBarTextStyle}>Richard Hendricks</Text>
+      <View style={styles.profileInfoContainerStyle}>
+        <Image source={ProfilePictureExample2} style={styles.profilePictureStyle} resizeMode="stretch" />
+        <Text style={styles.profileBarTextStyle}>Richard Hendricks</Text>
+      </View >
     </View>
   )
 };
@@ -24,10 +24,14 @@ const ProfileBar = props => {
 const styles = StyleSheet.create({
   profileBarContainerStyle: {
     backgroundColor: "#FFFFFF",
+  },
+  
+  profileInfoContainerStyle: {
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 16,
-    paddingTop: 20
+    paddingTop: 20,
+    marginBottom: 10
   },
 
   profilePictureStyle: {

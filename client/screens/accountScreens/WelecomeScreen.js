@@ -4,8 +4,7 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Image,
-  Alert
+  Image
 } from 'react-native';
 import {
   GoogleSignin,
@@ -87,8 +86,7 @@ const WelcomeScreen = ({ navigation }) => {
         } else {
           AccessToken.getCurrentAccessToken().then(
             (data) => {
-              console.log(data.accessToken.toString());
-              facebookSignInSubmit(data.accessToken.toString())
+              facebookSignInSubmit(data.accessToken.toString());
             }
           )
         }

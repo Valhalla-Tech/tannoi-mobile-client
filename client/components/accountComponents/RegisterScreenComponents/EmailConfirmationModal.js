@@ -101,6 +101,7 @@ const EmailConfirmationModal = props => {
           <View style={styles.codeBoxStyle}>
             <TextInput
               ref={codeBox1}
+              autoFocus={true}
               style={styles.codeInputStyle}
               maxLength={1}
               keyboardType="number-pad"

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -10,7 +10,14 @@ import {
 import SearchBar from '../../components/homeComponents/SearchBar';
 import RecentSearches from '../../components/homeComponents/searchScreenComponents/RecentSearches';
 
+
 const SearchScreen = ({ navigation }) => {
+  const [searchInput, setSearchInput] = useState('');
+
+  const searchBoxInput = input => {
+    setSearchInput(input);
+  };
+
   return (
     <TouchableWithoutFeedback
       onPress={() => Keyboard.dismiss()}
@@ -19,8 +26,13 @@ const SearchScreen = ({ navigation }) => {
         <SearchBar 
           navigation={navigation}
           searchBarIsOpen={true}
+          searchBoxInput={searchBoxInput}
         />
-        <RecentSearches />
+        {
+          !searchInput && (
+            <RecentSearches />
+          )
+        }
       </View>
     </TouchableWithoutFeedback>
   );
