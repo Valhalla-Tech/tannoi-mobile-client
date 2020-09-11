@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import branch, { BranchEvent } from 'react-native-branch'
 import axios from 'axios';
+import { bold, normal } from '../../assets/FontSize';
 
 //Components
 import BackButton from '../../components/PublicComponent/BackButton';
@@ -147,7 +148,7 @@ const styles = StyleSheet.create({
   resetPasswordWithEmailTitleStyle: {
     color: "#464D60",
     fontSize: 28,
-    fontWeight: "bold",
+    fontFamily: bold,
     marginBottom: 16
   },
 
@@ -157,9 +158,9 @@ const styles = StyleSheet.create({
 
   resetPasswordWithEmailScreenInstructionStyle: {
     fontSize: 16,
-    lineHeight: 24,
     color: "#73798C",
-    marginBottom: 40
+    marginBottom: 40,
+    fontFamily: normal
   }
 });
 

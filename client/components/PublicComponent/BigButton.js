@@ -4,6 +4,7 @@ import {
   Text,
   TouchableOpacity 
 } from 'react-native';
+import { medium } from '../../assets/FontSize';
 
 import FacebookLogo from '../../assets/PublicAsset/facebookIcon.svg';
 import GoogleLogo from '../../assets/PublicAsset/googleIcon.svg';
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
 
   buttonTitleStyle: {
     fontSize: 16,
-    fontWeight: "600",
+    fontFamily: medium
   },
 
   buttonIconStyle: {

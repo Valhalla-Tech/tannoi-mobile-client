@@ -12,6 +12,8 @@ import SplashScreen from 'react-native-splash-screen';
 import AccountNavigation from './AccountNavigation';
 import MainAppNavigation from './MainAppNavigation';
 
+import NewDiscussionScreen from '../screens/topicScreens/NewDiscussionScreen';
+
 const Stack = createStackNavigator();
 
 const NavigationIndex = () => {
@@ -31,7 +33,7 @@ const NavigationIndex = () => {
 
   useEffect(() => {
     // Uncomment to clear AsyncStorage
-    AsyncStorage.clear();
+    // AsyncStorage.clear();
     checkToken();
   }, [])
 
@@ -43,7 +45,10 @@ const NavigationIndex = () => {
     >
       {
         isLoggedIn ? (
-          <Stack.Screen name="MainAppNavigation" component={MainAppNavigation} />
+          <>
+            <Stack.Screen name="MainAppNavigation" component={MainAppNavigation} />
+            <Stack.Screen name="NewDiscussionScreen" component={NewDiscussionScreen} />
+          </>
         ) : (
           <Stack.Screen name="AccountNavigation" component={AccountNavigation} />
         )

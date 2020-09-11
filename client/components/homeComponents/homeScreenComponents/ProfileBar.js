@@ -5,6 +5,7 @@ import {
   Text,
   Image
 } from 'react-native';
+import { bold } from '../../../assets/FontSize'
 
 //Profile picture examples
 import ProfilePictureExample from '../../../assets/homeAssets/profilePictureExample.svg';
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#464D60",
     marginLeft: 12,
-    fontWeight: "bold"
+    fontFamily: bold
   }
 });
 

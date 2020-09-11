@@ -18,6 +18,7 @@ import {
 import { userLogin } from '../../store/actions/LoginAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
+import { bold, normal } from '../../assets/FontSize';
 
 //Image
 import welcomeImage from '../../assets/accountAssets/WelcomeScreen/welcomeImage.png';
@@ -144,9 +145,9 @@ const WelcomeScreen = ({ navigation }) => {
         <Text 
           style={{
             ...styles.welcomePageGreetingTextStyle, 
-            fontSize:28, 
-            fontWeight:"bold", 
-            marginBottom: "5%"
+            fontSize:28,
+            marginBottom: "1%",
+            fontFamily: bold
           }}>
             Discover Everything
           </Text>
@@ -154,14 +155,15 @@ const WelcomeScreen = ({ navigation }) => {
           style={{
             ...styles.welcomePageGreetingTextStyle, 
             fontSize:16, 
-            marginBottom:"25%"
+            marginBottom:"25%",
+            fontFamily: normal
           }}>
             Your place to talk with friends and {"\n"} communities
           </Text>
       </View>
       <View style={styles.welcomePageLoginButtonStyle}>
         <WelcomePageButton 
-          buttonTitle="Sign up with mobile or email"
+          buttonTitle="Sign up with email"
           buttonStyle={
             {
               backgroundColor: "#5152D0",
@@ -217,7 +219,7 @@ const WelcomeScreen = ({ navigation }) => {
               navigation.navigate('LoginScreen');
             }}
           >
-            <Text style={{...styles.loginButtonTextStyle, fontWeight:"bold"}}>Login</Text>
+            <Text style={{...styles.loginButtonTextStyle, fontFamily: bold}}>Login</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -248,7 +250,8 @@ const styles = StyleSheet.create({
   },
 
   loginButtonTextStyle: {
-    color: "#73798C"
+    color: "#73798C",
+    fontFamily: normal
   },
 
   welcomeImageStyle: {

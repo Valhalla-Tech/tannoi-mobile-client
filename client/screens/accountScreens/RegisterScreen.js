@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
+import { bold, normal } from '../../assets/FontSize';
 
 //Components
 import FormInput from '../../components/PublicComponent/FormInput';
@@ -184,18 +185,10 @@ const styles = StyleSheet.create({
   },
 
   registerTitleStyle: {
+    fontFamily: bold,
     color: "#464D60",
     fontSize: 28,
-    fontWeight: "bold",
     marginBottom: 44
-  },
-
-  formInputStyle: {
-    height: 30,
-    borderBottomColor: 'grey',
-    borderBottomWidth: 1,
-    borderBottomColor: "#E3E6EB",
-    fontSize: 16
   },
 
   signupButtonContainerStyle: {
@@ -205,14 +198,15 @@ const styles = StyleSheet.create({
 
   termsOfServiceContainerStyle: {
     flexDirection: 'row', 
-    justifyContent: 'center', 
-    alignItems: 'center', 
+    justifyContent: 'center',
     flexWrap: "wrap"
   },
 
   signupTermsAndPrivacyStyle: {
+    fontFamily: normal,
     fontSize: 12,
-    textAlign: "center"
+    textAlign: "center",
+    color: "#73798C"
   }
 });
 

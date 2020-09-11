@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image
 } from 'react-native';
+import { bold, normal } from '../../../assets/FontSize';
 
 //Icons
 import ActivePlayButton from '../../../assets/homeAssets/activePlayButton.svg';
@@ -64,7 +65,6 @@ const styles = StyleSheet.create({
     padding: "5%",
     borderBottomWidth: 1,
     borderBottomColor: "#F5F7F9",
-    height: 136
   },
 
   profileContainerStyle: {
@@ -82,13 +82,14 @@ const styles = StyleSheet.create({
   nameTextStyle: {
     fontSize: 14, 
     color: "#464D60", 
-    marginLeft: 8
+    marginLeft: 8,
+    fontFamily: normal
   },
 
   titleTextStyle: {
     fontSize: 16, 
     color: "#464D60", 
-    fontWeight: "bold", 
+    fontFamily: bold, 
     width: 267, 
     marginBottom: "3.8%"
   },
@@ -100,7 +101,8 @@ const styles = StyleSheet.create({
   cardInfoStyle: {
     marginRight: 16, 
     fontSize: 12, 
-    color: "#73798C"
+    color: "#73798C",
+    fontFamily: normal
   },
 
   playButtonAndDurationContainerStyle: {
@@ -111,7 +113,8 @@ const styles = StyleSheet.create({
   durationStyle: {
     marginBottom: 10, 
     fontSize: 12, 
-    color: "#73798C"
+    color: "#73798C",
+    fontFamily: normal
   }
 });
 

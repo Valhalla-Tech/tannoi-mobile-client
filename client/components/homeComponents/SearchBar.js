@@ -7,6 +7,7 @@ import {
   FlatList,
   TextInput
 } from 'react-native';
+import { bold, normal } from '../../assets/FontSize';
 
 //Icons
 import SearchIcon from '../../assets/homeAssets/searchIcon.svg';
@@ -185,7 +186,8 @@ const styles = StyleSheet.create({
   searchBoxTextStyle: {
     color: "#73798C",
     fontSize: 16,
-    marginLeft: 10
+    marginLeft: 10,
+    fontFamily: normal
   },
 
   searchBarCardContainerStyle: {

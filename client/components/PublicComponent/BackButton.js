@@ -7,16 +7,38 @@ import {
 import BackButtonIcon from '../../assets/PublicAsset/back-button.svg';
 
 const BackButton = props => {
-  const { navigation } = props;
-
+  const { 
+    navigation,
+    screen,
+    styleOption
+  } = props;
+  
   return (
-    <TouchableOpacity
-      onPress={() => navigation.goBack()}
-    >
-      <BackButtonIcon 
-      style={styles.backButtonStyle}
-      />
-    </TouchableOpacity>
+    <>
+      {
+        screen ? (
+          <>
+            <TouchableOpacity
+              onPress={() => navigation.navigate(screen)}
+            >
+            <BackButtonIcon 
+              style={{...styles.backButtonStyle, ...styleOption}}
+            />
+          </TouchableOpacity>
+        </>
+        ) : (
+          <>
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+            >
+              <BackButtonIcon 
+                style={{...styles.backButtonStyle, ...styleOption}}
+              />
+            </TouchableOpacity>
+          </>
+        )
+      }
+    </>
   );
 };
 

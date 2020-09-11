@@ -13,6 +13,7 @@ import {
 } from 'react-redux';
 import { userLogin } from '../../store/actions/LoginAction';
 import axios from 'axios';
+import { bold, normal } from '../../assets/FontSize';
 
 //Components
 import BackButton from '../../components/PublicComponent/BackButton';
@@ -106,7 +107,7 @@ const LoginWithEmailScreen = ({ navigation }) => {
             }
           </View>
           <View style={styles.forgotPasswordButtonContainer}>
-            <Text style={styles.loginButtonTextStyle}>
+            <Text style={styles.forgotPasswordButtonTextStyle}>
               Forgot password?
             </Text>
             <TouchableOpacity 
@@ -115,7 +116,7 @@ const LoginWithEmailScreen = ({ navigation }) => {
                 navigation.navigate('ResetPasswordWithEmailScreen');
               }}
             >
-              <Text style={{...styles.forgotPasswordButtonTextStyle, fontWeight:"bold"}}>Reset password</Text>
+              <Text style={{...styles.forgotPasswordButtonTextStyle, fontFamily: bold}}>Reset password</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -139,8 +140,8 @@ const styles = StyleSheet.create({
   loginTitleStyle: {
     color: "#464D60",
     fontSize: 28,
-    fontWeight: "bold",
-    marginBottom: 44
+    marginBottom: 44,
+    fontFamily: bold
   },
 
   loginWithEmailButtonContainerStyle: {
@@ -154,7 +155,8 @@ const styles = StyleSheet.create({
   },
 
   forgotPasswordButtonTextStyle: {
-    color: "#73798C"
+    color: "#73798C",
+    fontFamily: normal
   }
 });
 

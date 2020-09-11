@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   FlatList
 } from 'react-native';
+import { bold, normal } from '../../../assets/FontSize';
 
 //Icon
 import DownArrow from '../../../assets/homeAssets/downArrow.svg';
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
 
   homeListTitleStyle: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontFamily: bold,
     color: "#464D60",
     marginVertical: "4%",
     marginLeft: "5%"

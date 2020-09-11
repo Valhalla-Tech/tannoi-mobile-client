@@ -16,6 +16,7 @@ import {
 import { userLogin } from '../../store/actions/LoginAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
+import { bold } from '../../assets/FontSize';
 
 //Components
 import BackButton from '../../components/PublicComponent/BackButton';
@@ -158,7 +159,7 @@ const styles = StyleSheet.create({
   loginTitleStyle: {
     color: "#464D60",
     fontSize: 28,
-    fontWeight: "bold",
+    fontFamily: bold,
     marginBottom: 44
   }
 });

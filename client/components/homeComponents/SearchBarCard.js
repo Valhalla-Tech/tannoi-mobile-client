@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity
 } from 'react-native';
+import { normal } from '../../assets/FontSize';
 
 const SearchBarCard = props => {
   const { 
@@ -42,14 +43,16 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     paddingHorizontal: 12,
     borderRadius: 5,
-    borderColor: "#E3E6EB"
+    borderColor: "#E3E6EB",
+    justifyContent: "center",
+    alignItems: "center"
   },
 
   searchBarCardTextStyle: {
     color: "#73798C",
     fontSize: 14,
-    lineHeight: 20,
-    letterSpacing: -0.4
+    letterSpacing: -0.4,
+    fontFamily: normal
   }
 });
 
