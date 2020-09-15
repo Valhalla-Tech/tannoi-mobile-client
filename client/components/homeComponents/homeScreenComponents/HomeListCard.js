@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
 
   playButtonAndDurationContainerStyle: {
     alignItems: "flex-end", 
-    marginLeft: "10%"
+    // marginLeft: "2%"
   },
 
   durationStyle: {

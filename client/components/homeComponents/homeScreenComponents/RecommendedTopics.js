@@ -59,7 +59,7 @@ const RecommendedTopics = props => {
             <RecommendedTopicsCard
             firstCardIcon={itemData.item[0].imageUrl}
             firstCardName={itemData.item[0].name}
-            firstCardDiscussion={itemData.item[0].discussions}
+            firstCardDiscussions={itemData.item[0].discussions}
             secondCardIcon={itemData.item[1].imageUrl}
             secondCardName={itemData.item[1].name}
             secondCardDiscussions={itemData.item[1].discussions}
