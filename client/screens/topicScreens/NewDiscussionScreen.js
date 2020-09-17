@@ -47,7 +47,7 @@ const NewDiscussionScreen = ({ navigation }) => {
     try {
       let access_token = await AsyncStorage.getItem('access_token');
       
-      const uri = `file:/${recordingFile}`
+      const uri = `file://${recordingFile}`
     
       let formData = new FormData();
 
@@ -60,16 +60,13 @@ const NewDiscussionScreen = ({ navigation }) => {
 
       formData.append('status', '1');
 
-      formData.append('hashtag', hashtags);
+      formData.append('hashtag', JSON.stringify(hashtags));
 
       formData.append('voice_note_path', {
         uri,
         name: `recording.${fileType}`,
-        type: `audio/x-${fileType}`
+        type: `audio/${fileType}`
       });
-
-
-      console.log(formData._parts)
 
       let createNewDiscussionRequest = await axios({
         method: 'post',
@@ -107,18 +104,18 @@ const NewDiscussionScreen = ({ navigation }) => {
     setDissableButton(true);
 
     // Start recording
-    let rec = new Recorder("filename.mp4a").record();
+    let rec = new Recorder("discussionRecord.mp4").record();
 
+    
     // Stop recording after approximately 3 seconds
     setTimeout(() => {
-      console.log(rec)
       rec.stop((err) => {
         setDissableButton(false);
         setRecordingFile(rec._fsPath);
         // NOTE: In a real situation, handle possible errors here
-
+        
         // Play the file after recording has stopped
-        new Player("filename.mp4a")
+        new Player("discussionRecord.mp4")
         .play()
         .on('ended', () => {
           // Enable button again after playback finishes
