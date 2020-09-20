@@ -15,7 +15,6 @@ const TopicNavigation = () => {
       }}
     >
       <Stack.Screen name="TopicIndexScreen" component={TopicIndexScreen} />
-      {/* <Stack.Screen name="NewDiscussionScreen" component={NewDiscussionScreen} /> */}
     </Stack.Navigator>
   )
 };

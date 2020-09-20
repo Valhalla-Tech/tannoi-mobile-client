@@ -7,9 +7,11 @@ import thunk from 'redux-thunk';
 
 //Reducers
 import LoginReducer from './reducers/LoginReducer';
+import GetTopicReducer from './reducers/GetTopicReducer';
 
 const reducer = combineReducers({
-  LoginReducer
+  LoginReducer,
+  GetTopicReducer
 });
 
 const store = createStore(reducer, applyMiddleware(thunk));

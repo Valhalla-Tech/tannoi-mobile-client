@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -19,32 +19,74 @@ import {
   MediaStates
 } from '@react-native-community/audio-toolkit';
 import AsyncStorage from '@react-native-community/async-storage';
+import {
+  useSelector,
+  useDispatch
+} from 'react-redux';
+import { getTopic } from '../../store/actions/GetTopicAction';
 import axios from 'axios';
 
 //Icon
-import RecordButton from '../../assets/topicAsset/recordButton.svg';
+import RecordButton from '../../assets/topicAssets/recordButton.svg';
 
-//Component
+//Components
 import BackButton from '../../components/PublicComponent/BackButton';
 import FormInput from '../../components/PublicComponent/FormInput';
+import LoadingSpinner from '../../components/PublicComponent/LoadingSpinner';
 
 const NewDiscussionScreen = ({ navigation }) => {
   const [discussionTitle, setDiscussionTitle] = useState('');
   const [selectedTopic, setSelectedTopic] = useState('Select topic');
   const [hashtags, setHashtags] = useState([]);
+  const [hashtagsFormDisplay, setHashtagsFormDisplay] = useState('');
   const [disableButton, setDissableButton] = useState(false);
   const [recordingFile, setRecordingFile] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const topics = useSelector(state => state.GetTopicReducer.topics);
+  const dispatch = useDispatch();
 
   const discussionTitleInput = input => {
     setDiscussionTitle(input);
   };
 
   const hashtagsInput = input => {
-    setHashtags([input]);
+    let hashtagArray = [];
+    let hashtagDisplay = '';
+    let hashtag = '';
+
+    for (let hashtagInputIndex = 0; hashtagInputIndex < input.length; hashtagInputIndex++) {
+      if (input[hashtagInputIndex] === ' ') {
+        if (hashtag[0] === '#') {
+          hashtagDisplay += hashtag;
+          hashtagArray.push(hashtag);
+        } else {
+          hashtagDisplay += `#${hashtag} `;
+          hashtagArray.push(`#${hashtag}`);
+        }
+        hashtag = '';
+      } else {
+        hashtag += input[hashtagInputIndex];
+      };
+    };
+    
+    if (hashtag[0] === '#') {
+      hashtagDisplay += hashtag;
+      hashtagArray.push(hashtag);
+    } else {
+      hashtagDisplay += `#${hashtag} `;
+      hashtagArray.push(`#${hashtag}`);
+    }
+    hashtag = '';
+
+    setHashtags(hashtagArray);
+    setHashtagsFormDisplay(hashtagDisplay);
   };
 
   const createNewDiscussion =  async () => {
     try {
+      setIsLoading(true);
+
       let access_token = await AsyncStorage.getItem('access_token');
       
       const uri = `file://${recordingFile}`
@@ -78,8 +120,12 @@ const NewDiscussionScreen = ({ navigation }) => {
         data: formData
       });
 
-      console.log(createNewDiscussionRequest.data);
+      if (createNewDiscussionRequest.data) {
+        setIsLoading(false);
+        console.log(createNewDiscussionRequest.data);
+      }
     } catch (error) {
+      setIsLoading(false);
       console.log(error.message)
     }
   };
@@ -103,26 +149,25 @@ const NewDiscussionScreen = ({ navigation }) => {
     checkPermission();
     setDissableButton(true);
 
-    // Start recording
     let rec = new Recorder("discussionRecord.mp4").record();
 
-    
-    // Stop recording after approximately 3 seconds
     setTimeout(() => {
       rec.stop((err) => {
         setDissableButton(false);
         setRecordingFile(rec._fsPath);
-        // NOTE: In a real situation, handle possible errors here
-        
-        // Play the file after recording has stopped
+
         new Player("discussionRecord.mp4")
         .play()
         .on('ended', () => {
-          // Enable button again after playback finishes
+
         });
       });
     }, 3000);
   };
+
+  useEffect(() => {
+    dispatch(getTopic());
+  }, [])
 
   return (
     <ScrollView>
@@ -160,7 +205,11 @@ const NewDiscussionScreen = ({ navigation }) => {
               onValueChange={(itemValue, itemIndex) => setSelectedTopic(itemValue)}
             >
               <Picker.Item label="Select topic" value="Select topic" />
-              <Picker.Item label="JavaScript" value="js" />
+              { 
+                topics.map((topic, index) => (
+                  <Picker.Item key={index} label={topic.name} value={topic.id} />
+                ))
+              }
             </Picker>
             <FormInput
               formInputTitle="Add hashtags"
@@ -175,6 +224,11 @@ const NewDiscussionScreen = ({ navigation }) => {
               </TouchableOpacity>
             </View>
           </View>
+          {
+            isLoading && (
+              <LoadingSpinner />
+            )
+          }
         </View>
       </TouchableWithoutFeedback>
     </ScrollView>

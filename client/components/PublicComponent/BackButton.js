@@ -12,7 +12,7 @@ const BackButton = props => {
     screen,
     styleOption
   } = props;
-  
+
   return (
     <>
       {

@@ -37,7 +37,7 @@ const HomeListCard = props => {
 
   return (
     <TouchableOpacity style={styles.homeListCardContainerStyle}>
-      <View>
+      <View >
         <View style={styles.profileContainerStyle}>
           <Image source={imageUrl} style={styles.profilePictureStyle} resizeMode="stretch" />
           <Text style={styles.nameTextStyle}>{name}</Text>

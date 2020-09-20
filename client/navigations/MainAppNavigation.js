@@ -1,9 +1,9 @@
 import React from 'react';
 import NavigationBar from '../components/PublicComponent/NavigationBar';
 
-const MainAppNavigation = () => {
+const MainAppNavigation = ({ navigation }) => {
   return (
-    <NavigationBar />
+    <NavigationBar navigation={navigation} />
   )
 }
 

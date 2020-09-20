@@ -6,10 +6,11 @@ import {
 import { normal } from '../../assets/FontSize';
 
 const FormInput = props => {
-  const { formInputTitle, dataInput } = props;
+  const { formInputTitle, dataInput, formInputValue } = props;
 
   return (
     <TextInput
+      value={formInputValue}
       style={styles.formInputStyle} 
       placeholder={formInputTitle}
       placeholderTextColor="#73798C"

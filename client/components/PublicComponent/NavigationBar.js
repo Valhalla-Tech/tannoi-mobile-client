@@ -1,13 +1,21 @@
 import React from 'react';
 import {
   View,
-  Text
+  Text,
+  TouchableOpacity
 } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 //Icons
 import HomeIcon from '../../assets/homeAssets/homeIcon.svg';
-import NewDiscussionButton from '../../assets/topicAsset/newDiscussionButton.svg';
+import HomeIconNotActive from '../../assets/homeAssets/homeIconNotActive.svg';
+import TopicICon from '../../assets/topicAssets/topicIcon.svg';
+import TopicIconNotActive from '../../assets/topicAssets/topicIconNotActive.svg';
+import NewDiscussionButton from '../../assets/topicAssets/newDiscussionButton.svg';
+import InboxIcon from '../../assets/inboxAssets/inboxIcon.svg';
+import InboxIconNotActive from '../../assets/inboxAssets/inboxIconNotActive.svg';
+import MeIcon from '../../assets/meAssets/meIcon.svg';
+import MeIconNotActive from '../../assets/meAssets/meIconNotActive.svg';
 
 //Navigations
 import HomeNavigation from '../../navigations/HomeNavigation';
@@ -15,12 +23,15 @@ import TopicNavigation from '../../navigations/TopicNavigation';
 import InboxNavigation from '../../navigations/InboxNavigation';
 import MeNavigation from '../../navigations/MeNavigation';
 
-//Screen
-import NewDiscussionScreen from '../../screens/topicScreens/NewDiscussionScreen';
-
 const Tab = createBottomTabNavigator();
 
-const NavigationBar = () => {
+const NavigationBar = props => {
+  const { navigation } = props;
+
+  const newDiscussionScreenButton = () => {
+    navigation.navigate('NewDiscussionScreen');
+  };
+
   return (
     <Tab.Navigator
       tabBarOptions={{
@@ -37,11 +48,22 @@ const NavigationBar = () => {
         component={HomeNavigation}
         options={{
           tabBarLabel: "",
-          tabBarIcon: () => (
-            <View style={{justifyContent: "center", alignItems: "center"}}>
-              <HomeIcon />
-              <Text style={{color: "#FFFFFF", fontSize: 10}}>Home</Text>
-            </View>
+          tabBarIcon: ({focused}) => (
+            <>
+              {
+                focused ? (
+                  <View style={{justifyContent: "center", alignItems: "center"}}>
+                    <HomeIcon />
+                    <Text style={{color: "#FFFFFF", fontSize: 10}}>Home</Text>
+                  </View>
+                ) : (
+                  <View style={{justifyContent: "center", alignItems: "center"}}>
+                    <HomeIconNotActive />
+                    <Text style={{color: "#FFFFFF", fontSize: 10}}>Home</Text>
+                  </View>
+                )
+              }
+            </>
           ),
           style: {
             color: "#FFFFFF"
@@ -53,11 +75,22 @@ const NavigationBar = () => {
         component={TopicNavigation}
         options={{
           tabBarLabel: "",
-          tabBarIcon: () => (
-            <View style={{justifyContent: "center", alignItems: "center"}}>
-              <HomeIcon />
-              <Text style={{color: "#FFFFFF", fontSize: 10}}>Topics</Text>
-            </View>
+          tabBarIcon: ({focused}) => (
+            <>
+              {
+                focused ? (
+                  <View style={{justifyContent: "center", alignItems: "center"}}>
+                    <TopicICon />
+                    <Text style={{color: "#FFFFFF", fontSize: 10}}>Topic</Text>
+                  </View>
+                ) : (
+                  <View style={{justifyContent: "center", alignItems: "center"}}>
+                    <TopicIconNotActive />
+                    <Text style={{color: "#FFFFFF", fontSize: 10}}>Topic</Text>
+                  </View>
+                )
+              }
+            </>
           ),
           style: {
             color: "#FFFFFF"
@@ -66,13 +99,16 @@ const NavigationBar = () => {
       />
       <Tab.Screen 
         name="new discussion" 
-        component={NewDiscussionScreen}
+        component={newDiscussionScreenButton}
         options={{
           tabBarLabel: "",
           tabBarIcon: () => (
-            <View style={{justifyContent: "center", alignItems: "center", position: "absolute", bottom: 10}}>
+            <TouchableOpacity 
+              style={{justifyContent: "center", alignItems: "center", position: "absolute", bottom: 10}} 
+              onPress={newDiscussionScreenButton}
+            >
               <NewDiscussionButton />
-            </View>
+            </TouchableOpacity>
           ),
           style: {
             color: "#FFFFFF"
@@ -84,11 +120,22 @@ const NavigationBar = () => {
         component={InboxNavigation}
         options={{
           tabBarLabel: "",
-          tabBarIcon: () => (
-            <View style={{justifyContent: "center", alignItems: "center"}}>
-              <HomeIcon />
-              <Text style={{color: "#FFFFFF", fontSize: 10}}>Inbox</Text>
-            </View>
+          tabBarIcon: ({focused}) => (
+            <>
+              {
+                focused ? (
+                  <View style={{justifyContent: "center", alignItems: "center"}}>
+                    <InboxIcon />
+                    <Text style={{color: "#FFFFFF", fontSize: 10}}>Inbox</Text>
+                  </View>
+                ) : (
+                  <View style={{justifyContent: "center", alignItems: "center"}}>
+                    <InboxIconNotActive />
+                    <Text style={{color: "#FFFFFF", fontSize: 10}}>Inbox</Text>
+                  </View>
+                )
+              }
+            </>
           ),
           style: {
             color: "#FFFFFF"
@@ -100,11 +147,22 @@ const NavigationBar = () => {
         component={MeNavigation}
         options={{
           tabBarLabel: "",
-          tabBarIcon: () => (
-            <View style={{justifyContent: "center", alignItems: "center"}}>
-              <HomeIcon />
-              <Text style={{color: "#FFFFFF", fontSize: 10}}>Me</Text>
-            </View>
+          tabBarIcon: ({focused}) => (
+            <>
+              {
+                focused ? (
+                  <View style={{justifyContent: "center", alignItems: "center"}}>
+                    <MeIcon />
+                    <Text style={{color: "#FFFFFF", fontSize: 10}}>Me</Text>
+                  </View>
+                ) : (
+                  <View style={{justifyContent: "center", alignItems: "center"}}>
+                    <MeIconNotActive />
+                    <Text style={{color: "#FFFFFF", fontSize: 10}}>Me</Text>
+                  </View>
+                )
+              }
+            </>
           ),
           style: {
             color: "#FFFFFF"
