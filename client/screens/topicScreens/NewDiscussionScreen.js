@@ -98,7 +98,7 @@ const NewDiscussionScreen = ({ navigation }) => {
       
       formData.append('title', discussionTitle);
 
-      formData.append('topic_id', '1');
+      formData.append('topic_id', selectedTopic);
 
       formData.append('status', '1');
 
