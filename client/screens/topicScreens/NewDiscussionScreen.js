@@ -26,8 +26,10 @@ import {
 import { getTopic } from '../../store/actions/GetTopicAction';
 import axios from 'axios';
 
-//Icon
+//Icons
 import RecordButton from '../../assets/topicAssets/recordButton.svg';
+import PlayButton from '../../assets/PublicAsset/playButton.svg';
+import PauseButton from '../../assets/PublicAsset/pauseButton.svg';
 
 //Components
 import BackButton from '../../components/PublicComponent/BackButton';
@@ -39,7 +41,7 @@ const NewDiscussionScreen = ({ navigation }) => {
   const [selectedTopic, setSelectedTopic] = useState('Select topic');
   const [hashtags, setHashtags] = useState([]);
   const [hashtagsFormDisplay, setHashtagsFormDisplay] = useState('');
-  const [disableButton, setDissableButton] = useState(false);
+  const [playbackButton, setPlaybackButton] = useState(false);
   const [recordingFile, setRecordingFile] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -138,31 +140,91 @@ const NewDiscussionScreen = ({ navigation }) => {
     let result;
     try {
         result = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO, { title:'Microphone Permission', message:'Enter the Gunbook needs access to your microphone so you can search with voice.' });
+
+        if (result === PermissionsAndroid.RESULTS.GRANTED) {
+          return true;
+        } else {
+          return false;
+        }
     } catch(error) {
         console.error('failed getting permission, result:', result);
+        return false
     }
-    console.log('permission result:', result);
-    return (result === true || result === PermissionsAndroid.RESULTS.GRANTED);
   }
 
-  const voiceRecord = () => {
-    checkPermission();
-    setDissableButton(true);
+  let rec = new Recorder("discussionRecord.mp4");
+  let player = new Player("file:///data/user/0/tannoi.client/files/discussionRecord.mp4");
+  
+  let countDown;
 
-    let rec = new Recorder("discussionRecord.mp4").record();
+  const recordingTimer = option => {
+      countDown = setTimeout(() => {
+        voiceRecord(true);
+      }, 30000);
+  };
+  
+  const clearTimer = () => {
+    clearTimeout(countDown);
+  }
 
-    setTimeout(() => {
-      rec.stop((err) => {
-        setDissableButton(false);
-        setRecordingFile(rec._fsPath);
+  const reloadRecorder = () => {
+    if (rec) {
+      rec.destroy();
+    }
 
-        new Player("discussionRecord.mp4")
-        .play()
-        .on('ended', () => {
+    rec = new Recorder("discussionRecord.mp4"); 
+  };
 
+  const reloadPlayer = () => {
+    if (player) {
+      player.destroy()
+    }
+
+    let player = new Player("file:///data/user/0/tannoi.client/files/discussionRecord.mp4");
+  };
+
+  const voiceRecord = toggleFromTimer => {
+    if (player) {
+      player.destroy();
+    }
+    
+    let permission = checkPermission();
+    
+    permission.then((hasPermission) => {
+      if (toggleFromTimer && rec.isRecording) {
+
+        rec.toggleRecord((err, stopped) => {
+          if (stopped) {
+            reloadPlayer();
+            reloadRecorder();
+          }
+          
+          playRecording();
         });
-      });
-    }, 3000);
+      } else if (!toggleFromTimer) {
+        rec.toggleRecord((err, stopped) => {
+          
+          if (stopped) {
+            reloadPlayer();
+            reloadRecorder();
+          }
+          
+        });
+
+        if (rec.isRecording) {
+          playRecording();
+        } else {
+          recordingTimer();
+        };
+      }
+    })
+  };
+
+  const playRecording = () => {
+    console.log('Play recording');
+    setRecordingFile('/data/user/0/tannoi.client/files/discussionRecord.mp4');
+    clearTimer();
+    player.play();
   };
 
   useEffect(() => {
@@ -217,8 +279,7 @@ const NewDiscussionScreen = ({ navigation }) => {
             />
             <View style={styles.newDiscussionRecorderContainerStyle}>
               <TouchableOpacity
-                disabled={disableButton}
-                onPress={() => voiceRecord()}
+                onPress={() => voiceRecord(false)}
               >
                 <RecordButton />
               </TouchableOpacity>
