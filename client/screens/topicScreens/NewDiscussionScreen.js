@@ -30,7 +30,6 @@ import axios from 'axios';
 import RecordButton from '../../assets/topicAssets/recordButton.svg';
 import PlayButton from '../../assets/topicAssets/playButtonActive.svg';
 import PauseButton from '../../assets/topicAssets/pauseButton.svg';
-import PlayPauseButton from '../../assets/topicAssets/playPauseButton.svg';
 
 //Components
 import BackButton from '../../components/PublicComponent/BackButton';
@@ -223,13 +222,10 @@ const NewDiscussionScreen = ({ navigation }) => {
     console.log('Play recording');
     setRecordingFile('/data/user/0/tannoi.client/files/discussionRecord.mp4');
     clearTimer();
+
     player.playPause((error, paused) => {
       console.log(error)
     });
-  };
-
-  const deleteRecording = () => {
-    setRecordingFile('');
   };
 
   useEffect(() => {
@@ -284,25 +280,18 @@ const NewDiscussionScreen = ({ navigation }) => {
             />
             <View style={styles.newDiscussionRecorderContainerStyle}>
               <TouchableOpacity
-                onPress={() => recordingFile ? playRecording() : voiceRecord(false)}
+                onPress={() => voiceRecord(false)}
               >
-                {
-                  recordingFile ? (
-                    <View style={styles.playOrPauseButtonStyle}>
-                      <Text style={styles.playOrPauseButtonTextStyle}>Play / Pause</Text>
-                    </View>
-                  ) : (
-                    <RecordButton />
-                  )
-                }
+                <RecordButton />
               </TouchableOpacity>
-              {
-                recordingFile !== '' && (
-                <TouchableOpacity style={styles.deleteButtonStyle} onPress={() => deleteRecording()}>
-                  <Text style={styles.deleteButtonTextStyle}>Delete</Text>
-                </TouchableOpacity>
-                )
-              }
+              
+              <TouchableOpacity
+                onPress={() => recordingFile && playRecording() }
+              >
+                <View style={styles.playOrPauseButtonStyle}>
+                  <Text style={styles.playOrPauseButtonTextStyle}>Play / Pause</Text>
+                </View>
+              </TouchableOpacity>
             </View>
           </View>
           {
@@ -376,10 +365,10 @@ const styles = StyleSheet.create({
 
   newDiscussionRecorderContainerStyle: {
     marginTop: "50%",
-    justifyContent: "space-around",
     alignItems: "center",
     paddingBottom: "5%",
-    flexDirection: "row"
+    flexDirection: "row",
+    justifyContent: "space-around"
   },
   
   playOrPauseButtonStyle: {
@@ -393,18 +382,6 @@ const styles = StyleSheet.create({
     color: "#5152D0",
     fontFamily: bold,
     textAlign: "center"
-  },
-
-  deleteButtonStyle: {
-    borderWidth: 1,
-    borderColor: "red",
-    padding: "2%",
-    borderRadius: 10
-  },
-
-  deleteButtonTextStyle: {
-    color: "red",
-    fontFamily: bold
   }
 });
 
