@@ -12,7 +12,9 @@ import SplashScreen from 'react-native-splash-screen';
 import AccountNavigation from './AccountNavigation';
 import MainAppNavigation from './MainAppNavigation';
 
+//Screens
 import NewDiscussionScreen from '../screens/topicScreens/NewDiscussionScreen';
+import DiscussionScreen from '../screens/topicScreens/DiscussionScreen';
 
 const Stack = createStackNavigator();
 
@@ -48,6 +50,7 @@ const NavigationIndex = () => {
           <>
             <Stack.Screen name="MainAppNavigation" component={MainAppNavigation} />
             <Stack.Screen name="NewDiscussionScreen" component={NewDiscussionScreen} />
+            <Stack.Screen name="DiscussionScreen" component={DiscussionScreen} />
           </>
         ) : (
           <Stack.Screen name="AccountNavigation" component={AccountNavigation} />

@@ -28,8 +28,9 @@ import axios from 'axios';
 
 //Icons
 import RecordButton from '../../assets/topicAssets/recordButton.svg';
-import PlayButton from '../../assets/PublicAsset/playButton.svg';
-import PauseButton from '../../assets/PublicAsset/pauseButton.svg';
+import PlayButton from '../../assets/topicAssets/playButtonActive.svg';
+import PauseButton from '../../assets/topicAssets/pauseButton.svg';
+import PlayPauseButton from '../../assets/topicAssets/playPauseButton.svg';
 
 //Components
 import BackButton from '../../components/PublicComponent/BackButton';
@@ -41,7 +42,6 @@ const NewDiscussionScreen = ({ navigation }) => {
   const [selectedTopic, setSelectedTopic] = useState('Select topic');
   const [hashtags, setHashtags] = useState([]);
   const [hashtagsFormDisplay, setHashtagsFormDisplay] = useState('');
-  const [playbackButton, setPlaybackButton] = useState(false);
   const [recordingFile, setRecordingFile] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -128,18 +128,18 @@ const NewDiscussionScreen = ({ navigation }) => {
       }
     } catch (error) {
       setIsLoading(false);
-      console.log(error.message)
+      console.log(error.message);
     }
   };
 
   const checkPermission = async () => {
     if (Platform.OS !== 'android') {
-        return Promise.resolve(true);
+      return Promise.resolve(true);
     }
 
     let result;
     try {
-        result = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO, { title:'Microphone Permission', message:'Enter the Gunbook needs access to your microphone so you can search with voice.' });
+        result = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO, { title:'Microphone Permission', message:'Tannoi needs access to your microphone to use voice feature.' });
 
         if (result === PermissionsAndroid.RESULTS.GRANTED) {
           return true;
@@ -153,7 +153,7 @@ const NewDiscussionScreen = ({ navigation }) => {
   }
 
   let rec = new Recorder("discussionRecord.mp4");
-  let player = new Player("file:///data/user/0/tannoi.client/files/discussionRecord.mp4");
+  let player = new Player("file:///data/user/0/tannoi.client/files/discussionRecord.mp4", {autoDestroy: false});
   
   let countDown;
 
@@ -177,10 +177,10 @@ const NewDiscussionScreen = ({ navigation }) => {
 
   const reloadPlayer = () => {
     if (player) {
-      player.destroy()
+      player.destroy();
     }
 
-    let player = new Player("file:///data/user/0/tannoi.client/files/discussionRecord.mp4");
+    let player = new Player("file:///data/user/0/tannoi.client/files/discussionRecord.mp4", {autoDestroy: false});
   };
 
   const voiceRecord = toggleFromTimer => {
@@ -193,7 +193,7 @@ const NewDiscussionScreen = ({ navigation }) => {
     permission.then((hasPermission) => {
       if (toggleFromTimer && rec.isRecording) {
 
-        rec.toggleRecord((err, stopped) => {
+        rec.toggleRecord((error, stopped) => {
           if (stopped) {
             reloadPlayer();
             reloadRecorder();
@@ -202,8 +202,7 @@ const NewDiscussionScreen = ({ navigation }) => {
           playRecording();
         });
       } else if (!toggleFromTimer) {
-        rec.toggleRecord((err, stopped) => {
-          
+        rec.toggleRecord((error, stopped) => {
           if (stopped) {
             reloadPlayer();
             reloadRecorder();
@@ -224,7 +223,13 @@ const NewDiscussionScreen = ({ navigation }) => {
     console.log('Play recording');
     setRecordingFile('/data/user/0/tannoi.client/files/discussionRecord.mp4');
     clearTimer();
-    player.play();
+    player.playPause((error, paused) => {
+      console.log(error)
+    });
+  };
+
+  const deleteRecording = () => {
+    setRecordingFile('');
   };
 
   useEffect(() => {
@@ -279,10 +284,25 @@ const NewDiscussionScreen = ({ navigation }) => {
             />
             <View style={styles.newDiscussionRecorderContainerStyle}>
               <TouchableOpacity
-                onPress={() => voiceRecord(false)}
+                onPress={() => recordingFile ? playRecording() : voiceRecord(false)}
               >
-                <RecordButton />
+                {
+                  recordingFile ? (
+                    <View style={styles.playOrPauseButtonStyle}>
+                      <Text style={styles.playOrPauseButtonTextStyle}>Play / Pause</Text>
+                    </View>
+                  ) : (
+                    <RecordButton />
+                  )
+                }
               </TouchableOpacity>
+              {
+                recordingFile !== '' && (
+                <TouchableOpacity style={styles.deleteButtonStyle} onPress={() => deleteRecording()}>
+                  <Text style={styles.deleteButtonTextStyle}>Delete</Text>
+                </TouchableOpacity>
+                )
+              }
             </View>
           </View>
           {
@@ -356,8 +376,35 @@ const styles = StyleSheet.create({
 
   newDiscussionRecorderContainerStyle: {
     marginTop: "50%",
+    justifyContent: "space-around",
     alignItems: "center",
-    paddingBottom: "5%"
+    paddingBottom: "5%",
+    flexDirection: "row"
+  },
+  
+  playOrPauseButtonStyle: {
+    borderWidth: 1,
+    padding: "5%",
+    borderRadius: 10,
+    borderColor: "#5152D0"
+  },
+
+  playOrPauseButtonTextStyle: {
+    color: "#5152D0",
+    fontFamily: bold,
+    textAlign: "center"
+  },
+
+  deleteButtonStyle: {
+    borderWidth: 1,
+    borderColor: "red",
+    padding: "2%",
+    borderRadius: 10
+  },
+
+  deleteButtonTextStyle: {
+    color: "red",
+    fontFamily: bold
   }
 });
 
