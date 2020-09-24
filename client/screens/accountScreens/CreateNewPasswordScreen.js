@@ -10,14 +10,12 @@ import {
 } from 'react-native';
 import axios from 'axios';
 
-//Icon
-import BackButtonIcon from '../../assets/PublicAsset/back-button.svg';
-
 //Components
 import FormInput from '../../components/publicComponents/FormInput';
 import LoginButton from '../../components/publicComponents/BigButton';
 import NotActiveButton from '../../components/publicComponents/NotActiveButton';
 import ErrorMessage from '../../components/publicComponents/ErrorMessage';
+import BackButton from '../../components/publicComponents/BackButton';
 
 const CreateNewPasswordScreen = ({ route, navigation }) => {
   const [newPassword, setNewPassword] = useState('');
@@ -85,13 +83,10 @@ const CreateNewPasswordScreen = ({ route, navigation }) => {
       onPress={() => Keyboard.dismiss()}
     >
       <View style={styles.createNewPasswordScreenContainerStyle}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('WelcomeScreen')}
-        >
-          <BackButtonIcon 
-            style={styles.backButtonStyle}
-          />
-        </TouchableOpacity>
+        <BackButton
+          navigation={navigation}
+          screen="WelcomeScreen"
+        />
         <Text style={styles.createNewPasswordTitleStyle}>
           Create new password
         </Text>

@@ -4,7 +4,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import BackButtonIcon from '../../assets/PublicAsset/back-button.svg';
+import BackButtonIcon from '../../assets/publicAssets/back-button.svg';
 
 const BackButton = props => {
   const { 

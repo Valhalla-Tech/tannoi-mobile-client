@@ -11,7 +11,7 @@ import { bold, normal } from '../../assets/FontSize';
 
 //Icons
 import SearchIcon from '../../assets/homeAssets/searchIcon.svg';
-import BackButtonIcon from '../../assets/PublicAsset/back-button.svg';
+import BackButtonIcon from '../../assets/publicAssets/back-button.svg';
 
 //Component
 import SearchBarCard from '../../components/homeComponents/SearchBarCard';

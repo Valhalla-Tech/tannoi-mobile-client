@@ -6,8 +6,8 @@ import {
 } from 'react-native';
 import { medium } from '../../assets/FontSize';
 
-import FacebookLogo from '../../assets/PublicAsset/facebookIcon.svg';
-import GoogleLogo from '../../assets/PublicAsset/googleIcon.svg';
+import FacebookLogo from '../../assets/publicAssets/facebookIcon.svg';
+import GoogleLogo from '../../assets/publicAssets/googleIcon.svg';
 
 const WelcomePageButton = props => {
   const { 

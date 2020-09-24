@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 
 //Profile picture example
-import ProfilePictureExample from '../../../assets/PublicAsset/bigProfilePicture.png';
+import ProfilePictureExample from '../../../assets/publicAssets/bigProfilePicture.png';
 
 const DiscussionScreenCard = () => {
   return (
