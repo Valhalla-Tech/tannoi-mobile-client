@@ -10,7 +10,7 @@ import { bold, normal } from '../../../assets/FontSize';
 
 //Icons
 import ActivePlayButton from '../../../assets/homeAssets/activePlayButton.svg';
-import PlayButton from '../../../assets/homeAssets/playButton.svg';
+import PlayButton from '../../../assets/publicAssets/playButton.svg';
 
 const HomeListCard = props => {
   const {

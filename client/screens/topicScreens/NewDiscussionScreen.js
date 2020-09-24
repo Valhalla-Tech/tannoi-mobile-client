@@ -28,8 +28,6 @@ import axios from 'axios';
 
 //Icons
 import RecordButton from '../../assets/topicAssets/recordButton.svg';
-import PlayButton from '../../assets/topicAssets/playButtonActive.svg';
-import PauseButton from '../../assets/topicAssets/pauseButton.svg';
 
 //Components
 import BackButton from '../../components/publicComponents/BackButton';
