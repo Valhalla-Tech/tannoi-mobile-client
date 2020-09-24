@@ -13,9 +13,9 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 
 //Components
-import LoadingSpinner from '../../PublicComponent/LoadingSpinner';
-import ErrorMessage from '../../PublicComponent/ErrorMessage';
-import CloseButton from '../../PublicComponent/CloseButton';
+import LoadingSpinner from '../../publicComponents/LoadingSpinner';
+import ErrorMessage from '../../publicComponents/ErrorMessage';
+import CloseButton from '../../publicComponents/CloseButton';
 
 const EmailConfirmationModal = props => {
   const [code1, setCode1] = useState('');

@@ -14,10 +14,10 @@ import { userLogin } from '../../store/actions/LoginAction';
 import axios from 'axios';
 
 //Components
-import BackButton from '../../components/PublicComponent/BackButton';
+import BackButton from '../../components/publicComponents/BackButton';
 import Card from '../../components/accountComponents/FollowSomeTopicsScreenComponents/Card';
-import DoneButton from '../../components/PublicComponent/BigButton';
-import LoadingSpinner from '../../components/PublicComponent/LoadingSpinner';
+import DoneButton from '../../components/publicComponents/BigButton';
+import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
 
 const numColumns = 3
 

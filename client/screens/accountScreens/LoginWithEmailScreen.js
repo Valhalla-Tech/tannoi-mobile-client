@@ -16,12 +16,12 @@ import axios from 'axios';
 import { bold, normal } from '../../assets/FontSize';
 
 //Components
-import BackButton from '../../components/PublicComponent/BackButton';
-import LoginButton from '../../components/PublicComponent/BigButton';
-import FormInput from '../../components/PublicComponent/FormInput';
-import NotActiveButton from '../../components/PublicComponent/NotActiveButton';
-import LoadingSpinner from '../../components/PublicComponent/LoadingSpinner';
-import ErrorMessage from '../../components/PublicComponent/ErrorMessage';
+import BackButton from '../../components/publicComponents/BackButton';
+import LoginButton from '../../components/publicComponents/BigButton';
+import FormInput from '../../components/publicComponents/FormInput';
+import NotActiveButton from '../../components/publicComponents/NotActiveButton';
+import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
+import ErrorMessage from '../../components/publicComponents/ErrorMessage';
 
 const LoginWithEmailScreen = ({ navigation }) => {
   const [emailLogin, setEmailLogin] = useState('');

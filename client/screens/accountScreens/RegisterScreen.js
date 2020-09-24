@@ -12,13 +12,13 @@ import axios from 'axios';
 import { bold, normal } from '../../assets/FontSize';
 
 //Components
-import FormInput from '../../components/PublicComponent/FormInput';
-import SaveAndContinueButton from '../../components/PublicComponent/BigButton';
+import FormInput from '../../components/publicComponents/FormInput';
+import SaveAndContinueButton from '../../components/publicComponents/BigButton';
 import EmailConfirmationModal from '../../components/accountComponents/RegisterScreenComponents/EmailConfirmationModal';
-import BackButton from '../../components/PublicComponent/BackButton';
-import NotActiveButton from '../../components/PublicComponent/NotActiveButton';
-import ErrorMessage from '../../components/PublicComponent/ErrorMessage';
-import LoadingSpinner from '../../components/PublicComponent/LoadingSpinner';
+import BackButton from '../../components/publicComponents/BackButton';
+import NotActiveButton from '../../components/publicComponents/NotActiveButton';
+import ErrorMessage from '../../components/publicComponents/ErrorMessage';
+import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
 import TermsOfServiceModal from '../../components/accountComponents/RegisterScreenComponents/TermsOfServiceModal';
 
 const RegisterPage = ({ navigation }) => {

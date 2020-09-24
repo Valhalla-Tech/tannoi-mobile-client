@@ -11,7 +11,7 @@ import {
   Platform,
   PermissionsAndroid
 } from 'react-native';
-import { bold, normal } from '../../assets/FontSize';
+import { bold, normal, medium } from '../../assets/FontSize';
 import { Picker } from '@react-native-community/picker';
 import {
   Player,
@@ -32,9 +32,9 @@ import PlayButton from '../../assets/topicAssets/playButtonActive.svg';
 import PauseButton from '../../assets/topicAssets/pauseButton.svg';
 
 //Components
-import BackButton from '../../components/PublicComponent/BackButton';
-import FormInput from '../../components/PublicComponent/FormInput';
-import LoadingSpinner from '../../components/PublicComponent/LoadingSpinner';
+import BackButton from '../../components/publicComponents/BackButton';
+import FormInput from '../../components/publicComponents/FormInput';
+import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
 
 const NewDiscussionScreen = ({ navigation }) => {
   const [discussionTitle, setDiscussionTitle] = useState('');
@@ -336,7 +336,7 @@ const styles = StyleSheet.create({
   publishButtonTextStyle: {
     color: "#0E4EF4",
     fontSize: 16,
-    fontFamily: bold
+    fontFamily: medium
   },
 
   newDiscussionFormContainerStyle: {

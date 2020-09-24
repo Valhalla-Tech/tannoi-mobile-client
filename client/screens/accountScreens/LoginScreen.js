@@ -19,8 +19,8 @@ import axios from 'axios';
 import { bold } from '../../assets/FontSize';
 
 //Components
-import BackButton from '../../components/PublicComponent/BackButton';
-import LoginScreenButton from '../../components/PublicComponent/BigButton';
+import BackButton from '../../components/publicComponents/BackButton';
+import LoginScreenButton from '../../components/publicComponents/BigButton';
 
 const LoginScreen = ({ navigation }) => {
 

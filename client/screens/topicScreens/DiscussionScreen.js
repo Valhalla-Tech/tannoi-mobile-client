@@ -5,10 +5,11 @@ import {
   Text,
   TouchableOpacity
 } from 'react-native';
-import { bold, normal } from '../../assets/FontSize';
+import { bold, normal, medium } from '../../assets/FontSize';
 
 //Components
-import BackButton from '../../components/PublicComponent/BackButton';
+import BackButton from '../../components/publicComponents/BackButton';
+import DiscussionScreenCard from '../../components/topicComponents/discussionScreenComponents/DiscussionScreenCard';
 
 const DiscussionScreen = ({ navigation }) => {
   return (
@@ -49,14 +50,13 @@ const styles = StyleSheet.create({
 
   addResponseButtonStyle: {
     color: "#0E4EF4",
-    fontSize: 16,
-    fontFamily: bold
+    fontSize: 16
   },
 
   addResponseButtonTextStyle: {
     color: "#0E4EF4",
     fontSize: 16,
-    fontFamily: bold
+    fontFamily: medium
   }
 });
 

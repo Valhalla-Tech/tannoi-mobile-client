@@ -24,7 +24,7 @@ import { bold, normal } from '../../assets/FontSize';
 import welcomeImage from '../../assets/accountAssets/WelcomeScreen/welcomeImage.png';
 
 //Component
-import WelcomePageButton from '../../components/PublicComponent/BigButton';
+import WelcomePageButton from '../../components/publicComponents/BigButton';
 
 const WelcomeScreen = ({ navigation }) => {
 

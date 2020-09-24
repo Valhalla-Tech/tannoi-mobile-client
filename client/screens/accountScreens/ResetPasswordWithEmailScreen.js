@@ -11,12 +11,12 @@ import axios from 'axios';
 import { bold, normal } from '../../assets/FontSize';
 
 //Components
-import BackButton from '../../components/PublicComponent/BackButton';
-import SendResetPasswordButton from '../../components/PublicComponent/BigButton';
-import FormInput from '../../components/PublicComponent/FormInput';
-import NotActiveButton from '../../components/PublicComponent/NotActiveButton';
-import ErrorMessage from '../../components/PublicComponent/ErrorMessage';
-import LoadingSpinner from '../../components/PublicComponent/LoadingSpinner';
+import BackButton from '../../components/publicComponents/BackButton';
+import SendResetPasswordButton from '../../components/publicComponents/BigButton';
+import FormInput from '../../components/publicComponents/FormInput';
+import NotActiveButton from '../../components/publicComponents/NotActiveButton';
+import ErrorMessage from '../../components/publicComponents/ErrorMessage';
+import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
 
 const ResetPasswordWithEmailScreen = ({ navigation }) => {
   const [resetPasswordEmail, setResetPasswordEmail] = useState('');
