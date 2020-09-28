@@ -78,9 +78,16 @@ class DiscussionScreenPlayerCard extends Component {
       if (error) {
         console.log(error)
       }
+      console.log(this.player.duration, this.player.currentTime);
       this.updateState();
     });
   }
+
+  forwardTenSeconds() {
+    this.player.seek(this.player.currentTime + 10000, () => {
+      this.updateState();
+    });
+  };
 
   render() {
     return (
@@ -114,7 +121,7 @@ class DiscussionScreenPlayerCard extends Component {
             <TouchableOpacity>
               <NextButton />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.forwardTenSeconds()}>
               <ForwardTenButton />
             </TouchableOpacity>
           </View>
