@@ -122,6 +122,9 @@ const NewDiscussionScreen = ({ navigation }) => {
       if (createNewDiscussionRequest.data) {
         setIsLoading(false);
         console.log(createNewDiscussionRequest.data);
+        navigation.navigate('DiscussionScreen', {
+          discussionId: createNewDiscussionRequest.data.id
+        });
       }
     } catch (error) {
       setIsLoading(false);
@@ -334,7 +337,7 @@ const styles = StyleSheet.create({
   publishButtonTextStyle: {
     color: "#0E4EF4",
     fontSize: 16,
-    fontFamily: medium
+    fontFamily: bold
   },
 
   newDiscussionFormContainerStyle: {
