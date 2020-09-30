@@ -225,7 +225,13 @@ const NewDiscussionScreen = ({ navigation }) => {
     clearTimer();
 
     player.playPause((error, paused) => {
-      console.log(error)
+      console.log(error);
+    });
+  };
+
+  const stopPlayer = () => {
+    player.stop((error) => {
+      console.log(error);
     });
   };
 
@@ -281,11 +287,17 @@ const NewDiscussionScreen = ({ navigation }) => {
             />
             <View style={styles.newDiscussionRecorderContainerStyle}>
               <TouchableOpacity
+                onPress={() => recordingFile && stopPlayer() }
+              >
+                <View style={styles.stopButtonStyle}>
+                  <Text style={styles.stopButtonTextStyle}>Stop</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
                 onPress={() => voiceRecord(false)}
               >
                 <RecordButton />
               </TouchableOpacity>
-              
               <TouchableOpacity
                 onPress={() => recordingFile && playRecording() }
               >
@@ -371,12 +383,29 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around"
   },
+
+  stopButtonStyle: {
+    borderWidth: 1,
+    padding: "5%",
+    borderRadius: 10,
+    borderColor: "#de181f",
+    height: 40,
+    width: 100
+  },
+
+  stopButtonTextStyle: {
+    color: "#de181f",
+    fontFamily: bold,
+    textAlign: "center"
+  },
   
   playOrPauseButtonStyle: {
     borderWidth: 1,
     padding: "5%",
     borderRadius: 10,
-    borderColor: "#5152D0"
+    borderColor: "#5152D0",
+    height: 40,
+    width: 100
   },
 
   playOrPauseButtonTextStyle: {
