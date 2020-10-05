@@ -32,6 +32,20 @@ const DiscussionScreenCard = props => {
     recordingFile
   } = props;
 
+  const numberConverter = number => {
+    let numberToString = number.toString();
+
+    if (numberToString.length > 3 && numberToString.length <= 6) {
+      return `${numberToString.substring(0, numberToString.length - 3)}k`;
+    } else if (numberToString.length > 6 && numberToString.length <= 9) {
+      return `${numberToString.substring(0, numberToString.length - 6)}m`;
+    } else if (numberToString.length > 9) {
+      return `${numberToString.substring(0, numberToString.length - 9)}b`;
+    } else {
+      return numberToString
+    };
+  };
+
   return (
     <View style={styles.discussionScreenCardContainerStyle}>
       <View style={styles.discussionInfoSectionStyle}>
@@ -39,7 +53,7 @@ const DiscussionScreenCard = props => {
           <View style={styles.profileInfoContainerStyle}>
             <View style={styles.profileContainerStyle}>
               <Image source={profilePicture ? {uri: profilePicture} : ProfilePictureExample} style={styles.profileImageStyle} />
-              <Text style={styles.profileNameStyle}>Richard Hendricks</Text>
+              <Text style={styles.profileNameStyle}>{profileName}</Text>
             </View>
             <Text style={styles.postTimeStyle}>1 Jun 2020, 12:45</Text>
           </View>
@@ -48,21 +62,21 @@ const DiscussionScreenCard = props => {
           </TouchableOpacity>
         </View>
         <View style={styles.discussionVoteAndInfoContainerStyle}>
-          <View>
+          <View style={styles.voteContainerStyle}>
             <TouchableOpacity>
               <Upvote />
             </TouchableOpacity>
-            <Text style={styles.voteNumberStyle}>134k</Text>
+              <Text style={styles.voteNumberStyle}>{numberConverter(like)}</Text>
             <TouchableOpacity>
               <Downvote />
             </TouchableOpacity>
           </View>
           <View style={styles.discussionInfoContainerStyle}>
-            <Text style={styles.discussionTitleStyle}>Who's your PL Team of the Year?</Text>
+            <Text style={styles.discussionTitleStyle}>{discussionTitle}</Text>
             <Text style={styles.discussionHashtag}>#football</Text>
             <View style={styles.repliesAndPlaysNumberContainerStyle}>
-              <Text style={styles.repliesAndPlaysNumberStyle}>150k Replies</Text>
-              <Text style={styles.repliesAndPlaysNumberStyle}>449k Plays</Text>
+              <Text style={styles.repliesAndPlaysNumberStyle}>{numberConverter(replies)} Replies</Text>
+              <Text style={styles.repliesAndPlaysNumberStyle}>{numberConverter(plays)} Plays</Text>
             </View>
           </View>
         </View>
@@ -129,6 +143,10 @@ const styles = StyleSheet.create({
   discussionVoteAndInfoContainerStyle: {
     flexDirection: "row",
     marginTop: 24
+  },
+
+  voteContainerStyle: {
+    alignItems: "center"
   },
 
   voteNumberStyle: {

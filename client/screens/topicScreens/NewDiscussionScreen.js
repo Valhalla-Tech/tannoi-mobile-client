@@ -26,7 +26,7 @@ import {
 import { getTopic } from '../../store/actions/GetTopicAction';
 import axios from 'axios';
 
-//Icons
+//Icon
 import RecordButton from '../../assets/topicAssets/recordButton.svg';
 
 //Components

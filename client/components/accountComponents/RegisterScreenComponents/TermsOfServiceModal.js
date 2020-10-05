@@ -18,38 +18,38 @@ const TermsOfServiceModal = props => {
 
   return (
     <Modal
-    animationType="slide"
-    visible={openTermsOfServiceModal}
-    transparent={true}
+      animationType="slide"
+      visible={openTermsOfServiceModal}
+      transparent={true}
     >
-        <View style={styles.backgroundShadowStyle}></View>
-          <View style={styles.termsOfServiceModalStyle}>
-            <CloseButton closeFunction={closeTermsOfServiceModal} />
-            <ScrollView>
-              <Text style={styles.termsOfServiceTitleStyle}>Terms of service</Text>
-              <Text style={styles.termsOfServiceArticleTitleStyle}>AGREEMENT</Text>
-              <Text style={styles.termsOfServiceArticleStyle}>
-                These Terms of Service constitute a legally binding 
-                agreement (the "Agreement") by and between ProBoards, 
-                Inc. dba Forums.net (hereinafter, "Forums.net") 
-                and you or your company (in either case, "You" or "Your") 
-                concerning Your purchase and use of Forums.net's website, 
-                (the "Website"), products and services, including without 
-                limitation forum hosting services. The Website, products 
-                and services are collectively referred to herein as "the 
-                Services." By using the Services, You represent and warrant 
-                that You have read and understood, and agree to be bound by, 
-                this Agreement, as modified by Forums.net from time to time 
-                and posted on the Website.
-              </Text>
-              <Text style={styles.termsOfServiceArticleTitleStyle}>PRIVACY POLICY</Text>
-              <Text style={styles.termsOfServiceArticleStyle}>
-                By using the Services, You consent to the collection and 
-                use of certain information about You, as specified in Forums.net's Privacy Policy. 
-                Forums.net encourages You to frequently check the Privacy Policy for changes.
-              </Text>
-            </ScrollView>
-          </View>
+      <View style={styles.backgroundShadowStyle}></View>
+        <View style={styles.termsOfServiceModalStyle}>
+          <CloseButton closeFunction={closeTermsOfServiceModal} />
+          <ScrollView>
+            <Text style={styles.termsOfServiceTitleStyle}>Terms of service</Text>
+            <Text style={styles.termsOfServiceArticleTitleStyle}>AGREEMENT</Text>
+            <Text style={styles.termsOfServiceArticleStyle}>
+              These Terms of Service constitute a legally binding 
+              agreement (the "Agreement") by and between ProBoards, 
+              Inc. dba Forums.net (hereinafter, "Forums.net") 
+              and you or your company (in either case, "You" or "Your") 
+              concerning Your purchase and use of Forums.net's website, 
+              (the "Website"), products and services, including without 
+              limitation forum hosting services. The Website, products 
+              and services are collectively referred to herein as "the 
+              Services." By using the Services, You represent and warrant 
+              that You have read and understood, and agree to be bound by, 
+              this Agreement, as modified by Forums.net from time to time 
+              and posted on the Website.
+            </Text>
+            <Text style={styles.termsOfServiceArticleTitleStyle}>PRIVACY POLICY</Text>
+            <Text style={styles.termsOfServiceArticleStyle}>
+              By using the Services, You consent to the collection and 
+              use of certain information about You, as specified in Forums.net's Privacy Policy. 
+              Forums.net encourages You to frequently check the Privacy Policy for changes.
+            </Text>
+          </ScrollView>
+        </View>
       </Modal>
   );
 };

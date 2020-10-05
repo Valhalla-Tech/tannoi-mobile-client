@@ -26,6 +26,7 @@ class DiscussionScreenPlayerCard extends Component {
 
     this.state = {
       playPauseButton: 'Play',
+      playButtonDisabled: true,
       profilePicture: this.props.profilePicture,
       cardType: this.props.cardType,
       recordingFile: this.props.recordingFile
@@ -39,10 +40,11 @@ class DiscussionScreenPlayerCard extends Component {
   }
 
   updateState(err) {
+    console.log(this.player.canPlay);
     this.setState({
       playPauseButton: this.player && this.player.isPlaying ? 'Pause' : 'Play',
 
-      playButtonDisabled: !this.player
+      playButtonDisabled: !this.player || !this.player.canPlay
     });
   }
 
@@ -50,11 +52,12 @@ class DiscussionScreenPlayerCard extends Component {
     if (this.player) {
       this.player.destroy();
     }
-
+    
     this.player = new Player(this.state.recordingFile, {
       autoDestroy: false
     })
-    .prepare((error) => {
+    this.player.speed = 0.0;
+    this.player.prepare((error) => {
       if (error) {
         console.log('error at _reloadPlayer():');
         console.log(error);
@@ -74,11 +77,13 @@ class DiscussionScreenPlayerCard extends Component {
   };
 
   playRecording() {
+    console.log(this.player, this.state.recordingFile);
     this.player.playPause((error, paused) => {
       if (error) {
-        console.log(error)
+        console.log(error);
+        this.loadPlayer()
       }
-      console.log(this.player.duration, this.player.currentTime);
+      
       this.updateState();
     });
   }
@@ -93,7 +98,7 @@ class DiscussionScreenPlayerCard extends Component {
     return (
       <View style={this.state.cardType === 'discussion' ? styles.discussionPlayerContainerStyle : styles.responsePlayerContainerStyle}>
       <View>
-        <View style={styles.profileAndPostContainerTimeStyle}>
+        <View style={styles.profileAndPostTimeContainerStyle}>
           <View style={styles.profileInfoContainerStyle}>
             <Image source={{uri: this.state.profilePicture}} style={styles.profileImageStyle} />
             <Text style={styles.profileNameStyle}>Richard Hendricks</Text>
@@ -110,10 +115,14 @@ class DiscussionScreenPlayerCard extends Component {
           <View>
             <TouchableOpacity onPress={() => this.playRecording()}>
               {
-                this.state.playPauseButton === 'Play' ? (
-                  <ActivePlayButton />
-                ) : this.state.playPauseButton === 'Pause' && (
-                  <PauseButton />
+                this.state.playButtonDisabled ? (
+                  <Text>Loading...</Text>
+                ) : (
+                  this.state.playPauseButton === 'Play' ? (
+                    <ActivePlayButton />
+                  ) : this.state.playPauseButton === 'Pause' && (
+                    <PauseButton />
+                  )
                 )
               }
             </TouchableOpacity>
@@ -144,7 +153,7 @@ const styles = StyleSheet.create({
     borderRadius: 8
   },
 
-  profileAndPostContainerTimeStyle: {
+  profileAndPostTimeContainerStyle: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between"

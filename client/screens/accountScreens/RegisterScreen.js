@@ -140,19 +140,19 @@ const RegisterPage = ({ navigation }) => {
                 />
               )
             }
-          <View style={styles.termsOfServiceContainerStyle}>  
-            <Text style={styles.signupTermsAndPrivacyStyle}>By signing up, you agree to our </Text>
-            <TouchableOpacity
-              onPress={() => setTermsOfServiceModalIsOpen(true)}
-            >
-              <Text style={{...styles.signupTermsAndPrivacyStyle, color: "#2f3dfa"}}>
-                Terms of Service, Privacy Policies
+            <View style={styles.termsOfServiceContainerStyle}>  
+              <Text style={styles.signupTermsAndPrivacyStyle}>By signing up, you agree to our </Text>
+              <TouchableOpacity
+                onPress={() => setTermsOfServiceModalIsOpen(true)}
+              >
+                <Text style={{...styles.signupTermsAndPrivacyStyle, color: "#2f3dfa"}}>
+                  Terms of Service, Privacy Policies
+                </Text>
+              </TouchableOpacity>
+              <Text style={styles.signupTermsAndPrivacyStyle}>
+                and to receive notice on events and services.
               </Text>
-            </TouchableOpacity>
-            <Text style={styles.signupTermsAndPrivacyStyle}>
-              and to receive notice on events and services.
-            </Text>
-          </View>
+            </View>
           </View>
           <EmailConfirmationModal 
             openEmailConfirmationModal={openConfirmationModal}

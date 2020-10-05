@@ -23,6 +23,7 @@ const HomeListCard = props => {
     time
   } = props;
 
+
   const numberConverter = number => {
     if (number.length > 3 && number.length <= 6) {
       return `${number.substring(0, number.length - 3)}k`;
@@ -65,6 +66,7 @@ const styles = StyleSheet.create({
     padding: "5%",
     borderBottomWidth: 1,
     borderBottomColor: "#F5F7F9",
+    justifyContent: "space-between"
   },
 
   profileContainerStyle: {
@@ -106,8 +108,7 @@ const styles = StyleSheet.create({
   },
 
   playButtonAndDurationContainerStyle: {
-    alignItems: "flex-end", 
-    // marginLeft: "2%"
+    alignItems: "flex-end"
   },
 
   durationStyle: {

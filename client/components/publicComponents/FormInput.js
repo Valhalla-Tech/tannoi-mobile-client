@@ -6,7 +6,10 @@ import {
 import { normal } from '../../assets/FontSize';
 
 const FormInput = props => {
-  const { formInputTitle, dataInput, formInputValue } = props;
+  const { 
+    formInputTitle, 
+    dataInput, 
+    formInputValue } = props;
 
   return (
     <TextInput
