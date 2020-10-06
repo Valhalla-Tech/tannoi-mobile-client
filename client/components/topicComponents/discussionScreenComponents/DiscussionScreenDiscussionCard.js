@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
@@ -7,6 +7,8 @@ import {
   Image
 } from 'react-native';
 import { bold, normal, medium } from '../../../assets/FontSize';
+import AsyncStorage from '@react-native-community/async-storage';
+import axios from 'axios';
 
 //Profile picture example
 import ProfilePictureExample from '../../../assets/publicAssets/bigProfilePicture.png';
@@ -29,7 +31,13 @@ const DiscussionScreenCard = props => {
     hashtags,
     replies,
     plays,
-    recordingFile
+    recordingFile,
+    getDiscussion,
+    discussionId,
+    nextPlayerAvailable,
+    changePlayer,
+    cardIndex,
+    stopPlayer
   } = props;
 
   const numberConverter = number => {
@@ -46,6 +54,56 @@ const DiscussionScreenCard = props => {
     };
   };
 
+  const upvote = async () => {
+    try {
+      const access_token = await AsyncStorage.getItem('access_token');
+
+      let upvoteRequest = await axios({
+        method: 'get',
+        url: `https://dev.entervalhalla.tech/api/tannoi/v1/discussions/like/${discussionId}`,
+        headers: {
+          token: access_token
+        }
+      })
+
+      if (upvoteRequest.data) {
+        getDiscussion();
+      }
+    } catch (error) {
+      console.log(error.response);
+    };
+  };
+
+  const downvote = async () => {
+    try {
+      const access_token = await AsyncStorage.getItem('access_token');
+
+      let downvoteRequest = await axios({
+        method: 'get',
+        url: `https://dev.entervalhalla.tech/api/tannoi/v1/discussions/dislike/${discussionId}`,
+        headers: {
+          token: access_token
+        }
+      })
+
+      if (downvoteRequest.data) {
+        getDiscussion();
+      }
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
+  const convertHashtagForDisplay = hashtagsInput => {
+    let hashtagDisplayOutput = '';
+
+    hashtagsInput.forEach(hashtag => {
+      hashtagDisplayOutput += `${hashtag.name} `;
+    });
+
+    return hashtagDisplayOutput;
+  };
+
   return (
     <View style={styles.discussionScreenCardContainerStyle}>
       <View style={styles.discussionInfoSectionStyle}>
@@ -55,7 +113,7 @@ const DiscussionScreenCard = props => {
               <Image source={profilePicture ? {uri: profilePicture} : ProfilePictureExample} style={styles.profileImageStyle} />
               <Text style={styles.profileNameStyle}>{profileName}</Text>
             </View>
-            <Text style={styles.postTimeStyle}>1 Jun 2020, 12:45</Text>
+            <Text style={styles.postTimeStyle}>{postTime}</Text>
           </View>
           <TouchableOpacity style={styles.discussionCardMenuStyle}>
             <DiscussionCardMenu />
@@ -63,17 +121,17 @@ const DiscussionScreenCard = props => {
         </View>
         <View style={styles.discussionVoteAndInfoContainerStyle}>
           <View style={styles.voteContainerStyle}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => upvote()}>
               <Upvote />
             </TouchableOpacity>
               <Text style={styles.voteNumberStyle}>{numberConverter(like)}</Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => downvote()}>
               <Downvote />
             </TouchableOpacity>
           </View>
           <View style={styles.discussionInfoContainerStyle}>
             <Text style={styles.discussionTitleStyle}>{discussionTitle}</Text>
-            <Text style={styles.discussionHashtag}>#football</Text>
+            <Text style={styles.discussionHashtag}>{hashtags ? convertHashtagForDisplay(hashtags) : ''}</Text>
             <View style={styles.repliesAndPlaysNumberContainerStyle}>
               <Text style={styles.repliesAndPlaysNumberStyle}>{numberConverter(replies)} Replies</Text>
               <Text style={styles.repliesAndPlaysNumberStyle}>{numberConverter(plays)} Plays</Text>
@@ -86,7 +144,12 @@ const DiscussionScreenCard = props => {
           <DiscussionScreenPlayerCard
             cardType="discussion"
             profilePicture={profilePicture}
+            profileName={profileName}
+            postTime={postTime}
             recordingFile={recordingFile}
+            nextPlayerAvailable={nextPlayerAvailable}
+            changePlayer={changePlayer}
+            cardIndex={cardIndex}
           />
         )
       }

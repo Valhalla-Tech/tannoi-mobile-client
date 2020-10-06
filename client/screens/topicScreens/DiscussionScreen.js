@@ -33,6 +33,8 @@ const DiscussionScreen = ({ route, navigation }) => {
   const [openAddResponseModal, setOpenAddResponseModal] = useState(false);
   const [response, setResponse] = useState('');
   const [selectedCard, setSelectedCard] = useState('discussion');
+  const [nextPlayerAvailable, setNextPlayerAvailable] = useState(false);
+  const [stopPlayer, setStopPlayer] = useState(false);
 
   // const {
   //   discussionId
@@ -48,7 +50,7 @@ const DiscussionScreen = ({ route, navigation }) => {
       if (access_token) {
         getResponse();
         let getDiscussionRequest = await axios({
-          url: `https://dev.entervalhalla.tech/api/tannoi/v1/discussions/single/95`,
+          url: `https://dev.entervalhalla.tech/api/tannoi/v1/discussions/single/1`,
           method: 'get',
           headers: {
             'token': access_token
@@ -56,9 +58,13 @@ const DiscussionScreen = ({ route, navigation }) => {
         });
 
         if (getDiscussionRequest.data) {
+          if (getDiscussionRequest.data.response_count !== 0) {
+            setNextPlayerAvailable(true)
+          };
+
           setProfilePicture(getDiscussionRequest.data.creator.profile_photo_path);
           setProfileName(getDiscussionRequest.data.creator.name);
-          setPostTime(getDiscussionRequest.data.created_at);
+          setPostTime(convertPostTime(getDiscussionRequest.data.created_at));
           setLike(getDiscussionRequest.data.likes);
           setDiscussionTitle(getDiscussionRequest.data.title);
           setHashtags(getDiscussionRequest.data.hashtags);
@@ -76,7 +82,7 @@ const DiscussionScreen = ({ route, navigation }) => {
     try {
       let access_token = await AsyncStorage.getItem('access_token');
       let getResponseRequest = await axios({
-        url: `https://dev.entervalhalla.tech/api/tannoi/v1/responses/discussion/95?page=1`,
+        url: `https://dev.entervalhalla.tech/api/tannoi/v1/responses/discussion/1?page=1`,
         method: 'get',
         headers: {
           'token': access_token
@@ -84,7 +90,6 @@ const DiscussionScreen = ({ route, navigation }) => {
       });
 
       if (getResponseRequest.data) {
-        console.log(getResponseRequest.data.data);
         setResponse(getResponseRequest.data.data);
       }
     } catch (error) {
@@ -92,8 +97,49 @@ const DiscussionScreen = ({ route, navigation }) => {
     }
   };
 
-  const selectCard = cardId => {
-    setSelectedCard(cardId);
+  const getResponseLike = responseId => {
+    let like;
+
+    response.forEach(response => {
+      if (response.id === responseId) {
+        like = response.likes
+      }
+    });
+
+    return like;
+  };
+
+  const selectCard = cardIndex => {
+    setSelectedCard(cardIndex);
+  };
+
+  const changePlayer = (cardIndex, action) => {
+    if (cardIndex === 'discussion' && action === 'next') {
+      setSelectedCard(0);
+    } else if (cardIndex === 0 && action === 'previous') {
+      setSelectedCard('discussion')
+    } else if (action === 'next') {
+      let numberedCardIndex = Number(cardIndex);
+      setSelectedCard(numberedCardIndex + 1)
+    }
+  };
+
+  const convertPostTime = postTimeInput => {
+    let postTimeToNewDate = new Date(postTimeInput);
+    let postTimeToGMTString = postTimeToNewDate.toGMTString();
+    let postTimeToNewDateSplitted = postTimeToGMTString.split(' ');
+    
+    
+    let date = postTimeToNewDateSplitted[1];
+    let month = postTimeToNewDateSplitted[2];
+    let year = postTimeToNewDateSplitted[3];
+    let time = postTimeToNewDateSplitted[4].substring(0, 5);
+    
+    if (date[0] === '0') {
+      date = date[1]
+    }
+
+    return `${date} ${month} ${year}, ${time}`;
   };
 
   useEffect(() => {
@@ -137,37 +183,54 @@ const DiscussionScreen = ({ route, navigation }) => {
                   replies={replies}
                   plays={plays}
                   recordingFile={recordingFile}
+                  getDiscussion={getDiscussion}
+                  discussionId="1"
+                  nextPlayerAvailable={nextPlayerAvailable}
+                  changePlayer={changePlayer}
+                  cardIndex="discussion"
                 />
               ) : (
                 <ClosedCard
-                  profilePicture={ProfilePictureExample}
-                  name={profileName}
-                  cardId="discussion"
+                  profilePicture={profilePicture}
+                  profileName={profileName}
+                  cardIndex="discussion"
                   selectCard={selectCard}
+                  postTime={postTime}
                 />
               )
             }
             <AddResponse
               openAddResponseModal={openAddResponseModal}
               closeAddResponseModal={closeAddResponseModal}
-              discussionId="95"
+              discussionId="1"
+              getResponse={getResponse}
             />
           </View>
         }
         renderItem={itemData => (
           <>
             {
-              selectedCard === itemData.item.id ? (
+              selectedCard === itemData.index ? (
                 <DiscussionScreenPlayerCard
                   cardType="response"
-                  profilePicture={profilePicture}
+                  profilePicture={itemData.item.user.profile_photo_path}
                   recordingFile={itemData.item.voice_note_path}
+                  like={itemData.item.likes}
+                  responseId={itemData.item.id}
+                  getResponseLike={getResponseLike}
+                  getResponseFromDiscussion={getResponse}
+                  nextPlayerAvailable={nextPlayerAvailable}
+                  cardIndex={itemData.index}
+                  cardLength={response.length}
+                  postTime={postTime}
                 />
               ) : (
                 <ClosedCard
-                  profilePicture={ProfilePictureExample}
-                  cardId={itemData.item.id}
+                  profilePicture={itemData.item.user.profile_photo_path}
+                  cardIndex={itemData.index}
                   selectCard={selectCard}
+                  profileName={itemData.item.user.name}
+                  postTime={postTime}
                 />
               )
             }

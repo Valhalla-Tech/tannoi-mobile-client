@@ -31,7 +31,8 @@ const AddResponse = props => {
   const {
     openAddResponseModal,
     closeAddResponseModal,
-    discussionId
+    discussionId,
+    getResponse
   } = props;
 
   const createResponse = async () => {
@@ -63,6 +64,7 @@ const AddResponse = props => {
 
       console.log(createResponseRequest.data);
       if (createResponseRequest.data) {
+        getResponse();
         closeAddResponseModal();
       }
     } catch (error) {

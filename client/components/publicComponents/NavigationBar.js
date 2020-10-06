@@ -29,7 +29,7 @@ const NavigationBar = props => {
   const { navigation } = props;
 
   const newDiscussionScreenButton = () => {
-    navigation.navigate('DiscussionScreen');
+    navigation.navigate('NewDiscussionScreen');
   };
 
   return (

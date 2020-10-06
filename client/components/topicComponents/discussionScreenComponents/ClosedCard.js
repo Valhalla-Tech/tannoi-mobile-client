@@ -11,10 +11,10 @@ import { bold, normal } from '../../../assets/FontSize';
 const ClosedCard = props => {
   const {
     profilePicture,
-    name,
+    profileName,
     postTime,
     caption,
-    cardId,
+    cardIndex,
     selectCard
   } = props;
 
@@ -22,18 +22,18 @@ const ClosedCard = props => {
     <TouchableOpacity 
       style={styles.closedCardContainerStyle}
       onPress={() => {
-        selectCard(cardId);
+        selectCard(cardIndex);
       }}
     >
       <View style={styles.profileAndPostTimeContainerStyle}>
         <View style={styles.profileInfoContainerStyle}>
-          <Image source={profilePicture} style={styles.profileImageStyle} />
-          <Text style={styles.profileNameStyle}>Richard Hendricks</Text>
+          <Image source={{uri: profilePicture}} style={styles.profileImageStyle} />
+          <Text style={styles.profileNameStyle}>{profileName}</Text>
         </View>
-        <Text style={styles.postTimeStyle}>1 Jun 2020, 12:45</Text>
+        <Text style={styles.postTimeStyle}>{postTime}</Text>
       </View>
       {
-        cardId !== 'discussion' && <Text>Test caption</Text>
+        cardIndex !== 'discussion' && <Text style={styles.captionTextStyle}>Test caption</Text>
       }
     </TouchableOpacity>
   );
@@ -76,6 +76,13 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: normal
   },
+
+  captionTextStyle: {
+    fontSize: 16,
+    color: "#464D60",
+    fontFamily: normal,
+    marginTop: 12
+  }
 });
 
 export default ClosedCard;
