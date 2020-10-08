@@ -17,6 +17,8 @@ import ProfilePictureExample from '../../../assets/publicAssets/bigProfilePictur
 import DiscussionCardMenu from '../../../assets/topicAssets/discussionCardMenu.svg';
 import Upvote from '../../../assets/topicAssets/upvote.svg';
 import Downvote from '../../../assets/topicAssets/downvote.svg';
+import ActiveUpvote from '../../../assets/topicAssets/activeUpvote.svg';
+import ActiveDownvote from '../../../assets/topicAssets/activeDownvote.svg';
 
 //Components
 import DiscussionScreenPlayerCard from './DiscussionScreenPlayerCard';
@@ -32,12 +34,15 @@ const DiscussionScreenCard = props => {
     replies,
     plays,
     recordingFile,
+    isLike,
+    isDislike,
     getDiscussion,
     discussionId,
     nextPlayerAvailable,
     changePlayer,
     cardIndex,
-    stopPlayer
+    fromNextPreviousButton,
+    updateFromNextPreviousButton
   } = props;
 
   const numberConverter = number => {
@@ -104,6 +109,24 @@ const DiscussionScreenCard = props => {
     return hashtagDisplayOutput;
   };
 
+  const convertPostTime = postTimeInput => {
+    let postTimeToNewDate = new Date(postTimeInput);
+    let postTimeToGMTString = postTimeToNewDate.toGMTString();
+    let postTimeToNewDateSplitted = postTimeToGMTString.split(' ');
+    
+    
+    let date = postTimeToNewDateSplitted[1];
+    let month = postTimeToNewDateSplitted[2];
+    let year = postTimeToNewDateSplitted[3];
+    let time = postTimeToNewDateSplitted[4].substring(0, 5);
+    
+    if (date[0] === '0') {
+      date = date[1]
+    }
+
+    return `${date} ${month} ${year}, ${time}`;
+  };
+
   return (
     <View style={styles.discussionScreenCardContainerStyle}>
       <View style={styles.discussionInfoSectionStyle}>
@@ -113,7 +136,7 @@ const DiscussionScreenCard = props => {
               <Image source={profilePicture ? {uri: profilePicture} : ProfilePictureExample} style={styles.profileImageStyle} />
               <Text style={styles.profileNameStyle}>{profileName}</Text>
             </View>
-            <Text style={styles.postTimeStyle}>{postTime}</Text>
+            <Text style={styles.postTimeStyle}>{postTime ? convertPostTime(postTime) : ''}</Text>
           </View>
           <TouchableOpacity style={styles.discussionCardMenuStyle}>
             <DiscussionCardMenu />
@@ -122,11 +145,23 @@ const DiscussionScreenCard = props => {
         <View style={styles.discussionVoteAndInfoContainerStyle}>
           <View style={styles.voteContainerStyle}>
             <TouchableOpacity onPress={() => upvote()}>
-              <Upvote />
+              {
+                isLike ? (
+                  <ActiveUpvote />
+                ) : (
+                  <Upvote />
+                )
+              }
             </TouchableOpacity>
               <Text style={styles.voteNumberStyle}>{numberConverter(like)}</Text>
             <TouchableOpacity onPress={() => downvote()}>
-              <Downvote />
+              {
+                isDislike ? (
+                  <ActiveDownvote />
+                ) : (
+                  <Downvote />
+                )
+              }
             </TouchableOpacity>
           </View>
           <View style={styles.discussionInfoContainerStyle}>
@@ -150,6 +185,10 @@ const DiscussionScreenCard = props => {
             nextPlayerAvailable={nextPlayerAvailable}
             changePlayer={changePlayer}
             cardIndex={cardIndex}
+            discussionId={discussionId}
+            getDiscussion={getDiscussion}
+            fromNextPreviousButton={fromNextPreviousButton}
+            updateFromNextPreviousButton={updateFromNextPreviousButton}
           />
         )
       }

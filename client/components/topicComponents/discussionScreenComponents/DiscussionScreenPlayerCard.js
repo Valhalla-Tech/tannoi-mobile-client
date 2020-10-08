@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Component } from 'react';
+import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
@@ -25,12 +25,16 @@ import Upvote from '../../../assets/topicAssets/upvote.svg';
 import Downvote from '../../../assets/topicAssets/downvote.svg';
 import ActiveNextButton from '../../../assets/topicAssets/activeNextButton.svg';
 
+//Component
+import AddResponse from '../../../components/topicComponents/discussionScreenComponents/AddResponse';
+
 class DiscussionScreenPlayerCard extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       playPauseButton: 'Play',
+      discussionId: this.props.discussionId,
       playButtonDisabled: true,
       profilePicture: this.props.profilePicture,
       cardType: this.props.cardType,
@@ -46,7 +50,11 @@ class DiscussionScreenPlayerCard extends Component {
       changePlayer: this.props.changePlayer,
       cardIndex: this.props.cardIndex,
       cardLength: this.props.cardLength,
-      stopPlayer: this.props.stopPlayer
+      stopPlayer: this.props.stopPlayer,
+      getDiscussion: this.props.getDiscussion,
+      fromNextPreviousButton: this.props.fromNextPreviousButton,
+      updateFromNextPreviousButton: this.props.updateFromNextPreviousButton,
+      openAddResponseModal: false
     }
   }
 
@@ -86,6 +94,11 @@ class DiscussionScreenPlayerCard extends Component {
       }
       
       this.updateState();
+
+      if (this.state.fromNextPreviousButton && this.player.canPlay) {
+        this.playRecording();
+        this.state.updateFromNextPreviousButton(false);
+      }
     });
     
     this.updateState();
@@ -103,9 +116,11 @@ class DiscussionScreenPlayerCard extends Component {
       if (error) {
         console.log(error);
         this.loadPlayer();
-      }
+      };
 
-      console.log(this.player.isPlaying);
+      if (this.player.isPlaying && this.state.cardType === 'discussion' && !error) {
+        this.playCounter();
+      };
       
       this.updateState();
     });
@@ -129,6 +144,26 @@ class DiscussionScreenPlayerCard extends Component {
     } else {
       return numberToString
     };
+  };
+
+  playCounter = async () => {
+    try {
+      const access_token = await AsyncStorage.getItem('access_token');
+
+      let playCounterRequest = await axios({
+        method: 'get',
+        url: `https://dev.entervalhalla.tech/api/tannoi/v1//discussions/views/${this.state.discussionId}`,
+        headers: {
+          token: access_token
+        }
+      })
+
+      if (playCounterRequest.data) {
+        this.state.getDiscussion();
+      }
+    } catch (error) {
+      console.log(error.response);
+    }
   };
 
   getResponse = async () => {
@@ -198,6 +233,30 @@ class DiscussionScreenPlayerCard extends Component {
     };
   };
 
+  convertPostTime = postTimeInput => {
+    let postTimeToNewDate = new Date(postTimeInput);
+    let postTimeToGMTString = postTimeToNewDate.toGMTString();
+    let postTimeToNewDateSplitted = postTimeToGMTString.split(' ');
+    
+    
+    let date = postTimeToNewDateSplitted[1];
+    let month = postTimeToNewDateSplitted[2];
+    let year = postTimeToNewDateSplitted[3];
+    let time = postTimeToNewDateSplitted[4].substring(0, 5);
+    
+    if (date[0] === '0') {
+      date = date[1]
+    }
+
+    return `${date} ${month} ${year}, ${time}`;
+  };
+
+  closeAddResponseModal = () => {
+    this.setState({
+      openAddResponseModal: false
+    })
+  }
+
   render() {
     return (
       <View style={this.state.cardType === 'discussion' ? styles.discussionPlayerContainerStyle : styles.responsePlayerContainerStyle}>
@@ -206,15 +265,32 @@ class DiscussionScreenPlayerCard extends Component {
             <Image source={{uri: this.state.profilePicture}} style={styles.profileImageStyle} />
             <Text style={styles.profileNameStyle}>{this.state.profileName}</Text>
           </View>
-          <Text style={styles.postTimeStyle}>{this.state.postTime}</Text>
+          <Text style={styles.postTimeStyle}>{this.state.postTime ? this.convertPostTime(this.state.postTime) : ''}</Text>
         </View>
         <View style={styles.playerContainerStyle}>
           <TouchableOpacity>
             <PlayerSpeed />
           </TouchableOpacity>
-          <TouchableOpacity>
-            <PreviousButton />
-          </TouchableOpacity>
+          {
+            this.state.cardType !== 'discussion' ? (
+              <TouchableOpacity
+                onPress={() => {
+                  if (this.state.playPauseButton === 'Pause') {
+                    this.state.changePlayer(this.state.cardIndex, 'previous');
+                    this.playRecording();
+                    this.state.updateFromNextPreviousButton(true);
+                  } else {
+                    this.state.changePlayer(this.state.cardIndex, 'previous');
+                    this.state.updateFromNextPreviousButton(true);
+                  }
+                }}
+              >
+                <PreviousButton />
+              </TouchableOpacity>
+            ) : (
+              <PreviousButton />
+            )
+          }
           <TouchableOpacity onPress={() => this.playRecording()}>
             {
               this.state.playButtonDisabled ? (
@@ -230,14 +306,18 @@ class DiscussionScreenPlayerCard extends Component {
           </TouchableOpacity>
           {
             this.state.nextPlayerAvailable && this.state.cardIndex !== this.state.cardLength - 1 ? (
-              <TouchableOpacity onPress={() => {
-                if (this.state.playPauseButton === 'Pause') {
-                  this.state.changePlayer(this.state.cardIndex, 'next');
-                  this.playRecording();
-                } else {
-                  this.state.changePlayer(this.state.cardIndex, 'next');
-                }
-              }}>
+              <TouchableOpacity 
+                onPress={() => {
+                  if (this.state.playPauseButton === 'Pause') {
+                    this.state.changePlayer(this.state.cardIndex, 'next');
+                    this.playRecording();
+                    this.state.updateFromNextPreviousButton(true);
+                  } else {
+                    this.state.changePlayer(this.state.cardIndex, 'next');
+                    this.state.updateFromNextPreviousButton(true);
+                  }
+                }}
+              >
                 <ActiveNextButton />
               </TouchableOpacity>
             ) : (
@@ -262,13 +342,28 @@ class DiscussionScreenPlayerCard extends Component {
               </View>
               <TouchableOpacity
                 style={styles.addResponseButtonStyle}
-                // onPress={() => setOpenAddResponseModal(true)}
+                onPress={() => {
+                  // this.state.updateOpenAddResponseModal();
+                  // this.state.updateAddResponseForResponse(true);
+                  // this.state.updateResponseId(this.state.responseId);
+                  this.setState({
+                    openAddResponseModal: true
+                  })
+                }}
               >
                 <Text style={styles.addResponseButtonTextStyle}>Add response</Text>
               </TouchableOpacity>
             </View>
           )
         }
+        <AddResponse
+          openAddResponseModal={this.state.openAddResponseModal}
+          closeAddResponseModal={this.closeAddResponseModal}
+          discussionId={this.state.discussionId}
+          getResponse={this.state.getResponseFromDiscussion}
+          addResponseForResponse={true}
+          responseId={this.state.responseId}
+        />
       </View>
     )
   }

@@ -8,7 +8,8 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Platform,
-  PermissionsAndroid
+  PermissionsAndroid,
+  addResponseForResponse
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
 import {
@@ -27,12 +28,15 @@ import FormInput from '../../publicComponents/FormInput';
 
 const AddResponse = props => {
   const [recordingFile, setRecordingFile] = useState('');
+  const [caption, setCaption] = useState('');
 
   const {
     openAddResponseModal,
     closeAddResponseModal,
     discussionId,
-    getResponse
+    getResponse,
+    responseId,
+    addResponseForResponse
   } = props;
 
   const createResponse = async () => {
@@ -51,22 +55,34 @@ const AddResponse = props => {
         name: `recording.${fileType}`,
         type: `audio/${fileType}`
       });
+      
+      formData.append('caption', caption);
+
+      let addResponseForResponseUrl = '';
+
+      if (addResponseForResponse) {
+        console.log('masuk sini')
+        addResponseForResponseUrl = `/${responseId}`;
+      };
 
       let createResponseRequest = await axios({
         method: 'post',
-        url: `https://dev.entervalhalla.tech/api/tannoi/v1/responses/${discussionId}`,
+        url: `https://dev.entervalhalla.tech/api/tannoi/v1/responses/${discussionId}${addResponseForResponseUrl}`,
         headers: {
           'Content-Type': 'multipart/form-data',
           'token': access_token
         },
         data: formData
-      })
+      });
 
       console.log(createResponseRequest.data);
+
       if (createResponseRequest.data) {
         getResponse();
         closeAddResponseModal();
-      }
+        updateResponseId('');
+        updateAddResponseForResponse(false);
+      };
     } catch (error) {
       console.log(error.response);
     }
@@ -160,6 +176,10 @@ const AddResponse = props => {
     })
   };
 
+  const inputCaption = captionInput => {
+    setCaption(captionInput);
+  };
+
   const playRecording = () => {
     setRecordingFile('/data/user/0/tannoi.client/files/responseRecord.mp4');
     clearTimer();
@@ -186,7 +206,9 @@ const AddResponse = props => {
       </View>
       <View style={{flex: 1}} />
       <TouchableWithoutFeedback
-        onPress={() => Keyboard.dismiss()}
+        onPress={() => {
+          Keyboard.dismiss();
+        }}
       >
         <View style={styles.addResponseModalStyle}>
           <View style={styles.titleAndPublishButtonContainerStyle}>
@@ -199,6 +221,7 @@ const AddResponse = props => {
           </View>
           <FormInput
             formInputTitle="Add caption (Optional)"
+            dataInput={inputCaption}
           />
           <View style={styles.addResponseRecorderContainerStyle}>
             <TouchableOpacity
@@ -230,7 +253,7 @@ const AddResponse = props => {
 const styles = StyleSheet.create({
   backgroundShadowStyle: {
     position: "absolute",
-    // backgroundColor:'rgba(0,0,0,0.8)',
+    backgroundColor:'rgba(0,0,0,0.8)',
     height:"100%",
     width: "100%"
   },

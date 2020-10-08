@@ -30,15 +30,19 @@ const DiscussionScreen = ({ route, navigation }) => {
   const [replies, setReplies] = useState('');
   const [plays, setPlays] = useState('');
   const [recordingFile, setRecordingFile] = useState('');
+  const [isLike, setIsLike] = useState(false);
+  const [isDislike, setIsDislike] = useState(false);
   const [openAddResponseModal, setOpenAddResponseModal] = useState(false);
   const [response, setResponse] = useState('');
   const [selectedCard, setSelectedCard] = useState('discussion');
   const [nextPlayerAvailable, setNextPlayerAvailable] = useState(false);
-  const [stopPlayer, setStopPlayer] = useState(false);
+  const [fromNextPreviousButton, setFromNextPreviousButton] = useState(false);
 
   // const {
   //   discussionId
   // } = route.params;
+
+  // console.log(responseId, addResponseForResponse)
 
   const closeAddResponseModal = () => {
     setOpenAddResponseModal(false);
@@ -64,13 +68,15 @@ const DiscussionScreen = ({ route, navigation }) => {
 
           setProfilePicture(getDiscussionRequest.data.creator.profile_photo_path);
           setProfileName(getDiscussionRequest.data.creator.name);
-          setPostTime(convertPostTime(getDiscussionRequest.data.created_at));
+          setPostTime(getDiscussionRequest.data.created_at);
           setLike(getDiscussionRequest.data.likes);
           setDiscussionTitle(getDiscussionRequest.data.title);
           setHashtags(getDiscussionRequest.data.hashtags);
           setReplies(getDiscussionRequest.data.response_count);
           setPlays(getDiscussionRequest.data.play_count);
           setRecordingFile(getDiscussionRequest.data.voice_note_path);
+          setIsLike(getDiscussionRequest.data.isLike);
+          setIsDislike(getDiscussionRequest.data.isDislike);
         }
       }
     } catch (error) {
@@ -114,32 +120,21 @@ const DiscussionScreen = ({ route, navigation }) => {
   };
 
   const changePlayer = (cardIndex, action) => {
+    console.log(cardIndex, action)
+    let numberedCardIndex = Number(cardIndex);
     if (cardIndex === 'discussion' && action === 'next') {
       setSelectedCard(0);
     } else if (cardIndex === 0 && action === 'previous') {
       setSelectedCard('discussion')
     } else if (action === 'next') {
-      let numberedCardIndex = Number(cardIndex);
-      setSelectedCard(numberedCardIndex + 1)
+      setSelectedCard(numberedCardIndex + 1);
+    } else if (action === 'previous') {
+      setSelectedCard(numberedCardIndex - 1);
     }
   };
 
-  const convertPostTime = postTimeInput => {
-    let postTimeToNewDate = new Date(postTimeInput);
-    let postTimeToGMTString = postTimeToNewDate.toGMTString();
-    let postTimeToNewDateSplitted = postTimeToGMTString.split(' ');
-    
-    
-    let date = postTimeToNewDateSplitted[1];
-    let month = postTimeToNewDateSplitted[2];
-    let year = postTimeToNewDateSplitted[3];
-    let time = postTimeToNewDateSplitted[4].substring(0, 5);
-    
-    if (date[0] === '0') {
-      date = date[1]
-    }
-
-    return `${date} ${month} ${year}, ${time}`;
+  const updateFromNextPreviousButton = fromNextPreviousButtonStatus => {
+    setFromNextPreviousButton(fromNextPreviousButtonStatus)
   };
 
   useEffect(() => {
@@ -148,9 +143,9 @@ const DiscussionScreen = ({ route, navigation }) => {
 
   return (
     <View>
-      {
+      {/* {
         openAddResponseModal && <View style={{backgroundColor: "rgba(0,0,0,0.8)", height: "100%"}}></View>
-      }
+      } */}
       <View style={styles.discussionUpperBarStyle}>
         <BackButton
           navigation={navigation}
@@ -161,7 +156,9 @@ const DiscussionScreen = ({ route, navigation }) => {
         />
         <TouchableOpacity
           style={styles.addResponseButtonStyle}
-          onPress={() => setOpenAddResponseModal(true)}
+          onPress={() => {
+            setOpenAddResponseModal(true);
+          }}
         >
           <Text style={styles.addResponseButtonTextStyle}>Add response</Text>
         </TouchableOpacity>
@@ -188,6 +185,10 @@ const DiscussionScreen = ({ route, navigation }) => {
                   nextPlayerAvailable={nextPlayerAvailable}
                   changePlayer={changePlayer}
                   cardIndex="discussion"
+                  fromNextPreviousButton={fromNextPreviousButton}
+                  updateFromNextPreviousButton={updateFromNextPreviousButton}
+                  isLike={isLike}
+                  isDislike={isDislike}
                 />
               ) : (
                 <ClosedCard
@@ -204,6 +205,7 @@ const DiscussionScreen = ({ route, navigation }) => {
               closeAddResponseModal={closeAddResponseModal}
               discussionId="1"
               getResponse={getResponse}
+              addResponseForResponse={false}
             />
           </View>
         }
@@ -222,7 +224,10 @@ const DiscussionScreen = ({ route, navigation }) => {
                   nextPlayerAvailable={nextPlayerAvailable}
                   cardIndex={itemData.index}
                   cardLength={response.length}
-                  postTime={postTime}
+                  postTime={itemData.item.created_at}
+                  fromNextPreviousButton={fromNextPreviousButton}
+                  updateFromNextPreviousButton={updateFromNextPreviousButton}
+                  changePlayer={changePlayer}
                 />
               ) : (
                 <ClosedCard
@@ -230,7 +235,8 @@ const DiscussionScreen = ({ route, navigation }) => {
                   cardIndex={itemData.index}
                   selectCard={selectCard}
                   profileName={itemData.item.user.name}
-                  postTime={postTime}
+                  postTime={itemData.item.created_at}
+                  caption={itemData.item.caption}
                 />
               )
             }

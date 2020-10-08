@@ -18,6 +18,24 @@ const ClosedCard = props => {
     selectCard
   } = props;
 
+  const convertPostTime = postTimeInput => {
+    let postTimeToNewDate = new Date(postTimeInput);
+    let postTimeToGMTString = postTimeToNewDate.toGMTString();
+    let postTimeToNewDateSplitted = postTimeToGMTString.split(' ');
+    
+    
+    let date = postTimeToNewDateSplitted[1];
+    let month = postTimeToNewDateSplitted[2];
+    let year = postTimeToNewDateSplitted[3];
+    let time = postTimeToNewDateSplitted[4].substring(0, 5);
+    
+    if (date[0] === '0') {
+      date = date[1]
+    }
+
+    return `${date} ${month} ${year}, ${time}`;
+  };
+
   return (
     <TouchableOpacity 
       style={styles.closedCardContainerStyle}
@@ -30,10 +48,10 @@ const ClosedCard = props => {
           <Image source={{uri: profilePicture}} style={styles.profileImageStyle} />
           <Text style={styles.profileNameStyle}>{profileName}</Text>
         </View>
-        <Text style={styles.postTimeStyle}>{postTime}</Text>
+        <Text style={styles.postTimeStyle}>{postTime ? convertPostTime(postTime) : ''}</Text>
       </View>
       {
-        cardIndex !== 'discussion' && <Text style={styles.captionTextStyle}>Test caption</Text>
+        cardIndex !== 'discussion' && <Text style={styles.captionTextStyle}>{caption}</Text>
       }
     </TouchableOpacity>
   );
