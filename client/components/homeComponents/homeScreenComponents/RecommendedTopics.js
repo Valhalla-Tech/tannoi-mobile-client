@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   FlatList
 } from 'react-native';
+import { bold, normal } from '../../../assets/FontSize';
 
 //Component
 import RecommendedTopicsCard from './RecommendedTopicsCard';
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
 
   recommendedTopicsTitleStyle: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontFamily: bold,
     color: "#464D60",
     marginVertical: "4%",
     marginLeft: "5%"
@@ -102,7 +103,8 @@ const styles = StyleSheet.create({
 
   seeAllButtonTextStyle: {
     color: "#0E4EF4",
-    fontSize: 14
+    fontSize: 14,
+    fontFamily: normal
   },
 
   topicCardContainerStyle: {

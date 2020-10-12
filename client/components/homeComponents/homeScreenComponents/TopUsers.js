@@ -7,6 +7,7 @@ import {
   FlatList,
   Image
 } from 'react-native';
+import { bold, normal } from '../../../assets/FontSize';
 
 //Profile picture example
 import profilePictureExample from '../../../assets/homeAssets/bigProfilePicture.png';
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
   topUsersTitleStyle: {
     color: "#464D60",
     fontSize: 20,
-    fontWeight: "bold",
+    fontFamily: bold,
     paddingBottom: 30
   },
 
@@ -91,7 +92,8 @@ const styles = StyleSheet.create({
   topUsersNameStyle: {
     color: "#464D60",
     fontSize: 12,
-    marginBottom: 32
+    marginBottom: 32,
+    fontFamily: normal
   }
 });
 

@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image
 } from 'react-native';
+import { bold, normal } from '../../../assets/FontSize';
 
 const RecommendedTopicsCard = props => {
   const {
@@ -84,12 +85,14 @@ const styles = StyleSheet.create({
   
   topicNameStyle: {
     color: "#464D60",
-    fontSize: 16
+    fontSize: 16,
+    fontFamily: normal
   },
 
   topicDiscussionStyle: {
     color: "#73798C",
-    fontSize: 12
+    fontSize: 12,
+    fontFamily: normal
   }
 });
 

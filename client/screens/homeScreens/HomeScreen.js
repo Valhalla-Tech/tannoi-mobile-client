@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
   Text,
   FlatList
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+import axios from 'axios';
 
 //Profile picture example
 import ProfilePictureExample from '../../assets/homeAssets/bigProfilePicture.png';
@@ -164,6 +166,28 @@ const RECOMMENDED_TOPICS_DATA = [
 ]
 
 const HomeScreen = ({ navigation }) => {
+
+  useEffect(() => {
+    getDiscussionOfTheWeek();
+  }, []);
+
+  const getDiscussionOfTheWeek = async () => {
+    try {
+      const access_token = await AsyncStorage.getItem('access_token');
+
+      let getDiscussionOfTheWeekRequest = await axios({
+        url: 'https://dev.entervalhalla.tech/api/tannoi/v1/discussions/trendings',
+        method: 'get',
+        headers: {
+          'token': access_token
+        }
+      })
+
+      console.log(getDiscussionOfTheWeekRequest.data)
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
 
   return (
     <View>

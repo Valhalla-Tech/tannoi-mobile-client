@@ -5,7 +5,7 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  Button
+  PixelRatio
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
 import {
@@ -29,6 +29,18 @@ import ActiveDownvote from '../../../assets/topicAssets/activeDownvote.svg';
 
 //Component
 import AddResponse from '../../../components/topicComponents/discussionScreenComponents/AddResponse';
+
+const getFontSize = (originalSize) => {
+  if(PixelRatio.get() < 1.5) {
+      return (originalSize * 0.5 ) / PixelRatio.get() 
+  }else if(PixelRatio.get() >= 1.5 && PixelRatio.get() < 2.5) {
+      return (originalSize * 1.5 ) / PixelRatio.get() 
+  }else if(PixelRatio.get() >= 2.5){
+      return (originalSize * 2.5 ) / PixelRatio.get() 
+  }else{
+      return originalSize
+  }
+}
 
 class DiscussionScreenPlayerCard extends Component {
   constructor(props) {
@@ -189,20 +201,11 @@ class DiscussionScreenPlayerCard extends Component {
         });
         
         if (getResponseRequest.data) {
-          // if (this.state.cardIndex === 'response') {
-          //   this.setState({
-          //     responseLike: getResponseRequest.data.likes
-          //   })
-          // } else {
-            this.setState({
-              like: getResponseRequest.data.likes
-            })
-          // }
-
           this.setState({
+            like: getResponseRequest.data.likes,
             isLike: getResponseRequest.data.isLike,
             isDislike: getResponseRequest.data.isDislike
-          })
+          });
         }
       }
     } catch (error) {

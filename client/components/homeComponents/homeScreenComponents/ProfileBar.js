@@ -5,7 +5,7 @@ import {
   Text,
   Image
 } from 'react-native';
-import { bold } from '../../../assets/FontSize'
+import { bold } from '../../../assets/FontSize';
 
 //Profile picture examples
 import ProfilePictureExample from '../../../assets/homeAssets/profilePictureExample.svg';

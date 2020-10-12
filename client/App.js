@@ -7,10 +7,11 @@ import {
 } from 'react-redux';
 import store from './store';
 import {
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Text
 } from 'react-native';
 
-// //Navigation
+//Navigation
 import NavigationIndex from './navigations/NavigationIndex';
 
 const Stack = createStackNavigator();
