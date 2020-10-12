@@ -45,6 +45,11 @@ const NewDiscussionScreen = ({ navigation }) => {
   const topics = useSelector(state => state.GetTopicReducer.topics);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(getTopic());
+    reloadPlayer();
+  }, [])
+
   const discussionTitleInput = input => {
     setDiscussionTitle(input);
   };
@@ -220,7 +225,6 @@ const NewDiscussionScreen = ({ navigation }) => {
   };
 
   const playRecording = () => {
-    console.log('Play recording');
     setRecordingFile('/data/user/0/tannoi.client/files/discussionRecord.mp4');
     clearTimer();
 
@@ -234,10 +238,6 @@ const NewDiscussionScreen = ({ navigation }) => {
       console.log(error);
     });
   };
-
-  useEffect(() => {
-    dispatch(getTopic());
-  }, [])
 
   return (
     <ScrollView>

@@ -24,6 +24,8 @@ import ForwardTenButton from '../../../assets/topicAssets/forwardTenButton.svg';
 import Upvote from '../../../assets/topicAssets/upvote.svg';
 import Downvote from '../../../assets/topicAssets/downvote.svg';
 import ActiveNextButton from '../../../assets/topicAssets/activeNextButton.svg';
+import ActiveUpvote from '../../../assets/topicAssets/activeUpvote.svg';
+import ActiveDownvote from '../../../assets/topicAssets/activeDownvote.svg';
 
 //Component
 import AddResponse from '../../../components/topicComponents/discussionScreenComponents/AddResponse';
@@ -43,8 +45,8 @@ class DiscussionScreenPlayerCard extends Component {
       profileName: this.props.profileName,
       postTime: this.props.postTime,
       responseId: this.props.responseId,
-      getResponseLike: this.props.getResponseLike,
       like: '',
+      responseLike: this.props.responseLike,
       getResponseFromDiscussion: this.props.getResponseFromDiscussion,
       nextPlayerAvailable: this.props.nextPlayerAvailable,
       changePlayer: this.props.changePlayer,
@@ -54,7 +56,12 @@ class DiscussionScreenPlayerCard extends Component {
       getDiscussion: this.props.getDiscussion,
       fromNextPreviousButton: this.props.fromNextPreviousButton,
       updateFromNextPreviousButton: this.props.updateFromNextPreviousButton,
-      openAddResponseModal: false
+      openAddResponseModal: false,
+      responseCount: this.props.responseCount,
+      isLike: false,
+      isDislike: false,
+      isChainResponse: this.props.isChainResponse,
+      getIsLikeAndIsDislike: this.props.getIsLikeAndIsDislike
     }
   }
 
@@ -62,6 +69,8 @@ class DiscussionScreenPlayerCard extends Component {
     this.player = null;
 
     this.loadPlayer();
+
+    this.getResponse();
   };
 
   componentWillUnmount() {
@@ -168,23 +177,33 @@ class DiscussionScreenPlayerCard extends Component {
 
   getResponse = async () => {
     try {
-      let access_token = await AsyncStorage.getItem('access_token');
-      let getResponseRequest = await axios({
-        url: `https://dev.entervalhalla.tech/api/tannoi/v1/responses/discussion/1?page=1`,
-        method: 'get',
-        headers: {
-          'token': access_token
-        }
-      });
-
-      if (getResponseRequest.data) {
-        getResponseRequest.data.data.forEach(response => {
-          if (response.id === this.state.responseId) {
-            this.setState({
-              like: response.likes
-            })
+      const access_token = await AsyncStorage.getItem('access_token');
+      
+      if (access_token) {
+        let getResponseRequest = await axios({
+          url: `https://dev.entervalhalla.tech/api/tannoi/v1/responses/single/${this.state.responseId}`,
+          method: 'get',
+          headers: {
+            'token': access_token
           }
         });
+        
+        if (getResponseRequest.data) {
+          // if (this.state.cardIndex === 'response') {
+          //   this.setState({
+          //     responseLike: getResponseRequest.data.likes
+          //   })
+          // } else {
+            this.setState({
+              like: getResponseRequest.data.likes
+            })
+          // }
+
+          this.setState({
+            isLike: getResponseRequest.data.isLike,
+            isDislike: getResponseRequest.data.isDislike
+          })
+        }
       }
     } catch (error) {
       console.log(error.response);
@@ -205,7 +224,7 @@ class DiscussionScreenPlayerCard extends Component {
 
       if (upvoteRequest.data) {
         this.getResponse();
-        this.state.getResponseFromDiscussion();
+        // this.state.getResponseFromDiscussion();
       }
     } catch (error) {
       console.log(error.response);
@@ -226,10 +245,10 @@ class DiscussionScreenPlayerCard extends Component {
 
       if (downvoteRequest.data) {
         this.getResponse();
-        this.state.getResponseFromDiscussion();
+        // this.state.getResponseFromDiscussion();
       }
     } catch (error) {
-      console.log(error.response);
+      console.log(error);
     };
   };
 
@@ -333,25 +352,50 @@ class DiscussionScreenPlayerCard extends Component {
             <View style={styles.voteAndAddResponseContainerStyle}>
               <View style={styles.voteContainerStyle}>
                 <TouchableOpacity onPress={() => this.upvote()}>
-                  <Upvote />
+                  {
+                    this.state.isLike ? (
+                      <ActiveUpvote />
+                    ) : (
+                      <Upvote />
+                    )
+                  }
                 </TouchableOpacity>
-                <Text style={styles.voteNumberStyle}>{this.state.like === '' ? this.numberConverter(this.state.getResponseLike(this.state.responseId)) : this.numberConverter(this.state.like)}</Text>
+                <Text style={styles.voteNumberStyle}>
+                  {this.numberConverter(this.state.like)}
+                </Text>
                 <TouchableOpacity onPress={() => this.downvote()}>
-                  <Downvote />
+                {
+                    this.state.isDislike ? (
+                      <ActiveDownvote />
+                    ) : (
+                      <Downvote />
+                    )
+                  }
                 </TouchableOpacity>
               </View>
               <TouchableOpacity
                 style={styles.addResponseButtonStyle}
                 onPress={() => {
-                  // this.state.updateOpenAddResponseModal();
-                  // this.state.updateAddResponseForResponse(true);
-                  // this.state.updateResponseId(this.state.responseId);
                   this.setState({
                     openAddResponseModal: true
                   })
                 }}
               >
                 <Text style={styles.addResponseButtonTextStyle}>Add response</Text>
+              </TouchableOpacity>
+            </View>
+          )
+        }
+        {
+          this.state.responseCount >= 1 && (
+            <View style={styles.showReplyButtonContainerStyle}>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.push('ResponseScreen', {
+                  responseId: this.state.responseId,
+                  discussionId: this.state.discussionId
+                })}
+              >
+              <Text style={styles.showReplyButtonTextStyle}>{this.state.responseCount} Rep{this.state.responseCount > 1 ? 'lies' : 'ly'}</Text>
               </TouchableOpacity>
             </View>
           )
@@ -451,6 +495,20 @@ const styles = StyleSheet.create({
   addResponseButtonTextStyle: {
     color: "#0E4EF4",
     fontSize: 16,
+    fontFamily: bold
+  },
+
+  showReplyButtonContainerStyle: {
+    alignItems: "center",
+    marginTop: "5%",
+    borderTopWidth: 1,
+    borderTopColor: "#F5F7F9",
+    paddingTop: "5%"
+  },
+
+  showReplyButtonTextStyle: {
+    fontSize: 15,
+    color: "#0E4EF4",
     fontFamily: bold
   }
 });

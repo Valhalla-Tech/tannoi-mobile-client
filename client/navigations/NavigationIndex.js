@@ -15,6 +15,7 @@ import MainAppNavigation from './MainAppNavigation';
 //Screens
 import NewDiscussionScreen from '../screens/topicScreens/NewDiscussionScreen';
 import DiscussionScreen from '../screens/topicScreens/DiscussionScreen';
+import ResponseScreen from '../screens/topicScreens/ResponseScreen';
 
 const Stack = createStackNavigator();
 
@@ -51,6 +52,7 @@ const NavigationIndex = () => {
             <Stack.Screen name="MainAppNavigation" component={MainAppNavigation} />
             <Stack.Screen name="NewDiscussionScreen" component={NewDiscussionScreen} />
             <Stack.Screen name="DiscussionScreen" component={DiscussionScreen} />
+            <Stack.Screen name="ResponseScreen" component={ResponseScreen} />
           </>
         ) : (
           <Stack.Screen name="AccountNavigation" component={AccountNavigation} />

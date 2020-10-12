@@ -103,25 +103,13 @@ const DiscussionScreen = ({ route, navigation }) => {
     }
   };
 
-  const getResponseLike = responseId => {
-    let like;
-
-    response.forEach(response => {
-      if (response.id === responseId) {
-        like = response.likes
-      }
-    });
-
-    return like;
-  };
-
   const selectCard = cardIndex => {
     setSelectedCard(cardIndex);
   };
 
   const changePlayer = (cardIndex, action) => {
-    console.log(cardIndex, action)
     let numberedCardIndex = Number(cardIndex);
+
     if (cardIndex === 'discussion' && action === 'next') {
       setSelectedCard(0);
     } else if (cardIndex === 0 && action === 'previous') {
@@ -135,6 +123,22 @@ const DiscussionScreen = ({ route, navigation }) => {
 
   const updateFromNextPreviousButton = fromNextPreviousButtonStatus => {
     setFromNextPreviousButton(fromNextPreviousButtonStatus)
+  };
+
+  const getIsLikeAndIsDislike = (input, responseIdInput) => {
+    let isLikeAndIsDislike;
+
+    response.forEach(response => {
+      if (response.id === responseIdInput) {
+        if (input === 'isLike') {
+         isLikeAndIsDislike = response.isLike;
+        } else if (input === 'isDislike') {
+          isLikeAndIsDislike = response.isDislike;
+        }
+      }
+    });
+
+    return isLikeAndIsDislike
   };
 
   useEffect(() => {
@@ -165,7 +169,7 @@ const DiscussionScreen = ({ route, navigation }) => {
       </View>
       <FlatList
         data={response}
-        listKey={(item, index) => index.toString()}
+        keyExtractor={(item, index) => index.toString()}
         ListHeaderComponent={
           <View style={styles.discussionScreenContainerStyle}>
             {
@@ -214,12 +218,13 @@ const DiscussionScreen = ({ route, navigation }) => {
             {
               selectedCard === itemData.index ? (
                 <DiscussionScreenPlayerCard
+                  navigation={navigation}
                   cardType="response"
-                  profilePicture={itemData.item.user.profile_photo_path}
+                  profilePicture={itemData.item.creator.profile_photo_path}
+                  profileName={itemData.item.creator.name}
                   recordingFile={itemData.item.voice_note_path}
                   like={itemData.item.likes}
                   responseId={itemData.item.id}
-                  getResponseLike={getResponseLike}
                   getResponseFromDiscussion={getResponse}
                   nextPlayerAvailable={nextPlayerAvailable}
                   cardIndex={itemData.index}
@@ -228,13 +233,18 @@ const DiscussionScreen = ({ route, navigation }) => {
                   fromNextPreviousButton={fromNextPreviousButton}
                   updateFromNextPreviousButton={updateFromNextPreviousButton}
                   changePlayer={changePlayer}
+                  discussionId="1"
+                  responseCount={itemData.item.response_count}
+                  isLike={itemData.item.isLike}
+                  isDislike={itemData.item.isDislike}
+                  getIsLikeAndIsDislike={getIsLikeAndIsDislike}
                 />
               ) : (
                 <ClosedCard
-                  profilePicture={itemData.item.user.profile_photo_path}
+                  profilePicture={itemData.item.creator.profile_photo_path}
                   cardIndex={itemData.index}
                   selectCard={selectCard}
-                  profileName={itemData.item.user.name}
+                  profileName={itemData.item.creator.name}
                   postTime={itemData.item.created_at}
                   caption={itemData.item.caption}
                 />

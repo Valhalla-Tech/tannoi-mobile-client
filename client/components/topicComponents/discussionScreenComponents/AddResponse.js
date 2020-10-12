@@ -43,6 +43,8 @@ const AddResponse = props => {
     try {
       let access_token = await AsyncStorage.getItem('access_token');
 
+      console.log('masuk sini ')
+
       const uri = `file://${recordingFile}`;
 
       let audioParts = uri.split('.');
@@ -58,16 +60,13 @@ const AddResponse = props => {
       
       formData.append('caption', caption);
 
-      let addResponseForResponseUrl = '';
-
       if (addResponseForResponse) {
-        console.log('masuk sini')
-        addResponseForResponseUrl = `/${responseId}`;
+        formData.append('response_id', responseId)
       };
 
       let createResponseRequest = await axios({
         method: 'post',
-        url: `https://dev.entervalhalla.tech/api/tannoi/v1/responses/${discussionId}${addResponseForResponseUrl}`,
+        url: `https://dev.entervalhalla.tech/api/tannoi/v1/responses/${discussionId}`,
         headers: {
           'Content-Type': 'multipart/form-data',
           'token': access_token
@@ -80,8 +79,6 @@ const AddResponse = props => {
       if (createResponseRequest.data) {
         getResponse();
         closeAddResponseModal();
-        updateResponseId('');
-        updateAddResponseForResponse(false);
       };
     } catch (error) {
       console.log(error.response);
