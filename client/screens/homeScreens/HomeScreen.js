@@ -166,6 +166,7 @@ const RECOMMENDED_TOPICS_DATA = [
 ]
 
 const HomeScreen = ({ navigation }) => {
+  const [discussionOfTheWeek, setDiscussionOfTheWeek] = useState('');
 
   useEffect(() => {
     getDiscussionOfTheWeek();
@@ -183,7 +184,9 @@ const HomeScreen = ({ navigation }) => {
         }
       })
 
-      console.log(getDiscussionOfTheWeekRequest.data)
+      if (getDiscussionOfTheWeekRequest.data) {
+        setDiscussionOfTheWeek(getDiscussionOfTheWeekRequest.data);
+      };
     } catch (error) {
       console.log(error.response);
     }
@@ -201,12 +204,13 @@ const HomeScreen = ({ navigation }) => {
             />
             <DiscussionOfTheWeek
               listTitle="Discussion of the week"
-              listData={DISCUSSION_OF_THE_WEEK_DATA}
+              listData={discussionOfTheWeek}
+              navigation={navigation}
             />
             <TopUsers />
             <Trending 
               listTitle="Trending"
-              listData={TRENDING_DATA}
+              // listData={TRENDING_DATA}
             />
             <RecommendedTopics
               topicData={RECOMMENDED_TOPICS_DATA}

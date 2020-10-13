@@ -38,11 +38,9 @@ const DiscussionScreen = ({ route, navigation }) => {
   const [nextPlayerAvailable, setNextPlayerAvailable] = useState(false);
   const [fromNextPreviousButton, setFromNextPreviousButton] = useState(false);
 
-  // const {
-  //   discussionId
-  // } = route.params;
-
-  // console.log(responseId, addResponseForResponse)
+  const {
+    discussionId
+  } = route.params;
 
   const closeAddResponseModal = () => {
     setOpenAddResponseModal(false);
@@ -54,7 +52,7 @@ const DiscussionScreen = ({ route, navigation }) => {
       if (access_token) {
         getResponse();
         let getDiscussionRequest = await axios({
-          url: `https://dev.entervalhalla.tech/api/tannoi/v1/discussions/single/1`,
+          url: `https://dev.entervalhalla.tech/api/tannoi/v1/discussions/single/${discussionId}`,
           method: 'get',
           headers: {
             'token': access_token
@@ -185,7 +183,7 @@ const DiscussionScreen = ({ route, navigation }) => {
                   plays={plays}
                   recordingFile={recordingFile}
                   getDiscussion={getDiscussion}
-                  discussionId="1"
+                  discussionId={discussionId}
                   nextPlayerAvailable={nextPlayerAvailable}
                   changePlayer={changePlayer}
                   cardIndex="discussion"
@@ -207,7 +205,7 @@ const DiscussionScreen = ({ route, navigation }) => {
             <AddResponse
               openAddResponseModal={openAddResponseModal}
               closeAddResponseModal={closeAddResponseModal}
-              discussionId="1"
+              discussionId={discussionId}
               getResponse={getResponse}
               addResponseForResponse={false}
             />
@@ -233,7 +231,7 @@ const DiscussionScreen = ({ route, navigation }) => {
                   fromNextPreviousButton={fromNextPreviousButton}
                   updateFromNextPreviousButton={updateFromNextPreviousButton}
                   changePlayer={changePlayer}
-                  discussionId="1"
+                  discussionId={discussionId}
                   responseCount={itemData.item.response_count}
                   isLike={itemData.item.isLike}
                   isDislike={itemData.item.isDislike}

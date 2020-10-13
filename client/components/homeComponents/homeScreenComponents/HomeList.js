@@ -17,7 +17,8 @@ import HomeListCard from './HomeListCard';
 const HomeList = props => {
   const { 
     listTitle, 
-    listData 
+    listData,
+    navigation
   } = props
 
   return (
@@ -37,15 +38,19 @@ const HomeList = props => {
         data={listData}
         listKey={(item, index) => index.toString()}
         renderItem={itemData => (
-          <HomeListCard
-            imageUrl={itemData.item.imageUrl}
-            name={itemData.item.name}
-            title={itemData.item.title}
-            votes={itemData.item.votes}
-            replies={itemData.item.replies}
-            plays={itemData.item.plays}
-            time={itemData.item.time}
-          />
+          <>
+            <HomeListCard
+              imageUrl={itemData.item.creator.profile_photo_path}
+              name={itemData.item.creator.name}
+              title={itemData.item.title}
+              votes={itemData.item.likes}
+              replies={0}
+              plays={itemData.item.play_count}
+              time={itemData.item.time}
+              discussionId={itemData.item.id}
+              navigation={navigation}
+            />
+          </>
         )}
       />
       <View style={styles.moreButtonContainerStyle}>

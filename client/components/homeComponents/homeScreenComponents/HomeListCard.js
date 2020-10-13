@@ -20,9 +20,10 @@ const HomeListCard = props => {
     votes,
     replies,
     plays,
-    time
+    time,
+    discussionId,
+    navigation
   } = props;
-
 
   const numberConverter = number => {
     if (number.length > 3 && number.length <= 6) {
@@ -37,10 +38,16 @@ const HomeListCard = props => {
   };
 
   return (
-    <TouchableOpacity style={styles.homeListCardContainerStyle}>
+    <TouchableOpacity style={styles.homeListCardContainerStyle}
+      onPress={() => {
+        navigation.navigate('DiscussionScreen', {
+          discussionId: discussionId
+        })
+      }}
+    >
       <View >
         <View style={styles.profileContainerStyle}>
-          <Image source={imageUrl} style={styles.profilePictureStyle} resizeMode="stretch" />
+          <Image source={{uri: imageUrl}} style={styles.profilePictureStyle} />
           <Text style={styles.nameTextStyle}>{name}</Text>
         </View>
         <Text style={styles.titleTextStyle}>{title}</Text>
