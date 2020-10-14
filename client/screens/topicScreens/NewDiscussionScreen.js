@@ -6,18 +6,10 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
-  KeyboardAvoidingView,
-  ScrollView,
-  Platform,
-  PermissionsAndroid
+  ScrollView
 } from 'react-native';
 import { bold, normal, medium } from '../../assets/FontSize';
 import { Picker } from '@react-native-community/picker';
-import {
-  Player,
-  Recorder,
-  MediaStates
-} from '@react-native-community/audio-toolkit';
 import AsyncStorage from '@react-native-community/async-storage';
 import {
   useSelector,
@@ -26,13 +18,11 @@ import {
 import { getTopic } from '../../store/actions/GetTopicAction';
 import axios from 'axios';
 
-//Icon
-import RecordButton from '../../assets/topicAssets/recordButton.svg';
-
 //Components
 import BackButton from '../../components/publicComponents/BackButton';
 import FormInput from '../../components/publicComponents/FormInput';
 import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
+import NewDiscussionScreenRecorder from '../../components/topicComponents/newDiscussionScreenComponents/NewDiscussionScreenRecorder';
 
 const NewDiscussionScreen = ({ navigation }) => {
   const [discussionTitle, setDiscussionTitle] = useState('');
@@ -47,7 +37,6 @@ const NewDiscussionScreen = ({ navigation }) => {
 
   useEffect(() => {
     dispatch(getTopic());
-    reloadPlayer();
   }, [])
 
   const discussionTitleInput = input => {
@@ -137,106 +126,8 @@ const NewDiscussionScreen = ({ navigation }) => {
     }
   };
 
-  const checkPermission = async () => {
-    if (Platform.OS !== 'android') {
-      return Promise.resolve(true);
-    }
-
-    let result;
-    try {
-        result = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO, { title:'Microphone Permission', message:'Tannoi needs access to your microphone to use voice feature.' });
-
-        if (result === PermissionsAndroid.RESULTS.GRANTED) {
-          return true;
-        } else {
-          return false;
-        }
-    } catch(error) {
-        console.error('failed getting permission, result:', result);
-        return false
-    }
-  }
-
-  let rec = new Recorder("discussionRecord.mp4");
-  let player = new Player("file:///data/user/0/tannoi.client/files/discussionRecord.mp4", {autoDestroy: false});
-  
-  let countDown;
-
-  const recordingTimer = option => {
-      countDown = setTimeout(() => {
-        voiceRecord(true);
-      }, 30000);
-  };
-  
-  const clearTimer = () => {
-    clearTimeout(countDown);
-  }
-
-  const reloadRecorder = () => {
-    if (rec) {
-      rec.destroy();
-    }
-
-    rec = new Recorder("discussionRecord.mp4"); 
-  };
-
-  const reloadPlayer = () => {
-    if (player) {
-      player.destroy();
-    }
-
-    let player = new Player("file:///data/user/0/tannoi.client/files/discussionRecord.mp4", {autoDestroy: false});
-  };
-
-  const voiceRecord = toggleFromTimer => {
-    if (player) {
-      player.destroy();
-    }
-    
-    let permission = checkPermission();
-    
-    permission.then((hasPermission) => {
-      if (toggleFromTimer && rec.isRecording) {
-
-        rec.toggleRecord((error, stopped) => {
-          if (stopped) {
-            reloadPlayer();
-            reloadRecorder();
-          }
-          
-          playRecording();
-        });
-      } else if (!toggleFromTimer) {
-        rec.toggleRecord((error, stopped) => {
-          if (stopped) {
-            reloadPlayer();
-            reloadRecorder();
-          }
-          
-        });
-
-        if (rec.isRecording) {
-          playRecording();
-        } else {
-          recordingTimer();
-        };
-      }
-    })
-  };
-
-  const playRecording = () => {
-    setRecordingFile('/data/user/0/tannoi.client/files/discussionRecord.mp4');
-    clearTimer();
-
-    player.playPause((error, paused) => {
-      console.log(error);
-    });
-  };
-
-  const stopPlayer = () => {
-    player.stop((error) => {
-      console.log(error);
-    });
+  const addRecordingFile = recordingFileInput => {
+    setRecordingFile(recordingFileInput);
   };
 
   return (
@@ -285,27 +176,9 @@ const NewDiscussionScreen = ({ navigation }) => {
               formInputTitle="Add hashtags"
               dataInput={hashtagsInput}
             />
-            <View style={styles.newDiscussionRecorderContainerStyle}>
-              <TouchableOpacity
-                onPress={() => recordingFile && stopPlayer() }
-              >
-                <View style={styles.stopButtonStyle}>
-                  <Text style={styles.stopButtonTextStyle}>Stop</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => voiceRecord(false)}
-              >
-                <RecordButton />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => recordingFile && playRecording() }
-              >
-                <View style={styles.playOrPauseButtonStyle}>
-                  <Text style={styles.playOrPauseButtonTextStyle}>Play / Pause</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
+            <NewDiscussionScreenRecorder
+              addRecordingFile={addRecordingFile}
+            />
           </View>
           {
             isLoading && (
