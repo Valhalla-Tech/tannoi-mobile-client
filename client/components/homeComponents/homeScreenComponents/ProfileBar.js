@@ -18,11 +18,11 @@ const ProfileBar = props => {
   return (
     <View style={styles.profileBarContainerStyle}>
       <View style={styles.profileInfoContainerStyle}>
-        {
+        {/* {
           !user && (
             <LoadingSpinner loadingSpinnerForComponent={true} />
           )
-        }
+        } */}
         <Image source={{uri: user.profile_photo_path}} style={styles.profilePictureStyle} />
         <Text style={styles.profileBarTextStyle}>{user.name}</Text>
       </View >

@@ -22,6 +22,7 @@ import ActiveDownvote from '../../../assets/topicAssets/activeDownvote.svg';
 
 //Components
 import DiscussionScreenPlayerCard from './DiscussionScreenPlayerCard';
+import LoadingSpinner from '../../publicComponents/LoadingSpinner';
 
 const DiscussionScreenCard = props => {
   const {
@@ -129,11 +130,16 @@ const DiscussionScreenCard = props => {
 
   return (
     <View style={styles.discussionScreenCardContainerStyle}>
-      <View style={styles.discussionInfoSectionStyle}>
+      {
+        !profileName ? (
+          <LoadingSpinner loadingSpinnerForComponent={true} />
+        ) : (
+          <>
+            <View style={styles.discussionInfoSectionStyle}>
         <View style={styles.profileAndMenuContainerStyle}>
           <View style={styles.profileInfoContainerStyle}>
             <View style={styles.profileContainerStyle}>
-              <Image source={profilePicture ? {uri: profilePicture} : ProfilePictureExample} style={styles.profileImageStyle} />
+              <Image source={{uri: profilePicture}} style={styles.profileImageStyle} />
               <Text style={styles.profileNameStyle}>{profileName}</Text>
             </View>
             <Text style={styles.postTimeStyle}>{postTime ? convertPostTime(postTime) : ''}</Text>
@@ -192,8 +198,11 @@ const DiscussionScreenCard = props => {
           />
         )
       }
+          </>
+        )
+      }
     </View>
-  );
+  )
 };
 
 const styles = StyleSheet.create({

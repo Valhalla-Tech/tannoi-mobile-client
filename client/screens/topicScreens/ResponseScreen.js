@@ -14,6 +14,8 @@ import axios from 'axios';
 import BackButton from '../../components/publicComponents/BackButton';
 import DiscussionScreenPlayerCard from '../../components/topicComponents/discussionScreenComponents/DiscussionScreenPlayerCard';
 import ClosedCard from '../../components/topicComponents/discussionScreenComponents/ClosedCard';
+import LoadingScreen from '../../components/publicComponents/LoadingSpinner';
+import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
 
 const ReplyScreen = ({route, navigation}) => {
   const [profilePicture, setProfilePicture] = useState('');
@@ -126,7 +128,11 @@ const ReplyScreen = ({route, navigation}) => {
               marginBottom: 0
             }}
           />
-          <Text style={styles.titleStyle}>{profileName}'s Reply</Text>
+          {
+            profileName !== '' && (
+              <Text style={styles.titleStyle}>{profileName}'s Reply</Text>
+            )
+          }
         </View>
         {/* <TouchableOpacity
           style={styles.addResponseButtonStyle}
@@ -137,6 +143,11 @@ const ReplyScreen = ({route, navigation}) => {
           <Text style={styles.addResponseButtonTextStyle}>Add response</Text>
         </TouchableOpacity> */}
       </View>
+      {
+        !profileName && (
+          <LoadingSpinner loadingSpinnerForComponent={true} />
+        )
+      }
       <FlatList
         ListHeaderComponent={
           <View>

@@ -19,6 +19,7 @@ import DiscussionScreenDiscussionCard from '../../components/topicComponents/dis
 import DiscussionScreenPlayerCard from '../../components/topicComponents/discussionScreenComponents/DiscussionScreenPlayerCard';
 import AddResponse from '../../components/topicComponents/discussionScreenComponents/AddResponse';
 import ClosedCard from '../../components/topicComponents/discussionScreenComponents/ClosedCard';
+import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
 
 const DiscussionScreen = ({ route, navigation }) => {
   const [profilePicture, setProfilePicture] = useState('');
@@ -209,6 +210,11 @@ const DiscussionScreen = ({ route, navigation }) => {
               getResponse={getResponse}
               addResponseForResponse={false}
             />
+            {
+              response === '' && (
+                <LoadingSpinner loadingSpinnerForComponent={true} />
+              )
+            }
           </View>
         }
         renderItem={itemData => (
