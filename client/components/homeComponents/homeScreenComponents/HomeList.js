@@ -46,7 +46,7 @@ const HomeList = props => {
               votes={itemData.item.likes}
               replies={0}
               plays={itemData.item.play_count}
-              time={itemData.item.time}
+              postTime={itemData.item.created_at}
               discussionId={itemData.item.id}
               navigation={navigation}
             />

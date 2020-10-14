@@ -227,7 +227,6 @@ class DiscussionScreenPlayerCard extends Component {
 
       if (upvoteRequest.data) {
         this.getResponse();
-        // this.state.getResponseFromDiscussion();
       }
     } catch (error) {
       console.log(error.response);
@@ -248,7 +247,6 @@ class DiscussionScreenPlayerCard extends Component {
 
       if (downvoteRequest.data) {
         this.getResponse();
-        // this.state.getResponseFromDiscussion();
       }
     } catch (error) {
       console.log(error);

@@ -20,7 +20,7 @@ const HomeListCard = props => {
     votes,
     replies,
     plays,
-    time,
+    postTime,
     discussionId,
     navigation
   } = props;
@@ -35,6 +35,24 @@ const HomeListCard = props => {
     } else {
       return number
     };
+  };
+
+  const convertPostTime = postTimeInput => {
+    let postTimeToNewDate = new Date(postTimeInput);
+    let postTimeToGMTString = postTimeToNewDate.toGMTString();
+    let postTimeToNewDateSplitted = postTimeToGMTString.split(' ');
+    
+    
+    let date = postTimeToNewDateSplitted[1];
+    let month = postTimeToNewDateSplitted[2];
+    let year = postTimeToNewDateSplitted[3];
+    let time = postTimeToNewDateSplitted[4].substring(0, 5);
+    
+    if (date[0] === '0') {
+      date = date[1]
+    }
+
+    return `${date} ${month} ${year}, ${time}`;
   };
 
   return (
@@ -58,7 +76,7 @@ const HomeListCard = props => {
         </View>
       </View>
       <View style={styles.playButtonAndDurationContainerStyle}>
-        <Text style={styles.durationStyle}>{time}m</Text>
+        <Text style={styles.postTimeStyle}>{convertPostTime(postTime)}</Text>
         <TouchableOpacity>
           <ActivePlayButton />
         </TouchableOpacity>
@@ -118,7 +136,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-end"
   },
 
-  durationStyle: {
+  postTimeStyle: {
     marginBottom: 10, 
     fontSize: 12, 
     color: "#73798C",
