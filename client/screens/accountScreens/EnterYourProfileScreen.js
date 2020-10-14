@@ -13,6 +13,7 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import ImagePicker from 'react-native-image-crop-picker';
+import { bold, normal } from '../../assets/FontSize';
 import axios from 'axios';
 
 //Icon
@@ -204,7 +205,7 @@ const styles = StyleSheet.create({
   enterYourProfileScreenTitleStyle: {
     marginLeft: 25,
     fontSize: 20,
-    fontWeight: "600",
+    fontFamily: bold,
     color: "#464D60"
   },
 
@@ -230,7 +231,7 @@ const styles = StyleSheet.create({
 
   uploadProfilePhotoButtonTextStyle: {
     fontSize: 16,
-    fontWeight: "600",
+    fontFamily: normal,
     color: "#5152D0"
   },
 
@@ -238,6 +239,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
     textAlign: "center",
     fontSize: 14,
+    fontFamily: normal,
     lineHeight: 20,
     color: "#73798C"
   },
@@ -253,6 +255,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#E3E6EB",
     fontSize: 16,
+    fontFamily: normal,
     justifyContent: "center"
   },
 

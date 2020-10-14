@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   Modal,
@@ -6,6 +6,7 @@ import {
   Text,
   ScrollView
 } from 'react-native';
+import { bold, normal } from '../../../assets/FontSize';
 
 //Component
 import CloseButton from '../../publicComponents/CloseButton';
@@ -78,19 +79,20 @@ const styles = StyleSheet.create({
     marginTop: 32,
     marginBottom: 16,
     fontSize: 28,
-    fontWeight: "bold",
+    fontFamily: bold,
     color: "#464D60"
   },
 
   termsOfServiceArticleTitleStyle: {
     fontSize: 16,
     marginBottom: 4,
-    fontWeight: "600",
+    fontFamily: normal,
     color: "#5152D0"
   },
 
   termsOfServiceArticleStyle: {
     fontSize: 16,
+    fontFamily: normal,
     marginBottom: 24,
     color: "#464D60",
     lineHeight: 24,

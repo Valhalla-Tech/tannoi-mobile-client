@@ -9,31 +9,8 @@ import {
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
 
-//Profile picture example
-import profilePictureExample from '../../../assets/homeAssets/bigProfilePicture.png';
-
-const TOP_USERS_DATA = [
-  {
-    id: '1',
-    imageUrl: profilePictureExample,
-    name: 'Richard Hendricks'
-  },
-  {
-    id: '2',
-    imageUrl: profilePictureExample,
-    name: 'Monical Hall'
-  },
-  {
-    id: '3',
-    imageUrl: profilePictureExample,
-    name: 'Gavin Belson'
-  },
-  {
-    id: '4',
-    imageUrl: profilePictureExample,
-    name: 'Laurie Bream'
-  },
-];
+//Component
+import LoadingSpinner from '../../publicComponents/LoadingSpinner';
 
 const TopUsers = props => {
   const {
@@ -43,6 +20,11 @@ const TopUsers = props => {
   return (
     <View style={styles.topUsersContainerStyle}>
       <Text style={styles.topUsersTitleStyle}>Top users</Text>
+      {
+        !topUserData && (
+          <LoadingSpinner loadingSpinnerForComponent={true} />
+        )
+      }
       <FlatList
         data={topUserData}
         horizontal={true}

@@ -7,9 +7,8 @@ import {
 } from 'react-native';
 import { bold } from '../../../assets/FontSize';
 
-//Profile picture examples
-import ProfilePictureExample from '../../../assets/homeAssets/profilePictureExample.svg';
-import ProfilePictureExample2 from '../../../assets/homeAssets/bigProfilePicture.png';
+//Component
+import LoadingSpinner from '../../publicComponents/LoadingSpinner';
 
 const ProfileBar = props => {
   const {
@@ -19,6 +18,11 @@ const ProfileBar = props => {
   return (
     <View style={styles.profileBarContainerStyle}>
       <View style={styles.profileInfoContainerStyle}>
+        {
+          !user && (
+            <LoadingSpinner loadingSpinnerForComponent={true} />
+          )
+        }
         <Image source={{uri: user.profile_photo_path}} style={styles.profilePictureStyle} />
         <Text style={styles.profileBarTextStyle}>{user.name}</Text>
       </View >

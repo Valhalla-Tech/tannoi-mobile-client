@@ -10,37 +10,13 @@ import { bold, normal } from '../../../assets/FontSize';
 
 //Component
 import RecommendedTopicsCard from './RecommendedTopicsCard';
+import LoadingSpinner from '../../publicComponents/LoadingSpinner';
 
 const RecommendedTopics = props => {
   const { 
     topicData 
   } = props;
-  
-  // const [groupedTopic, setGroupedTopic] = useState(false);
 
-  // const topicGroup = () => {
-  //   let arrayGroup = []
-  //   let topicGroupArray = []
-
-  //   for (let topicIndex = 0; topicIndex < topicData.length; topicIndex++) {
-  //     if (topicGroupArray.length === 3) {
-  //       arrayGroup.push(topicGroupArray)
-  //       topicGroupArray = [];
-  //       topicGroupArray.push(topicData[topicIndex]);
-  //     } else {
-  //       topicGroupArray.push(topicData[topicIndex])
-  //     }
-  //   }
-
-  //   arrayGroup.push(topicGroupArray);
-  //   setGroupedTopic(arrayGroup);
-  // };
-  
-  // useEffect(() => {
-
-  // }, [])
-  
-  
   return (
     <View style={styles.recommendedTopicsContainerStyle}>
       <View style={styles.recommendedTopicsTitleAndSeeAllButtonContainerStyle}>
@@ -50,7 +26,7 @@ const RecommendedTopics = props => {
         </TouchableOpacity>
       </View>
       {
-        topicData !== '' && (
+        topicData !== '' ? (
           <View style={styles.topicCardContainerStyle}>
             <FlatList
               horizontal={true}
@@ -72,6 +48,8 @@ const RecommendedTopics = props => {
               )}
             />
           </View>
+        ) : (
+          <LoadingSpinner loadingSpinnerForComponent={true} />
         )
       }
     </View>

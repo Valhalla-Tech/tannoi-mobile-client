@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -13,8 +13,11 @@ import DownArrow from '../../../assets/homeAssets/downArrow.svg';
 
 //Component
 import HomeListCard from './HomeListCard';
+import LoadingSpinner from '../../publicComponents/LoadingSpinner';
 
 const HomeList = props => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const { 
     listTitle, 
     listData,
@@ -34,6 +37,11 @@ const HomeList = props => {
           )
         }
       </View>
+      {
+        !listData && (
+          <LoadingSpinner loadingSpinnerForComponent={true} />
+        )
+      }
       <FlatList
         data={listData}
         listKey={(item, index) => index.toString()}

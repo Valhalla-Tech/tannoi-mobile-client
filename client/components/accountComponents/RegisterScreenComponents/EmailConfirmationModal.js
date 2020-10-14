@@ -10,6 +10,7 @@ import {
   Keyboard,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import { bold, normal } from '../../../assets/FontSize';
 import axios from 'axios';
 
 //Components
@@ -144,11 +145,11 @@ const EmailConfirmationModal = props => {
             />
           </View>
           <View style={styles.sendAgainEmailContainerStyle}>
-            <Text>Didn't get an email? </Text>
+            <Text style={styles.sendAgainEmailTextStyle}>Didn't get an email? </Text>
             <TouchableOpacity
               onPress={resendCode}
             >
-              <Text style={styles.sendAgainEmailButtonStyle}>Send again</Text>
+              <Text style={styles.sendAgainEmailButtonTextStyle}>Send again</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -185,7 +186,7 @@ const styles = StyleSheet.create({
     marginTop: 45,
     color: "#464D60",
     fontSize: 28,
-    fontWeight: "bold"
+    fontFamily: bold
   },
 
   confirmationEmailModalInstructionStyle: {
@@ -218,8 +219,15 @@ const styles = StyleSheet.create({
     marginTop: 32
   },
 
-  sendAgainEmailButtonStyle: {
-    color: "#2f3dfa"
+  sendAgainEmailTextStyle: {
+    fontSize: 16,
+    fontFamily: normal
+  },
+
+  sendAgainEmailButtonTextStyle: {
+    color: "#2f3dfa",
+    fontSize: 16,
+    fontFamily: normal
   }
 });
 

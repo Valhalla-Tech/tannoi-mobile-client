@@ -8,6 +8,7 @@ import {
   Keyboard,
   Alert
 } from 'react-native';
+import { bold, normal } from '../../assets/FontSize';
 import axios from 'axios';
 
 //Components
@@ -149,7 +150,7 @@ const styles = StyleSheet.create({
   createNewPasswordTitleStyle: {
     color: "#464D60",
     fontSize: 28,
-    fontWeight: "bold",
+    fontFamily: bold,
     marginBottom: 16
   },
 

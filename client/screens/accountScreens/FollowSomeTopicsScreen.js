@@ -11,6 +11,7 @@ import {
   useDispatch
 } from 'react-redux';
 import { userLogin } from '../../store/actions/LoginAction';
+import { bold, normal } from '../../assets/FontSize';
 import axios from 'axios';
 
 //Components
@@ -172,15 +173,17 @@ const styles = StyleSheet.create({
   },
 
   backButtonAndTitleContainer: {
-    flexDirection: "row"
+    flexDirection: "row",
+    alignItems: "center"
   },
 
   followSomeTopicsScreenTitleStyle: {
-    marginTop: 53.5,
+    color: "#464D60",
+    marginTop: 57,
     marginBottom: 44,
     marginLeft: 14,
     fontSize: 20,
-    fontWeight: "600"
+    fontFamily: bold
   },
 
   FollowSomeTopicsScreenInstructionStyle: {
@@ -188,7 +191,8 @@ const styles = StyleSheet.create({
     fontSize: 16, 
     color: "#464D60", 
     lineHeight: 24,
-    marginBottom: 10
+    marginBottom: 10,
+    fontFamily: normal
   },
 
   cardsContainerStyle: {

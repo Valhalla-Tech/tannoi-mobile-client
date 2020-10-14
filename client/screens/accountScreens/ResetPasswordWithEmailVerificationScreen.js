@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity
 } from 'react-native';
+import { bold, normal } from '../../assets/FontSize';
 import axios from 'axios';
 
 //Component
@@ -51,12 +52,13 @@ const styles = StyleSheet.create({
   resetPasswordWithEmailVerificationTitleStyle: {
     color: "#464D60",
     fontSize: 28,
-    fontWeight: "bold"
+    fontFamily: bold
   },
 
   resetPasswordWithEmailVerificationScreenInstructionStyle: {
     marginTop: 16,
     fontSize: 16,
+    fontFamily: normal,
     lineHeight: 24,
     color: "#73798C"
   },
@@ -67,11 +69,15 @@ const styles = StyleSheet.create({
   },
 
   sendAgainEmailButtonTitleStyle: {
-    color:"#73798C"
+    color:"#73798C",
+    fontSize: 16,
+    fontFamily: normal
   },
 
   sendAgainEmailButtonStyle: {
-    color: "#2f3dfa"
+    color: "#2f3dfa",
+    fontSize: 16,
+    fontFamily: normal
   }
 });
 
