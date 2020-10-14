@@ -16,30 +16,29 @@ const RecommendedTopics = props => {
     topicData 
   } = props;
   
-  const [groupedTopic, setGroupedTopic] = useState([]);
+  // const [groupedTopic, setGroupedTopic] = useState(false);
 
-  const topicGroup = () => {
-    let arrayGroup = []
-    let topicGroupArray = []
+  // const topicGroup = () => {
+  //   let arrayGroup = []
+  //   let topicGroupArray = []
 
-    for (let topicIndex = 0; topicIndex < topicData.length; topicIndex++) {
-      if (topicGroupArray.length === 3) {
-        arrayGroup.push(topicGroupArray)
-        topicGroupArray = [];
-        topicGroupArray.push(topicData[topicIndex]);
-      } else {
-        topicGroupArray.push(topicData[topicIndex])
-      }
-    }
+  //   for (let topicIndex = 0; topicIndex < topicData.length; topicIndex++) {
+  //     if (topicGroupArray.length === 3) {
+  //       arrayGroup.push(topicGroupArray)
+  //       topicGroupArray = [];
+  //       topicGroupArray.push(topicData[topicIndex]);
+  //     } else {
+  //       topicGroupArray.push(topicData[topicIndex])
+  //     }
+  //   }
 
-    arrayGroup.push(topicGroupArray);
-
-    setGroupedTopic(arrayGroup);
-  };
+  //   arrayGroup.push(topicGroupArray);
+  //   setGroupedTopic(arrayGroup);
+  // };
   
-  useEffect(() => {
-    topicGroup();
-  }, [])
+  // useEffect(() => {
+
+  // }, [])
   
   
   return (
@@ -50,27 +49,31 @@ const RecommendedTopics = props => {
           <Text style={styles.seeAllButtonTextStyle}>See all</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.topicCardContainerStyle}>
-        <FlatList
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={(id, index) => index.toString()}
-          data={groupedTopic}
-          renderItem={itemData => (
-            <RecommendedTopicsCard
-            firstCardIcon={itemData.item[0].imageUrl}
-            firstCardName={itemData.item[0].name}
-            firstCardDiscussions={itemData.item[0].discussions}
-            secondCardIcon={itemData.item[1].imageUrl}
-            secondCardName={itemData.item[1].name}
-            secondCardDiscussions={itemData.item[1].discussions}
-            thirdCardIcon={itemData.item[2].imageUrl}
-            thirdCardName={itemData.item[2].name}
-            thirdCardDiscussions={itemData.item[2].discussions}
+      {
+        topicData !== '' && (
+          <View style={styles.topicCardContainerStyle}>
+            <FlatList
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              keyExtractor={(id, index) => index.toString()}
+              data={topicData}
+              renderItem={itemData => (
+                <RecommendedTopicsCard
+                firstCardIcon={itemData.item[0].image_path}
+                firstCardName={itemData.item[0].name}
+                firstCardDiscussions={1}
+                secondCardIcon={itemData.item[1].image_path}
+                secondCardName={itemData.item[1].name}
+                secondCardDiscussions={1}
+                thirdCardIcon={itemData.item[2].image_path}
+                thirdCardName={itemData.item[2].name}
+                thirdCardDiscussions={1}
+                />
+              )}
             />
-          )}
-        />
-      </View>
+          </View>
+        )
+      }
     </View>
   );
 };

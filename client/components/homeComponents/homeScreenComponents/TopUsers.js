@@ -35,17 +35,21 @@ const TOP_USERS_DATA = [
   },
 ];
 
-const TopUsers = () => {
+const TopUsers = props => {
+  const {
+    topUserData
+  } = props;
+
   return (
     <View style={styles.topUsersContainerStyle}>
       <Text style={styles.topUsersTitleStyle}>Top users</Text>
       <FlatList
-        data={TOP_USERS_DATA}
+        data={topUserData}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         renderItem={itemData => (
           <TouchableOpacity style={styles.topUsersCardConntainerStyle}>
-            <Image source={itemData.item.imageUrl} style={styles.profilePictureStyle} resizeMode="stretch" />
+            <Image source={{uri: itemData.item.profile_photo_path}} style={styles.profilePictureStyle} />
             {
               itemData.item.name.length > 14 ? (
                 <Text style={styles.topUsersNameStyle}>{`${itemData.item.name.substr(0, 11)}...`}</Text>

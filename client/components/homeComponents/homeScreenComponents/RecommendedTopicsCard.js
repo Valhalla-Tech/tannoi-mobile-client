@@ -24,7 +24,7 @@ const RecommendedTopicsCard = props => {
   return (
     <View>
       <TouchableOpacity style={styles.topicCardStyle}>
-        <Image source={firstCardIcon} style={styles.topicIconStyle} resizeMode="stretch" />
+        <Image source={{uri: firstCardIcon}} style={styles.topicIconStyle} />
         <View style={styles.topicCardInfoContainerStyle}>
           {
             firstCardName.length > 13 ? (
@@ -37,7 +37,7 @@ const RecommendedTopicsCard = props => {
         </View>
       </TouchableOpacity>
       <TouchableOpacity style={styles.topicCardStyle}>
-        <Image source={secondCardIcon} style={styles.topicIconStyle} resizeMode="stretch" />
+        <Image source={{uri: secondCardIcon}} style={styles.topicIconStyle} resizeMode="stretch" />
         <View style={styles.topicCardInfoContainerStyle}>
         {
             secondCardName.length >= 13 ? (
@@ -50,7 +50,7 @@ const RecommendedTopicsCard = props => {
         </View>
       </TouchableOpacity>
       <TouchableOpacity style={styles.topicCardStyle}>
-        <Image source={thirdCardIcon} style={styles.topicIconStyle} resizeMode="stretch" />
+        <Image source={{uri: thirdCardIcon}} style={styles.topicIconStyle} resizeMode="stretch" />
         <View style={styles.topicCardInfoContainerStyle}>
         {
             thirdCardName.length >= 13 ? (

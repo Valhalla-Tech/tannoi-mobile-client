@@ -12,11 +12,15 @@ import ProfilePictureExample from '../../../assets/homeAssets/profilePictureExam
 import ProfilePictureExample2 from '../../../assets/homeAssets/bigProfilePicture.png';
 
 const ProfileBar = props => {
+  const {
+    user
+  } = props;
+
   return (
     <View style={styles.profileBarContainerStyle}>
       <View style={styles.profileInfoContainerStyle}>
-        <Image source={ProfilePictureExample2} style={styles.profilePictureStyle} resizeMode="stretch" />
-        <Text style={styles.profileBarTextStyle}>Richard Hendricks</Text>
+        <Image source={{uri: user.profile_photo_path}} style={styles.profilePictureStyle} />
+        <Text style={styles.profileBarTextStyle}>{user.name}</Text>
       </View >
     </View>
   )

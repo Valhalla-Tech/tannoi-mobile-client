@@ -167,34 +167,62 @@ const RECOMMENDED_TOPICS_DATA = [
 
 const HomeScreen = ({ navigation }) => {
   const [discussionOfTheWeek, setDiscussionOfTheWeek] = useState('');
+  const [topUser, setTopUser] = useState('');
+  const [trending, setTrending] = useState('');
+  const [recommendedTopic, setRecommendedTopic] = useState('');
+  const [user, setUser] = useState('');
 
   useEffect(() => {
-    getDiscussionOfTheWeek();
+    getHome();
   }, []);
 
-  const getDiscussionOfTheWeek = async () => {
+  const getHome = async () => {
     try {
       const access_token = await AsyncStorage.getItem('access_token');
 
-      let getDiscussionOfTheWeekRequest = await axios({
-        url: 'https://dev.entervalhalla.tech/api/tannoi/v1/discussions/trendings',
+      let getHomeRequest = await axios({
+        url: 'https://dev.entervalhalla.tech/api/tannoi/v1/pages/home?sort=like&page=1',
         method: 'get',
         headers: {
           'token': access_token
         }
-      })
+      });
 
-      if (getDiscussionOfTheWeekRequest.data) {
-        setDiscussionOfTheWeek(getDiscussionOfTheWeekRequest.data);
+      if (getHomeRequest.data) {
+        setUser(getHomeRequest.data.user);
+        setDiscussionOfTheWeek(getHomeRequest.data.discussion_of_the_week);
+        setTopUser(getHomeRequest.data.top_user);
+        setTrending(getHomeRequest.data.discussion.data);
+        topicGroup(getHomeRequest.data.recommended_topic);
       };
     } catch (error) {
       console.log(error.response);
     }
   };
 
+  const topicGroup = topicData => {
+    let arrayGroup = []
+    let topicGroupArray = []
+
+    for (let topicIndex = 0; topicIndex < topicData.length; topicIndex++) {
+      if (topicGroupArray.length === 3) {
+        arrayGroup.push(topicGroupArray)
+        topicGroupArray = [];
+        topicGroupArray.push(topicData[topicIndex]);
+      } else {
+        topicGroupArray.push(topicData[topicIndex])
+      }
+    }
+
+    arrayGroup.push(topicGroupArray);
+    setRecommendedTopic(arrayGroup);
+  };
+
   return (
     <View>
-      <ProfileBar />
+      <ProfileBar 
+        user={user}
+      />
       <FlatList
         ListHeaderComponent={
           <View style={styles.homeScreenContainerStyle}>
@@ -207,13 +235,16 @@ const HomeScreen = ({ navigation }) => {
               listData={discussionOfTheWeek}
               navigation={navigation}
             />
-            <TopUsers />
+            <TopUsers
+              topUserData={topUser}
+            />
             <Trending 
               listTitle="Trending"
-              // listData={TRENDING_DATA}
+              listData={trending}
+              navigation={navigation}
             />
             <RecommendedTopics
-              topicData={RECOMMENDED_TOPICS_DATA}
+              topicData={recommendedTopic}
             />
           </View>
         }
