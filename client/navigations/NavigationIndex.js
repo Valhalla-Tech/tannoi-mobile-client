@@ -28,10 +28,10 @@ const NavigationIndex = () => {
     
     if (getToken) {
       dispatch(userLogin());
-    } else {
+    } else if (!getToken) {
       dispatch(userLogout());
-    };
-    SplashScreen.hide();
+      SplashScreen.hide();
+    }; 
   };
 
   useEffect(() => {
