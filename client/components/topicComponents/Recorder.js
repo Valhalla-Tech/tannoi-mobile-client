@@ -69,10 +69,10 @@ class NewDiscussionScreenRecorder extends Component {
 
     this.player = new Player('discussionRecord.m4a', {
       autoDestroy: false
-    }).prepare((err) => {
-      if (err) {
+    }).prepare((error) => {
+      if (error) {
         console.log('error at _reloadPlayer():');
-        console.log(err);
+        console.log(error);
       }
     });
   };

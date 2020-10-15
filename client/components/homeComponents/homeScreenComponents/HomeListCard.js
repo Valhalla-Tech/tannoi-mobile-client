@@ -8,9 +8,8 @@ import {
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
 
-//Icons
-import ActivePlayButton from '../../../assets/homeAssets/activePlayButton.svg';
-import PlayButton from '../../../assets/publicAssets/playButton.svg';
+//Component
+import HomeListCardPlayer from './HomeListCardPlayer';
 
 const HomeListCard = props => {
   const {
@@ -22,7 +21,8 @@ const HomeListCard = props => {
     plays,
     postTime,
     discussionId,
-    navigation
+    navigation,
+    recordingFile
   } = props;
 
   const numberConverter = number => {
@@ -77,9 +77,7 @@ const HomeListCard = props => {
       </View>
       <View style={styles.playButtonAndDurationContainerStyle}>
         <Text style={styles.postTimeStyle}>{convertPostTime(postTime)}</Text>
-        <TouchableOpacity>
-          <ActivePlayButton />
-        </TouchableOpacity>
+        <HomeListCardPlayer recordingFile={recordingFile} />
       </View>
     </TouchableOpacity>
   );

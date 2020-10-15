@@ -50,6 +50,7 @@ const HomeList = props => {
           <>
             <HomeListCard
               imageUrl={itemData.item.creator.profile_photo_path}
+              recordingFile={itemData.item.voice_note_path}
               name={itemData.item.creator.name}
               title={itemData.item.title}
               votes={itemData.item.likes}

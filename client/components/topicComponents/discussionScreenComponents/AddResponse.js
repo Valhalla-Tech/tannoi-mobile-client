@@ -15,9 +15,6 @@ import { bold, normal } from '../../../assets/FontSize';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 
-//Icons
-import RecordButton from '../../../assets/topicAssets/recordButton.svg';
-
 //Components
 import FormInput from '../../publicComponents/FormInput';
 import Recorder from '../Recorder';
