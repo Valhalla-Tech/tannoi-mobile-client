@@ -4,8 +4,7 @@ import {
   View,
   Text,
   Image,
-  TouchableOpacity,
-  PixelRatio
+  TouchableOpacity
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
 import {
@@ -31,18 +30,6 @@ import ActiveDownvote from '../../../assets/topicAssets/activeDownvote.svg';
 
 //Component
 import AddResponse from '../../../components/topicComponents/discussionScreenComponents/AddResponse';
-
-const getFontSize = (originalSize) => {
-  if(PixelRatio.get() < 1.5) {
-      return (originalSize * 0.5 ) / PixelRatio.get() 
-  }else if(PixelRatio.get() >= 1.5 && PixelRatio.get() < 2.5) {
-      return (originalSize * 1.5 ) / PixelRatio.get() 
-  }else if(PixelRatio.get() >= 2.5){
-      return (originalSize * 2.5 ) / PixelRatio.get() 
-  }else{
-      return originalSize
-  }
-}
 
 class DiscussionScreenPlayerCard extends Component {
   constructor(props) {
@@ -76,7 +63,12 @@ class DiscussionScreenPlayerCard extends Component {
       isDislike: false,
       isChainResponse: this.props.isChainResponse,
       getIsLikeAndIsDislike: this.props.getIsLikeAndIsDislike,
-      progress: 0
+      progress: 0,
+      duration: 0,
+      durationRemaining: 0,
+      durationDisplay: '',
+      durationPlayerDisplay: '',
+      isPaused: false
     }
   }
 
@@ -103,7 +95,9 @@ class DiscussionScreenPlayerCard extends Component {
     this.setState({
       playPauseButton: this.player && this.player.isPlaying ? 'Pause' : 'Play',
 
-      playButtonDisabled: !this.player || !this.player.canPlay
+      playButtonDisabled: !this.player || !this.player.canPlay,
+
+      isPaused: this.player.isPaused
     });
   };
   
@@ -122,15 +116,7 @@ class DiscussionScreenPlayerCard extends Component {
         console.log(error);
       }
 
-      this.progressInterval = setInterval(() => {
-        if (this.player && this.shouldUpdateProgressBar()) {
-          let currentProgress = Math.max(0, this.player.currentTime) / this.player.duration;
-          if (isNaN(currentProgress)) {
-            currentProgress = 0;
-          }
-          this.setState({ progress: currentProgress });
-        }
-      }, 100);
+      this.getDuration();
       
       this.updateState();
 
@@ -149,6 +135,10 @@ class DiscussionScreenPlayerCard extends Component {
       this.updateState();
     });
   };
+
+  stopProgressInterval = () => {
+    clearInterval(this.progressInterval);
+  };
   
   playRecording() {
     this.player.playPause((error, paused) => {
@@ -157,12 +147,66 @@ class DiscussionScreenPlayerCard extends Component {
         this.loadPlayer();
       };
 
-      if (this.player.isPlaying && this.state.cardType === 'discussion' && !error) {
+      if (this.player.isPlaying && this.state.cardType === 'discussion' && !error && !this.state.isPaused) {
         this.playCounter();
       };
-      
+
+      if (this.player.isPlaying && this.state.cardType === 'discussion' && !error) {
+        this.progressInterval = setInterval(() => {
+          if (this.player && this.shouldUpdateProgressBar()) {
+            let currentProgress = Math.max(0, this.player.currentTime) / this.player.duration;
+            if (isNaN(currentProgress)) {
+              currentProgress = 0;
+            };
+
+            this.updateDuration(this.player.currentTime);
+  
+            if (!this.player.isPlaying) {
+              if (!this.player.isPaused) {
+                this.getDuration();
+              };
+
+              this.stopProgressInterval();
+            };
+  
+            this.setState({ progress: currentProgress });
+          }
+        }, 100);
+      };
+
       this.updateState();
     });
+  };
+
+  updateDuration = currentTime => {
+    let durationRemaining = this.player.duration - currentTime;
+    let durationRemainingToString = durationRemaining.toString();
+    let currentTimeToString = currentTime.toString();
+    
+    this.setState({
+      durationDisplay: durationRemainingToString.length === 4 ? (`0:0${durationRemainingToString[0]}`) : (
+        durationRemainingToString.length === 5 ? `0:${durationRemainingToString[0]}${durationRemainingToString[1]}` : '0:00'
+      ),
+      durationPlayedDisplay: currentTimeToString.length === 4 ? (`0:0${currentTimeToString[0]}`) : (
+        currentTimeToString.length === 5 ? `0:${currentTimeToString[0]}${currentTimeToString[1]}` : '0:00'
+      )
+    });
+  };
+
+  getDuration = () => {
+    let durationToString = this.player.duration.toString();
+    
+    if (durationToString.length === 4) {
+      this.setState({
+        durationDisplay: `0:0${durationToString[0]}`,
+        durationPlayedDisplay: '0:00'
+      });
+    } else if (durationToString.length === 5) {
+      this.setState({
+        durationDisplay: `0:${durationToString[0]}${durationToString[1]}`,
+        durationPlayedDisplay: '0:00'
+      });
+    };
   };
 
   seek(percentage) {
@@ -324,6 +368,10 @@ class DiscussionScreenPlayerCard extends Component {
           <Text style={styles.postTimeStyle}>{this.state.postTime ? this.convertPostTime(this.state.postTime) : ''}</Text>
         </View>
         <View style={styles.sliderStyle}>
+          <View style={styles.durationContainerStyle}>
+            <Text style={styles.durationStyle}>{this.state.durationDisplay}</Text>
+            <Text style={styles.durationStyle}>{this.state.durationPlayedDisplay}</Text>
+          </View>
           <Slider 
             step={0.0001} 
             onValueChange={(percentage) => this.seek(percentage)} value={this.state.progress} 
@@ -502,7 +550,18 @@ const styles = StyleSheet.create({
   },
 
   sliderStyle: {
-    marginTop: 30
+    marginTop: 30,
+    color: "#464D60"
+  },
+
+  durationContainerStyle: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
+  },
+
+  durationStyle: {
+    fontFamily: normal
   },
 
   playerContainerStyle: {
