@@ -9,6 +9,9 @@ import {
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
 
+//Icon
+import NoProfilePicture from '../../../assets/publicAssets/noProfilePicture.png';
+
 //Component
 import LoadingSpinner from '../../publicComponents/LoadingSpinner';
 
@@ -32,7 +35,7 @@ const TopUsers = props => {
         keyExtractor={(item, index) => index.toString()}
         renderItem={itemData => (
           <TouchableOpacity style={styles.topUsersCardConntainerStyle}>
-            <Image source={{uri: itemData.item.profile_photo_path}} style={styles.profilePictureStyle} />
+            <Image source={itemData.item.profile_photo_path ? {uri: itemData.item.profile_photo_path} : NoProfilePicture} style={styles.profilePictureStyle} />
             {
               itemData.item.name.length > 14 ? (
                 <Text style={styles.topUsersNameStyle}>{`${itemData.item.name.substr(0, 11)}...`}</Text>

@@ -59,7 +59,7 @@ class NewDiscussionScreenRecorder extends Component {
       this.recorder.destroy();
     }
 
-    this.recorder = new Recorder('discussionRecord.mp4');
+    this.recorder = new Recorder('discussionRecord.m4a');
   };
 
   reloadPlayer() {
@@ -67,7 +67,7 @@ class NewDiscussionScreenRecorder extends Component {
       this.player.destroy();
     }
 
-    this.player = new Player('discussionRecord.mp4', {
+    this.player = new Player('discussionRecord.m4a', {
       autoDestroy: false
     }).prepare((err) => {
       if (err) {
@@ -150,9 +150,9 @@ class NewDiscussionScreenRecorder extends Component {
 
   playRecording = () => {
     this.setState({
-      recordingFile: '/data/user/0/tannoi.client/files/discussionRecord.mp4'
+      recordingFile: '/data/user/0/tannoi.client/files/discussionRecord.m4a'
     });
-    this.props.addRecordingFile('/data/user/0/tannoi.client/files/discussionRecord.mp4');
+    this.props.addRecordingFile('/data/user/0/tannoi.client/files/discussionRecord.m4a');
     this.clearTimer();
 
     this.player.playPause((error, paused) => {
