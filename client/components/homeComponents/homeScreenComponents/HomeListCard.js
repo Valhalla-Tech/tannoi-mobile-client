@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     padding: "5%",
     borderBottomWidth: 1,
     borderBottomColor: "#F5F7F9",
-    justifyContent: "space-between"
+    justifyContent: "space-around"
   },
 
   profileContainerStyle: {

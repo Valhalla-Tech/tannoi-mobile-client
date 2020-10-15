@@ -12,6 +12,7 @@ import {
   Player
 } from '@react-native-community/audio-toolkit';
 import AsyncStorage from '@react-native-community/async-storage';
+import Slider from '@react-native-community/slider';
 import axios from 'axios';
 
 //Icons
@@ -24,6 +25,7 @@ import ForwardTenButton from '../../../assets/topicAssets/forwardTenButton.svg';
 import Upvote from '../../../assets/topicAssets/upvote.svg';
 import Downvote from '../../../assets/topicAssets/downvote.svg';
 import ActiveNextButton from '../../../assets/topicAssets/activeNextButton.svg';
+import ActivePreviousButton from '../../../assets/topicAssets/activePreviousButton.svg';
 import ActiveUpvote from '../../../assets/topicAssets/activeUpvote.svg';
 import ActiveDownvote from '../../../assets/topicAssets/activeDownvote.svg';
 
@@ -73,22 +75,28 @@ class DiscussionScreenPlayerCard extends Component {
       isLike: false,
       isDislike: false,
       isChainResponse: this.props.isChainResponse,
-      getIsLikeAndIsDislike: this.props.getIsLikeAndIsDislike
+      getIsLikeAndIsDislike: this.props.getIsLikeAndIsDislike,
+      progress: 0
     }
   }
 
   componentDidMount() {
     this.player = null;
+    this.lastSeek = 0;
 
     this.loadPlayer();
 
     this.getResponse();
+
+    this.progressInterval = null;
   };
 
   componentWillUnmount() {
     if (this.state.playPauseButton === 'Pause') {
       this.playRecording();
-    }
+    };
+
+    clearInterval(this.progressInterval);
   };
 
   updateState(err) {
@@ -113,6 +121,16 @@ class DiscussionScreenPlayerCard extends Component {
         console.log('error at _reloadPlayer():');
         console.log(error);
       }
+
+      this.progressInterval = setInterval(() => {
+        if (this.player && this.shouldUpdateProgressBar()) {
+          let currentProgress = Math.max(0, this.player.currentTime) / this.player.duration;
+          if (isNaN(currentProgress)) {
+            currentProgress = 0;
+          }
+          this.setState({ progress: currentProgress });
+        }
+      }, 100);
       
       this.updateState();
 
@@ -145,6 +163,24 @@ class DiscussionScreenPlayerCard extends Component {
       
       this.updateState();
     });
+  };
+
+  seek(percentage) {
+    if (!this.player) {
+      return;
+    }
+
+    this.lastSeek = Date.now();
+
+    let position = percentage * this.player.duration;
+
+    this.player.seek(position, () => {
+      this.updateState();
+    });
+  };
+
+  shouldUpdateProgressBar() {
+    return Date.now() - this.lastSeek > 200;
   };
   
   forwardTenSeconds() {
@@ -287,6 +323,14 @@ class DiscussionScreenPlayerCard extends Component {
           </View>
           <Text style={styles.postTimeStyle}>{this.state.postTime ? this.convertPostTime(this.state.postTime) : ''}</Text>
         </View>
+        <View style={styles.sliderStyle}>
+          <Slider 
+            step={0.0001} 
+            onValueChange={(percentage) => this.seek(percentage)} value={this.state.progress} 
+            thumbTintColor="#5152D0"
+            minimumTrackTintColor="#5152D0"
+          />
+        </View>
         <View style={styles.playerContainerStyle}>
           <TouchableOpacity>
             <PlayerSpeed />
@@ -305,7 +349,7 @@ class DiscussionScreenPlayerCard extends Component {
                   }
                 }}
               >
-                <PreviousButton />
+                <ActivePreviousButton />
               </TouchableOpacity>
             ) : (
               <PreviousButton />
@@ -457,11 +501,15 @@ const styles = StyleSheet.create({
     fontFamily: normal
   },
 
+  sliderStyle: {
+    marginTop: 30
+  },
+
   playerContainerStyle: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 68
+    marginTop: 35
   },
 
   voteAndAddResponseContainerStyle: {
