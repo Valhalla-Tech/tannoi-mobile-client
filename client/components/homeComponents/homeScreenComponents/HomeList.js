@@ -45,6 +45,7 @@ const HomeList = props => {
       <FlatList
         data={listData}
         listKey={(item, index) => index.toString()}
+        keyExtractor={(item, index) => index.toString()}
         renderItem={itemData => (
           <>
             <HomeListCard

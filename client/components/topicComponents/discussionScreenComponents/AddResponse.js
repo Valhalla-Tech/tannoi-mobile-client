@@ -12,19 +12,15 @@ import {
   addResponseForResponse
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
-import {
-  Player,
-  Recorder,
-  MediaStates
-} from '@react-native-community/audio-toolkit';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 
 //Icons
 import RecordButton from '../../../assets/topicAssets/recordButton.svg';
 
-//Component
+//Components
 import FormInput from '../../publicComponents/FormInput';
+import Recorder from '../Recorder';
 
 const AddResponse = props => {
   const [recordingFile, setRecordingFile] = useState('');
@@ -85,92 +81,8 @@ const AddResponse = props => {
     }
   };
 
-
-  let rec = new Recorder("responseRecord.mp4");
-  let player = new Player("file:///data/user/0/tannoi.client/files/responseRecord.mp4", {autoDestroy: false});
-
-  let countDown;
-
-  const checkPermission = async () => {
-    if (Platform.OS !== 'android') {
-      return Promise.resolve(true);
-    }
-
-    let result;
-    try {
-        result = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO, { title:'Microphone Permission', message:'Tannoi needs access to your microphone to use voice feature.' });
-
-        if (result === PermissionsAndroid.RESULTS.GRANTED) {
-          return true;
-        } else {
-          return false;
-        }
-    } catch(error) {
-        console.error('failed getting permission, result:', result);
-        return false
-    }
-  }
-
-  const recordingTimer = option => {
-      countDown = setTimeout(() => {
-        voiceRecord(true);
-      }, 30000);
-  };
-  
-  const clearTimer = () => {
-    clearTimeout(countDown);
-  }
-
-  const reloadRecorder = () => {
-    if (rec) {
-      rec.destroy();
-    }
-
-    rec = new Recorder("responseRecord.mp4"); 
-  };
-
-  const reloadPlayer = () => {
-    if (player) {
-      player.destroy();
-    }
-
-    let player = new Player("file:///data/user/0/tannoi.client/files/responseRecord.mp4", {autoDestroy: false});
-  };
-
-  const voiceRecord = toggleFromTimer => {
-    if (player) {
-      player.destroy();
-    }
-    
-    let permission = checkPermission();
-    
-    permission.then((hasPermission) => {
-      if (toggleFromTimer && rec.isRecording) {
-
-        rec.toggleRecord((error, stopped) => {
-          if (stopped) {
-            reloadPlayer();
-            reloadRecorder();
-          }
-          
-          playRecording();
-        });
-      } else if (!toggleFromTimer) {
-        rec.toggleRecord((error, stopped) => {
-          if (stopped) {
-            reloadPlayer();
-            reloadRecorder();
-          }
-          
-        });
-
-        if (rec.isRecording) {
-          playRecording();
-        } else {
-          recordingTimer();
-        };
-      }
-    })
+  const addRecordingFile = recordingFileInput => {
+    setRecordingFile(recordingFileInput);
   };
 
   const inputCaption = captionInput => {
@@ -220,27 +132,10 @@ const AddResponse = props => {
             formInputTitle="Add caption (Optional)"
             dataInput={inputCaption}
           />
-          <View style={styles.addResponseRecorderContainerStyle}>
-            <TouchableOpacity
-              onPress={() => recordingFile && stopPlayer() }
-            >
-              <View style={styles.stopButtonStyle}>
-                <Text style={styles.stopButtonTextStyle}>Stop</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => voiceRecord(false)}
-            >
-              <RecordButton />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => recordingFile && playRecording() }
-            >
-              <View style={styles.playOrPauseButtonStyle}>
-                <Text style={styles.playOrPauseButtonTextStyle}>Play / Pause</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
+          <Recorder
+            addRecordingFile={addRecordingFile}
+            recorderStyle={{marginTop: "30%"}}
+          />
         </View>
       </TouchableWithoutFeedback>
     </Modal>

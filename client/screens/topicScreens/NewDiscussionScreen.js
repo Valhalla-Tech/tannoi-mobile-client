@@ -22,7 +22,7 @@ import axios from 'axios';
 import BackButton from '../../components/publicComponents/BackButton';
 import FormInput from '../../components/publicComponents/FormInput';
 import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
-import NewDiscussionScreenRecorder from '../../components/topicComponents/newDiscussionScreenComponents/NewDiscussionScreenRecorder';
+import Recorder from '../../components/topicComponents/Recorder';
 
 const NewDiscussionScreen = ({ navigation }) => {
   const [discussionTitle, setDiscussionTitle] = useState('');
@@ -176,7 +176,7 @@ const NewDiscussionScreen = ({ navigation }) => {
               formInputTitle="Add hashtags"
               dataInput={hashtagsInput}
             />
-            <NewDiscussionScreenRecorder
+            <Recorder
               addRecordingFile={addRecordingFile}
             />
           </View>

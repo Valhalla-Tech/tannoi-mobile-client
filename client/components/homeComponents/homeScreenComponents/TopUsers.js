@@ -29,6 +29,7 @@ const TopUsers = props => {
         data={topUserData}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
+        keyExtractor={(item, index) => index.toString()}
         renderItem={itemData => (
           <TouchableOpacity style={styles.topUsersCardConntainerStyle}>
             <Image source={{uri: itemData.item.profile_photo_path}} style={styles.profilePictureStyle} />

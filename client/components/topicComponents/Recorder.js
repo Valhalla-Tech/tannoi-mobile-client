@@ -12,10 +12,10 @@ import {
   Recorder,
   MediaStates
 } from '@react-native-community/audio-toolkit';
-import { bold, normal } from '../../../assets/FontSize';
+import { bold, normal } from '../../assets/FontSize';
 
 //Icon
-import RecordButton from '../../../assets/topicAssets/recordButton.svg'
+import RecordButton from '../../assets/topicAssets/recordButton.svg'
 
 class NewDiscussionScreenRecorder extends Component {
   constructor(props) {
@@ -171,9 +171,7 @@ class NewDiscussionScreenRecorder extends Component {
   render() {
     return (
       <View>
-        <View style={styles.timerContainerStyle}>
-          <Text style={styles.timerStyle}>{this.state.timer}</Text>
-        </View>
+        <Text style={this.props.recorderStyle ? {...styles.timerStyle, ...this.props.recorderStyle} : styles.timerStyle}>{this.state.timer}</Text>
         <View style={styles.newDiscussionScreenRecorderContainerStyle}>
           <TouchableOpacity
             onPress={() => this.state.recordingFile && this.stopPlayer() }
