@@ -23,7 +23,6 @@ const RECENT_SEARCHES_DATA = [
 ]
 
 const RecentSearches = () => {
-
   return (
     <View style={styles.recentSearchesContainerStyle}>
       <View style={styles.recentSearchesTitleAndClearAllButtonContainerStyle}>

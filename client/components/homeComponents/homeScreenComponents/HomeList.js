@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   FlatList
 } from 'react-native';
-import { bold, normal } from '../../../assets/FontSize';
+import { bold } from '../../../assets/FontSize';
 
 //Icon
 import DownArrow from '../../../assets/homeAssets/downArrow.svg';
@@ -16,8 +16,6 @@ import HomeListCard from './HomeListCard';
 import LoadingSpinner from '../../publicComponents/LoadingSpinner';
 
 const HomeList = props => {
-  const [isLoading, setIsLoading] = useState(false);
-
   const { 
     listTitle, 
     listData,
@@ -54,7 +52,7 @@ const HomeList = props => {
               name={itemData.item.creator.name}
               title={itemData.item.title}
               votes={itemData.item.likes}
-              replies={0}
+              replies={itemData.item.responses.length}
               plays={itemData.item.play_count}
               postTime={itemData.item.created_at}
               discussionId={itemData.item.id}

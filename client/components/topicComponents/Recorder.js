@@ -9,10 +9,9 @@ import {
 } from 'react-native';
 import {
   Player,
-  Recorder,
-  MediaStates
+  Recorder
 } from '@react-native-community/audio-toolkit';
-import { bold, normal } from '../../assets/FontSize';
+import { bold } from '../../assets/FontSize';
 
 //Icon
 import RecordButton from '../../assets/topicAssets/recordButton.svg'
@@ -32,8 +31,8 @@ class NewDiscussionScreenRecorder extends Component {
     this.player = null;
     this.countdown = null;
 
-    this.reloadRecorder();
-    this.reloadPlayer();
+    this.loadRecorder();
+    this.loadPlayer();
 
     this.counter = null;
   };
@@ -54,24 +53,24 @@ class NewDiscussionScreenRecorder extends Component {
     });
   };
 
-  reloadRecorder() {
+  loadRecorder() {
     if (this.recorder) {
       this.recorder.destroy();
     }
 
-    this.recorder = new Recorder('discussionRecord.m4a');
+    this.recorder = new Recorder('discussionRecord.mp4');
   };
 
-  reloadPlayer() {
+  loadPlayer() {
     if (this.player) {
       this.player.destroy();
     }
 
-    this.player = new Player('discussionRecord.m4a', {
+    this.player = new Player('discussionRecord.mp4', {
       autoDestroy: false
     }).prepare((error) => {
       if (error) {
-        console.log('error at _reloadPlayer():');
+        console.log('error at loadPlayer():');
         console.log(error);
       }
     });
@@ -119,7 +118,7 @@ class NewDiscussionScreenRecorder extends Component {
 
         this.recorder.toggleRecord((error, stopped) => {
           if (stopped) {
-            this.reloadRecorder();
+            this.loadRecorder();
           }
           
           this.stopCounter();
@@ -128,9 +127,8 @@ class NewDiscussionScreenRecorder extends Component {
       } else if (!toggleFromTimer) {
         this.recorder.toggleRecord((error, stopped) => {
           if (stopped) {
-            this.reloadRecorder();
+            this.loadRecorder();
           }
-          
         });
 
         if (this.recorder.isRecording) {
@@ -150,9 +148,9 @@ class NewDiscussionScreenRecorder extends Component {
 
   playRecording = () => {
     this.setState({
-      recordingFile: '/data/user/0/tannoi.client/files/discussionRecord.m4a'
+      recordingFile: '/data/user/0/tannoi.client/files/discussionRecord.mp4'
     });
-    this.props.addRecordingFile('/data/user/0/tannoi.client/files/discussionRecord.m4a');
+    this.props.addRecordingFile('/data/user/0/tannoi.client/files/discussionRecord.mp4');
     this.clearTimer();
 
     this.player.playPause((error, paused) => {

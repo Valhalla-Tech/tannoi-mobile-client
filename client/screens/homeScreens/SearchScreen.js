@@ -10,8 +10,6 @@ import {
 import SearchBar from '../../components/homeComponents/SearchBar';
 import RecentSearches from '../../components/homeComponents/searchScreenComponents/RecentSearches';
 import SearchResultBox from '../../components/homeComponents/searchScreenComponents/SearchResultBox';
-import { Text } from 'native-base';
-
 
 const SearchScreen = ({ navigation }) => {
   const [searchInput, setSearchInput] = useState('');

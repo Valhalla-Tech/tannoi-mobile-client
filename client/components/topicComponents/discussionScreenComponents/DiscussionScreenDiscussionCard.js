@@ -6,12 +6,11 @@ import {
   TouchableOpacity,
   Image
 } from 'react-native';
-import { bold, normal, medium } from '../../../assets/FontSize';
+import { bold, normal } from '../../../assets/FontSize';
+import { useDispatch } from 'react-redux';
+import { getHome } from '../../../store/actions/HomeAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
-
-//Profile picture example
-import ProfilePictureExample from '../../../assets/publicAssets/bigProfilePicture.png';
 
 //Icons
 import DiscussionCardMenu from '../../../assets/topicAssets/discussionCardMenu.svg';
@@ -46,6 +45,8 @@ const DiscussionScreenCard = props => {
     updateFromNextPreviousButton
   } = props;
 
+  const dispatch = useDispatch();
+
   const numberConverter = number => {
     let numberToString = number.toString();
 
@@ -74,6 +75,7 @@ const DiscussionScreenCard = props => {
 
       if (upvoteRequest.data) {
         getDiscussion();
+        dispatch(getHome());
       }
     } catch (error) {
       console.log(error.response);
@@ -94,6 +96,7 @@ const DiscussionScreenCard = props => {
 
       if (downvoteRequest.data) {
         getDiscussion();
+        dispatch(getHome());
       }
     } catch (error) {
       console.log(error.response);

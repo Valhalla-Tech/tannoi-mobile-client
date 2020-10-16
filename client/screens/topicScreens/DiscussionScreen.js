@@ -6,12 +6,9 @@ import {
   TouchableOpacity,
   FlatList
 } from 'react-native';
-import { bold, normal, medium } from '../../assets/FontSize';
+import { bold } from '../../assets/FontSize';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
-
-//Profile picture example
-import ProfilePictureExample from '../../assets/publicAssets/bigProfilePicture.png';
 
 //Components
 import BackButton from '../../components/publicComponents/BackButton';
@@ -87,7 +84,7 @@ const DiscussionScreen = ({ route, navigation }) => {
     try {
       let access_token = await AsyncStorage.getItem('access_token');
       let getResponseRequest = await axios({
-        url: `https://dev.entervalhalla.tech/api/tannoi/v1/responses/discussion/1?page=1`,
+        url: `https://dev.entervalhalla.tech/api/tannoi/v1/responses/discussion/${discussionId}?page=1`,
         method: 'get',
         headers: {
           'token': access_token
@@ -238,7 +235,6 @@ const DiscussionScreen = ({ route, navigation }) => {
                   updateFromNextPreviousButton={updateFromNextPreviousButton}
                   changePlayer={changePlayer}
                   discussionId={discussionId}
-                  responseCount={itemData.item.response_count}
                   isLike={itemData.item.isLike}
                   isDislike={itemData.item.isDislike}
                   getIsLikeAndIsDislike={getIsLikeAndIsDislike}

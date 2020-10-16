@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Image
 } from 'react-native';
-import { bold, normal } from '../../../assets/FontSize';
+import { normal } from '../../../assets/FontSize';
 
 const RecommendedTopicsCard = props => {
   const {

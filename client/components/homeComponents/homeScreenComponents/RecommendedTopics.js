@@ -17,6 +17,24 @@ const RecommendedTopics = props => {
     topicData 
   } = props;
 
+  const topicGroup = topicData => {
+    let arrayGroup = []
+    let topicGroupArray = []
+
+    for (let topicIndex = 0; topicIndex < topicData.length; topicIndex++) {
+      if (topicGroupArray.length === 3) {
+        arrayGroup.push(topicGroupArray)
+        topicGroupArray = [];
+        topicGroupArray.push(topicData[topicIndex]);
+      } else {
+        topicGroupArray.push(topicData[topicIndex])
+      }
+    }
+
+    arrayGroup.push(topicGroupArray);
+    return arrayGroup;
+  };
+
   return (
     <View style={styles.recommendedTopicsContainerStyle}>
       <View style={styles.recommendedTopicsTitleAndSeeAllButtonContainerStyle}>
@@ -32,7 +50,7 @@ const RecommendedTopics = props => {
               horizontal={true}
               showsHorizontalScrollIndicator={false}
               keyExtractor={(id, index) => index.toString()}
-              data={topicData}
+              data={topicGroup(topicData)}
               renderItem={itemData => (
                 <RecommendedTopicsCard
                 firstCardIcon={itemData.item[0].image_path}

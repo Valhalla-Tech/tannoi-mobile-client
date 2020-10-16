@@ -6,37 +6,42 @@ import {
   Modal,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  Keyboard,
-  Platform,
-  PermissionsAndroid,
-  addResponseForResponse
+  Keyboard
 } from 'react-native';
-import { bold, normal } from '../../../assets/FontSize';
+import { bold } from '../../../assets/FontSize';
+import { useDispatch } from 'react-redux';
+import { getHome } from '../../../store/actions/HomeAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 
 //Components
 import FormInput from '../../publicComponents/FormInput';
 import Recorder from '../Recorder';
+import LoadingSpinner from '../../publicComponents/LoadingSpinner';
+import ErrorMessage from '../../publicComponents/ErrorMessage';
 
 const AddResponse = props => {
   const [recordingFile, setRecordingFile] = useState('');
   const [caption, setCaption] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [addResponseValidation, setAddResponseValidation] = useState(false);
+
+  const dispatch = useDispatch();
 
   const {
     openAddResponseModal,
     closeAddResponseModal,
     discussionId,
     getResponse,
+    getSingleResponse,
     responseId,
     addResponseForResponse
   } = props;
 
   const createResponse = async () => {
     try {
+      setIsLoading(true);
       let access_token = await AsyncStorage.getItem('access_token');
-
-      console.log('masuk sini ')
 
       const uri = `file://${recordingFile}`;
 
@@ -67,13 +72,17 @@ const AddResponse = props => {
         data: formData
       });
 
-      console.log(createResponseRequest.data);
-
       if (createResponseRequest.data) {
         getResponse();
+        if (addResponseForResponse) {
+          getSingleResponse();
+        }
+        dispatch(getHome());
         closeAddResponseModal();
       };
     } catch (error) {
+      setIsLoading(false);
+      setAddResponseValidation(true);
       console.log(error.response);
     }
   };
@@ -84,21 +93,6 @@ const AddResponse = props => {
 
   const inputCaption = captionInput => {
     setCaption(captionInput);
-  };
-
-  const playRecording = () => {
-    setRecordingFile('/data/user/0/tannoi.client/files/responseRecord.mp4');
-    clearTimer();
-
-    player.playPause((error, paused) => {
-      console.log(error);
-    });
-  };
-
-  const stopPlayer = () => {
-    player.stop((error) => {
-      console.log(error);
-    });
   };
 
   return (
@@ -117,22 +111,36 @@ const AddResponse = props => {
         }}
       >
         <View style={styles.addResponseModalStyle}>
-          <View style={styles.titleAndPublishButtonContainerStyle}>
-            <Text style={styles.addResponseTitleStyle}>Add response</Text>
-            <TouchableOpacity
-              onPress={() => createResponse()}
-            >
-              <Text style={styles.publishButtonTextStyle}>Publish</Text>
-            </TouchableOpacity>
+          <View style={styles.contentContainerStyle}>
+            <View style={styles.titleAndPublishButtonContainerStyle}>
+              <Text style={styles.addResponseTitleStyle}>Add response</Text>
+              <TouchableOpacity
+                onPress={() => createResponse()}
+              >
+                <Text style={styles.publishButtonTextStyle}>Publish</Text>
+              </TouchableOpacity>
+            </View>
+            <FormInput
+              formInputTitle="Add caption (Optional)"
+              dataInput={inputCaption}
+            />
+            {
+              addResponseValidation && (
+                <ErrorMessage
+                  message="Something's wrong"
+                />
+              )
+            }
+            <Recorder
+              addRecordingFile={addRecordingFile}
+              recorderStyle={{marginTop: "30%"}}
+            />
           </View>
-          <FormInput
-            formInputTitle="Add caption (Optional)"
-            dataInput={inputCaption}
-          />
-          <Recorder
-            addRecordingFile={addRecordingFile}
-            recorderStyle={{marginTop: "30%"}}
-          />
+          {
+            isLoading && (
+              <LoadingSpinner />
+            )
+          }
         </View>
       </TouchableWithoutFeedback>
     </Modal>
@@ -152,8 +160,11 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "50%",
     borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    padding: 20,
+    borderTopRightRadius: 20
+  },
+
+  contentContainerStyle: {
+    padding: 20, 
     paddingBottom: 55
   },
 

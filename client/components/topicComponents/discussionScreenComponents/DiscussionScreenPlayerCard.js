@@ -12,6 +12,8 @@ import {
 } from '@react-native-community/audio-toolkit';
 import AsyncStorage from '@react-native-community/async-storage';
 import Slider from '@react-native-community/slider';
+import { connect } from 'react-redux';
+import { getHome } from '../../../store/actions/HomeAction';
 import axios from 'axios';
 
 //Icons
@@ -58,7 +60,7 @@ class DiscussionScreenPlayerCard extends Component {
       fromNextPreviousButton: this.props.fromNextPreviousButton,
       updateFromNextPreviousButton: this.props.updateFromNextPreviousButton,
       openAddResponseModal: false,
-      responseCount: this.props.responseCount,
+      responseCount: 0,
       isLike: false,
       isDislike: false,
       isChainResponse: this.props.isChainResponse,
@@ -78,7 +80,7 @@ class DiscussionScreenPlayerCard extends Component {
 
     this.loadPlayer();
 
-    this.getResponse();
+    this.getSingleResponse();
 
     this.progressInterval = null;
   };
@@ -149,9 +151,10 @@ class DiscussionScreenPlayerCard extends Component {
 
       if (this.player.isPlaying && this.state.cardType === 'discussion' && !error && !this.state.isPaused) {
         this.playCounter();
+        this.props.getHome();
       };
 
-      if (this.player.isPlaying && this.state.cardType === 'discussion' && !error) {
+      if (this.player.isPlaying && !error) {
         this.progressInterval = setInterval(() => {
           if (this.player && this.shouldUpdateProgressBar()) {
             let currentProgress = Math.max(0, this.player.currentTime) / this.player.duration;
@@ -267,12 +270,12 @@ class DiscussionScreenPlayerCard extends Component {
     }
   };
 
-  getResponse = async () => {
+  getSingleResponse = async () => {
     try {
       const access_token = await AsyncStorage.getItem('access_token');
       
       if (access_token) {
-        let getResponseRequest = await axios({
+        let getSingleResponseRequest = await axios({
           url: `https://dev.entervalhalla.tech/api/tannoi/v1/responses/single/${this.state.responseId}`,
           method: 'get',
           headers: {
@@ -280,11 +283,12 @@ class DiscussionScreenPlayerCard extends Component {
           }
         });
         
-        if (getResponseRequest.data) {
+        if (getSingleResponseRequest.data) {
           this.setState({
-            like: getResponseRequest.data.likes,
-            isLike: getResponseRequest.data.isLike,
-            isDislike: getResponseRequest.data.isDislike
+            like: getSingleResponseRequest.data.likes,
+            isLike: getSingleResponseRequest.data.isLike,
+            isDislike: getSingleResponseRequest.data.isDislike,
+            responseCount: getSingleResponseRequest.data.response_count
           });
         }
       }
@@ -306,7 +310,7 @@ class DiscussionScreenPlayerCard extends Component {
       })
 
       if (upvoteRequest.data) {
-        this.getResponse();
+        this.getSingleResponse();
       }
     } catch (error) {
       console.log(error.response);
@@ -326,7 +330,7 @@ class DiscussionScreenPlayerCard extends Component {
       })
 
       if (downvoteRequest.data) {
-        this.getResponse();
+        this.getSingleResponse();
       }
     } catch (error) {
       console.log(error);
@@ -480,7 +484,7 @@ class DiscussionScreenPlayerCard extends Component {
           )
         }
         {
-          this.state.responseCount >= 1 && (
+          this.state.responseCount >= 1 && this.state.cardIndex !== 'response' && (
             <View style={styles.showReplyButtonContainerStyle}>
               <TouchableOpacity
                 onPress={() => this.props.navigation.push('ResponseScreen', {
@@ -498,12 +502,19 @@ class DiscussionScreenPlayerCard extends Component {
           closeAddResponseModal={this.closeAddResponseModal}
           discussionId={this.state.discussionId}
           getResponse={this.state.getResponseFromDiscussion}
+          getSingleResponse={this.getSingleResponse}
           addResponseForResponse={true}
           responseId={this.state.responseId}
         />
       </View>
     )
   }
+};
+
+const dispatchUpdateHome = () => {
+  return {
+    getHome 
+  };
 };
 
 const styles = StyleSheet.create({
@@ -621,4 +632,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default DiscussionScreenPlayerCard;
+export default connect(
+  null,
+  dispatchUpdateHome()
+)(DiscussionScreenPlayerCard);

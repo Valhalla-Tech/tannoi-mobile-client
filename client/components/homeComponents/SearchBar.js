@@ -7,7 +7,7 @@ import {
   FlatList,
   TextInput
 } from 'react-native';
-import { bold, normal } from '../../assets/FontSize';
+import { normal } from '../../assets/FontSize';
 
 //Icons
 import SearchIcon from '../../assets/homeAssets/searchIcon.svg';

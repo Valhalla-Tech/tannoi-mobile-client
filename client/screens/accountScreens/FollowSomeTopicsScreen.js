@@ -3,8 +3,7 @@ import {
   StyleSheet,
   View,
   Text,
-  FlatList,
-  Alert
+  FlatList
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {
@@ -45,7 +44,7 @@ const FollowSomeTopicsScreen = ({ navigation }) => {
   
       setAllTopics(getTopicRequest.data);
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
     }
   };
 

@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet,
-  View,
-  Text,
   TouchableOpacity
 } from 'react-native';
 import {
@@ -29,7 +26,7 @@ class HomeListPlayerCard extends Component {
   componentDidMount() {
     this.player = null;
 
-    this.reloadPlayer();
+    this.loadPlayer();
   };
 
   updateState() {
@@ -39,7 +36,7 @@ class HomeListPlayerCard extends Component {
     })
   };
 
-  reloadPlayer() {
+  loadPlayer() {
     if (this.player) {
       this.player.destroy();
     };

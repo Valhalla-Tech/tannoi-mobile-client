@@ -1,19 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
   StyleSheet,
   View,
-  Text,
   FlatList
 } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import {
+  useSelector,
+  useDispatch
+} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
-import axios from 'axios';
-
-//Profile picture example
-import ProfilePictureExample from '../../assets/homeAssets/bigProfilePicture.png';
-
-//Icon
-import carsTopicIcon from '../../assets/homeAssets/carsTopicIcon.png';
+import { getHome } from '../../store/actions/HomeAction';
 
 //Components
 import SearchBar from '../../components/homeComponents/SearchBar';
@@ -24,58 +20,18 @@ import Trending from '../../components/homeComponents/homeScreenComponents/HomeL
 import RecommendedTopics from '../../components/homeComponents/homeScreenComponents/RecommendedTopics';
 
 const HomeScreen = ({ navigation }) => {
-  const [discussionOfTheWeek, setDiscussionOfTheWeek] = useState('');
-  const [topUser, setTopUser] = useState('');
-  const [trending, setTrending] = useState('');
-  const [recommendedTopic, setRecommendedTopic] = useState('');
-  const [user, setUser] = useState('');
+  const user = useSelector(state => state.HomeReducer.user);
+  const discussionOfTheWeek = useSelector(state => state.HomeReducer.discussionOfTheWeek);
+  const topUser = useSelector(state => state.HomeReducer.topUser);
+  const trending = useSelector(state => state.HomeReducer.trending);
+  const recommendedTopic = useSelector(state => state.HomeReducer.recommendedTopic);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getHome();
+    dispatch(getHome());
     SplashScreen.hide();
   }, []);
-
-  const getHome = async () => {
-    try {
-      const access_token = await AsyncStorage.getItem('access_token');
-
-      let getHomeRequest = await axios({
-        url: 'https://dev.entervalhalla.tech/api/tannoi/v1/pages/home?sort=like&page=1',
-        method: 'get',
-        headers: {
-          'token': access_token
-        }
-      });
-
-      if (getHomeRequest.data) {
-        setUser(getHomeRequest.data.user);
-        setDiscussionOfTheWeek(getHomeRequest.data.discussion_of_the_week);
-        setTopUser(getHomeRequest.data.top_user);
-        setTrending(getHomeRequest.data.discussion.data);
-        topicGroup(getHomeRequest.data.recommended_topic);
-      };
-    } catch (error) {
-      console.log(error.response);
-    }
-  };
-
-  const topicGroup = topicData => {
-    let arrayGroup = []
-    let topicGroupArray = []
-
-    for (let topicIndex = 0; topicIndex < topicData.length; topicIndex++) {
-      if (topicGroupArray.length === 3) {
-        arrayGroup.push(topicGroupArray)
-        topicGroupArray = [];
-        topicGroupArray.push(topicData[topicIndex]);
-      } else {
-        topicGroupArray.push(topicData[topicIndex])
-      }
-    }
-
-    arrayGroup.push(topicGroupArray);
-    setRecommendedTopic(arrayGroup);
-  };
 
   return (
     <View>

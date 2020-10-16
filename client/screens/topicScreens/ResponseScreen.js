@@ -3,7 +3,6 @@ import {
   StyleSheet,
   View,
   Text,
-  TouchableOpacity,
   FlatList
 } from 'react-native';
 import { bold, normal } from '../../assets/FontSize';
@@ -14,7 +13,6 @@ import axios from 'axios';
 import BackButton from '../../components/publicComponents/BackButton';
 import DiscussionScreenPlayerCard from '../../components/topicComponents/discussionScreenComponents/DiscussionScreenPlayerCard';
 import ClosedCard from '../../components/topicComponents/discussionScreenComponents/ClosedCard';
-import LoadingScreen from '../../components/publicComponents/LoadingSpinner';
 import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
 
 const ReplyScreen = ({route, navigation}) => {
@@ -134,14 +132,6 @@ const ReplyScreen = ({route, navigation}) => {
             )
           }
         </View>
-        {/* <TouchableOpacity
-          style={styles.addResponseButtonStyle}
-          onPress={() => {
-            // setOpenAddResponseModal(true);
-          }}
-        >
-          <Text style={styles.addResponseButtonTextStyle}>Add response</Text>
-        </TouchableOpacity> */}
       </View>
       {
         !profileName && (

@@ -8,7 +8,7 @@ import {
   Keyboard,
   ScrollView
 } from 'react-native';
-import { bold, normal, medium } from '../../assets/FontSize';
+import { bold, normal } from '../../assets/FontSize';
 import { Picker } from '@react-native-community/picker';
 import AsyncStorage from '@react-native-community/async-storage';
 import {
@@ -23,6 +23,7 @@ import BackButton from '../../components/publicComponents/BackButton';
 import FormInput from '../../components/publicComponents/FormInput';
 import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
 import Recorder from '../../components/topicComponents/Recorder';
+import ErrorMessage from '../../components/publicComponents/ErrorMessage';
 
 const NewDiscussionScreen = ({ navigation }) => {
   const [discussionTitle, setDiscussionTitle] = useState('');
@@ -31,6 +32,7 @@ const NewDiscussionScreen = ({ navigation }) => {
   const [hashtagsFormDisplay, setHashtagsFormDisplay] = useState('');
   const [recordingFile, setRecordingFile] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [createNewDiscussionValidation, setCreateNewDiscussionValidation] = useState(false);
 
   const topics = useSelector(state => state.GetTopicReducer.topics);
   const dispatch = useDispatch();
@@ -79,6 +81,7 @@ const NewDiscussionScreen = ({ navigation }) => {
   const createNewDiscussion =  async () => {
     try {
       setIsLoading(true);
+      setCreateNewDiscussionValidation(false);
 
       let access_token = await AsyncStorage.getItem('access_token');
       
@@ -122,7 +125,8 @@ const NewDiscussionScreen = ({ navigation }) => {
       }
     } catch (error) {
       setIsLoading(false);
-      console.log(error.message);
+      setCreateNewDiscussionValidation(true);
+      console.log(error.response);
     }
   };
 
@@ -154,37 +158,46 @@ const NewDiscussionScreen = ({ navigation }) => {
             </TouchableOpacity>
           </View>
           <View style={styles.newDiscussionFormContainerStyle}>
-            <FormInput
-              formInputTitle="Discussion title"
-              dataInput={discussionTitleInput}
-            />
-            <Text style={styles.formInputTitleStyle}>Topic</Text>
-            <Picker
-              selectedValue={selectedTopic}
-              style={styles.topicPickerStyle}
-              selectedValue={selectedTopic}
-              onValueChange={(itemValue, itemIndex) => setSelectedTopic(itemValue)}
-            >
-              <Picker.Item label="Select topic" value="Select topic" />
-              { 
-                topics.map((topic, index) => (
-                  <Picker.Item key={index} label={topic.name} value={topic.id} />
-                ))
+            <View style={styles.contentContainerStyle}>
+              <FormInput
+                formInputTitle="Discussion title"
+                dataInput={discussionTitleInput}
+              />
+              <Text style={styles.formInputTitleStyle}>Topic</Text>
+              <Picker
+                selectedValue={selectedTopic}
+                style={styles.topicPickerStyle}
+                selectedValue={selectedTopic}
+                onValueChange={(itemValue, itemIndex) => setSelectedTopic(itemValue)}
+              >
+                <Picker.Item label="Select topic" value="Select topic" />
+                { 
+                  topics.map((topic, index) => (
+                    <Picker.Item key={index} label={topic.name} value={topic.id} />
+                  ))
+                }
+              </Picker>
+              <FormInput
+                formInputTitle="Add hashtags"
+                dataInput={hashtagsInput}
+              />
+              {
+                createNewDiscussionValidation && (
+                  <ErrorMessage
+                    message="Something's error"
+                  />
+                )
               }
-            </Picker>
-            <FormInput
-              formInputTitle="Add hashtags"
-              dataInput={hashtagsInput}
-            />
-            <Recorder
-              addRecordingFile={addRecordingFile}
-            />
+              <Recorder
+                addRecordingFile={addRecordingFile}
+              />
+            </View>
+            {
+              isLoading && (
+                <LoadingSpinner />
+              )
+            }
           </View>
-          {
-            isLoading && (
-              <LoadingSpinner />
-            )
-          }
         </View>
       </TouchableWithoutFeedback>
     </ScrollView>
@@ -228,7 +241,10 @@ const styles = StyleSheet.create({
   newDiscussionFormContainerStyle: {
     backgroundColor: "#FFFFFF",
     margin: 8,
-    borderRadius: 8,
+    borderRadius: 8
+  },
+
+  contentContainerStyle: {
     paddingHorizontal: 16,
     paddingTop: 4
   },
