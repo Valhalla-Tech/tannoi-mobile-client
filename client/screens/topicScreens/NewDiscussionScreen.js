@@ -188,9 +188,11 @@ const NewDiscussionScreen = ({ navigation }) => {
                   />
                 )
               }
-              <Recorder
-                addRecordingFile={addRecordingFile}
-              />
+              <View style={styles.recorderContainerStyle}>
+                <Recorder
+                  addRecordingFile={addRecordingFile}
+                />
+              </View>
             </View>
             {
               isLoading && (
@@ -265,42 +267,8 @@ const styles = StyleSheet.create({
     color: "#73798C"
   },
 
-  newDiscussionRecorderContainerStyle: {
-    marginTop: "50%",
-    alignItems: "center",
-    paddingBottom: "5%",
-    flexDirection: "row",
-    justifyContent: "space-around"
-  },
-
-  stopButtonStyle: {
-    borderWidth: 1,
-    padding: "5%",
-    borderRadius: 10,
-    borderColor: "#de181f",
-    height: 40,
-    width: 100
-  },
-
-  stopButtonTextStyle: {
-    color: "#de181f",
-    fontFamily: bold,
-    textAlign: "center"
-  },
-  
-  playOrPauseButtonStyle: {
-    borderWidth: 1,
-    padding: "5%",
-    borderRadius: 10,
-    borderColor: "#5152D0",
-    height: 40,
-    width: 100
-  },
-
-  playOrPauseButtonTextStyle: {
-    color: "#5152D0",
-    fontFamily: bold,
-    textAlign: "center"
+  recorderContainerStyle: {
+    marginTop: "35%"
   }
 });
 

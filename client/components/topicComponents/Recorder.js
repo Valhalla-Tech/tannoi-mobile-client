@@ -11,7 +11,8 @@ import {
   Player,
   Recorder
 } from '@react-native-community/audio-toolkit';
-import { bold } from '../../assets/FontSize';
+import Slider from '@react-native-community/slider';
+import { bold, normal } from '../../assets/FontSize';
 
 //Icon
 import RecordButton from '../../assets/topicAssets/recordButton.svg'
@@ -22,7 +23,12 @@ class NewDiscussionScreenRecorder extends Component {
 
     this.state = {
       recordingFile: '',
-      timer: ''
+      timer: '',
+      progress: 0,
+      duration: 0,
+      durationRemaining: 0,
+      durationDisplay: '',
+      durationPlayerDisplay: ''
     };
   };
 
@@ -30,11 +36,13 @@ class NewDiscussionScreenRecorder extends Component {
     this.recorder = null;
     this.player = null;
     this.countdown = null;
+    this.lastSeek = 0;
 
     this.loadRecorder();
     this.loadPlayer();
 
     this.counter = null;
+    this.progressInterval = null;
   };
 
   startCounter = () => {
@@ -157,6 +165,29 @@ class NewDiscussionScreenRecorder extends Component {
       if (error) {
         console.log(error);
       };
+
+      if (this.player.isPlaying && !error) {
+        this.progressInterval = setInterval(() => {
+          if (this.player && this.shouldUpdateProgressBar()) {
+            let currentProgress = Math.max(0, this.player.currentTime) / this.player.duration;
+            if (isNaN(currentProgress)) {
+              currentProgress = 0;
+            };
+
+            this.updateDuration(this.player.currentTime);
+  
+            if (!this.player.isPlaying) {
+              if (!this.player.isPaused) {
+                this.getDuration();
+              };
+
+              this.stopProgressInterval();
+            };
+  
+            this.setState({ progress: currentProgress });
+          }
+        }, 100);
+      };
     });
   };
 
@@ -166,9 +197,78 @@ class NewDiscussionScreenRecorder extends Component {
     });
   };
 
+  stopProgressInterval = () => {
+    clearInterval(this.progressInterval);
+  };
+
+  updateDuration = currentTime => {
+    let durationRemaining = this.player.duration - currentTime;
+    let durationRemainingToString = durationRemaining.toString();
+    let currentTimeToString = currentTime.toString();
+    
+    this.setState({
+      durationDisplay: durationRemainingToString.length === 4 ? (`0:0${durationRemainingToString[0]}`) : (
+        durationRemainingToString.length === 5 ? `0:${durationRemainingToString[0]}${durationRemainingToString[1]}` : '0:00'
+      ),
+      durationPlayedDisplay: currentTimeToString.length === 4 ? (`0:0${currentTimeToString[0]}`) : (
+        currentTimeToString.length === 5 ? `0:${currentTimeToString[0]}${currentTimeToString[1]}` : '0:00'
+      )
+    });
+  };
+
+  getDuration = () => {
+    let durationToString = this.player.duration.toString();
+    
+    if (durationToString.length === 4) {
+      this.setState({
+        durationDisplay: `0:0${durationToString[0]}`,
+        durationPlayedDisplay: '0:00'
+      });
+    } else if (durationToString.length === 5) {
+      this.setState({
+        durationDisplay: `0:${durationToString[0]}${durationToString[1]}`,
+        durationPlayedDisplay: '0:00'
+      });
+    };
+  };
+
+  seek(percentage) {
+    if (!this.player) {
+      return;
+    }
+
+    this.lastSeek = Date.now();
+
+    let position = percentage * this.player.duration;
+
+    this.player.seek(position, () => {
+      this.updateState();
+    });
+  };
+
+  shouldUpdateProgressBar() {
+    return Date.now() - this.lastSeek > 200;
+  };
+
   render() {
     return (
       <View>
+        {
+          this.state.recordingFile !== '' && (
+            <View style={styles.sliderStyle}>
+              <View style={styles.durationContainerStyle}>
+                <Text style={styles.durationStyle}>{this.state.durationDisplay}</Text>
+                <Text style={styles.durationStyle}>{this.state.durationPlayedDisplay}</Text>
+              </View>
+              <Slider 
+                step={0.0001} 
+                onValueChange={(percentage) => this.seek(percentage)} value={this.state.progress} 
+                thumbTintColor="#5152D0"
+                minimumTrackTintColor="#5152D0"
+              />
+            </View>
+          )
+        }
         <Text style={this.props.recorderStyle ? {...styles.timerStyle, ...this.props.recorderStyle} : styles.timerStyle}>{this.state.timer}</Text>
         <View style={styles.newDiscussionScreenRecorderContainerStyle}>
           <TouchableOpacity
@@ -197,8 +297,22 @@ class NewDiscussionScreenRecorder extends Component {
 };
 
 const styles = StyleSheet.create({
+  sliderStyle: {
+    color: "#464D60"
+  },
+
+  durationContainerStyle: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
+  },
+
+  durationStyle: {
+    fontFamily: normal
+  },
+
   timerStyle: {
-    marginTop: "50%",
+    marginTop: "5%",
     textAlign: "center",
     color: "#5152D0",
     fontSize: 20,

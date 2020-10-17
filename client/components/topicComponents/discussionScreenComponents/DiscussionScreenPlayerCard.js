@@ -14,6 +14,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Slider from '@react-native-community/slider';
 import { connect } from 'react-redux';
 import { getHome } from '../../../store/actions/HomeAction';
+import LoadingSpinner from '../../publicComponents/LoadingSpinner';
 import axios from 'axios';
 
 //Icons
@@ -381,6 +382,7 @@ class DiscussionScreenPlayerCard extends Component {
             onValueChange={(percentage) => this.seek(percentage)} value={this.state.progress} 
             thumbTintColor="#5152D0"
             minimumTrackTintColor="#5152D0"
+            disabled={this.state.playButtonDisabled}
           />
         </View>
         <View style={styles.playerContainerStyle}>
@@ -410,7 +412,7 @@ class DiscussionScreenPlayerCard extends Component {
           <TouchableOpacity onPress={() => this.playRecording()}>
             {
               this.state.playButtonDisabled ? (
-                <Text>Loading...</Text>
+                <LoadingSpinner loadingSpinnerForComponent={true} />
               ) : (
                 this.state.playPauseButton === 'Play' ? (
                   <ActivePlayButton />
