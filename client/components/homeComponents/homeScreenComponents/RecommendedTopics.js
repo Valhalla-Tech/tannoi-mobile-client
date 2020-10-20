@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
 
-//Component
+//Components
 import RecommendedTopicsCard from './RecommendedTopicsCard';
 import LoadingSpinner from '../../publicComponents/LoadingSpinner';
 
@@ -44,7 +44,7 @@ const RecommendedTopics = props => {
         </TouchableOpacity>
       </View>
       {
-        topicData !== '' ? (
+        topicData !== '' && topicData.length !== 0 ? (
           <View style={styles.topicCardContainerStyle}>
             <FlatList
               horizontal={true}
@@ -52,17 +52,44 @@ const RecommendedTopics = props => {
               keyExtractor={(id, index) => index.toString()}
               data={topicGroup(topicData)}
               renderItem={itemData => (
-                <RecommendedTopicsCard
-                firstCardIcon={itemData.item[0].image_path}
-                firstCardName={itemData.item[0].name}
-                firstCardDiscussions={1}
-                secondCardIcon={itemData.item[1].image_path}
-                secondCardName={itemData.item[1].name}
-                secondCardDiscussions={1}
-                thirdCardIcon={itemData.item[2].image_path}
-                thirdCardName={itemData.item[2].name}
-                thirdCardDiscussions={1}
-                />
+                <>
+                  {
+                    itemData.item.length === 1 && (
+                      <RecommendedTopicsCard
+                        firstCardIcon={itemData.item[0].image_path ? itemData.item[0].image_path : ''}
+                        firstCardName={itemData.item[0].name ? itemData.item[0].name : ''}
+                        firstCardDiscussions={1}
+                      />
+                    )
+                  }
+                  {
+                    itemData.item.length === 2 && (
+                      <RecommendedTopicsCard
+                        firstCardIcon={itemData.item[0].image_path ? itemData.item[0].image_path : ''}
+                        firstCardName={itemData.item[0].name ? itemData.item[0].name : ''}
+                        firstCardDiscussions={1}
+                        secondCardIcon={itemData.item[1].image_path ? itemData.item[1].image_path : ''}
+                        secondCardName={itemData.item[1].name ? itemData.item[1].name : ''}
+                        secondCardDiscussions={1}
+                      />
+                    )
+                  }
+                  {
+                    itemData.item.length === 3 && (
+                      <RecommendedTopicsCard
+                        firstCardIcon={itemData.item[0].image_path ? itemData.item[0].image_path : ''}
+                        firstCardName={itemData.item[0].name ? itemData.item[0].name : ''}
+                        firstCardDiscussions={1}
+                        secondCardIcon={itemData.item[1].image_path ? itemData.item[1].image_path : ''}
+                        secondCardName={itemData.item[1].name ? itemData.item[1].name : ''}
+                        secondCardDiscussions={1}
+                        thirdCardIcon={itemData.item[2].image_path ? itemData.item[2].image_path : ''}
+                        thirdCardName={itemData.item[2].name ? itemData.item[2].name : ''}
+                        thirdCardDiscussions={1}
+                      />
+                    )
+                  }
+                </>
               )}
             />
           </View>

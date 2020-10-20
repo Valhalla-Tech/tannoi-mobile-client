@@ -27,7 +27,7 @@ export const getHome = () => {
         })
       };
     } catch (error) {
-      console.log(error.response);
+      console.log(error);
     }
   };
 };
