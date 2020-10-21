@@ -139,7 +139,7 @@ const DiscussionScreenCard = props => {
           <>
             <View style={styles.discussionInfoSectionStyle}>
               <View style={styles.profileAndMenuContainerStyle}>
-                <View style={styles.profileInfoContainerStyle}>
+                <View>
                   <View style={styles.profileContainerStyle}>
                     <Image source={{uri: profilePicture}} style={styles.profileImageStyle} />
                     <Text style={styles.profileNameStyle}>{profileName}</Text>
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between"
   },
-
+  
   profileContainerStyle: {
     flexDirection: "row",
     alignItems: "center"
@@ -246,7 +246,8 @@ const styles = StyleSheet.create({
     marginLeft: 36,
     fontFamily: normal,
     color: "#73798C",
-    fontSize: 12
+    fontSize: 12,
+    marginTop: "-5%"
   },
 
   discussionCardMenuStyle: {
