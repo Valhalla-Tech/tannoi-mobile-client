@@ -118,7 +118,6 @@ const DiscussionScreenCard = props => {
     let postTimeToGMTString = postTimeToNewDate.toGMTString();
     let postTimeToNewDateSplitted = postTimeToGMTString.split(' ');
     
-    
     let date = postTimeToNewDateSplitted[1];
     let month = postTimeToNewDateSplitted[2];
     let year = postTimeToNewDateSplitted[3];
@@ -139,68 +138,68 @@ const DiscussionScreenCard = props => {
         ) : (
           <>
             <View style={styles.discussionInfoSectionStyle}>
-        <View style={styles.profileAndMenuContainerStyle}>
-          <View style={styles.profileInfoContainerStyle}>
-            <View style={styles.profileContainerStyle}>
-              <Image source={{uri: profilePicture}} style={styles.profileImageStyle} />
-              <Text style={styles.profileNameStyle}>{profileName}</Text>
+              <View style={styles.profileAndMenuContainerStyle}>
+                <View style={styles.profileInfoContainerStyle}>
+                  <View style={styles.profileContainerStyle}>
+                    <Image source={{uri: profilePicture}} style={styles.profileImageStyle} />
+                    <Text style={styles.profileNameStyle}>{profileName}</Text>
+                  </View>
+                  <Text style={styles.postTimeStyle}>{postTime ? convertPostTime(postTime) : ''}</Text>
+                </View>
+                <TouchableOpacity style={styles.discussionCardMenuStyle}>
+                  <DiscussionCardMenu />
+                </TouchableOpacity>
+              </View>
+              <View style={styles.discussionVoteAndInfoContainerStyle}>
+                <View style={styles.voteContainerStyle}>
+                  <TouchableOpacity onPress={() => upvote()}>
+                    {
+                      isLike ? (
+                        <ActiveUpvote />
+                      ) : (
+                        <Upvote />
+                      )
+                    }
+                  </TouchableOpacity>
+                    <Text style={styles.voteNumberStyle}>{numberConverter(like)}</Text>
+                  <TouchableOpacity onPress={() => downvote()}>
+                    {
+                      isDislike ? (
+                        <ActiveDownvote />
+                      ) : (
+                        <Downvote />
+                      )
+                    }
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.discussionInfoContainerStyle}>
+                  <Text style={styles.discussionTitleStyle}>{discussionTitle}</Text>
+                  <Text style={styles.discussionHashtag}>{hashtags ? convertHashtagForDisplay(hashtags) : ''}</Text>
+                  <View style={styles.repliesAndPlaysNumberContainerStyle}>
+                    <Text style={styles.repliesAndPlaysNumberStyle}>{numberConverter(replies)} Replies</Text>
+                    <Text style={styles.repliesAndPlaysNumberStyle}>{numberConverter(plays)} Plays</Text>
+                  </View>
+                </View>
+              </View>
             </View>
-            <Text style={styles.postTimeStyle}>{postTime ? convertPostTime(postTime) : ''}</Text>
-          </View>
-          <TouchableOpacity style={styles.discussionCardMenuStyle}>
-            <DiscussionCardMenu />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.discussionVoteAndInfoContainerStyle}>
-          <View style={styles.voteContainerStyle}>
-            <TouchableOpacity onPress={() => upvote()}>
-              {
-                isLike ? (
-                  <ActiveUpvote />
-                ) : (
-                  <Upvote />
-                )
-              }
-            </TouchableOpacity>
-              <Text style={styles.voteNumberStyle}>{numberConverter(like)}</Text>
-            <TouchableOpacity onPress={() => downvote()}>
-              {
-                isDislike ? (
-                  <ActiveDownvote />
-                ) : (
-                  <Downvote />
-                )
-              }
-            </TouchableOpacity>
-          </View>
-          <View style={styles.discussionInfoContainerStyle}>
-            <Text style={styles.discussionTitleStyle}>{discussionTitle}</Text>
-            <Text style={styles.discussionHashtag}>{hashtags ? convertHashtagForDisplay(hashtags) : ''}</Text>
-            <View style={styles.repliesAndPlaysNumberContainerStyle}>
-              <Text style={styles.repliesAndPlaysNumberStyle}>{numberConverter(replies)} Replies</Text>
-              <Text style={styles.repliesAndPlaysNumberStyle}>{numberConverter(plays)} Plays</Text>
-            </View>
-          </View>
-        </View>
-      </View>
-      {
-        recordingFile !== '' && (
-          <DiscussionScreenPlayerCard
-            cardType="discussion"
-            profilePicture={profilePicture}
-            profileName={profileName}
-            postTime={postTime}
-            recordingFile={recordingFile}
-            nextPlayerAvailable={nextPlayerAvailable}
-            changePlayer={changePlayer}
-            cardIndex={cardIndex}
-            discussionId={discussionId}
-            getDiscussion={getDiscussion}
-            fromNextPreviousButton={fromNextPreviousButton}
-            updateFromNextPreviousButton={updateFromNextPreviousButton}
-          />
-        )
-      }
+            {
+              recordingFile !== '' && (
+                <DiscussionScreenPlayerCard
+                  cardType="discussion"
+                  profilePicture={profilePicture}
+                  profileName={profileName}
+                  postTime={postTime}
+                  recordingFile={recordingFile}
+                  nextPlayerAvailable={nextPlayerAvailable}
+                  changePlayer={changePlayer}
+                  cardIndex={cardIndex}
+                  discussionId={discussionId}
+                  getDiscussion={getDiscussion}
+                  fromNextPreviousButton={fromNextPreviousButton}
+                  updateFromNextPreviousButton={updateFromNextPreviousButton}
+                />
+              )
+            }
           </>
         )
       }

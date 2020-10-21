@@ -71,7 +71,8 @@ class DiscussionScreenPlayerCard extends Component {
       durationRemaining: 0,
       durationDisplay: '',
       durationPlayerDisplay: '',
-      isPaused: false
+      isPaused: false,
+      caption: this.props.caption
     }
   }
 
@@ -372,6 +373,11 @@ class DiscussionScreenPlayerCard extends Component {
           </View>
           <Text style={styles.postTimeStyle}>{this.state.postTime ? this.convertPostTime(this.state.postTime) : ''}</Text>
         </View>
+        {
+          this.state.caption && (
+            <Text style={styles.captionStyle}>{this.state.caption}</Text>
+          )
+        }
         <View style={styles.sliderStyle}>
           <View style={styles.durationContainerStyle}>
             <Text style={styles.durationStyle}>{this.state.durationDisplay}</Text>
@@ -562,6 +568,12 @@ const styles = StyleSheet.create({
     fontFamily: normal
   },
 
+  captionStyle: {
+    marginTop: "7%",
+    fontSize: 15,
+    fontFamily: normal
+  },
+
   sliderStyle: {
     marginTop: 30,
     color: "#464D60"
@@ -597,7 +609,7 @@ const styles = StyleSheet.create({
   voteContainerStyle: {
     flexDirection: "row",
     alignItems: "center",
-    width: "42%",
+    width: "35%",
     justifyContent: "space-between"
   },
 

@@ -15,7 +15,8 @@ const ClosedCard = props => {
     postTime,
     caption,
     cardIndex,
-    selectCard
+    selectCard,
+    discussionTitle
   } = props;
 
   const convertPostTime = postTimeInput => {
@@ -51,7 +52,17 @@ const ClosedCard = props => {
         <Text style={styles.postTimeStyle}>{postTime ? convertPostTime(postTime) : ''}</Text>
       </View>
       {
-        cardIndex !== 'discussion' && <Text style={styles.captionTextStyle}>{caption}</Text>
+        cardIndex === 'discussion' ? (
+          (
+            discussionTitle.length > 30 ? (
+              <Text style={styles.discussionTitleStyle}>{discussionTitle.substring(0,25)}...</Text>
+            ) : (
+              <Text style={styles.discussionTitleStyle}>{discussionTitle}</Text>
+            )
+          )
+        ) : (
+          <Text style={styles.captionTextStyle}>{caption}</Text>
+        )
       }
     </TouchableOpacity>
   );
@@ -93,6 +104,12 @@ const styles = StyleSheet.create({
     color: "#73798C",
     fontSize: 12,
     fontFamily: normal
+  },
+
+  discussionTitleStyle: {
+    marginVertical: "2%",
+    fontSize: 16,
+    fontFamily: bold
   },
 
   captionTextStyle: {

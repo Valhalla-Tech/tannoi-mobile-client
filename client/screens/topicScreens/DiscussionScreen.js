@@ -194,6 +194,7 @@ const DiscussionScreen = ({ route, navigation }) => {
                   cardIndex="discussion"
                   selectCard={selectCard}
                   postTime={postTime}
+                  discussionTitle={discussionTitle}
                 />
               )
             }
@@ -235,6 +236,7 @@ const DiscussionScreen = ({ route, navigation }) => {
                   isLike={itemData.item.isLike}
                   isDislike={itemData.item.isDislike}
                   getIsLikeAndIsDislike={getIsLikeAndIsDislike}
+                  caption={itemData.item.caption}
                 />
               ) : (
                 <ClosedCard
