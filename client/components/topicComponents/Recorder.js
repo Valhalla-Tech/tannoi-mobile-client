@@ -271,25 +271,33 @@ class NewDiscussionScreenRecorder extends Component {
         }
         <Text style={this.props.recorderStyle ? {...styles.timerStyle, ...this.props.recorderStyle} : styles.timerStyle}>{this.state.timer}</Text>
         <View style={styles.newDiscussionScreenRecorderContainerStyle}>
-          <TouchableOpacity
-            onPress={() => this.state.recordingFile && this.stopPlayer() }
-            style={this.state.recordingFile ? styles.stopButtonStyle : {...styles.stopButtonStyle, borderColor: "#a1a5ab"}}
-            disabled={this.state.recordingFile === ''}
-          >
-            <Text style={this.state.recordingFile ? styles.stopButtonTextStyle : {...styles.stopButtonTextStyle, color: "#a1a5ab"}}>Stop</Text> 
-          </TouchableOpacity>
+          {
+            this.state.recordingFile !== '' && (
+              <TouchableOpacity
+                onPress={() => this.state.recordingFile && this.stopPlayer() }
+                style={this.state.recordingFile ? styles.stopButtonStyle : {...styles.stopButtonStyle, borderColor: "#a1a5ab"}}
+                disabled={this.state.recordingFile === ''}
+              >
+                <Text style={this.state.recordingFile ? styles.stopButtonTextStyle : {...styles.stopButtonTextStyle, color: "#a1a5ab"}}>Reset</Text> 
+              </TouchableOpacity>
+            )
+          }
           <TouchableOpacity
             onPress={() => this.voiceRecord(false)}
           >
             <RecordButton />
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.state.recordingFile && this.playRecording()}
-            style={this.state.recordingFile ? styles.playOrPauseButtonStyle : {...styles.playOrPauseButtonStyle, borderColor: "#a1a5ab"}}
-            disabled={this.state.recordingFile === ''}
-          >
-              <Text style={this.state.recordingFile ? styles.playOrPauseButtonTextStyle : {...styles.playOrPauseButtonTextStyle, color: "#a1a5ab"}}>Play / Pause</Text>
-          </TouchableOpacity>
+          {
+            this.state.recordingFile !== '' && (
+              <TouchableOpacity
+                onPress={() => this.state.recordingFile && this.playRecording()}
+                style={this.state.recordingFile ? styles.playOrPauseButtonStyle : {...styles.playOrPauseButtonStyle, borderColor: "#a1a5ab"}}
+                disabled={this.state.recordingFile === ''}
+              >
+                <Text style={this.state.recordingFile ? styles.playOrPauseButtonTextStyle : {...styles.playOrPauseButtonTextStyle, color: "#a1a5ab"}}>Play / Pause</Text>
+              </TouchableOpacity>
+            )
+          }
         </View>
       </View>
     )

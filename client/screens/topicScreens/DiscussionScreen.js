@@ -143,9 +143,6 @@ const DiscussionScreen = ({ route, navigation }) => {
 
   return (
     <View>
-      {/* {
-        openAddResponseModal && <View style={{backgroundColor: "rgba(0,0,0,0.8)", height: "100%"}}></View>
-      } */}
       <View style={styles.discussionUpperBarStyle}>
         <BackButton
           navigation={navigation}

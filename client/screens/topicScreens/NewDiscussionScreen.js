@@ -184,7 +184,7 @@ const NewDiscussionScreen = ({ navigation }) => {
               {
                 createNewDiscussionValidation && (
                   <ErrorMessage
-                    message="Something's error"
+                    message="All fields must be filled in, including a voice note!"
                   />
                 )
               }

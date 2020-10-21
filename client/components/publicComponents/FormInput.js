@@ -19,6 +19,11 @@ const FormInput = props => {
       placeholderTextColor="#73798C"
       onChangeText={value => dataInput(value)}
       secureTextEntry={formInputTitle === 'Password' || formInputTitle === 'New password' || formInputTitle === 'Confirm new password' ? true : false}
+      autoCapitalize={
+        formInputTitle === 'Full name' || 
+        formInputTitle === 'Add caption (Optional)' ||
+        formInputTitle === 'Discussion title' ? "sentences" : "none"
+      }
     />
   );
 };

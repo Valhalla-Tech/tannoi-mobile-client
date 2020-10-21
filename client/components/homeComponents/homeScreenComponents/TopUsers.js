@@ -37,10 +37,12 @@ const TopUsers = props => {
           <TouchableOpacity style={styles.topUsersCardConntainerStyle}>
             <Image source={itemData.item.profile_photo_path ? {uri: itemData.item.profile_photo_path} : NoProfilePicture} style={styles.profilePictureStyle} />
             {
-              itemData.item.name.length > 14 ? (
-                <Text style={styles.topUsersNameStyle}>{`${itemData.item.name.substr(0, 11)}...`}</Text>
-              ) : (
-                <Text style={styles.topUsersNameStyle}>{itemData.item.name}</Text>
+              itemData.item.name === null ? <Text style={styles.topUsersNameStyle}> </Text> : (
+                itemData.item.name.length > 14 ? (
+                  <Text style={styles.topUsersNameStyle}>{`${itemData.item.name.substr(0, 11)}...`}</Text>
+                ) : (
+                  <Text style={styles.topUsersNameStyle}>{itemData.item.name}</Text>
+                )
               )
             }
           </TouchableOpacity>
