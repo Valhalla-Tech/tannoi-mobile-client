@@ -37,7 +37,8 @@ const DiscussionScreen = ({ route, navigation }) => {
   const [fromNextPreviousButton, setFromNextPreviousButton] = useState(false);
 
   const {
-    discussionId
+    discussionId,
+    fromNewDiscussion
   } = route.params;
 
   const closeAddResponseModal = () => {
@@ -146,6 +147,7 @@ const DiscussionScreen = ({ route, navigation }) => {
       <View style={styles.discussionUpperBarStyle}>
         <BackButton
           navigation={navigation}
+          screen={fromNewDiscussion && 'MainAppNavigation'}
           styleOption={{
             marginTop: 0,
             marginBottom: 0

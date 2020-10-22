@@ -11,7 +11,7 @@ import { bold } from '../../../assets/FontSize';
 //Icon
 import DownArrow from '../../../assets/homeAssets/downArrow.svg';
 
-//Component
+//Components
 import HomeListCard from './HomeListCard';
 import LoadingSpinner from '../../publicComponents/LoadingSpinner';
 

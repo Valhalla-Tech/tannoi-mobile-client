@@ -122,7 +122,8 @@ const NewDiscussionScreen = ({ navigation }) => {
         console.log(createNewDiscussionRequest.data);
         dispatch(getHome());
         navigation.navigate('DiscussionScreen', {
-          discussionId: createNewDiscussionRequest.data.id
+          discussionId: createNewDiscussionRequest.data.id,
+          fromNewDiscussion: true
         });
       }
     } catch (error) {
