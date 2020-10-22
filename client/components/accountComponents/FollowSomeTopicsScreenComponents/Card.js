@@ -7,8 +7,6 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import testImage from '../../../assets/publicAssets/base.png';
-
 const Card = props => {
   const { 
     cardData, 
@@ -16,7 +14,8 @@ const Card = props => {
     isSelected,
     selectTopic,
     deselectTopic,
-    topicKey
+    topicKey,
+    cardImage
   } = props;
 
   if (!isEmpty) {
@@ -30,7 +29,7 @@ const Card = props => {
                 deselectTopic(topicKey)
               }}
             >
-              <Image source={testImage} style={styles.cardImageStyle} />
+              <Image source={{uri: cardImage}} style={styles.cardImageStyle} />
               <Text style={{...styles.cardTitleStyle, color: "#FFFFFF"}}>{cardData}</Text>
             </TouchableOpacity>
           ) : (
@@ -40,7 +39,7 @@ const Card = props => {
                 selectTopic(topicKey)
               }}
             >
-              <Image source={testImage} style={styles.cardImageStyle} />
+              <Image source={{uri: cardImage}} style={styles.cardImageStyle} />
               <Text style={{...styles.cardTitleStyle, color: "#464D60"}}>{cardData}</Text>
             </TouchableOpacity>
           )

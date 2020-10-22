@@ -83,7 +83,8 @@ const styles = StyleSheet.create({
   homeListTitleAndFilterContainerStyle: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    marginBottom: "-7.5%"
   },
 
   filterStyle: {
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
     fontFamily: bold,
     color: "#464D60",
     marginVertical: "4%",
-    marginLeft: "5%"
+    marginLeft: "3%"
   },
 
   moreButtonContainerStyle: {

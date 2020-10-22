@@ -134,6 +134,7 @@ const FollowSomeTopicsScreen = ({ navigation }) => {
               topicKey={itemData.item.id}
               selectTopic={selectTopic}
               deselectTopic={deselectTopic}
+              cardImage={itemData.item.image_path}
             />
           )}
         />
