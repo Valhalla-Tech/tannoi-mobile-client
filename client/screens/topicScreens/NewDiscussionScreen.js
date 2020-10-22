@@ -16,6 +16,7 @@ import {
   useDispatch
 } from 'react-redux';
 import { getTopic } from '../../store/actions/GetTopicAction';
+import { getHome } from '../../store/actions/HomeAction';
 import axios from 'axios';
 
 //Components
@@ -119,6 +120,7 @@ const NewDiscussionScreen = ({ navigation }) => {
       if (createNewDiscussionRequest.data) {
         setIsLoading(false);
         console.log(createNewDiscussionRequest.data);
+        dispatch(getHome());
         navigation.navigate('DiscussionScreen', {
           discussionId: createNewDiscussionRequest.data.id
         });
