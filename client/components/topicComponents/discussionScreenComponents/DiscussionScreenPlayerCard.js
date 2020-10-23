@@ -534,7 +534,8 @@ const styles = StyleSheet.create({
   responsePlayerContainerStyle: {
     backgroundColor: "#FFFFFF",
     padding: 16,
-    margin: 8,
+    marginHorizontal: 8,
+    marginBottom: 8,
     borderRadius: 8
   },
 

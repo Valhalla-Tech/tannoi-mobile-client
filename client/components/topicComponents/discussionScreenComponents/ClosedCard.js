@@ -71,7 +71,8 @@ const ClosedCard = props => {
 const styles = StyleSheet.create({
   closedCardContainerStyle: {
     backgroundColor: "#FFFFFF",
-    margin: 8,
+    marginHorizontal: 8,
+    marginBottom: 8,
     borderRadius: 8,
     padding: 16
   },

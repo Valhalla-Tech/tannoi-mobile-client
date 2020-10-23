@@ -210,7 +210,8 @@ const DiscussionScreenCard = props => {
 const styles = StyleSheet.create({
   discussionScreenCardContainerStyle: {
     backgroundColor: "#FFFFFF",
-    margin: 8,
+    marginHorizontal: 8,
+    marginBottom: 8,
     borderRadius: 8
   },
   

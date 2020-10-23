@@ -193,7 +193,8 @@ const styles = StyleSheet.create({
   searchBarCardContainerStyle: {
     marginLeft: 16,
     paddingVertical: 8,
-    paddingRight: 20
+    paddingRight: 20,
+    marginTop: -8
   },
 
   searchResultCategoryContainerStyle: {
