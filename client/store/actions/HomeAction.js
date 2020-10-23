@@ -27,7 +27,15 @@ export const getHome = () => {
         })
       };
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data.msg);
+      if (error.response.data.msg === 'You have to login first') {
+        dispatch({
+          type: 'LOGOUT',
+          payload: {
+            loginStatus: false
+          }
+        })
+      };
     }
   };
 };
