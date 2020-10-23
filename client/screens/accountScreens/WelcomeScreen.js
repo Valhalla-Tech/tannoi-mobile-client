@@ -21,7 +21,7 @@ import axios from 'axios';
 import { bold, normal } from '../../assets/FontSize';
 
 //Image
-import welcomeImage from '../../assets/accountAssets/WelcomeScreen/welcomeImage.png';
+import TannoiWelcomeScreenImage from '../../assets/publicAssets/tannOiWelcomeScreenImage.png';
 
 //Component
 import WelcomePageButton from '../../components/publicComponents/BigButton';
@@ -136,13 +136,9 @@ const WelcomeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.welcomePageContainerStyle}>
-      {/* Remove comment to use SVG */}
-      {/* <View style={{position: "absolute"}}>
-        <WelcomeImage />
-      </View> */}
       <View style={styles.welcomePageGreetingContainerStyle}>
-      <Image source={welcomeImage} style={styles.welcomeImageStyle} />
-        <Text 
+      <Image source={TannoiWelcomeScreenImage} style={styles.welcomeImageStyle} />
+        {/* <Text 
           style={{
             ...styles.welcomePageGreetingTextStyle, 
             fontSize:28,
@@ -150,8 +146,8 @@ const WelcomeScreen = ({ navigation }) => {
             fontFamily: bold
           }}>
             Discover Everything
-          </Text>
-        <Text 
+          </Text> */}
+        {/* <Text 
           style={{
             ...styles.welcomePageGreetingTextStyle, 
             fontSize:16, 
@@ -159,7 +155,7 @@ const WelcomeScreen = ({ navigation }) => {
             fontFamily: normal
           }}>
             Your place to talk with friends and {"\n"} communities
-          </Text>
+          </Text> */}
       </View>
       <View style={styles.welcomePageLoginButtonStyle}>
         <WelcomePageButton 
@@ -255,10 +251,9 @@ const styles = StyleSheet.create({
   },
 
   welcomeImageStyle: {
-    position:"absolute", 
     resizeMode:"stretch", 
-    width:"107%", 
-    height:"105%"
+    width:"95%", 
+    height:"100%"
   }
 });
 
