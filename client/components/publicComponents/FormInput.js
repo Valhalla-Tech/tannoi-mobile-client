@@ -9,7 +9,8 @@ const FormInput = props => {
   const { 
     formInputTitle, 
     dataInput, 
-    formInputValue } = props;
+    formInputValue
+  } = props;
 
   return (
     <TextInput

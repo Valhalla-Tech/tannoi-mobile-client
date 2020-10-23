@@ -15,8 +15,7 @@ import Slider from '@react-native-community/slider';
 import { bold, normal } from '../../assets/FontSize';
 
 //Icon
-import RecordButton from '../../assets/topicAssets/recordButton.svg'
-import { TapGestureHandler } from 'react-native-gesture-handler';
+import RecordButton from '../../assets/topicAssets/recordButton.svg';
 
 class NewDiscussionScreenRecorder extends Component {
   constructor(props) {

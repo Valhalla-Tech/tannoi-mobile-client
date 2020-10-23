@@ -29,6 +29,7 @@ const DiscussionScreenCard = props => {
     profileName,
     postTime,
     like,
+    topic,
     discussionTitle,
     hashtags,
     replies,
@@ -174,6 +175,7 @@ const DiscussionScreenCard = props => {
                 </View>
                 <View style={styles.discussionInfoContainerStyle}>
                   <Text style={styles.discussionTitleStyle}>{discussionTitle}</Text>
+                  <Text style={styles.topicStyle}>{topic}</Text>
                   <Text style={styles.discussionHashtag}>{hashtags ? convertHashtagForDisplay(hashtags) : ''}</Text>
                   <View style={styles.repliesAndPlaysNumberContainerStyle}>
                     <Text style={styles.repliesAndPlaysNumberStyle}>{numberConverter(replies)} Replies</Text>
@@ -278,6 +280,11 @@ const styles = StyleSheet.create({
   discussionTitleStyle: {
     fontFamily: bold,
     fontSize: 20
+  },
+
+  topicStyle: {
+    color: "#5152D0",
+    fontFamily: bold
   },
 
   discussionHashtag: {

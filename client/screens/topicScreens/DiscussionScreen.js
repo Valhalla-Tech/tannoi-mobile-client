@@ -23,6 +23,7 @@ const DiscussionScreen = ({ route, navigation }) => {
   const [profileName, setProfileName] = useState('');
   const [postTime, setPostTime] = useState('');
   const [like, setLike] = useState('');
+  const [topic, setTopic] = useState('');
   const [discussionTitle, setDiscussionTitle] = useState('');
   const [hashtags, setHashtags] = useState('');
   const [replies, setReplies] = useState('');
@@ -74,6 +75,7 @@ const DiscussionScreen = ({ route, navigation }) => {
           setRecordingFile(getDiscussionRequest.data.voice_note_path);
           setIsLike(getDiscussionRequest.data.isLike);
           setIsDislike(getDiscussionRequest.data.isDislike);
+          setTopic(getDiscussionRequest.data.topic.name);
         }
       }
     } catch (error) {
@@ -174,6 +176,7 @@ const DiscussionScreen = ({ route, navigation }) => {
                   profileName={profileName}
                   postTime={postTime}
                   like={like}
+                  topic={topic}
                   discussionTitle={discussionTitle}
                   hashtags={hashtags}
                   replies={replies}

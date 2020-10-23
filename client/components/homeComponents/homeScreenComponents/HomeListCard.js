@@ -22,7 +22,8 @@ const HomeListCard = props => {
     postTime,
     discussionId,
     navigation,
-    recordingFile
+    recordingFile,
+    topic
   } = props;
 
   const numberConverter = number => {
@@ -68,6 +69,11 @@ const HomeListCard = props => {
           <Image source={{uri: imageUrl}} style={styles.profilePictureStyle} />
           <Text style={styles.nameTextStyle}>{name}</Text>
         </View>
+        {
+          topic !== '' && (
+            <Text style={styles.topicStyle}>{topic}</Text>
+          )
+        }
         <Text style={styles.titleTextStyle}>{title}</Text>
         <View style={styles.cardInfoContainerStyle}>
           <Text style={styles.cardInfoStyle}>{numberConverter(votes)} Votes</Text>
@@ -109,6 +115,11 @@ const styles = StyleSheet.create({
     color: "#464D60", 
     marginLeft: 8,
     fontFamily: normal
+  },
+
+  topicStyle: {
+    color: "#5152D0",
+    fontFamily: bold
   },
 
   titleTextStyle: {

@@ -52,11 +52,12 @@ const HomeList = props => {
               name={itemData.item.creator.name}
               title={itemData.item.title}
               votes={itemData.item.likes}
-              replies={itemData.item.responses.length}
+              replies={itemData.item.response_count}
               plays={itemData.item.play_count}
               postTime={itemData.item.created_at}
               discussionId={itemData.item.id}
               navigation={navigation}
+              topic={itemData.item.topic ? itemData.item.topic.name : ''}
             />
           </>
         )}
