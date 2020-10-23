@@ -16,6 +16,7 @@ import { bold, normal } from '../../assets/FontSize';
 
 //Icon
 import RecordButton from '../../assets/topicAssets/recordButton.svg'
+import { TapGestureHandler } from 'react-native-gesture-handler';
 
 class NewDiscussionScreenRecorder extends Component {
   constructor(props) {
@@ -194,6 +195,11 @@ class NewDiscussionScreenRecorder extends Component {
   stopPlayer = () => {
     this.player.stop((error) => {
       console.log(error);
+      this.getDuration();
+      this.stopProgressInterval();
+      this.setState({
+        progress: 0
+      });
     });
   };
 
@@ -262,7 +268,8 @@ class NewDiscussionScreenRecorder extends Component {
               </View>
               <Slider 
                 step={0.0001} 
-                onValueChange={(percentage) => this.seek(percentage)} value={this.state.progress} 
+                onValueChange={(percentage) => this.seek(percentage)} 
+                value={this.state.progress} 
                 thumbTintColor="#5152D0"
                 minimumTrackTintColor="#5152D0"
               />
