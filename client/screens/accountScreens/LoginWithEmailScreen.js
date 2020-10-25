@@ -140,16 +140,16 @@ const styles = StyleSheet.create({
   loginTitleStyle: {
     color: "#464D60",
     fontSize: 28,
-    marginBottom: 44,
+    marginBottom: "10%",
     fontFamily: bold
   },
 
   loginWithEmailButtonContainerStyle: {
-    height: 50
+    height: 55
   },
 
   forgotPasswordButtonContainer: {
-    marginTop: 16,
+    marginTop: "5%",
     flexDirection:"row",
     justifyContent: "center"
   },

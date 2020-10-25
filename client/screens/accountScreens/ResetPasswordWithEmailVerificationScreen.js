@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   },
 
   resetPasswordWithEmailVerificationScreenInstructionStyle: {
-    marginTop: 16,
+    marginTop: "5%",
     fontSize: 16,
     fontFamily: normal,
     lineHeight: 24,
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
 
   sendAgainEmailContainerStyle: {
     flexDirection: "row",
-    marginTop: 32
+    marginTop: "8%"
   },
 
   sendAgainEmailButtonTitleStyle: {

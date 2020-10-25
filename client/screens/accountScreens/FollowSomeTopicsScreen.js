@@ -179,9 +179,9 @@ const styles = StyleSheet.create({
 
   followSomeTopicsScreenTitleStyle: {
     color: "#464D60",
-    marginTop: 57,
-    marginBottom: 44,
-    marginLeft: 14,
+    marginTop: "15.5%",
+    marginBottom: "12%",
+    marginLeft: "4.5%",
     fontSize: 20,
     fontFamily: bold
   },

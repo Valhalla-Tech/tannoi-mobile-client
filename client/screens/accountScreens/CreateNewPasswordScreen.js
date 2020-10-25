@@ -3,12 +3,11 @@ import {
   StyleSheet,
   View,
   Text,
-  TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
   Alert
 } from 'react-native';
-import { bold, normal } from '../../assets/FontSize';
+import { bold } from '../../assets/FontSize';
 import axios from 'axios';
 
 //Components
@@ -151,12 +150,7 @@ const styles = StyleSheet.create({
     color: "#464D60",
     fontSize: 28,
     fontFamily: bold,
-    marginBottom: 16
-  },
-
-  backButtonStyle: {
-    marginTop: 56,
-    marginBottom: 44
+    marginBottom: "6%"
   }
 });
 

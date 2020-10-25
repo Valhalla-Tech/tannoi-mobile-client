@@ -188,12 +188,12 @@ const styles = StyleSheet.create({
     fontFamily: bold,
     color: "#464D60",
     fontSize: 28,
-    marginBottom: 44
+    marginBottom: "15%"
   },
 
   signupButtonContainerStyle: {
     alignItems:"center",
-    height: 50
+    height: 55
   },
 
   termsOfServiceContainerStyle: {

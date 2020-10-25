@@ -6,8 +6,7 @@ import {
 } from 'react-native';
 import {
   GoogleSignin,
-  GoogleSigninButton,
-  statusCodes,
+  statusCodes
 } from '@react-native-community/google-signin';
 import { LoginManager, AccessToken } from "react-native-fbsdk";
 import {
@@ -160,7 +159,7 @@ const styles = StyleSheet.create({
     color: "#464D60",
     fontSize: 28,
     fontFamily: bold,
-    marginBottom: 44
+    marginBottom: "10%"
   }
 });
 

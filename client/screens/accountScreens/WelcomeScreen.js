@@ -7,11 +7,10 @@ import {
   Image
 } from 'react-native';
 import {
-  GoogleSignin,
-  statusCodes,
+  GoogleSignin
 } from '@react-native-community/google-signin';
 import { LoginManager, AccessToken } from "react-native-fbsdk";
-import branch, { BranchEvent } from 'react-native-branch';
+import branch from 'react-native-branch';
 import {
   useDispatch
 } from 'react-redux';
@@ -51,15 +50,7 @@ const WelcomeScreen = ({ navigation }) => {
       const userInfo = await GoogleSignin.signIn();
       googleSignInSubmit(userInfo.idToken)
     } catch (error) {
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        // user cancelled the login flow
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-        // operation (e.g. sign in) is in progress already
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        // play services not available or outdated
-      } else {
-        // some other error happened
-      }
+      console.log(error)
     }
   };
 
@@ -138,24 +129,6 @@ const WelcomeScreen = ({ navigation }) => {
     <View style={styles.welcomePageContainerStyle}>
       <View style={styles.welcomePageGreetingContainerStyle}>
       <Image source={TannoiWelcomeScreenImage} style={styles.welcomeImageStyle} />
-        {/* <Text 
-          style={{
-            ...styles.welcomePageGreetingTextStyle, 
-            fontSize:28,
-            marginBottom: "1%",
-            fontFamily: bold
-          }}>
-            Discover Everything
-          </Text> */}
-        {/* <Text 
-          style={{
-            ...styles.welcomePageGreetingTextStyle, 
-            fontSize:16, 
-            marginBottom:"25%",
-            fontFamily: normal
-          }}>
-            Your place to talk with friends and {"\n"} communities
-          </Text> */}
       </View>
       <View style={styles.welcomePageLoginButtonStyle}>
         <WelcomePageButton 
@@ -238,11 +211,6 @@ const styles = StyleSheet.create({
     flex: 1.9,
     justifyContent: "flex-end",
     alignItems: "center"
-  },
-
-  welcomePageGreetingTextStyle: {
-    color: "#FFFFFF",
-    textAlign: "center"
   },
 
   loginButtonTextStyle: {

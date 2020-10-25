@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
   },
 
   enterYourProfileScreenTitleStyle: {
-    marginLeft: 25,
+    marginLeft: "7.5%",
     fontSize: 20,
     fontFamily: bold,
     color: "#464D60"
@@ -217,15 +217,15 @@ const styles = StyleSheet.create({
 
   uploadProfilePhotoContainerStyle: {
     alignItems:"center",
-    marginTop: 42
+    marginTop: "10%"
   },
 
   uploadProfilePhotoStyle: {
-    marginTop: 15,
+    marginTop: "5%",
     borderWidth: 1,
     borderRadius: 20,
-    paddingVertical: 8,
-    paddingHorizontal: 23,
+    padding: "2%",
+    paddingHorizontal: "5%",
     borderColor: "#5152D0"
   },
 
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
   },
 
   uploadProfilePhotoInformationTextStyle: {
-    marginTop: 16,
+    marginTop: "8%",
     textAlign: "center",
     fontSize: 14,
     fontFamily: normal,
@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
 
   formInputTitleStyle: {
     color: "#73798C",
-    marginTop: 32
+    marginTop: "8%"
   },
 
   formInputStyle: {
@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
   },
 
   enterYourProfileScreenButtonContainerStyle: {
-    height: 50
+    height: 55
   }
 })
 

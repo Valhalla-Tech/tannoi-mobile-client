@@ -6,7 +6,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard
 } from 'react-native';
-import branch, { BranchEvent } from 'react-native-branch'
+import branch from 'react-native-branch'
 import axios from 'axios';
 import { bold, normal } from '../../assets/FontSize';
 
@@ -75,8 +75,8 @@ const ResetPasswordWithEmailScreen = ({ navigation }) => {
 
     } catch (error) {
       setIsloading(false);
-      console.log(error);
       setEmailCheck(!emailCheck)
+      console.log(error);
     };
   };
 
@@ -149,17 +149,17 @@ const styles = StyleSheet.create({
     color: "#464D60",
     fontSize: 28,
     fontFamily: bold,
-    marginBottom: 16
+    marginBottom: "5%"
   },
 
   resetPasswordWithEmailbuttonContainerStyle: {
-    height: 50
+    height: 55
   },
 
   resetPasswordWithEmailScreenInstructionStyle: {
     fontSize: 16,
     color: "#73798C",
-    marginBottom: 40,
+    marginBottom: "10%",
     fontFamily: normal
   }
 });
