@@ -65,7 +65,8 @@ const styles = StyleSheet.create({
     color: "#464D60",
     fontSize: 20,
     fontFamily: bold,
-    paddingBottom: "3%"
+    paddingBottom: "3%",
+    paddingTop: "4%"
   },
 
   topUsersCardConntainerStyle: {
