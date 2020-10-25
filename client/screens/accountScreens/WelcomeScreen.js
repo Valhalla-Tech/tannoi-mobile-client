@@ -128,7 +128,7 @@ const WelcomeScreen = ({ navigation }) => {
   return (
     <View style={styles.welcomePageContainerStyle}>
       <View style={styles.welcomePageGreetingContainerStyle}>
-      <Image source={TannoiWelcomeScreenImage} style={styles.welcomeImageStyle} />
+        <Image source={TannoiWelcomeScreenImage} style={styles.welcomeImageStyle} />
       </View>
       <View style={styles.welcomePageLoginButtonStyle}>
         <WelcomePageButton 
@@ -209,7 +209,6 @@ const styles = StyleSheet.create({
 
   welcomePageGreetingContainerStyle: {
     flex: 1.9,
-    justifyContent: "flex-end",
     alignItems: "center"
   },
 
@@ -220,8 +219,8 @@ const styles = StyleSheet.create({
 
   welcomeImageStyle: {
     resizeMode:"stretch", 
-    width:"95%", 
-    height:"100%"
+    width:"80%", 
+    height:"80%"
   }
 });
 
