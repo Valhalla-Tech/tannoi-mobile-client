@@ -58,6 +58,7 @@ const HomeList = props => {
               discussionId={itemData.item.id}
               navigation={navigation}
               topic={itemData.item.topic ? itemData.item.topic.name : ''}
+              isBorder={itemData.index === listData.length - 1 ? false : true}
             />
           </>
         )}

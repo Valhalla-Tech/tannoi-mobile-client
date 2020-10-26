@@ -23,7 +23,8 @@ const HomeListCard = props => {
     discussionId,
     navigation,
     recordingFile,
-    topic
+    topic,
+    isBorder
   } = props;
 
   const numberConverter = number => {
@@ -57,7 +58,7 @@ const HomeListCard = props => {
   };
 
   return (
-    <TouchableOpacity style={styles.homeListCardContainerStyle}
+    <TouchableOpacity style={isBorder ? styles.homeListCardContainerStyle : {...styles.homeListCardContainerStyle, borderBottomWidth: 0, paddingBottom: "2%"}}
       onPress={() => {
         navigation.navigate('DiscussionScreen', {
           discussionId: discussionId
