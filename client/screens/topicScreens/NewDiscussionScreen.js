@@ -219,8 +219,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingLeft: 22,
     paddingRight: 16,
-    paddingTop: 10,
-    paddingBottom: 5,
+    paddingVertical: "3%",
     justifyContent: "space-between",
     alignItems: "center"
   },
@@ -232,7 +231,7 @@ const styles = StyleSheet.create({
 
   newDiscussionTitleStyle: {
     fontFamily: bold,
-    fontSize: 20,
+    fontSize: 16,
     color: "#464D60",
     marginLeft: 14
   },
@@ -251,7 +250,7 @@ const styles = StyleSheet.create({
 
   contentContainerStyle: {
     paddingHorizontal: 16,
-    paddingTop: 4
+    paddingTop: "5%"
   },
 
   formInputTitleStyle: {

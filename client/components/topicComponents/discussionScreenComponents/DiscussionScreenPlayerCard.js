@@ -610,7 +610,7 @@ const styles = StyleSheet.create({
   voteContainerStyle: {
     flexDirection: "row",
     alignItems: "center",
-    width: "35%",
+    width: "28%",
     justifyContent: "space-between"
   },
 

@@ -27,6 +27,7 @@ const ReplyScreen = ({route, navigation}) => {
   const [selectedCard, setSelectedCard] = useState('response');
   const [isLike, setIslike] = useState(false);
   const [isDislike, setIsDislike] = useState(false);
+  const [caption, setCaption] = useState('');
 
   const {
     responseId,
@@ -63,6 +64,7 @@ const ReplyScreen = ({route, navigation}) => {
           setReply(getResponseRequest.data.chain_response);
           setIslike(getResponseRequest.data.isLike);
           setIsDislike(getResponseRequest.data.isDislike);
+          setCaption(getResponseRequest.data.caption);
         }
       }
     } catch (error) {
@@ -142,7 +144,7 @@ const ReplyScreen = ({route, navigation}) => {
         ListHeaderComponent={
           <View>
             {
-              recordingFile !== '' && (
+              recordingFile !== '' && caption !== '' && (
                 selectedCard === 'response' ? (
                   <DiscussionScreenPlayerCard
                     cardType="response"
@@ -160,7 +162,8 @@ const ReplyScreen = ({route, navigation}) => {
                     responseId={responseId}
                     cardIndex="response"
                     getIsLikeAndIsDislike={getIsLikeAndIsDislike}
-                    />
+                    caption={caption}
+                  />
                 ) : (
                   <ClosedCard
                     profilePicture={profilePicture}
@@ -168,6 +171,7 @@ const ReplyScreen = ({route, navigation}) => {
                     cardIndex="response"
                     selectCard={selectCard}
                     postTime={postTime}
+                    caption={caption}
                   />
                 )
               )
@@ -200,6 +204,7 @@ const ReplyScreen = ({route, navigation}) => {
                   isChainResponse={true}
                   mainResponseId={responseId}
                   getIsLikeAndIsDislike={getIsLikeAndIsDislike}
+                  caption={itemData.item.caption}
                 />
               ) : (
                 <ClosedCard
@@ -229,7 +234,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingLeft: 22,
     paddingRight: 16,
-    paddingVertical: 8,
+    paddingVertical: "3%",
     marginBottom: 8,
     justifyContent: "space-between",
     alignItems: "center",
@@ -242,7 +247,7 @@ const styles = StyleSheet.create({
   },
 
   titleStyle: {
-    fontSize: 20,
+    fontSize: 16,
     fontFamily: bold,
     color: "#464D60",
     marginLeft: "5%"

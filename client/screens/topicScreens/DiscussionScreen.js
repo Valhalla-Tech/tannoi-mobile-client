@@ -272,17 +272,16 @@ const styles = StyleSheet.create({
   discussionUpperBarStyle: {
     backgroundColor: "#FFFFFF",
     flexDirection: "row",
-    paddingLeft: 22,
-    paddingRight: 16,
-    paddingVertical: 8,
+    paddingLeft: "5%",
+    paddingRight: "3.5%",
+    paddingVertical: "3%",
     marginBottom: 8,
     justifyContent: "space-between",
     alignItems: "center"
   },
 
   addResponseButtonStyle: {
-    color: "#0E4EF4",
-    fontSize: 16
+    marginTop: ".6%"
   },
 
   addResponseButtonTextStyle: {

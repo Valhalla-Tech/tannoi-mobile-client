@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
 
   discussionVoteAndInfoContainerStyle: {
     flexDirection: "row",
-    marginTop: 24
+    marginTop: "3%"
   },
 
   voteContainerStyle: {

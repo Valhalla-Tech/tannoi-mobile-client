@@ -34,8 +34,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 16,
-    paddingTop: 20,
-    marginBottom: 10
+    paddingVertical: "3%"
   },
 
   profilePictureStyle: {

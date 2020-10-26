@@ -54,8 +54,8 @@ const ClosedCard = props => {
       {
         cardIndex === 'discussion' ? (
           (
-            discussionTitle.length > 30 ? (
-              <Text style={styles.discussionTitleStyle}>{discussionTitle.substring(0,25)}...</Text>
+            discussionTitle.length > 45 ? (
+              <Text style={styles.discussionTitleStyle}>{discussionTitle.substring(0,42)}...</Text>
             ) : (
               <Text style={styles.discussionTitleStyle}>{discussionTitle}</Text>
             )
