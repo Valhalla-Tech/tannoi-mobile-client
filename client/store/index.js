@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 
 //Reducers
 import LoginReducer from './reducers/LoginReducer';
-import GetTopicReducer from './reducers/GetTopicReducer';
+import GetTopicReducer from './reducers/TopicReducer';
 import HomeReducer from './reducers/HomeReducer';
 
 const reducer = combineReducers({

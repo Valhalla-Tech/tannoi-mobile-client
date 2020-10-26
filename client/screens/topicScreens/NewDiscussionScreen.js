@@ -15,7 +15,7 @@ import {
   useSelector,
   useDispatch
 } from 'react-redux';
-import { getTopic } from '../../store/actions/GetTopicAction';
+import { getTopic } from '../../store/actions/TopicAction';
 import { getHome } from '../../store/actions/HomeAction';
 import axios from 'axios';
 

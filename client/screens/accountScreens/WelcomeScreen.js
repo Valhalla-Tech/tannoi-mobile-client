@@ -9,15 +9,12 @@ import {
 import {
   GoogleSignin
 } from '@react-native-community/google-signin';
-import { LoginManager, AccessToken } from "react-native-fbsdk";
 import branch from 'react-native-branch';
 import {
   useDispatch
 } from 'react-redux';
-import { userLogin } from '../../store/actions/LoginAction';
-import AsyncStorage from '@react-native-community/async-storage';
-import axios from 'axios';
 import { bold, normal } from '../../assets/FontSize';
+import { GoogleSignIn, FacebookSignIn } from '../../store/actions/LoginAction'
 
 //Image
 import TannoiWelcomeScreenImage from '../../assets/publicAssets/tannOiWelcomeScreenImage.png';
@@ -26,67 +23,14 @@ import TannoiWelcomeScreenImage from '../../assets/publicAssets/tannOiWelcomeScr
 import WelcomePageButton from '../../components/publicComponents/BigButton';
 
 const WelcomeScreen = ({ navigation }) => {
-
   const dispatch = useDispatch();
 
-  const googleSignInSubmit = async googleAccessToken => {
-    try {
-      let googleSigninRequest = await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/login/google', {
-        token: googleAccessToken
-      });
-
-      if (googleSigninRequest.data.access_token) {
-        await AsyncStorage.setItem('access_token', googleSigninRequest.data.access_token);
-        dispatch(userLogin());
-      };
-    } catch (error) {
-      console.log(error) 
-    };
-  };
-
-  const googleSignIn = async () => {
-    try {
-      await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-      googleSignInSubmit(userInfo.idToken)
-    } catch (error) {
-      console.log(error)
-    }
-  };
-
-  const facebookSignInSubmit = async facebookAccessToken => {
-    try {
-      let facebookSigninRequest = await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/login/facebook', {
-        token: facebookAccessToken
-      });
-
-      if (facebookSigninRequest.data.access_token) {
-        await AsyncStorage.setItem('access_token', facebookSigninRequest.data.access_token);
-        dispatch(userLogin());
-      };
-    } catch (error) {
-      console.log(error) 
-    };
+  const googleSignIn = () => {
+    dispatch(GoogleSignIn());
   };
   
-
-  const facebookSignIn = async () => {
-    LoginManager.logInWithPermissions(['public_profile']).then(
-      function(result) {
-        if (result.isCancelled) {
-          console.log("Login cancelled");
-        } else {
-          AccessToken.getCurrentAccessToken().then(
-            (data) => {
-              facebookSignInSubmit(data.accessToken.toString());
-            }
-          )
-        }
-      },
-      function(error) {
-        console.log("Login fail with error: " + error);
-      }
-    );
+  const facebookSignIn = () => {
+    dispatch(FacebookSignIn());
   };
   
   useEffect(() => {
@@ -125,11 +69,34 @@ const WelcomeScreen = ({ navigation }) => {
     })
   }, [])
 
-  return (
-    <View style={styles.welcomePageContainerStyle}>
+  const WelcomePageUpperSection = () => {
+    return (
       <View style={styles.welcomePageGreetingContainerStyle}>
         <Image source={TannoiWelcomeScreenImage} style={styles.welcomeImageStyle} />
       </View>
+    );
+  };
+
+  const WelcomePageLoginButton = () => {
+    return (
+      <View style={{flexDirection:"row"}}>
+        <Text style={styles.loginButtonTextStyle}>
+          Already a member?
+        </Text>
+        <TouchableOpacity 
+          style={{marginLeft: 5}}
+          onPress={() => {
+            navigation.navigate('LoginScreen');
+          }}
+        >
+          <Text style={{...styles.loginButtonTextStyle, fontFamily: bold}}>Login</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
+  const WelcomePageButtonSection = () => {
+    return (
       <View style={styles.welcomePageLoginButtonStyle}>
         <WelcomePageButton 
           buttonTitle="Sign up with email"
@@ -178,20 +145,15 @@ const WelcomeScreen = ({ navigation }) => {
           buttonType="buttonFunction"
           buttonFunction={googleSignIn}
         />
-        <View style={{flexDirection:"row"}}>
-          <Text style={styles.loginButtonTextStyle}>
-            Already a member?
-          </Text>
-          <TouchableOpacity 
-            style={{marginLeft: 5}}
-            onPress={() => {
-              navigation.navigate('LoginScreen');
-            }}
-          >
-            <Text style={{...styles.loginButtonTextStyle, fontFamily: bold}}>Login</Text>
-          </TouchableOpacity>
-        </View>
+        <WelcomePageLoginButton />
       </View>
+    );
+  };
+
+  return (
+    <View style={styles.welcomePageContainerStyle}>
+      <WelcomePageUpperSection />
+      <WelcomePageButtonSection />
     </View>
   )
 };

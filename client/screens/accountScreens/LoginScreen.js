@@ -5,17 +5,10 @@ import {
   Text
 } from 'react-native';
 import {
-  GoogleSignin,
-  statusCodes
-} from '@react-native-community/google-signin';
-import { LoginManager, AccessToken } from "react-native-fbsdk";
-import {
   useDispatch
 } from 'react-redux';
-import { userLogin } from '../../store/actions/LoginAction';
-import AsyncStorage from '@react-native-community/async-storage';
-import axios from 'axios';
 import { bold } from '../../assets/FontSize';
+import { GoogleSignIn, FacebookSignIn } from '../../store/actions/LoginAction';
 
 //Components
 import BackButton from '../../components/publicComponents/BackButton';
@@ -25,78 +18,17 @@ const LoginScreen = ({ navigation }) => {
 
   const dispatch = useDispatch();
 
-  const googleSignInSubmit = async googleAccessToken => {
-    try {
-      let googleSigninRequest = await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/login/google', {
-        token: googleAccessToken
-      });
-
-      if (googleSigninRequest.data.access_token) {
-        await AsyncStorage.setItem('access_token', googleSigninRequest.data.access_token);
-        dispatch(userLogin());
-      };
-    } catch (error) {
-      console.log(error) 
-    };
+  const googleSignIn = () => {
+    dispatch(GoogleSignIn());
   };
 
-  const googleSignIn = async () => {
-    try {
-      await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-      googleSignInSubmit(userInfo.idToken)
-    } catch (error) {
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        // user cancelled the login flow
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-        // operation (e.g. sign in) is in progress already
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        // play services not available or outdated
-      } else {
-        // some other error happened
-      }
-    }
+  const facebookSignIn = () => {
+    dispatch(FacebookSignIn());
   };
 
-  const facebookSignInSubmit = async facebookAccessToken => {
-    try {
-      let facebookSigninRequest = await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/login/facebook', {
-        token: facebookAccessToken
-      });
-
-      if (facebookSigninRequest.data.access_token) {
-        await AsyncStorage.setItem('access_token', facebookSigninRequest.data.access_token);
-        dispatch(userLogin());
-      };
-    } catch (error) {
-      console.log(error) 
-    };
-  };
-
-  const facebookSignIn = async () => {
-    LoginManager.logInWithPermissions(['public_profile']).then(
-      function(result) {
-        if (result.isCancelled) {
-          console.log("Login cancelled");
-        } else {
-          AccessToken.getCurrentAccessToken().then(
-            (data) => {
-              facebookSignInSubmit(data.accessToken.toString());
-            }
-          )
-        }
-      },
-      function(error) {
-        console.log("Login fail with error: " + error);
-      }
-    );
-  };
-
-  return (
-    <View style={{flex: 1}}>
-      <View style={styles.loginScreenContainerStyle}>
-        <BackButton navigation={navigation} />
-        <Text style={styles.loginTitleStyle}>Login to TannOi</Text>
+  const LoginButton = () => {
+    return (
+      <>
         <LoginScreenButton 
           buttonTitle="Log in with email"
           buttonStyle={
@@ -144,6 +76,16 @@ const LoginScreen = ({ navigation }) => {
           buttonType="buttonFunction"
           buttonFunction={googleSignIn}
         />
+      </>
+    );
+  };
+
+  return (
+    <View style={{flex: 1}}>
+      <View style={styles.loginScreenContainerStyle}>
+        <BackButton navigation={navigation} />
+        <Text style={styles.loginTitleStyle}>Login to TannOi</Text>
+        <LoginButton />
       </View>
     </View>
   )
