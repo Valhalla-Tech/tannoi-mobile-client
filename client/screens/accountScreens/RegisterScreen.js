@@ -88,6 +88,55 @@ const RegisterPage = ({ navigation }) => {
     setTermsOfServiceModalIsOpen(false);
   }
 
+  const TermsAndService = () => {
+    return (
+      <View style={styles.termsOfServiceContainerStyle}>  
+        <Text style={styles.signupTermsAndPrivacyStyle}>By signing up, you agree to our </Text>
+        <TouchableOpacity
+          onPress={() => setTermsOfServiceModalIsOpen(true)}
+        >
+          <Text style={{...styles.signupTermsAndPrivacyStyle, color: "#2f3dfa"}}>
+            Terms of Service, Privacy Policies
+          </Text>
+        </TouchableOpacity>
+        <Text style={styles.signupTermsAndPrivacyStyle}>
+          and to receive notice on events and services.
+        </Text>
+      </View>
+    );
+  };
+
+  const SignUpButton = () => {
+    return (
+      <View style={styles.signupButtonContainerStyle}>
+        {
+          emailRegister && passwordRegister.length >= 5 ? (
+            <SaveAndContinueButton
+              buttonTitle="Save and Continue"
+              buttonStyle={
+                {
+                  backgroundColor: "#5152D0",
+                  borderColor: "#5152D0",
+                  color: "#FFFFFF",
+                  width: "100%",
+                  height: "100%"
+                }
+              }
+              buttonType="funtionButton"
+              buttonFunction={emailConfirmation}
+            />
+          ) : (
+            <NotActiveButton 
+              buttonTitle="Continue" 
+              buttonHeight="100%"
+            />
+          )
+        }
+        <TermsAndService />
+      </View>
+    );
+  };
+
   return (
     <TouchableWithoutFeedback
       onPress={() => Keyboard.dismiss()}
@@ -116,44 +165,7 @@ const RegisterPage = ({ navigation }) => {
             formInputTitle="Password"
             dataInput={passwordInput}
           />
-          <View style={styles.signupButtonContainerStyle}>
-            {
-              emailRegister && passwordRegister.length >= 5 ? (
-                <SaveAndContinueButton
-                  buttonTitle="Save and Continue"
-                  buttonStyle={
-                    {
-                      backgroundColor: "#5152D0",
-                      borderColor: "#5152D0",
-                      color: "#FFFFFF",
-                      width: "100%",
-                      height: "100%"
-                    }
-                  }
-                  buttonType="funtionButton"
-                  buttonFunction={emailConfirmation}
-                />
-              ) : (
-                <NotActiveButton 
-                  buttonTitle="Continue" 
-                  buttonHeight="100%"
-                />
-              )
-            }
-            <View style={styles.termsOfServiceContainerStyle}>  
-              <Text style={styles.signupTermsAndPrivacyStyle}>By signing up, you agree to our </Text>
-              <TouchableOpacity
-                onPress={() => setTermsOfServiceModalIsOpen(true)}
-              >
-                <Text style={{...styles.signupTermsAndPrivacyStyle, color: "#2f3dfa"}}>
-                  Terms of Service, Privacy Policies
-                </Text>
-              </TouchableOpacity>
-              <Text style={styles.signupTermsAndPrivacyStyle}>
-                and to receive notice on events and services.
-              </Text>
-            </View>
-          </View>
+          <SignUpButton />
           <EmailConfirmationModal 
             openEmailConfirmationModal={openConfirmationModal}
             closeEmailConfirmationModal={closeConfirmationModal}

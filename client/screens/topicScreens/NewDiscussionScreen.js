@@ -35,7 +35,7 @@ const NewDiscussionScreen = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [createNewDiscussionValidation, setCreateNewDiscussionValidation] = useState(false);
 
-  const topics = useSelector(state => state.GetTopicReducer.topics);
+  const topics = useSelector(state => state.TopicReducer.topics);
   const dispatch = useDispatch();
 
   useEffect(() => {

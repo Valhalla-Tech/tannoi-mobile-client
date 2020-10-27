@@ -115,6 +115,51 @@ const EnterYourProfileScreen = ({ navigation }) => {
     showMode('date');
   };
 
+  const UploadPhoto = () => {
+    return (
+      <View style={styles.uploadProfilePhotoContainerStyle}>
+        {
+          profileImage ? (
+            <Image source={{uri:profileImage}} style={styles.profileImageStyle} />
+          ) : (
+            <NoProfileIcon />
+          )
+        }
+        <TouchableOpacity 
+          style={styles.uploadProfilePhotoStyle}
+          onPress={uploadProfileImage}
+        >
+          <Text style={styles.uploadProfilePhotoButtonTextStyle}>Upload a photo</Text>
+        </TouchableOpacity>
+        <Text style={styles.uploadProfilePhotoInformationTextStyle}>
+          Square JPG or PNG images work best. Your photo will be visible to anyone.
+        </Text>
+      </View>
+    );
+  };
+
+  const EnterYourProfileScreenButton = () => {
+    return (
+      <View style={styles.enterYourProfileScreenButtonContainerStyle}>
+        <SaveAndContinueButton 
+          buttonTitle="Save and Continue"
+          buttonStyle={
+            {
+              backgroundColor: "#5152D0",
+              borderColor: "#5152D0",
+              color: "#FFFFFF",
+              width: "100%",
+              height: "100%",
+              marginTop: 24
+            }
+          }
+          buttonType="functionButton"
+          buttonFunction={enterYourProfileRequest}
+        />
+      </View>
+    );
+  };
+
   return (
     <TouchableWithoutFeedback
       onPress={() => {
@@ -124,24 +169,7 @@ const EnterYourProfileScreen = ({ navigation }) => {
       <View style={{flex: 1}}>
         <View style={styles.enterYourProfileScreenContainerStyle}>
           <Text style={styles.enterYourProfileScreenTitleStyle}>Enter your profile</Text>
-          <View style={styles.uploadProfilePhotoContainerStyle}>
-            {
-              profileImage ? (
-                <Image source={{uri:profileImage}} style={styles.profileImageStyle} />
-              ) : (
-                <NoProfileIcon />
-              )
-            }
-            <TouchableOpacity 
-              style={styles.uploadProfilePhotoStyle}
-              onPress={uploadProfileImage}
-            >
-              <Text style={styles.uploadProfilePhotoButtonTextStyle}>Upload a photo</Text>
-            </TouchableOpacity>
-            <Text style={styles.uploadProfilePhotoInformationTextStyle}>
-              Square JPG or PNG images work best. Your photo will be visible to anyone.
-            </Text>
-          </View>
+          <UploadPhoto />
           <Text style={{...styles.formInputTitleStyle}}>Full name</Text>
           <TextInput 
             style={styles.formInputStyle}
@@ -167,23 +195,7 @@ const EnterYourProfileScreen = ({ navigation }) => {
               </TouchableOpacity>
             )
           }
-          <View style={styles.enterYourProfileScreenButtonContainerStyle}>
-            <SaveAndContinueButton 
-              buttonTitle="Save and Continue"
-              buttonStyle={
-                {
-                  backgroundColor: "#5152D0",
-                  borderColor: "#5152D0",
-                  color: "#FFFFFF",
-                  width: "100%",
-                  height: "100%",
-                  marginTop: 24
-                }
-              }
-              buttonType="functionButton"
-              buttonFunction={enterYourProfileRequest}
-            />
-            </View>
+          <EnterYourProfileScreenButton />
         </View>
         {
           isLoading && (

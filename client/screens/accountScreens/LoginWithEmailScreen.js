@@ -60,6 +60,54 @@ const LoginWithEmailScreen = ({ navigation }) => {
     }
   };
 
+  const LoginWithEmailButton = () => {
+    return (
+      <View style={styles.loginWithEmailButtonContainerStyle}>
+        {
+          emailLogin && passwordLogin ? (
+            <LoginButton
+                buttonTitle="Log in"
+                buttonStyle={
+                  {
+                    backgroundColor: "#5152D0",
+                    borderColor: "#5152D0",
+                    color: "#FFFFFF",
+                    width: "100%",
+                    height: "100%"
+                  }
+                }
+                buttonType="funtionButton"
+                buttonFunction={login}
+            />
+          ) : (
+            <NotActiveButton 
+              buttonTitle="Log in"
+              buttonHeight="100%"
+            />
+          )
+        }
+      </View>
+    );
+  };
+
+  const ForgotPasswordButton = () => {
+    return (
+      <View style={styles.forgotPasswordButtonContainer}>
+        <Text style={styles.forgotPasswordButtonTextStyle}>
+          Forgot password?
+        </Text>
+        <TouchableOpacity 
+          style={{marginLeft: 5}}
+          onPress={() => {
+            navigation.navigate('ResetPasswordWithEmailScreen');
+          }}
+        >
+          <Text style={{...styles.forgotPasswordButtonTextStyle, fontFamily: bold}}>Reset password</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   return (
     <TouchableWithoutFeedback
       onPress={() => Keyboard.dismiss()}
@@ -81,44 +129,8 @@ const LoginWithEmailScreen = ({ navigation }) => {
             formInputTitle="Password"
             dataInput={passwordInput}
           />
-          <View style={styles.loginWithEmailButtonContainerStyle}>
-            {
-              emailLogin && passwordLogin ? (
-                <LoginButton
-                    buttonTitle="Log in"
-                    buttonStyle={
-                      {
-                        backgroundColor: "#5152D0",
-                        borderColor: "#5152D0",
-                        color: "#FFFFFF",
-                        width: "100%",
-                        height: "100%"
-                      }
-                    }
-                    buttonType="funtionButton"
-                    buttonFunction={login}
-                />
-              ) : (
-                <NotActiveButton 
-                  buttonTitle="Log in"
-                  buttonHeight="100%"
-                />
-              )
-            }
-          </View>
-          <View style={styles.forgotPasswordButtonContainer}>
-            <Text style={styles.forgotPasswordButtonTextStyle}>
-              Forgot password?
-            </Text>
-            <TouchableOpacity 
-              style={{marginLeft: 5}}
-              onPress={() => {
-                navigation.navigate('ResetPasswordWithEmailScreen');
-              }}
-            >
-              <Text style={{...styles.forgotPasswordButtonTextStyle, fontFamily: bold}}>Reset password</Text>
-            </TouchableOpacity>
-          </View>
+          <LoginWithEmailButton />
+          <ForgotPasswordButton />
         </View>
         {
           isLoading && (

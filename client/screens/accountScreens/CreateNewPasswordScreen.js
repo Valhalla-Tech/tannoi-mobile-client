@@ -55,7 +55,7 @@ const CreateNewPasswordScreen = ({ route, navigation }) => {
                 onPress: () => console.log('Cancel Pressed'),
                 style: 'cancel'
               },
-              { text: 'OK', onPress: () => navigation.navigate('WelcomeScreen') }
+              { text: 'OK', onPress: () => navigation.navigate('LoginWithEmailScreen') }
             ],
             { cancelable: false }
           );
@@ -76,6 +76,36 @@ const CreateNewPasswordScreen = ({ route, navigation }) => {
     }  catch (error) {
       console.log(error);
     }
+  };
+
+  const CreateNewPasswordButton = () => {
+    return (
+      <View style={{height: 50}}>
+        {
+          newPassword.length >= 5 && confirmPassword.length >= 5 ? (
+            <LoginButton
+              buttonTitle="Change Password & Login"
+              buttonStyle={
+                {
+                  backgroundColor: "#5152D0",
+                  borderColor: "#5152D0",
+                  color: "#FFFFFF",
+                  width: "100%",
+                  height: "100%"
+                }
+              }
+              buttonType="functionButton"
+              buttonFunction={submitNewPassword}
+            />
+          ) : (
+            <NotActiveButton
+              buttonTitle="Change Password & Login"
+              buttonHeight="100%"
+            />
+          )
+        }
+      </View>
+    );
   };
 
   return (
@@ -110,31 +140,7 @@ const CreateNewPasswordScreen = ({ route, navigation }) => {
             dataInput={inputConfirmPassword}
           />
         </View>
-        <View style={{height: 50}}>
-          {
-            newPassword.length >= 5 && confirmPassword.length >= 5 ? (
-              <LoginButton
-                buttonTitle="Change Password & Login"
-                buttonStyle={
-                  {
-                    backgroundColor: "#5152D0",
-                    borderColor: "#5152D0",
-                    color: "#FFFFFF",
-                    width: "100%",
-                    height: "100%"
-                  }
-                }
-                buttonType="functionButton"
-                buttonFunction={submitNewPassword}
-              />
-            ) : (
-              <NotActiveButton
-                buttonTitle="Change Password & Login"
-                buttonHeight="100%"
-              />
-            )
-          }
-        </View>
+        <CreateNewPasswordButton />
       </View>
     </TouchableWithoutFeedback>
   );

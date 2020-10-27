@@ -7,11 +7,13 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {
+  useSelector,
   useDispatch
 } from 'react-redux';
 import { userLogin } from '../../store/actions/LoginAction';
 import { bold, normal } from '../../assets/FontSize';
 import axios from 'axios';
+import { getTopic } from '../../store/actions/TopicAction';
 
 //Components
 import BackButton from '../../components/publicComponents/BackButton';
@@ -22,34 +24,15 @@ import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
 const numColumns = 3
 
 const FollowSomeTopicsScreen = ({ navigation }) => {
-  const [allTopics, setAllTopics] = useState('');
+  const topics = useSelector(state => state.TopicReducer.topics);
+  const [allTopics, setAllTopics] = useState(topics);
   const [selectedTopic, setSelectedTopic] = useState([]);
-  const [accessToken, setAccessToken] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
 
-  const getTopics = async () => {
-    try {
-      let access_token = await AsyncStorage.getItem('access_token');
-      setAccessToken(access_token);
-  
-      let getTopicRequest = await axios({
-        url: 'https://dev.entervalhalla.tech/api/tannoi/v1/topics',
-        method: 'get',
-        headers: {
-          'token': access_token
-        }
-      });
-  
-      setAllTopics(getTopicRequest.data);
-    } catch (error) {
-      console.log(error.response);
-    }
-  };
-
   useEffect(() => {
-    getTopics();
+    dispatch(getTopic());
   }, [])
 
   const lastRow = () => {
@@ -79,20 +62,21 @@ const FollowSomeTopicsScreen = ({ navigation }) => {
   const followSomeTopicSubmit = async () => {
     try {
       setIsLoading(true);
+      const access_token = await AsyncStorage.getItem('access_token');
 
       let followSomeTopicRequest = await axios({
         method: 'post',
         url: 'https://dev.entervalhalla.tech/api/tannoi/v1/topics/preferred-many',
         headers: {
-          'token': accessToken
+          'token': access_token
         },
         data: {
           topics_id: selectedTopic
         }
       });
-      setIsLoading(false);
 
       if (followSomeTopicRequest.data.msg === 'Success') {
+        setIsLoading(false);
         dispatch(userLogin());
       }
     } catch (error) {
@@ -100,7 +84,6 @@ const FollowSomeTopicsScreen = ({ navigation }) => {
       console.log(error);
     }
   };
-
 
   const deselectTopic = topicKey => {
     if (selectedTopic.length > 1) {
