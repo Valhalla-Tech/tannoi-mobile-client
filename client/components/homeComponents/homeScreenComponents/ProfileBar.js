@@ -33,20 +33,20 @@ const styles = StyleSheet.create({
   profileInfoContainerStyle: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 16,
+    paddingHorizontal: "3.9%",
     paddingVertical: "3%"
   },
 
   profilePictureStyle: {
     borderRadius: 50,
-    width: 24,
-    height: 24
+    width: "6%",
+    height: "68%"
   },
 
   profileBarTextStyle: {
     fontSize: 16,
     color: "#464D60",
-    marginLeft: 12,
+    marginLeft: "3%",
     fontFamily: bold
   }
 });

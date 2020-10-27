@@ -104,7 +104,7 @@ const RecommendedTopics = props => {
 const styles = StyleSheet.create({
   recommendedTopicsContainerStyle: {
     marginHorizontal: 8,
-    marginTop: 8,
+    marginTop: "2%",
     marginBottom: 70,
     backgroundColor: "#FFFFFF",
     borderRadius: 8,

@@ -57,14 +57,8 @@ const HomeListCard = props => {
     return `${date} ${month} ${year}, ${time}`;
   };
 
-  return (
-    <TouchableOpacity style={isBorder ? styles.homeListCardContainerStyle : {...styles.homeListCardContainerStyle, borderBottomWidth: 0, paddingBottom: "2%"}}
-      onPress={() => {
-        navigation.navigate('DiscussionScreen', {
-          discussionId: discussionId
-        })
-      }}
-    >
+  const HomeListCardData = () => {
+    return (
       <View >
         <View style={styles.profileContainerStyle}>
           <Image source={{uri: imageUrl}} style={styles.profilePictureStyle} />
@@ -82,10 +76,28 @@ const HomeListCard = props => {
           <Text style={{...styles.cardInfoStyle}}>{numberConverter(plays)} Plays</Text>
         </View>
       </View>
+    );
+  };
+
+  const HomeListPostTimeAndPlayer = () => {
+    return (
       <View style={styles.playButtonAndDurationContainerStyle}>
         <Text style={styles.postTimeStyle}>{convertPostTime(postTime)}</Text>
         <HomeListCardPlayer recordingFile={recordingFile} />
       </View>
+    );
+  };
+
+  return (
+    <TouchableOpacity style={isBorder ? styles.homeListCardContainerStyle : {...styles.homeListCardContainerStyle, borderBottomWidth: 0, paddingBottom: "2%"}}
+      onPress={() => {
+        navigation.navigate('DiscussionScreen', {
+          discussionId: discussionId
+        })
+      }}
+    >
+      <HomeListCardData />
+      <HomeListPostTimeAndPlayer />
     </TouchableOpacity>
   );
 };
@@ -106,15 +118,15 @@ const styles = StyleSheet.create({
   },
 
   profilePictureStyle: {
-    height: 24, 
-    width: 24, 
+    height: "75%", 
+    width: "8%", 
     borderRadius: 50
   },
 
   nameTextStyle: {
     fontSize: 14, 
     color: "#464D60", 
-    marginLeft: 8,
+    marginLeft: "3%",
     fontFamily: normal
   },
 
@@ -136,7 +148,7 @@ const styles = StyleSheet.create({
   },
 
   cardInfoStyle: {
-    marginRight: 16, 
+    marginRight: "6%", 
     fontSize: 12, 
     color: "#73798C",
     fontFamily: normal
@@ -147,7 +159,7 @@ const styles = StyleSheet.create({
   },
 
   postTimeStyle: {
-    marginBottom: 10, 
+    marginBottom: "6%", 
     fontSize: 12, 
     color: "#73798C",
     fontFamily: normal

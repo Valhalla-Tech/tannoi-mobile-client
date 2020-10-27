@@ -55,7 +55,7 @@ const TopUsers = props => {
 const styles = StyleSheet.create({
   topUsersContainerStyle: {
     backgroundColor: "#FFFFFF",
-    marginVertical: 8,
+    marginTop: "2%",
     marginHorizontal: 8,
     borderRadius: 8,
     paddingLeft: 16

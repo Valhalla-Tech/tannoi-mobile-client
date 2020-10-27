@@ -22,16 +22,32 @@ const HomeList = props => {
     navigation
   } = props
 
+  const MoreButton = () => {
+    return (
+      <View style={styles.moreButtonContainerStyle}>
+        <TouchableOpacity style={styles.moreButton}>
+          <Text style={styles.moreButtonTextStyle}>More</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
+  const ListFilter = () => {
+    return (
+      <TouchableOpacity style={styles.filterStyle}>
+        <Text style={styles.filterTextStyle}>Most recent</Text>
+        <DownArrow />
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <View style={styles.homeListContainerStyle}>
       <View style={styles.homeListTitleAndFilterContainerStyle}>
         <Text style={styles.homeListTitleStyle}>{listTitle}</Text>
         {
           listTitle === 'Trending' && (
-            <TouchableOpacity style={styles.filterStyle}>
-              <Text style={styles.filterTextStyle}>Most recent</Text>
-              <DownArrow />
-            </TouchableOpacity>
+            <ListFilter />
           )
         }
       </View>
@@ -63,11 +79,7 @@ const HomeList = props => {
           </>
         )}
       />
-      <View style={styles.moreButtonContainerStyle}>
-        <TouchableOpacity style={styles.moreButton}>
-          <Text style={styles.moreButtonTextStyle}>More</Text>
-        </TouchableOpacity>
-      </View>
+      <MoreButton />
     </View>
   );
 };
@@ -75,9 +87,9 @@ const HomeList = props => {
 const styles = StyleSheet.create({
   homeListContainerStyle: {
     backgroundColor: "#FFFFFF",
-    marginTop: 8,
+    marginTop: "2%",
     marginHorizontal: 8,
-    marginBottom: 16,
+    marginBottom: "4%",
     borderRadius: 8,
     paddingBottom: "6.5%"
   },
@@ -90,7 +102,7 @@ const styles = StyleSheet.create({
   },
 
   filterStyle: {
-    marginRight: 16,
+    marginRight: ".8%",
     flexDirection: "row",
     alignItems: "center"
   },
@@ -98,7 +110,7 @@ const styles = StyleSheet.create({
   filterTextStyle: {
     fontSize: 14,
     color: "#73798C",
-    marginRight: 5.2
+    marginRight: "5%"
   },
 
   homeListTitleStyle: {

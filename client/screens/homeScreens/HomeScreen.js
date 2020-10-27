@@ -10,7 +10,6 @@ import {
 } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import { getHome } from '../../store/actions/HomeAction';
-import { userLogout } from '../../store/actions/LoginAction';
 
 //Components
 import SearchBar from '../../components/homeComponents/SearchBar';
@@ -19,7 +18,6 @@ import DiscussionOfTheWeek from '../../components/homeComponents/homeScreenCompo
 import TopUsers from '../../components/homeComponents/homeScreenComponents/TopUsers';
 import Trending from '../../components/homeComponents/homeScreenComponents/HomeList';
 import RecommendedTopics from '../../components/homeComponents/homeScreenComponents/RecommendedTopics';
-import AsyncStorage from '@react-native-community/async-storage';
 
 const HomeScreen = ({ navigation }) => {
   const user = useSelector(state => state.HomeReducer.user);
