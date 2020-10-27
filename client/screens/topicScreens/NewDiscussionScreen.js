@@ -17,6 +17,7 @@ import {
 } from 'react-redux';
 import { getTopic } from '../../store/actions/TopicAction';
 import { getHome } from '../../store/actions/HomeAction';
+import { userLogout } from '../../store/actions/LoginAction';
 import axios from 'axios';
 
 //Components
@@ -129,7 +130,10 @@ const NewDiscussionScreen = ({ navigation }) => {
     } catch (error) {
       setIsLoading(false);
       setCreateNewDiscussionValidation(true);
-      console.log(error.response);
+      if (error.response.data.msg === 'You have to login first') {
+        dispatch(userLogout());
+      };
+      console.log(error.response.data.msg);
     }
   };
 

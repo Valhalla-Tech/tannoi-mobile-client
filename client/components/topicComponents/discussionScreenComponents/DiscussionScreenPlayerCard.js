@@ -14,6 +14,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Slider from '@react-native-community/slider';
 import { connect } from 'react-redux';
 import { getHome } from '../../../store/actions/HomeAction';
+import { getDiscussion } from '../../../store/actions/DiscussionAction'
 import LoadingSpinner from '../../publicComponents/LoadingSpinner';
 import axios from 'axios';
 
@@ -265,7 +266,7 @@ class DiscussionScreenPlayerCard extends Component {
       })
 
       if (playCounterRequest.data) {
-        this.state.getDiscussion();
+        this.props.getDiscussion(this.state.discussionId);
       }
     } catch (error) {
       console.log(error.response);
@@ -363,16 +364,77 @@ class DiscussionScreenPlayerCard extends Component {
     })
   }
 
+  ProfileAndPostTime = () => {
+    return (
+      <View style={styles.profileAndPostTimeContainerStyle}>
+        <View style={styles.profileInfoContainerStyle}>
+          <Image source={{uri: this.state.profilePicture}} style={styles.profileImageStyle} />
+          <Text style={styles.profileNameStyle}>{this.state.profileName}</Text>
+        </View>
+        <Text style={styles.postTimeStyle}>{this.state.postTime ? this.convertPostTime(this.state.postTime) : ''}</Text>
+      </View>
+    );
+  }
+
+  VoteAndResponse = () => {
+    return (
+      <View style={styles.voteAndAddResponseContainerStyle}>
+        <View style={styles.voteContainerStyle}>
+          <TouchableOpacity onPress={() => this.upvote()}>
+            {
+              this.state.isLike ? (
+                <ActiveUpvote />
+              ) : (
+                <Upvote />
+              )
+            }
+          </TouchableOpacity>
+          <Text style={styles.voteNumberStyle}>
+            {this.numberConverter(this.state.like)}
+          </Text>
+          <TouchableOpacity onPress={() => this.downvote()}>
+          {
+              this.state.isDislike ? (
+                <ActiveDownvote />
+              ) : (
+                <Downvote />
+              )
+            }
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity
+          style={styles.addResponseButtonStyle}
+          onPress={() => {
+            this.setState({
+              openAddResponseModal: true
+            })
+          }}
+        >
+          <Text style={styles.addResponseButtonTextStyle}>Add response</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
+  ReplyButton = () => {
+    return (
+      <View style={styles.showReplyButtonContainerStyle}>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.push('ResponseScreen', {
+            responseId: this.state.responseId,
+            discussionId: this.state.discussionId
+          })}
+        >
+        <Text style={styles.showReplyButtonTextStyle}>{this.state.responseCount} Rep{this.state.responseCount > 1 ? 'lies' : 'ly'}</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   render() {
     return (
       <View style={this.state.cardType === 'discussion' ? styles.discussionPlayerContainerStyle : styles.responsePlayerContainerStyle}>
-        <View style={styles.profileAndPostTimeContainerStyle}>
-          <View style={styles.profileInfoContainerStyle}>
-            <Image source={{uri: this.state.profilePicture}} style={styles.profileImageStyle} />
-            <Text style={styles.profileNameStyle}>{this.state.profileName}</Text>
-          </View>
-          <Text style={styles.postTimeStyle}>{this.state.postTime ? this.convertPostTime(this.state.postTime) : ''}</Text>
-        </View>
+        <this.ProfileAndPostTime />
         {
           this.state.caption && (
             <Text style={styles.captionStyle}>{this.state.caption}</Text>
@@ -454,55 +516,12 @@ class DiscussionScreenPlayerCard extends Component {
         </View>
         {
           this.state.cardType === 'response' && (
-            <View style={styles.voteAndAddResponseContainerStyle}>
-              <View style={styles.voteContainerStyle}>
-                <TouchableOpacity onPress={() => this.upvote()}>
-                  {
-                    this.state.isLike ? (
-                      <ActiveUpvote />
-                    ) : (
-                      <Upvote />
-                    )
-                  }
-                </TouchableOpacity>
-                <Text style={styles.voteNumberStyle}>
-                  {this.numberConverter(this.state.like)}
-                </Text>
-                <TouchableOpacity onPress={() => this.downvote()}>
-                {
-                    this.state.isDislike ? (
-                      <ActiveDownvote />
-                    ) : (
-                      <Downvote />
-                    )
-                  }
-                </TouchableOpacity>
-              </View>
-              <TouchableOpacity
-                style={styles.addResponseButtonStyle}
-                onPress={() => {
-                  this.setState({
-                    openAddResponseModal: true
-                  })
-                }}
-              >
-                <Text style={styles.addResponseButtonTextStyle}>Add response</Text>
-              </TouchableOpacity>
-            </View>
+            <this.VoteAndResponse />
           )
         }
         {
           this.state.responseCount >= 1 && this.state.cardIndex !== 'response' && (
-            <View style={styles.showReplyButtonContainerStyle}>
-              <TouchableOpacity
-                onPress={() => this.props.navigation.push('ResponseScreen', {
-                  responseId: this.state.responseId,
-                  discussionId: this.state.discussionId
-                })}
-              >
-              <Text style={styles.showReplyButtonTextStyle}>{this.state.responseCount} Rep{this.state.responseCount > 1 ? 'lies' : 'ly'}</Text>
-              </TouchableOpacity>
-            </View>
+            <this.ReplyButton />
           )
         }
         <AddResponse
@@ -519,9 +538,10 @@ class DiscussionScreenPlayerCard extends Component {
   }
 };
 
-const dispatchUpdateHome = () => {
+const dispatchUpdate = () => {
   return {
-    getHome 
+    getHome,
+    getDiscussion
   };
 };
 
@@ -649,5 +669,5 @@ const styles = StyleSheet.create({
 
 export default connect(
   null,
-  dispatchUpdateHome()
+  dispatchUpdate()
 )(DiscussionScreenPlayerCard);

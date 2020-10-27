@@ -131,6 +131,60 @@ const DiscussionScreenCard = props => {
     return `${date} ${month} ${year}, ${time}`;
   };
 
+  const ProfileAndMenu = () => {
+    return (
+      <View style={styles.profileAndMenuContainerStyle}>
+        <View>
+          <View style={styles.profileContainerStyle}>
+            <Image source={{uri: profilePicture}} style={styles.profileImageStyle} />
+            <Text style={styles.profileNameStyle}>{profileName}</Text>
+          </View>
+          <Text style={styles.postTimeStyle}>{postTime ? convertPostTime(postTime) : ''}</Text>
+        </View>
+        <TouchableOpacity style={styles.discussionCardMenuStyle}>
+          <DiscussionCardMenu />
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
+  const DiscussionVoteAndInfo = () => {
+    return (
+      <View style={styles.discussionVoteAndInfoContainerStyle}>
+        <View style={styles.voteContainerStyle}>
+          <TouchableOpacity onPress={() => upvote()}>
+            {
+              isLike ? (
+                <ActiveUpvote />
+              ) : (
+                <Upvote />
+              )
+            }
+          </TouchableOpacity>
+            <Text style={styles.voteNumberStyle}>{numberConverter(like)}</Text>
+          <TouchableOpacity onPress={() => downvote()}>
+            {
+              isDislike ? (
+                <ActiveDownvote />
+              ) : (
+                <Downvote />
+              )
+            }
+          </TouchableOpacity>
+        </View>
+        <View style={styles.discussionInfoContainerStyle}>
+          <Text style={styles.discussionTitleStyle}>{discussionTitle}</Text>
+          <Text style={styles.topicStyle}>{topic}</Text>
+          <Text style={styles.discussionHashtag}>{hashtags ? convertHashtagForDisplay(hashtags) : ''}</Text>
+          <View style={styles.repliesAndPlaysNumberContainerStyle}>
+            <Text style={styles.repliesAndPlaysNumberStyle}>{numberConverter(replies)} Replies</Text>
+            <Text style={styles.repliesAndPlaysNumberStyle}>{numberConverter(plays)} Plays</Text>
+          </View>
+        </View>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.discussionScreenCardContainerStyle}>
       {
@@ -139,50 +193,8 @@ const DiscussionScreenCard = props => {
         ) : (
           <>
             <View style={styles.discussionInfoSectionStyle}>
-              <View style={styles.profileAndMenuContainerStyle}>
-                <View>
-                  <View style={styles.profileContainerStyle}>
-                    <Image source={{uri: profilePicture}} style={styles.profileImageStyle} />
-                    <Text style={styles.profileNameStyle}>{profileName}</Text>
-                  </View>
-                  <Text style={styles.postTimeStyle}>{postTime ? convertPostTime(postTime) : ''}</Text>
-                </View>
-                <TouchableOpacity style={styles.discussionCardMenuStyle}>
-                  <DiscussionCardMenu />
-                </TouchableOpacity>
-              </View>
-              <View style={styles.discussionVoteAndInfoContainerStyle}>
-                <View style={styles.voteContainerStyle}>
-                  <TouchableOpacity onPress={() => upvote()}>
-                    {
-                      isLike ? (
-                        <ActiveUpvote />
-                      ) : (
-                        <Upvote />
-                      )
-                    }
-                  </TouchableOpacity>
-                    <Text style={styles.voteNumberStyle}>{numberConverter(like)}</Text>
-                  <TouchableOpacity onPress={() => downvote()}>
-                    {
-                      isDislike ? (
-                        <ActiveDownvote />
-                      ) : (
-                        <Downvote />
-                      )
-                    }
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.discussionInfoContainerStyle}>
-                  <Text style={styles.discussionTitleStyle}>{discussionTitle}</Text>
-                  <Text style={styles.topicStyle}>{topic}</Text>
-                  <Text style={styles.discussionHashtag}>{hashtags ? convertHashtagForDisplay(hashtags) : ''}</Text>
-                  <View style={styles.repliesAndPlaysNumberContainerStyle}>
-                    <Text style={styles.repliesAndPlaysNumberStyle}>{numberConverter(replies)} Replies</Text>
-                    <Text style={styles.repliesAndPlaysNumberStyle}>{numberConverter(plays)} Plays</Text>
-                  </View>
-                </View>
-              </View>
+              <ProfileAndMenu />
+              <DiscussionVoteAndInfo />
             </View>
             {
               recordingFile !== '' && (

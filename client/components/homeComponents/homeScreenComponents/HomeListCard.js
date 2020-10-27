@@ -79,15 +79,6 @@ const HomeListCard = props => {
     );
   };
 
-  const HomeListPostTimeAndPlayer = () => {
-    return (
-      <View style={styles.playButtonAndDurationContainerStyle}>
-        <Text style={styles.postTimeStyle}>{convertPostTime(postTime)}</Text>
-        <HomeListCardPlayer recordingFile={recordingFile} />
-      </View>
-    );
-  };
-
   return (
     <TouchableOpacity style={isBorder ? styles.homeListCardContainerStyle : {...styles.homeListCardContainerStyle, borderBottomWidth: 0, paddingBottom: "2%"}}
       onPress={() => {
@@ -97,7 +88,10 @@ const HomeListCard = props => {
       }}
     >
       <HomeListCardData />
-      <HomeListPostTimeAndPlayer />
+      <View style={styles.playButtonAndDurationContainerStyle}>
+        <Text style={styles.postTimeStyle}>{convertPostTime(postTime)}</Text>
+        <HomeListCardPlayer recordingFile={recordingFile} />
+      </View>
     </TouchableOpacity>
   );
 };

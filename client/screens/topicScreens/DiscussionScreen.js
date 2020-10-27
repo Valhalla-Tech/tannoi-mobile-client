@@ -7,6 +7,9 @@ import {
   FlatList
 } from 'react-native';
 import { bold } from '../../assets/FontSize';
+import { useDispatch, useSelector } from 'react-redux';
+import { getDiscussion, clearDiscussion } from '../../store/actions/DiscussionAction';
+import { userLogout } from '../../store/actions/LoginAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 
@@ -19,68 +22,39 @@ import ClosedCard from '../../components/topicComponents/discussionScreenCompone
 import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
 
 const DiscussionScreen = ({ route, navigation }) => {
-  const [profilePicture, setProfilePicture] = useState('');
-  const [profileName, setProfileName] = useState('');
-  const [postTime, setPostTime] = useState('');
-  const [like, setLike] = useState('');
-  const [topic, setTopic] = useState('');
-  const [discussionTitle, setDiscussionTitle] = useState('');
-  const [hashtags, setHashtags] = useState('');
-  const [replies, setReplies] = useState('');
-  const [plays, setPlays] = useState('');
-  const [recordingFile, setRecordingFile] = useState('');
-  const [isLike, setIsLike] = useState(false);
-  const [isDislike, setIsDislike] = useState(false);
   const [openAddResponseModal, setOpenAddResponseModal] = useState(false);
   const [response, setResponse] = useState('');
   const [selectedCard, setSelectedCard] = useState('discussion');
-  const [nextPlayerAvailable, setNextPlayerAvailable] = useState(false);
   const [fromNextPreviousButton, setFromNextPreviousButton] = useState(false);
+
+  const profilePicture = useSelector(state => state.DiscussionReducer.profilePicture);
+  const profileName = useSelector(state => state.DiscussionReducer.profileName);
+  const postTime = useSelector(state => state.DiscussionReducer.postTime);
+  const like = useSelector(state => state.DiscussionReducer.like);
+  const topic = useSelector(state => state.DiscussionReducer.topic);
+  const discussionTitle = useSelector(state => state.DiscussionReducer.discussionTitle);
+  const hashtags = useSelector(state => state.DiscussionReducer.hashtags);
+  const replies = useSelector(state => state.DiscussionReducer.replies);
+  const plays = useSelector(state => state.DiscussionReducer.plays);
+  const recordingFile = useSelector(state => state.DiscussionReducer.recordingFile);
+  const isLike = useSelector(state => state.DiscussionReducer.isLike);
+  const isDislike = useSelector(state => state.DiscussionReducer.isDislike);
 
   const {
     discussionId,
     fromNewDiscussion
   } = route.params;
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(clearDiscussion());
+    dispatch(getDiscussion(discussionId));
+    getResponse();
+  }, []);
+
   const closeAddResponseModal = () => {
     setOpenAddResponseModal(false);
-  };
-
-  const getDiscussion = async () => {
-    try {
-      let access_token = await AsyncStorage.getItem('access_token');
-      if (access_token) {
-        getResponse();
-        let getDiscussionRequest = await axios({
-          url: `https://dev.entervalhalla.tech/api/tannoi/v1/discussions/single/${discussionId}`,
-          method: 'get',
-          headers: {
-            'token': access_token
-          }
-        });
-
-        if (getDiscussionRequest.data) {
-          if (getDiscussionRequest.data.response_count !== 0) {
-            setNextPlayerAvailable(true)
-          };
-
-          setProfilePicture(getDiscussionRequest.data.creator.profile_photo_path);
-          setProfileName(getDiscussionRequest.data.creator.name);
-          setPostTime(getDiscussionRequest.data.created_at);
-          setLike(getDiscussionRequest.data.likes);
-          setDiscussionTitle(getDiscussionRequest.data.title);
-          setHashtags(getDiscussionRequest.data.hashtags);
-          setReplies(getDiscussionRequest.data.response_count);
-          setPlays(getDiscussionRequest.data.play_count);
-          setRecordingFile(getDiscussionRequest.data.voice_note_path);
-          setIsLike(getDiscussionRequest.data.isLike);
-          setIsDislike(getDiscussionRequest.data.isDislike);
-          setTopic(getDiscussionRequest.data.topic.name);
-        }
-      }
-    } catch (error) {
-      console.log(error.response);
-    }
   };
 
   const getResponse = async () => {
@@ -99,6 +73,9 @@ const DiscussionScreen = ({ route, navigation }) => {
       }
     } catch (error) {
       console.log(error.response);
+      if (error.response.data.msg === 'You have to login first') {
+        dispatch(userLogout());
+      };
     }
   };
 
@@ -140,10 +117,6 @@ const DiscussionScreen = ({ route, navigation }) => {
     return isLikeAndIsDislike
   };
 
-  useEffect(() => {
-    getDiscussion();
-  }, []);
-
   return (
     <View>
       <View style={styles.discussionUpperBarStyle}>
@@ -184,7 +157,7 @@ const DiscussionScreen = ({ route, navigation }) => {
                   recordingFile={recordingFile}
                   getDiscussion={getDiscussion}
                   discussionId={discussionId}
-                  nextPlayerAvailable={nextPlayerAvailable}
+                  nextPlayerAvailable={replies > 0 ? true : false}
                   changePlayer={changePlayer}
                   cardIndex="discussion"
                   fromNextPreviousButton={fromNextPreviousButton}
@@ -230,7 +203,7 @@ const DiscussionScreen = ({ route, navigation }) => {
                   like={itemData.item.likes}
                   responseId={itemData.item.id}
                   getResponseFromDiscussion={getResponse}
-                  nextPlayerAvailable={nextPlayerAvailable}
+                  nextPlayerAvailable={replies > 0 ? true : false}
                   cardIndex={itemData.index}
                   cardLength={response.length}
                   postTime={itemData.item.created_at}

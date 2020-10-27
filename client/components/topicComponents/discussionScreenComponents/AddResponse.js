@@ -11,6 +11,8 @@ import {
 import { bold } from '../../../assets/FontSize';
 import { useDispatch } from 'react-redux';
 import { getHome } from '../../../store/actions/HomeAction';
+import { getDiscussion } from '../../../store/actions/DiscussionAction';
+import { userLogout } from '../../../store/actions/LoginAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 
@@ -78,12 +80,16 @@ const AddResponse = props => {
           getSingleResponse();
         }
         dispatch(getHome());
+        dispatch(getDiscussion(discussionId));
         closeAddResponseModal();
       };
     } catch (error) {
       setIsLoading(false);
       setAddResponseValidation(true);
       console.log(error.response);
+      if (error.response.data.msg === 'You have to login first') {
+        dispatch(userLogout());
+      };
     }
   };
 

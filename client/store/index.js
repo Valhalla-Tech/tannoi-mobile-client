@@ -9,11 +9,13 @@ import thunk from 'redux-thunk';
 import LoginReducer from './reducers/LoginReducer';
 import TopicReducer from './reducers/TopicReducer';
 import HomeReducer from './reducers/HomeReducer';
+import DiscussionReducer from './reducers/DiscussionReducer';
 
 const reducer = combineReducers({
   LoginReducer,
   TopicReducer,
-  HomeReducer
+  HomeReducer,
+  DiscussionReducer
 });
 
 const store = createStore(reducer, applyMiddleware(thunk));
