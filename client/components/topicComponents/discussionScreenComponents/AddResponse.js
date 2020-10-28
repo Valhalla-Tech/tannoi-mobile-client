@@ -36,7 +36,8 @@ const AddResponse = props => {
     closeAddResponseModal,
     discussionId,
     responseId,
-    addResponseForResponse
+    addResponseForResponse,
+    addResponseForResponseInResponseScreen
   } = props;
 
   const createResponse = async () => {
@@ -78,7 +79,9 @@ const AddResponse = props => {
         setAddResponseValidation(false);
         dispatch(getResponse(discussionId));
         if (addResponseForResponse) {
-          dispatch(getSingleResponse(responseId));
+          if (!addResponseForResponseInResponseScreen) {
+            dispatch(getSingleResponse(responseId));
+          };
           dispatch(getSingleResponse(responseId, 'getDataForResponse'));
         }
         dispatch(getHome());

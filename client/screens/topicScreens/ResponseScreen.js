@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { bold } from '../../assets/FontSize';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSingleResponse } from '../../store/actions/ResponseAction';
+import { getResponse, getSingleResponse, clearResponse } from '../../store/actions/ResponseAction';
 
 //Components
 import BackButton from '../../components/publicComponents/BackButton';
@@ -37,8 +37,14 @@ const ReplyScreen = ({route, navigation}) => {
   } = route.params;
 
   useEffect(() => {
-    dispatch(getSingleResponse(responseId));
-  }, []);
+    const unsubscribe = navigation.addListener("focus", () => {
+      dispatch(clearResponse());
+      dispatch(getSingleResponse(responseId));
+      dispatch(getResponse(discussionId));
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   const getIsLikeAndIsDislike = (input, responseIdInput) => {
     let isLikeAndIsDislike;

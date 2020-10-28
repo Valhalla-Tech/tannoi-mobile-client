@@ -10,7 +10,8 @@ const BackButton = props => {
   const { 
     navigation,
     screen,
-    styleOption
+    styleOption,
+    backButtonFunction
   } = props;
 
   return (

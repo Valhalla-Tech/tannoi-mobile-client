@@ -498,6 +498,7 @@ class DiscussionScreenPlayerCard extends Component {
           discussionId={this.state.discussionId}
           addResponseForResponse={true}
           responseId={this.state.responseId}
+          addResponseForResponseInResponseScreen={this.state.cardIndex !== 'response' ? true : false}
         />
       </View>
     )
