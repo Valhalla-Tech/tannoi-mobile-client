@@ -9,6 +9,7 @@ import {
 import { bold, normal } from '../../../assets/FontSize';
 import { useDispatch } from 'react-redux';
 import { getHome } from '../../../store/actions/HomeAction';
+import { getDiscussion } from '../../../store/actions/DiscussionAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 
@@ -37,7 +38,6 @@ const DiscussionScreenCard = props => {
     recordingFile,
     isLike,
     isDislike,
-    getDiscussion,
     discussionId,
     nextPlayerAvailable,
     changePlayer,
@@ -75,7 +75,7 @@ const DiscussionScreenCard = props => {
       })
 
       if (upvoteRequest.data) {
-        getDiscussion();
+        dispatch(getDiscussion(discussionId));
         dispatch(getHome());
       }
     } catch (error) {
@@ -96,7 +96,7 @@ const DiscussionScreenCard = props => {
       })
 
       if (downvoteRequest.data) {
-        getDiscussion();
+        dispatch(getDiscussion(discussionId));
         dispatch(getHome());
       }
     } catch (error) {
@@ -208,7 +208,6 @@ const DiscussionScreenCard = props => {
                   changePlayer={changePlayer}
                   cardIndex={cardIndex}
                   discussionId={discussionId}
-                  getDiscussion={getDiscussion}
                   fromNextPreviousButton={fromNextPreviousButton}
                   updateFromNextPreviousButton={updateFromNextPreviousButton}
                 />

@@ -58,7 +58,6 @@ class DiscussionScreenPlayerCard extends Component {
       cardIndex: this.props.cardIndex,
       cardLength: this.props.cardLength,
       stopPlayer: this.props.stopPlayer,
-      getDiscussion: this.props.getDiscussion,
       fromNextPreviousButton: this.props.fromNextPreviousButton,
       updateFromNextPreviousButton: this.props.updateFromNextPreviousButton,
       openAddResponseModal: false,

@@ -155,7 +155,6 @@ const DiscussionScreen = ({ route, navigation }) => {
                   replies={replies}
                   plays={plays}
                   recordingFile={recordingFile}
-                  getDiscussion={getDiscussion}
                   discussionId={discussionId}
                   nextPlayerAvailable={replies > 0 ? true : false}
                   changePlayer={changePlayer}
