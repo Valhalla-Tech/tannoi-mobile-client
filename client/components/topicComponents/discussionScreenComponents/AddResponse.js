@@ -12,6 +12,7 @@ import { bold } from '../../../assets/FontSize';
 import { useDispatch } from 'react-redux';
 import { getHome } from '../../../store/actions/HomeAction';
 import { getDiscussion } from '../../../store/actions/DiscussionAction';
+import { getResponse, getSingleResponse } from '../../../store/actions/ResponseAction';
 import { userLogout } from '../../../store/actions/LoginAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
@@ -34,8 +35,6 @@ const AddResponse = props => {
     openAddResponseModal,
     closeAddResponseModal,
     discussionId,
-    getResponse,
-    getSingleResponse,
     responseId,
     addResponseForResponse
   } = props;
@@ -75,9 +74,12 @@ const AddResponse = props => {
       });
 
       if (createResponseRequest.data) {
-        getResponse();
+        setIsLoading(false);
+        setAddResponseValidation(false);
+        dispatch(getResponse(discussionId));
         if (addResponseForResponse) {
-          getSingleResponse();
+          dispatch(getSingleResponse(responseId));
+          dispatch(getSingleResponse(responseId, 'getDataForResponse'));
         }
         dispatch(getHome());
         dispatch(getDiscussion(discussionId));

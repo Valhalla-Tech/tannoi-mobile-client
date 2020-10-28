@@ -14,7 +14,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Slider from '@react-native-community/slider';
 import { connect } from 'react-redux';
 import { getHome } from '../../../store/actions/HomeAction';
-import { getDiscussion } from '../../../store/actions/DiscussionAction'
+import { getDiscussion } from '../../../store/actions/DiscussionAction';
+import { getSingleResponse } from '../../../store/actions/ResponseAction';
 import LoadingSpinner from '../../publicComponents/LoadingSpinner';
 import axios from 'axios';
 
@@ -51,8 +52,6 @@ class DiscussionScreenPlayerCard extends Component {
       postTime: this.props.postTime,
       responseId: this.props.responseId,
       like: '',
-      responseLike: this.props.responseLike,
-      getResponseFromDiscussion: this.props.getResponseFromDiscussion,
       nextPlayerAvailable: this.props.nextPlayerAvailable,
       changePlayer: this.props.changePlayer,
       cardIndex: this.props.cardIndex,
@@ -61,9 +60,6 @@ class DiscussionScreenPlayerCard extends Component {
       fromNextPreviousButton: this.props.fromNextPreviousButton,
       updateFromNextPreviousButton: this.props.updateFromNextPreviousButton,
       openAddResponseModal: false,
-      responseCount: 0,
-      isLike: false,
-      isDislike: false,
       isChainResponse: this.props.isChainResponse,
       getIsLikeAndIsDislike: this.props.getIsLikeAndIsDislike,
       progress: 0,
@@ -82,7 +78,7 @@ class DiscussionScreenPlayerCard extends Component {
 
     this.loadPlayer();
 
-    this.getSingleResponse();
+    this.props.getSingleResponse(this.state.responseId, 'getDataForResponse');
 
     this.progressInterval = null;
   };
@@ -272,33 +268,6 @@ class DiscussionScreenPlayerCard extends Component {
     }
   };
 
-  getSingleResponse = async () => {
-    try {
-      const access_token = await AsyncStorage.getItem('access_token');
-      
-      if (access_token) {
-        let getSingleResponseRequest = await axios({
-          url: `https://dev.entervalhalla.tech/api/tannoi/v1/responses/single/${this.state.responseId}`,
-          method: 'get',
-          headers: {
-            'token': access_token
-          }
-        });
-        
-        if (getSingleResponseRequest.data) {
-          this.setState({
-            like: getSingleResponseRequest.data.likes,
-            isLike: getSingleResponseRequest.data.isLike,
-            isDislike: getSingleResponseRequest.data.isDislike,
-            responseCount: getSingleResponseRequest.data.response_count
-          });
-        }
-      }
-    } catch (error) {
-      console.log(error.response);
-    }
-  };
-
   upvote = async () => {
     try {
       const access_token = await AsyncStorage.getItem('access_token');
@@ -312,7 +281,7 @@ class DiscussionScreenPlayerCard extends Component {
       })
 
       if (upvoteRequest.data) {
-        this.getSingleResponse();
+        this.props.getSingleResponse(this.state.responseId, 'getDataForResponse');
       }
     } catch (error) {
       console.log(error.response);
@@ -332,7 +301,7 @@ class DiscussionScreenPlayerCard extends Component {
       })
 
       if (downvoteRequest.data) {
-        this.getSingleResponse();
+        this.props.getSingleResponse(this.state.responseId, 'getDataForResponse');
       }
     } catch (error) {
       console.log(error);
@@ -381,7 +350,7 @@ class DiscussionScreenPlayerCard extends Component {
         <View style={styles.voteContainerStyle}>
           <TouchableOpacity onPress={() => this.upvote()}>
             {
-              this.state.isLike ? (
+              this.props.isLikeForResponse ? (
                 <ActiveUpvote />
               ) : (
                 <Upvote />
@@ -389,11 +358,11 @@ class DiscussionScreenPlayerCard extends Component {
             }
           </TouchableOpacity>
           <Text style={styles.voteNumberStyle}>
-            {this.numberConverter(this.state.like)}
+            {this.numberConverter(this.props.likeForResponse)}
           </Text>
           <TouchableOpacity onPress={() => this.downvote()}>
           {
-              this.state.isDislike ? (
+              this.props.isDislikeForResponse ? (
                 <ActiveDownvote />
               ) : (
                 <Downvote />
@@ -424,7 +393,7 @@ class DiscussionScreenPlayerCard extends Component {
             discussionId: this.state.discussionId
           })}
         >
-        <Text style={styles.showReplyButtonTextStyle}>{this.state.responseCount} Rep{this.state.responseCount > 1 ? 'lies' : 'ly'}</Text>
+        <Text style={styles.showReplyButtonTextStyle}>{this.props.responseCountForResponse} Rep{this.props.responseCountForResponse > 1 ? 'lies' : 'ly'}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -457,7 +426,7 @@ class DiscussionScreenPlayerCard extends Component {
             <PlayerSpeed />
           </TouchableOpacity>
           {
-            this.state.cardType !== 'discussion' ? (
+            this.state.cardType !== 'discussion' && this.state.cardIndex !== 'response' ? (
               <TouchableOpacity
                 onPress={() => {
                   if (this.state.playPauseButton === 'Pause') {
@@ -519,7 +488,7 @@ class DiscussionScreenPlayerCard extends Component {
           )
         }
         {
-          this.state.responseCount >= 1 && this.state.cardIndex !== 'response' && (
+          this.props.responseCountForResponse >= 1 && this.state.cardIndex !== 'response' && this.state.cardType !== 'discussion' && (
             <this.ReplyButton />
           )
         }
@@ -527,8 +496,6 @@ class DiscussionScreenPlayerCard extends Component {
           openAddResponseModal={this.state.openAddResponseModal}
           closeAddResponseModal={this.closeAddResponseModal}
           discussionId={this.state.discussionId}
-          getResponse={this.state.getResponseFromDiscussion}
-          getSingleResponse={this.getSingleResponse}
           addResponseForResponse={true}
           responseId={this.state.responseId}
         />
@@ -537,10 +504,20 @@ class DiscussionScreenPlayerCard extends Component {
   }
 };
 
+const mapStateToProps = (state) => {
+  return {
+    likeForResponse: state.ResponseReducer.likeForResponse,
+    isLikeForResponse: state.ResponseReducer.isLikeForResponse,
+    isDislikeForResponse: state.ResponseReducer.isDislikeForResponse,
+    responseCountForResponse: state.ResponseReducer.responseCountForResponse
+  }
+};
+
 const dispatchUpdate = () => {
   return {
     getHome,
-    getDiscussion
+    getDiscussion,
+    getSingleResponse
   };
 };
 
@@ -667,6 +644,6 @@ const styles = StyleSheet.create({
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   dispatchUpdate()
 )(DiscussionScreenPlayerCard);

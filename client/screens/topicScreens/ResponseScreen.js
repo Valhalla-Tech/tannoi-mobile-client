@@ -5,9 +5,9 @@ import {
   Text,
   FlatList
 } from 'react-native';
-import { bold, normal } from '../../assets/FontSize';
-import AsyncStorage from '@react-native-community/async-storage';
-import axios from 'axios';
+import { bold } from '../../assets/FontSize';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSingleResponse } from '../../store/actions/ResponseAction';
 
 //Components
 import BackButton from '../../components/publicComponents/BackButton';
@@ -16,18 +16,20 @@ import ClosedCard from '../../components/topicComponents/discussionScreenCompone
 import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
 
 const ReplyScreen = ({route, navigation}) => {
-  const [profilePicture, setProfilePicture] = useState('');
-  const [profileName, setProfileName] = useState('');
-  const [postTime, setPostTime] = useState('');
-  const [like, setLike] = useState('');
-  const [recordingFile, setRecordingFile] = useState('');
-  const [nextPlayerAvailable, setNextPlayerAvailable] = useState(false);
   const [fromNextPreviousButton, setFromNextPreviousButton] = useState(false);
-  const [reply, setReply] = useState('');
   const [selectedCard, setSelectedCard] = useState('response');
-  const [isLike, setIslike] = useState(false);
-  const [isDislike, setIsDislike] = useState(false);
-  const [caption, setCaption] = useState('');
+
+  const profilePicture = useSelector(state => state.ResponseReducer.profilePicture);
+  const profileName = useSelector(state => state.ResponseReducer.profileName);
+  const postTime = useSelector(state => state.ResponseReducer.postTime);
+  const like = useSelector(state => state.ResponseReducer.like);
+  const recordingFile = useSelector(state => state.ResponseReducer.recordingFile);
+  const reply = useSelector(state => state.ResponseReducer.reply);
+  const isLike = useSelector(state => state.ResponseReducer.isLike);
+  const isDislike = useSelector(state => state.ResponseReducer.isDislike);
+  const caption = useSelector(state => state.ResponseReducer.caption);
+
+  const dispatch = useDispatch();
 
   const {
     responseId,
@@ -35,42 +37,8 @@ const ReplyScreen = ({route, navigation}) => {
   } = route.params;
 
   useEffect(() => {
-    getResponse();
+    dispatch(getSingleResponse(responseId));
   }, []);
-
-  const getResponse = async () => {
-    try {
-      const access_token = await AsyncStorage.getItem('access_token');
-
-      if (access_token) {
-        let getResponseRequest = await axios({
-          url: `https://dev.entervalhalla.tech/api/tannoi/v1/responses/single/${responseId}`,
-          method: 'get',
-          headers: {
-            'token': access_token
-          }
-        });
-  
-        if (getResponseRequest.data) {
-          if (getResponseRequest.data.response_count !== 0) {
-            setNextPlayerAvailable(true)
-          };
-
-          setProfilePicture(getResponseRequest.data.creator.profile_photo_path);
-          setProfileName(getResponseRequest.data.creator.name);
-          setPostTime(getResponseRequest.data.created_at);
-          setLike(getResponseRequest.data.likes);
-          setRecordingFile(getResponseRequest.data.voice_note_path);
-          setReply(getResponseRequest.data.chain_response);
-          setIslike(getResponseRequest.data.isLike);
-          setIsDislike(getResponseRequest.data.isDislike);
-          setCaption(getResponseRequest.data.caption);
-        }
-      }
-    } catch (error) {
-      console.log(error.response);
-    }
-  };
 
   const getIsLikeAndIsDislike = (input, responseIdInput) => {
     let isLikeAndIsDislike;
@@ -144,7 +112,7 @@ const ReplyScreen = ({route, navigation}) => {
         ListHeaderComponent={
           <View>
             {
-              recordingFile !== '' && caption !== '' && (
+              recordingFile !== '' && (
                 selectedCard === 'response' ? (
                   <DiscussionScreenPlayerCard
                     cardType="response"
@@ -152,12 +120,11 @@ const ReplyScreen = ({route, navigation}) => {
                     profileName={profileName}
                     postTime={postTime}
                     recordingFile={recordingFile}
-                    nextPlayerAvailable={nextPlayerAvailable}
+                    nextPlayerAvailable={reply.length > 0 ? true : false}
                     changePlayer={changePlayer}
                     fromNextPreviousButton={fromNextPreviousButton}
                     updateFromNextPreviousButton={updateFromNextPreviousButton}
                     responseLike={like}
-                    getResponseFromDiscussion={getResponse}
                     discussionId={discussionId}
                     responseId={responseId}
                     cardIndex="response"
@@ -191,8 +158,7 @@ const ReplyScreen = ({route, navigation}) => {
                   profileName={itemData.item.creator.name}
                   recordingFile={itemData.item.voice_note_path}
                   responseId={itemData.item.id}
-                  getResponseFromDiscussion={getResponse}
-                  nextPlayerAvailable={nextPlayerAvailable}
+                  nextPlayerAvailable={reply.length > 0 ? true : false}
                   cardIndex={itemData.index}
                   cardLength={reply.length}
                   postTime={itemData.item.created_at}

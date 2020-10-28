@@ -9,9 +9,7 @@ import {
 import { bold } from '../../assets/FontSize';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDiscussion, clearDiscussion } from '../../store/actions/DiscussionAction';
-import { userLogout } from '../../store/actions/LoginAction';
-import AsyncStorage from '@react-native-community/async-storage';
-import axios from 'axios';
+import { getResponse, clearResponse } from '../../store/actions/ResponseAction';
 
 //Components
 import BackButton from '../../components/publicComponents/BackButton';
@@ -23,7 +21,6 @@ import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
 
 const DiscussionScreen = ({ route, navigation }) => {
   const [openAddResponseModal, setOpenAddResponseModal] = useState(false);
-  const [response, setResponse] = useState('');
   const [selectedCard, setSelectedCard] = useState('discussion');
   const [fromNextPreviousButton, setFromNextPreviousButton] = useState(false);
 
@@ -39,6 +36,7 @@ const DiscussionScreen = ({ route, navigation }) => {
   const recordingFile = useSelector(state => state.DiscussionReducer.recordingFile);
   const isLike = useSelector(state => state.DiscussionReducer.isLike);
   const isDislike = useSelector(state => state.DiscussionReducer.isDislike);
+  const response = useSelector(state => state.ResponseReducer.response);
 
   const {
     discussionId,
@@ -49,34 +47,13 @@ const DiscussionScreen = ({ route, navigation }) => {
 
   useEffect(() => {
     dispatch(clearDiscussion());
+    dispatch(clearResponse());
     dispatch(getDiscussion(discussionId));
-    getResponse();
+    dispatch(getResponse(discussionId));
   }, []);
 
   const closeAddResponseModal = () => {
     setOpenAddResponseModal(false);
-  };
-
-  const getResponse = async () => {
-    try {
-      let access_token = await AsyncStorage.getItem('access_token');
-      let getResponseRequest = await axios({
-        url: `https://dev.entervalhalla.tech/api/tannoi/v1/responses/discussion/${discussionId}?page=1`,
-        method: 'get',
-        headers: {
-          'token': access_token
-        }
-      });
-
-      if (getResponseRequest.data) {
-        setResponse(getResponseRequest.data.data);
-      }
-    } catch (error) {
-      console.log(error.response);
-      if (error.response.data.msg === 'You have to login first') {
-        dispatch(userLogout());
-      };
-    }
   };
 
   const selectCard = cardIndex => {
@@ -179,11 +156,10 @@ const DiscussionScreen = ({ route, navigation }) => {
               openAddResponseModal={openAddResponseModal}
               closeAddResponseModal={closeAddResponseModal}
               discussionId={discussionId}
-              getResponse={getResponse}
               addResponseForResponse={false}
             />
             {
-              response === '' && (
+              response.length === 0 && (
                 <LoadingSpinner loadingSpinnerForComponent={true} />
               )
             }
