@@ -15,7 +15,7 @@ import Slider from '@react-native-community/slider';
 import { connect } from 'react-redux';
 import { getHome } from '../../../store/actions/HomeAction';
 import { getDiscussion } from '../../../store/actions/DiscussionAction';
-import { getSingleResponse } from '../../../store/actions/ResponseAction';
+import { getSingleResponse, clearResponse } from '../../../store/actions/ResponseAction';
 import LoadingSpinner from '../../publicComponents/LoadingSpinner';
 import axios from 'axios';
 
@@ -78,6 +78,7 @@ class DiscussionScreenPlayerCard extends Component {
 
     this.loadPlayer();
 
+    this.props.clearResponse(true);
     this.props.getSingleResponse(this.state.responseId, 'getDataForResponse');
 
     this.progressInterval = null;
@@ -518,7 +519,8 @@ const dispatchUpdate = () => {
   return {
     getHome,
     getDiscussion,
-    getSingleResponse
+    getSingleResponse,
+    clearResponse
   };
 };
 

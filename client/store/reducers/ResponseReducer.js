@@ -57,7 +57,7 @@ const reducer = (state = defaultState, action) => {
         isLikeForResponse: setIsLikeForResponse,
         isDislikeForResponse: setIsDislikeForResponse,
         responseCountForResponse: setResponseCountForResponse
-      }
+      };
     case 'CLEAR_RESPONSE':
       return {
         ...state,
@@ -70,9 +70,16 @@ const reducer = (state = defaultState, action) => {
         reply: '',
         isLike: '',
         isDislike: '',
-        caption: '',
-        responseCount: ''
-      }
+        caption: ''
+      };
+    case 'CLEAR_RESPONSE_DATA':
+      return {
+        ...state,
+        likeForResponse: '',
+        isLikeForResponse: '',
+        isDislikeForResponse: '',
+        responseCountForResponse: ''
+      };
     default:
       return state;
   }

@@ -93,10 +93,16 @@ export const getSingleResponse = (responseId, responseOption) => {
   };
 };
 
-export const clearResponse = () => {
+export const clearResponse = (clearResponseData) => {
   return (dispatch) => {
-    dispatch({
-      type: 'CLEAR_RESPONSE'
-    })
+    if (clearResponseData) {
+      dispatch({
+        type: 'CLEAR_RESPONSE_DATA'
+      })
+    } else {
+      dispatch({
+        type: 'CLEAR_RESPONSE'
+      })
+    }
   };
 };
