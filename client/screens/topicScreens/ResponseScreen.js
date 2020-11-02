@@ -145,6 +145,9 @@ const ReplyScreen = ({route, navigation}) => {
                     selectCard={selectCard}
                     postTime={postTime}
                     caption={caption}
+                    responseLike={like}
+                    responseReply={reply.length}
+                    responsePlay={0}
                   />
                 )
               )
@@ -186,6 +189,9 @@ const ReplyScreen = ({route, navigation}) => {
                   profileName={itemData.item.creator.name}
                   postTime={itemData.item.created_at}
                   caption={itemData.item.caption}
+                  responseLike={itemData.item.likes}
+                  responseReply={0}
+                  responsePlay={0}
                 />
               )
             }

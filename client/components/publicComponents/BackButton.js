@@ -23,7 +23,9 @@ const BackButton = props => {
                 navigation.navigate(screen);
               }}
             >
-            <BackButtonIcon 
+            <BackButtonIcon
+              width={20}
+              height={25}
               style={{...styles.backButtonStyle, ...styleOption}}
             />
           </TouchableOpacity>
@@ -34,6 +36,8 @@ const BackButton = props => {
               onPress={() => navigation.goBack()}
             >
               <BackButtonIcon 
+                width={20}
+                height={25}
                 style={{...styles.backButtonStyle, ...styleOption}}
               />
             </TouchableOpacity>

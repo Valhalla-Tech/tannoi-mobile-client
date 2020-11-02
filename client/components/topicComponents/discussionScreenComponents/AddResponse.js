@@ -132,7 +132,7 @@ const AddResponse = props => {
               </TouchableOpacity>
             </View>
             <FormInput
-              formInputTitle="Add caption (Optional)"
+              formInputTitle="Add caption"
               dataInput={inputCaption}
             />
             {

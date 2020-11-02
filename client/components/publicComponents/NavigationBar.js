@@ -38,7 +38,8 @@ const NavigationBar = props => {
         style: {
           backgroundColor: "#464D60",
           height: 65,
-          padding: 5
+          padding: "5%",
+          paddingTop: "3.5%"
         },
         keyboardHidesTabBar: true
       }}
