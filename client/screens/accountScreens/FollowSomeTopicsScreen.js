@@ -36,6 +36,10 @@ const FollowSomeTopicsScreen = ({ navigation }) => {
   }, [])
 
   const lastRow = () => {
+    if (allTopics.length === 0) {
+      setAllTopics(topics);
+    };
+
     const totalRows = Math.floor(allTopics.length / numColumns);
     let totalLastRow = allTopics.length - (totalRows * numColumns);
 
@@ -105,22 +109,28 @@ const FollowSomeTopicsScreen = ({ navigation }) => {
         <Text style={styles.FollowSomeTopicsScreenInstructionStyle}>
           Select 5 topics that interest you to get started
         </Text>
-        <FlatList
-          data={lastRow(allTopics, numColumns)}
-          contentContainerStyle={styles.cardsContainerStyle}
-          numColumns={numColumns}
-          renderItem={itemData => (
-            <Card 
-              cardData={itemData.item.name} 
-              isEmpty={itemData.item.empty}
-              isSelected={isSelected}
-              topicKey={itemData.item.id}
-              selectTopic={selectTopic}
-              deselectTopic={deselectTopic}
-              cardImage={itemData.item.image_path}
-            />
-          )}
-        />
+        {
+          topics.length !== 0 && (
+            <View>
+                <FlatList
+                  data={lastRow(topics, numColumns)}
+                  contentContainerStyle={styles.cardsContainerStyle}
+                  numColumns={numColumns}
+                  renderItem={itemData => (
+                    <Card 
+                      cardData={itemData.item.name} 
+                      isEmpty={itemData.item.empty}
+                      isSelected={isSelected}
+                      topicKey={itemData.item.id}
+                      selectTopic={selectTopic}
+                      deselectTopic={deselectTopic}
+                      cardImage={itemData.item.image_path}
+                    />
+                  )}
+                />
+            </View>
+          )
+        }
         <DoneButton 
           buttonTitle="Done"
           buttonStyle={

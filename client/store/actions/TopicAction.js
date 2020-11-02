@@ -10,7 +10,7 @@ export const getTopic = () => {
         url: 'https://dev.entervalhalla.tech/api/tannoi/v1/topics',
         method: 'get',
         headers: {
-          'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjAzNzU2OTI3fQ.9MAk6YemljsxYh1OykFCmdboG9vh9qzHoNVKiJ9zKTs'
+          'token': access_token
         }
       });
       

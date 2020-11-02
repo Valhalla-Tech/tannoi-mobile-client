@@ -14,6 +14,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import ImagePicker from 'react-native-image-crop-picker';
 import { bold, normal } from '../../assets/FontSize';
+import ErrorMessage from '../../components/publicComponents/ErrorMessage';
 import axios from 'axios';
 
 //Icon
@@ -32,6 +33,7 @@ const EnterYourProfileScreen = ({ navigation }) => {
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [fullNameValidation, setFullNameValidation] = useState(false);
 
   const uploadProfileImage = () => {
     ImagePicker.openPicker({
@@ -50,40 +52,45 @@ const EnterYourProfileScreen = ({ navigation }) => {
     try {
       setIsLoading(true);
 
-      let access_token = await AsyncStorage.getItem('access_token');
-      let filename = profileImage.split('/').pop();
-      let match = /\.(\w+)$/.exec(filename);
-      let type = match ? `image/${match[1]}` : `image`;
-      
-      let formData = new FormData();
-      
-      if (profileImage) {
-        formData.append('profile_photo_path', {uri: profileImage, name: filename, type});
-      }
-
-      if (birthDate !== '') {
-        formData.append('birth_date', `${birthDate}`);
-      }
-
-      if (fullName !== '') {
-        formData.append('name', fullName);
-      } else {
-        formData.append('name', '');
-      }
-      
-      let enterProfileRequest = await axios({
-        method: 'put',
-        url: 'https://dev.entervalhalla.tech/api/tannoi/v1/users/profile/edit',
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'token': access_token
-        },
-        data: formData
-      });
-
-      if (enterProfileRequest.data.msg === 'Update Success') {
+      if (fullName === '') {
         setIsLoading(false);
-        navigation.navigate('FollowSomeTopicsScreen');
+        setFullNameValidation(true);
+      } else {
+        let access_token = await AsyncStorage.getItem('access_token');
+        let filename = profileImage.split('/').pop();
+        let match = /\.(\w+)$/.exec(filename);
+        let type = match ? `image/${match[1]}` : `image`;
+        
+        let formData = new FormData();
+        
+        if (profileImage) {
+          formData.append('profile_photo_path', {uri: profileImage, name: filename, type});
+        }
+  
+        if (birthDate !== '') {
+          formData.append('birth_date', `${birthDate}`);
+        }
+  
+        if (fullName !== '') {
+          formData.append('name', fullName);
+        } else {
+          formData.append('name', '');
+        }
+        
+        let enterProfileRequest = await axios({
+          method: 'put',
+          url: 'https://dev.entervalhalla.tech/api/tannoi/v1/users/profile/edit',
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'token': access_token
+          },
+          data: formData
+        });
+  
+        if (enterProfileRequest.data.msg === 'Update Success') {
+          setIsLoading(false);
+          navigation.navigate('FollowSomeTopicsScreen');
+        }
       }
     } catch (error) {
       setIsLoading(false);
@@ -170,6 +177,13 @@ const EnterYourProfileScreen = ({ navigation }) => {
         <View style={styles.enterYourProfileScreenContainerStyle}>
           <Text style={styles.enterYourProfileScreenTitleStyle}>Enter your profile</Text>
           <UploadPhoto />
+          {
+            fullNameValidation && (
+              <View style={{marginTop: "2%"}}>
+                <ErrorMessage message="Please enter your full name" />
+              </View>
+            )
+          }
           <Text style={{...styles.formInputTitleStyle}}>Full name</Text>
           <TextInput 
             style={styles.formInputStyle}

@@ -3,6 +3,8 @@ import {
   StyleSheet,
   TouchableOpacity
 } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { clearHome, getHome } from '../../store/actions/HomeAction';
 
 import BackButtonIcon from '../../assets/publicAssets/back-button.svg';
 
@@ -10,9 +12,10 @@ const BackButton = props => {
   const { 
     navigation,
     screen,
-    styleOption,
-    backButtonFunction
+    styleOption
   } = props;
+
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -20,7 +23,12 @@ const BackButton = props => {
         screen ? (
           <>
             <TouchableOpacity
-              onPress={() => navigation.navigate(screen)}
+              onPress={() => {
+                navigation.navigate(screen);
+                if (screen === 'MainAppNavigation') {
+                  dispatch(getHome());
+                }
+              }}
             >
             <BackButtonIcon 
               style={{...styles.backButtonStyle, ...styleOption}}

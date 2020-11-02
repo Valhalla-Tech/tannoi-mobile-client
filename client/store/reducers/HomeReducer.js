@@ -23,6 +23,15 @@ const reducer = (state = defaultState, action) => {
         trending: setTrending, 
         recommendedTopic: setRecommendedTopic
       };
+    case 'CLEAR_HOME':
+      return {
+        ...state,
+        user: '',
+        discussionOfTheWeek: '',
+        topUser: '',
+        trending: '',
+        recommendedTopic: ''
+      }
     default:
       return state;
   }

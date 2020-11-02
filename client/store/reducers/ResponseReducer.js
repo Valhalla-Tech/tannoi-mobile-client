@@ -1,5 +1,6 @@
 const defaultState = {
   response: '',
+  isResponse: true,
   profilePicture: '',
   profileName: '',
   postTime: '',
@@ -19,7 +20,8 @@ const reducer = (state = defaultState, action) => {
   switch (action.type) {
     case 'GET_RESPONSE':
       let setResponse = action.payload.response;
-      return {...state, response: setResponse};
+      let setIsResponse = action.payload.response.length !== 0 ? true : false;
+      return {...state, response: setResponse, isResponse: setIsResponse};
     case 'GET_SINGLE_RESPONSE':
       let setProfilePicture = action.payload.profilePicture;
       let setProfileName = action.payload.profileName;

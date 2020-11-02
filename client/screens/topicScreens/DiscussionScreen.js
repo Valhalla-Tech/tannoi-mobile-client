@@ -37,6 +37,7 @@ const DiscussionScreen = ({ route, navigation }) => {
   const isLike = useSelector(state => state.DiscussionReducer.isLike);
   const isDislike = useSelector(state => state.DiscussionReducer.isDislike);
   const response = useSelector(state => state.ResponseReducer.response);
+  const isResponse = useSelector(state => state.ResponseReducer.isResponse);
 
   const {
     discussionId,
@@ -159,7 +160,7 @@ const DiscussionScreen = ({ route, navigation }) => {
               addResponseForResponse={false}
             />
             {
-              response.length === 0 && (
+              response.length === 0 && isResponse && (
                 <LoadingSpinner loadingSpinnerForComponent={true} />
               )
             }

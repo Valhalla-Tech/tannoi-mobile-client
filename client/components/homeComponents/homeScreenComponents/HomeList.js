@@ -20,7 +20,7 @@ const HomeList = props => {
     listTitle, 
     listData,
     navigation
-  } = props
+  } = props;
 
   const MoreButton = () => {
     return (
@@ -52,33 +52,34 @@ const HomeList = props => {
         }
       </View>
       {
-        !listData && (
+        !listData ? (
           <LoadingSpinner loadingSpinnerForComponent={true} />
+        ) : (
+          <FlatList
+            data={listData}
+            listKey={(item, index) => index.toString()}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={itemData => (
+              <>
+                <HomeListCard
+                  imageUrl={itemData.item.creator.profile_photo_path}
+                  recordingFile={itemData.item.voice_note_path}
+                  name={itemData.item.creator.name}
+                  title={itemData.item.title}
+                  votes={itemData.item.likes}
+                  replies={itemData.item.response_count}
+                  plays={itemData.item.play_count}
+                  postTime={itemData.item.created_at}
+                  discussionId={itemData.item.id}
+                  navigation={navigation}
+                  topic={itemData.item.topic ? itemData.item.topic.name : ''}
+                  isBorder={itemData.index === listData.length - 1 ? false : true}
+                />
+              </>
+            )}
+          />
         )
       }
-      <FlatList
-        data={listData}
-        listKey={(item, index) => index.toString()}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={itemData => (
-          <>
-            <HomeListCard
-              imageUrl={itemData.item.creator.profile_photo_path}
-              recordingFile={itemData.item.voice_note_path}
-              name={itemData.item.creator.name}
-              title={itemData.item.title}
-              votes={itemData.item.likes}
-              replies={itemData.item.response_count}
-              plays={itemData.item.play_count}
-              postTime={itemData.item.created_at}
-              discussionId={itemData.item.id}
-              navigation={navigation}
-              topic={itemData.item.topic ? itemData.item.topic.name : ''}
-              isBorder={itemData.index === listData.length - 1 ? false : true}
-            />
-          </>
-        )}
-      />
       <MoreButton />
     </View>
   );

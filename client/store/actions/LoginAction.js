@@ -18,7 +18,7 @@ export const userLogin = () => {
 
 export const userLogout = () => {
   return async (dispatch) => {
-    await AsyncStorage.clear('access_token');
+    await AsyncStorage.clear();
     dispatch({
       type: 'LOGOUT',
       payload: {

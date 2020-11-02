@@ -39,3 +39,11 @@ export const getHome = () => {
     }
   };
 };
+
+export const clearHome = () => {
+  return (dispatch) => {
+    dispatch({
+      type: 'CLEAR_HOME'
+    });
+  };
+};

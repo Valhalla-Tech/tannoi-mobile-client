@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
 import {
   TouchableOpacity
 } from 'react-native';
 import {
   Player
 } from '@react-native-community/audio-toolkit';
+import { connect } from 'react-redux';
+import { getHome } from '../../../store/actions/HomeAction';
+import axios from 'axios';
 
-//Icon
+//Icons
 import ActivePlayButton from '../../../assets/homeAssets/activePlayButton.svg';
 import PauseButton from '../../../assets/homeAssets/pauseButton.svg';
 
@@ -25,7 +29,6 @@ class HomeListPlayerCard extends Component {
 
   componentDidMount() {
     this.player = null;
-
     this.loadPlayer();
   };
 
@@ -34,6 +37,26 @@ class HomeListPlayerCard extends Component {
       isPlaying: this.player.isPlaying ? true : false,
       playerIsReady: this.player && this.player.canPlay
     })
+  };
+
+  playCounter = async () => {
+    try {
+      const access_token = await AsyncStorage.getItem('access_token');
+
+      let playCounterRequest = await axios({
+        method: 'get',
+        url: `https://dev.entervalhalla.tech/api/tannoi/v1//discussions/views/${this.props.discussionId}`,
+        headers: {
+          token: access_token
+        }
+      })
+
+      if (playCounterRequest.data) {
+        this.props.getHome();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   loadPlayer() {
@@ -65,6 +88,10 @@ class HomeListPlayerCard extends Component {
         console.log(error);
       };
 
+      if (this.player.isPlaying && !error && !this.player.isPaused) {
+        this.playCounter();
+      };
+
       this.updateState();
     })
   };
@@ -88,4 +115,13 @@ class HomeListPlayerCard extends Component {
   };
 };
 
-export default HomeListPlayerCard;
+const dispatchUpdate = () => {
+  return {
+    getHome
+  }
+};
+
+export default connect(
+  null,
+  dispatchUpdate()
+)(HomeListPlayerCard);

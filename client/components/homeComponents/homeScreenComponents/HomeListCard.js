@@ -90,7 +90,7 @@ const HomeListCard = props => {
       <HomeListCardData />
       <View style={styles.playButtonAndDurationContainerStyle}>
         <Text style={styles.postTimeStyle}>{convertPostTime(postTime)}</Text>
-        <HomeListCardPlayer recordingFile={recordingFile} />
+        <HomeListCardPlayer recordingFile={recordingFile} discussionId={discussionId} />
       </View>
     </TouchableOpacity>
   );
