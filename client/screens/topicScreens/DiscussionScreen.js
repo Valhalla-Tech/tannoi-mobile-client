@@ -200,6 +200,9 @@ const DiscussionScreen = ({ route, navigation }) => {
                   profileName={itemData.item.creator.name}
                   postTime={itemData.item.created_at}
                   caption={itemData.item.caption}
+                  responseLike={itemData.item.likes}
+                  responseReply={itemData.item.response_count}
+                  responsePlay={0}
                 />
               )
             }

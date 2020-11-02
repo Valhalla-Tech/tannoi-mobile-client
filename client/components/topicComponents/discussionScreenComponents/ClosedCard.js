@@ -16,7 +16,10 @@ const ClosedCard = props => {
     caption,
     cardIndex,
     selectCard,
-    discussionTitle
+    discussionTitle,
+    responseLike,
+    responsePlay,
+    responseReply
   } = props;
 
   const convertPostTime = postTimeInput => {
@@ -35,6 +38,30 @@ const ClosedCard = props => {
     }
 
     return `${date} ${month} ${year}, ${time}`;
+  };
+
+  const numberConverter = number => {
+    let numberToString = number.toString();
+
+    if (numberToString.length > 3 && numberToString.length <= 6) {
+      return `${numberToString.substring(0, numberToString.length - 3)}k`;
+    } else if (numberToString.length > 6 && numberToString.length <= 9) {
+      return `${numberToString.substring(0, numberToString.length - 6)}m`;
+    } else if (numberToString.length > 9) {
+      return `${numberToString.substring(0, numberToString.length - 9)}b`;
+    } else {
+      return numberToString
+    };
+  };
+
+  const ResponseData = () => {
+    return (
+      <View style={styles.responseDataContainerStyle}>
+        <Text style={styles.responseDataTextStyle}>{numberConverter(responseLike)} Votes</Text>
+        <Text style={styles.responseDataTextStyle}>{numberConverter(responseReply)} Replies</Text>
+        <Text style={styles.responseDataTextStyle}>{numberConverter(responsePlay)} Plays</Text>
+      </View>
+    );
   };
 
   return (
@@ -62,6 +89,11 @@ const ClosedCard = props => {
           )
         ) : (
           <Text style={styles.captionTextStyle}>{caption}</Text>
+        )
+      }
+      {
+        responseLike !== undefined && (
+          <ResponseData />
         )
       }
     </TouchableOpacity>
@@ -118,6 +150,19 @@ const styles = StyleSheet.create({
     color: "#464D60",
     fontFamily: normal,
     marginTop: 12
+  },
+
+  responseDataContainerStyle: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "50%",
+    marginTop: "2%"
+  },
+
+  responseDataTextStyle: {
+    fontSize: 12,
+    color: "#73798C",
+    fontFamily: normal
   }
 });
 
