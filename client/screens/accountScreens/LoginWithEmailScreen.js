@@ -12,6 +12,7 @@ import {
   useDispatch
 } from 'react-redux';
 import { userLogin } from '../../store/actions/LoginAction';
+import { getHome, clearHome } from '../../store/actions/HomeAction';
 import axios from 'axios';
 import { bold, normal } from '../../assets/FontSize';
 
@@ -50,6 +51,8 @@ const LoginWithEmailScreen = ({ navigation }) => {
       if (loginRequest.data) {
         setIsLoading(false);
         await AsyncStorage.setItem('access_token', loginRequest.data.access_token);
+        dispatch(clearHome());
+        dispatch(getHome());
         dispatch(userLogin());
       }
     } catch (error) {

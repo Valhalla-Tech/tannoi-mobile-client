@@ -9,7 +9,7 @@ import {
   useDispatch
 } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
-import { getHome } from '../../store/actions/HomeAction';
+import { getHome, clearHome } from '../../store/actions/HomeAction';
 
 //Components
 import SearchBar from '../../components/homeComponents/SearchBar';
@@ -29,9 +29,14 @@ const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getHome());
-    SplashScreen.hide();
-  }, []);
+    const unsubscribe = navigation.addListener('focus', () => {
+      dispatch(clearHome());
+      dispatch(getHome());
+      SplashScreen.hide();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <View>
