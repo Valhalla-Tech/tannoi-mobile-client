@@ -15,7 +15,7 @@ import Slider from '@react-native-community/slider';
 import { connect } from 'react-redux';
 import { getHome } from '../../../store/actions/HomeAction';
 import { getDiscussion } from '../../../store/actions/DiscussionAction';
-import { getSingleResponse, clearResponse } from '../../../store/actions/ResponseAction';
+import { getResponse, getSingleResponse, clearResponse } from '../../../store/actions/ResponseAction';
 import LoadingSpinner from '../../publicComponents/LoadingSpinner';
 import axios from 'axios';
 
@@ -148,8 +148,8 @@ class DiscussionScreenPlayerCard extends Component {
         this.loadPlayer();
       };
 
-      if (this.player.isPlaying && this.state.cardType === 'discussion' && !error && !this.state.isPaused) {
-        this.playCounter();
+      if (this.player.isPlaying && !error && !this.state.isPaused) {
+        this.playCounter(this.state.responseId ? true : false);
         this.props.getHome();
       };
 
@@ -249,20 +249,39 @@ class DiscussionScreenPlayerCard extends Component {
     };
   };
 
-  playCounter = async () => {
+  playCounter = async (playResponse) => {
     try {
       const access_token = await AsyncStorage.getItem('access_token');
 
-      let playCounterRequest = await axios({
-        method: 'get',
-        url: `https://dev.entervalhalla.tech/api/tannoi/v1//discussions/views/${this.state.discussionId}`,
-        headers: {
-          token: access_token
-        }
-      })
+      if (playResponse) {
+        let responsePlayCounterRequest = await axios({
+          method: 'get',
+          url: `https://dev.entervalhalla.tech/api/tannoi/v1/responses/views/${this.state.responseId}`,
+          headers: {
+            token: access_token
+          }
+        });
 
-      if (playCounterRequest.data) {
-        this.props.getDiscussion(this.state.discussionId);
+        if (responsePlayCounterRequest.data) {
+          if (this.props.responseScreenResponseId) {
+            this.props.getSingleResponse(this.props.responseScreenResponseId);
+          } else if (this.state.responseId) {
+            this.props.getSingleResponse(this.state.responseId);
+            this.props.getResponse(this.state.discussionId);
+          }
+        }
+      } else {
+        let playCounterRequest = await axios({
+          method: 'get',
+          url: `https://dev.entervalhalla.tech/api/tannoi/v1//discussions/views/${this.state.discussionId}`,
+          headers: {
+            token: access_token
+          }
+        });
+  
+        if (playCounterRequest.data) {
+          this.props.getDiscussion(this.state.discussionId);
+        }
       }
     } catch (error) {
       console.log(error.response);
@@ -520,6 +539,7 @@ const dispatchUpdate = () => {
   return {
     getHome,
     getDiscussion,
+    getResponse,
     getSingleResponse,
     clearResponse
   };
