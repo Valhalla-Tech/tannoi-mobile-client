@@ -500,6 +500,7 @@ class DiscussionScreenPlayerCard extends Component {
           addResponseForResponse={true}
           responseId={this.state.responseId}
           addResponseForResponseInResponseScreen={this.state.cardIndex !== 'response' ? true : false}
+          responseScreenResponseId={this.props.responseScreenResponseId}
         />
       </View>
     )

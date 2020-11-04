@@ -7,6 +7,7 @@ const defaultState = {
   like: '',
   recordingFile: '',
   reply: '',
+  play: '',
   isLike: '',
   isDislike: '',
   caption: '',
@@ -28,7 +29,8 @@ const reducer = (state = defaultState, action) => {
       let setPostTime = action.payload.postTime;
       let setLike = action.payload.like;
       let setRecordingFile = action.payload.recordingFile;
-      let setReply= action.payload.reply;
+      let setReply = action.payload.reply;
+      let setPlay = action.payload.play;
       let setIsLike = action.payload.isLike;
       let setIsDislike = action.payload.isDislike;
       let setCaption = action.payload.caption;
@@ -42,6 +44,7 @@ const reducer = (state = defaultState, action) => {
         like: setLike,
         recordingFile: setRecordingFile,
         reply: setReply,
+        play: setPlay,
         isLike: setIsLike,
         isDislike: setIsDislike,
         caption: setCaption,

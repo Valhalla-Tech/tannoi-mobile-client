@@ -16,7 +16,6 @@ import {
   useDispatch
 } from 'react-redux';
 import { getTopic } from '../../store/actions/TopicAction';
-import { clearHome } from '../../store/actions/HomeAction';
 import { userLogout } from '../../store/actions/LoginAction';
 import axios from 'axios';
 
@@ -31,7 +30,6 @@ const NewDiscussionScreen = ({ navigation }) => {
   const [discussionTitle, setDiscussionTitle] = useState('');
   const [selectedTopic, setSelectedTopic] = useState('Select topic');
   const [hashtags, setHashtags] = useState([]);
-  const [hashtagsFormDisplay, setHashtagsFormDisplay] = useState('');
   const [recordingFile, setRecordingFile] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [createNewDiscussionValidation, setCreateNewDiscussionValidation] = useState(false);
@@ -49,16 +47,13 @@ const NewDiscussionScreen = ({ navigation }) => {
 
   const hashtagsInput = input => {
     let hashtagArray = [];
-    let hashtagDisplay = '';
     let hashtag = '';
 
     for (let hashtagInputIndex = 0; hashtagInputIndex < input.length; hashtagInputIndex++) {
       if (input[hashtagInputIndex] === ' ') {
         if (hashtag[0] === '#') {
-          hashtagDisplay += hashtag;
           hashtagArray.push(hashtag);
         } else {
-          hashtagDisplay += `#${hashtag} `;
           hashtagArray.push(`#${hashtag}`);
         }
         hashtag = '';
@@ -68,16 +63,13 @@ const NewDiscussionScreen = ({ navigation }) => {
     };
     
     if (hashtag[0] === '#') {
-      hashtagDisplay += hashtag;
       hashtagArray.push(hashtag);
     } else {
-      hashtagDisplay += `#${hashtag} `;
       hashtagArray.push(`#${hashtag}`);
     }
     hashtag = '';
 
-    setHashtags(hashtagArray);
-    setHashtagsFormDisplay(hashtagDisplay);
+    setHashtags(hashtagArray.filter(item => item.length > 1));
   };
 
   const createNewDiscussion =  async () => {
@@ -121,7 +113,6 @@ const NewDiscussionScreen = ({ navigation }) => {
       if (createNewDiscussionRequest.data) {
         setIsLoading(false);
         console.log(createNewDiscussionRequest.data);
-        dispatch(clearHome());
         navigation.navigate('DiscussionScreen', {
           discussionId: createNewDiscussionRequest.data.id,
           fromNewDiscussion: true

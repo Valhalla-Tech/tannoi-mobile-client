@@ -37,57 +37,65 @@ const AddResponse = props => {
     discussionId,
     responseId,
     addResponseForResponse,
-    addResponseForResponseInResponseScreen
+    addResponseForResponseInResponseScreen,
+    responseScreenResponseId
   } = props;
 
   const createResponse = async () => {
     try {
       setIsLoading(true);
-      let access_token = await AsyncStorage.getItem('access_token');
 
-      const uri = `file://${recordingFile}`;
-
-      let audioParts = uri.split('.');
-      let fileType = audioParts[audioParts.length - 1];
-      
-      let formData = new FormData();
-      
-      formData.append('voice_note_path', {
-        uri,
-        name: `recording.${fileType}`,
-        type: `audio/${fileType}`
-      });
-      
-      formData.append('caption', caption);
-
-      if (addResponseForResponse) {
-        formData.append('response_id', responseId)
-      };
-
-      let createResponseRequest = await axios({
-        method: 'post',
-        url: `https://dev.entervalhalla.tech/api/tannoi/v1/responses/${discussionId}`,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'token': access_token
-        },
-        data: formData
-      });
-
-      if (createResponseRequest.data) {
-        setIsLoading(false);
-        setAddResponseValidation(false);
-        dispatch(getResponse(discussionId));
+      if (caption === '') {
+        setIsLoading(false)
+        setAddResponseValidation(true);
+      } else {
+        let access_token = await AsyncStorage.getItem('access_token');
+  
+        const uri = `file://${recordingFile}`;
+  
+        let audioParts = uri.split('.');
+        let fileType = audioParts[audioParts.length - 1];
+        
+        let formData = new FormData();
+        
+        formData.append('voice_note_path', {
+          uri,
+          name: `recording.${fileType}`,
+          type: `audio/${fileType}`
+        });
+        
+        formData.append('caption', caption);
+  
         if (addResponseForResponse) {
-          if (!addResponseForResponseInResponseScreen) {
-            dispatch(getSingleResponse(responseId));
-          };
-          dispatch(getSingleResponse(responseId, 'getDataForResponse'));
-        }
-        dispatch(getHome());
-        dispatch(getDiscussion(discussionId));
-        closeAddResponseModal();
-      };
+          formData.append('response_id', responseId)
+        };
+  
+        let createResponseRequest = await axios({
+          method: 'post',
+          url: `https://dev.entervalhalla.tech/api/tannoi/v1/responses/${discussionId}`,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'token': access_token
+          },
+          data: formData
+        });
+  
+        if (createResponseRequest.data) {
+          setIsLoading(false);
+          setAddResponseValidation(false);
+          dispatch(getResponse(discussionId));
+          if (addResponseForResponse) {
+            if (!addResponseForResponseInResponseScreen) {
+              dispatch(getSingleResponse(responseId));
+            };
+            dispatch(getSingleResponse(responseId, 'getDataForResponse'));
+            dispatch(getSingleResponse(responseScreenResponseId));
+          }
+          dispatch(getHome());
+          dispatch(getDiscussion(discussionId));
+          closeAddResponseModal();
+        };
+      }
     } catch (error) {
       setIsLoading(false);
       setAddResponseValidation(true);
@@ -113,7 +121,11 @@ const AddResponse = props => {
       transparent={true}
     >
       <View style={styles.backgroundShadowStyle}>
-        <TouchableOpacity style={{flex: 1}} onPress={() => closeAddResponseModal()} />
+        <TouchableOpacity style={{flex: 1}} onPress={() => {
+            closeAddResponseModal();
+            setAddResponseValidation(false);
+          }} 
+        />
       </View>
       <View style={{flex: 1}} />
       <TouchableWithoutFeedback
@@ -138,7 +150,7 @@ const AddResponse = props => {
             {
               addResponseValidation && (
                 <ErrorMessage
-                  message="Something's wrong"
+                  message="All fields must be filled in, including a voice note!"
                 />
               )
             }

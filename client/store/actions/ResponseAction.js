@@ -71,6 +71,7 @@ export const getSingleResponse = (responseId, responseOption) => {
                 like: getResponseRequest.data.likes,
                 recordingFile: getResponseRequest.data.voice_note_path,
                 reply: getResponseRequest.data.chain_response,
+                play: getResponseRequest.data.play_count,
                 isLike: getResponseRequest.data.isLike,
                 isDislike: getResponseRequest.data.isDislike,
                 caption: getResponseRequest.data.caption

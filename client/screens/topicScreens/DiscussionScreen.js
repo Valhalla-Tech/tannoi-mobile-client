@@ -202,7 +202,7 @@ const DiscussionScreen = ({ route, navigation }) => {
                   caption={itemData.item.caption}
                   responseLike={itemData.item.likes}
                   responseReply={itemData.item.response_count}
-                  responsePlay={0}
+                  responsePlay={itemData.item.play_count !== null ? itemData.item.play_count : 0}
                 />
               )
             }
