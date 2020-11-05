@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -12,16 +12,35 @@ import axios from 'axios';
 import BackButton from '../../components/publicComponents/BackButton';
 
 const ResetPasswordWithEmailVerificationScreen = ({ route, navigation }) => {
+  const [countNumber, setCountNumber] = useState(60);
 
-  const {url} = route.params;
+  const sendEmailCounter = () => {
+    let counter = 60;
+
+    let startCounter = setInterval(() => {
+      counter = counter - 1;
+      setCountNumber(counter);
+      console.log(counter);
+
+      if (counter === 0) {
+        clearInterval(startCounter);
+        counter = 60;
+      }
+    }, 1000);
+  };
 
   const resendEmail = async () => {
-    let resetPasswordRequest =  await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/password/send-reset-token', {
-      link: url
-    });
-    if (resetPasswordRequest.data.msg === 'Success') {
-      console.log(`resend email: ${resetPasswordRequest.data.msg}`);
-    };
+    try {
+      sendEmailCounter();
+      let resetPasswordRequest =  await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/password/send-reset-token', {
+        link: url
+      });
+      if (resetPasswordRequest.data.msg === 'Success') {
+        console.log(`resend email: ${resetPasswordRequest.data.msg}`);
+      };
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -35,9 +54,11 @@ const ResetPasswordWithEmailVerificationScreen = ({ route, navigation }) => {
         <Text style={styles.sendAgainEmailButtonTitleStyle}>Didn’t receive the link? </Text>
         <TouchableOpacity
           onPress={resendEmail}
+          disabled={countNumber !== 60 && countNumber !== 0 ? true : false}
         >
-          <Text style={styles.sendAgainEmailButtonStyle}>Send again</Text>
+          <Text style={countNumber !== 60 && countNumber !== 0 ? {...styles.sendAgainEmailButtonStyle, color: "#a1a5ab"} : styles.sendAgainEmailButtonStyle}>Send again</Text>
         </TouchableOpacity>
+        <Text style={styles.counterTextStyle}>{countNumber !== 60 && countNumber !== 0 && ` (${countNumber})`}</Text>
       </View>
     </View>
   );
@@ -78,6 +99,12 @@ const styles = StyleSheet.create({
     color: "#2f3dfa",
     fontSize: 16,
     fontFamily: normal
+  },
+
+  counterTextStyle: {
+    color: "#2f3dfa",
+    fontSize: 16,
+    fontFamily: bold
   }
 });
 
