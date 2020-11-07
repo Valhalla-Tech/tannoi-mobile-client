@@ -58,7 +58,7 @@ const RecommendedTopics = props => {
                       <RecommendedTopicsCard
                         firstCardIcon={itemData.item[0].image_path ? itemData.item[0].image_path : ''}
                         firstCardName={itemData.item[0].name ? itemData.item[0].name : ''}
-                        firstCardDiscussions={1}
+                        firstCardDiscussions={itemData.item[0].discussion_count ? itemData.item[0].discussion_count : 0}
                       />
                     )
                   }
@@ -67,10 +67,10 @@ const RecommendedTopics = props => {
                       <RecommendedTopicsCard
                         firstCardIcon={itemData.item[0].image_path ? itemData.item[0].image_path : ''}
                         firstCardName={itemData.item[0].name ? itemData.item[0].name : ''}
-                        firstCardDiscussions={1}
+                        firstCardDiscussions={itemData.item[0].discussion_count ? itemData.item[0].discussion_count : 0}
                         secondCardIcon={itemData.item[1].image_path ? itemData.item[1].image_path : ''}
                         secondCardName={itemData.item[1].name ? itemData.item[1].name : ''}
-                        secondCardDiscussions={1}
+                        secondCardDiscussions={itemData.item[1].discussion_count ? itemData.item[1].discussion_count : 0}
                       />
                     )
                   }
@@ -79,13 +79,13 @@ const RecommendedTopics = props => {
                       <RecommendedTopicsCard
                         firstCardIcon={itemData.item[0].image_path ? itemData.item[0].image_path : ''}
                         firstCardName={itemData.item[0].name ? itemData.item[0].name : ''}
-                        firstCardDiscussions={1}
+                        firstCardDiscussions={itemData.item[0].discussion_count ? itemData.item[0].discussion_count : 0}
                         secondCardIcon={itemData.item[1].image_path ? itemData.item[1].image_path : ''}
                         secondCardName={itemData.item[1].name ? itemData.item[1].name : ''}
-                        secondCardDiscussions={1}
+                        secondCardDiscussions={itemData.item[1].discussion_count ? itemData.item[1].discussion_count : 0}
                         thirdCardIcon={itemData.item[2].image_path ? itemData.item[2].image_path : ''}
                         thirdCardName={itemData.item[2].name ? itemData.item[2].name : ''}
-                        thirdCardDiscussions={1}
+                        thirdCardDiscussions={itemData.item[2].discussion_count ? itemData.item[2].discussion_count : 0}
                       />
                     )
                   }

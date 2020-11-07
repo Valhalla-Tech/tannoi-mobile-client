@@ -46,7 +46,7 @@ const AddResponse = props => {
       setIsLoading(true);
 
       if (caption === '') {
-        setIsLoading(false)
+        setIsLoading(false);
         setAddResponseValidation(true);
       } else {
         let access_token = await AsyncStorage.getItem('access_token');
@@ -93,6 +93,8 @@ const AddResponse = props => {
           }
           dispatch(getHome());
           dispatch(getDiscussion(discussionId));
+          setRecordingFile('');
+          setCaption('');
           closeAddResponseModal();
         };
       }
@@ -123,6 +125,8 @@ const AddResponse = props => {
       <View style={styles.backgroundShadowStyle}>
         <TouchableOpacity style={{flex: 1}} onPress={() => {
             closeAddResponseModal();
+            setRecordingFile('');
+            setCaption('');
             setAddResponseValidation(false);
           }} 
         />

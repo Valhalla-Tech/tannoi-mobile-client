@@ -81,6 +81,7 @@ const RecommendedTopicsCard = props => {
 const styles = StyleSheet.create({
   topicCardStyle: {
     flexDirection: "row",
+    alignItems: "center",
     marginBottom: 24,
     marginRight: 31
   },
