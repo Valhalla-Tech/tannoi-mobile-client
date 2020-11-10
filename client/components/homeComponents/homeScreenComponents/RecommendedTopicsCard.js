@@ -99,7 +99,8 @@ const styles = StyleSheet.create({
   topicNameStyle: {
     color: "#464D60",
     fontSize: 16,
-    fontFamily: normal
+    fontFamily: normal,
+    marginBottom: -5
   },
 
   topicDiscussionStyle: {
