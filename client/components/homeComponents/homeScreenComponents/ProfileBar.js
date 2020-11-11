@@ -3,7 +3,8 @@ import {
   StyleSheet,
   View,
   Text,
-  Image
+  Image,
+  TouchableOpacity
 } from 'react-native';
 import { bold } from '../../../assets/FontSize';
 
@@ -21,6 +22,9 @@ const ProfileBar = props => {
         <Image source={user.profile_photo_path ? {uri: user.profile_photo_path} : NoProfilePicture} style={styles.profilePictureStyle} />
         <Text style={styles.profileBarTextStyle}>{user.name}</Text>
       </View >
+      <TouchableOpacity style={styles.verifyButtonStyle}>
+        <Text style={styles.verifyButtonTextStyle}>VERIFY</Text>
+      </TouchableOpacity>
     </View>
   )
 };
@@ -28,19 +32,35 @@ const ProfileBar = props => {
 const styles = StyleSheet.create({
   profileBarContainerStyle: {
     backgroundColor: "#FFFFFF",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingRight: "5%"
+  },
+
+  verifyButtonStyle: {
+    borderWidth: 1,
+    paddingHorizontal: "1%",
+    borderRadius: 10,
+    borderColor: "#56c930"
+  },
+
+  verifyButtonTextStyle: {
+    fontFamily: bold,
+    color: "#56c930"
   },
   
   profileInfoContainerStyle: {
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: "3.9%",
-    paddingVertical: "3%"
+    paddingVertical: "1%"
   },
 
   profilePictureStyle: {
     borderRadius: 50,
-    width: "6%",
-    height: "68%"
+    width: 25,
+    height: 25
   },
 
   profileBarTextStyle: {

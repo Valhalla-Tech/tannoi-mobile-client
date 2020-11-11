@@ -74,7 +74,7 @@ const SearchBar = props => {
         {
           !searchBarIsOpen ? (
             <TouchableOpacity
-              style={styles.searchBoxStyle}
+              style={{...styles.searchBoxStyle, marginTop: -5}}
               onPress={() => navigation.navigate('SearchScreen')}
             >
               <SearchIcon />
