@@ -24,6 +24,7 @@ const DiscussionScreen = ({ route, navigation }) => {
   const [selectedCard, setSelectedCard] = useState('discussion');
   const [fromNextPreviousButton, setFromNextPreviousButton] = useState(false);
 
+  const profileId = useSelector(state => state.DiscussionReducer.profileId);
   const profilePicture = useSelector(state => state.DiscussionReducer.profilePicture);
   const profileName = useSelector(state => state.DiscussionReducer.profileName);
   const postTime = useSelector(state => state.DiscussionReducer.postTime);
@@ -141,6 +142,8 @@ const DiscussionScreen = ({ route, navigation }) => {
                   updateFromNextPreviousButton={updateFromNextPreviousButton}
                   isLike={isLike}
                   isDislike={isDislike}
+                  navigation={navigation}
+                  profileId={profileId}
                 />
               ) : (
                 <ClosedCard
@@ -191,6 +194,8 @@ const DiscussionScreen = ({ route, navigation }) => {
                   isDislike={itemData.item.isDislike}
                   getIsLikeAndIsDislike={getIsLikeAndIsDislike}
                   caption={itemData.item.caption}
+                  navigation={navigation}
+                  profileId={itemData.item.creator.id}
                 />
               ) : (
                 <ClosedCard

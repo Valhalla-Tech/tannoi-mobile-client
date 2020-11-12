@@ -1,12 +1,13 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
+import BaseUrl from '../../constants/BaseUrl';
 
 export const getDiscussion = (discussionId) => {
   return async (dispatch) => {
     try {
       let access_token = await AsyncStorage.getItem('access_token');
       let getDiscussionRequest = await axios({
-        url: `https://dev.entervalhalla.tech/api/tannoi/v1/discussions/single/${discussionId}`,
+        url: `${BaseUrl}/discussions/single/${discussionId}`,
         method: 'get',
         headers: {
           'token': access_token
@@ -17,6 +18,7 @@ export const getDiscussion = (discussionId) => {
         dispatch({
           type: 'GET_DISCUSSION',
           payload: {
+            profileId: getDiscussionRequest.data.creator.id,
             profilePicture: getDiscussionRequest.data.creator.profile_photo_path,
             profileName: getDiscussionRequest.data.creator.name,
             postTime: getDiscussionRequest.data.created_at,

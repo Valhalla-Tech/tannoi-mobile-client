@@ -18,6 +18,7 @@ import {
 import { getTopic } from '../../store/actions/TopicAction';
 import { userLogout } from '../../store/actions/LoginAction';
 import axios from 'axios';
+import BaseUrl from '../../constants/BaseUrl';
 
 //Components
 import BackButton from '../../components/publicComponents/BackButton';
@@ -102,7 +103,7 @@ const NewDiscussionScreen = ({ navigation }) => {
 
       let createNewDiscussionRequest = await axios({
         method: 'post',
-        url: 'https://dev.entervalhalla.tech/api/tannoi/v1/discussions',
+        url: `${BaseUrl}/discussions`,
         headers: {
           'Content-Type': 'multipart/form-data',
           'token': access_token

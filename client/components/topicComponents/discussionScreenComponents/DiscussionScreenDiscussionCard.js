@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -12,6 +12,7 @@ import { getHome } from '../../../store/actions/HomeAction';
 import { getDiscussion } from '../../../store/actions/DiscussionAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
+import BaseUrl from '../../../constants/BaseUrl';
 
 //Icons
 import DiscussionCardMenu from '../../../assets/topicAssets/discussionCardMenu.svg';
@@ -23,6 +24,7 @@ import ActiveDownvote from '../../../assets/topicAssets/activeDownvote.svg';
 //Components
 import DiscussionScreenPlayerCard from './DiscussionScreenPlayerCard';
 import LoadingSpinner from '../../publicComponents/LoadingSpinner';
+import OptionModal from './OptionModal';
 
 const DiscussionScreenCard = props => {
   const {
@@ -43,8 +45,12 @@ const DiscussionScreenCard = props => {
     changePlayer,
     cardIndex,
     fromNextPreviousButton,
-    updateFromNextPreviousButton
+    updateFromNextPreviousButton,
+    navigation,
+    profileId
   } = props;
+
+  const [optionModal, setOptionModal] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -68,7 +74,7 @@ const DiscussionScreenCard = props => {
 
       let upvoteRequest = await axios({
         method: 'get',
-        url: `https://dev.entervalhalla.tech/api/tannoi/v1/discussions/like/${discussionId}`,
+        url: `${BaseUrl}/discussions/like/${discussionId}`,
         headers: {
           token: access_token
         }
@@ -89,7 +95,7 @@ const DiscussionScreenCard = props => {
 
       let downvoteRequest = await axios({
         method: 'get',
-        url: `https://dev.entervalhalla.tech/api/tannoi/v1/discussions/dislike/${discussionId}`,
+        url: `${BaseUrl}/discussions/dislike/${discussionId}`,
         headers: {
           token: access_token
         }
@@ -131,19 +137,42 @@ const DiscussionScreenCard = props => {
     return `${date} ${month} ${year}, ${time}`;
   };
 
+  const closeOptionModal = () => {
+    setOptionModal(false);
+  };
+
   const ProfileAndMenu = () => {
     return (
       <View style={styles.profileAndMenuContainerStyle}>
         <View>
           <View style={styles.profileContainerStyle}>
-            <Image source={{uri: profilePicture}} style={styles.profileImageStyle} />
-            <Text style={styles.profileNameStyle}>{profileName}</Text>
+            <TouchableOpacity onPress={() => {
+                navigation.navigate('UserProfile', {
+                  userId: profileId
+                });
+            }}>
+              <Image source={{uri: profilePicture}} style={styles.profileImageStyle} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => {
+                navigation.navigate('UserProfile', {
+                  userId: profileId
+                });
+            }}>
+              <Text style={styles.profileNameStyle}>{profileName}</Text>
+            </TouchableOpacity>
           </View>
           <Text style={styles.postTimeStyle}>{postTime ? convertPostTime(postTime) : ''}</Text>
         </View>
-        <TouchableOpacity style={styles.discussionCardMenuStyle}>
+        <TouchableOpacity onPress={() => setOptionModal(true)} style={styles.discussionCardMenuStyle}>
           <DiscussionCardMenu />
         </TouchableOpacity>
+        <OptionModal 
+          openOptionModal={optionModal}
+          closeOptionModal={closeOptionModal}
+          deleteId={discussionId}
+          navigation={navigation}
+          profileId={profileId}
+        />
       </View>
     );
   };

@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { bold } from '../../assets/FontSize';
 import axios from 'axios';
+import BaseUrl from '../../constants/BaseUrl';
 
 //Components
 import FormInput from '../../components/publicComponents/FormInput';
@@ -40,7 +41,7 @@ const CreateNewPasswordScreen = ({ route, navigation }) => {
         setPasswordValidation(false);
 
         if (newPassword.length >=5 && newPassword.length <= 20) {
-          let submitNewPasswordRequest = await axios.post(`https://dev.entervalhalla.tech/api/tannoi/v1/users/password/reset?token=${token}`, {
+          let submitNewPasswordRequest = await axios.post(`${BaseUrl}/users/password/reset?token=${token}`, {
             new_password: newPassword
           });
   

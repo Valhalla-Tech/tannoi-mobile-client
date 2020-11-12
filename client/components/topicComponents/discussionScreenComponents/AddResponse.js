@@ -16,6 +16,7 @@ import { getResponse, getSingleResponse } from '../../../store/actions/ResponseA
 import { userLogout } from '../../../store/actions/LoginAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
+import BaseUrl from '../../../constants/BaseUrl';
 
 //Components
 import FormInput from '../../publicComponents/FormInput';
@@ -72,7 +73,7 @@ const AddResponse = props => {
   
         let createResponseRequest = await axios({
           method: 'post',
-          url: `https://dev.entervalhalla.tech/api/tannoi/v1/responses/${discussionId}`,
+          url: `${BaseUrl}/responses/${discussionId}`,
           headers: {
             'Content-Type': 'multipart/form-data',
             'token': access_token

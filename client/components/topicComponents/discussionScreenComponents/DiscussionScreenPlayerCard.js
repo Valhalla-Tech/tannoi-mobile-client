@@ -18,6 +18,7 @@ import { getDiscussion } from '../../../store/actions/DiscussionAction';
 import { getResponse, getSingleResponse, clearResponse } from '../../../store/actions/ResponseAction';
 import LoadingSpinner from '../../publicComponents/LoadingSpinner';
 import axios from 'axios';
+import BaseUrl from '../../../constants/BaseUrl';
 
 //Icons
 import PlayerSpeed from '../../../assets/topicAssets/playerSpeed.svg';
@@ -256,7 +257,7 @@ class DiscussionScreenPlayerCard extends Component {
       if (playResponse) {
         let responsePlayCounterRequest = await axios({
           method: 'get',
-          url: `https://dev.entervalhalla.tech/api/tannoi/v1/responses/views/${this.state.responseId}`,
+          url: `${BaseUrl}/responses/views/${this.state.responseId}`,
           headers: {
             token: access_token
           }
@@ -273,7 +274,7 @@ class DiscussionScreenPlayerCard extends Component {
       } else {
         let playCounterRequest = await axios({
           method: 'get',
-          url: `https://dev.entervalhalla.tech/api/tannoi/v1//discussions/views/${this.state.discussionId}`,
+          url: `${BaseUrl}/discussions/views/${this.state.discussionId}`,
           headers: {
             token: access_token
           }
@@ -294,7 +295,7 @@ class DiscussionScreenPlayerCard extends Component {
 
       let upvoteRequest = await axios({
         method: 'get',
-        url: `https://dev.entervalhalla.tech/api/tannoi/v1/responses/like/${this.state.responseId}`,
+        url: `${BaseUrl}/responses/like/${this.state.responseId}`,
         headers: {
           token: access_token
         }
@@ -314,7 +315,7 @@ class DiscussionScreenPlayerCard extends Component {
 
       let downvoteRequest = await axios({
         method: 'get',
-        url: `https://dev.entervalhalla.tech/api/tannoi/v1/responses/dislike/${this.state.responseId}`,
+        url: `${BaseUrl}/responses/dislike/${this.state.responseId}`,
         headers: {
           token: access_token
         }
@@ -356,8 +357,16 @@ class DiscussionScreenPlayerCard extends Component {
     return (
       <View style={styles.profileAndPostTimeContainerStyle}>
         <View style={styles.profileInfoContainerStyle}>
-          <Image source={{uri: this.state.profilePicture}} style={styles.profileImageStyle} />
-          <Text style={styles.profileNameStyle}>{this.state.profileName}</Text>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('UserProfile', {
+            userId: this.props.profileId
+          })}>
+            <Image source={{uri: this.state.profilePicture}} style={styles.profileImageStyle} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('UserProfile', {
+            userId: this.props.profileId
+          })}>
+            <Text style={styles.profileNameStyle}>{this.state.profileName}</Text>
+          </TouchableOpacity>
         </View>
         <Text style={styles.postTimeStyle}>{this.state.postTime ? this.convertPostTime(this.state.postTime) : ''}</Text>
       </View>

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
+import BaseUrl from '../../constants/BaseUrl';
 
 export const getResponse = (discussionId) => {
   return async (dispatch) => {
@@ -7,7 +8,7 @@ export const getResponse = (discussionId) => {
       let access_token = await AsyncStorage.getItem('access_token');
 
       let getResponseRequest = await axios({
-        url: `https://dev.entervalhalla.tech/api/tannoi/v1/responses/discussion/${discussionId}?page=1`,
+        url: `${BaseUrl}/responses/discussion/${discussionId}?page=1`,
         method: 'get',
         headers: {
           'token': access_token
@@ -43,7 +44,7 @@ export const getSingleResponse = (responseId, responseOption) => {
   
       if (access_token) {
         let getResponseRequest = await axios({
-          url: `https://dev.entervalhalla.tech/api/tannoi/v1/responses/single/${responseId}`,
+          url: `${BaseUrl}/responses/single/${responseId}`,
           method: 'get',
           headers: {
             'token': access_token
@@ -65,6 +66,7 @@ export const getSingleResponse = (responseId, responseOption) => {
             dispatch({
               type: 'GET_SINGLE_RESPONSE',
               payload: {
+                profileId: getResponseRequest.data.creator.id,
                 profilePicture: getResponseRequest.data.creator.profile_photo_path,
                 profileName: getResponseRequest.data.creator.name,
                 postTime: getResponseRequest.data.created_at,

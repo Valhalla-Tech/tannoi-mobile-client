@@ -1,6 +1,7 @@
 const defaultState = {
   response: '',
   isResponse: true,
+  profileId: '',
   profilePicture: '',
   profileName: '',
   postTime: '',
@@ -24,6 +25,7 @@ const reducer = (state = defaultState, action) => {
       let setIsResponse = action.payload.response.length !== 0 ? true : false;
       return {...state, response: setResponse, isResponse: setIsResponse};
     case 'GET_SINGLE_RESPONSE':
+      let setProfileId = action.payload.profileId;
       let setProfilePicture = action.payload.profilePicture;
       let setProfileName = action.payload.profileName;
       let setPostTime = action.payload.postTime;
@@ -38,6 +40,7 @@ const reducer = (state = defaultState, action) => {
 
       return {
         ...state,
+        profileId: setProfileId,
         profilePicture: setProfilePicture,
         profileName: setProfileName,
         postTime: setPostTime,

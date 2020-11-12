@@ -16,6 +16,7 @@ import MainAppNavigation from './MainAppNavigation';
 import NewDiscussionScreen from '../screens/topicScreens/NewDiscussionScreen';
 import DiscussionScreen from '../screens/topicScreens/DiscussionScreen';
 import ResponseScreen from '../screens/topicScreens/ResponseScreen';
+import UserProfile from '../screens/meScreens/UserProfile';
 
 const Stack = createStackNavigator();
 
@@ -52,6 +53,7 @@ const NavigationIndex = () => {
             <Stack.Screen name="NewDiscussionScreen" component={NewDiscussionScreen} />
             <Stack.Screen name="DiscussionScreen" component={DiscussionScreen} />
             <Stack.Screen name="ResponseScreen" component={ResponseScreen} />
+            <Stack.Screen name="UserProfile" component={UserProfile} />
           </>
         ) : (
           <Stack.Screen name="AccountNavigation" component={AccountNavigation} />

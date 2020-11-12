@@ -1,5 +1,6 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
+import BaseUrl from '../../constants/BaseUrl';
 
 export const getTopic = () => {
   try{
@@ -7,7 +8,7 @@ export const getTopic = () => {
       let access_token = await AsyncStorage.getItem('access_token');
     
       let getTopicRequest = await axios({
-        url: 'https://dev.entervalhalla.tech/api/tannoi/v1/topics',
+        url: `${BaseUrl}/topics`,
         method: 'get',
         headers: {
           'token': access_token

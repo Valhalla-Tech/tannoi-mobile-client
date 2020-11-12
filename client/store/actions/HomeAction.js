@@ -1,5 +1,6 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
+import BaseUrl from '../../constants/BaseUrl';
 
 export const getHome = () => {
   return async (dispatch) => {
@@ -7,7 +8,7 @@ export const getHome = () => {
       let access_token = await AsyncStorage.getItem('access_token');
 
       let getHomeRequest = await axios({
-        url: 'https://dev.entervalhalla.tech/api/tannoi/v1/pages/home?sort=newest&page=1',
+        url: `${BaseUrl}/pages/home?sort=newest&page=1`,
         method: 'get',
         headers: {
           'token': access_token

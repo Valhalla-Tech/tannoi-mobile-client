@@ -4,6 +4,7 @@ import {
 import { LoginManager, AccessToken } from "react-native-fbsdk";
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
+import BaseUrl from '../../constants/BaseUrl';
 
 export const userLogin = () => {
   return (dispatch) => {
@@ -34,7 +35,7 @@ export const GoogleSignIn = () => {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
 
-      let googleSigninRequest = await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/login/google', {
+      let googleSigninRequest = await axios.post(`${BaseUrl}/users/login/google`, {
         token: userInfo.idToken
       });
 
@@ -63,7 +64,7 @@ export const FacebookSignIn = () => {
           } else {
             AccessToken.getCurrentAccessToken().then(
               async (data) => {
-                let facebookSigninRequest = await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/login/facebook', {
+                let facebookSigninRequest = await axios.post(`${BaseUrl}/users/login/facebook`, {
                   token: data.accessToken.toString()
                 });
 

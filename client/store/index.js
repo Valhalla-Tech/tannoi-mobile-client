@@ -11,13 +11,15 @@ import TopicReducer from './reducers/TopicReducer';
 import HomeReducer from './reducers/HomeReducer';
 import DiscussionReducer from './reducers/DiscussionReducer';
 import ResponseReducer from './reducers/ResponseReducer';
+import ProfileReducer from './reducers/ProfileReducer';
 
 const reducer = combineReducers({
   LoginReducer,
   TopicReducer,
   HomeReducer,
   DiscussionReducer,
-  ResponseReducer
+  ResponseReducer,
+  ProfileReducer
 });
 
 const store = createStore(reducer, applyMiddleware(thunk));

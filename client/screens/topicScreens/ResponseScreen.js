@@ -19,6 +19,7 @@ const ReplyScreen = ({route, navigation}) => {
   const [fromNextPreviousButton, setFromNextPreviousButton] = useState(false);
   const [selectedCard, setSelectedCard] = useState('response');
 
+  const profileId = useSelector(state => state.ResponseReducer.profileId);
   const profilePicture = useSelector(state => state.ResponseReducer.profilePicture);
   const profileName = useSelector(state => state.ResponseReducer.profileName);
   const postTime = useSelector(state => state.ResponseReducer.postTime);
@@ -137,6 +138,8 @@ const ReplyScreen = ({route, navigation}) => {
                     cardIndex="response"
                     getIsLikeAndIsDislike={getIsLikeAndIsDislike}
                     caption={caption}
+                    navigation={navigation}
+                    profileId={profileId}
                   />
                 ) : (
                   <ClosedCard
@@ -182,6 +185,8 @@ const ReplyScreen = ({route, navigation}) => {
                   getIsLikeAndIsDislike={getIsLikeAndIsDislike}
                   caption={itemData.item.caption}
                   responseScreenResponseId={responseId}
+                  navigation={navigation}
+                  profileId={itemData.item.creator.id}
                 />
               ) : (
                 <ClosedCard

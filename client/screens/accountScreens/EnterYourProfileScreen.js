@@ -16,6 +16,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import { bold, normal } from '../../assets/FontSize';
 import ErrorMessage from '../../components/publicComponents/ErrorMessage';
 import axios from 'axios';
+import BaseUrl from '../../constants/BaseUrl';
 
 //Icon
 import NoProfileIcon from '../../assets/accountAssets/EnterYourProfileScreen/noProfileIcon.svg';
@@ -80,7 +81,7 @@ const EnterYourProfileScreen = ({ navigation }) => {
         
         let enterProfileRequest = await axios({
           method: 'put',
-          url: 'https://dev.entervalhalla.tech/api/tannoi/v1/users/profile/edit',
+          url: `${BaseUrl}/users/profile/edit`,
           headers: {
             'Content-Type': 'multipart/form-data',
             'token': access_token

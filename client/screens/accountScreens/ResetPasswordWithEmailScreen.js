@@ -9,6 +9,7 @@ import {
 import branch from 'react-native-branch'
 import axios from 'axios';
 import { bold, normal } from '../../assets/FontSize';
+import BaseUrl from '../../constants/BaseUrl';
 
 //Components
 import BackButton from '../../components/publicComponents/BackButton';
@@ -31,7 +32,7 @@ const ResetPasswordWithEmailScreen = ({ navigation }) => {
     try {
       setIsloading(true);
 
-      let getResetPasswordToken = await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/password/get-reset-token', {
+      let getResetPasswordToken = await axios.post(`${BaseUrl}/users/password/get-reset-token`, {
         email: resetPasswordEmail
       });
       
@@ -60,7 +61,7 @@ const ResetPasswordWithEmailScreen = ({ navigation }) => {
         
         let {url} = await branchUniversalObject.generateShortUrl(linkProperties, controlParams);
         
-        let resetPasswordRequest =  await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/password/send-reset-token', {
+        let resetPasswordRequest =  await axios.post(`${BaseUrl}/users/password/send-reset-token`, {
           link: url,
           email: resetPasswordEmail
         });

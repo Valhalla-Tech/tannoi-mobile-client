@@ -15,6 +15,7 @@ import { userLogin } from '../../store/actions/LoginAction';
 import { getHome, clearHome } from '../../store/actions/HomeAction';
 import axios from 'axios';
 import { bold, normal } from '../../assets/FontSize';
+import BaseUrl from '../../constants/BaseUrl';
 
 //Components
 import BackButton from '../../components/publicComponents/BackButton';
@@ -43,12 +44,13 @@ const LoginWithEmailScreen = ({ navigation }) => {
   const login = async () => {
     try {
       setIsLoading(!isLoading);
-      let loginRequest = await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/login', {
+      let loginRequest = await axios.post(`${BaseUrl}/users/login`, {
         email: emailLogin,
         password: passwordLogin
       })
 
       if (loginRequest.data) {
+        console.log(loginRequest.data);
         setIsLoading(false);
         await AsyncStorage.setItem('access_token', loginRequest.data.access_token);
         dispatch(clearHome());
@@ -56,6 +58,7 @@ const LoginWithEmailScreen = ({ navigation }) => {
         dispatch(userLogin());
       }
     } catch (error) {
+      console.log(error)
       if (error.response.data.msg) {
         setIsLoading(false);
         setLoginValidation(true);

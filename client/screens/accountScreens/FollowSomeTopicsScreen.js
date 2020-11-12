@@ -14,6 +14,7 @@ import { userLogin } from '../../store/actions/LoginAction';
 import { bold, normal } from '../../assets/FontSize';
 import axios from 'axios';
 import { getTopic } from '../../store/actions/TopicAction';
+import BaseUrl from '../../constants/BaseUrl';
 
 //Components
 import BackButton from '../../components/publicComponents/BackButton';
@@ -70,7 +71,7 @@ const FollowSomeTopicsScreen = ({ navigation }) => {
 
       let followSomeTopicRequest = await axios({
         method: 'post',
-        url: 'https://dev.entervalhalla.tech/api/tannoi/v1/topics/preferred-many',
+        url: `${BaseUrl}/topics/preferred-many`,
         headers: {
           'token': access_token
         },

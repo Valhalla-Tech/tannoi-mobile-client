@@ -1,0 +1,1 @@
+export default baseUrl = 'http://159.65.142.221/api/tannoi/v1';

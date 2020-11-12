@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import { bold, normal } from '../../assets/FontSize';
 import axios from 'axios';
+import BaseUrl from '../../constants/BaseUrl';
 
 //Component
 import BackButton from '../../components/publicComponents/BackButton';
@@ -32,7 +33,7 @@ const ResetPasswordWithEmailVerificationScreen = ({ route, navigation }) => {
   const resendEmail = async () => {
     try {
       sendEmailCounter();
-      let resetPasswordRequest =  await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/password/send-reset-token', {
+      let resetPasswordRequest =  await axios.post(`${BaseUrl}/users/password/send-reset-token`, {
         link: url
       });
       if (resetPasswordRequest.data.msg === 'Success') {

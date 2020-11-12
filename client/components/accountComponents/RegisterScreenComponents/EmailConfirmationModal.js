@@ -12,6 +12,7 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 import { bold, normal } from '../../../assets/FontSize';
 import axios from 'axios';
+import BaseUrl from '../../../constants/BaseUrl';
 
 //Components
 import LoadingSpinner from '../../publicComponents/LoadingSpinner';
@@ -49,7 +50,7 @@ const EmailConfirmationModal = props => {
   const emailVerified = async () => {
     try {
       setIsLoading(true);
-      let emailActivationRequest = await axios.get(`https://dev.entervalhalla.tech/api/tannoi/v1/users/activation?token=${getCode()}`);
+      let emailActivationRequest = await axios.get(`${BaseUrl}/users/activation?token=${getCode()}`);
       if(emailActivationRequest.data.msg === 'Email Activated'){
         setIsLoading(false);
         emailConfirmed();
@@ -65,7 +66,7 @@ const EmailConfirmationModal = props => {
 
   const resendCode = async () => {
     try {
-      let resendCodeRequest = await axios.get(`https://dev.entervalhalla.tech/api/tannoi/v1/users/generate/${userId}`);
+      let resendCodeRequest = await axios.get(`${BaseUrl}/users/generate/${userId}`);
       
       dconsole.log(resendCodeRequest);
     } catch (error) {

@@ -10,6 +10,7 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import { bold, normal } from '../../assets/FontSize';
+import BaseUrl from '../../constants/BaseUrl';
 
 //Components
 import FormInput from '../../components/publicComponents/FormInput';
@@ -52,7 +53,7 @@ const RegisterPage = ({ navigation }) => {
     try {
       if (passwordRegister.length >= 5 && passwordRegister.length <= 20) {
         setIsLoading(!isLoading);
-        let registerRequest = await axios.post('https://dev.entervalhalla.tech/api/tannoi/v1/users/register', {
+        let registerRequest = await axios.post(`${BaseUrl}/users/register`, {
           email: emailRegister,
           password: passwordRegister
         });

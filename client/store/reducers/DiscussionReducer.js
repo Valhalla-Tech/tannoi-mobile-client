@@ -1,4 +1,5 @@
 const defaultState = {
+  profileId: '',
   profilePicture: '',
   profileName: '',
   postTime: '',
@@ -17,21 +18,23 @@ const defaultState = {
 const reducer = (state = defaultState, action) => {
   switch (action.type) {
     case 'GET_DISCUSSION':
-      let setProfilePicture = action.payload.profilePicture
-      let setProfileName = action.payload.profileName
-      let setPostTime = action.payload.postTime
-      let setLike = action.payload.like
-      let setTopic = action.payload.topic
-      let setDiscussionTitle = action.payload.discussionTitle
-      let setHashtags = action.payload.hashtags
-      let setReplies = action.payload.replies
-      let setPlays = action.payload.plays
-      let setRecordingFile = action.payload.recordingFile
-      let setIsLike = action.payload.isLike
-      let setIsDislike = action.payload.isDislike
+      let setProfileId = action.payload.profileId;
+      let setProfilePicture = action.payload.profilePicture;
+      let setProfileName = action.payload.profileName;
+      let setPostTime = action.payload.postTime;
+      let setLike = action.payload.like;
+      let setTopic = action.payload.topic;
+      let setDiscussionTitle = action.payload.discussionTitle;
+      let setHashtags = action.payload.hashtags;
+      let setReplies = action.payload.replies;
+      let setPlays = action.payload.plays;
+      let setRecordingFile = action.payload.recordingFile;
+      let setIsLike = action.payload.isLike;
+      let setIsDislike = action.payload.isDislike;
 
       return {
         ...state,
+        profileId: setProfileId,
         profilePicture: setProfilePicture,
         profileName: setProfileName,
         postTime: setPostTime,
