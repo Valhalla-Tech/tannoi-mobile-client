@@ -57,6 +57,7 @@ const HomeScreen = ({ navigation }) => {
             />
             <TopUsers
               topUserData={topUser}
+              navigation={navigation}
             />
             <Trending 
               listTitle="Trending"

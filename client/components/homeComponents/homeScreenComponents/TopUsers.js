@@ -17,7 +17,8 @@ import LoadingSpinner from '../../publicComponents/LoadingSpinner';
 
 const TopUsers = props => {
   const {
-    topUserData
+    topUserData,
+    navigation
   } = props;
 
   return (
@@ -34,7 +35,11 @@ const TopUsers = props => {
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item, index) => index.toString()}
         renderItem={itemData => (
-          <TouchableOpacity style={styles.topUsersCardConntainerStyle}>
+          <TouchableOpacity style={styles.topUsersCardConntainerStyle} onPress={() => {
+            navigation.navigate('UserProfile', {
+              userId: itemData.item.id
+            });
+          }}>
             <Image source={itemData.item.profile_photo_path ? {uri: itemData.item.profile_photo_path} : NoProfilePicture} style={styles.profilePictureStyle} />
             {
               itemData.item.name === null ? <Text style={styles.topUsersNameStyle}> </Text> : (

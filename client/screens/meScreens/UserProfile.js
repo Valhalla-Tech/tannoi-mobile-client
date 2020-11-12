@@ -18,7 +18,6 @@ import BaseUrl from '../../constants/BaseUrl';
 import BackButton from '../../components/publicComponents/BackButton';
 
 const UserProfile = ({route, navigation}) => {
-
   const { userId } = route.params;
 
   const dispatch = useDispatch();
@@ -91,15 +90,15 @@ const UserProfile = ({route, navigation}) => {
             <View style={styles.profileInfoStyle}>
               <View style={styles.profileDataContainerStyle}>
                 <Text style={styles.profileDataStyle}>Discussions</Text>
-                <Text style={styles.profileDataNumberStyle}>{numberConverter(profile.discussions.length)}</Text>
+                <Text style={styles.profileDataNumberStyle}>{profile.discussions && numberConverter(profile.discussions.length)}</Text>
               </View>
               <View style={styles.profileDataContainerStyle}>
                 <Text style={styles.profileDataStyle}>Responses</Text>
-                <Text style={styles.profileDataNumberStyle}>{numberConverter(profile.creator.length)}</Text>
+                <Text style={styles.profileDataNumberStyle}>{profile.creator && numberConverter(profile.creator.length)}</Text>
               </View>
               <View style={styles.profileDataContainerStyle}>
                 <Text style={styles.profileDataStyle}>Followers</Text>
-                <Text style={styles.profileDataNumberStyle}>{profile.followers.length}</Text>
+                <Text style={styles.profileDataNumberStyle}>{profile.followers && numberConverter(profile.followers.length)}</Text>
               </View>
             </View>
           </View>

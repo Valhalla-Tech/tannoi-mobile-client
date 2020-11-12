@@ -9,6 +9,7 @@ import {
 import { connect } from 'react-redux';
 import { getHome } from '../../../store/actions/HomeAction';
 import axios from 'axios';
+import BaseUrl from '../../../constants/BaseUrl';
 
 //Icons
 import ActivePlayButton from '../../../assets/homeAssets/activePlayButton.svg';
@@ -45,7 +46,7 @@ class HomeListPlayerCard extends Component {
 
       let playCounterRequest = await axios({
         method: 'get',
-        url: `https://dev.entervalhalla.tech/api/tannoi/v1//discussions/views/${this.props.discussionId}`,
+        url: `${BaseUrl}/discussions/views/${this.props.discussionId}`,
         headers: {
           token: access_token
         }
