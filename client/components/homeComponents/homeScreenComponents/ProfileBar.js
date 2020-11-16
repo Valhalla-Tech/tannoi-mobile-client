@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingRight: "5%"
+    paddingRight: "5%",
+    paddingVertical: "1%"
   },
 
   verifyButtonStyle: {

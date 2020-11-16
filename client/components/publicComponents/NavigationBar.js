@@ -37,7 +37,7 @@ const NavigationBar = props => {
       tabBarOptions={{
         style: {
           backgroundColor: "#464D60",
-          height: 65,
+          height: "6.5%",
           padding: "5%",
           paddingTop: "3.5%"
         },
@@ -105,7 +105,7 @@ const NavigationBar = props => {
           tabBarLabel: "",
           tabBarIcon: () => (
             <TouchableOpacity 
-              style={{justifyContent: "center", alignItems: "center", position: "absolute", bottom: 10}} 
+              style={{justifyContent: "center", alignItems: "center", position: "absolute", bottom: 1}} 
               onPress={newDiscussionScreenButton}
             >
               <NewDiscussionButton />
