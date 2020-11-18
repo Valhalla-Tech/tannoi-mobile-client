@@ -1,1 +1,1 @@
-export default baseUrl = 'http://159.65.142.221/api/tannoi/v1';
+export default baseUrl = 'https://dev.entervalhalla.tech/api/tannoi/v1';

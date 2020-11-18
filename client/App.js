@@ -20,7 +20,7 @@ const App = () => {
     <Provider store={store}>
       <KeyboardAvoidingView
         style={{flex: 1}}
-        keyboardVerticalOffset={-100}
+        keyboardVerticalOffset={-200}
         behavior="padding"
       >
         <NavigationContainer>

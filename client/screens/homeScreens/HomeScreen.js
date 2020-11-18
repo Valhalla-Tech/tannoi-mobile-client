@@ -42,6 +42,7 @@ const HomeScreen = ({ navigation }) => {
     <View>
       <ProfileBar 
         user={user}
+        navigation={navigation}
       />
       <FlatList
         ListHeaderComponent={

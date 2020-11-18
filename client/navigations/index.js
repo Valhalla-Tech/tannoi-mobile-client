@@ -11,6 +11,7 @@ import SplashScreen from 'react-native-splash-screen';
 //Navigations
 import AccountNavigation from './AccountNavigation';
 import MainAppNavigation from './MainAppNavigation';
+import VerificationNavigation from '../navigations/VerificationNavigation';
 
 //Screens
 import NewDiscussionScreen from '../screens/topicScreens/NewDiscussionScreen';
@@ -54,6 +55,7 @@ const NavigationIndex = () => {
             <Stack.Screen name="DiscussionScreen" component={DiscussionScreen} />
             <Stack.Screen name="ResponseScreen" component={ResponseScreen} />
             <Stack.Screen name="UserProfile" component={UserProfile} />
+            <Stack.Screen name="VerificationNavigation" component={VerificationNavigation} />
           </>
         ) : (
           <Stack.Screen name="AccountNavigation" component={AccountNavigation} />

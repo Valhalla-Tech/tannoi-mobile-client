@@ -259,7 +259,7 @@ class NewDiscussionScreenRecorder extends Component {
     return (
       <View>
         {
-          this.state.recordingFile !== '' && (
+          this.state.recordingFile !== '' && !this.props.isVerification && (
             <View style={styles.sliderStyle}>
               <View style={styles.durationContainerStyle}>
                 <Text style={styles.durationStyle}>{this.state.durationDisplay}</Text>

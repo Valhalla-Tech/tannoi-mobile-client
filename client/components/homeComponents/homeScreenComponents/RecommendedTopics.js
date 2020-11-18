@@ -44,7 +44,7 @@ const RecommendedTopics = props => {
         </TouchableOpacity>
       </View>
       {
-        topicData !== '' && topicData.length !== 0 ? (
+        topicData !== '' ? (
           <View style={styles.topicCardContainerStyle}>
             <FlatList
               horizontal={true}

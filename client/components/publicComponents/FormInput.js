@@ -8,14 +8,15 @@ import { normal } from '../../assets/FontSize';
 const FormInput = props => {
   const { 
     formInputTitle, 
-    dataInput, 
+    dataInput,
+    formInputCustomStyle,
     formInputValue
   } = props;
 
   return (
     <TextInput
       value={formInputValue}
-      style={styles.formInputStyle} 
+      style={{...styles.formInputStyle, ...formInputCustomStyle}} 
       placeholder={formInputTitle}
       placeholderTextColor="#73798C"
       onChangeText={value => dataInput(value)}
@@ -32,7 +33,6 @@ const FormInput = props => {
 const styles = StyleSheet.create({
   formInputStyle: {
     height: 47,
-    borderBottomColor: 'grey',
     borderBottomWidth: 1,
     borderBottomColor: "#E3E6EB",
     fontSize: 16,

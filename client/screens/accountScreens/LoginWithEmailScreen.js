@@ -30,7 +30,7 @@ const LoginWithEmailScreen = ({ navigation }) => {
   const [passwordLogin, setPasswordLogin] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [loginValidation, setLoginValidation] = useState(false)
-
+  
   const dispatch = useDispatch();
 
   const emailInput = emailData => {

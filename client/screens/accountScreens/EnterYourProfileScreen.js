@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
 
   formInputStyle: {
     height: 45,
-    borderBottomColor: 'grey',
+    borderBottomColor: "grey",
     borderBottomWidth: 1,
     borderBottomColor: "#E3E6EB",
     fontSize: 16,

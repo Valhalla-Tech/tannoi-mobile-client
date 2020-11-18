@@ -80,7 +80,7 @@ const NewDiscussionScreen = ({ navigation }) => {
 
       let access_token = await AsyncStorage.getItem('access_token');
       
-      const uri = `file://${recordingFile}`
+      const uri = `file://${recordingFile}`;
     
       let formData = new FormData();
 

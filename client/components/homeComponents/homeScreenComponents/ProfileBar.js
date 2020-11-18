@@ -10,10 +10,12 @@ import { bold } from '../../../assets/FontSize';
 
 //Icon
 import NoProfilePicture from '../../../assets/publicAssets/noProfilePicture.png';
+import tickIcon from '../../../assets/homeAssets/tickIcon.png';
 
 const ProfileBar = props => {
   const {
-    user
+    user,
+    navigation
   } = props;
 
   return (
@@ -21,10 +23,20 @@ const ProfileBar = props => {
       <View style={styles.profileInfoContainerStyle}>
         <Image source={user.profile_photo_path ? {uri: user.profile_photo_path} : NoProfilePicture} style={styles.profilePictureStyle} />
         <Text style={styles.profileBarTextStyle}>{user.name}</Text>
+        {
+          user.type === 1 && <Image source={tickIcon} style={styles.tickIconStyle} />
+        }
       </View >
-      <TouchableOpacity style={styles.verifyButtonStyle}>
-        <Text style={styles.verifyButtonTextStyle}>VERIFY</Text>
-      </TouchableOpacity>
+      {
+        user !== '' && user.type !== 1 && (
+          <TouchableOpacity 
+            onPress={() => navigation.navigate('VerificationNavigation')}
+            style={styles.verifyButtonStyle}
+          >
+            <Text style={styles.verifyButtonTextStyle}>VERIFY</Text>
+          </TouchableOpacity>
+        )
+      }
     </View>
   )
 };
@@ -69,6 +81,12 @@ const styles = StyleSheet.create({
     color: "#464D60",
     marginLeft: "3%",
     fontFamily: bold
+  },
+
+  tickIconStyle: {
+    height: 15, 
+    width: 15, 
+    marginLeft: "2%"
   }
 });
 
