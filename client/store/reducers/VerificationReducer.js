@@ -6,7 +6,8 @@ const defaultState = {
   street: '',
   city: '',
   country: '',
-  postalCode: ''
+  postalCode: '',
+  stepCount: ''
 };
 
 const reducer = (state = defaultState, action) => {
@@ -36,6 +37,23 @@ const reducer = (state = defaultState, action) => {
         city: setCity,
         country: setCountry,
         postalCode: setPostalCode
+      };
+    case 'ADD_STEP_COUNT':
+      let setStepCount = action.payload.stepCount;
+
+      return {...state, stepCount: setStepCount};
+    case 'DELETE_VERIFICATION_DATA':
+      return {
+        ...state,
+        firstName: '',
+        lastName: '',
+        gender: '',
+        birthDate: '',
+        street: '',
+        city: '',
+        country: '',
+        postalCode: '',
+        stepCount: ''
       };
     default:
       return state;

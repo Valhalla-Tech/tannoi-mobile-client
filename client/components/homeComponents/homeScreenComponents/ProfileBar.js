@@ -28,14 +28,14 @@ const ProfileBar = props => {
         }
       </View >
       {
-        user !== '' && user.type !== 1 && (
+        // user !== '' && user.type !== 1 && (
           <TouchableOpacity 
             onPress={() => navigation.navigate('VerificationNavigation')}
             style={styles.verifyButtonStyle}
           >
             <Text style={styles.verifyButtonTextStyle}>VERIFY</Text>
           </TouchableOpacity>
-        )
+        // )
       }
     </View>
   )

@@ -10,7 +10,8 @@ const FormInput = props => {
     formInputTitle, 
     dataInput,
     formInputCustomStyle,
-    formInputValue
+    formInputValue,
+    capitalize
   } = props;
 
   return (
@@ -21,11 +22,11 @@ const FormInput = props => {
       placeholderTextColor="#73798C"
       onChangeText={value => dataInput(value)}
       secureTextEntry={formInputTitle === 'Password' || formInputTitle === 'New password' || formInputTitle === 'Confirm new password' ? true : false}
-      autoCapitalize={
-        formInputTitle === 'Full name' || 
-        formInputTitle === 'Add caption (Optional)' ||
-        formInputTitle === 'Discussion title' ? "sentences" : "none"
-      }
+      autoCapitalize={capitalize ? "sentences" : "none"}
+      //   formInputTitle === 'Full name' || 
+      //   formInputTitle === 'Add caption (Optional)' ||
+      //   formInputTitle === 'Discussion title' ? "sentences" : "none"
+      // }
     />
   );
 };

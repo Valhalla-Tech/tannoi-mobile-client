@@ -16,7 +16,6 @@ export const getHome = () => {
       });
 
       if (getHomeRequest.data) {
-        console.log(getHomeRequest.data.recommended_topic)
         dispatch({
           type: 'GET_HOME',
           payload: {

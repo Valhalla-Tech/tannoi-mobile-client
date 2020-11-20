@@ -25,3 +25,22 @@ export const inputUserAddress = (data) => {
     });
   };
 };
+
+export const addStepCount = (count) => {
+  return (dispatch) => {
+    dispatch({
+      type: 'ADD_STEP_COUNT',
+      payload: {
+        stepCount: count
+      }
+    });
+  };
+};
+
+export const deleteVerificationData = () => {
+  return (dispatch) => {
+    dispatch({
+      type: 'DELETE_VERIFICATION_DATA'
+    });
+  };
+};

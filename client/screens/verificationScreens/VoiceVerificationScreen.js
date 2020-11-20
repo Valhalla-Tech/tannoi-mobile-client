@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -19,11 +19,13 @@ import BigButton from '../../components/publicComponents/BigButton';
 import Recorder from '../../components/topicComponents/Recorder';
 import ErrorMessage from '../../components/publicComponents/ErrorMessage';
 import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
+import StepCount from '../../components/verificationComponent/StepCount';
 
 const VoiceVerificationScreen = ({ navigation }) => {
   const [recordingFile, setRecordingFile] = useState('');
   const [recordingFileValidation, setRecordingFileValidation] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [word, setWord] = useState('');
 
   const randomWords = [
     'Candy',
@@ -46,6 +48,14 @@ const VoiceVerificationScreen = ({ navigation }) => {
     setRecordingFile(recordingFileInput);
   };
 
+  const randomizeWord = () => {
+    setWord(randomWords[Math.floor(Math.random() * 5)]);
+  };
+
+  useEffect(() => {
+    randomizeWord();
+  }, [])
+
   const nextScreen = async () => {
     try {
       if (recordingFile !== '') {
@@ -67,7 +77,7 @@ const VoiceVerificationScreen = ({ navigation }) => {
         formData.append('city', city);
         formData.append('country', country);
         formData.append('postal_code', postalCode);
-        formData.append('voice_note_path', {
+        formData.append('verification', {
           uri,
           name: `recording.${fileType}`,
           type: `audio/${fileType}`
@@ -104,29 +114,37 @@ const VoiceVerificationScreen = ({ navigation }) => {
      {isLoading && <LoadingSpinner />}
       <View style={styles.voiceVerificationScreenContainerStyle}>
         <View>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Text style={styles.backButtonTextStyle}>Back</Text>
-          </TouchableOpacity>
+          <View>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Text style={styles.backButtonTextStyle}>Back</Text>
+            </TouchableOpacity>
+          </View>
+          <StepCount rootCustomStyle={{width: "14.5%", height: "81%"}} />
+          <View style={styles.imageContainerStyle}>
+            <VerificationScreenImage />
+          </View>
+          <View style={styles.textContainerStyle}>
+            <Text style={styles.boldTextStyle}>Lastly we need to make sure you are not a bot</Text>
+            <Text style={styles.normalTextStyle}>Please say the word below 3 times</Text>
+          </View>
+          <Text style={styles.randomWordStyle}>{word}</Text>
+          <View style={{alignItems: "center", marginTop: "1%"}}>
+            {recordingFileValidation && <ErrorMessage message="Please input your voice" />}
+          </View>
+          <Recorder addRecordingFile={addRecordingFile} isVerification={true} />
         </View>
-        <View style={styles.imageContainerStyle}>
-          <VerificationScreenImage />
-        </View>
-        <View style={styles.textContainerStyle}>
-          <Text style={styles.boldTextStyle}>Lastly we need to make sure you are not a bot</Text>
-          <Text style={styles.normalTextStyle}>Please say the word below 3 times</Text>
-        </View>
-        <Text style={styles.randomWordStyle}>{randomWords[Math.floor(Math.random() * 5)]}</Text>
-        <View style={{alignItems: "center", marginTop: "1%"}}>
-          {recordingFileValidation && <ErrorMessage message="Please input your voice" />}
-        </View>
-        <Recorder addRecordingFile={addRecordingFile} isVerification={true} />
         <BigButton
           buttonTitle="Submit"
-          buttonStyle={{
+          buttonStyle={recordingFile === '' ? {
+            color: "#FFFFFF",
+            backgroundColor: "#a1a5ab",
+            borderWidth: 0
+          } : {
             color: "#FFFFFF",
             backgroundColor: "#6505E1",
             borderWidth: 0
           }}
+          disableButton={recordingFile === '' && true}
           buttonFunction={nextScreen}
         />
       </View>
@@ -136,7 +154,8 @@ const VoiceVerificationScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   voiceVerificationScreenContainerStyle: {
-    padding: "5%"
+    padding: "5%",
+    justifyContent: "space-between"
   },
 
   backButtonTextStyle: {
@@ -146,8 +165,7 @@ const styles = StyleSheet.create({
   },
 
   imageContainerStyle: {
-    alignItems: "center",
-    paddingTop: "5%"
+    alignItems: "center"
   },
 
   boldTextStyle: {

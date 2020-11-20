@@ -5,6 +5,8 @@ import {
   TouchableOpacity,
   StyleSheet
 } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { deleteVerificationData } from '../../store/actions/VerificationAction';
 import { bold, normal } from '../../assets/FontSize';
 
 //Image
@@ -14,6 +16,8 @@ import VerificationScreenImage from '../../assets/verificationAssets/verificatio
 import BigButton from '../../components/publicComponents/BigButton';
 
 const StartVerificationScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+
   const startButton = () => {
     navigation.navigate('UserProfileVerificationScreen')
   };
@@ -21,18 +25,23 @@ const StartVerificationScreen = ({ navigation }) => {
   return (
     <View style={styles.startVerificationScreenContainerStyle}>
       <View>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text style={styles.cancelButtonTextStyle}>Cancel</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.imageContainerStyle}>
-        <VerificationScreenImage />
-      </View>
-      <View style={styles.textContainerStyle}>
-        <Text style={styles.boldTextStyle}>Become a verified TannOi user</Text>
-        <Text style={styles.normalTextStyle}>
-          Participate in verified discussions and {"\n"} stand behind what you say
-        </Text>
+        <View>
+          <TouchableOpacity onPress={() => {
+            navigation.goBack();
+            dispatch(deleteVerificationData());
+          }}>
+            <Text style={styles.cancelButtonTextStyle}>Cancel</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.imageContainerStyle}>
+          <VerificationScreenImage />
+        </View>
+        <View style={styles.textContainerStyle}>
+          <Text style={styles.boldTextStyle}>Become a verified TannOi user</Text>
+          <Text style={styles.normalTextStyle}>
+            Participate in verified discussions and {"\n"} stand behind what you say
+          </Text>
+        </View>
       </View>
       <BigButton
         buttonTitle="Start"
@@ -50,7 +59,9 @@ const StartVerificationScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   startVerificationScreenContainerStyle: {
-    padding: "5%"
+    padding: "5%",
+    flex: 1,
+    justifyContent: "space-between"
   },
 
   cancelButtonTextStyle: {

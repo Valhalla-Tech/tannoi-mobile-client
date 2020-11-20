@@ -17,7 +17,8 @@ const WelcomePageButton = props => {
     navigationPage,
     buttonFunction,
     buttonType,
-    buttonIconTitle
+    buttonIconTitle,
+    disableButton
   } = props;
 
   return (
@@ -27,6 +28,7 @@ const WelcomePageButton = props => {
           ...buttonStyle,
         }}
       onPress={buttonType === "navigationButton" ? () => navigation.navigate(navigationPage) : buttonFunction}
+      disabled={disableButton}
     >
       {
         buttonIconTitle === 'facebook' ? (
