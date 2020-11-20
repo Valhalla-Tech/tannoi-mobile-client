@@ -399,16 +399,20 @@ class DiscussionScreenPlayerCard extends Component {
             }
           </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          style={styles.addResponseButtonStyle}
-          onPress={() => {
-            this.setState({
-              openAddResponseModal: true
-            })
-          }}
-        >
-          <Text style={styles.addResponseButtonTextStyle}>Add response</Text>
-        </TouchableOpacity>
+        {
+          this.props.userData.type !== 0 || this.props.userData.id === this.props.profileId ? (
+            <TouchableOpacity
+              style={styles.addResponseButtonStyle}
+              onPress={() => {
+                this.setState({
+                  openAddResponseModal: true
+                })
+              }}
+            >
+              <Text style={styles.addResponseButtonTextStyle}>Add response</Text>
+            </TouchableOpacity>
+          ) : null
+        }
       </View>
     );
   };
@@ -540,7 +544,8 @@ const mapStateToProps = (state) => {
     likeForResponse: state.ResponseReducer.likeForResponse,
     isLikeForResponse: state.ResponseReducer.isLikeForResponse,
     isDislikeForResponse: state.ResponseReducer.isDislikeForResponse,
-    responseCountForResponse: state.ResponseReducer.responseCountForResponse
+    responseCountForResponse: state.ResponseReducer.responseCountForResponse,
+    userData: state.HomeReducer.user
   }
 };
 

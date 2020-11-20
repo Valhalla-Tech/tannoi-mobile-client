@@ -23,7 +23,8 @@ const DiscussionScreen = ({ route, navigation }) => {
   const [openAddResponseModal, setOpenAddResponseModal] = useState(false);
   const [selectedCard, setSelectedCard] = useState('discussion');
   const [fromNextPreviousButton, setFromNextPreviousButton] = useState(false);
-
+  const userType = useSelector(state => state.HomeReducer.user);
+  console.log(userType)
   const profileId = useSelector(state => state.DiscussionReducer.profileId);
   const profilePicture = useSelector(state => state.DiscussionReducer.profilePicture);
   const profileName = useSelector(state => state.DiscussionReducer.profileName);
@@ -107,14 +108,18 @@ const DiscussionScreen = ({ route, navigation }) => {
             marginBottom: 0
           }}
         />
-        <TouchableOpacity
-          style={styles.addResponseButtonStyle}
-          onPress={() => {
-            setOpenAddResponseModal(true);
-          }}
-        >
-          <Text style={styles.addResponseButtonTextStyle}>Add response</Text>
-        </TouchableOpacity>
+        {
+          userType.type !== 0 || userType.id === profileId ? (
+            <TouchableOpacity
+              style={styles.addResponseButtonStyle}
+              onPress={() => {
+                setOpenAddResponseModal(true);
+              }}
+            >
+              <Text style={styles.addResponseButtonTextStyle}>Add response</Text>
+            </TouchableOpacity>
+          ) : null
+        }
       </View>
       <FlatList
         data={response}
