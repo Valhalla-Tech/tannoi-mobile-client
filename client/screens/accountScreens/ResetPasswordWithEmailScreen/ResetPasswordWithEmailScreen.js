@@ -8,16 +8,16 @@ import {
 } from 'react-native';
 import branch from 'react-native-branch'
 import axios from 'axios';
-import { bold, normal } from '../../assets/FontSize';
-import BaseUrl from '../../constants/BaseUrl';
+import { bold, normal } from '../../../assets/FontSize';
+import BaseUrl from '../../../constants/BaseUrl';
 
 //Components
-import BackButton from '../../components/publicComponents/BackButton';
-import SendResetPasswordButton from '../../components/publicComponents/BigButton';
-import FormInput from '../../components/publicComponents/FormInput';
-import NotActiveButton from '../../components/publicComponents/NotActiveButton';
-import ErrorMessage from '../../components/publicComponents/ErrorMessage';
-import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
+import BackButton from '../../../components/publicComponents/BackButton';
+import SendResetPasswordButton from '../../../components/publicComponents/BigButton';
+import FormInput from '../../../components/publicComponents/FormInput';
+import NotActiveButton from '../../../components/publicComponents/NotActiveButton';
+import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
+import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 
 const ResetPasswordWithEmailScreen = ({ navigation }) => {
   const [resetPasswordEmail, setResetPasswordEmail] = useState('');

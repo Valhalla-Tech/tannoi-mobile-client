@@ -9,18 +9,18 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
-import { bold, normal } from '../../assets/FontSize';
-import BaseUrl from '../../constants/BaseUrl';
+import { bold, normal } from '../../../assets/FontSize';
+import BaseUrl from '../../../constants/BaseUrl';
 
 //Components
-import FormInput from '../../components/publicComponents/FormInput';
-import SaveAndContinueButton from '../../components/publicComponents/BigButton';
-import EmailConfirmationModal from '../../components/accountComponents/RegisterScreenComponents/EmailConfirmationModal';
-import BackButton from '../../components/publicComponents/BackButton';
-import NotActiveButton from '../../components/publicComponents/NotActiveButton';
-import ErrorMessage from '../../components/publicComponents/ErrorMessage';
-import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
-import TermsOfServiceModal from '../../components/accountComponents/RegisterScreenComponents/TermsOfServiceModal';
+import FormInput from '../../../components/publicComponents/FormInput';
+import SaveAndContinueButton from '../../../components/publicComponents/BigButton';
+import EmailConfirmationModal from '../../../components/accountComponents/RegisterScreenComponents/EmailConfirmationModal';
+import BackButton from '../../../components/publicComponents/BackButton';
+import NotActiveButton from '../../../components/publicComponents/NotActiveButton';
+import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
+import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
+import TermsOfServiceModal from '../../../components/accountComponents/RegisterScreenComponents/TermsOfServiceModal';
 
 const RegisterPage = ({ navigation }) => {
   const [emailRegister, setEmailRegister] = useState('');

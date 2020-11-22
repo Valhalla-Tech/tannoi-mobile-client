@@ -5,15 +5,17 @@ import {
   Text,
   TouchableOpacity
 } from 'react-native';
-import { bold, normal } from '../../assets/FontSize';
+import { bold, normal } from '../../../assets/FontSize';
 import axios from 'axios';
-import BaseUrl from '../../constants/BaseUrl';
+import BaseUrl from '../../../constants/BaseUrl';
 
 //Component
-import BackButton from '../../components/publicComponents/BackButton';
+import BackButton from '../../../components/publicComponents/BackButton';
 
 const ResetPasswordWithEmailVerificationScreen = ({ route, navigation }) => {
   const [countNumber, setCountNumber] = useState(60);
+
+  const { url } = route.params;
 
   const sendEmailCounter = () => {
     let counter = 60;

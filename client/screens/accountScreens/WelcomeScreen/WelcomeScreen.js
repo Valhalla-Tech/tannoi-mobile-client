@@ -13,14 +13,14 @@ import branch from 'react-native-branch';
 import {
   useDispatch
 } from 'react-redux';
-import { bold, normal } from '../../assets/FontSize';
-import { GoogleSignIn, FacebookSignIn } from '../../store/actions/LoginAction'
+import { bold, normal } from '../../../assets/FontSize';
+import { GoogleSignIn, FacebookSignIn } from '../../../store/actions/LoginAction'
 
 //Image
-import TannoiWelcomeScreenImage from '../../assets/publicAssets/tannOiWelcomeScreenImage.png';
+import TannoiWelcomeScreenImage from '../../../assets/publicAssets/tannOiWelcomeScreenImage.png';
 
 //Component
-import WelcomePageButton from '../../components/publicComponents/BigButton';
+import WelcomePageButton from '../../../components/publicComponents/BigButton';
 
 const WelcomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();

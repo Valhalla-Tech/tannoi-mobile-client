@@ -13,17 +13,17 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import ImagePicker from 'react-native-image-crop-picker';
-import { bold, normal } from '../../assets/FontSize';
-import ErrorMessage from '../../components/publicComponents/ErrorMessage';
+import { bold, normal } from '../../../assets/FontSize';
+import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import axios from 'axios';
-import BaseUrl from '../../constants/BaseUrl';
+import BaseUrl from '../../../constants/BaseUrl';
 
 //Icon
-import NoProfileIcon from '../../assets/accountAssets/EnterYourProfileScreen/noProfileIcon.svg';
+import NoProfileIcon from '../../../assets/accountAssets/EnterYourProfileScreen/noProfileIcon.svg';
 
 //Components
-import SaveAndContinueButton from '../../components/publicComponents/BigButton';
-import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
+import SaveAndContinueButton from '../../../components/publicComponents/BigButton';
+import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 
 const EnterYourProfileScreen = ({ navigation }) => {
   const [profileImage, setProfileImage] = useState('');

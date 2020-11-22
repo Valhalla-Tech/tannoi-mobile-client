@@ -7,12 +7,12 @@ import {
 import {
   useDispatch
 } from 'react-redux';
-import { bold } from '../../assets/FontSize';
-import { GoogleSignIn, FacebookSignIn } from '../../store/actions/LoginAction';
+import { bold } from '../../../assets/FontSize';
+import { GoogleSignIn, FacebookSignIn } from '../../../store/actions/LoginAction';
 
 //Components
-import BackButton from '../../components/publicComponents/BackButton';
-import LoginScreenButton from '../../components/publicComponents/BigButton';
+import BackButton from '../../../components/publicComponents/BackButton';
+import LoginScreenButton from '../../../components/publicComponents/BigButton';
 
 const LoginScreen = ({ navigation }) => {
 

@@ -7,16 +7,16 @@ import {
   Keyboard,
   Alert
 } from 'react-native';
-import { bold } from '../../assets/FontSize';
+import { bold } from '../../../assets/FontSize';
 import axios from 'axios';
-import BaseUrl from '../../constants/BaseUrl';
+import BaseUrl from '../../../constants/BaseUrl';
 
 //Components
-import FormInput from '../../components/publicComponents/FormInput';
-import LoginButton from '../../components/publicComponents/BigButton';
-import NotActiveButton from '../../components/publicComponents/NotActiveButton';
-import ErrorMessage from '../../components/publicComponents/ErrorMessage';
-import BackButton from '../../components/publicComponents/BackButton';
+import FormInput from '../../../components/publicComponents/FormInput';
+import LoginButton from '../../../components/publicComponents/BigButton';
+import NotActiveButton from '../../../components/publicComponents/NotActiveButton';
+import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
+import BackButton from '../../../components/publicComponents/BackButton';
 
 const CreateNewPasswordScreen = ({ route, navigation }) => {
   const [newPassword, setNewPassword] = useState('');

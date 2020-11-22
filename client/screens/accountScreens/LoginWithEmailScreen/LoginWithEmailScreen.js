@@ -11,19 +11,19 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {
   useDispatch
 } from 'react-redux';
-import { userLogin } from '../../store/actions/LoginAction';
-import { getHome, clearHome } from '../../store/actions/HomeAction';
+import { userLogin } from '../../../store/actions/LoginAction';
+import { getHome, clearHome } from '../../../store/actions/HomeAction';
 import axios from 'axios';
-import { bold, normal } from '../../assets/FontSize';
-import BaseUrl from '../../constants/BaseUrl';
+import { bold, normal } from '../../../assets/FontSize';
+import BaseUrl from '../../../constants/BaseUrl';
 
 //Components
-import BackButton from '../../components/publicComponents/BackButton';
-import LoginButton from '../../components/publicComponents/BigButton';
-import FormInput from '../../components/publicComponents/FormInput';
-import NotActiveButton from '../../components/publicComponents/NotActiveButton';
-import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
-import ErrorMessage from '../../components/publicComponents/ErrorMessage';
+import BackButton from '../../../components/publicComponents/BackButton';
+import LoginButton from '../../../components/publicComponents/BigButton';
+import FormInput from '../../../components/publicComponents/FormInput';
+import NotActiveButton from '../../../components/publicComponents/NotActiveButton';
+import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
+import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 
 const LoginWithEmailScreen = ({ navigation }) => {
   const [emailLogin, setEmailLogin] = useState('');
