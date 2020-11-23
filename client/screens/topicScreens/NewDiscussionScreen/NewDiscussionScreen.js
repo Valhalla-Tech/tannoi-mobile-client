@@ -40,6 +40,7 @@ const NewDiscussionScreen = ({ navigation }) => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedFollowers, setSelectedFollowers] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
+  const [modalOption, setModalOption] = useState(false);
 
   const topics = useSelector(state => state.TopicReducer.topics);
   const dispatch = useDispatch();
@@ -57,8 +58,8 @@ const NewDiscussionScreen = ({ navigation }) => {
     setSelectedFollowers(followers);
     if (followers.length === 0 && !isSelectAll) {
       setSwitchValue(false);
-    }
-    if (isSelectAll) {
+      setSelectAll(false);
+    } else if (isSelectAll) {
       setSelectAll(true);
     };
   };
@@ -158,14 +159,29 @@ const NewDiscussionScreen = ({ navigation }) => {
     setSwitchValue(previousState => !previousState);
     if (switchValue !== true) {
       setOpenModal(true);
-    }
+    } else if (switchValue === true) {
+      setModalOption(true);
+      setOpenModal(true);
+    };
   };
 
   const closeModal = (isFinish) => {
     setOpenModal(false);
     if (!isFinish) {
       setSwitchValue(false);
+      setSelectAll(false);
+      setSelectedFollowers([]);
+    } else {
+      setSwitchValue(true);
     }
+  };
+
+  const changeModalOption = (input, changeSwitch) => {
+    setModalOption(input);
+
+    if (changeSwitch) {
+      setSwitchValue(changeSwitch)
+    };
   };
 
   const PrivateDiscussionSwitch = () => {
@@ -182,6 +198,9 @@ const NewDiscussionScreen = ({ navigation }) => {
           openModal={openModal}
           closeModal={closeModal}
           addSelectedFollowers={addSelectedFollowers}
+          openModalOption={modalOption}
+          changeModalOption={changeModalOption}
+          isFilled={selectAll || selectedFollowers.length > 0 ? true : false}
         />
       </View>
     );

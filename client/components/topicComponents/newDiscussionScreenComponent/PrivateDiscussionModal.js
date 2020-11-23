@@ -24,7 +24,10 @@ const PrivateDiscussionModal = props => {
   const {
     openModal,
     closeModal,
-    addSelectedFollowers
+    addSelectedFollowers,
+    openModalOption,
+    changeModalOption,
+    isFilled
   } = props;
 
   const dispatch = useDispatch();
@@ -106,6 +109,24 @@ const PrivateDiscussionModal = props => {
     );
   };
 
+  const ModalOption = () => {
+    return (
+      <View style={styles.modalOptionButtonContainerStyle}>
+        <TouchableOpacity onPress={() => {
+          changeModalOption(false, true);
+        }}>
+          <Text style={styles.modalOptionTextStyle}>Edit list</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => {
+          changeModalOption(false, false);
+          closeModal();
+        }}>
+          <Text style={styles.modalOptionTextStyle}>Disable private discussion</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+console.log(isFilled)
   return (
     <Modal
       animationType="fade"
@@ -114,28 +135,40 @@ const PrivateDiscussionModal = props => {
     >
       <View style={styles.optionModalBackground}>
         <TouchableOpacity style={{flex: 1}} onPress={()=> {
-          closeModal();
+          if (openModalOption || isFilled) {
+            closeModal(true);
+          } else {
+            closeModal();
+          };
         }} ></TouchableOpacity>
       </View>
       <View style={styles.modalContainerStyle}>
         <View style={styles.privateDiscussionModalStyle}>
-          <Text style={styles.privateDiscussionTextStyle}>Invite your followers to a private discussion</Text>
-          <View>
-            <FormInput 
-              formInputTitle="Search"
-              formInputCustomStyle={{
-                paddingVertical: 0,
-                height: 35,
-                marginBottom: "5%"
-              }}
-              dataInput={searchUserName}
-            />
-            <FlatList
-              data={followers}
-              renderItem={renderFollowerList}
-            />
-            <Buttons />
-          </View>
+          {
+            openModalOption ? (
+              <ModalOption />
+            ) : (
+              <>
+                <Text style={styles.privateDiscussionTextStyle}>Invite your followers to a private discussion</Text>
+                <View>
+                  <FormInput 
+                    formInputTitle="Search"
+                    formInputCustomStyle={{
+                      paddingVertical: 0,
+                      height: 35,
+                      marginBottom: "5%"
+                    }}
+                    dataInput={searchUserName}
+                  />
+                  <FlatList
+                    data={followers}
+                    renderItem={renderFollowerList}
+                  />
+                  <Buttons />
+                </View>
+              </>
+            )
+          }
         </View>
       </View>
     </Modal>
@@ -202,6 +235,16 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     width: "100%",
     marginTop: "5%"
+  },
+
+  modalOptionTextStyle: {
+    fontFamily: normal,
+    fontSize: 16
+  },
+
+  modalOptionButtonContainerStyle: {
+    height: 80,
+    justifyContent: "space-between"
   }
 });
 
