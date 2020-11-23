@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
-  ScrollView
+  ScrollView,
+  Switch
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
 import { Picker } from '@react-native-community/picker';
@@ -26,6 +27,7 @@ import FormInput from '../../../components/publicComponents/FormInput';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 import Recorder from '../../../components/topicComponents/Recorder';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
+import PrivateDiscussionModal from '../../../components/topicComponents/newDiscussionScreenComponent/PrivateDiscussionModal';
 
 const NewDiscussionScreen = ({ navigation }) => {
   const [discussionTitle, setDiscussionTitle] = useState('');
@@ -34,6 +36,10 @@ const NewDiscussionScreen = ({ navigation }) => {
   const [recordingFile, setRecordingFile] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [createNewDiscussionValidation, setCreateNewDiscussionValidation] = useState(false);
+  const [switchValue, setSwitchValue] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedFollowers, setSelectedFollowers] = useState([]);
+  const [selectAll, setSelectAll] = useState(false);
 
   const topics = useSelector(state => state.TopicReducer.topics);
   const dispatch = useDispatch();
@@ -44,6 +50,17 @@ const NewDiscussionScreen = ({ navigation }) => {
 
   const discussionTitleInput = input => {
     setDiscussionTitle(input);
+  };
+
+  const addSelectedFollowers = (followers, isSelectAll) => {
+    setOpenModal(false);
+    setSelectedFollowers(followers);
+    if (followers.length === 0 && !isSelectAll) {
+      setSwitchValue(false);
+    }
+    if (isSelectAll) {
+      setSelectAll(true);
+    };
   };
 
   const hashtagsInput = input => {
@@ -91,7 +108,11 @@ const NewDiscussionScreen = ({ navigation }) => {
 
       formData.append('topic_id', selectedTopic);
 
-      formData.append('status', '1');
+      formData.append('status', selectAll || selectedFollowers.length > 0 ? '2' : '1');
+
+      selectedFollowers.length > 0 && formData.append('userArr', selectedFollowers);
+
+      selectAll && formData.append('all_followers', true);
 
       formData.append('hashtag', JSON.stringify(hashtags));
 
@@ -133,65 +154,113 @@ const NewDiscussionScreen = ({ navigation }) => {
     setRecordingFile(recordingFileInput);
   };
 
+  const changeSwitchValue = () => {
+    setSwitchValue(previousState => !previousState);
+    if (switchValue !== true) {
+      setOpenModal(true);
+    }
+  };
+
+  const closeModal = (isFinish) => {
+    setOpenModal(false);
+    if (!isFinish) {
+      setSwitchValue(false);
+    }
+  };
+
+  const PrivateDiscussionSwitch = () => {
+    return (
+      <View style={styles.privateDiscussionSwitchContainerStyle}>
+        <Text style={styles.privateDiscussionText}>Private discussion:  </Text>
+        <Switch
+          value={switchValue}
+          onValueChange={changeSwitchValue}
+          trackColor={{true: "#6505E1", false: ""}}
+          thumbColor={"#6505E1"}
+        />
+        <PrivateDiscussionModal 
+          openModal={openModal}
+          closeModal={closeModal}
+          addSelectedFollowers={addSelectedFollowers}
+        />
+      </View>
+    );
+  };
+
+  const NewDiscussionHeader = () => {
+    return (
+      <View style={styles.newDiscussionUpperBarStyle}>
+        <View style={styles.backButtonAndTitleContainerStyle}>
+          <BackButton
+            navigation={navigation}
+            styleOption={{
+              marginTop: 0,
+              marginBottom: 0
+            }}
+          />
+          <Text style={styles.newDiscussionTitleStyle}>New discussion</Text>
+        </View>
+        <TouchableOpacity
+          onPress={() => createNewDiscussion()}
+        >
+          <Text style={styles.publishButtonTextStyle}>Publish</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
+  const NewDiscussionForm = () => {
+    return (
+      <>
+        <FormInput
+          formInputTitle="Discussion title"
+          dataInput={discussionTitleInput}
+        />
+        <Text style={styles.formInputTitleStyle}>Topic</Text>
+        <Picker
+          selectedValue={selectedTopic}
+          style={styles.topicPickerStyle}
+          selectedValue={selectedTopic}
+          onValueChange={(itemValue, itemIndex) => setSelectedTopic(itemValue)}
+        >
+          <Picker.Item label="Select topic" value="Select topic" />
+          { 
+            topics.map((topic, index) => (
+              <Picker.Item key={index} label={topic.name} value={topic.id} />
+            ))
+          }
+        </Picker>
+        <FormInput
+          formInputTitle="Add hashtags"
+          dataInput={hashtagsInput}
+        />
+        {
+          createNewDiscussionValidation && (
+            <ErrorMessage
+              message="All fields must be filled in, including a voice note!"
+            />
+          )
+        }
+      </>
+    );
+  };
+
   return (
     <ScrollView>
       <TouchableWithoutFeedback
         onPress={() => Keyboard.dismiss()}
       >
         <View style={styles.newDiscussionContainerStyle}>
-          <View style={styles.newDiscussionUpperBarStyle}>
-            <View style={styles.backButtonAndTitleContainerStyle}>
-              <BackButton
-                navigation={navigation}
-                styleOption={{
-                  marginTop: 0,
-                  marginBottom: 0
-                }}
-              />
-              <Text style={styles.newDiscussionTitleStyle}>New discussion</Text>
-            </View>
-            <TouchableOpacity
-              onPress={() => createNewDiscussion()}
-            >
-              <Text style={styles.publishButtonTextStyle}>Publish</Text>
-            </TouchableOpacity>
-          </View>
+          <NewDiscussionHeader />
           <View style={styles.newDiscussionFormContainerStyle}>
             <View style={styles.contentContainerStyle}>
-              <FormInput
-                formInputTitle="Discussion title"
-                dataInput={discussionTitleInput}
-              />
-              <Text style={styles.formInputTitleStyle}>Topic</Text>
-              <Picker
-                selectedValue={selectedTopic}
-                style={styles.topicPickerStyle}
-                selectedValue={selectedTopic}
-                onValueChange={(itemValue, itemIndex) => setSelectedTopic(itemValue)}
-              >
-                <Picker.Item label="Select topic" value="Select topic" />
-                { 
-                  topics.map((topic, index) => (
-                    <Picker.Item key={index} label={topic.name} value={topic.id} />
-                  ))
-                }
-              </Picker>
-              <FormInput
-                formInputTitle="Add hashtags"
-                dataInput={hashtagsInput}
-              />
-              {
-                createNewDiscussionValidation && (
-                  <ErrorMessage
-                    message="All fields must be filled in, including a voice note!"
-                  />
-                )
-              }
+              <PrivateDiscussionSwitch />
               <View style={styles.recorderContainerStyle}>
                 <Recorder
                   addRecordingFile={addRecordingFile}
                 />
               </View>
+              {NewDiscussionForm()}
             </View>
             {
               isLoading && (
@@ -220,6 +289,18 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
 
+  privateDiscussionSwitchContainerStyle: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    marginBottom: "3%"
+  },
+
+  privateDiscussionText: {
+    fontFamily: bold,
+    color: "#73798C"
+  },
+
   backButtonAndTitleContainerStyle: {
     flexDirection: "row",
     alignItems: "center"
@@ -246,7 +327,8 @@ const styles = StyleSheet.create({
 
   contentContainerStyle: {
     paddingHorizontal: 16,
-    paddingTop: "5%"
+    paddingTop: "5%",
+    paddingBottom: "5%"
   },
 
   formInputTitleStyle: {
@@ -266,7 +348,7 @@ const styles = StyleSheet.create({
   },
 
   recorderContainerStyle: {
-    marginTop: "35%"
+    marginBottom: "20%"
   }
 });
 

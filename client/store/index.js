@@ -13,6 +13,7 @@ import DiscussionReducer from './reducers/DiscussionReducer';
 import ResponseReducer from './reducers/ResponseReducer';
 import ProfileReducer from './reducers/ProfileReducer';
 import VerificationReducer from './reducers/VerificationReducer';
+import PrivateDiscussionReducer from './reducers/PrivateDiscussionReducer';
 
 const reducer = combineReducers({
   LoginReducer,
@@ -21,7 +22,8 @@ const reducer = combineReducers({
   DiscussionReducer,
   ResponseReducer,
   ProfileReducer,
-  VerificationReducer
+  VerificationReducer,
+  PrivateDiscussionReducer
 });
 
 const store = createStore(reducer, applyMiddleware(thunk));
