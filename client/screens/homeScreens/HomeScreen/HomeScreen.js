@@ -9,15 +9,15 @@ import {
   useDispatch
 } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
-import { getHome, clearHome } from '../../store/actions/HomeAction';
+import { getHome, clearHome } from '../../../store/actions/HomeAction';
 
 //Components
-import SearchBar from '../../components/homeComponents/SearchBar';
-import ProfileBar from '../../components/homeComponents/homeScreenComponents/ProfileBar';
-import DiscussionOfTheWeek from '../../components/homeComponents/homeScreenComponents/HomeList';
-import TopUsers from '../../components/homeComponents/homeScreenComponents/TopUsers';
-import Trending from '../../components/homeComponents/homeScreenComponents/HomeList';
-import RecommendedTopics from '../../components/homeComponents/homeScreenComponents/RecommendedTopics';
+import SearchBar from '../../../components/homeComponents/SearchBar';
+import ProfileBar from '../../../components/homeComponents/homeScreenComponents/ProfileBar';
+import DiscussionOfTheWeek from '../../../components/homeComponents/homeScreenComponents/HomeList';
+import TopUsers from '../../../components/homeComponents/homeScreenComponents/TopUsers';
+import Trending from '../../../components/homeComponents/homeScreenComponents/HomeList';
+import RecommendedTopics from '../../../components/homeComponents/homeScreenComponents/RecommendedTopics';
 
 const HomeScreen = ({ navigation }) => {
   const user = useSelector(state => state.HomeReducer.user);

@@ -6,20 +6,20 @@ import {
   StyleSheet
 } from 'react-native';
 import { useSelector } from 'react-redux';
-import { bold, normal } from '../../assets/FontSize';
+import { bold, normal } from '../../../assets/FontSize';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
-import BaseUrl from '../../constants/BaseUrl';
+import BaseUrl from '../../../constants/BaseUrl';
 
 //Image
-import VerificationScreenImage from '../../assets/verificationAssets/verificationScreenImage.svg';
+import VerificationScreenImage from '../../../assets/verificationAssets/verificationScreenImage.svg';
 
 //Components
-import BigButton from '../../components/publicComponents/BigButton';
-import Recorder from '../../components/topicComponents/Recorder';
-import ErrorMessage from '../../components/publicComponents/ErrorMessage';
-import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
-import StepCount from '../../components/verificationComponent/StepCount';
+import BigButton from '../../../components/publicComponents/BigButton';
+import Recorder from '../../../components/topicComponents/Recorder';
+import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
+import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
+import StepCount from '../../../components/verificationComponent/StepCount';
 
 const VoiceVerificationScreen = ({ navigation }) => {
   const [recordingFile, setRecordingFile] = useState('');

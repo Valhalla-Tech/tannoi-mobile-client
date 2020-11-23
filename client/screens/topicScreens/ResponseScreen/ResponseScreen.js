@@ -5,15 +5,15 @@ import {
   Text,
   FlatList
 } from 'react-native';
-import { bold } from '../../assets/FontSize';
+import { bold } from '../../../assets/FontSize';
 import { useDispatch, useSelector } from 'react-redux';
-import { getResponse, getSingleResponse, clearResponse } from '../../store/actions/ResponseAction';
+import { getResponse, getSingleResponse, clearResponse } from '../../../store/actions/ResponseAction';
 
 //Components
-import BackButton from '../../components/publicComponents/BackButton';
-import DiscussionScreenPlayerCard from '../../components/topicComponents/discussionScreenComponents/DiscussionScreenPlayerCard';
-import ClosedCard from '../../components/topicComponents/discussionScreenComponents/ClosedCard';
-import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
+import BackButton from '../../../components/publicComponents/BackButton';
+import DiscussionScreenPlayerCard from '../../../components/topicComponents/discussionScreenComponents/DiscussionScreenPlayerCard';
+import ClosedCard from '../../../components/topicComponents/discussionScreenComponents/ClosedCard';
+import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 
 const ReplyScreen = ({route, navigation}) => {
   const [fromNextPreviousButton, setFromNextPreviousButton] = useState(false);

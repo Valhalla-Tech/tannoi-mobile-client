@@ -8,24 +8,24 @@ import {
   Keyboard,
   ScrollView
 } from 'react-native';
-import { bold, normal } from '../../assets/FontSize';
+import { bold, normal } from '../../../assets/FontSize';
 import { Picker } from '@react-native-community/picker';
 import AsyncStorage from '@react-native-community/async-storage';
 import {
   useSelector,
   useDispatch
 } from 'react-redux';
-import { getTopic } from '../../store/actions/TopicAction';
-import { userLogout } from '../../store/actions/LoginAction';
+import { getTopic } from '../../../store/actions/TopicAction';
+import { userLogout } from '../../../store/actions/LoginAction';
 import axios from 'axios';
-import BaseUrl from '../../constants/BaseUrl';
+import BaseUrl from '../../../constants/BaseUrl';
 
 //Components
-import BackButton from '../../components/publicComponents/BackButton';
-import FormInput from '../../components/publicComponents/FormInput';
-import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
-import Recorder from '../../components/topicComponents/Recorder';
-import ErrorMessage from '../../components/publicComponents/ErrorMessage';
+import BackButton from '../../../components/publicComponents/BackButton';
+import FormInput from '../../../components/publicComponents/FormInput';
+import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
+import Recorder from '../../../components/topicComponents/Recorder';
+import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 
 const NewDiscussionScreen = ({ navigation }) => {
   const [discussionTitle, setDiscussionTitle] = useState('');

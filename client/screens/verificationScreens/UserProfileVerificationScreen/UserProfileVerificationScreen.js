@@ -11,17 +11,17 @@ import {
 import { Picker } from '@react-native-community/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useSelector, useDispatch } from 'react-redux';
-import { inputUserProfile, addStepCount } from '../../store/actions/VerificationAction';
-import { bold, normal } from '../../assets/FontSize';
+import { inputUserProfile, addStepCount } from '../../../store/actions/VerificationAction';
+import { bold, normal } from '../../../assets/FontSize';
 
 //Image
-import VerificationScreenImage from '../../assets/verificationAssets/verificationScreenImage.svg';
+import VerificationScreenImage from '../../../assets/verificationAssets/verificationScreenImage.svg';
 
 //Components
-import BigButton from '../../components/publicComponents/BigButton';
-import FormInput from '../../components/publicComponents/FormInput';
-import ErrorMessage from '../../components/publicComponents/ErrorMessage';
-import StepCount from '../../components/verificationComponent/StepCount';
+import BigButton from '../../../components/publicComponents/BigButton';
+import FormInput from '../../../components/publicComponents/FormInput';
+import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
+import StepCount from '../../../components/verificationComponent/StepCount';
 
 const UserProfileVerificationScreen = ({ navigation }) => {
   const firstNameFromStore = useSelector(state => state.VerificationReducer.firstName);

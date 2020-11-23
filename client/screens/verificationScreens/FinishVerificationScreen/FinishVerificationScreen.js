@@ -4,13 +4,13 @@ import {
   Text,
   StyleSheet
 } from 'react-native';
-import { bold, normal } from '../../assets/FontSize';
+import { bold, normal } from '../../../assets/FontSize';
 
 //Icon
-import TickIcon from '../../assets/verificationAssets/tickIcon.svg';
+import TickIcon from '../../../assets/verificationAssets/tickIcon.svg';
 
 //Component
-import BigButton from '../../components/publicComponents/BigButton';
+import BigButton from '../../../components/publicComponents/BigButton';
 
 const FinishVerificationScreen = ({ navigation }) => {
   const nextButton = () => {

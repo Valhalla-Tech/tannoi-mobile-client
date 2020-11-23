@@ -51,6 +51,7 @@ const EnterYourProfileScreen = ({ navigation }) => {
 
   const enterYourProfileRequest = async () => {
     try {
+      setIsLoading(true);
       let checker = /[A-Za-z0-9]+/g;
       let fullNameCheck = fullName.match(checker);
 
@@ -95,7 +96,7 @@ const EnterYourProfileScreen = ({ navigation }) => {
         }
       }
     } catch (error) {
-      // setIsLoading(false);
+      setIsLoading(false);
       console.log(error);
     }
   };

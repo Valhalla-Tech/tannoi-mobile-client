@@ -6,18 +6,18 @@ import {
   TouchableOpacity,
   FlatList
 } from 'react-native';
-import { bold } from '../../assets/FontSize';
+import { bold } from '../../../assets/FontSize';
 import { useDispatch, useSelector } from 'react-redux';
-import { getDiscussion, clearDiscussion } from '../../store/actions/DiscussionAction';
-import { getResponse, clearResponse } from '../../store/actions/ResponseAction';
+import { getDiscussion, clearDiscussion } from '../../../store/actions/DiscussionAction';
+import { getResponse, clearResponse } from '../../../store/actions/ResponseAction';
 
 //Components
-import BackButton from '../../components/publicComponents/BackButton';
-import DiscussionScreenDiscussionCard from '../../components/topicComponents/discussionScreenComponents/DiscussionScreenDiscussionCard';
-import DiscussionScreenPlayerCard from '../../components/topicComponents/discussionScreenComponents/DiscussionScreenPlayerCard';
-import AddResponse from '../../components/topicComponents/discussionScreenComponents/AddResponse';
-import ClosedCard from '../../components/topicComponents/discussionScreenComponents/ClosedCard';
-import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
+import BackButton from '../../../components/publicComponents/BackButton';
+import DiscussionScreenDiscussionCard from '../../../components/topicComponents/discussionScreenComponents/DiscussionScreenDiscussionCard';
+import DiscussionScreenPlayerCard from '../../../components/topicComponents/discussionScreenComponents/DiscussionScreenPlayerCard';
+import AddResponse from '../../../components/topicComponents/discussionScreenComponents/AddResponse';
+import ClosedCard from '../../../components/topicComponents/discussionScreenComponents/ClosedCard';
+import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 
 const DiscussionScreen = ({ route, navigation }) => {
   const [openAddResponseModal, setOpenAddResponseModal] = useState(false);

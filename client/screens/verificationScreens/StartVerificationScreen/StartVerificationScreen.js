@@ -6,14 +6,14 @@ import {
   StyleSheet
 } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { deleteVerificationData } from '../../store/actions/VerificationAction';
-import { bold, normal } from '../../assets/FontSize';
+import { deleteVerificationData } from '../../../store/actions/VerificationAction';
+import { bold, normal } from '../../../assets/FontSize';
 
 //Image
-import VerificationScreenImage from '../../assets/verificationAssets/verificationScreenImage.svg';
+import VerificationScreenImage from '../../../assets/verificationAssets/verificationScreenImage.svg';
 
 //Component
-import BigButton from '../../components/publicComponents/BigButton';
+import BigButton from '../../../components/publicComponents/BigButton';
 
 const StartVerificationScreen = ({ navigation }) => {
   const dispatch = useDispatch();

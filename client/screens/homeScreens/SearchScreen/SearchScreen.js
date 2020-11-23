@@ -7,9 +7,9 @@ import {
 } from 'react-native';
 
 //Components
-import SearchBar from '../../components/homeComponents/SearchBar';
-import RecentSearches from '../../components/homeComponents/searchScreenComponents/RecentSearches';
-import SearchResultBox from '../../components/homeComponents/searchScreenComponents/SearchResultBox';
+import SearchBar from '../../../components/homeComponents/SearchBar';
+import RecentSearches from '../../../components/homeComponents/searchScreenComponents/RecentSearches';
+import SearchResultBox from '../../../components/homeComponents/searchScreenComponents/SearchResultBox';
 
 const SearchScreen = ({ navigation }) => {
   const [searchInput, setSearchInput] = useState('');

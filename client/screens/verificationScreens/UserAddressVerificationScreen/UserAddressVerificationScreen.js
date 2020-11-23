@@ -9,19 +9,19 @@ import {
   ScrollView
 } from 'react-native';
 import { Picker } from '@react-native-community/picker';
-import { bold, normal } from '../../assets/FontSize';
+import { bold, normal } from '../../../assets/FontSize';
 import { useSelector, useDispatch } from 'react-redux';
-import { inputUserAddress, addStepCount } from '../../store/actions/VerificationAction';
-import ErrorMessage from '../../components/publicComponents/ErrorMessage';
+import { inputUserAddress, addStepCount } from '../../../store/actions/VerificationAction';
+import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import axios from 'axios';
 
 //Image
-import VerificationScreenImage from '../../assets/verificationAssets/verificationScreenImage.svg';
+import VerificationScreenImage from '../../../assets/verificationAssets/verificationScreenImage.svg';
 
 //Components
-import BigButton from '../../components/publicComponents/BigButton';
-import FormInput from '../../components/publicComponents/FormInput';
-import StepCount from '../../components/verificationComponent/StepCount';
+import BigButton from '../../../components/publicComponents/BigButton';
+import FormInput from '../../../components/publicComponents/FormInput';
+import StepCount from '../../../components/verificationComponent/StepCount';
 
 const UserAddressVerificationScreen = ({ navigation }) => {
   const streetFromStore = useSelector(state => state.VerificationReducer.street);
