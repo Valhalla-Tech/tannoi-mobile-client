@@ -25,6 +25,7 @@ import ActiveDownvote from '../../../assets/topicAssets/activeDownvote.svg';
 import DiscussionScreenPlayerCard from './DiscussionScreenPlayerCard';
 import LoadingSpinner from '../../publicComponents/LoadingSpinner';
 import OptionModal from './OptionModal';
+import PrivateDiscussionModal from '../PrivateDiscussionModal';
 
 const DiscussionScreenCard = props => {
   const {
@@ -51,6 +52,7 @@ const DiscussionScreenCard = props => {
   } = props;
 
   const [optionModal, setOptionModal] = useState(false);
+  const [privateModal, setPrivateModal] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -141,6 +143,14 @@ const DiscussionScreenCard = props => {
     setOptionModal(false);
   };
 
+  const openPrivateModal = () => {
+    setPrivateModal(true);
+  };
+
+  const closePrivateModal = () => {
+    setPrivateModal(false);
+  };
+
   const ProfileAndMenu = () => {
     return (
       <View style={styles.profileAndMenuContainerStyle}>
@@ -169,9 +179,16 @@ const DiscussionScreenCard = props => {
         <OptionModal 
           openOptionModal={optionModal}
           closeOptionModal={closeOptionModal}
-          deleteId={discussionId}
+          discussionId={discussionId}
           navigation={navigation}
           profileId={profileId}
+          openPrivateModal={openPrivateModal}
+        />
+        <PrivateDiscussionModal
+          openModal={privateModal}
+          closeModal={closePrivateModal}
+          fromDiscussionScreen={true}
+          discussionId={discussionId}
         />
       </View>
     );

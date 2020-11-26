@@ -30,7 +30,8 @@ export const getDiscussion = (discussionId) => {
             plays: getDiscussionRequest.data.play_count,
             recordingFile: getDiscussionRequest.data.voice_note_path,
             isLike: getDiscussionRequest.data.isLike,
-            isDislike: getDiscussionRequest.data.isDislike
+            isDislike: getDiscussionRequest.data.isDislike,
+            type: getDiscussionRequest.data.type
           }
         })
       }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -18,6 +18,7 @@ import DiscussionOfTheWeek from '../../../components/homeComponents/homeScreenCo
 import TopUsers from '../../../components/homeComponents/homeScreenComponents/TopUsers';
 import Trending from '../../../components/homeComponents/homeScreenComponents/HomeList';
 import RecommendedTopics from '../../../components/homeComponents/homeScreenComponents/RecommendedTopics';
+import NoticeModal from '../../../components/publicComponents/NoticeModal';
 
 const HomeScreen = ({ navigation }) => {
   const user = useSelector(state => state.HomeReducer.user);
@@ -26,16 +27,26 @@ const HomeScreen = ({ navigation }) => {
   const trending = useSelector(state => state.HomeReducer.trending);
   const recommendedTopic = useSelector(state => state.HomeReducer.recommendedTopic);
 
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
+    // const unsubscribe = navigation.addListener('focus', () => {
       dispatch(clearHome());
       dispatch(getHome());
       SplashScreen.hide();
-    });
+    // });
 
-    return unsubscribe;
+    // return unsubscribe;
   }, [navigation]);
 
   return (
@@ -55,6 +66,7 @@ const HomeScreen = ({ navigation }) => {
               listTitle="Discussion of the week"
               listData={discussionOfTheWeek}
               navigation={navigation}
+              openModal={openModal}
             />
             <TopUsers
               topUserData={topUser}
@@ -64,12 +76,18 @@ const HomeScreen = ({ navigation }) => {
               listTitle="Trending"
               listData={trending}
               navigation={navigation}
+              openModal={openModal}
             />
             <RecommendedTopics
               topicData={recommendedTopic}
             />
           </View>
         }
+      />
+      <NoticeModal 
+        openModal={modalIsOpen}
+        closeModal={closeModal}
+        message="You don't have access to this discussion"
       />
     </View>
   );

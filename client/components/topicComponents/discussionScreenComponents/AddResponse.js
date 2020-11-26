@@ -102,7 +102,7 @@ const AddResponse = props => {
     } catch (error) {
       setIsLoading(false);
       setAddResponseValidation(true);
-      console.log(error.response);
+      console.log(error);
       if (error.response.data.msg === 'You have to login first') {
         dispatch(userLogout());
       };

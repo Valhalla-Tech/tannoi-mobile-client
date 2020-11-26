@@ -19,7 +19,8 @@ const HomeList = props => {
   const { 
     listTitle, 
     listData,
-    navigation
+    navigation,
+    openModal
   } = props;
 
   const MoreButton = () => {
@@ -74,6 +75,9 @@ const HomeList = props => {
                   navigation={navigation}
                   topic={itemData.item.topic ? itemData.item.topic.name : ''}
                   isBorder={itemData.index === listData.length - 1 ? false : true}
+                  discussionType={itemData.item.type}
+                  openModal={openModal}
+                  isAuthorized={itemData.item.isAuthorized}
                 />
               </>
             )}

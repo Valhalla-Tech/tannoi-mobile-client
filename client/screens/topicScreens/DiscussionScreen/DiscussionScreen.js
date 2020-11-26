@@ -24,7 +24,7 @@ const DiscussionScreen = ({ route, navigation }) => {
   const [selectedCard, setSelectedCard] = useState('discussion');
   const [fromNextPreviousButton, setFromNextPreviousButton] = useState(false);
   const userType = useSelector(state => state.HomeReducer.user);
-  console.log(userType)
+
   const profileId = useSelector(state => state.DiscussionReducer.profileId);
   const profilePicture = useSelector(state => state.DiscussionReducer.profilePicture);
   const profileName = useSelector(state => state.DiscussionReducer.profileName);

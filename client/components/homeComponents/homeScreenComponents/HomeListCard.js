@@ -8,6 +8,9 @@ import {
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
 
+//Icon
+import LockIcon from '../../../assets/homeAssets/lockIcon.png';
+
 //Component
 import HomeListCardPlayer from './HomeListCardPlayer';
 
@@ -24,7 +27,10 @@ const HomeListCard = props => {
     navigation,
     recordingFile,
     topic,
-    isBorder
+    isBorder,
+    discussionType,
+    openModal,
+    isAuthorized
   } = props;
 
   const numberConverter = number => {
@@ -80,17 +86,36 @@ const HomeListCard = props => {
   };
 
   return (
-    <TouchableOpacity style={isBorder ? styles.homeListCardContainerStyle : {...styles.homeListCardContainerStyle, borderBottomWidth: 0, paddingBottom: "2%"}}
+    <TouchableOpacity 
+      style={
+        isBorder ? styles.homeListCardContainerStyle : 
+        {...styles.homeListCardContainerStyle, borderBottomWidth: 0, paddingBottom: "2%"}
+      }
+
       onPress={() => {
-        navigation.navigate('DiscussionScreen', {
-          discussionId: discussionId
-        })
+        if (discussionType === 2 && !isAuthorized) {
+          openModal();
+        } else if (discussionType === 2 && isAuthorized) {
+          navigation.navigate('DiscussionScreen', {
+            discussionId: discussionId
+          })
+        } else {
+          navigation.navigate('DiscussionScreen', {
+            discussionId: discussionId
+          })
+        };
       }}
     >
       <HomeListCardData />
       <View style={styles.playButtonAndDurationContainerStyle}>
         <Text style={styles.postTimeStyle}>{convertPostTime(postTime)}</Text>
-        <HomeListCardPlayer recordingFile={recordingFile} discussionId={discussionId} />
+        {
+          discussionType === 2 ? (
+              <Image source={LockIcon} style={styles.lockIconStyle} />
+            ) : (
+              <HomeListCardPlayer recordingFile={recordingFile} discussionId={discussionId} />
+          )
+        }
       </View>
     </TouchableOpacity>
   );
@@ -157,6 +182,12 @@ const styles = StyleSheet.create({
     fontSize: 12, 
     color: "#73798C",
     fontFamily: normal
+  },
+
+  lockIconStyle: {
+    width: "31%",
+    height: 48,
+    borderWidth: 1
   }
 });
 

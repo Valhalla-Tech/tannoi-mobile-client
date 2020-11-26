@@ -15,15 +15,16 @@ export const searchUser = (searchInput) => {
         }
       });
 
-      dispatch({
-        type: 'GET_FOLLOWERS',
-        payload: {
-          followers: searchUserRequest.data.data
-        }
-      });
+      if (searchUserRequest.data) {
+        dispatch({
+          type: 'GET_FOLLOWERS',
+          payload: {
+            followers: searchUserRequest.data.data
+          }
+        });
+      };
     } catch (error) {
       console.log(error);
-      console.log(error.response.data.msg);
       if (error.response.data.msg === 'You have to login first') {
         dispatch({
           type: 'LOGOUT',
@@ -33,5 +34,47 @@ export const searchUser = (searchInput) => {
         })
       };
     }
+  };
+};
+
+export const getAuthorizedFollowers = (discussionId, searchInput) => {
+  return async (dispatch) => {
+    try {
+      let access_token = await AsyncStorage.getItem('access_token');
+      let getAuthorizedFollowersRequest = await axios({
+        method: 'get',
+        url: `${BaseUrl}/discussions/see-private/${discussionId}${searchInput ? `?search=${searchInput}` : ''}`,
+        headers: {
+          'token': access_token
+        }
+      });
+
+      if (getAuthorizedFollowersRequest.data) {
+        let authorizedId = []
+        getAuthorizedFollowersRequest.data.data.forEach(data => {
+          if (data.isAuthorized) {
+            authorizedId.push(data.id);
+          };
+        });
+
+        dispatch({
+          type: 'GET_AUTHORIZED',
+          payload: {
+            authorized: getAuthorizedFollowersRequest.data.data,
+            authorizedId: authorizedId
+          }
+        });
+      };
+    } catch (error) {
+      console.log(error)
+      if (error.response.data.msg === 'You have to login first') {
+        dispatch({
+          type: 'LOGOUT',
+          payload: {
+            loginStatus: false
+          }
+        })
+      };
+    };
   };
 };

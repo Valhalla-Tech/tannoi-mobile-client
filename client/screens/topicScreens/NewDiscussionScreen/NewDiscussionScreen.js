@@ -17,6 +17,7 @@ import {
   useDispatch
 } from 'react-redux';
 import { getTopic } from '../../../store/actions/TopicAction';
+import { getHome, clearHome } from '../../../store/actions/HomeAction';
 import { userLogout } from '../../../store/actions/LoginAction';
 import axios from 'axios';
 import BaseUrl from '../../../constants/BaseUrl';
@@ -27,7 +28,7 @@ import FormInput from '../../../components/publicComponents/FormInput';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 import Recorder from '../../../components/topicComponents/Recorder';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
-import PrivateDiscussionModal from '../../../components/topicComponents/newDiscussionScreenComponent/PrivateDiscussionModal';
+import PrivateDiscussionModal from '../../../components/topicComponents/PrivateDiscussionModal';
 
 const NewDiscussionScreen = ({ navigation }) => {
   const [discussionTitle, setDiscussionTitle] = useState('');
@@ -109,11 +110,13 @@ const NewDiscussionScreen = ({ navigation }) => {
 
       formData.append('topic_id', selectedTopic);
 
-      formData.append('status', selectAll || selectedFollowers.length > 0 ? '2' : '1');
+      formData.append('status', '1');
+
+      formData.append('type', selectAll || selectedFollowers.length > 0 ? '2' : '1');
 
       selectedFollowers.length > 0 && formData.append('userArr', selectedFollowers);
 
-      selectAll && formData.append('all_followers', true);
+      selectAll && formData.append('all_follower', true);
 
       formData.append('hashtag', JSON.stringify(hashtags));
 
@@ -135,7 +138,8 @@ const NewDiscussionScreen = ({ navigation }) => {
 
       if (createNewDiscussionRequest.data) {
         setIsLoading(false);
-        console.log(createNewDiscussionRequest.data);
+        dispatch(clearHome());
+        dispatch(getHome());
         navigation.navigate('DiscussionScreen', {
           discussionId: createNewDiscussionRequest.data.id,
           fromNewDiscussion: true
@@ -201,6 +205,7 @@ const NewDiscussionScreen = ({ navigation }) => {
           openModalOption={modalOption}
           changeModalOption={changeModalOption}
           isFilled={selectAll || selectedFollowers.length > 0 ? true : false}
+          selectedFollowers={selectedFollowers}
         />
       </View>
     );
@@ -234,6 +239,7 @@ const NewDiscussionScreen = ({ navigation }) => {
         <FormInput
           formInputTitle="Discussion title"
           dataInput={discussionTitleInput}
+          capitalize={true}
         />
         <Text style={styles.formInputTitleStyle}>Topic</Text>
         <Picker

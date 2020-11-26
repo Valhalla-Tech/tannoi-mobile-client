@@ -1,5 +1,7 @@
 const defaultState = {
-  followers: []
+  followers: [],
+  authorized: [],
+  authorizedId: []
 }
 
 const reducer = (state = defaultState, action) => {
@@ -8,6 +10,11 @@ const reducer = (state = defaultState, action) => {
       let setFollowers = action.payload.followers;
 
       return {...state, followers: setFollowers};
+    case 'GET_AUTHORIZED':
+      let setAuthorized = action.payload.authorized;
+      let setAuthorizedId = action.payload.authorizedId;
+
+      return {...state, authorized: setAuthorized, authorizedId: setAuthorizedId};
     default:
       return state;
   }

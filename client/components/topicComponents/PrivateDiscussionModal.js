@@ -8,39 +8,54 @@ import {
   Image,
   FlatList
 } from 'react-native';
-import { bold, normal } from '../../../assets/FontSize';
+import { bold, normal } from '../../assets/FontSize';
 import { useSelector, useDispatch } from 'react-redux';
-import { searchUser } from '../../../store/actions/PrivateDiscussionAction';
+import { searchUser, getAuthorizedFollowers } from '../../store/actions/PrivateDiscussionAction';
+import AsyncStorage from '@react-native-community/async-storage';
+import axios from 'axios';
+import BaseUrl from '../../constants/BaseUrl';
 
 //Components
-import FormInput from '../../publicComponents/FormInput';
-import BigButton from '../../publicComponents/BigButton';
+import FormInput from '../publicComponents/FormInput';
+import BigButton from '../publicComponents/BigButton';
 
 const PrivateDiscussionModal = props => {
-  const [searchKeyword, setSearchKeyword] = useState('');
-  const [selectedUser, setSelectedUser] = useState([]);
-  const [isSelectAll, setIsSelectAll] = useState(false);
-
   const {
     openModal,
     closeModal,
     addSelectedFollowers,
     openModalOption,
     changeModalOption,
-    isFilled
+    isFilled,
+    selectedFollowers,
+    fromDiscussionScreen,
+    discussionId
   } = props;
-
+  
+  const followers = useSelector(state => state.PrivateDiscussionReducer.followers);
+  const authorized = useSelector(state => state.PrivateDiscussionReducer.authorized);
+  const authorizedId = useSelector(state => state.PrivateDiscussionReducer.authorizedId);
+  
+  const [selectedUser, setSelectedUser] = useState(fromDiscussionScreen ? authorizedId : selectedFollowers);
+  const [isSelectAll, setIsSelectAll] = useState(false);
+  
   const dispatch = useDispatch();
 
-  const followers = useSelector(state => state.PrivateDiscussionReducer.followers);
 
   useEffect(() => {
-    dispatch(searchUser());
+    if (fromDiscussionScreen) {
+      dispatch(getAuthorizedFollowers(discussionId));
+    } else {
+      dispatch(searchUser());
+    }
   }, []);
 
   const searchUserName = searchInput => {
-    setSearchKeyword(searchInput);
-    dispatch(searchUser(searchInput));
+    if (fromDiscussionScreen) {
+      dispatch(getAuthorizedFollowers(discussionId, searchInput));
+    } else {
+      dispatch(searchUser(searchInput));
+    };
   };
 
   const selectUser = userId => {
@@ -65,7 +80,7 @@ const PrivateDiscussionModal = props => {
     setIsSelectAll(previousState => !previousState);
   };
 
-  const FollowerList = ({ profileImage, profileName, userId }) => {
+  const FollowerList = ({ profileImage, profileName, userId, isAuthorized }) => {
     return (
       <TouchableOpacity disabled={isSelectAll ? true : false} onPress={() => isSelected(userId) ? deselectUser(userId) : selectUser(userId)} style={styles.followerDataContainerStyle}>
         <View style={isSelected(userId) || isSelectAll ? {...styles.followerDataStyle, backgroundColor: "#6505E1", borderRadius: 10} : styles.followerDataStyle}>
@@ -77,8 +92,44 @@ const PrivateDiscussionModal = props => {
   };
 
   const renderFollowerList = itemData => (
-    <FollowerList profileImage={itemData.item.profile_photo_path} profileName={itemData.item.name} userId={itemData.item.id} />
+    <FollowerList 
+      profileImage={itemData.item.profile_photo_path} 
+      profileName={itemData.item.name} 
+      userId={itemData.item.id}
+    />
   );
+
+  const editList = async () => {
+    try {
+      let access_token = await AsyncStorage.getItem('access_token');
+
+      let editAuthorizedListRequest = await axios({
+        method: 'put',
+        url: `${BaseUrl}/discussions/edit-private/${discussionId}`,
+        headers: {
+          'token': access_token
+        },
+        data: {
+          'allFollower': isSelectAll,
+          'userArr': JSON.stringify(selectedUser)
+        }
+      });
+
+      if (editAuthorizedListRequest.data) {
+        closeModal();
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const submitList = async () => {
+    if (fromDiscussionScreen) {
+      editList();
+    } else {
+      addSelectedFollowers(selectedUser, isSelectAll);
+    }
+  };
 
   const Buttons = () => {
     return (
@@ -103,7 +154,7 @@ const PrivateDiscussionModal = props => {
             width: "30%",
             height: "80%"
           }}
-          buttonFunction={() => addSelectedFollowers(selectedUser, isSelectAll)}
+          buttonFunction={submitList}
         />
       </View>
     );
@@ -126,7 +177,7 @@ const PrivateDiscussionModal = props => {
       </View>
     );
   };
-console.log(isFilled)
+
   return (
     <Modal
       animationType="fade"
@@ -160,8 +211,15 @@ console.log(isFilled)
                     }}
                     dataInput={searchUserName}
                   />
+                  {
+                    selectedUser.length !== 0 && !isSelectAll && <Text style={styles.counterTextStyle}>You have selected {selectedUser.length} people</Text>
+                  }
+                  {
+                    isSelectAll && <Text style={styles.counterTextStyle}>You have selected all of your followers</Text>
+                  }
                   <FlatList
-                    data={followers}
+                    data={fromDiscussionScreen ? authorized : followers}
+                    keyExtractor={(item, index) => index.toString()}
                     renderItem={renderFollowerList}
                   />
                   <Buttons />
@@ -201,6 +259,12 @@ const styles = StyleSheet.create({
     color: "#73798C",
     fontSize:16,
     marginBottom: "3%"
+  },
+
+  counterTextStyle: {
+    marginBottom: "2%",
+    color: "#6505E1",
+    fontFamily: normal
   },
 
   followerDataContainerStyle: {

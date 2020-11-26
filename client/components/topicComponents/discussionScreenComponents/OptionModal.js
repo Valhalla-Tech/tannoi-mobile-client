@@ -9,7 +9,8 @@ import {
 import { normal, bold } from '../../../assets/FontSize';
 import BigButton from '../../publicComponents/BigButton';
 import { useDispatch, useSelector } from 'react-redux';
-import { getOneProfile } from '../../../store/actions/ProfileAction'
+import { getOneProfile } from '../../../store/actions/ProfileAction';
+import { getHome, clearHome } from '../../../store/actions/HomeAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import BaseUrl from '../../../constants/BaseUrl';
@@ -18,12 +19,14 @@ const OptionModal = props => {
   const {
     openOptionModal,
     closeOptionModal,
-    deleteId,
+    discussionId,
     navigation,
-    profileId
+    profileId,
+    openPrivateModal
   } = props;
 
   const userId = useSelector(state => state.ProfileReducer.userProfile.id);
+  const type = useSelector(state => state.DiscussionReducer.type);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -37,6 +40,7 @@ const OptionModal = props => {
       <TouchableOpacity
         onPress={() => {
           buttonTitle === 'Delete discussion' && setDeleteOption(true);
+          buttonTitle === 'Edit participant list' && openPrivateModal();
         }}
       >
         <Text style={styles.optionModalButtonTextStyle}>{buttonTitle}</Text>
@@ -82,13 +86,15 @@ const OptionModal = props => {
 
       let deleteDiscussionOrResponseRequest = await axios({
         method: 'delete',
-        url: `${BaseUrl}/discussions/delete/${deleteId}`,
+        url: `${BaseUrl}/discussions/delete/${discussionId}`,
         headers: {
           'token': access_token
         }
       })
 
       if (deleteDiscussionOrResponseRequest.data) {
+        dispatch(clearHome());
+        dispatch(getHome());
         navigation.navigate('MainAppNavigation');
       };
     } catch (error) {
@@ -117,6 +123,7 @@ const OptionModal = props => {
               <>
                 {OptionModalButton('Share this discussion')}
                 {profileId === userId && OptionModalButton('Edit discussion')}
+                {profileId === userId && type === 2 && OptionModalButton('Edit participant list')}
                 {profileId === userId && OptionModalButton('Delete discussion')}
               </>
             ) : (
