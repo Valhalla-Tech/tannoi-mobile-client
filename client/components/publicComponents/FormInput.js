@@ -23,10 +23,6 @@ const FormInput = props => {
       onChangeText={value => dataInput(value)}
       secureTextEntry={formInputTitle === 'Password' || formInputTitle === 'New password' || formInputTitle === 'Confirm new password' ? true : false}
       autoCapitalize={capitalize ? "sentences" : "none"}
-      //   formInputTitle === 'Full name' || 
-      //   formInputTitle === 'Add caption (Optional)' ||
-      //   formInputTitle === 'Discussion title' ? "sentences" : "none"
-      // }
     />
   );
 };

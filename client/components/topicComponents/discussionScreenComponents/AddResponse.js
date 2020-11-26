@@ -152,6 +152,7 @@ const AddResponse = props => {
             <FormInput
               formInputTitle="Add caption"
               dataInput={inputCaption}
+              capitalize={true}
             />
             {
               addResponseValidation && (
