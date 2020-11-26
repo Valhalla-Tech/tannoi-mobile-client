@@ -13,7 +13,7 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 import Slider from '@react-native-community/slider';
 import { connect } from 'react-redux';
-import { getHome } from '../../../store/actions/HomeAction';
+import { getHome, clearHome } from '../../../store/actions/HomeAction';
 import { getDiscussion } from '../../../store/actions/DiscussionAction';
 import { getResponse, getSingleResponse, clearResponse } from '../../../store/actions/ResponseAction';
 import LoadingSpinner from '../../publicComponents/LoadingSpinner';
@@ -151,6 +151,7 @@ class DiscussionScreenPlayerCard extends Component {
 
       if (this.player.isPlaying && !error && !this.state.isPaused) {
         this.playCounter(this.state.responseId ? true : false);
+        this.props.clearHome();
         this.props.getHome();
       };
 
@@ -552,6 +553,7 @@ const mapStateToProps = (state) => {
 const dispatchUpdate = () => {
   return {
     getHome,
+    clearHome,
     getDiscussion,
     getResponse,
     getSingleResponse,

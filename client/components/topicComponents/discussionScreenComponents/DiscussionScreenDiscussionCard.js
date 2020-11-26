@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
 import { useDispatch } from 'react-redux';
-import { getHome } from '../../../store/actions/HomeAction';
+import { getHome, clearHome } from '../../../store/actions/HomeAction';
 import { getDiscussion } from '../../../store/actions/DiscussionAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
@@ -84,6 +84,7 @@ const DiscussionScreenCard = props => {
 
       if (upvoteRequest.data) {
         dispatch(getDiscussion(discussionId));
+        dispatch(clearHome());
         dispatch(getHome());
       }
     } catch (error) {
@@ -105,6 +106,7 @@ const DiscussionScreenCard = props => {
 
       if (downvoteRequest.data) {
         dispatch(getDiscussion(discussionId));
+        dispatch(clearHome());
         dispatch(getHome());
       }
     } catch (error) {

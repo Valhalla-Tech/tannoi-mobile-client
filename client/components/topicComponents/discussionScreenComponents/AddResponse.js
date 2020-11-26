@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { bold } from '../../../assets/FontSize';
 import { useDispatch } from 'react-redux';
-import { getHome } from '../../../store/actions/HomeAction';
+import { getHome, clearHome } from '../../../store/actions/HomeAction';
 import { getDiscussion } from '../../../store/actions/DiscussionAction';
 import { getResponse, getSingleResponse } from '../../../store/actions/ResponseAction';
 import { userLogout } from '../../../store/actions/LoginAction';
@@ -91,7 +91,8 @@ const AddResponse = props => {
             };
             dispatch(getSingleResponse(responseId, 'getDataForResponse'));
             dispatch(getSingleResponse(responseScreenResponseId));
-          }
+          };
+          dispatch(clearHome());
           dispatch(getHome());
           dispatch(getDiscussion(discussionId));
           setRecordingFile('');
