@@ -23,6 +23,9 @@ import TopicNavigation from '../../navigations/TopicNavigation';
 import InboxNavigation from '../../navigations/InboxNavigation';
 import MeNavigation from '../../navigations/MeNavigation';
 
+//Screen
+import NewDiscussionScreen from '../../screens/topicScreens/NewDiscussionScreen';
+
 const Tab = createBottomTabNavigator();
 
 const NavigationBar = props => {
@@ -100,7 +103,7 @@ const NavigationBar = props => {
       />
       <Tab.Screen 
         name="new discussion" 
-        component={newDiscussionScreenButton}
+        component={NewDiscussionScreen}
         options={{
           tabBarLabel: "",
           tabBarIcon: () => (

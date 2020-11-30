@@ -39,7 +39,7 @@ const OptionModal = props => {
     return (
       <TouchableOpacity
         onPress={() => {
-          buttonTitle === 'Delete discussion' && setDeleteOption(true);
+          buttonTitle === 'Delete' && setDeleteOption(true);
           buttonTitle === 'Edit participant list' && openPrivateModal();
         }}
       >
@@ -51,8 +51,11 @@ const OptionModal = props => {
   const DeleteOption = () => {
     return (
       <>
+        <Text style={styles.headerTextStyle}>
+          Delete
+        </Text>
         <Text style={styles.deleteOptionTextStyle}>
-          Once the discussion is deleted you cannot recover it. All response on this discussion will be deleted too.
+          Once a discussion is deleted, you can't recover it. All responses associated with this discussion will be deleted too.
         </Text>
         <View style={styles.deleteConfirmationButtonContainerStyle}>
           <BigButton
@@ -61,7 +64,8 @@ const OptionModal = props => {
               color: "#5152D0",
               borderColor: "#5152D0",
               marginRight: "2%",
-              width: "35%"
+              width: "35%",
+              height: "60%"
             }}
             buttonFunction={() => setDeleteOption(false)}
           />
@@ -71,7 +75,8 @@ const OptionModal = props => {
               color: "#FFFFFF",
               borderColor: "#5152D0",
               backgroundColor: "#5152D0",
-              width: "35%"
+              width: "35%",
+              height: "60%"
             }}
             buttonFunction={() => DeleteDiscussionOrResponse()}
           />
@@ -117,14 +122,17 @@ const OptionModal = props => {
         }} ></TouchableOpacity>
       </View>
       <View style={styles.optionModalContainerStyle}>
-        <View style={deleteOption ? {...styles.modalOptionStyle, width: "75%", height: "25%"} : styles.modalOptionStyle}>
+        <View style={deleteOption ? {...styles.modalOptionStyle, width: "75%", height: "28.5%"} : styles.modalOptionStyle}>
           {
             !deleteOption ? (
               <>
-                {OptionModalButton('Share this discussion')}
-                {profileId === userId && OptionModalButton('Edit discussion')}
+                <Text style={styles.headerTextStyle}>
+                  Discussion
+                </Text>
+                {OptionModalButton('Share')}
+                {profileId === userId && OptionModalButton('Edit')}
                 {profileId === userId && type === 2 && OptionModalButton('Edit participant list')}
-                {profileId === userId && OptionModalButton('Delete discussion')}
+                {profileId === userId && OptionModalButton('Delete')}
               </>
             ) : (
               <DeleteOption />
@@ -152,7 +160,7 @@ const styles = StyleSheet.create({
 
   modalOptionStyle: {
     width: "60%",
-    // height: "20%",
+    minHeight: "28.5%",
     borderRadius: 20,
     padding: "5%",
     backgroundColor: "#FFFFFF",
@@ -170,6 +178,13 @@ const styles = StyleSheet.create({
     height: "50%",
     paddingTop: "5%",
     justifyContent: "flex-end"
+  },
+
+  headerTextStyle: {
+    fontFamily: bold,
+    color: "#6505E1",
+    fontSize: 16,
+    padding: "2%"
   },
 
   deleteOptionTextStyle: {
