@@ -32,6 +32,8 @@ import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner'
 import Recorder from '../../../components/topicComponents/Recorder';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import PrivateDiscussionModal from '../../../components/topicComponents/PrivateDiscussionModal';
+import NoticeModal from '../../../components/publicComponents/NoticeModal';
+import BigButton from '../../../components/publicComponents/BigButton';
 
 const NewDiscussionScreen = ({ navigation }) => {
   const [discussionTitle, setDiscussionTitle] = useState('');
@@ -44,6 +46,7 @@ const NewDiscussionScreen = ({ navigation }) => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedFollowers, setSelectedFollowers] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
+  const [noticeModal, setNoticeModal] = useState(false);
 
   const topics = useSelector(state => state.TopicReducer.topics);
   const dispatch = useDispatch();
@@ -182,6 +185,43 @@ const NewDiscussionScreen = ({ navigation }) => {
     }
   };
 
+  const openNoticeModal = () => {
+    setNoticeModal(true);
+  };
+
+  const closeNoticeModal = () => {
+    setNoticeModal(false);
+  };
+
+  const noticeModalButton = () => {
+    return (
+      <View style={styles.noticeModalButtonContainerStyle}>
+        <BigButton
+          buttonTitle="Cancel"
+          buttonStyle={{
+            color: "#5152D0",
+            borderColor: "#5152D0",
+            marginRight: "2%",
+            width: "35%",
+            height: "60%"
+          }}
+          buttonFunction={closeNoticeModal}
+        />
+        <BigButton
+          buttonTitle="Go back"
+          buttonStyle={{
+            color: "#FFFFFF",
+            borderWidth: 0,
+            backgroundColor: "#6505E1",
+            width: "35%",
+            height: "60%"
+          }}
+          buttonFunction={() => navigation.goBack()}
+        />
+      </View>
+    );
+  };
+
   const PrivateDiscussionSwitch = () => {
     return (
       <View style={styles.privateDiscussionSwitchContainerStyle}>
@@ -216,11 +256,11 @@ const NewDiscussionScreen = ({ navigation }) => {
       <View style={styles.newDiscussionUpperBarStyle}>
         <View style={styles.backButtonAndTitleContainerStyle}>
           <BackButton
-            navigation={navigation}
             styleOption={{
               marginTop: 0,
               marginBottom: 0
             }}
+            buttonFunction={openNoticeModal}
           />
           <Text style={styles.newDiscussionTitleStyle}>New discussion</Text>
         </View>
@@ -293,6 +333,15 @@ const NewDiscussionScreen = ({ navigation }) => {
               )
             }
           </View>
+          <NoticeModal 
+            openModal={noticeModal}
+            closeModal={closeNoticeModal}
+            message="Are you sure you want to go back? Your progress will not be saved"
+            modalButton={noticeModalButton}
+            customStyle={{
+              height: "20%"
+            }}
+          />
         </View>
       </TouchableWithoutFeedback>
     </ScrollView>
@@ -378,6 +427,14 @@ const styles = StyleSheet.create({
 
   recorderContainerStyle: {
     marginBottom: "20%"
+  },
+
+  noticeModalButtonContainerStyle: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    marginTop: "5%",
+    width: "100%"
   }
 });
 

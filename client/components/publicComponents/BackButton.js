@@ -10,41 +10,28 @@ const BackButton = props => {
   const { 
     navigation,
     screen,
-    styleOption
+    styleOption,
+    buttonFunction
   } = props;
 
   return (
-    <>
-      {
-        screen ? (
-          <>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate(screen);
-              }}
-            >
-            <BackButtonIcon
-              width={20}
-              height={25}
-              style={{...styles.backButtonStyle, ...styleOption}}
-            />
-          </TouchableOpacity>
-        </>
-        ) : (
-          <>
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-            >
-              <BackButtonIcon 
-                width={20}
-                height={25}
-                style={{...styles.backButtonStyle, ...styleOption}}
-              />
-            </TouchableOpacity>
-          </>
-        )
-      }
-    </>
+    <TouchableOpacity
+      onPress={() => {
+        if (buttonFunction) {
+          buttonFunction();
+        } else if (screen) {
+          navigation.navigate(screen);
+        } else {
+          navigation.goBack();
+        }
+      }}
+    >
+      <BackButtonIcon
+        width={20}
+        height={25}
+        style={{...styles.backButtonStyle, ...styleOption}}
+      />
+  </TouchableOpacity>
   );
 };
 

@@ -12,7 +12,9 @@ const NoticeModal = props => {
   const {
     openModal,
     closeModal,
-    message
+    message,
+    modalButton,
+    customStyle
   } = props;
 
   return (
@@ -27,8 +29,9 @@ const NoticeModal = props => {
         }} ></TouchableOpacity>
       </View>
       <View style={styles.modalContainerStyle}>
-        <View style={styles.noticeModalStyle}>
+        <View style={{...styles.noticeModalStyle, ...customStyle}}>
           <Text style={styles.textStyle}>{message}</Text>
+          {modalButton && modalButton()}
         </View>
       </View>
     </Modal>
@@ -61,7 +64,10 @@ const styles = StyleSheet.create({
 
   textStyle: {
     fontFamily: bold,
-    color: "#6505E1"
+    color: "#6505E1",
+    lineHeight: 25,
+    fontSize: 16,
+    padding: "2%"
   }
 });
 
