@@ -15,6 +15,9 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import BaseUrl from '../../constants/BaseUrl';
 
+//Icon
+import XMark from '../../assets/topicAssets/x-mark.svg';
+
 //Components
 import FormInput from '../publicComponents/FormInput';
 import BigButton from '../publicComponents/BigButton';
@@ -24,10 +27,9 @@ const PrivateDiscussionModal = props => {
     openModal,
     closeModal,
     addSelectedFollowers,
-    openModalOption,
-    changeModalOption,
     isFilled,
     selectedFollowers,
+    selectedAll,
     fromDiscussionScreen,
     discussionId
   } = props;
@@ -35,26 +37,29 @@ const PrivateDiscussionModal = props => {
   const followers = useSelector(state => state.PrivateDiscussionReducer.followers);
   const authorized = useSelector(state => state.PrivateDiscussionReducer.authorized);
   const authorizedId = useSelector(state => state.PrivateDiscussionReducer.authorizedId);
+  const noFollowers = useSelector(state => state.PrivateDiscussionReducer.noFollowers);
   
   const [selectedUser, setSelectedUser] = useState(fromDiscussionScreen ? authorizedId : selectedFollowers);
-  const [isSelectAll, setIsSelectAll] = useState(false);
+  const [isSelectAll, setIsSelectAll] = useState(selectedAll);
+  const [searchKeyword, setSearchKeyword] = useState('');
   
   const dispatch = useDispatch();
 
-
   useEffect(() => {
     if (fromDiscussionScreen) {
-      dispatch(getAuthorizedFollowers(discussionId));
+      dispatch(getAuthorizedFollowers(discussionId, false, true));
     } else {
-      dispatch(searchUser());
+      dispatch(searchUser(false, true));
     }
   }, []);
 
-  const searchUserName = searchInput => {
+  const searchUserName = (searchInput, clearSearch) => {
+    setSearchKeyword(clearSearch ? '' : searchInput);
+
     if (fromDiscussionScreen) {
-      dispatch(getAuthorizedFollowers(discussionId, searchInput));
+      dispatch(getAuthorizedFollowers(discussionId, clearSearch ? '' : searchInput));
     } else {
-      dispatch(searchUser(searchInput));
+      dispatch(searchUser(clearSearch ? '' : searchInput));
     };
   };
 
@@ -78,6 +83,7 @@ const PrivateDiscussionModal = props => {
 
   const selectAllUser = () => {
     setIsSelectAll(previousState => !previousState);
+    isSelectAll ? setSelectedUser([]) : null;
   };
 
   const FollowerList = ({ profileImage, profileName, userId, isAuthorized }) => {
@@ -110,7 +116,7 @@ const PrivateDiscussionModal = props => {
           'token': access_token
         },
         data: {
-          'allFollower': isSelectAll,
+          'all_follower': isSelectAll,
           'userArr': JSON.stringify(selectedUser)
         }
       });
@@ -160,24 +166,6 @@ const PrivateDiscussionModal = props => {
     );
   };
 
-  const ModalOption = () => {
-    return (
-      <View style={styles.modalOptionButtonContainerStyle}>
-        <TouchableOpacity onPress={() => {
-          changeModalOption(false, true);
-        }}>
-          <Text style={styles.modalOptionTextStyle}>Edit list</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => {
-          changeModalOption(false, false);
-          closeModal();
-        }}>
-          <Text style={styles.modalOptionTextStyle}>Disable private discussion</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  };
-
   return (
     <Modal
       animationType="fade"
@@ -186,7 +174,7 @@ const PrivateDiscussionModal = props => {
     >
       <View style={styles.optionModalBackground}>
         <TouchableOpacity style={{flex: 1}} onPress={()=> {
-          if (openModalOption || isFilled) {
+          if (isFilled) {
             closeModal(true);
           } else {
             closeModal();
@@ -195,38 +183,43 @@ const PrivateDiscussionModal = props => {
       </View>
       <View style={styles.modalContainerStyle}>
         <View style={styles.privateDiscussionModalStyle}>
-          {
-            openModalOption ? (
-              <ModalOption />
-            ) : (
-              <>
-                <Text style={styles.privateDiscussionTextStyle}>Invite your followers to a private discussion</Text>
-                <View>
-                  <FormInput 
-                    formInputTitle="Search"
-                    formInputCustomStyle={{
-                      paddingVertical: 0,
-                      height: 35,
-                      marginBottom: "5%"
-                    }}
-                    dataInput={searchUserName}
-                  />
-                  {
-                    selectedUser.length !== 0 && !isSelectAll && <Text style={styles.counterTextStyle}>You have selected {selectedUser.length} people</Text>
-                  }
-                  {
-                    isSelectAll && <Text style={styles.counterTextStyle}>You have selected all of your followers</Text>
-                  }
-                  <FlatList
-                    data={fromDiscussionScreen ? authorized : followers}
-                    keyExtractor={(item, index) => index.toString()}
-                    renderItem={renderFollowerList}
-                  />
-                  <Buttons />
-                </View>
-              </>
-            )
-          }
+          <Text style={styles.privateDiscussionTextStyle}>Invite your followers to a private discussion</Text>
+          <View>
+            <FormInput 
+              formInputTitle="Search"
+              formInputCustomStyle={{
+                paddingVertical: 0,
+                height: 35,
+                marginBottom: "5%"
+              }}
+              formInputValue={searchKeyword}
+              dataInput={searchUserName}
+              Icon={searchKeyword !== '' && XMark}
+              iconStyle={{
+                height: 25,
+                width: 25
+              }}
+              iconFunction={() => searchUserName('', true)}
+            />
+            {
+              selectedUser.length !== 0 && !isSelectAll && <Text style={styles.counterTextStyle}>You have selected {selectedUser.length} follower{selectedUser.length > 1 && 's'}</Text>
+            }
+            {
+              isSelectAll && <Text style={styles.counterTextStyle}>You have selected all of your followers</Text>
+            }
+            {
+              noFollowers ? (
+                <Text style={styles.noFollowersTextStyle}>You have no followers yet!</Text>
+              ) : (
+                <FlatList
+                  data={fromDiscussionScreen ? authorized : followers}
+                  keyExtractor={(item, index) => index.toString()}
+                  renderItem={renderFollowerList}
+                />
+              )
+            }
+            <Buttons />
+          </View>
         </View>
       </View>
     </Modal>
@@ -249,6 +242,7 @@ const styles = StyleSheet.create({
 
   privateDiscussionModalStyle: {
     width: "95%",
+    maxHeight: "80%",
     borderRadius: 20,
     padding: "3.5%",
     backgroundColor: "#FFFFFF"
@@ -256,9 +250,10 @@ const styles = StyleSheet.create({
 
   privateDiscussionTextStyle: {
     fontFamily: bold,
-    color: "#73798C",
+    color: "#6505E1",
     fontSize:16,
-    marginBottom: "3%"
+    marginBottom: "3%",
+    padding: "2%"
   },
 
   counterTextStyle: {
@@ -273,6 +268,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     marginBottom: "2%"
+  },
+
+  noFollowersTextStyle: {
+    textAlign: "center",
+    fontFamily: bold
   },
 
   followerDataStyle: {

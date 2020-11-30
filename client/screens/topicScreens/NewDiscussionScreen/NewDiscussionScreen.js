@@ -22,6 +22,9 @@ import { userLogout } from '../../../store/actions/LoginAction';
 import axios from 'axios';
 import BaseUrl from '../../../constants/BaseUrl';
 
+//Icon
+import EditButton from '../../../assets/topicAssets/edit.svg';
+
 //Components
 import BackButton from '../../../components/publicComponents/BackButton';
 import FormInput from '../../../components/publicComponents/FormInput';
@@ -41,7 +44,6 @@ const NewDiscussionScreen = ({ navigation }) => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedFollowers, setSelectedFollowers] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
-  const [modalOption, setModalOption] = useState(false);
 
   const topics = useSelector(state => state.TopicReducer.topics);
   const dispatch = useDispatch();
@@ -163,10 +165,10 @@ const NewDiscussionScreen = ({ navigation }) => {
     setSwitchValue(previousState => !previousState);
     if (switchValue !== true) {
       setOpenModal(true);
-    } else if (switchValue === true) {
-      setModalOption(true);
-      setOpenModal(true);
-    };
+    } else {
+      setSelectedFollowers([]);
+      setSelectAll(false);
+    }
   };
 
   const closeModal = (isFinish) => {
@@ -180,14 +182,6 @@ const NewDiscussionScreen = ({ navigation }) => {
     }
   };
 
-  const changeModalOption = (input, changeSwitch) => {
-    setModalOption(input);
-
-    if (changeSwitch) {
-      setSwitchValue(changeSwitch)
-    };
-  };
-
   const PrivateDiscussionSwitch = () => {
     return (
       <View style={styles.privateDiscussionSwitchContainerStyle}>
@@ -198,14 +192,20 @@ const NewDiscussionScreen = ({ navigation }) => {
           trackColor={{true: "#6505E1", false: ""}}
           thumbColor={"#6505E1"}
         />
+        {
+          switchValue && (
+            <TouchableOpacity style={styles.editButtonStyle} onPress={() => setOpenModal(true)}>
+              <EditButton height={20} width={20} />
+            </TouchableOpacity>
+          )
+        }
         <PrivateDiscussionModal 
           openModal={openModal}
           closeModal={closeModal}
           addSelectedFollowers={addSelectedFollowers}
-          openModalOption={modalOption}
-          changeModalOption={changeModalOption}
           isFilled={selectAll || selectedFollowers.length > 0 ? true : false}
           selectedFollowers={selectedFollowers}
+          selectedAll={selectAll}
         />
       </View>
     );
@@ -324,6 +324,10 @@ const styles = StyleSheet.create({
   privateDiscussionText: {
     fontFamily: bold,
     color: "#73798C"
+  },
+
+  editButtonStyle: {
+    marginLeft: "2%"
   },
 
   backButtonAndTitleContainerStyle: {

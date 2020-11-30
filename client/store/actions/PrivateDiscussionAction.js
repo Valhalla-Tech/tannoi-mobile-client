@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import BaseUrl from '../../constants/BaseUrl';
 
-export const searchUser = (searchInput) => {
+export const searchUser = (searchInput, initialSearch) => {
   return async (dispatch) => {
     try {
       let access_token = await AsyncStorage.getItem('access_token');
@@ -22,6 +22,16 @@ export const searchUser = (searchInput) => {
             followers: searchUserRequest.data.data
           }
         });
+        
+        if (searchUserRequest.data.data.length === 0 && initialSearch) {
+          dispatch({
+            type: 'SET_FOLLOWERS_STATUS',
+            payload: {
+              noFollowers: true
+            }
+          })
+        };
+
       };
     } catch (error) {
       console.log(error);
@@ -37,7 +47,7 @@ export const searchUser = (searchInput) => {
   };
 };
 
-export const getAuthorizedFollowers = (discussionId, searchInput) => {
+export const getAuthorizedFollowers = (discussionId, searchInput, initialSearch) => {
   return async (dispatch) => {
     try {
       let access_token = await AsyncStorage.getItem('access_token');
@@ -64,6 +74,16 @@ export const getAuthorizedFollowers = (discussionId, searchInput) => {
             authorizedId: authorizedId
           }
         });
+
+        if (getAuthorizedFollowersRequest.data.data.length === 0 && initialSearch) {
+          dispatch({
+            type: 'SET_FOLLOWERS_STATUS',
+            payload: {
+              noFollowers: true
+            }
+          })
+        };
+
       };
     } catch (error) {
       console.log(error)
