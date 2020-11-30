@@ -27,16 +27,16 @@ const ProfileBar = props => {
           user.type === 1 && <Image source={tickIcon} style={styles.tickIconStyle} />
         }
       </View >
-      {
-        user !== '' && user.type !== 1 && (
+      {/* {
+        user !== '' && user.type !== 1 && ( */}
           <TouchableOpacity 
             onPress={() => navigation.navigate('VerificationNavigation')}
             style={styles.verifyButtonStyle}
           >
             <Text style={styles.verifyButtonTextStyle}>VERIFY</Text>
           </TouchableOpacity>
-        )
-      }
+        {/* )
+      } */}
     </View>
   )
 };

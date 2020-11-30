@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
     padding: "5%",
     flex: 1,
     justifyContent: "space-between",
-    marginBottom: "15%"
+    marginBottom: "20%"
   },
 
   backButtonTextStyle: {
@@ -246,7 +246,8 @@ const styles = StyleSheet.create({
   boldTextStyle: {
     textAlign: "center",
     fontFamily: bold,
-    fontSize: 20
+    fontSize: 20,
+    marginBottom: "2%"
   },
 
   normalTextStyle: {
@@ -257,9 +258,9 @@ const styles = StyleSheet.create({
 
   formContainerStyle: {
     justifyContent: "space-between",
-    height: "42.5%",
+    height: "43%",
     paddingTop: "10%",
-    marginBottom: "3%"
+    marginBottom: "10%"
   },
 
   formInputCustomStyle: {
