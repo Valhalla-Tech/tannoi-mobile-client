@@ -108,18 +108,14 @@ const DiscussionScreen = ({ route, navigation }) => {
             marginBottom: 0
           }}
         />
-        {
-          userType.type !== 0 || userType.id === profileId ? (
-            <TouchableOpacity
-              style={styles.addResponseButtonStyle}
-              onPress={() => {
-                setOpenAddResponseModal(true);
-              }}
-            >
-              <Text style={styles.addResponseButtonTextStyle}>Add response</Text>
-            </TouchableOpacity>
-          ) : null
-        }
+          <TouchableOpacity
+            style={styles.addResponseButtonStyle}
+            onPress={() => {
+              userType.type !== 0 || userType.id === profileId ? setOpenAddResponseModal(true) : navigation.navigate('VerificationNavigation') ;
+            }}
+          >
+            <Text style={styles.addResponseButtonTextStyle}>Add response</Text>
+          </TouchableOpacity>
       </View>
       <FlatList
         data={response}

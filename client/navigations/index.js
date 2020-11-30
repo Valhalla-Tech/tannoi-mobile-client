@@ -36,8 +36,6 @@ const NavigationIndex = () => {
   };
 
   useEffect(() => {
-    // Uncomment to clear AsyncStorage
-    // AsyncStorage.clear();
     checkToken();
   }, [])
 

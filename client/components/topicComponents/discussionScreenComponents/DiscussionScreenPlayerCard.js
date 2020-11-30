@@ -400,20 +400,16 @@ class DiscussionScreenPlayerCard extends Component {
             }
           </TouchableOpacity>
         </View>
-        {
-          this.props.userData.type !== 0 || this.props.userData.id === this.props.profileId ? (
-            <TouchableOpacity
-              style={styles.addResponseButtonStyle}
-              onPress={() => {
-                this.setState({
-                  openAddResponseModal: true
-                })
-              }}
-            >
-              <Text style={styles.addResponseButtonTextStyle}>Add response</Text>
-            </TouchableOpacity>
-          ) : null
-        }
+          <TouchableOpacity
+            style={styles.addResponseButtonStyle}
+            onPress={() => {
+              this.props.userData.type !== 0 || this.props.userData.id === this.props.profileId ? this.setState({
+                openAddResponseModal: true
+              }) : this.props.navigation.navigate('VerificationNavigation'); 
+            }}
+          >
+            <Text style={styles.addResponseButtonTextStyle}>Add response</Text>
+          </TouchableOpacity>
       </View>
     );
   };

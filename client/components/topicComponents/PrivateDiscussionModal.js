@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
 
   privateDiscussionModalStyle: {
     width: "95%",
-    maxHeight: "80%",
+    maxHeight: "90%",
     borderRadius: 20,
     padding: "3.5%",
     backgroundColor: "#FFFFFF"
