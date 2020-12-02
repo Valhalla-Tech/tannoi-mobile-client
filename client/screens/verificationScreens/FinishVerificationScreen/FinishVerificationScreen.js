@@ -4,6 +4,8 @@ import {
   Text,
   StyleSheet
 } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { getHome, clearHome } from '../../../store/actions/HomeAction';
 import { bold, normal } from '../../../assets/FontSize';
 
 //Icon
@@ -13,7 +15,11 @@ import TickIcon from '../../../assets/verificationAssets/tickIcon.svg';
 import BigButton from '../../../components/publicComponents/BigButton';
 
 const FinishVerificationScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+
   const nextButton = () => {
+    dispatch(clearHome());
+    dispatch(getHome());
     navigation.navigate('MainAppNavigation');
   };
 

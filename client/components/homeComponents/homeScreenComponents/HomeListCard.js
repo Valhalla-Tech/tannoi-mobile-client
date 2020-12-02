@@ -187,7 +187,8 @@ const styles = StyleSheet.create({
   lockIconStyle: {
     width: "21.5%",
     height: 33,
-    borderWidth: 1
+    borderWidth: 1,
+    marginRight: "10%"
   }
 });
 
