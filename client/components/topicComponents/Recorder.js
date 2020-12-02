@@ -278,7 +278,7 @@ class NewDiscussionScreenRecorder extends Component {
         <Text style={this.props.recorderStyle ? {...styles.timerStyle, ...this.props.recorderStyle} : styles.timerStyle}>{this.state.timer}</Text>
         <View style={styles.newDiscussionScreenRecorderContainerStyle}>
           {
-            this.state.recordingFile !== '' && (
+            this.state.recordingFile !== '' && !this.recorder.isRecording && (
               <TouchableOpacity
                 onPress={() => this.state.recordingFile && this.stopPlayer() }
                 style={this.state.recordingFile ? styles.stopButtonStyle : {...styles.stopButtonStyle, borderColor: "#a1a5ab"}}
@@ -294,7 +294,7 @@ class NewDiscussionScreenRecorder extends Component {
             <RecordButton />
           </TouchableOpacity>
           {
-            this.state.recordingFile !== '' && (
+            this.state.recordingFile !== '' &&  !this.recorder.isRecording && (
               <TouchableOpacity
                 onPress={() => this.state.recordingFile && this.playRecording()}
                 style={this.state.recordingFile ? styles.playOrPauseButtonStyle : {...styles.playOrPauseButtonStyle, borderColor: "#a1a5ab"}}

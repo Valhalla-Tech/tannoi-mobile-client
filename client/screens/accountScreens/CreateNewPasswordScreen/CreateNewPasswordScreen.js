@@ -14,7 +14,6 @@ import BaseUrl from '../../../constants/BaseUrl';
 //Components
 import FormInput from '../../../components/publicComponents/FormInput';
 import LoginButton from '../../../components/publicComponents/BigButton';
-import NotActiveButton from '../../../components/publicComponents/NotActiveButton';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import BackButton from '../../../components/publicComponents/BackButton';
 
@@ -82,45 +81,34 @@ const CreateNewPasswordScreen = ({ route, navigation }) => {
   const CreateNewPasswordButton = () => {
     return (
       <View style={{height: 50}}>
-        {
-          newPassword.length >= 5 && confirmPassword.length >= 5 ? (
-            <LoginButton
-              buttonTitle="Change Password & Login"
-              buttonStyle={
-                {
-                  backgroundColor: "#5152D0",
-                  borderColor: "#5152D0",
-                  color: "#FFFFFF",
-                  width: "100%",
-                  height: "100%"
-                }
-              }
-              buttonType="functionButton"
-              buttonFunction={submitNewPassword}
-            />
-          ) : (
-            <NotActiveButton
-              buttonTitle="Change Password & Login"
-              buttonHeight="100%"
-            />
-          )
-        }
+        <LoginButton
+          buttonTitle="Change Password & Login"
+          buttonStyle={
+            newPassword.length >= 5 && confirmPassword.length >= 5 ? {
+              backgroundColor: "#5152D0",
+              borderColor: "#5152D0",
+              color: "#FFFFFF",
+              width: "100%",
+              height: "100%"
+            } : {
+              backgroundColor: "#a1a5ab",
+              borderColor: "#a1a5ab",
+              color: "#FFFFFF",
+              width: "100%",
+              height: "100%"
+            }
+          }
+          buttonType="functionButton"
+          buttonFunction={submitNewPassword}
+          disableButton={newPassword.length >= 5 && confirmPassword.length >= 5 ? false : true}
+        />
       </View>
     );
   };
 
-  return (
-    <TouchableWithoutFeedback
-      onPress={() => Keyboard.dismiss()}
-    >
-      <View style={styles.createNewPasswordScreenContainerStyle}>
-        <BackButton
-          navigation={navigation}
-          screen="WelcomeScreen"
-        />
-        <Text style={styles.createNewPasswordTitleStyle}>
-          Create new password
-        </Text>
+  const NewPasswordForm = () => {
+    return (
+      <>
         {
           passwordValidation && (
             <ErrorMessage message="Password must be 5 - 20 characters" />
@@ -141,6 +129,23 @@ const CreateNewPasswordScreen = ({ route, navigation }) => {
             dataInput={inputConfirmPassword}
           />
         </View>
+      </>
+    );
+  };
+
+  return (
+    <TouchableWithoutFeedback
+      onPress={() => Keyboard.dismiss()}
+    >
+      <View style={styles.createNewPasswordScreenContainerStyle}>
+        <BackButton
+          navigation={navigation}
+          screen="WelcomeScreen"
+        />
+        <Text style={styles.createNewPasswordTitleStyle}>
+          Create new password
+        </Text>
+        {NewPasswordForm()}
         <CreateNewPasswordButton />
       </View>
     </TouchableWithoutFeedback>

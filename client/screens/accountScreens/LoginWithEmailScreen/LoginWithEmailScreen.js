@@ -21,7 +21,6 @@ import BaseUrl from '../../../constants/BaseUrl';
 import BackButton from '../../../components/publicComponents/BackButton';
 import LoginButton from '../../../components/publicComponents/BigButton';
 import FormInput from '../../../components/publicComponents/FormInput';
-import NotActiveButton from '../../../components/publicComponents/NotActiveButton';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 
@@ -69,29 +68,27 @@ const LoginWithEmailScreen = ({ navigation }) => {
   const LoginWithEmailButton = () => {
     return (
       <View style={styles.loginWithEmailButtonContainerStyle}>
-        {
-          emailLogin && passwordLogin ? (
-            <LoginButton
-                buttonTitle="Log in"
-                buttonStyle={
-                  {
-                    backgroundColor: "#5152D0",
-                    borderColor: "#5152D0",
-                    color: "#FFFFFF",
-                    width: "100%",
-                    height: "100%"
-                  }
-                }
-                buttonType="funtionButton"
-                buttonFunction={login}
-            />
-          ) : (
-            <NotActiveButton 
-              buttonTitle="Log in"
-              buttonHeight="100%"
-            />
-          )
-        }
+        <LoginButton
+            buttonTitle="Log in"
+            buttonStyle={
+              emailLogin && passwordLogin ? {
+                backgroundColor: "#5152D0",
+                borderColor: "#5152D0",
+                color: "#FFFFFF",
+                width: "100%",
+                height: "100%"
+              } : {
+                backgroundColor: "#a1a5ab",
+                borderColor: "#a1a5ab",
+                color: "#FFFFFF",
+                width: "100%",
+                height: "100%"
+              }
+            }
+            buttonType="funtionButton"
+            buttonFunction={login}
+            disableButton={emailLogin && passwordLogin ? false : true}
+        />
       </View>
     );
   };
@@ -114,6 +111,26 @@ const LoginWithEmailScreen = ({ navigation }) => {
     );
   };
 
+  const LoginForm = () => {
+    return (
+      <>
+        {
+          loginValidation && (
+            <ErrorMessage message="Wrong username/password" />
+          )
+        }
+        <FormInput 
+          formInputTitle="Email address"
+          dataInput={emailInput}
+        />
+        <FormInput 
+          formInputTitle="Password"
+          dataInput={passwordInput}
+        />
+      </>
+    )
+  };
+
   return (
     <TouchableWithoutFeedback
       onPress={() => Keyboard.dismiss()}
@@ -122,19 +139,7 @@ const LoginWithEmailScreen = ({ navigation }) => {
         <View style={styles.loginWithEmailScreenContainerStyle}>
           <BackButton navigation={navigation} />
           <Text style={styles.loginTitleStyle}>Login to TannOi</Text>
-          {
-            loginValidation && (
-              <ErrorMessage message="Wrong username/password" />
-            )
-          }
-          <FormInput 
-            formInputTitle="Email address"
-            dataInput={emailInput}
-          />
-          <FormInput 
-            formInputTitle="Password"
-            dataInput={passwordInput}
-          />
+          {LoginForm()}
           <LoginWithEmailButton />
           <ForgotPasswordButton />
         </View>

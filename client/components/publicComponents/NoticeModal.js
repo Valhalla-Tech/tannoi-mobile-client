@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -6,13 +6,12 @@ import {
   TouchableOpacity,
   Modal
 } from 'react-native';
-import { bold, normal } from '../../assets/FontSize';
 
 const NoticeModal = props => {
   const {
     openModal,
     closeModal,
-    message,
+    child,
     modalButton,
     customStyle
   } = props;
@@ -30,7 +29,7 @@ const NoticeModal = props => {
       </View>
       <View style={styles.modalContainerStyle}>
         <View style={{...styles.noticeModalStyle, ...customStyle}}>
-          <Text style={styles.textStyle}>{message}</Text>
+          {child && child()}
           {modalButton && modalButton()}
         </View>
       </View>
@@ -56,18 +55,10 @@ const styles = StyleSheet.create({
     width: "85%",
     height: "10%",
     borderRadius: 20,
-    padding: "3.5%",
+    padding: "5%",
     backgroundColor: "#FFFFFF",
     justifyContent: "center",
     alignItems: "center"
-  },
-
-  textStyle: {
-    fontFamily: bold,
-    color: "#6505E1",
-    lineHeight: 25,
-    fontSize: 16,
-    padding: "2%"
   }
 });
 
