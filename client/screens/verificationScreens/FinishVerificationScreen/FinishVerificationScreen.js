@@ -25,14 +25,16 @@ const FinishVerificationScreen = ({ navigation }) => {
 
   return (
     <View style={styles.finishVerificationScreenContainerStyle}>
-      <View style={styles.iconContainerStyle}>
-        <TickIcon />
-      </View>
-      <View style={styles.textContainerStyle}>
-        <Text style={styles.boldTextStyle}>Verified!</Text>
-        <Text style={styles.normalTextStyle}>
-          You are now a verified tannOi user. We can’t wait to hear what you have to say
-        </Text>
+      <View>
+        <View style={styles.iconContainerStyle}>
+          <TickIcon />
+        </View>
+        <View style={styles.textContainerStyle}>
+          <Text style={styles.boldTextStyle}>Verified!</Text>
+          <Text style={styles.normalTextStyle}>
+            You are now a verified tannOi user. We can’t wait to hear what you have to say
+          </Text>
+        </View>
       </View>
       <BigButton
         buttonTitle="Done"
@@ -50,7 +52,9 @@ const FinishVerificationScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   finishVerificationScreenContainerStyle: {
-    padding: "5%"
+    padding: "5%",
+    justifyContent: "space-between",
+    height: "100%"
   },
 
   iconContainerStyle: {

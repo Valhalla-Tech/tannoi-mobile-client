@@ -36,7 +36,7 @@ const ProfileBar = props => {
             <Text style={styles.verifyButtonTextStyle}>VERIFY</Text>
           </TouchableOpacity>
         )
-      } 
+      }
     </View>
   )
 };
