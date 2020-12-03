@@ -126,9 +126,7 @@ const OptionModal = props => {
           {
             !deleteOption ? (
               <>
-                <Text style={styles.headerTextStyle}>
-                  Discussion
-                </Text>
+                <Text style={styles.headerTextStyle}>Discussion</Text>
                 {OptionModalButton('Share')}
                 {profileId === userId && OptionModalButton('Edit')}
                 {profileId === userId && type === 2 && OptionModalButton('Edit participant list')}
@@ -160,9 +158,10 @@ const styles = StyleSheet.create({
 
   modalOptionStyle: {
     width: "60%",
-    minHeight: "28.5%",
+    minHeight: "30%",
     borderRadius: 20,
     padding: "5%",
+    paddingBottom: "7%",
     backgroundColor: "#FFFFFF",
     justifyContent: "space-between"
   },
@@ -184,7 +183,7 @@ const styles = StyleSheet.create({
     fontFamily: bold,
     color: "#6505E1",
     fontSize: 16,
-    padding: "2%"
+    paddingTop: "2%"
   },
 
   deleteOptionTextStyle: {

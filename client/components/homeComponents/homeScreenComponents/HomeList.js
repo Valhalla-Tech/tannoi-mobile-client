@@ -103,7 +103,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: "-7.5%"
+    marginBottom: "-7.5%",
+    paddingHorizontal: "2%"
   },
 
   filterStyle: {

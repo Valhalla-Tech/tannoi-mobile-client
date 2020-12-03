@@ -125,6 +125,7 @@ const styles = StyleSheet.create({
   homeListCardContainerStyle:{
     flexDirection: "row",
     padding: "5%",
+    paddingHorizontal: "10%",
     borderBottomWidth: 1,
     borderBottomColor: "#F5F7F9",
     justifyContent: "space-around"
@@ -185,8 +186,8 @@ const styles = StyleSheet.create({
   },
 
   lockIconStyle: {
-    width: "21.5%",
-    height: 33,
+    width: 28,
+    height: 34.8,
     borderWidth: 1,
     marginRight: "10%"
   }
