@@ -78,6 +78,7 @@ const HomeList = props => {
                   discussionType={itemData.item.type}
                   openModal={openModal}
                   isAuthorized={itemData.item.isAuthorized}
+                  profileType={itemData.item.creator.type}
                 />
               </>
             )}

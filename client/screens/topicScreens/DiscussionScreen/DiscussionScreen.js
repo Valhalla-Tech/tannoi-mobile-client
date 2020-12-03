@@ -145,6 +145,8 @@ const DiscussionScreen = ({ route, navigation }) => {
                   isDislike={isDislike}
                   navigation={navigation}
                   profileId={profileId}
+                  userType={userType.type}
+                  userId={userType.id}
                 />
               ) : (
                 <ClosedCard
@@ -154,6 +156,7 @@ const DiscussionScreen = ({ route, navigation }) => {
                   selectCard={selectCard}
                   postTime={postTime}
                   discussionTitle={discussionTitle}
+                  userType={userType.type}
                 />
               )
             }
@@ -197,6 +200,7 @@ const DiscussionScreen = ({ route, navigation }) => {
                   caption={itemData.item.caption}
                   navigation={navigation}
                   profileId={itemData.item.creator.id}
+                  userType={itemData.item.creator.type}
                 />
               ) : (
                 <ClosedCard
@@ -209,6 +213,7 @@ const DiscussionScreen = ({ route, navigation }) => {
                   responseLike={itemData.item.likes}
                   responseReply={itemData.item.response_count}
                   responsePlay={itemData.item.play_count !== null ? itemData.item.play_count : 0}
+                  userType={itemData.item.creator.type}
                 />
               )
             }

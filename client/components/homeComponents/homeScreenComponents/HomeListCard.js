@@ -10,6 +10,7 @@ import { bold, normal } from '../../../assets/FontSize';
 
 //Icon
 import LockIcon from '../../../assets/homeAssets/lockIcon.png';
+import tickIcon from '../../../assets/publicAssets/tickIcon.png';
 
 //Component
 import HomeListCardPlayer from './HomeListCardPlayer';
@@ -30,7 +31,8 @@ const HomeListCard = props => {
     isBorder,
     discussionType,
     openModal,
-    isAuthorized
+    isAuthorized,
+    profileType
   } = props;
 
   const numberConverter = number => {
@@ -69,6 +71,9 @@ const HomeListCard = props => {
         <View style={styles.profileContainerStyle}>
           <Image source={{uri: imageUrl}} style={styles.profilePictureStyle} />
           <Text style={styles.nameTextStyle}>{name}</Text>
+          {
+            profileType === 1 && <Image source={tickIcon} style={styles.tickIconStyle} />
+          }
         </View>
         {
           topic !== '' && (
@@ -134,7 +139,8 @@ const styles = StyleSheet.create({
   profileContainerStyle: {
     flexDirection: "row", 
     alignItems: "center", 
-    marginBottom: "3.8%"
+    marginBottom: "3.8%",
+    marginLeft: -1.5
   },
 
   profilePictureStyle: {
@@ -148,6 +154,12 @@ const styles = StyleSheet.create({
     color: "#464D60", 
     marginLeft: "3%",
     fontFamily: normal
+  },
+
+  tickIconStyle: {
+    height: 15, 
+    width: 15, 
+    marginLeft: "2%"
   },
 
   topicStyle: {

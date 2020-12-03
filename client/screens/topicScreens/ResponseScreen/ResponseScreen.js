@@ -30,6 +30,7 @@ const ReplyScreen = ({route, navigation}) => {
   const isDislike = useSelector(state => state.ResponseReducer.isDislike);
   const caption = useSelector(state => state.ResponseReducer.caption);
   const play = useSelector(state => state.ResponseReducer.play);
+  const userType = useSelector(state => state.HomeReducer.user);
 
   const dispatch = useDispatch();
 
@@ -140,6 +141,7 @@ const ReplyScreen = ({route, navigation}) => {
                     caption={caption}
                     navigation={navigation}
                     profileId={profileId}
+                    userType={userType.type}
                   />
                 ) : (
                   <ClosedCard
@@ -152,6 +154,7 @@ const ReplyScreen = ({route, navigation}) => {
                     responseLike={like}
                     responseReply={reply.length}
                     responsePlay={play !== null ? play : 0}
+                    userType={userType.type}
                   />
                 )
               )
@@ -187,6 +190,7 @@ const ReplyScreen = ({route, navigation}) => {
                   responseScreenResponseId={responseId}
                   navigation={navigation}
                   profileId={itemData.item.creator.id}
+                  userType={itemData.item.creator.type}
                 />
               ) : (
                 <ClosedCard
@@ -199,6 +203,7 @@ const ReplyScreen = ({route, navigation}) => {
                   responseLike={itemData.item.likes}
                   responseReply={itemData.item.response_count}
                   responsePlay={itemData.item.play_count !== null ? itemData.item.play_count : 0}
+                  userType={itemData.item.creator.type}
                 />
               )
             }
