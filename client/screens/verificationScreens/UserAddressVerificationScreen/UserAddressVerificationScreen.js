@@ -198,6 +198,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: bold,
     fontSize: 20,
+    paddingTop: "5%",
     marginBottom: "2%"
   },
 
@@ -211,7 +212,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     height: "38%",
     marginTop: "10%",
-    marginBottom: "10%"
+    marginBottom: "12.5%"
   },
 
   formInputCustomStyle: {

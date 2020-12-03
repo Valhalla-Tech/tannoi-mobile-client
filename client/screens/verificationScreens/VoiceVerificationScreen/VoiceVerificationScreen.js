@@ -119,7 +119,7 @@ const VoiceVerificationScreen = ({ navigation }) => {
               <Text style={styles.backButtonTextStyle}>Back</Text>
             </TouchableOpacity>
           </View>
-          <StepCount rootCustomStyle={{width: "14.5%", height: "81%"}} />
+          <StepCount />
           <View style={styles.imageContainerStyle}>
             <VerificationScreenImage />
           </View>
@@ -155,7 +155,8 @@ const VoiceVerificationScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   voiceVerificationScreenContainerStyle: {
     padding: "5%",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    height: "100%"
   },
 
   backButtonTextStyle: {
