@@ -11,7 +11,6 @@ import HomeIcon from '../../assets/homeAssets/homeIcon.svg';
 import HomeIconNotActive from '../../assets/homeAssets/homeIconNotActive.svg';
 import TopicICon from '../../assets/topicAssets/topicIcon.svg';
 import TopicIconNotActive from '../../assets/topicAssets/topicIconNotActive.svg';
-import NewDiscussionButton from '../../assets/topicAssets/newDiscussionButton.svg';
 import InboxIcon from '../../assets/inboxAssets/inboxIcon.svg';
 import InboxIconNotActive from '../../assets/inboxAssets/inboxIconNotActive.svg';
 import MeIcon from '../../assets/meAssets/meIcon.svg';
@@ -121,7 +120,6 @@ const NavigationBar = props => {
               }} 
               onPress={newDiscussionScreenButton}
             >
-              {/* <NewDiscussionButton /> */}
             </TouchableOpacity>
           ),
           style: {

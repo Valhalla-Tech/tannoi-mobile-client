@@ -30,7 +30,7 @@ const ReplyScreen = ({route, navigation}) => {
   const isDislike = useSelector(state => state.ResponseReducer.isDislike);
   const caption = useSelector(state => state.ResponseReducer.caption);
   const play = useSelector(state => state.ResponseReducer.play);
-  const userType = useSelector(state => state.HomeReducer.user);
+  const userType = useSelector(state => state.ResponseReducer.userType);
 
   const dispatch = useDispatch();
 
@@ -141,7 +141,7 @@ const ReplyScreen = ({route, navigation}) => {
                     caption={caption}
                     navigation={navigation}
                     profileId={profileId}
-                    userType={userType.type}
+                    userType={userType}
                   />
                 ) : (
                   <ClosedCard
@@ -154,7 +154,7 @@ const ReplyScreen = ({route, navigation}) => {
                     responseLike={like}
                     responseReply={reply.length}
                     responsePlay={play !== null ? play : 0}
-                    userType={userType.type}
+                    userType={userType}
                   />
                 )
               )

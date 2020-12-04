@@ -23,7 +23,6 @@ const DiscussionScreen = ({ route, navigation }) => {
   const [openAddResponseModal, setOpenAddResponseModal] = useState(false);
   const [selectedCard, setSelectedCard] = useState('discussion');
   const [fromNextPreviousButton, setFromNextPreviousButton] = useState(false);
-  const userType = useSelector(state => state.HomeReducer.user);
 
   const profileId = useSelector(state => state.DiscussionReducer.profileId);
   const profilePicture = useSelector(state => state.DiscussionReducer.profilePicture);
@@ -40,6 +39,7 @@ const DiscussionScreen = ({ route, navigation }) => {
   const isDislike = useSelector(state => state.DiscussionReducer.isDislike);
   const response = useSelector(state => state.ResponseReducer.response);
   const isResponse = useSelector(state => state.ResponseReducer.isResponse);
+  const userType = useSelector(state => state.DiscussionReducer.userType);
 
   const {
     discussionId,
@@ -145,7 +145,7 @@ const DiscussionScreen = ({ route, navigation }) => {
                   isDislike={isDislike}
                   navigation={navigation}
                   profileId={profileId}
-                  userType={userType.type}
+                  userType={userType}
                   userId={userType.id}
                 />
               ) : (
@@ -156,7 +156,7 @@ const DiscussionScreen = ({ route, navigation }) => {
                   selectCard={selectCard}
                   postTime={postTime}
                   discussionTitle={discussionTitle}
-                  userType={userType.type}
+                  userType={userType}
                 />
               )
             }
