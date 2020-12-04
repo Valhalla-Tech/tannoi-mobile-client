@@ -37,7 +37,7 @@ const NavigationIndex = () => {
         'Notification caused app to open from background state:',
         remoteMessage.notification,
       );
-      navigation.navigate(remoteMessage.data.screen, JSON.parse(remoteMessage.data.payload));
+      navigation.push(remoteMessage.data.screen, JSON.parse(remoteMessage.data.payload));
     });
   }
   const getInitialNotification = () => {
@@ -50,7 +50,7 @@ const NavigationIndex = () => {
             'Notification caused app to open from quit state:',
             remoteMessage.notification,
           );
-          navigation.navigate(remoteMessage.data.screen, JSON.parse(remoteMessage.data.payload));
+          navigation.push(remoteMessage.data.screen, JSON.parse(remoteMessage.data.payload));
         }
       });
   }
