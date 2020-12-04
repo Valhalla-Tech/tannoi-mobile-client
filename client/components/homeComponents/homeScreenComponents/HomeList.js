@@ -104,8 +104,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: "-7.5%",
-    paddingHorizontal: "2%"
+    paddingHorizontal: "2%",
+    backgroundColor: "#7817FF",
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+    height: 75
   },
 
   filterStyle: {
@@ -116,14 +119,14 @@ const styles = StyleSheet.create({
 
   filterTextStyle: {
     fontSize: 14,
-    color: "#73798C",
+    color: "#FFFFFF",
     marginRight: "5%"
   },
 
   homeListTitleStyle: {
     fontSize: 20,
     fontFamily: bold,
-    color: "#464D60",
+    color: "#FFFFFF",
     marginVertical: "4%",
     marginLeft: "3%"
   },

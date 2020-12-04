@@ -113,13 +113,18 @@ const styles = StyleSheet.create({
   recommendedTopicsTitleAndSeeAllButtonContainerStyle: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    backgroundColor: "#7817FF",
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+    height: 75,
+    marginBottom: "3.5%"
   },
 
   recommendedTopicsTitleStyle: {
     fontSize: 20,
     fontFamily: bold,
-    color: "#464D60",
+    color: "#FFFFFF",
     marginVertical: "4%",
     marginLeft: "5%"
   },
@@ -129,7 +134,7 @@ const styles = StyleSheet.create({
   },
 
   seeAllButtonTextStyle: {
-    color: "#0E4EF4",
+    color: "#FFFFFF",
     fontSize: 14,
     fontFamily: normal
   },
