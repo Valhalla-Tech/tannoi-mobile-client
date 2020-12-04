@@ -17,7 +17,10 @@ import { bold, normal } from '../../../assets/FontSize';
 import { GoogleSignIn, FacebookSignIn } from '../../../store/actions/LoginAction'
 
 //Image
-import TannoiWelcomeScreenImage from '../../../assets/publicAssets/tannOiWelcomeScreenImage.png';
+import WelcomeScreenBackground from '../../../assets/accountAssets/WelcomeScreen/welcomeScreenBackground.png';
+
+//Icon
+import TannoiLogo from '../../../assets/publicAssets/tannoiLogo.svg';
 
 //Component
 import WelcomePageButton from '../../../components/publicComponents/BigButton';
@@ -72,7 +75,10 @@ const WelcomeScreen = ({ navigation }) => {
   const WelcomePageUpperSection = () => {
     return (
       <View style={styles.welcomePageGreetingContainerStyle}>
-        <Image source={TannoiWelcomeScreenImage} style={styles.welcomeImageStyle} />
+        <Image source={WelcomeScreenBackground} style={styles.welcomeScreenBackgroundStyle} />
+        <TannoiLogo />
+        <Text style={styles.headerBoldTextStyle}>Discover Everything</Text>
+        <Text style={styles.headerNormalTextStyle}>Your place for you to talk with friends {'\n'} and communities</Text>
       </View>
     );
   };
@@ -170,8 +176,30 @@ const styles = StyleSheet.create({
   },
 
   welcomePageGreetingContainerStyle: {
-    flex: 1.9,
-    alignItems: "center"
+    flex: 1.5,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingBottom: "20%",
+    marginBottom: "20%"
+  },
+
+  welcomeScreenBackgroundStyle: {
+    position: "absolute", 
+    height: "95%", 
+    width: "100%", 
+    top: "40%"
+  },
+
+  headerBoldTextStyle: {
+    fontFamily: bold,
+    marginTop: "15%",
+    fontSize: 22
+  },
+
+  headerNormalTextStyle: {
+    fontFamily: normal,
+    textAlign: "center",
+    fontSize: 15
   },
 
   loginButtonTextStyle: {
