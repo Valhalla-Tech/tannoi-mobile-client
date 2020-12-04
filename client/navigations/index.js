@@ -7,6 +7,10 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 import { userLogin, userLogout } from '../store/actions/LoginAction';
 import SplashScreen from 'react-native-splash-screen';
+import messaging from '@react-native-firebase/messaging';
+import { useNavigation } from '@react-navigation/native';
+import axios from "axios"
+import BaseUrl from "../constants/BaseUrl";
 
 //Navigations
 import AccountNavigation from './AccountNavigation';
@@ -22,13 +26,76 @@ import UserProfile from '../screens/meScreens/UserProfile';
 const Stack = createStackNavigator();
 
 const NavigationIndex = () => {
+  const navigation = useNavigation();
   const isLoggedIn = useSelector(state => state.LoginReducer.isLoggedIn);
   const dispatch = useDispatch();
 
+  const onNotificationOpenedApp = () => {
+    // If the push notification received when the app is minimize
+    messaging().onNotificationOpenedApp(remoteMessage => {
+      console.log(
+        'Notification caused app to open from background state:',
+        remoteMessage.notification,
+      );
+      navigation.navigate(remoteMessage.data.screen, JSON.parse(remoteMessage.data.payload));
+    });
+  }
+  const getInitialNotification = () => {
+    // If the push notification received when the app is close
+    messaging()
+      .getInitialNotification()
+      .then(remoteMessage => {
+        if (remoteMessage) {
+          console.log(
+            'Notification caused app to open from quit state:',
+            remoteMessage.notification,
+          );
+          navigation.navigate(remoteMessage.data.screen, JSON.parse(remoteMessage.data.payload));
+        }
+      });
+  }
+
+  const saveTokenToDatabase = async (fcmToken) => {
+    try {
+      let access_token = await AsyncStorage.getItem('access_token');
+      const { data } = await axios({
+        method: "POST",
+        url: BaseUrl + "/users/add-firebase-token",
+        data: {
+          token: fcmToken,
+          device: "Android"
+        },
+        headers: {
+          token: access_token
+        }
+      });
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const getDeviceToken = () => {
+    // Get the device token
+    messaging()
+      .getToken()
+      .then(token => {
+        console.log(token)
+        return saveTokenToDatabase(token);
+      });
+      // Listen to whether the token changes
+      return messaging().onTokenRefresh(token => {
+      console.log(token)
+      saveTokenToDatabase(token);
+    });
+  }
   const checkToken = async () => {
     let getToken = await AsyncStorage.getItem('access_token');
     if (getToken) {
       dispatch(userLogin());
+      onNotificationOpenedApp();
+      getInitialNotification();
+      getDeviceToken();
     } else if (!getToken) {
       dispatch(userLogout());
       SplashScreen.hide();
@@ -37,7 +104,7 @@ const NavigationIndex = () => {
 
   useEffect(() => {
     checkToken();
-  }, [])
+  }, [isLoggedIn])
 
   return (
     <Stack.Navigator
