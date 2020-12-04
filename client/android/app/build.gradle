@@ -197,6 +197,8 @@ dependencies {
 
     implementation 'com.android.support:customtabs:28.0.0'
 
+    implementation project(':@react-native-community_audio-toolkit')
+
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
     }

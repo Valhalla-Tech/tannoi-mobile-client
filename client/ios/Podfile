@@ -8,6 +8,10 @@ target 'client' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+  pod 'RNSiriWaveView', :path => '../node_modules/react-native-siri-wave-view'
+
+  pod 'ReactNativeAudioToolkit', :path => '../node_modules/@react-native-community/audio-toolkit'
+
   target 'clientTests' do
     inherit! :complete
     # Pods for testing
