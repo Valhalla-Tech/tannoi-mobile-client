@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { 
@@ -7,8 +7,10 @@ import {
 } from 'react-redux';
 import store from './store';
 import {
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Alert
 } from 'react-native';
+import messaging from '@react-native-firebase/messaging';
 
 //Navigation
 import NavigationIndex from './navigations';
@@ -16,6 +18,14 @@ import NavigationIndex from './navigations';
 const Stack = createStackNavigator();
 
 const App = () => {
+  useEffect(() => {
+    // If the push notification received when the app is open
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      // Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+    });
+    return unsubscribe;
+  }, []);
+
   return (
     <Provider store={store}>
       <KeyboardAvoidingView
