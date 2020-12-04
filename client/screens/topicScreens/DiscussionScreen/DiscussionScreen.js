@@ -39,7 +39,9 @@ const DiscussionScreen = ({ route, navigation }) => {
   const isDislike = useSelector(state => state.DiscussionReducer.isDislike);
   const response = useSelector(state => state.ResponseReducer.response);
   const isResponse = useSelector(state => state.ResponseReducer.isResponse);
-  const userType = useSelector(state => state.DiscussionReducer.userType);
+  const profileType = useSelector(state => state.DiscussionReducer.userType);
+  const userId = useSelector(state => state.HomeReducer.user.id);
+  const userType = useSelector(state => state.HomeReducer.user.type);
 
   const {
     discussionId,
@@ -49,10 +51,14 @@ const DiscussionScreen = ({ route, navigation }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(clearDiscussion());
-    dispatch(clearResponse());
-    dispatch(getDiscussion(discussionId));
-    dispatch(getResponse(discussionId));
+    const unsubscribe = navigation.addListener('focus', () => {
+      dispatch(clearDiscussion());
+      dispatch(clearResponse());
+      dispatch(getDiscussion(discussionId));
+      dispatch(getResponse(discussionId));
+    });
+
+    return unsubscribe;
   }, []);
 
   const closeAddResponseModal = () => {
@@ -111,7 +117,7 @@ const DiscussionScreen = ({ route, navigation }) => {
           <TouchableOpacity
             style={styles.addResponseButtonStyle}
             onPress={() => {
-              userType.type !== 0 || userType.id === profileId ? setOpenAddResponseModal(true) : navigation.navigate('VerificationNavigation') ;
+              userType !== 0 || userId === profileId ? setOpenAddResponseModal(true) : navigation.navigate('VerificationNavigation') ;
             }}
           >
             <Text style={styles.addResponseButtonTextStyle}>Add response</Text>
@@ -145,8 +151,9 @@ const DiscussionScreen = ({ route, navigation }) => {
                   isDislike={isDislike}
                   navigation={navigation}
                   profileId={profileId}
+                  profileType={profileType}
                   userType={userType}
-                  userId={userType.id}
+                  userId={userId}
                 />
               ) : (
                 <ClosedCard
@@ -156,7 +163,7 @@ const DiscussionScreen = ({ route, navigation }) => {
                   selectCard={selectCard}
                   postTime={postTime}
                   discussionTitle={discussionTitle}
-                  userType={userType}
+                  userType={profileType}
                 />
               )
             }
@@ -200,7 +207,9 @@ const DiscussionScreen = ({ route, navigation }) => {
                   caption={itemData.item.caption}
                   navigation={navigation}
                   profileId={itemData.item.creator.id}
-                  userType={itemData.item.creator.type}
+                  profileType={itemData.item.creator.type}
+                  userType={userType}
+                  selectedCard={selectedCard}
                 />
               ) : (
                 <ClosedCard

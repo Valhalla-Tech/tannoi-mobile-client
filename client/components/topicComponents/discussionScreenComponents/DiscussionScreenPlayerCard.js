@@ -75,13 +75,13 @@ class DiscussionScreenPlayerCard extends Component {
   }
 
   componentDidMount() {
+    this.props.getSingleResponse(this.state.responseId, 'getDataForResponse');
     this.player = null;
     this.lastSeek = 0;
 
     this.loadPlayer();
 
     this.props.clearResponse(true);
-    this.props.getSingleResponse(this.state.responseId, 'getDataForResponse');
 
     this.progressInterval = null;
   };
@@ -293,18 +293,22 @@ class DiscussionScreenPlayerCard extends Component {
 
   upvote = async () => {
     try {
-      const access_token = await AsyncStorage.getItem('access_token');
-
-      let upvoteRequest = await axios({
-        method: 'get',
-        url: `${BaseUrl}/responses/like/${this.state.responseId}`,
-        headers: {
-          token: access_token
+      if (this.props.userType !== 0) {
+        const access_token = await AsyncStorage.getItem('access_token');
+  
+        let upvoteRequest = await axios({
+          method: 'get',
+          url: `${BaseUrl}/responses/like/${this.state.responseId}`,
+          headers: {
+            token: access_token
+          }
+        })
+  
+        if (upvoteRequest.data) {
+          this.props.getSingleResponse(this.state.responseId, 'getDataForResponse');
         }
-      })
-
-      if (upvoteRequest.data) {
-        this.props.getSingleResponse(this.state.responseId, 'getDataForResponse');
+      } else {
+        this.props.navigation.navigate('VerificationNavigation');
       }
     } catch (error) {
       console.log(error.response);
@@ -313,18 +317,22 @@ class DiscussionScreenPlayerCard extends Component {
 
   downvote = async () => {
     try {
-      const access_token = await AsyncStorage.getItem('access_token');
-
-      let downvoteRequest = await axios({
-        method: 'get',
-        url: `${BaseUrl}/responses/dislike/${this.state.responseId}`,
-        headers: {
-          token: access_token
+      if (this.props.userType !== 0) {
+        const access_token = await AsyncStorage.getItem('access_token');
+  
+        let downvoteRequest = await axios({
+          method: 'get',
+          url: `${BaseUrl}/responses/dislike/${this.state.responseId}`,
+          headers: {
+            token: access_token
+          }
+        })
+  
+        if (downvoteRequest.data) {
+          this.props.getSingleResponse(this.state.responseId, 'getDataForResponse');
         }
-      })
-
-      if (downvoteRequest.data) {
-        this.props.getSingleResponse(this.state.responseId, 'getDataForResponse');
+      } else {
+        this.props.navigation.navigate('VerificationNavigation');
       }
     } catch (error) {
       console.log(error);
@@ -369,7 +377,7 @@ class DiscussionScreenPlayerCard extends Component {
           })}>
             <Text style={styles.profileNameStyle}>{this.state.profileName}</Text>
           </TouchableOpacity>
-          {this.props.userType === 1 && <Image source={TickIcon} style={styles.tickIconStyle} />}
+          {this.props.profileType === 1 && <Image source={TickIcon} style={styles.tickIconStyle} />}
         </View>
         <Text style={styles.postTimeStyle}>{this.state.postTime ? this.convertPostTime(this.state.postTime) : ''}</Text>
       </View>

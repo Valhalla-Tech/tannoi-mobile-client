@@ -30,7 +30,8 @@ const ReplyScreen = ({route, navigation}) => {
   const isDislike = useSelector(state => state.ResponseReducer.isDislike);
   const caption = useSelector(state => state.ResponseReducer.caption);
   const play = useSelector(state => state.ResponseReducer.play);
-  const userType = useSelector(state => state.ResponseReducer.userType);
+  const profileType = useSelector(state => state.ResponseReducer.userType);
+  const userType = useSelector(state => state.HomeReducer.user.type);
 
   const dispatch = useDispatch();
 
@@ -41,6 +42,7 @@ const ReplyScreen = ({route, navigation}) => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
+      setSelectedCard('response');
       dispatch(clearResponse());
       dispatch(getSingleResponse(responseId));
       dispatch(getResponse(discussionId));
@@ -141,7 +143,9 @@ const ReplyScreen = ({route, navigation}) => {
                     caption={caption}
                     navigation={navigation}
                     profileId={profileId}
+                    profileType={profileType}
                     userType={userType}
+                    selectedCard={selectedCard}
                   />
                 ) : (
                   <ClosedCard
@@ -154,7 +158,7 @@ const ReplyScreen = ({route, navigation}) => {
                     responseLike={like}
                     responseReply={reply.length}
                     responsePlay={play !== null ? play : 0}
-                    userType={userType}
+                    profileType={profileType}
                   />
                 )
               )
@@ -190,7 +194,9 @@ const ReplyScreen = ({route, navigation}) => {
                   responseScreenResponseId={responseId}
                   navigation={navigation}
                   profileId={itemData.item.creator.id}
-                  userType={itemData.item.creator.type}
+                  profileType={itemData.item.creator.type}
+                  userType={userType}
+                  selectedCard={selectedCard}
                 />
               ) : (
                 <ClosedCard
@@ -203,7 +209,7 @@ const ReplyScreen = ({route, navigation}) => {
                   responseLike={itemData.item.likes}
                   responseReply={itemData.item.response_count}
                   responsePlay={itemData.item.play_count !== null ? itemData.item.play_count : 0}
-                  userType={itemData.item.creator.type}
+                  profileType={itemData.item.creator.type}
                 />
               )
             }

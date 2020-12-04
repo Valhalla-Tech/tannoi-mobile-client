@@ -23,7 +23,7 @@ const ClosedCard = props => {
     responseLike,
     responsePlay,
     responseReply,
-    userType
+    profileType
   } = props;
 
   const convertPostTime = postTimeInput => {
@@ -79,7 +79,7 @@ const ClosedCard = props => {
         <View style={styles.profileInfoContainerStyle}>
           <Image source={{uri: profilePicture}} style={styles.profileImageStyle} />
           <Text style={styles.profileNameStyle}>{profileName}</Text>
-          {userType === 1 && <Image source={TickIcon} style={styles.tickIconStyle} />}
+          {profileType === 1 && <Image source={TickIcon} style={styles.tickIconStyle} />}
         </View>
         <Text style={styles.postTimeStyle}>{postTime ? convertPostTime(postTime) : ''}</Text>
       </View>

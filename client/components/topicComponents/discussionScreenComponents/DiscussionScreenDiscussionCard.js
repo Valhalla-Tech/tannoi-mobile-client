@@ -51,6 +51,7 @@ const DiscussionScreenCard = props => {
     navigation,
     profileId,
     userType,
+    profileType,
     userId
   } = props;
 
@@ -75,24 +76,24 @@ const DiscussionScreenCard = props => {
 
   const upvote = async () => {
     try {
-      const access_token = await AsyncStorage.getItem('access_token');
-
-      let upvoteRequest = await axios({
-        method: 'get',
-        url: `${BaseUrl}/discussions/like/${discussionId}`,
-        headers: {
-          token: access_token
-        }
-      })
-
-      if (upvoteRequest.data) {
-        if (userType !== 0 || profileId === userId) {
+      if (userType !== 0 || profileId === userId) {
+        const access_token = await AsyncStorage.getItem('access_token');
+  
+        let upvoteRequest = await axios({
+          method: 'get',
+          url: `${BaseUrl}/discussions/like/${discussionId}`,
+          headers: {
+            token: access_token
+          }
+        })
+  
+        if (upvoteRequest.data) {
           dispatch(getDiscussion(discussionId));
           dispatch(clearHome());
           dispatch(getHome());
-        } else {
-          navigation.navigate('VerificationNavigation');
         }
+      } else {
+        navigation.navigate('VerificationNavigation')
       }
     } catch (error) {
       console.log(error);
@@ -101,27 +102,27 @@ const DiscussionScreenCard = props => {
 
   const downvote = async () => {
     try {
-      const access_token = await AsyncStorage.getItem('access_token');
-
-      let downvoteRequest = await axios({
-        method: 'get',
-        url: `${BaseUrl}/discussions/dislike/${discussionId}`,
-        headers: {
-          token: access_token
-        }
-      })
-
-      if (downvoteRequest.data) {
-        if (userType !== 0 || userType === userId) {
+      if (userType !== 0 || userType === userId) {
+        const access_token = await AsyncStorage.getItem('access_token');
+  
+        let downvoteRequest = await axios({
+          method: 'get',
+          url: `${BaseUrl}/discussions/dislike/${discussionId}`,
+          headers: {
+            token: access_token
+          }
+        })
+  
+        if (downvoteRequest.data) {
           dispatch(getDiscussion(discussionId));
           dispatch(clearHome());
           dispatch(getHome());
-        } else {
-          navigation.navigate('VerificationNavigation');
         }
+      } else {
+        navigation.navigate('VerificationNavigation');
       }
     } catch (error) {
-      console.log(error.response);
+      console.log(error);
     }
   };
 
@@ -183,7 +184,7 @@ const DiscussionScreenCard = props => {
             }}>
               <Text style={styles.profileNameStyle}>{profileName}</Text>
             </TouchableOpacity>
-            {userType === 1 && <Image source={TickIcon} style={styles.tickIconStyle} />}
+            {profileType === 1 && <Image source={TickIcon} style={styles.tickIconStyle} />}
           </View>
           <Text style={styles.postTimeStyle}>{postTime ? convertPostTime(postTime) : ''}</Text>
         </View>
