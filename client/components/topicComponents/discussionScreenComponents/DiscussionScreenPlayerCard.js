@@ -33,6 +33,7 @@ import ActiveNextButton from '../../../assets/topicAssets/activeNextButton.svg';
 import ActivePreviousButton from '../../../assets/topicAssets/activePreviousButton.svg';
 import ActiveUpvote from '../../../assets/topicAssets/activeUpvote.svg';
 import ActiveDownvote from '../../../assets/topicAssets/activeDownvote.svg';
+import TickIcon from '../../../assets/publicAssets/tickIcon.png';
 
 //Component
 import AddResponse from '../../../components/topicComponents/discussionScreenComponents/AddResponse';
@@ -368,6 +369,7 @@ class DiscussionScreenPlayerCard extends Component {
           })}>
             <Text style={styles.profileNameStyle}>{this.state.profileName}</Text>
           </TouchableOpacity>
+          {this.props.userType === 1 && <Image source={TickIcon} style={styles.tickIconStyle} />}
         </View>
         <Text style={styles.postTimeStyle}>{this.state.postTime ? this.convertPostTime(this.state.postTime) : ''}</Text>
       </View>
@@ -595,6 +597,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#464D60",
     fontFamily: bold
+  },
+
+  tickIconStyle: {
+    height: 15, 
+    width: 15, 
+    marginLeft: "2%"
   },
 
   postTimeStyle: {

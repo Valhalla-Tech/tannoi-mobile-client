@@ -11,7 +11,6 @@ import HomeIcon from '../../assets/homeAssets/homeIcon.svg';
 import HomeIconNotActive from '../../assets/homeAssets/homeIconNotActive.svg';
 import TopicICon from '../../assets/topicAssets/topicIcon.svg';
 import TopicIconNotActive from '../../assets/topicAssets/topicIconNotActive.svg';
-import NewDiscussionButton from '../../assets/topicAssets/newDiscussionButton.svg';
 import InboxIcon from '../../assets/inboxAssets/inboxIcon.svg';
 import InboxIconNotActive from '../../assets/inboxAssets/inboxIconNotActive.svg';
 import MeIcon from '../../assets/meAssets/meIcon.svg';
@@ -39,7 +38,7 @@ const NavigationBar = props => {
     <Tab.Navigator
       tabBarOptions={{
         style: {
-          backgroundColor: "#464D60",
+          backgroundColor: "#2B085C",
           height: "7%",
           padding: "5%",
           paddingTop: "3.5%"
@@ -58,7 +57,7 @@ const NavigationBar = props => {
                 focused ? (
                   <View style={{justifyContent: "center", alignItems: "center"}}>
                     <HomeIcon />
-                    <Text style={{color: "#FFFFFF", fontSize: 10}}>Home</Text>
+                    <Text style={{color: "#FFA530", fontSize: 10}}>Home</Text>
                   </View>
                 ) : (
                   <View style={{justifyContent: "center", alignItems: "center"}}>
@@ -108,10 +107,19 @@ const NavigationBar = props => {
           tabBarLabel: "",
           tabBarIcon: () => (
             <TouchableOpacity 
-              style={{justifyContent: "center", alignItems: "center", marginBottom: "25%"}} 
+              style={{
+                justifyContent: "center", 
+                alignItems: "center", 
+                marginBottom: "30%", 
+                borderWidth: 10,
+                height: "280%",
+                width: "60%",
+                borderRadius: 30,
+                backgroundColor: "#2B085C",
+                borderColor: "#7817FF"
+              }} 
               onPress={newDiscussionScreenButton}
             >
-              <NewDiscussionButton />
             </TouchableOpacity>
           ),
           style: {

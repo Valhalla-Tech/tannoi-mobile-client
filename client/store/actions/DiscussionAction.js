@@ -31,7 +31,8 @@ export const getDiscussion = (discussionId) => {
             recordingFile: getDiscussionRequest.data.voice_note_path,
             isLike: getDiscussionRequest.data.isLike,
             isDislike: getDiscussionRequest.data.isDislike,
-            type: getDiscussionRequest.data.type
+            type: getDiscussionRequest.data.type,
+            userType: getDiscussionRequest.data.creator.type
           }
         })
       }

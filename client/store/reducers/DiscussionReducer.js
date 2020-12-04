@@ -13,7 +13,8 @@ const defaultState = {
   isLike: '',
   isDislike: '',
   responseCount: '',
-  type: ''
+  type: '',
+  userType: ''
 }
 
 const reducer = (state = defaultState, action) => {
@@ -33,6 +34,7 @@ const reducer = (state = defaultState, action) => {
       let setIsLike = action.payload.isLike;
       let setIsDislike = action.payload.isDislike;
       let setType = action.payload.type;
+      let setUserType = action.payload.userType;
 
       return {
         ...state,
@@ -49,7 +51,8 @@ const reducer = (state = defaultState, action) => {
         recordingFile: setRecordingFile,
         isLike: setIsLike,
         isDislike: setIsDislike,
-        type: setType
+        type: setType,
+        userType: setUserType
       }
     case 'CLEAR_DISCUSSION':
       return {

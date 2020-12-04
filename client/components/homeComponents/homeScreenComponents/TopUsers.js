@@ -23,36 +23,40 @@ const TopUsers = props => {
 
   return (
     <View style={styles.topUsersContainerStyle}>
-      <Text style={styles.topUsersTitleStyle}>Top users</Text>
+      <View style={styles.topUsersHeaderStyle}>
+        <Text style={styles.topUsersTitleStyle}>Top users</Text>
+      </View>
       {
         !topUserData && (
           <LoadingSpinner loadingSpinnerForComponent={true} />
         )
       }
-      <FlatList
-        data={topUserData}
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={itemData => (
-          <TouchableOpacity style={styles.topUsersCardConntainerStyle} onPress={() => {
-            navigation.navigate('UserProfile', {
-              userId: itemData.item.id
-            });
-          }}>
-            <Image source={itemData.item.profile_photo_path ? {uri: itemData.item.profile_photo_path} : NoProfilePicture} style={styles.profilePictureStyle} />
-            {
-              itemData.item.name === null ? <Text style={styles.topUsersNameStyle}> </Text> : (
-                itemData.item.name.length > 14 ? (
-                  <Text style={styles.topUsersNameStyle}>{`${itemData.item.name.substr(0, 11)}...`}</Text>
-                ) : (
-                  <Text style={styles.topUsersNameStyle}>{itemData.item.name}</Text>
+      <View style={styles.listStyle}>
+        <FlatList
+          data={topUserData}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={itemData => (
+            <TouchableOpacity style={styles.topUsersCardConntainerStyle} onPress={() => {
+              navigation.navigate('UserProfile', {
+                userId: itemData.item.id
+              });
+            }}>
+              <Image source={itemData.item.profile_photo_path ? {uri: itemData.item.profile_photo_path} : NoProfilePicture} style={styles.profilePictureStyle} />
+              {
+                itemData.item.name === null ? <Text style={styles.topUsersNameStyle}> </Text> : (
+                  itemData.item.name.length > 14 ? (
+                    <Text style={styles.topUsersNameStyle}>{`${itemData.item.name.substr(0, 11)}...`}</Text>
+                  ) : (
+                    <Text style={styles.topUsersNameStyle}>{itemData.item.name}</Text>
+                  )
                 )
-              )
-            }
-          </TouchableOpacity>
-        )}
-      />
+              }
+            </TouchableOpacity>
+          )}
+        />
+      </View>
     </View>
   );
 };
@@ -62,16 +66,28 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     marginTop: "2%",
     marginHorizontal: 8,
-    borderRadius: 8,
-    paddingLeft: 16
+    borderRadius: 8
+  },
+
+  topUsersHeaderStyle: {
+    backgroundColor: "#7817FF",
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+    height: 75,
+    paddingLeft: "5%"
   },
 
   topUsersTitleStyle: {
-    color: "#464D60",
+    color: "#FFFFFF",
     fontSize: 20,
     fontFamily: bold,
     paddingBottom: "3%",
     paddingTop: "4%"
+  },
+
+  listStyle: {
+    paddingLeft: "5%",
+    marginVertical: "5.5%"
   },
 
   topUsersCardConntainerStyle: {
@@ -89,7 +105,6 @@ const styles = StyleSheet.create({
   topUsersNameStyle: {
     color: "#464D60",
     fontSize: 12,
-    marginBottom: 32,
     fontFamily: normal
   }
 });

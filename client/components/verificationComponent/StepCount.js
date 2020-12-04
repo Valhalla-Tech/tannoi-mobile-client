@@ -38,8 +38,8 @@ const styles = StyleSheet.create({
   },
 
   stepStyle: {
-    width: "15%",
-    height: "75%",
+    width: 15, 
+    height: 15,
     borderRadius: 50,
     backgroundColor: "#a1a5ab"
   },

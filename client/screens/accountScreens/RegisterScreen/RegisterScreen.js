@@ -17,7 +17,6 @@ import FormInput from '../../../components/publicComponents/FormInput';
 import SaveAndContinueButton from '../../../components/publicComponents/BigButton';
 import EmailConfirmationModal from '../../../components/accountComponents/RegisterScreenComponents/EmailConfirmationModal';
 import BackButton from '../../../components/publicComponents/BackButton';
-import NotActiveButton from '../../../components/publicComponents/NotActiveButton';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 import TermsOfServiceModal from '../../../components/accountComponents/RegisterScreenComponents/TermsOfServiceModal';
@@ -33,6 +32,10 @@ const RegisterPage = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [termsOfServiceModalIsOpen, setTermsOfServiceModalIsOpen] = useState(false);
 
+  useEffect(() => {
+    clearStorage();
+  }, []);
+
   const emailInput = emailData => {
     setEmailRegister(emailData);
   };
@@ -44,10 +47,6 @@ const RegisterPage = ({ navigation }) => {
   const clearStorage = async () => {
     await AsyncStorage.removeItem('access_token')
   };
-
-  useEffect(() => {
-    clearStorage
-  }, []);
 
   const emailConfirmation = async () => {
     try {
@@ -110,31 +109,56 @@ const RegisterPage = ({ navigation }) => {
   const SignUpButton = () => {
     return (
       <View style={styles.signupButtonContainerStyle}>
-        {
-          emailRegister && passwordRegister.length >= 5 ? (
-            <SaveAndContinueButton
-              buttonTitle="Save and Continue"
-              buttonStyle={
-                {
-                  backgroundColor: "#5152D0",
-                  borderColor: "#5152D0",
-                  color: "#FFFFFF",
-                  width: "100%",
-                  height: "100%"
-                }
-              }
-              buttonType="funtionButton"
-              buttonFunction={emailConfirmation}
-            />
-          ) : (
-            <NotActiveButton 
-              buttonTitle="Continue" 
-              buttonHeight="100%"
-            />
-          )
-        }
+        <SaveAndContinueButton
+          buttonTitle="Save and Continue"
+          buttonStyle={
+            emailRegister && passwordRegister.length >= 5 ? {
+              backgroundColor: "#5152D0",
+              borderColor: "#5152D0",
+              color: "#FFFFFF",
+              width: "100%",
+              height: "100%"
+            } : {
+              backgroundColor: "#a1a5ab",
+              borderColor: "#a1a5ab",
+              color: "#FFFFFF",
+              width: "100%",
+              height: "100%"
+            }
+          }
+          buttonType="funtionButton"
+          buttonFunction={emailConfirmation}
+          disableButton={emailRegister && passwordRegister.length >= 5 ? false : true}
+        />
         <TermsAndService />
       </View>
+    );
+  };
+
+  const RegisterForm = () => {
+    return (
+      <>
+        {
+          emailCheck ? (
+            <ErrorMessage message="Must enter a valid email" />
+          ) : emailAlreadyRegistered && (
+            <ErrorMessage message="Email already registered" />
+          )
+        }
+        <FormInput 
+          formInputTitle="Email address"
+          dataInput={emailInput}
+        />
+        {
+          passwordCheck && (
+            <ErrorMessage message="Password must be 5 - 20 charachters" />
+          )
+        }
+        <FormInput
+          formInputTitle="Password"
+          dataInput={passwordInput}
+        />
+      </>
     );
   };
 
@@ -146,26 +170,7 @@ const RegisterPage = ({ navigation }) => {
         <View style={styles.registerPageContainerStyle}>
           <BackButton navigation={navigation} />
           <Text style={styles.registerTitleStyle}>Sign up to TannOi</Text>
-          {
-            emailCheck ? (
-              <ErrorMessage message="Must enter a valid email" />
-            ) : emailAlreadyRegistered && (
-              <ErrorMessage message="Email already registered" />
-            )
-          }
-          <FormInput 
-            formInputTitle="Email address"
-            dataInput={emailInput}
-          />
-          {
-            passwordCheck && (
-              <ErrorMessage message="Password must be 5 - 20 charachters" />
-            )
-          }
-          <FormInput
-            formInputTitle="Password"
-            dataInput={passwordInput}
-          />
+          {RegisterForm()}
           <SignUpButton />
           <EmailConfirmationModal 
             openEmailConfirmationModal={openConfirmationModal}

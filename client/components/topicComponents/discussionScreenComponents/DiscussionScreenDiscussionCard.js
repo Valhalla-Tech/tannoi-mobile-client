@@ -20,6 +20,7 @@ import Upvote from '../../../assets/topicAssets/upvote.svg';
 import Downvote from '../../../assets/topicAssets/downvote.svg';
 import ActiveUpvote from '../../../assets/topicAssets/activeUpvote.svg';
 import ActiveDownvote from '../../../assets/topicAssets/activeDownvote.svg';
+import TickIcon from '../../../assets/publicAssets/tickIcon.png';
 
 //Components
 import DiscussionScreenPlayerCard from './DiscussionScreenPlayerCard';
@@ -48,7 +49,9 @@ const DiscussionScreenCard = props => {
     fromNextPreviousButton,
     updateFromNextPreviousButton,
     navigation,
-    profileId
+    profileId,
+    userType,
+    userId
   } = props;
 
   const [optionModal, setOptionModal] = useState(false);
@@ -83,12 +86,16 @@ const DiscussionScreenCard = props => {
       })
 
       if (upvoteRequest.data) {
-        dispatch(getDiscussion(discussionId));
-        dispatch(clearHome());
-        dispatch(getHome());
+        if (userType !== 0 || profileId === userId) {
+          dispatch(getDiscussion(discussionId));
+          dispatch(clearHome());
+          dispatch(getHome());
+        } else {
+          navigation.navigate('VerificationNavigation');
+        }
       }
     } catch (error) {
-      console.log(error.response);
+      console.log(error);
     };
   };
 
@@ -105,9 +112,13 @@ const DiscussionScreenCard = props => {
       })
 
       if (downvoteRequest.data) {
-        dispatch(getDiscussion(discussionId));
-        dispatch(clearHome());
-        dispatch(getHome());
+        if (userType !== 0 || userType === userId) {
+          dispatch(getDiscussion(discussionId));
+          dispatch(clearHome());
+          dispatch(getHome());
+        } else {
+          navigation.navigate('VerificationNavigation');
+        }
       }
     } catch (error) {
       console.log(error.response);
@@ -172,6 +183,7 @@ const DiscussionScreenCard = props => {
             }}>
               <Text style={styles.profileNameStyle}>{profileName}</Text>
             </TouchableOpacity>
+            {userType === 1 && <Image source={TickIcon} style={styles.tickIconStyle} />}
           </View>
           <Text style={styles.postTimeStyle}>{postTime ? convertPostTime(postTime) : ''}</Text>
         </View>
@@ -302,6 +314,12 @@ const styles = StyleSheet.create({
   profileNameStyle: {
     color: "#464D60",
     fontFamily: bold
+  },
+
+  tickIconStyle: {
+    height: 15, 
+    width: 15, 
+    marginLeft: "2%"
   },
 
   postTimeStyle: {

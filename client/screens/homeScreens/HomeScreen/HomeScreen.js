@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   View,
+  Text,
   FlatList
 } from 'react-native';
 import {
@@ -10,6 +11,7 @@ import {
 } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import { getHome, clearHome } from '../../../store/actions/HomeAction';
+import { bold, normal } from '../../../assets/FontSize';
 
 //Components
 import SearchBar from '../../../components/homeComponents/SearchBar';
@@ -49,6 +51,10 @@ const HomeScreen = ({ navigation }) => {
     // return unsubscribe;
   }, [navigation]);
 
+  const noticeModalChild = () => {
+    return <Text style={styles.noticeModalTextStyle}>You don't have access to this discussion</Text>
+  }
+
   return (
     <View>
       <ProfileBar 
@@ -87,7 +93,7 @@ const HomeScreen = ({ navigation }) => {
       <NoticeModal 
         openModal={modalIsOpen}
         closeModal={closeModal}
-        message="You don't have access to this discussion"
+        child={noticeModalChild}
       />
     </View>
   );
@@ -96,6 +102,11 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   homeScreenContainerStyle: {
     flex: 1
+  },
+
+  noticeModalTextStyle: {
+    fontFamily: bold,
+    color: "#6505E1"
   }
 });
 

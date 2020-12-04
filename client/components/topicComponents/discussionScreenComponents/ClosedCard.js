@@ -8,6 +8,9 @@ import {
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
 
+//Icon
+import TickIcon from '../../../assets/publicAssets/tickIcon.png';
+
 const ClosedCard = props => {
   const {
     profilePicture,
@@ -19,7 +22,8 @@ const ClosedCard = props => {
     discussionTitle,
     responseLike,
     responsePlay,
-    responseReply
+    responseReply,
+    userType
   } = props;
 
   const convertPostTime = postTimeInput => {
@@ -75,6 +79,7 @@ const ClosedCard = props => {
         <View style={styles.profileInfoContainerStyle}>
           <Image source={{uri: profilePicture}} style={styles.profileImageStyle} />
           <Text style={styles.profileNameStyle}>{profileName}</Text>
+          {userType === 1 && <Image source={TickIcon} style={styles.tickIconStyle} />}
         </View>
         <Text style={styles.postTimeStyle}>{postTime ? convertPostTime(postTime) : ''}</Text>
       </View>
@@ -131,6 +136,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#464D60",
     fontFamily: bold
+  },
+
+  tickIconStyle: {
+    height: 15, 
+    width: 15, 
+    marginLeft: "2%"
   },
 
   postTimeStyle: {

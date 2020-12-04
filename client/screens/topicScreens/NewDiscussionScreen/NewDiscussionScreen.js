@@ -119,7 +119,7 @@ const NewDiscussionScreen = ({ navigation }) => {
 
       formData.append('type', selectAll || selectedFollowers.length > 0 ? '2' : '1');
 
-      selectedFollowers.length > 0 && formData.append('userArr', selectedFollowers);
+      selectedFollowers.length > 0 && formData.append('userArr', JSON.stringify(selectedFollowers));
 
       selectAll && formData.append('all_follower', true);
 
@@ -203,7 +203,8 @@ const NewDiscussionScreen = ({ navigation }) => {
             borderColor: "#5152D0",
             marginRight: "2%",
             width: "35%",
-            height: "60%"
+            height: "80%",
+            marginBottom: 0
           }}
           buttonFunction={closeNoticeModal}
         />
@@ -214,24 +215,30 @@ const NewDiscussionScreen = ({ navigation }) => {
             borderWidth: 0,
             backgroundColor: "#6505E1",
             width: "35%",
-            height: "60%"
+            height: "80%",
+            marginBottom: 0
           }}
-          buttonFunction={() => navigation.goBack()}
+          buttonFunction={() => {
+            closeNoticeModal();
+            navigation.goBack();
+          }}
         />
       </View>
+    );
+  };
+
+  const NoticeModalChild = () => {
+    return (
+      <>
+        <Text style={styles.noticeModalHeaderStyle}>Confirm</Text>
+        <Text style={styles.noticeModalMessageStyle}>Are you sure you want to go back? Your progress will not be saved</Text>
+      </>
     );
   };
 
   const PrivateDiscussionSwitch = () => {
     return (
       <View style={styles.privateDiscussionSwitchContainerStyle}>
-        <Text style={styles.privateDiscussionText}>Private discussion:  </Text>
-        <Switch
-          value={switchValue}
-          onValueChange={changeSwitchValue}
-          trackColor={{true: "#6505E1", false: ""}}
-          thumbColor={"#6505E1"}
-        />
         {
           switchValue && (
             <TouchableOpacity style={styles.editButtonStyle} onPress={() => setOpenModal(true)}>
@@ -239,6 +246,13 @@ const NewDiscussionScreen = ({ navigation }) => {
             </TouchableOpacity>
           )
         }
+        <Text style={styles.privateDiscussionText}>Private discussion:  </Text>
+        <Switch
+          value={switchValue}
+          onValueChange={changeSwitchValue}
+          trackColor={{true: "#6505E1", false: ""}}
+          thumbColor={"#6505E1"}
+        />
         <PrivateDiscussionModal 
           openModal={openModal}
           closeModal={closeModal}
@@ -339,8 +353,9 @@ const NewDiscussionScreen = ({ navigation }) => {
             message="Are you sure you want to go back? Your progress will not be saved"
             modalButton={noticeModalButton}
             customStyle={{
-              height: "20%"
+              height: "25%"
             }}
+            child={NoticeModalChild}
           />
         </View>
       </TouchableWithoutFeedback>
@@ -376,7 +391,7 @@ const styles = StyleSheet.create({
   },
 
   editButtonStyle: {
-    marginLeft: "2%"
+    marginRight: "2.5%"
   },
 
   backButtonAndTitleContainerStyle: {
@@ -426,7 +441,8 @@ const styles = StyleSheet.create({
   },
 
   recorderContainerStyle: {
-    marginBottom: "20%"
+    marginBottom: "20%",
+    marginTop: "5%"
   },
 
   noticeModalButtonContainerStyle: {
@@ -434,7 +450,21 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "center",
     marginTop: "5%",
-    width: "100%"
+    width: "100%",
+    marginBottom: "2.5%"
+  },
+
+  noticeModalHeaderStyle: {
+    fontFamily: bold,
+    color: "#6505E1",
+    fontSize: 18
+  },
+
+  noticeModalMessageStyle: {
+    color: "#464D60",
+    fontFamily: normal,
+    lineHeight: 25,
+    fontSize: 16
   }
 });
 

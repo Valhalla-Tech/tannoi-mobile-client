@@ -56,35 +56,38 @@ const HomeList = props => {
         !listData ? (
           <LoadingSpinner loadingSpinnerForComponent={true} />
         ) : (
-          <FlatList
-            data={listData}
-            listKey={(item, index) => index.toString()}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={itemData => (
-              <>
-                <HomeListCard
-                  imageUrl={itemData.item.creator.profile_photo_path}
-                  recordingFile={itemData.item.voice_note_path}
-                  name={itemData.item.creator.name}
-                  title={itemData.item.title}
-                  votes={itemData.item.likes}
-                  replies={itemData.item.response_count}
-                  plays={itemData.item.play_count}
-                  postTime={itemData.item.created_at}
-                  discussionId={itemData.item.id}
-                  navigation={navigation}
-                  topic={itemData.item.topic ? itemData.item.topic.name : ''}
-                  isBorder={itemData.index === listData.length - 1 ? false : true}
-                  discussionType={itemData.item.type}
-                  openModal={openModal}
-                  isAuthorized={itemData.item.isAuthorized}
-                />
-              </>
-            )}
-          />
+          <>
+            <FlatList
+              data={listData}
+              listKey={(item, index) => index.toString()}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={itemData => (
+                <>
+                  <HomeListCard
+                    imageUrl={itemData.item.creator.profile_photo_path}
+                    recordingFile={itemData.item.voice_note_path}
+                    name={itemData.item.creator.name}
+                    title={itemData.item.title}
+                    votes={itemData.item.likes}
+                    replies={itemData.item.response_count}
+                    plays={itemData.item.play_count}
+                    postTime={itemData.item.created_at}
+                    discussionId={itemData.item.id}
+                    navigation={navigation}
+                    topic={itemData.item.topic ? itemData.item.topic.name : ''}
+                    isBorder={itemData.index === listData.length - 1 ? false : true}
+                    discussionType={itemData.item.type}
+                    openModal={openModal}
+                    isAuthorized={itemData.item.isAuthorized}
+                    profileType={itemData.item.creator.type}
+                  />
+                </>
+              )}
+            />
+            <MoreButton />
+          </>
         )
       }
-      <MoreButton />
     </View>
   );
 };
@@ -103,7 +106,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: "-7.5%"
+    paddingHorizontal: "2%",
+    backgroundColor: "#7817FF",
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+    height: 75
   },
 
   filterStyle: {
@@ -114,14 +121,14 @@ const styles = StyleSheet.create({
 
   filterTextStyle: {
     fontSize: 14,
-    color: "#73798C",
+    color: "#FFFFFF",
     marginRight: "5%"
   },
 
   homeListTitleStyle: {
     fontSize: 20,
     fontFamily: bold,
-    color: "#464D60",
+    color: "#FFFFFF",
     marginVertical: "4%",
     marginLeft: "3%"
   },

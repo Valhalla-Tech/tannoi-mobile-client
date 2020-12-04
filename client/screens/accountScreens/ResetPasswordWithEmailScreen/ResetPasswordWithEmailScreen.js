@@ -15,7 +15,6 @@ import BaseUrl from '../../../constants/BaseUrl';
 import BackButton from '../../../components/publicComponents/BackButton';
 import SendResetPasswordButton from '../../../components/publicComponents/BigButton';
 import FormInput from '../../../components/publicComponents/FormInput';
-import NotActiveButton from '../../../components/publicComponents/NotActiveButton';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 
@@ -104,29 +103,27 @@ const ResetPasswordWithEmailScreen = ({ navigation }) => {
           <View>
           </View>
           <View style={styles.resetPasswordWithEmailbuttonContainerStyle}>
-            {
-              resetPasswordEmail ? (
-                <SendResetPasswordButton
-                    buttonTitle="Send"
-                    buttonStyle={
-                      {
-                        backgroundColor: "#5152D0",
-                        borderColor: "#5152D0",
-                        color: "#FFFFFF",
-                        width: "100%",
-                        height: "100%"
-                      }
-                    }
-                    buttonType="functionButton"
-                    buttonFunction={resetPassword}
-                />
-              ) : (
-                <NotActiveButton 
-                  buttonTitle="Send"
-                  buttonHeight="100%"
-                />
-              )
-            }
+            <SendResetPasswordButton
+              buttonTitle="Send"
+              buttonStyle={
+                resetPasswordEmail ? {
+                  backgroundColor: "#5152D0",
+                  borderColor: "#5152D0",
+                  color: "#FFFFFF",
+                  width: "100%",
+                  height: "100%"
+                } : {
+                  backgroundColor: "#a1a5ab",
+                  borderColor: "#a1a5ab",
+                  color: "#FFFFFF",
+                  width: "100%",
+                  height: "100%"
+                }
+              }
+              buttonType="functionButton"
+              buttonFunction={resetPassword}
+              disableButton={resetPasswordEmail ? false : true}
+            />
           </View>
         </View>
         {

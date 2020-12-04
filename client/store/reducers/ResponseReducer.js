@@ -15,7 +15,8 @@ const defaultState = {
   likeForResponse: '',
   isLikeForResponse: '',
   isDislikeForResponse: '',
-  responseCountForResponse: ''
+  responseCountForResponse: '',
+  userType: ''
 };
 
 const reducer = (state = defaultState, action) => {
@@ -23,6 +24,7 @@ const reducer = (state = defaultState, action) => {
     case 'GET_RESPONSE':
       let setResponse = action.payload.response;
       let setIsResponse = action.payload.response.length !== 0 ? true : false;
+
       return {...state, response: setResponse, isResponse: setIsResponse};
     case 'GET_SINGLE_RESPONSE':
       let setProfileId = action.payload.profileId;
@@ -37,6 +39,7 @@ const reducer = (state = defaultState, action) => {
       let setIsDislike = action.payload.isDislike;
       let setCaption = action.payload.caption;
       let setResponseCount = action.payload.responseCount;
+      let setUserType = action.payload.userType;
 
       return {
         ...state,
@@ -51,7 +54,8 @@ const reducer = (state = defaultState, action) => {
         isLike: setIsLike,
         isDislike: setIsDislike,
         caption: setCaption,
-        responseCount: setResponseCount
+        responseCount: setResponseCount,
+        userType: setUserType
       };
     case 'GET_DATA_FOR_RESPONSE':
       let setLikeForResponse = action.payload.likeForResponse;

@@ -18,7 +18,7 @@ const SearchBarCard = props => {
     <>
       {
         cardTitle === selectedDiscussion ? (
-            <View style={{...styles.searchBarCardStyle, backgroundColor: "#5152D0", borderWidth: 0}}>
+            <View style={{...styles.searchBarCardStyle, backgroundColor: "#B219FF", borderWidth: 0}}>
               <Text style={{...styles.searchBarCardTextStyle, color: "#FFFFFF"}}>{cardTitle}</Text>
             </View>
         ) : (

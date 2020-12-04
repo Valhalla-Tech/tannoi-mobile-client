@@ -10,7 +10,7 @@ import { bold } from '../../../assets/FontSize';
 
 //Icon
 import NoProfilePicture from '../../../assets/publicAssets/noProfilePicture.png';
-import tickIcon from '../../../assets/homeAssets/tickIcon.png';
+import tickIcon from '../../../assets/publicAssets/tickIcon.png';
 
 const ProfileBar = props => {
   const {
@@ -36,7 +36,7 @@ const ProfileBar = props => {
             <Text style={styles.verifyButtonTextStyle}>VERIFY</Text>
           </TouchableOpacity>
         )
-      } 
+      }
     </View>
   )
 };

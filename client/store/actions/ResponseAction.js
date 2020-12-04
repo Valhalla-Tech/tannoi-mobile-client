@@ -76,7 +76,8 @@ export const getSingleResponse = (responseId, responseOption) => {
                 play: getResponseRequest.data.play_count,
                 isLike: getResponseRequest.data.isLike,
                 isDislike: getResponseRequest.data.isDislike,
-                caption: getResponseRequest.data.caption
+                caption: getResponseRequest.data.caption,
+                userType: getResponseRequest.data.creator.type
               }
             })
           }

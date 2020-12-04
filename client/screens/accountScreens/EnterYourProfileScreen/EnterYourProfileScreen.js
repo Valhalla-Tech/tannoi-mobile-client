@@ -24,6 +24,7 @@ import NoProfileIcon from '../../../assets/accountAssets/EnterYourProfileScreen/
 //Components
 import SaveAndContinueButton from '../../../components/publicComponents/BigButton';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
+import FormInput from '../../../components/publicComponents/FormInput';
 
 const EnterYourProfileScreen = ({ navigation }) => {
   const [profileImage, setProfileImage] = useState('');
@@ -125,6 +126,10 @@ const EnterYourProfileScreen = ({ navigation }) => {
     showMode('date');
   };
 
+  const nameInput = input => {
+    setFullName(input);
+  };
+
   const UploadPhoto = () => {
     return (
       <View style={styles.uploadProfilePhotoContainerStyle}>
@@ -170,6 +175,44 @@ const EnterYourProfileScreen = ({ navigation }) => {
     );
   };
 
+  const ProfileForm = () => {
+    return (
+      <>
+        {
+          fullNameValidation && (
+            <View style={{marginTop: "2%"}}>
+              <ErrorMessage message="Please enter your full name" />
+            </View>
+          )
+        }
+        <Text style={{...styles.formInputTitleStyle}}>Full name</Text>
+        <FormInput
+          dataInput={nameInput}
+        />
+        <Text style={{...styles.formInputTitleStyle}}>Date of birth</Text>
+        {
+          show ? (
+            <DateTimePicker 
+              testID="dateTimePicker"
+              value={currentDate}
+              mode={mode}
+              is24Hour={true}
+              display="default"
+              onChange={dateInput}
+            />
+          ) : (
+            <TouchableOpacity
+              style={styles.formInputStyle}
+              onPress={showDatepicker}
+            >
+              <Text style={{fontSize: 16}}>{birthDateDisplay}</Text>
+            </TouchableOpacity>
+          )
+        }
+      </>
+    );
+  };
+
   return (
     <TouchableWithoutFeedback
       onPress={() => {
@@ -180,38 +223,7 @@ const EnterYourProfileScreen = ({ navigation }) => {
         <View style={styles.enterYourProfileScreenContainerStyle}>
           <Text style={styles.enterYourProfileScreenTitleStyle}>Enter your profile</Text>
           <UploadPhoto />
-          {
-            fullNameValidation && (
-              <View style={{marginTop: "2%"}}>
-                <ErrorMessage message="Please enter your full name" />
-              </View>
-            )
-          }
-          <Text style={{...styles.formInputTitleStyle}}>Full name</Text>
-          <TextInput 
-            style={styles.formInputStyle}
-            onChangeText={value => setFullName(value)}
-          />
-          <Text style={{...styles.formInputTitleStyle}}>Date of birth</Text>
-          {
-            show ? (
-              <DateTimePicker 
-                testID="dateTimePicker"
-                value={currentDate}
-                mode={mode}
-                is24Hour={true}
-                display="default"
-                onChange={dateInput}
-              />
-            ) : (
-              <TouchableOpacity
-                style={styles.formInputStyle}
-                onPress={showDatepicker}
-              >
-                <Text style={{fontSize: 16}}>{birthDateDisplay}</Text>
-              </TouchableOpacity>
-            )
-          }
+          {ProfileForm()}
           <EnterYourProfileScreenButton />
         </View>
         {
