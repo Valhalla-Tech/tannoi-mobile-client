@@ -117,12 +117,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#7817FF",
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
-    height: 60,
+    height: 50,
     marginBottom: "3.5%"
   },
 
   recommendedTopicsTitleStyle: {
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: bold,
     color: "#FFFFFF",
     marginVertical: "4%",

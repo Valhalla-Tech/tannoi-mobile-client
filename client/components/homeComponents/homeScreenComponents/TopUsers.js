@@ -73,16 +73,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#7817FF",
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
-    height: 60,
+    height: 50,
     paddingLeft: "5%"
   },
 
   topUsersTitleStyle: {
     color: "#FFFFFF",
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: bold,
     paddingBottom: "3%",
-    paddingTop: "3%"
+    paddingTop: "2%"
   },
 
   listStyle: {
