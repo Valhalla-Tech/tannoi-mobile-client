@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
   },
 
   searchBoxStyle: {
-    backgroundColor: "#E3E6EB",
+    backgroundColor: "#F7F7F7",
     padding: 6,
     borderRadius: 10,
     flexDirection: "row",

@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   profileInfoContainerStyle: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: "3.9%",
+    paddingHorizontal: "4.3%",
     paddingVertical: "1%"
   },
 
