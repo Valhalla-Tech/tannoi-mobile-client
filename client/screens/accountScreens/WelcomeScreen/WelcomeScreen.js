@@ -75,10 +75,13 @@ const WelcomeScreen = ({ navigation }) => {
   const WelcomePageUpperSection = () => {
     return (
       <View style={styles.welcomePageGreetingContainerStyle}>
-        <Image source={WelcomeScreenBackground} style={styles.welcomeScreenBackgroundStyle} />
+        <Image 
+          source={WelcomeScreenBackground} 
+          style={styles.welcomeScreenBackgroundStyle} 
+          resizeMode="stretch"/>
         <TannoiLogo />
         <Text style={styles.headerBoldTextStyle}>Discover Everything</Text>
-        <Text style={styles.headerNormalTextStyle}>Your place for you to talk with friends {'\n'} and communities</Text>
+        <Text style={styles.headerNormalTextStyle}>A place for you to talk with friends {'\n'} and communities</Text>
       </View>
     );
   };
@@ -180,7 +183,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingBottom: "20%",
-    marginBottom: "20%"
+    marginBottom: "20%",
   },
 
   welcomeScreenBackgroundStyle: {
@@ -192,7 +195,7 @@ const styles = StyleSheet.create({
 
   headerBoldTextStyle: {
     fontFamily: bold,
-    marginTop: "15%",
+    marginTop: "10%",
     fontSize: 22
   },
 
