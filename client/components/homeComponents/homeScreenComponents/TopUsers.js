@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#7817FF",
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
-    height: 75,
+    height: 60,
     paddingLeft: "5%"
   },
 
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: bold,
     paddingBottom: "3%",
-    paddingTop: "4%"
+    paddingTop: "3%"
   },
 
   listStyle: {
