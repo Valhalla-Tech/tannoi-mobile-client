@@ -84,7 +84,7 @@ const NavigationBar = props => {
                 focused ? (
                   <View style={{justifyContent: "center", alignItems: "center"}}>
                     <TopicICon />
-                    <Text style={{color: "#FFFFFF", fontSize: 10}}>Topics</Text>
+                    <Text style={{color: "#FFA530", fontSize: 10}}>Topics</Text>
                   </View>
                 ) : (
                   <View style={{justifyContent: "center", alignItems: "center"}}>
@@ -138,7 +138,7 @@ const NavigationBar = props => {
                 focused ? (
                   <View style={{justifyContent: "center", alignItems: "center"}}>
                     <InboxIcon />
-                    <Text style={{color: "#FFFFFF", fontSize: 10}}>Inbox</Text>
+                    <Text style={{color: "#FFA530", fontSize: 10}}>Inbox</Text>
                   </View>
                 ) : (
                   <View style={{justifyContent: "center", alignItems: "center"}}>
@@ -165,7 +165,7 @@ const NavigationBar = props => {
                 focused ? (
                   <View style={{justifyContent: "center", alignItems: "center"}}>
                     <MeIcon />
-                    <Text style={{color: "#FFFFFF", fontSize: 10}}>Me</Text>
+                    <Text style={{color: "#FFA530", fontSize: 10}}>Me</Text>
                   </View>
                 ) : (
                   <View style={{justifyContent: "center", alignItems: "center"}}>
