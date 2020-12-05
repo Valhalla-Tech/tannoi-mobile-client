@@ -97,7 +97,7 @@ const LoginWithEmailScreen = ({ navigation }) => {
     return (
       <View style={styles.forgotPasswordButtonContainer}>
         <Text style={styles.forgotPasswordButtonTextStyle}>
-          Forgot password?
+          Forgot your password?
         </Text>
         <TouchableOpacity 
           style={{marginLeft: 5}}
@@ -138,7 +138,7 @@ const LoginWithEmailScreen = ({ navigation }) => {
       <View style={{flex: 1}}>
         <View style={styles.loginWithEmailScreenContainerStyle}>
           <BackButton navigation={navigation} />
-          <Text style={styles.loginTitleStyle}>Login to TannOi</Text>
+          <Text style={styles.loginTitleStyle}>Login to tannOi</Text>
           {LoginForm()}
           <LoginWithEmailButton />
           <ForgotPasswordButton />

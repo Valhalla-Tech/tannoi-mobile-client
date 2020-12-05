@@ -110,9 +110,9 @@ const NavigationBar = props => {
               style={{
                 justifyContent: "center", 
                 alignItems: "center", 
-                marginBottom: "30%", 
+                marginBottom: "35%", 
                 borderWidth: 10,
-                height: "330%",
+                height: "320%",
                 width: "60%",
                 borderRadius: 30,
                 backgroundColor: "#2B085C",
