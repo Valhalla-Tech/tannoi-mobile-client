@@ -78,7 +78,7 @@ class DiscussionScreenPlayerCard extends Component {
 
   componentDidMount() {
     this._isMounted = true;
-    this.props.getSingleResponse(this.state.responseId, 'getDataForResponse');
+    this.state.cardIndex !== 'discussion' && this.props.getSingleResponse(this.state.responseId, 'getDataForResponse');
     this.player = null;
     this.lastSeek = 0;
 

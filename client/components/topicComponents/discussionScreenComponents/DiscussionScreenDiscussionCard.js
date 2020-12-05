@@ -7,7 +7,7 @@ import {
   Image
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getHome, clearHome } from '../../../store/actions/HomeAction';
 import { getDiscussion } from '../../../store/actions/DiscussionAction';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -57,6 +57,7 @@ const DiscussionScreenCard = props => {
 
   const [optionModal, setOptionModal] = useState(false);
   const [privateModal, setPrivateModal] = useState(false);
+  const discussionType = useSelector(state => state.DiscussionReducer.type);
 
   const dispatch = useDispatch();
 
@@ -199,12 +200,16 @@ const DiscussionScreenCard = props => {
           profileId={profileId}
           openPrivateModal={openPrivateModal}
         />
-        <PrivateDiscussionModal
-          openModal={privateModal}
-          closeModal={closePrivateModal}
-          fromDiscussionScreen={true}
-          discussionId={discussionId}
-        />
+        {
+          discussionType === 2 && (
+            <PrivateDiscussionModal
+              openModal={privateModal}
+              closeModal={closePrivateModal}
+              fromDiscussionScreen={true}
+              discussionId={discussionId}
+            />
+          )
+        }
       </View>
     );
   };
