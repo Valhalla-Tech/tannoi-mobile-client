@@ -84,12 +84,12 @@ const NavigationBar = props => {
                 focused ? (
                   <View style={{justifyContent: "center", alignItems: "center"}}>
                     <TopicICon />
-                    <Text style={{color: "#FFFFFF", fontSize: 10}}>Topic</Text>
+                    <Text style={{color: "#FFFFFF", fontSize: 10}}>Topics</Text>
                   </View>
                 ) : (
                   <View style={{justifyContent: "center", alignItems: "center"}}>
                     <TopicIconNotActive />
-                    <Text style={{color: "#FFFFFF", fontSize: 10}}>Topic</Text>
+                    <Text style={{color: "#FFFFFF", fontSize: 10}}>Topics</Text>
                   </View>
                 )
               }
@@ -112,7 +112,7 @@ const NavigationBar = props => {
                 alignItems: "center", 
                 marginBottom: "30%", 
                 borderWidth: 10,
-                height: "280%",
+                height: "330%",
                 width: "60%",
                 borderRadius: 30,
                 backgroundColor: "#2B085C",
