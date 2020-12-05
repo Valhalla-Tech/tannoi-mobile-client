@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   profileContainerStyle: {
     flexDirection: "row", 
     alignItems: "center", 
-    marginBottom: "3.8%",
+    marginBottom: "1.5%",
     marginLeft: -1.5
   },
 
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     color: "#464D60", 
     fontFamily: bold, 
     width: 267, 
-    marginBottom: "3.8%"
+    marginBottom: "1.5%"
   },
 
   cardInfoContainerStyle: {
