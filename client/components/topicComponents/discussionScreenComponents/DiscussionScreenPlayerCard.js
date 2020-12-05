@@ -39,6 +39,8 @@ import TickIcon from '../../../assets/publicAssets/tickIcon.png';
 import AddResponse from '../../../components/topicComponents/discussionScreenComponents/AddResponse';
 
 class DiscussionScreenPlayerCard extends Component {
+  _isMounted = false;
+
   constructor(props) {
     super(props);
 
@@ -75,6 +77,7 @@ class DiscussionScreenPlayerCard extends Component {
   }
 
   componentDidMount() {
+    this._isMounted = true;
     this.props.getSingleResponse(this.state.responseId, 'getDataForResponse');
     this.player = null;
     this.lastSeek = 0;
@@ -90,18 +93,20 @@ class DiscussionScreenPlayerCard extends Component {
     if (this.state.playPauseButton === 'Pause') {
       this.playRecording();
     };
-
+    this._isMounted = false;
     clearInterval(this.progressInterval);
   };
 
   updateState(err) {
-    this.setState({
-      playPauseButton: this.player && this.player.isPlaying ? 'Pause' : 'Play',
-
-      playButtonDisabled: !this.player || !this.player.canPlay,
-
-      isPaused: this.player.isPaused
-    });
+    if (this._isMounted) {
+      this.setState({
+        playPauseButton: this.player && this.player.isPlaying ? 'Pause' : 'Play',
+  
+        playButtonDisabled: !this.player || !this.player.canPlay,
+  
+        isPaused: this.player.isPaused
+      });
+    }
   };
   
   loadPlayer() {
@@ -201,12 +206,12 @@ class DiscussionScreenPlayerCard extends Component {
   getDuration = () => {
     let durationToString = this.player.duration.toString();
     
-    if (durationToString.length === 4) {
+    if (durationToString.length === 4 && this._isMounted) {
       this.setState({
         durationDisplay: `0:0${durationToString[0]}`,
         durationPlayedDisplay: '0:00'
       });
-    } else if (durationToString.length === 5) {
+    } else if (durationToString.length === 5 && this._isMounted) {
       this.setState({
         durationDisplay: `0:${durationToString[0]}${durationToString[1]}`,
         durationPlayedDisplay: '0:00'
