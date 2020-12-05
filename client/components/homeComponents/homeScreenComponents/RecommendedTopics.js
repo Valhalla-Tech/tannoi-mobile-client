@@ -38,7 +38,7 @@ const RecommendedTopics = props => {
   return (
     <View style={styles.recommendedTopicsContainerStyle}>
       <View style={styles.recommendedTopicsTitleAndSeeAllButtonContainerStyle}>
-        <Text style={styles.recommendedTopicsTitleStyle}>Recommended topics</Text>
+        <Text style={styles.recommendedTopicsTitleStyle}>Recommended Topics</Text>
         <TouchableOpacity style={styles.seeAllButton}>
           <Text style={styles.seeAllButtonTextStyle}>See all</Text>
         </TouchableOpacity>

@@ -24,7 +24,7 @@ const TopUsers = props => {
   return (
     <View style={styles.topUsersContainerStyle}>
       <View style={styles.topUsersHeaderStyle}>
-        <Text style={styles.topUsersTitleStyle}>Top users</Text>
+        <Text style={styles.topUsersTitleStyle}>Top Users</Text>
       </View>
       {
         !topUserData && (
