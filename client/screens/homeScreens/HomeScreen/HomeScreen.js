@@ -64,10 +64,12 @@ const HomeScreen = ({ navigation }) => {
       <FlatList
         ListHeaderComponent={
           <View style={styles.homeScreenContainerStyle}>
-            <SearchBar
-              searchBarIsOpen={false}
-              navigation={navigation}
-            />
+            <View style={styles.searchBarContainer}>
+              <SearchBar
+                searchBarIsOpen={false}
+                navigation={navigation}
+              />
+            </View>
             <DiscussionOfTheWeek
               listTitle="Discussions of the Week"
               listData={discussionOfTheWeek}
@@ -107,6 +109,11 @@ const styles = StyleSheet.create({
   noticeModalTextStyle: {
     fontFamily: bold,
     color: "#6505E1"
+  },
+  
+  searchBarContainer: {
+    paddingHorizontal: "4.2%",
+    backgroundColor: "#FFFFFF"
   }
 });
 

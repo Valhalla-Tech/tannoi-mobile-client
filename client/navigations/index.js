@@ -22,6 +22,7 @@ import NewDiscussionScreen from '../screens/topicScreens/NewDiscussionScreen';
 import DiscussionScreen from '../screens/topicScreens/DiscussionScreen';
 import ResponseScreen from '../screens/topicScreens/ResponseScreen';
 import UserProfile from '../screens/meScreens/UserProfile';
+import SearchScreen from '../screens/homeScreens/SearchScreen';
 
 const Stack = createStackNavigator();
 
@@ -121,6 +122,12 @@ const NavigationIndex = () => {
             <Stack.Screen name="ResponseScreen" component={ResponseScreen} />
             <Stack.Screen name="UserProfile" component={UserProfile} />
             <Stack.Screen name="VerificationNavigation" component={VerificationNavigation} />
+            <Stack.Screen 
+              name="SearchScreen" 
+              component={SearchScreen} options={{
+                animationEnabled: false
+              }} 
+            />
           </>
         ) : (
           <Stack.Screen name="AccountNavigation" component={AccountNavigation} />

@@ -51,7 +51,8 @@ const SearchBar = props => {
   const {
     searchBarIsOpen,
     navigation,
-    searchBoxInput
+    searchBoxInput,
+    showCard
   } = props;
 
   const changeSelectedDiscussion = discussion => {
@@ -65,7 +66,7 @@ const SearchBar = props => {
           searchBarIsOpen && (
             <TouchableOpacity 
               style={styles.backButtonStyle}
-              onPress={() => navigation.navigate('HomeScreen')}
+              onPress={() => navigation.goBack()}
             >
               <BackButtonIcon />
             </TouchableOpacity>
@@ -100,7 +101,7 @@ const SearchBar = props => {
         }
       </View>
       {
-        !searchBarIsOpen && (
+        !searchBarIsOpen && showCard && (
           <FlatList
             data={DATA}
             horizontal={true}
@@ -158,16 +159,11 @@ const SearchBar = props => {
 };
 
 const styles = StyleSheet.create({
-  searchBarContainerStyle: {
-    backgroundColor: "#FFFFFF"
-  },
-
   backButtonStyle: {
     marginRight: 22
   },
 
   searchBarStyle: {
-    marginHorizontal: 16,
     marginTop: 8,
     marginBottom: 8,
     flexDirection: "row",

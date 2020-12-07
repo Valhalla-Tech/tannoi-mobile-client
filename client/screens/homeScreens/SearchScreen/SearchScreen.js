@@ -23,11 +23,13 @@ const SearchScreen = ({ navigation }) => {
       onPress={() => Keyboard.dismiss()}
     >
       <View style={styles.searchScreenContainerStyle}>
-        <SearchBar 
-          navigation={navigation}
-          searchBarIsOpen={true}
-          searchBoxInput={searchBoxInput}
-        />
+        <View style={styles.searchBarContainerStyle}>
+          <SearchBar 
+            navigation={navigation}
+            searchBarIsOpen={true}
+            searchBoxInput={searchBoxInput}
+          />
+        </View>
         {
           !searchInput && (
             <RecentSearches />
@@ -48,6 +50,11 @@ const SearchScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   searchScreenContainerStyle: {
     flex: 1
+  },
+
+  searchBarContainerStyle: {
+    backgroundColor: "#FFFFFF",
+    paddingHorizontal: "4.2%"
   }
 });
 
