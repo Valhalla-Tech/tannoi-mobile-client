@@ -28,6 +28,9 @@ const SearchScreen = ({ navigation }) => {
             navigation={navigation}
             searchBarIsOpen={true}
             searchBoxInput={searchBoxInput}
+            customStyle={{
+              marginHorizontal: "4.2%"
+            }}
           />
         </View>
         {
@@ -53,8 +56,7 @@ const styles = StyleSheet.create({
   },
 
   searchBarContainerStyle: {
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: "4.2%"
+    backgroundColor: "#FFFFFF"
   }
 });
 

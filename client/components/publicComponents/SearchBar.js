@@ -52,8 +52,11 @@ const SearchBar = props => {
     searchBarIsOpen,
     navigation,
     searchBoxInput,
-    showCard
+    showCard,
+    customStyle
   } = props;
+
+  const searchBarStyle = {...styles.searchBarStyle, ...customStyle};
 
   const changeSelectedDiscussion = discussion => {
     setCurrentSelectedDiscussion(discussion);
@@ -61,7 +64,7 @@ const SearchBar = props => {
 
   return (
     <View style={styles.searchBarContainerStyle}>
-      <View style={styles.searchBarStyle}>
+      <View style={searchBarStyle}>
         {
           searchBarIsOpen && (
             <TouchableOpacity 
