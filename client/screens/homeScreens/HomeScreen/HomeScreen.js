@@ -14,7 +14,7 @@ import { getHome, clearHome } from '../../../store/actions/HomeAction';
 import { bold, normal } from '../../../assets/FontSize';
 
 //Components
-import SearchBar from '../../../components/homeComponents/SearchBar';
+import SearchBar from '../../../components/publicComponents/SearchBar';
 import ProfileBar from '../../../components/homeComponents/homeScreenComponents/ProfileBar';
 import DiscussionOfTheWeek from '../../../components/homeComponents/homeScreenComponents/HomeList';
 import TopUsers from '../../../components/homeComponents/homeScreenComponents/TopUsers';

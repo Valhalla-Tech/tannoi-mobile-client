@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 
 //Components
-import SearchBar from '../../../components/homeComponents/SearchBar';
+import SearchBar from '../../../components/publicComponents/SearchBar';
 import RecentSearches from '../../../components/homeComponents/searchScreenComponents/RecentSearches';
 import SearchResultBox from '../../../components/homeComponents/searchScreenComponents/SearchResultBox';
 

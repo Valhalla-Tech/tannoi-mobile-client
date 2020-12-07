@@ -14,7 +14,7 @@ import SearchIcon from '../../assets/homeAssets/searchIcon.svg';
 import BackButtonIcon from '../../assets/publicAssets/back-button.svg';
 
 //Component
-import SearchBarCard from '../../components/homeComponents/SearchBarCard';
+import SearchBarCard from './SearchBarCard';
 
 const DATA = [
   {
