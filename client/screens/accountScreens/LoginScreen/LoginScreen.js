@@ -84,7 +84,7 @@ const LoginScreen = ({ navigation }) => {
     <View style={{flex: 1}}>
       <View style={styles.loginScreenContainerStyle}>
         <BackButton navigation={navigation} />
-        <Text style={styles.loginTitleStyle}>Login to TannOi</Text>
+        <Text style={styles.loginTitleStyle}>Login to tannOi</Text>
         <LoginButton />
       </View>
     </View>

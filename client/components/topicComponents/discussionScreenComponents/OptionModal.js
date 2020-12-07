@@ -180,6 +180,7 @@ const styles = StyleSheet.create({
   },
 
   headerTextStyle: {
+    textAlign: "center",
     fontFamily: bold,
     color: "#6505E1",
     fontSize: 16,

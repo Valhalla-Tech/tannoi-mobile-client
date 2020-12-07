@@ -69,7 +69,7 @@ const HomeScreen = ({ navigation }) => {
               navigation={navigation}
             />
             <DiscussionOfTheWeek
-              listTitle="Discussion of the week"
+              listTitle="Discussions of the Week"
               listData={discussionOfTheWeek}
               navigation={navigation}
               openModal={openModal}
