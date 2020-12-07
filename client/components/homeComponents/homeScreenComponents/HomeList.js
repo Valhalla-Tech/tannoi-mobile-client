@@ -14,6 +14,7 @@ import DownArrow from '../../../assets/homeAssets/downArrow.svg';
 //Components
 import HomeListCard from './HomeListCard';
 import LoadingSpinner from '../../publicComponents/LoadingSpinner';
+import Card from '../../publicComponents/Card';
 
 const HomeList = props => {
   const { 
@@ -42,53 +43,59 @@ const HomeList = props => {
     );
   };
 
-  return (
-    <View style={styles.homeListContainerStyle}>
-      <View style={styles.homeListTitleAndFilterContainerStyle}>
-        <Text style={styles.homeListTitleStyle}>{listTitle}</Text>
+  const HomeListContent = () => {
+    return (
+        <View>
+        <View style={styles.homeListTitleAndFilterContainerStyle}>
+          <Text style={styles.homeListTitleStyle}>{listTitle}</Text>
+          {
+            listTitle === 'Trending' && (
+              <ListFilter />
+            )
+          }
+        </View>
         {
-          listTitle === 'Trending' && (
-            <ListFilter />
+          !listData ? (
+            <LoadingSpinner loadingSpinnerForComponent={true} />
+          ) : (
+            <>
+              <FlatList
+                data={listData}
+                listKey={(item, index) => index.toString()}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={itemData => (
+                  <>
+                    <HomeListCard
+                      imageUrl={itemData.item.creator.profile_photo_path}
+                      recordingFile={itemData.item.voice_note_path}
+                      name={itemData.item.creator.name}
+                      title={itemData.item.title}
+                      votes={itemData.item.likes}
+                      replies={itemData.item.response_count}
+                      plays={itemData.item.play_count}
+                      postTime={itemData.item.created_at}
+                      discussionId={itemData.item.id}
+                      navigation={navigation}
+                      topic={itemData.item.topic ? itemData.item.topic.name : ''}
+                      isBorder={itemData.index === listData.length - 1 ? false : true}
+                      discussionType={itemData.item.type}
+                      openModal={openModal}
+                      isAuthorized={itemData.item.isAuthorized}
+                      profileType={itemData.item.creator.type}
+                    />
+                  </>
+                )}
+              />
+              <MoreButton />
+            </>
           )
         }
       </View>
-      {
-        !listData ? (
-          <LoadingSpinner loadingSpinnerForComponent={true} />
-        ) : (
-          <>
-            <FlatList
-              data={listData}
-              listKey={(item, index) => index.toString()}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={itemData => (
-                <>
-                  <HomeListCard
-                    imageUrl={itemData.item.creator.profile_photo_path}
-                    recordingFile={itemData.item.voice_note_path}
-                    name={itemData.item.creator.name}
-                    title={itemData.item.title}
-                    votes={itemData.item.likes}
-                    replies={itemData.item.response_count}
-                    plays={itemData.item.play_count}
-                    postTime={itemData.item.created_at}
-                    discussionId={itemData.item.id}
-                    navigation={navigation}
-                    topic={itemData.item.topic ? itemData.item.topic.name : ''}
-                    isBorder={itemData.index === listData.length - 1 ? false : true}
-                    discussionType={itemData.item.type}
-                    openModal={openModal}
-                    isAuthorized={itemData.item.isAuthorized}
-                    profileType={itemData.item.creator.type}
-                  />
-                </>
-              )}
-            />
-            <MoreButton />
-          </>
-        )
-      }
-    </View>
+    );
+  }
+
+  return (
+    <Card child={HomeListContent} customStyle={styles.homeListContainerStyle} />
   );
 };
 
@@ -96,10 +103,10 @@ const styles = StyleSheet.create({
   homeListContainerStyle: {
     backgroundColor: "#FFFFFF",
     marginTop: "2%",
-    marginHorizontal: 8,
     marginBottom: "3.5%",
     borderRadius: 8,
-    paddingBottom: "6.5%"
+    paddingBottom: "6.5%",
+    marginHorizontal: "1.8%"
   },
 
   homeListTitleAndFilterContainerStyle: {
