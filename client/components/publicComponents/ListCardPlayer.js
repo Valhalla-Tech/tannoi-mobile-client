@@ -7,16 +7,16 @@ import {
   Player
 } from '@react-native-community/audio-toolkit';
 import { connect } from 'react-redux';
-import { getHome } from '../../../store/actions/HomeAction';
+import { getHome } from '../../store/actions/HomeAction';
 import axios from 'axios';
-import BaseUrl from '../../../constants/BaseUrl';
+import BaseUrl from '../../constants/BaseUrl';
 
 //Icons
-import ActivePlayButton from '../../../assets/homeAssets/activePlayButton.svg';
-import PauseButton from '../../../assets/homeAssets/pauseButton.svg';
+import ActivePlayButton from '../../assets/homeAssets/activePlayButton.svg';
+import PauseButton from '../../assets/homeAssets/pauseButton.svg';
 
 //Component
-import LoadingSpinner from '../../publicComponents/LoadingSpinner';
+import LoadingSpinner from './LoadingSpinner';
 
 class HomeListPlayerCard extends Component {
   constructor(props) {

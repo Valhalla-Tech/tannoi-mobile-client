@@ -35,6 +35,41 @@ export const getTopic = () => {
   };
 };
 
+export const getSingleTopic = (topicId) => {
+  return async (dispatch) => {
+    try {
+      let access_token = await AsyncStorage.getItem('access_token');
+
+      let getSingleTopicRequest = await axios({
+        url: `${BaseUrl}/topics/${topicId}`,
+        method: 'get',
+        headers: {
+          'token': access_token
+        }
+      });
+
+      if (getSingleTopicRequest.data) {
+        dispatch({
+          type: 'GET_SINGLE_TOPIC',
+          payload: {
+            topic: getSingleTopicRequest.data
+          }
+        })
+      }
+    } catch (error) {
+      console.log(error);
+      if (error.response.data.msg === 'You have to login first') {
+        dispatch({
+          type: 'LOGOUT',
+          payload: {
+            loginStatus: false
+          }
+        });
+      };
+    }
+  };
+};
+
 export const followTopic = (topicId) => {
   return async (dispatch) => {
     try {
@@ -62,7 +97,7 @@ export const followTopic = (topicId) => {
         });
       };
     }
-  }
+  };
 };
 
 export const unfollowTopic = (topicId) => {
@@ -92,5 +127,5 @@ export const unfollowTopic = (topicId) => {
         });
       };
     }
-  }
+  };
 };

@@ -16,9 +16,9 @@ import { bold, normal } from '../../../assets/FontSize';
 //Components
 import SearchBar from '../../../components/publicComponents/SearchBar';
 import ProfileBar from '../../../components/homeComponents/homeScreenComponents/ProfileBar';
-import DiscussionOfTheWeek from '../../../components/homeComponents/homeScreenComponents/HomeList';
+import DiscussionOfTheWeek from '../../../components/publicComponents/List';
 import TopUsers from '../../../components/homeComponents/homeScreenComponents/TopUsers';
-import Trending from '../../../components/homeComponents/homeScreenComponents/HomeList';
+import Trending from '../../../components/publicComponents/List';
 import RecommendedTopics from '../../../components/homeComponents/homeScreenComponents/RecommendedTopics';
 import NoticeModal from '../../../components/publicComponents/Modal';
 
@@ -53,7 +53,7 @@ const HomeScreen = ({ navigation }) => {
 
   const noticeModalChild = () => {
     return <Text style={styles.noticeModalTextStyle}>You don't have access to this discussion</Text>
-  }
+  };
 
   return (
     <View>
@@ -75,6 +75,7 @@ const HomeScreen = ({ navigation }) => {
               listData={discussionOfTheWeek}
               navigation={navigation}
               openModal={openModal}
+              isUsingMoreButton={true}
             />
             <TopUsers
               topUserData={topUser}
@@ -85,6 +86,8 @@ const HomeScreen = ({ navigation }) => {
               listData={trending}
               navigation={navigation}
               openModal={openModal}
+              isFilter={true}
+              isUsingMoreButton={true}
             />
             <RecommendedTopics
               topicData={recommendedTopic}

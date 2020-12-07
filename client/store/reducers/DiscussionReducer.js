@@ -14,11 +14,16 @@ const defaultState = {
   isDislike: '',
   responseCount: '',
   type: '',
-  userType: ''
+  userType: '',
+  discussions: []
 }
 
 const reducer = (state = defaultState, action) => {
   switch (action.type) {
+    case 'GET_ALL_DISCUSSION':
+      let setDiscussions = action.payload.discussions;
+
+      return {...state, discussions: setDiscussions};
     case 'GET_DISCUSSION':
       let setProfileId = action.payload.profileId;
       let setProfilePicture = action.payload.profilePicture;

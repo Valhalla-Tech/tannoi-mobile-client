@@ -6,14 +6,14 @@ import {
   TouchableOpacity,
   Image
 } from 'react-native';
-import { bold, normal } from '../../../assets/FontSize';
+import { bold, normal } from '../../assets/FontSize';
 
 //Icon
-import LockIcon from '../../../assets/homeAssets/lockIcon.png';
-import tickIcon from '../../../assets/publicAssets/tickIcon.png';
+import LockIcon from '../../assets/homeAssets/lockIcon.png';
+import tickIcon from '../../assets/publicAssets/tickIcon.png';
 
 //Component
-import HomeListCardPlayer from './HomeListCardPlayer';
+import HomeListCardPlayer from './ListCardPlayer';
 
 const HomeListCard = props => {
   const {

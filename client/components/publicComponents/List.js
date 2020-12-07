@@ -6,22 +6,24 @@ import {
   TouchableOpacity,
   FlatList
 } from 'react-native';
-import { bold } from '../../../assets/FontSize';
+import { bold } from '../../assets/FontSize';
 
 //Icon
-import DownArrow from '../../../assets/homeAssets/downArrow.svg';
+import DownArrow from '../../assets/homeAssets/downArrow.svg';
 
 //Components
-import HomeListCard from './HomeListCard';
-import LoadingSpinner from '../../publicComponents/LoadingSpinner';
-import Card from '../../publicComponents/Card';
+import HomeListCard from './ListCard';
+import LoadingSpinner from './LoadingSpinner';
+import Card from './Card';
 
 const HomeList = props => {
   const { 
     listTitle, 
     listData,
     navigation,
-    openModal
+    openModal,
+    isFilter,
+    isUsingMoreButton
   } = props;
 
   const MoreButton = () => {
@@ -49,7 +51,7 @@ const HomeList = props => {
         <View style={styles.homeListTitleAndFilterContainerStyle}>
           <Text style={styles.homeListTitleStyle}>{listTitle}</Text>
           {
-            listTitle === 'Trending' && (
+            isFilter && (
               <ListFilter />
             )
           }
@@ -86,7 +88,9 @@ const HomeList = props => {
                   </>
                 )}
               />
-              <MoreButton />
+              {
+                isUsingMoreButton && <MoreButton />
+              }
             </>
           )
         }

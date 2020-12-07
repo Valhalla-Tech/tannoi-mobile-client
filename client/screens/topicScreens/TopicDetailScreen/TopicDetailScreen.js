@@ -1,0 +1,152 @@
+import React, { useEffect, useState } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList
+} from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import { getAllDiscussion } from '../../../store/actions/DiscussionAction';
+import { bold, normal } from '../../../assets/FontSize';
+
+//Components
+import Header from '../../../components/publicComponents/Header';
+import List from '../../../components/publicComponents/List';
+import SearchBar from '../../../components/publicComponents/SearchBar';
+import BackButton from '../../../components/publicComponents/BackButton';
+import NoticeModal from '../../../components/publicComponents/Modal';
+import { getSingleTopic } from '../../../store/actions/TopicAction';
+
+const TopicDetail = props => {
+  const [noticeModal, setNoticeModal] = useState(false);
+
+  const {
+    route,
+    navigation
+  } = props;
+
+  const { topicName, topicId } = route.params;
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllDiscussion('?topic_id=', topicId));
+    dispatch(getSingleTopic(topicId));
+  }, []);
+
+  const discussions = useSelector(state => state.DiscussionReducer.discussions);
+  const { description } = useSelector(state => state.TopicReducer.topic);
+
+  const openModal = () => {
+    setNoticeModal(true);
+  };
+
+  const closeModal = () => {
+    setNoticeModal(false);
+  };
+
+  const noticeModalChild = () => {
+    return <Text style={styles.noticeModalTextStyle}>You don't have access to this discussion</Text>
+  };
+
+  const HeaderContent = () => {
+    return (
+      <View>
+        <View style={styles.headerTitleAndButtonContainerStyle}>
+          <View style={styles.headerTitleContainerStyle}>
+            <BackButton
+              styleOption={{
+                marginTop: 0,
+                marginBottom: 0,
+                marginRight: "10%"
+              }}
+              navigation={navigation}
+            />
+            <Text style={styles.headerTextStyle}>{topicName}</Text>
+          </View>
+          <TouchableOpacity onPress={() => navigation.navigate('NewDiscussionScreen')}>
+            <Text style={styles.newDiscussionButtonStyle}>New Discussion</Text>
+          </TouchableOpacity>
+        </View>
+        <SearchBar searchBarIsOpen={false} navigation={navigation} />
+        <View style={styles.topicDescriptionContainerStyle}>
+          <Text style={styles.descriptionTextStyle}>
+            {description}.. more
+          </Text>
+        </View>
+      </View>
+    );
+  };
+
+  return (
+    <View>
+      <FlatList
+        ListHeaderComponent={
+          <>
+            <Header child={HeaderContent} customStyle={styles.headerStyle} />
+            <List
+              listTitle="Discussion"
+              listData={discussions}
+              navigation={navigation}
+              openModal={openModal}
+              isFilter={true}
+            />
+            <NoticeModal 
+              openModal={noticeModal}
+              closeModal={closeModal}
+              child={noticeModalChild}
+            />
+          </>
+        }
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  headerStyle: {
+    paddingHorizontal: "5%",
+    paddingTop: "3.5%",
+    paddingBottom: "1%"
+  },
+
+  headerTextStyle: {
+    fontFamily: bold,
+    fontSize: 18,
+    color: "#464D60"
+  },
+
+  newDiscussionButtonStyle: {
+    fontFamily: bold,
+    color: "#0E4EF4"
+  },
+
+  topicDescriptionContainerStyle: {
+    marginTop: "2%"
+  },
+
+  descriptionTextStyle: {
+    fontFamily: normal,
+    color: "#464D60",
+    lineHeight: 26.5
+  },
+
+  moreButtonStyle: {
+
+  },
+
+  headerTitleAndButtonContainerStyle: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: "2%"
+  },
+
+  headerTitleContainerStyle: {
+    flexDirection: "row",
+    alignItems: "center"
+  }
+});
+
+export default TopicDetail;

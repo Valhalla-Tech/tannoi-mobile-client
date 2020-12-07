@@ -11,7 +11,7 @@ import { getTopic, followTopic, unfollowTopic } from '../../../store/actions/Top
 import { useSelector, useDispatch } from 'react-redux';
 import { bold, normal } from '../../../assets/FontSize';
 
-//Icon
+//Icons
 import StarIcon from '../../../assets/topicAssets/starIcon.svg';
 import InactiveStarIcon from '../../../assets/topicAssets/inactiveStarIcon.svg';
 
@@ -46,7 +46,10 @@ const TopicIndexScreen = ({ navigation }) => {
 
   const renderTopics = (itemData) => {
     return (
-      <TouchableOpacity style={styles.topicStyle}>
+      <TouchableOpacity onPress={() => navigation.navigate('TopicDetailScreen', {
+        topicName: itemData.item.name,
+        topicId: itemData.item.id
+      })} style={styles.topicStyle}>
         <View style={styles.topicDataContainerStyle}>
           <Image source={{uri: itemData.item.image_path}} style={styles.topicIconStyle} />
           <View>
@@ -81,8 +84,8 @@ const TopicIndexScreen = ({ navigation }) => {
 
   return (
     <View>
-     <Header child={HeaderContent} customStyle={styles.headerStyle} />
-     <Card child={TopicScreenContent} customStyle={styles.cardContainerStyle} />
+      <Header child={HeaderContent} customStyle={styles.headerStyle} />
+      <Card child={TopicScreenContent} customStyle={styles.cardContainerStyle} />
     </View>
   );
 };
