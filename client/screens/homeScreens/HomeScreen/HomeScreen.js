@@ -20,7 +20,7 @@ import DiscussionOfTheWeek from '../../../components/homeComponents/homeScreenCo
 import TopUsers from '../../../components/homeComponents/homeScreenComponents/TopUsers';
 import Trending from '../../../components/homeComponents/homeScreenComponents/HomeList';
 import RecommendedTopics from '../../../components/homeComponents/homeScreenComponents/RecommendedTopics';
-import NoticeModal from '../../../components/publicComponents/NoticeModal';
+import NoticeModal from '../../../components/publicComponents/Modal';
 
 const HomeScreen = ({ navigation }) => {
   const user = useSelector(state => state.HomeReducer.user);
