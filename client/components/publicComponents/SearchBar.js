@@ -44,17 +44,18 @@ const DATA = [
 ];
 
 const SearchBar = props => {
-  const [currentSelectedDiscussion, setCurrentSelectedDiscussion] = useState('All discussions');
-  const [searchBoxIsFilled, setSearchBoxIsFilled] = useState(false);
-  const [currentCategory, setCurrentCategory] = useState('Discussions');
-
   const {
+    category,
     searchBarIsOpen,
     navigation,
     searchBoxInput,
     showCard,
-    customStyle
+    customStyle,
+    setSearchCategory
   } = props;
+  
+  const [currentSelectedDiscussion, setCurrentSelectedDiscussion] = useState('All discussions');
+  const [searchBoxIsFilled, setSearchBoxIsFilled] = useState(false);
 
   const searchBarStyle = {...styles.searchBarStyle, ...customStyle};
 
@@ -96,7 +97,6 @@ const SearchBar = props => {
                   setSearchBoxIsFilled(true);
                 } else {
                   setSearchBoxIsFilled(false);
-                  setCurrentCategory('Discussions');
                 }
               }}
             />
@@ -123,37 +123,60 @@ const SearchBar = props => {
       {
         searchBoxIsFilled && (
           <View style={styles.searchResultCategoryContainerStyle}>
-            {
-              currentCategory === 'Discussions' ? (
-                <>
-                  <View style={{...styles.searchCategoryStyle, borderBottomColor: "#5152D0", borderRightWidth: 1, borderRightColor: "#F5F7F9"}}>
-                    <Text style={{...styles.searchCategoryTitleStyle, color: "#5152D0"}}>Discussions</Text>
-                  </View>
-                  <TouchableOpacity 
-                    style={{...styles.searchCategoryStyle, borderBottomColor: "#F5F7F9"}}
-                    onPress={() => {
-                      setCurrentCategory('User');
-                    }}
-                  >
-                    <Text style={{...styles.searchCategoryTitleStyle, color: "#464D60"}}>User</Text>
-                  </TouchableOpacity>
-                </>
-              ) : (
-                <>
-                  <TouchableOpacity 
-                    style={{...styles.searchCategoryStyle, borderBottomColor: "#F5F7F9", borderRightWidth: 1, borderRightColor: "#F5F7F9"}}
-                    onPress={() => {
-                      setCurrentCategory('Discussions');
-                    }}
-                  >
-                    <Text style={{...styles.searchCategoryTitleStyle, color: "#464D60"}}>Discussions</Text>
-                  </TouchableOpacity>
-                  <View style={{...styles.searchCategoryStyle, borderBottomColor: "#5152D0"}}>
-                    <Text style={{...styles.searchCategoryTitleStyle, color: "#5152D0"}}>User</Text>
-                  </View>
-                </>
-              )
-            }
+            <TouchableOpacity 
+              style={
+                category === 'Discussions' ? {
+                  ...styles.searchCategoryStyle,
+                  borderBottomColor: "#5152D0",
+                  borderRightWidth: 1,
+                  borderRightColor: "#F5F7F9"
+                } : {
+                  ...styles.searchCategoryStyle, 
+                  borderBottomColor: "#F5F7F9",
+                  borderRightWidth: 1, 
+                  borderRightColor: "#F5F7F9"
+                }
+              }
+              onPress={() => {
+                setSearchCategory('Discussions');
+              }}
+              disabled={category === 'Discussions' ? true : false}
+            >
+              <Text style={category === 'Discussions' ? {
+                  ...styles.searchCategoryTitleStyle, 
+                  color: "#5152D0"
+                } : {
+                  ...styles.searchCategoryTitleStyle,
+                  color: "#464D60"
+                }
+              }>
+                Discussions
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={category === 'User' ? {
+                ...styles.searchCategoryStyle, 
+                borderBottomColor: "#5152D0"
+              } : {
+                ...styles.searchCategoryStyle, 
+                borderBottomColor: "#F5F7F9"
+              }}
+              onPress={() => {
+                setSearchCategory('User');
+              }}
+              disabled={category === 'User' ? true : false}
+            >
+              <Text style={category === 'User' ? {
+                  ...styles.searchCategoryTitleStyle,
+                  color: "#5152D0"
+                } : {
+                  ...styles.searchCategoryTitleStyle,
+                  color: "#464D60"
+                }
+              }>
+                User
+              </Text>
+            </TouchableOpacity>
           </View>
         )
       }

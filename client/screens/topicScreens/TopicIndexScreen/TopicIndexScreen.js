@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: "5%",
     paddingVertical: "2%",
     borderBottomWidth: 1,
-    borderBottomColor: "#F5F7F9",
+    borderBottomColor: "#F5F7F9"
   },
 
   topicDataContainerStyle: {
