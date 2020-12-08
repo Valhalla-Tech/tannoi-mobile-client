@@ -1,12 +1,18 @@
 const defaultState = {
-  topics: []
+  topics: [],
+  topic: ''
 };
 
 const reducer = (state = defaultState, action) => {
   switch (action.type) {
     case 'GET_TOPIC':
       let setTopics = action.payload.topics;
+
       return {...state, topics: setTopics};
+    case 'GET_SINGLE_TOPIC':
+      let setTopic = action.payload.topic;
+
+      return {...state, topic: setTopic};
     default:
       return state
   }

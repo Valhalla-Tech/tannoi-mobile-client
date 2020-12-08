@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 
 //Components
-import SearchBar from '../../../components/homeComponents/SearchBar';
+import SearchBar from '../../../components/publicComponents/SearchBar';
 import RecentSearches from '../../../components/homeComponents/searchScreenComponents/RecentSearches';
 import SearchResultBox from '../../../components/homeComponents/searchScreenComponents/SearchResultBox';
 
@@ -23,11 +23,16 @@ const SearchScreen = ({ navigation }) => {
       onPress={() => Keyboard.dismiss()}
     >
       <View style={styles.searchScreenContainerStyle}>
-        <SearchBar 
-          navigation={navigation}
-          searchBarIsOpen={true}
-          searchBoxInput={searchBoxInput}
-        />
+        <View style={styles.searchBarContainerStyle}>
+          <SearchBar 
+            navigation={navigation}
+            searchBarIsOpen={true}
+            searchBoxInput={searchBoxInput}
+            customStyle={{
+              marginHorizontal: "4.2%"
+            }}
+          />
+        </View>
         {
           !searchInput && (
             <RecentSearches />
@@ -48,6 +53,10 @@ const SearchScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   searchScreenContainerStyle: {
     flex: 1
+  },
+
+  searchBarContainerStyle: {
+    backgroundColor: "#FFFFFF"
   }
 });
 

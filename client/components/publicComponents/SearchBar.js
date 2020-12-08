@@ -14,7 +14,7 @@ import SearchIcon from '../../assets/homeAssets/searchIcon.svg';
 import BackButtonIcon from '../../assets/publicAssets/back-button.svg';
 
 //Component
-import SearchBarCard from '../../components/homeComponents/SearchBarCard';
+import SearchBarCard from './SearchBarCard';
 
 const DATA = [
   {
@@ -51,8 +51,12 @@ const SearchBar = props => {
   const {
     searchBarIsOpen,
     navigation,
-    searchBoxInput
+    searchBoxInput,
+    showCard,
+    customStyle
   } = props;
+
+  const searchBarStyle = {...styles.searchBarStyle, ...customStyle};
 
   const changeSelectedDiscussion = discussion => {
     setCurrentSelectedDiscussion(discussion);
@@ -60,12 +64,12 @@ const SearchBar = props => {
 
   return (
     <View style={styles.searchBarContainerStyle}>
-      <View style={styles.searchBarStyle}>
+      <View style={searchBarStyle}>
         {
           searchBarIsOpen && (
             <TouchableOpacity 
               style={styles.backButtonStyle}
-              onPress={() => navigation.navigate('HomeScreen')}
+              onPress={() => navigation.goBack()}
             >
               <BackButtonIcon />
             </TouchableOpacity>
@@ -100,7 +104,7 @@ const SearchBar = props => {
         }
       </View>
       {
-        !searchBarIsOpen && (
+        !searchBarIsOpen && showCard && (
           <FlatList
             data={DATA}
             horizontal={true}
@@ -158,16 +162,11 @@ const SearchBar = props => {
 };
 
 const styles = StyleSheet.create({
-  searchBarContainerStyle: {
-    backgroundColor: "#FFFFFF"
-  },
-
   backButtonStyle: {
     marginRight: 22
   },
 
   searchBarStyle: {
-    marginHorizontal: 16,
     marginTop: 8,
     marginBottom: 8,
     flexDirection: "row",

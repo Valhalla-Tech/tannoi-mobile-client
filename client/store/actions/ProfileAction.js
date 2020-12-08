@@ -24,8 +24,8 @@ export const getOneProfile = (id) => {
         });
       };
     } catch (error) {
+      console.log(error);
       if (error.response.data.msg === 'You have to login first') {
-        console.log(error)
         dispatch({
           type: 'LOGOUT',
           payload: {

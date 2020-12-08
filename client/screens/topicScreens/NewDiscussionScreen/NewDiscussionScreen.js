@@ -32,7 +32,7 @@ import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner'
 import Recorder from '../../../components/topicComponents/Recorder';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import PrivateDiscussionModal from '../../../components/topicComponents/PrivateDiscussionModal';
-import NoticeModal from '../../../components/publicComponents/NoticeModal';
+import NoticeModal from '../../../components/publicComponents/Modal';
 import BigButton from '../../../components/publicComponents/BigButton';
 
 const NewDiscussionScreen = ({ navigation }) => {

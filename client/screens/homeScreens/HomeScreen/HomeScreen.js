@@ -14,13 +14,13 @@ import { getHome, clearHome } from '../../../store/actions/HomeAction';
 import { bold, normal } from '../../../assets/FontSize';
 
 //Components
-import SearchBar from '../../../components/homeComponents/SearchBar';
+import SearchBar from '../../../components/publicComponents/SearchBar';
 import ProfileBar from '../../../components/homeComponents/homeScreenComponents/ProfileBar';
-import DiscussionOfTheWeek from '../../../components/homeComponents/homeScreenComponents/HomeList';
+import DiscussionOfTheWeek from '../../../components/publicComponents/List';
 import TopUsers from '../../../components/homeComponents/homeScreenComponents/TopUsers';
-import Trending from '../../../components/homeComponents/homeScreenComponents/HomeList';
+import Trending from '../../../components/publicComponents/List';
 import RecommendedTopics from '../../../components/homeComponents/homeScreenComponents/RecommendedTopics';
-import NoticeModal from '../../../components/publicComponents/NoticeModal';
+import NoticeModal from '../../../components/publicComponents/Modal';
 
 const HomeScreen = ({ navigation }) => {
   const user = useSelector(state => state.HomeReducer.user);
@@ -53,7 +53,7 @@ const HomeScreen = ({ navigation }) => {
 
   const noticeModalChild = () => {
     return <Text style={styles.noticeModalTextStyle}>You don't have access to this discussion</Text>
-  }
+  };
 
   return (
     <View>
@@ -64,15 +64,18 @@ const HomeScreen = ({ navigation }) => {
       <FlatList
         ListHeaderComponent={
           <View style={styles.homeScreenContainerStyle}>
-            <SearchBar
-              searchBarIsOpen={false}
-              navigation={navigation}
-            />
+            <View style={styles.searchBarContainer}>
+              <SearchBar
+                searchBarIsOpen={false}
+                navigation={navigation}
+              />
+            </View>
             <DiscussionOfTheWeek
               listTitle="Discussions of the Week"
               listData={discussionOfTheWeek}
               navigation={navigation}
               openModal={openModal}
+              isUsingMoreButton={true}
             />
             <TopUsers
               topUserData={topUser}
@@ -83,6 +86,8 @@ const HomeScreen = ({ navigation }) => {
               listData={trending}
               navigation={navigation}
               openModal={openModal}
+              isFilter={true}
+              isUsingMoreButton={true}
             />
             <RecommendedTopics
               topicData={recommendedTopic}
@@ -107,6 +112,11 @@ const styles = StyleSheet.create({
   noticeModalTextStyle: {
     fontFamily: bold,
     color: "#6505E1"
+  },
+  
+  searchBarContainer: {
+    paddingHorizontal: "4.2%",
+    backgroundColor: "#FFFFFF"
   }
 });
 

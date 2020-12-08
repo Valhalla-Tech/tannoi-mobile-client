@@ -23,6 +23,8 @@ import NewDiscussionScreen from '../screens/topicScreens/NewDiscussionScreen';
 import DiscussionScreen from '../screens/topicScreens/DiscussionScreen';
 import ResponseScreen from '../screens/topicScreens/ResponseScreen';
 import UserProfile from '../screens/meScreens/UserProfile';
+import SearchScreen from '../screens/homeScreens/SearchScreen';
+import TopicDetailScreen from '../screens/topicScreens/TopicDetailScreen';
 
 const Stack = createStackNavigator();
 
@@ -40,7 +42,8 @@ const NavigationIndex = () => {
       );
       navigation.push(remoteMessage.data.screen, JSON.parse(remoteMessage.data.payload));
     });
-  }
+  };
+
   const getInitialNotification = () => {
     // If the push notification received when the app is close
     messaging()
@@ -89,7 +92,8 @@ const NavigationIndex = () => {
       console.log(token)
       saveTokenToDatabase(token);
     });
-  }
+  };
+
   const checkToken = async () => {
     let getToken = await AsyncStorage.getItem('access_token');
     if (getToken) {
@@ -100,7 +104,7 @@ const NavigationIndex = () => {
     } else if (!getToken) {
       dispatch(userLogout());
       SplashScreen.hide();
-    }; 
+    }
   };
 
   useEffect(() => {
@@ -122,6 +126,13 @@ const NavigationIndex = () => {
             <Stack.Screen name="ResponseScreen" component={ResponseScreen} />
             <Stack.Screen name="UserProfile" component={UserProfile} />
             <Stack.Screen name="VerificationNavigation" component={VerificationNavigation} />
+            <Stack.Screen 
+              name="SearchScreen" 
+              component={SearchScreen} options={{
+                animationEnabled: false
+              }} 
+            />
+            <Stack.Screen name="TopicDetailScreen" component={TopicDetailScreen} />
           </>
         ) : (
           <Stack.Screen name="AccountNavigation" component={AccountNavigation} />
