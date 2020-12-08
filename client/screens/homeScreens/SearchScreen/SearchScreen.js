@@ -5,6 +5,8 @@ import {
   TouchableWithoutFeedback,
   Keyboard
 } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import { search } from '../../../store/actions/SearchAction';
 
 //Components
 import SearchBar from '../../../components/publicComponents/SearchBar';
@@ -13,9 +15,20 @@ import SearchResultBox from '../../../components/homeComponents/searchScreenComp
 
 const SearchScreen = ({ navigation }) => {
   const [searchInput, setSearchInput] = useState('');
+  const [category, setCategory] = useState('Discussions');
+
+  const discussions = useSelector(state => state.SearchReducer.discussions);
+  const users = useSelector(state => state.SearchReducer.users);
+
+  const dispatch = useDispatch();
 
   const searchBoxInput = input => {
     setSearchInput(input);
+    dispatch(search(input, 1));
+  };
+
+  const setSearchCategory = input => {
+    setCategory(input);
   };
 
   return (
@@ -24,13 +37,15 @@ const SearchScreen = ({ navigation }) => {
     >
       <View style={styles.searchScreenContainerStyle}>
         <View style={styles.searchBarContainerStyle}>
-          <SearchBar 
+          <SearchBar
+            category={category}
             navigation={navigation}
             searchBarIsOpen={true}
             searchBoxInput={searchBoxInput}
             customStyle={{
               marginHorizontal: "4.2%"
             }}
+            setSearchCategory={setSearchCategory}
           />
         </View>
         {
@@ -42,6 +57,10 @@ const SearchScreen = ({ navigation }) => {
           searchInput !== '' && (
             <SearchResultBox
               searchInput={searchInput}
+              category={category}
+              discussionResults={discussions}
+              userResults={users}
+              navigation={navigation}
             />
           )
         }
