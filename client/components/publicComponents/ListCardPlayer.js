@@ -7,9 +7,9 @@ import {
   Player
 } from '@react-native-community/audio-toolkit';
 import { connect } from 'react-redux';
-import { getHome } from '../../../store/actions/HomeAction';
-import axios from '../../../constants/ApiServices';
-import BaseUrl from '../../../constants/BaseUrl';
+import { getHome } from '../../store/actions/HomeAction';
+import axios from '../../constants/ApiServices';
+import BaseUrl from '../../constants/BaseUrl';
 
 //Icons
 import ActivePlayButton from '../../assets/homeAssets/activePlayButton.svg';
