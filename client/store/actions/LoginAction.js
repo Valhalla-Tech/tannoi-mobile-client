@@ -20,14 +20,11 @@ export const userLogin = () => {
 
 export const userLogout = () => {
   return async (dispatch) => {
-    let access_token = await AsyncStorage.getItem('access_token');
-    if (access_token) {
+    const fcm_token = await AsyncStorage.getItem('fcm_token');
+    if (fcm_token) {
       await axios({
         method: "DELETE",
-        url: BaseUrl + "/users/delete-firebase-token",
-        headers: {
-          token: access_token
-        }
+        url: BaseUrl + "/users/delete-firebase-token?token=" + fcm_token,
       })
     }
     await AsyncStorage.clear();

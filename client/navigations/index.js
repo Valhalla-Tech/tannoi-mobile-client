@@ -73,6 +73,7 @@ const NavigationIndex = () => {
           token: access_token
         }
       });
+      await AsyncStorage.setItem('fcm_token', fcmToken);
       console.log(data);
     } catch (err) {
       console.log(err);
