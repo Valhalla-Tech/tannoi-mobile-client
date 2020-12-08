@@ -15,7 +15,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import ImagePicker from 'react-native-image-crop-picker';
 import { bold, normal } from '../../../assets/FontSize';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
-import axios from 'axios';
+import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 
 //Icon

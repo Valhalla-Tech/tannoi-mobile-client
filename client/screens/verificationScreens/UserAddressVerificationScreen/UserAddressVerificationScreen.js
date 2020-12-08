@@ -13,7 +13,7 @@ import { bold, normal } from '../../../assets/FontSize';
 import { useSelector, useDispatch } from 'react-redux';
 import { inputUserAddress, addStepCount } from '../../../store/actions/VerificationAction';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
-import axios from 'axios';
+import axios from '../../../constants/ApiServices';
 
 //Image
 import VerificationScreenImage from '../../../assets/verificationAssets/verificationScreenImage.svg';

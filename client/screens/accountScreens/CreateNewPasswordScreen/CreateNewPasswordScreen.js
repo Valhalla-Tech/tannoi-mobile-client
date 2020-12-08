@@ -8,7 +8,7 @@ import {
   Alert
 } from 'react-native';
 import { bold } from '../../../assets/FontSize';
-import axios from 'axios';
+import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 
 //Components
