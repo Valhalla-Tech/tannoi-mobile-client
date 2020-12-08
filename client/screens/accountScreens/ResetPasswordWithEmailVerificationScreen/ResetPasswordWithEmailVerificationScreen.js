@@ -6,7 +6,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
-import axios from 'axios';
+import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 
 //Component

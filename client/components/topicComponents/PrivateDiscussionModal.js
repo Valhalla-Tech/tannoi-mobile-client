@@ -12,7 +12,7 @@ import { bold, normal } from '../../assets/FontSize';
 import { useSelector, useDispatch } from 'react-redux';
 import { searchUser, getAuthorizedFollowers } from '../../store/actions/PrivateDiscussionAction';
 import AsyncStorage from '@react-native-community/async-storage';
-import axios from 'axios';
+import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
 
 //Icon

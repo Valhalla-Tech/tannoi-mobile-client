@@ -19,7 +19,7 @@ import {
 import { getTopic } from '../../../store/actions/TopicAction';
 import { getHome, clearHome } from '../../../store/actions/HomeAction';
 import { userLogout } from '../../../store/actions/LoginAction';
-import axios from 'axios';
+import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 
 //Icon

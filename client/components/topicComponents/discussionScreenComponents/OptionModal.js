@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getOneProfile } from '../../../store/actions/ProfileAction';
 import { getHome, clearHome } from '../../../store/actions/HomeAction';
 import AsyncStorage from '@react-native-community/async-storage';
-import axios from 'axios';
+import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 
 const OptionModal = props => {

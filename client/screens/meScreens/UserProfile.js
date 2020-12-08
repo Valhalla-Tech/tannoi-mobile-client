@@ -11,7 +11,7 @@ import NoProfilePicture from '../../assets/publicAssets/noProfilePicture.png';
 import { useSelector, useDispatch } from 'react-redux';
 import { getOneProfile } from '../../store/actions/ProfileAction';
 import AsyncStorage from '@react-native-community/async-storage';
-import axios from 'axios';
+import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
 
 //Components

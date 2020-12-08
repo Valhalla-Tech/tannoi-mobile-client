@@ -3,8 +3,9 @@ import {
 } from '@react-native-community/google-signin';
 import { LoginManager, AccessToken } from "react-native-fbsdk";
 import AsyncStorage from '@react-native-community/async-storage';
-import axios from 'axios';
+import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
+import { Platform } from "react-native";
 
 export const userLogin = () => {
   return (dispatch) => {
@@ -19,14 +20,11 @@ export const userLogin = () => {
 
 export const userLogout = () => {
   return async (dispatch) => {
-    let access_token = await AsyncStorage.getItem('access_token');
-    if (access_token) {
+    const fcm_token = await AsyncStorage.getItem('fcm_token');
+    if (fcm_token) {
       await axios({
         method: "DELETE",
-        url: BaseUrl + "/users/delete-firebase-token",
-        headers: {
-          token: access_token
-        }
+        url: BaseUrl + "/users/delete-firebase-token?token=" + fcm_token,
       })
     }
     await AsyncStorage.clear();
@@ -46,11 +44,13 @@ export const GoogleSignIn = () => {
       const userInfo = await GoogleSignin.signIn();
 
       let googleSigninRequest = await axios.post(`${BaseUrl}/users/login/google`, {
-        token: userInfo.idToken
+        token: userInfo.idToken,
+        device: Platform.OS
       });
 
-      if (googleSigninRequest.data.access_token) {
+      if (googleSigninRequest.data.access_token && googleSigninRequest.data.refresh_token) {
         await AsyncStorage.setItem('access_token', googleSigninRequest.data.access_token);
+        await AsyncStorage.setItem('refresh_token', googleSigninRequest.data.refresh_token);
         dispatch({
           type: 'LOGIN',
           payload: {
@@ -75,11 +75,13 @@ export const FacebookSignIn = () => {
             AccessToken.getCurrentAccessToken().then(
               async (data) => {
                 let facebookSigninRequest = await axios.post(`${BaseUrl}/users/login/facebook`, {
-                  token: data.accessToken.toString()
+                  token: data.accessToken.toString(),
+                  device: Platform.OS
                 });
 
-                if (facebookSigninRequest.data.access_token) {
+                if (facebookSigninRequest.data.access_token && facebookSigninRequest.data.refresh_token) {
                   await AsyncStorage.setItem('access_token', facebookSigninRequest.data.access_token);
+                  await AsyncStorage.setItem('refresh_token', facebookSigninRequest.data.refresh_token);
                   dispatch({
                     type: 'LOGIN',
                     payload: {

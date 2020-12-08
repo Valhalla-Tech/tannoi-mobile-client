@@ -5,7 +5,8 @@ import {
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
+  Platform
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {
@@ -13,7 +14,7 @@ import {
 } from 'react-redux';
 import { userLogin } from '../../../store/actions/LoginAction';
 import { getHome, clearHome } from '../../../store/actions/HomeAction';
-import axios from 'axios';
+import axios from '../../../constants/ApiServices';
 import { bold, normal } from '../../../assets/FontSize';
 import BaseUrl from '../../../constants/BaseUrl';
 
@@ -45,13 +46,15 @@ const LoginWithEmailScreen = ({ navigation }) => {
       setIsLoading(!isLoading);
       let loginRequest = await axios.post(`${BaseUrl}/users/login`, {
         email: emailLogin,
-        password: passwordLogin
+        password: passwordLogin,
+        device: Platform.OS
       })
 
       if (loginRequest.data) {
         console.log(loginRequest.data);
         setIsLoading(false);
         await AsyncStorage.setItem('access_token', loginRequest.data.access_token);
+        await AsyncStorage.setItem('refresh_token', loginRequest.data.refresh_token);
         dispatch(clearHome());
         dispatch(getHome());
         dispatch(userLogin());

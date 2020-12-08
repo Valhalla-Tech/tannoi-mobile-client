@@ -8,7 +8,7 @@ import {
   Keyboard
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import axios from 'axios';
+import axios from '../../../constants/ApiServices';
 import { bold, normal } from '../../../assets/FontSize';
 import BaseUrl from '../../../constants/BaseUrl';
 

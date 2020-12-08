@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-community/async-storage';
-import axios from 'axios';
+import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
 
 export const searchUser = (searchInput, initialSearch) => {

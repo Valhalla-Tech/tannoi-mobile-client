@@ -12,7 +12,7 @@ import {
 } from 'react-redux';
 import { userLogin } from '../../../store/actions/LoginAction';
 import { bold, normal } from '../../../assets/FontSize';
-import axios from 'axios';
+import axios from '../../../constants/ApiServices';
 import { getTopic } from '../../../store/actions/TopicAction';
 import BaseUrl from '../../../constants/BaseUrl';
 
