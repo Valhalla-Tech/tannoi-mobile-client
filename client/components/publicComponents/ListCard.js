@@ -129,8 +129,8 @@ const HomeListCard = props => {
 const styles = StyleSheet.create({
   homeListCardContainerStyle:{
     flexDirection: "row",
-    padding: "5%",
-    paddingHorizontal: "10%",
+    paddingHorizontal: "6.5%",
+    paddingVertical: "5%",
     borderBottomWidth: 1,
     borderBottomColor: "#F5F7F9",
     justifyContent: "space-around"

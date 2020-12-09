@@ -86,7 +86,7 @@ const TopicDetail = props => {
           <>
             <Header child={HeaderContent} customStyle={styles.headerStyle} />
             <List
-              listTitle="Discussion"
+              listTitle="Discussions"
               listData={discussions}
               navigation={navigation}
               openModal={openModal}
@@ -113,11 +113,12 @@ const styles = StyleSheet.create({
 
   headerTextStyle: {
     fontFamily: bold,
-    fontSize: 18,
+    fontSize: 20,
     color: "#464D60"
   },
 
   newDiscussionButtonStyle: {
+    fontSize: 16,
     fontFamily: bold,
     color: "#0E4EF4"
   },
@@ -129,11 +130,17 @@ const styles = StyleSheet.create({
   descriptionTextStyle: {
     fontFamily: normal,
     color: "#464D60",
-    lineHeight: 26.5
+    lineHeight: 26.5,
+    paddingBottom: "2.5%"
   },
 
   moreButtonStyle: {
 
+  },
+
+  noticeModalTextStyle: {
+    fontFamily: bold,
+    color: "#6505E1"
   },
 
   headerTitleAndButtonContainerStyle: {
