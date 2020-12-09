@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { bold, normal } from '../../../assets/FontSize';
-import axios from 'axios';
+import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 
 //Components

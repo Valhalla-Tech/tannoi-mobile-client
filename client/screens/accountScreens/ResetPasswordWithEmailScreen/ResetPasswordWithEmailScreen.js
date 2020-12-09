@@ -7,7 +7,7 @@ import {
   Keyboard
 } from 'react-native';
 import branch from 'react-native-branch'
-import axios from 'axios';
+import axios from '../../../constants/ApiServices';
 import { bold, normal } from '../../../assets/FontSize';
 import BaseUrl from '../../../constants/BaseUrl';
 

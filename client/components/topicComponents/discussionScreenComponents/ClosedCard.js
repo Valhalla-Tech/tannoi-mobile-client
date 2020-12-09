@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#464D60",
     fontFamily: normal,
-    marginTop: 12
+    marginTop: "2%"
   },
 
   responseDataContainerStyle: {

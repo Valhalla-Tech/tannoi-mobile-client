@@ -30,7 +30,7 @@ const RecommendedTopicsCard = props => {
             <View style={styles.topicCardInfoContainerStyle}>
               {
                 firstCardName.length > 13 ? (
-                  <Text style={styles.topicNameStyle}>{`${firstCardName.substr(0, 13)}..`}</Text>
+                  <Text style={styles.topicNameStyle}>{`${firstCardName.substr(0, 12)}...`}</Text>
                 ) : (
                   <Text style={styles.topicNameStyle}>{firstCardName}</Text>
                 )
@@ -47,7 +47,7 @@ const RecommendedTopicsCard = props => {
             <View style={styles.topicCardInfoContainerStyle}>
             {
                 secondCardName.length >= 13 ? (
-                  <Text style={styles.topicNameStyle}>{`${secondCardName.substr(0, 13)}..`}</Text>
+                  <Text style={styles.topicNameStyle}>{`${secondCardName.substr(0, 12)}...`}</Text>
                 ) : (
                   <Text style={styles.topicNameStyle}>{secondCardName}</Text>
                 )
@@ -64,7 +64,7 @@ const RecommendedTopicsCard = props => {
             <View style={styles.topicCardInfoContainerStyle}>
             {
                 thirdCardName.length >= 13 ? (
-                  <Text style={styles.topicNameStyle}>{`${thirdCardName.substr(0, 13)}..`}</Text>
+                  <Text style={styles.topicNameStyle}>{`${thirdCardName.substr(0, 12)}...`}</Text>
                 ) : (
                   <Text style={styles.topicNameStyle}>{thirdCardName}</Text>
                 )

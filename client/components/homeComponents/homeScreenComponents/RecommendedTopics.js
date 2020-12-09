@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
   },
 
   topicCardContainerStyle: {
-    marginLeft: 16
+    marginLeft: "4%"
   }
 });
 

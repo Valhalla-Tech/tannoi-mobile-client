@@ -17,7 +17,7 @@ import { getHome, clearHome } from '../../../store/actions/HomeAction';
 import { getDiscussion } from '../../../store/actions/DiscussionAction';
 import { getResponse, getSingleResponse, clearResponse } from '../../../store/actions/ResponseAction';
 import LoadingSpinner from '../../publicComponents/LoadingSpinner';
-import axios from 'axios';
+import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 
 //Icons
@@ -575,16 +575,17 @@ const dispatchUpdate = () => {
 const styles = StyleSheet.create({
   discussionPlayerContainerStyle: {
     backgroundColor: "#FFFFFF",
-    padding: 16,
+    paddingHorizontal: "4%",
+    paddingVertical: "6%",
     borderBottomRightRadius: 8,
     borderBottomLeftRadius: 8
   },
 
   responsePlayerContainerStyle: {
     backgroundColor: "#FFFFFF",
-    padding: 16,
-    marginHorizontal: 8,
-    marginBottom: 8,
+    padding: "4%",
+    marginHorizontal: "2%",
+    marginBottom: "2%",
     borderRadius: 8
   },
 
@@ -631,7 +632,7 @@ const styles = StyleSheet.create({
   },
 
   sliderStyle: {
-    marginTop: 30,
+    marginTop: "7%",
     color: "#464D60"
   },
 
@@ -649,7 +650,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 35
+    marginTop: "7%"
   },
 
   voteAndAddResponseContainerStyle: {

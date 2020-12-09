@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity
 } from 'react-native';
+import { counterEvent } from 'react-native/Libraries/Performance/Systrace';
 import { normal } from '../../../assets/FontSize';
 
 //Icon
@@ -46,11 +47,14 @@ const SearchResultBox = props => {
     )
   };
 
+  const pluralize = (count, noun, suffix = "s") => `${count} ${noun}${count !== 1 ? suffix : ''}`;
+
   return (
     <FlatList
       ListHeaderComponent={
         <View style={styles.searchResultBoxContainerStyle}>
-          <Text style={styles.searchInputTextStyle}>Search results for <Text style={{fontWeight: "bold"}}>"{searchInput}"</Text></Text>
+          <Text style={styles.searchInputTextStyle}>{pluralize(userResults.length, 'discussion')} for <Text style={{fontWeight: "bold"}}>"{searchInput}"</Text>
+          </Text>
           {
             category === 'Discussions' ? null : ShowList(userResults)
           }
@@ -73,7 +77,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginHorizontal: "3%",
     marginTop: "5%",
-    marginBottom: "2.5%"
+    marginBottom: "5%"
   },
 
   userContainerStyle: {

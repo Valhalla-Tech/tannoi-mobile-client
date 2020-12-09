@@ -9,8 +9,9 @@ import { userLogin, userLogout } from '../store/actions/LoginAction';
 import SplashScreen from 'react-native-splash-screen';
 import messaging from '@react-native-firebase/messaging';
 import { useNavigation } from '@react-navigation/native';
-import axios from "axios"
+import axios from "../constants/ApiServices"
 import BaseUrl from "../constants/BaseUrl";
+import { Platform } from "react-native";
 
 //Navigations
 import AccountNavigation from './AccountNavigation';
@@ -66,12 +67,13 @@ const NavigationIndex = () => {
         url: BaseUrl + "/users/add-firebase-token",
         data: {
           token: fcmToken,
-          device: "Android"
+          device: Platform.OS
         },
         headers: {
           token: access_token
         }
       });
+      await AsyncStorage.setItem('fcm_token', fcmToken);
       console.log(data);
     } catch (err) {
       console.log(err);

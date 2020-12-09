@@ -112,7 +112,7 @@ const NavigationBar = props => {
                 alignItems: "center", 
                 marginBottom: "35%", 
                 borderWidth: 10,
-                height: "320%",
+                height: "280%",
                 width: "60%",
                 borderRadius: 30,
                 backgroundColor: "#2B085C",

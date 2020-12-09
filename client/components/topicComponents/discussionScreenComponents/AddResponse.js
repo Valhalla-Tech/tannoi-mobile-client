@@ -15,7 +15,7 @@ import { getDiscussion } from '../../../store/actions/DiscussionAction';
 import { getResponse, getSingleResponse } from '../../../store/actions/ResponseAction';
 import { userLogout } from '../../../store/actions/LoginAction';
 import AsyncStorage from '@react-native-community/async-storage';
-import axios from 'axios';
+import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 
 //Components

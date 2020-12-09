@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     fontFamily: bold,
     color: "#FFFFFF",
     marginVertical: "4%",
-    marginLeft: "3%"
+    marginLeft: "2.5%"
   },
 
   moreButtonContainerStyle: {

@@ -98,11 +98,12 @@ const styles = StyleSheet.create({
 
   headerTextStyle: {
     fontFamily: bold,
-    fontSize: 18,
+    fontSize: 20,
     color: "#464D60"
   },
 
   editButtonStyle: {
+    fontSize: 16,
     fontFamily: bold,
     color: "#0E4EF4"
   },

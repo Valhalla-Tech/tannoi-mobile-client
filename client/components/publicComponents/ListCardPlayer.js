@@ -8,7 +8,7 @@ import {
 } from '@react-native-community/audio-toolkit';
 import { connect } from 'react-redux';
 import { getHome } from '../../store/actions/HomeAction';
-import axios from 'axios';
+import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
 
 //Icons
