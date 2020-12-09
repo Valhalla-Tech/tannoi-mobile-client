@@ -10,7 +10,7 @@ import {
 const RECENT_SEARCHES_DATA = [
   {
     id: "1",
-    name: "Bob Brownfoot"
+    name: "Mark Crown"
   },
   {
     id: "2",
@@ -18,7 +18,7 @@ const RECENT_SEARCHES_DATA = [
   },
   {
     id: "3",
-    name: "Newcastle United"
+    name: "Manchester United"
   },
 ]
 
@@ -45,7 +45,7 @@ const RecentSearches = () => {
 
 const styles = StyleSheet.create({
   recentSearchesContainerStyle: {
-    margin: 8,
+    margin: "2%",
     backgroundColor: "#FFFFFF",
     borderRadius: 8
   },
@@ -69,8 +69,7 @@ const styles = StyleSheet.create({
   },
 
   recentSearchesCardStyle: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    padding: "4%",
     borderBottomWidth: 1,
     borderBottomColor: "#F5F7F9"
   },

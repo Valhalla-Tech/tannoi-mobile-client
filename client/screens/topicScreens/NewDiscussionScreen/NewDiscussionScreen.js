@@ -401,7 +401,7 @@ const styles = StyleSheet.create({
 
   newDiscussionTitleStyle: {
     fontFamily: bold,
-    fontSize: 16,
+    fontSize: 20,
     color: "#464D60",
     marginLeft: 14
   },
@@ -441,8 +441,7 @@ const styles = StyleSheet.create({
   },
 
   recorderContainerStyle: {
-    marginBottom: "20%",
-    marginTop: "5%"
+    marginVertical: "5%"
   },
 
   noticeModalButtonContainerStyle: {
