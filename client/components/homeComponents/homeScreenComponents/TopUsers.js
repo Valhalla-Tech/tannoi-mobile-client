@@ -79,8 +79,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#7817FF",
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
-    height: 50,
-    paddingLeft: "5%"
+    height: 50
   },
 
   topUsersTitleStyle: {
@@ -88,11 +87,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: bold,
     paddingBottom: "3%",
-    paddingTop: "2%"
+    paddingTop: "2%",
+    paddingLeft: "4%"
   },
 
   listStyle: {
-    paddingLeft: "5%",
+    paddingLeft: "4%",
     marginVertical: "5.5%"
   },
 
@@ -102,8 +102,8 @@ const styles = StyleSheet.create({
   },
 
   profilePictureStyle: {
-    height: 90,
-    width: 90,
+    height: 75,
+    width: 75,
     borderRadius: 50,
     marginBottom: 8
   },
