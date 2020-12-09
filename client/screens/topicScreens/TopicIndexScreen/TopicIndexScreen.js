@@ -15,11 +15,10 @@ import { bold, normal } from '../../../assets/FontSize';
 import StarIcon from '../../../assets/topicAssets/starIcon.svg';
 import InactiveStarIcon from '../../../assets/topicAssets/inactiveStarIcon.svg';
 
-//Component
+//Components
 import Header from '../../../components/publicComponents/Header';
 import SearchBar from '../../../components/publicComponents/SearchBar';
 import Card from '../../../components/publicComponents/Card';
-
 
 const TopicIndexScreen = ({ navigation }) => {
   const dispatch = useDispatch();
