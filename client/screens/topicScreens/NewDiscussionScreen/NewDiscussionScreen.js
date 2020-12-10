@@ -241,10 +241,11 @@ const NewDiscussionScreen = ({ navigation }) => {
     );
   };
 
-  const DiscussionModalContainer = (switchName) => {
+  const DiscussionModalContainer = ({ switchName }) => {
+    console.log(switchName)
     return (
       <PrivateDiscussionModal 
-        openModal={openModal}
+        openModal={switchName === selectedSwitch && openModal}
         closeModal={closeModal}
         addSelectedFollowers={addSelectedFollowers}
         isFilled={selectAll || selectedFollowers.length > 0 ? true : false}
@@ -256,7 +257,7 @@ const NewDiscussionScreen = ({ navigation }) => {
     );
   };
 
-  const DiscussionSwitch = (switchName) => {
+  const DiscussionSwitch = ({ switchName }) => {
     return (
       <View style={styles.privateDiscussionSwitchContainerStyle}>
         {
@@ -283,6 +284,10 @@ const NewDiscussionScreen = ({ navigation }) => {
             true
           }
         />
+        {
+
+        }
+        <DiscussionModalContainer switchName={switchName} />
       </View>
     );
   };
@@ -355,12 +360,8 @@ const NewDiscussionScreen = ({ navigation }) => {
           <NewDiscussionHeader />
           <View style={styles.newDiscussionFormContainerStyle}>
             <View style={styles.contentContainerStyle}>
-              {
-                DiscussionSwitch('Private discussion')
-              }
-              {
-                DiscussionSwitch('Ask to response')
-              }
+              <DiscussionSwitch switchName="Private discussion" />
+              <DiscussionSwitch switchName="Ask to response" />
               <View style={styles.recorderContainerStyle}>
                 <Recorder
                   addRecordingFile={addRecordingFile}
@@ -374,7 +375,6 @@ const NewDiscussionScreen = ({ navigation }) => {
               )
             }
           </View>
-          {DiscussionModalContainer(selectedSwitch)}
           <NoticeModal 
             openModal={noticeModal}
             closeModal={closeNoticeModal}
