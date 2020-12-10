@@ -15,6 +15,7 @@ import NoProfilePicture from '../../../assets/publicAssets/noProfilePicture.png'
 //Components
 import LoadingSpinner from '../../publicComponents/LoadingSpinner';
 import Card from '../../publicComponents/Card';
+import ListHeader from '../../publicComponents/ListHeader';
 
 const TopUsers = props => {
   const {
@@ -25,9 +26,7 @@ const TopUsers = props => {
   const TopUserContent = () => {
     return (
       <View>
-        <View style={styles.topUsersHeaderStyle}>
-          <Text style={styles.topUsersTitleStyle}>Top Users</Text>
-        </View>
+        <ListHeader listTitle="Top Users" />
         {
           !topUserData && (
             <LoadingSpinner loadingSpinnerForComponent={true} />
@@ -73,22 +72,6 @@ const styles = StyleSheet.create({
     marginTop: "2%",
     marginHorizontal: "1.8%",
     borderRadius: 8
-  },
-
-  topUsersHeaderStyle: {
-    backgroundColor: "#7817FF",
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
-    height: 50
-  },
-
-  topUsersTitleStyle: {
-    color: "#FFFFFF",
-    fontSize: 18,
-    fontFamily: bold,
-    paddingBottom: "3%",
-    paddingTop: "2%",
-    paddingLeft: "4%"
   },
 
   listStyle: {

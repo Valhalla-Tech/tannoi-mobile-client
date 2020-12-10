@@ -6,15 +6,12 @@ import {
   TouchableOpacity,
   FlatList
 } from 'react-native';
-import { bold } from '../../assets/FontSize';
-
-//Icon
-import DownArrow from '../../assets/homeAssets/downArrow.svg';
 
 //Components
 import HomeListCard from './ListCard';
 import LoadingSpinner from './LoadingSpinner';
 import Card from './Card';
+import ListHeader from './ListHeader';
 
 const HomeList = props => {
   const { 
@@ -23,7 +20,8 @@ const HomeList = props => {
     navigation,
     openModal,
     isFilter,
-    isUsingMoreButton
+    isUsingMoreButton,
+    isHeader = true
   } = props;
 
   const MoreButton = () => {
@@ -36,26 +34,12 @@ const HomeList = props => {
     );
   };
 
-  const ListFilter = () => {
-    return (
-      <TouchableOpacity style={styles.filterStyle}>
-        <Text style={styles.filterTextStyle}>Most recent</Text>
-        <DownArrow />
-      </TouchableOpacity>
-    );
-  };
-
   const HomeListContent = () => {
     return (
-        <View>
-        <View style={styles.homeListTitleAndFilterContainerStyle}>
-          <Text style={styles.homeListTitleStyle}>{listTitle}</Text>
-          {
-            isFilter && (
-              <ListFilter />
-            )
-          }
-        </View>
+      <View>
+        {
+          isHeader && <ListHeader isFilter={isFilter} listTitle={listTitle} />
+        }
         {
           !listData ? (
             <LoadingSpinner loadingSpinnerForComponent={true} />
@@ -111,37 +95,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingBottom: "6.5%",
     marginHorizontal: "1.8%"
-  },
-
-  homeListTitleAndFilterContainerStyle: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: "2%",
-    backgroundColor: "#7817FF",
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
-    height: 50
-  },
-
-  filterStyle: {
-    marginRight: ".8%",
-    flexDirection: "row",
-    alignItems: "center"
-  },
-
-  filterTextStyle: {
-    fontSize: 14,
-    color: "#FFFFFF",
-    marginRight: "5%"
-  },
-
-  homeListTitleStyle: {
-    fontSize: 18,
-    fontFamily: bold,
-    color: "#FFFFFF",
-    marginVertical: "4%",
-    marginLeft: "2.5%"
   },
 
   moreButtonContainerStyle: {

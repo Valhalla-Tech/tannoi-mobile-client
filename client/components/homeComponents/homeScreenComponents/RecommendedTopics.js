@@ -12,6 +12,7 @@ import { bold, normal } from '../../../assets/FontSize';
 import RecommendedTopicsCard from './RecommendedTopicsCard';
 import LoadingSpinner from '../../publicComponents/LoadingSpinner';
 import Card from '../../publicComponents/Card';
+import ListHeader from '../../publicComponents/ListHeader';
 
 const RecommendedTopics = props => {
   const { 
@@ -39,12 +40,15 @@ const RecommendedTopics = props => {
   const RecommendedTopicContent = () => {
     return (
       <View>
-        <View style={styles.recommendedTopicsTitleAndSeeAllButtonContainerStyle}>
-          <Text style={styles.recommendedTopicsTitleStyle}>Recommended Topics</Text>
-          <TouchableOpacity style={styles.seeAllButton}>
-            <Text style={styles.seeAllButtonTextStyle}>See all</Text>
-          </TouchableOpacity>
-        </View>
+        <ListHeader 
+          listTitle="Recommended Topics"
+          customStyle={{marginBottom: "3.5%"}}
+          headerButton={() => (
+            <TouchableOpacity style={styles.seeAllButton}>
+              <Text style={styles.seeAllButtonTextStyle}>See all</Text>
+            </TouchableOpacity>
+          )} 
+        />
         {
           topicData !== '' ? (
             <View style={styles.topicCardContainerStyle}>
@@ -116,18 +120,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     borderRadius: 8,
   },
-
-  recommendedTopicsTitleAndSeeAllButtonContainerStyle: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#7817FF",
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
-    height: 50,
-    marginBottom: "3.5%"
-  },
-
+  
   recommendedTopicsTitleStyle: {
     fontSize: 18,
     fontFamily: bold,
