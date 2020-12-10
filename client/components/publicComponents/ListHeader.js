@@ -5,10 +5,13 @@ import {
   StyleSheet,
   TouchableOpacity
 } from 'react-native';
-import { bold, normal } from '../../assets/FontSize';
+import { bold } from '../../assets/FontSize';
 
 //Icon
 import DownArrow from '../../assets/homeAssets/downArrow.svg';
+
+//Component
+import Header from '../../components/publicComponents/Header';
 
 const ListHeader = props => {
   const {
@@ -25,8 +28,8 @@ const ListHeader = props => {
     );
   };
 
-  return (
-    <View>
+  const ListHeaderContent = () => {
+    return (
       <View style={styles.headerStyle}>
         <Text style={styles.headerTitleStyle}>{listTitle}</Text>
         {
@@ -35,7 +38,11 @@ const ListHeader = props => {
           )
         }
       </View>
-    </View>
+    );
+  };
+
+  return (
+    <Header child={ListHeaderContent} customStyle={{backgroundColor: "#7817FF", borderTopLeftRadius: 8, borderTopRightRadius: 8}} />
   );
 };
 
@@ -45,9 +52,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: "2%",
-    backgroundColor: "#7817FF",
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
     height: 50
   },
 
