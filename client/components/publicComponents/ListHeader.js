@@ -16,7 +16,9 @@ import Header from '../../components/publicComponents/Header';
 const ListHeader = props => {
   const {
     listTitle,
-    isFilter
+    isFilter,
+    headerButton,
+    customStyle
   } = props;
 
   const ListFilter = () => {
@@ -37,12 +39,15 @@ const ListHeader = props => {
             <ListFilter />
           )
         }
+        {
+          headerButton && headerButton()
+        }
       </View>
     );
   };
 
   return (
-    <Header child={ListHeaderContent} customStyle={{backgroundColor: "#7817FF", borderTopLeftRadius: 8, borderTopRightRadius: 8}} />
+    <Header child={ListHeaderContent} customStyle={{backgroundColor: "#7817FF", borderTopLeftRadius: 8, borderTopRightRadius: 8, ...customStyle}} />
   );
 };
 
