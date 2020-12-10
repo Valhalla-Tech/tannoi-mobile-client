@@ -16,9 +16,8 @@ import { bold, normal } from '../../../assets/FontSize';
 //Components
 import SearchBar from '../../../components/publicComponents/SearchBar';
 import ProfileBar from '../../../components/homeComponents/homeScreenComponents/ProfileBar';
-import DiscussionOfTheWeek from '../../../components/publicComponents/List';
+import List from '../../../components/publicComponents/List';
 import TopUsers from '../../../components/homeComponents/homeScreenComponents/TopUsers';
-import Trending from '../../../components/publicComponents/List';
 import RecommendedTopics from '../../../components/homeComponents/homeScreenComponents/RecommendedTopics';
 import NoticeModal from '../../../components/publicComponents/Modal';
 
@@ -28,6 +27,8 @@ const HomeScreen = ({ navigation }) => {
   const topUser = useSelector(state => state.HomeReducer.topUser);
   const trending = useSelector(state => state.HomeReducer.trending);
   const recommendedTopic = useSelector(state => state.HomeReducer.recommendedTopic);
+  const followingDiscussion = useSelector(state => state.HomeReducer.followingDiscussion);
+  const requestedDiscussion = useSelector(state => state.HomeReducer.requestedDiscussion);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -70,7 +71,31 @@ const HomeScreen = ({ navigation }) => {
                 navigation={navigation}
               />
             </View>
-            <DiscussionOfTheWeek
+            {
+              requestedDiscussion.length !== 0 && (
+                <View style={styles.sectionStyle}>
+                  <List
+                    listTitle="Discussions especially for you"
+                    listData={requestedDiscussion}
+                    navigation={navigation}
+                    openModal={openModal}
+                  />
+                </View>
+              )
+            }
+            {
+              followingDiscussion.length !== 0 && (
+                <View style={styles.sectionStyle}>
+                  <List
+                    listTitle="Discussions by People You Follow"
+                    listData={followingDiscussion}
+                    navigation={navigation}
+                    openModal={openModal}
+                  />
+                </View>
+              )
+            }
+            <List
               listTitle="Discussions of the Week"
               listData={discussionOfTheWeek}
               navigation={navigation}
@@ -81,7 +106,7 @@ const HomeScreen = ({ navigation }) => {
               topUserData={topUser}
               navigation={navigation}
             />
-            <Trending 
+            <List 
               listTitle="Trending"
               listData={trending}
               navigation={navigation}
@@ -117,6 +142,10 @@ const styles = StyleSheet.create({
   searchBarContainer: {
     paddingHorizontal: "4.2%",
     backgroundColor: "#FFFFFF"
+  },
+
+  sectionStyle: {
+    marginBottom: -14
   }
 });
 

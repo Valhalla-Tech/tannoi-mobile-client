@@ -31,14 +31,15 @@ const PrivateDiscussionModal = props => {
     selectedFollowers,
     selectedAll,
     fromDiscussionScreen,
-    discussionId
+    discussionId,
+    modalTitle
   } = props;
-  
+
   const followers = useSelector(state => state.PrivateDiscussionReducer.followers);
   const authorized = useSelector(state => state.PrivateDiscussionReducer.authorized);
   const authorizedId = useSelector(state => state.PrivateDiscussionReducer.authorizedId);
   const noFollowers = useSelector(state => state.PrivateDiscussionReducer.noFollowers);
-  
+
   const [selectedUser, setSelectedUser] = useState(fromDiscussionScreen ? authorizedId : selectedFollowers);
   const [isSelectAll, setIsSelectAll] = useState(selectedAll);
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -183,7 +184,7 @@ const PrivateDiscussionModal = props => {
       </View>
       <View style={styles.modalContainerStyle}>
         <View style={styles.privateDiscussionModalStyle}>
-          <Text style={styles.privateDiscussionTextStyle}>Invite your followers to a private discussion</Text>
+        <Text style={styles.privateDiscussionTextStyle}>{modalTitle}</Text>
           <View>
             <FormInput 
               formInputTitle="Search"

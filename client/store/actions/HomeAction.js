@@ -23,9 +23,11 @@ export const getHome = () => {
             discussionOfTheWeek: getHomeRequest.data.discussion_of_the_week,
             topUser: getHomeRequest.data.top_user,
             trending: getHomeRequest.data.discussion.data,
-            recommendedTopic: getHomeRequest.data.recommended_topic
+            recommendedTopic: getHomeRequest.data.recommended_topic,
+            followingDiscussion: getHomeRequest.data.followingDiscussion,
+            requestedDiscussion: getHomeRequest.data.requestedDiscussion
           }
-        })
+        });
       };
     } catch (error) {
       console.log(error.response.data.msg);

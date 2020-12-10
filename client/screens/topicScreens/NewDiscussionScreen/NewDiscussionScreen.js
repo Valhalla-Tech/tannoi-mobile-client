@@ -42,7 +42,9 @@ const NewDiscussionScreen = ({ navigation }) => {
   const [recordingFile, setRecordingFile] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [createNewDiscussionValidation, setCreateNewDiscussionValidation] = useState(false);
-  const [switchValue, setSwitchValue] = useState(false);
+  const [privateDiscussionSwitchValue, setPrivateDiscussionSwitchValue] = useState(false);
+  const [askToResponseSwitchValue, setAskToResponseSwitchValue] = useState(false);
+  const [selectedSwitch, setSelectedSwitch] = useState('Private discussion');
   const [openModal, setOpenModal] = useState(false);
   const [selectedFollowers, setSelectedFollowers] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
@@ -63,7 +65,8 @@ const NewDiscussionScreen = ({ navigation }) => {
     setOpenModal(false);
     setSelectedFollowers(followers);
     if (followers.length === 0 && !isSelectAll) {
-      setSwitchValue(false);
+      setPrivateDiscussionSwitchValue(false);
+      setAskToResponseSwitchValue(false);
       setSelectAll(false);
     } else if (isSelectAll) {
       setSelectAll(true);
@@ -164,9 +167,10 @@ const NewDiscussionScreen = ({ navigation }) => {
     setRecordingFile(recordingFileInput);
   };
 
-  const changeSwitchValue = () => {
-    setSwitchValue(previousState => !previousState);
-    if (switchValue !== true) {
+  const changeSwitchValue = (switchName) => {
+    switchName === 'Private discussion' ? setPrivateDiscussionSwitchValue(previousState => !previousState) : setAskToResponseSwitchValue(previousState => !previousState);
+    setSelectedSwitch(switchName);
+    if (!privateDiscussionSwitchValue && selectedFollowers.length === 0 && !selectAll || !askToResponseSwitchValue && selectedFollowers.length === 0 && !selectAll) {
       setOpenModal(true);
     } else {
       setSelectedFollowers([]);
@@ -177,11 +181,12 @@ const NewDiscussionScreen = ({ navigation }) => {
   const closeModal = (isFinish) => {
     setOpenModal(false);
     if (!isFinish) {
-      setSwitchValue(false);
+      setPrivateDiscussionSwitchValue(false);
+      setAskToResponseSwitchValue(false);
       setSelectAll(false);
       setSelectedFollowers([]);
     } else {
-      setSwitchValue(true);
+      selectedSwitch === 'Private discussion' ? setPrivateDiscussionSwitchValue(true) : setAskToResponseSwitchValue(true);
     }
   };
 
@@ -236,30 +241,47 @@ const NewDiscussionScreen = ({ navigation }) => {
     );
   };
 
-  const PrivateDiscussionSwitch = () => {
+  const DiscussionModalContainer = (switchName) => {
+    return (
+      <PrivateDiscussionModal 
+        openModal={openModal}
+        closeModal={closeModal}
+        addSelectedFollowers={addSelectedFollowers}
+        isFilled={selectAll || selectedFollowers.length > 0 ? true : false}
+        selectedFollowers={selectedFollowers}
+        selectedAll={selectAll}
+        modalTitle={switchName === 'Private discussion' ? 'Invite your followers to a private discussion' : 'Ask your followers to response this discussion'}
+        switchName={switchName}
+      />
+    );
+  };
+
+  const DiscussionSwitch = (switchName) => {
     return (
       <View style={styles.privateDiscussionSwitchContainerStyle}>
         {
-          switchValue && (
+          privateDiscussionSwitchValue && selectedSwitch === switchName ? (
             <TouchableOpacity style={styles.editButtonStyle} onPress={() => setOpenModal(true)}>
               <EditButton height={20} width={20} />
             </TouchableOpacity>
-          )
+          ) : askToResponseSwitchValue && selectedSwitch === switchName ? (
+            <TouchableOpacity style={styles.editButtonStyle} onPress={() => setOpenModal(true)}>
+              <EditButton height={20} width={20} />
+            </TouchableOpacity>
+          ) : null
         }
-        <Text style={styles.privateDiscussionText}>Private discussion:  </Text>
+        <Text style={styles.privateDiscussionText}>{switchName}:  </Text>
         <Switch
-          value={switchValue}
-          onValueChange={changeSwitchValue}
+          value={switchName === 'Private discussion' ? privateDiscussionSwitchValue : askToResponseSwitchValue}
+          onValueChange={() => changeSwitchValue(switchName)}
           trackColor={{true: "#6505E1", false: ""}}
           thumbColor={"#6505E1"}
-        />
-        <PrivateDiscussionModal 
-          openModal={openModal}
-          closeModal={closeModal}
-          addSelectedFollowers={addSelectedFollowers}
-          isFilled={selectAll || selectedFollowers.length > 0 ? true : false}
-          selectedFollowers={selectedFollowers}
-          selectedAll={selectAll}
+          disabled={
+            selectedSwitch === 'Private discussion' && privateDiscussionSwitchValue && switchName === selectedSwitch ? false : 
+            selectedSwitch === 'Ask to response' && askToResponseSwitchValue && switchName === selectedSwitch ? false : 
+            !privateDiscussionSwitchValue && !askToResponseSwitchValue ? false :
+            true
+          }
         />
       </View>
     );
@@ -333,7 +355,12 @@ const NewDiscussionScreen = ({ navigation }) => {
           <NewDiscussionHeader />
           <View style={styles.newDiscussionFormContainerStyle}>
             <View style={styles.contentContainerStyle}>
-              <PrivateDiscussionSwitch />
+              {
+                DiscussionSwitch('Private discussion')
+              }
+              {
+                DiscussionSwitch('Ask to response')
+              }
               <View style={styles.recorderContainerStyle}>
                 <Recorder
                   addRecordingFile={addRecordingFile}
@@ -347,6 +374,7 @@ const NewDiscussionScreen = ({ navigation }) => {
               )
             }
           </View>
+          {DiscussionModalContainer(selectedSwitch)}
           <NoticeModal 
             openModal={noticeModal}
             closeModal={closeNoticeModal}
