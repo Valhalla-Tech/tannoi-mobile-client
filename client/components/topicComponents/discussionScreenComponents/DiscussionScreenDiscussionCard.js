@@ -27,7 +27,7 @@ import DiscussionScreenPlayerCard from './DiscussionScreenPlayerCard';
 import LoadingSpinner from '../../publicComponents/LoadingSpinner';
 import OptionModal from './OptionModal';
 import PrivateDiscussionModal from '../PrivateDiscussionModal';
-
+import branch from 'react-native-branch';
 const DiscussionScreenCard = props => {
   const {
     profilePicture,
@@ -80,9 +80,35 @@ const DiscussionScreenCard = props => {
       if (userType !== 0 || profileId === userId) {
         const access_token = await AsyncStorage.getItem('access_token');
   
+        let branchUniversalObject = await branch.createBranchUniversalObject('canonicalIdentifier', {
+          locallyIndex: true,
+          title: 'Like a Discussion',
+          contentDescription: 'This is a link to Discussion',
+          contentMetadata: {
+            ratingAverage: 4.2,
+            customMetadata: {
+              screen: 'DiscussionScreen',
+              payload: JSON.stringify({
+                discussionId: discussionId.toString()
+              })
+            }
+          }
+        });
+        
+        let linkProperties = {
+          feature: 'like discussion',
+          channel: 'tannoi'
+        };
+        
+        let controlParams = {
+          $desktop_url: 'https://www.entervalhalla.tech/'
+        };
+        
+        let {url} = await branchUniversalObject.generateShortUrl(linkProperties, controlParams);
+
         let upvoteRequest = await axios({
           method: 'get',
-          url: `${BaseUrl}/discussions/like/${discussionId}`,
+          url: `${BaseUrl}/discussions/like/${discussionId}?deep_link=${url}`,
           headers: {
             token: access_token
           }

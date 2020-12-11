@@ -19,6 +19,7 @@ import { getResponse, getSingleResponse, clearResponse } from '../../../store/ac
 import LoadingSpinner from '../../publicComponents/LoadingSpinner';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
+import branch from 'react-native-branch';
 
 //Icons
 import PlayerSpeed from '../../../assets/topicAssets/playerSpeed.svg';
@@ -301,9 +302,35 @@ class DiscussionScreenPlayerCard extends Component {
       if (this.props.userType !== 0) {
         const access_token = await AsyncStorage.getItem('access_token');
   
+        let branchUniversalObject = await branch.createBranchUniversalObject('canonicalIdentifier', {
+          locallyIndex: true,
+          title: 'Like a Response',
+          contentDescription: 'This is a link to Discussion',
+          contentMetadata: {
+            ratingAverage: 4.2,
+            customMetadata: {
+              screen: 'DiscussionScreen',
+              payload: JSON.stringify({
+                discussionId: this.state.discussionId.toString()
+              })
+            }
+          }
+        });
+        
+        let linkProperties = {
+          feature: 'like response',
+          channel: 'tannoi'
+        };
+        
+        let controlParams = {
+          $desktop_url: 'https://www.entervalhalla.tech/'
+        };
+        
+        let {url} = await branchUniversalObject.generateShortUrl(linkProperties, controlParams);
+
         let upvoteRequest = await axios({
           method: 'get',
-          url: `${BaseUrl}/responses/like/${this.state.responseId}`,
+          url: `${BaseUrl}/responses/like/${this.state.responseId}?deep_link=${url}`,
           headers: {
             token: access_token
           }

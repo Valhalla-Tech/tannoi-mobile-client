@@ -44,7 +44,9 @@ const ResetPasswordWithEmailScreen = ({ navigation }) => {
             ratingAverage: 4.2,
             customMetadata: {
               screen: 'CreateNewPasswordScreen',
-              token: getResetPasswordToken.data.token
+              payload: JSON.stringify({
+                token: getResetPasswordToken.data.token
+              })
             }
           }
         });

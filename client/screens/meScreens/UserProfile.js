@@ -13,6 +13,8 @@ import { getOneProfile } from '../../store/actions/ProfileAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
+import branch from 'react-native-branch';
+import { getHome, clearHome } from '../../store/actions/HomeAction';
 
 //Components
 import BackButton from '../../components/publicComponents/BackButton';
@@ -21,6 +23,10 @@ const UserProfile = ({route, navigation}) => {
   const { userId } = route.params;
 
   const dispatch = useDispatch();
+
+  const followingUserId = useSelector(state => state.HomeReducer.user.id);
+
+  console.log(followingUserId, "Id yg login");
 
   const profile = useSelector(state => state.ProfileReducer.userProfile);
 
@@ -40,9 +46,35 @@ const UserProfile = ({route, navigation}) => {
     try {
       let access_token = await AsyncStorage.getItem('access_token');
 
+      let branchUniversalObject = await branch.createBranchUniversalObject('canonicalIdentifier', {
+        locallyIndex: true,
+        title: 'Follow an Account',
+        contentDescription: 'This is a link to User Profile',
+        contentMetadata: {
+          ratingAverage: 4.2,
+          customMetadata: {
+            screen: 'UserProfile',
+            payload: JSON.stringify({
+              userId: followingUserId
+            })
+          }
+        }
+      });
+      
+      let linkProperties = {
+        feature: 'follow user',
+        channel: 'tannoi'
+      };
+      
+      let controlParams = {
+        $desktop_url: 'https://www.entervalhalla.tech/'
+      };
+      
+      let {url} = await branchUniversalObject.generateShortUrl(linkProperties, controlParams);
+
       let followAccountRequest = await axios({
         method: 'get',
-        url: `${BaseUrl}/users/${profile.isFollowing ? 'unfollow' : 'follow'}/${userId}`,
+        url: `${BaseUrl}/users/${profile.isFollowing ? 'unfollow' : 'follow'}/${userId}?deep_link=${url}`,
         headers: {
           'token': access_token
         }
@@ -61,6 +93,8 @@ const UserProfile = ({route, navigation}) => {
 
   useEffect(() => {
     dispatch(getOneProfile(userId));
+    dispatch(clearHome());
+    dispatch(getHome());
   }, [])
 
   return (

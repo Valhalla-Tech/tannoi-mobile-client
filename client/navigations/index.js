@@ -12,6 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 import axios from "../constants/ApiServices"
 import BaseUrl from "../constants/BaseUrl";
 import { Platform } from "react-native";
+import branch from 'react-native-branch';
 
 //Navigations
 import AccountNavigation from './AccountNavigation';
@@ -95,6 +96,34 @@ const NavigationIndex = () => {
     });
   };
 
+  const branchSubscribe = async () => {
+    try {
+      let getToken = await AsyncStorage.getItem('access_token');
+      branch.subscribe(({error, params, uri}) => {
+        if (error) {
+          console.error('Error from Branch: ' + error)
+        }
+      
+        // params will never be null if error is null
+      
+        if (params['+non_branch_link']) {
+          // Route non-Branch URL if appropriate.
+        }
+      
+        if (!params['+clicked_branch_link']) {
+          // Indicates initialization success and some other conditions.
+          // No link was opened.
+        }
+      
+        if (params.screen !== undefined && getToken) {
+          navigation.push(params.screen, JSON.parse(params.payload));
+        }
+      })
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   const checkToken = async () => {
     let getToken = await AsyncStorage.getItem('access_token');
     if (getToken) {
@@ -106,6 +135,7 @@ const NavigationIndex = () => {
       dispatch(userLogout());
       SplashScreen.hide();
     }
+    branchSubscribe();
   };
 
   useEffect(() => {
