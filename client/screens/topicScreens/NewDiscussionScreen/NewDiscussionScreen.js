@@ -21,6 +21,7 @@ import { getHome, clearHome } from '../../../store/actions/HomeAction';
 import { userLogout } from '../../../store/actions/LoginAction';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
+import branch from 'react-native-branch';
 
 //Icon
 import EditButton from '../../../assets/topicAssets/edit.svg';
@@ -151,8 +152,34 @@ const NewDiscussionScreen = ({ navigation }) => {
         } : {'userArr': JSON.stringify(selectedFollowers)};
 
         if (selectedSwitch === 'Ask to response') {
+          let branchUniversalObject = await branch.createBranchUniversalObject('canonicalIdentifier', {
+            locallyIndex: true,
+            title: 'Ask For Response',
+            contentDescription: 'This is a link to discussion',
+            contentMetadata: {
+              ratingAverage: 4.2,
+              customMetadata: {
+                screen: 'DiscussionScreen',
+                payload: JSON.stringify({
+                  discussionId: createNewDiscussionRequest.data.id.toString()
+                })
+              }
+            }
+          });
+          
+          let linkProperties = {
+            feature: 'ask for response',
+            channel: 'tannoi'
+          };
+          
+          let controlParams = {
+            $desktop_url: 'https://www.entervalhalla.tech/'
+          };
+          
+          let {url} = await branchUniversalObject.generateShortUrl(linkProperties, controlParams);
+
           let askToResponseRequest = await axios({
-            url: `${BaseUrl}/users/ask/${createNewDiscussionRequest.data.id}`,
+            url: `${BaseUrl}/users/ask/${createNewDiscussionRequest.data.id}?deep_link=${url}`,
             method: 'post',
             headers: {
               'token': access_token
