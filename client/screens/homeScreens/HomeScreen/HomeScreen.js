@@ -55,7 +55,7 @@ const HomeScreen = ({ navigation }) => {
   const noticeModalChild = () => {
     return <Text style={styles.noticeModalTextStyle}>You don't have access to this discussion</Text>
   };
-
+  
   return (
     <View>
       <ProfileBar 

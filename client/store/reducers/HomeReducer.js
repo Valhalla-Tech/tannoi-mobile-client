@@ -27,7 +27,7 @@ const reducer = (state = defaultState, action) => {
         trending: setTrending, 
         recommendedTopic: setRecommendedTopic,
         followingDiscussion: setFollowingDiscussion,
-        requestDiscussion: setRequestedDiscussion
+        requestedDiscussion: setRequestedDiscussion
       };
     case 'CLEAR_HOME':
       return {

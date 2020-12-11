@@ -145,15 +145,42 @@ const NewDiscussionScreen = ({ navigation }) => {
       });
 
       if (createNewDiscussionRequest.data) {
-        setIsLoading(false);
-        dispatch(clearHome());
-        dispatch(getHome());
-        navigation.navigate('DiscussionScreen', {
-          discussionId: createNewDiscussionRequest.data.id,
-          fromNewDiscussion: true
-        });
+        const data = selectAll ? {
+          'userArr': JSON.stringify(selectedFollowers),
+          'all_follower': selectAll
+        } : {'userArr': JSON.stringify(selectedFollowers)};
+
+        if (selectedSwitch === 'Ask to response') {
+          let askToResponseRequest = await axios({
+            url: `${BaseUrl}/users/ask/${createNewDiscussionRequest.data.id}`,
+            method: 'post',
+            headers: {
+              'token': access_token
+            },
+            data: data
+          });
+
+          if (askToResponseRequest.data) {
+            setIsLoading(false);
+            dispatch(clearHome());
+            dispatch(getHome());
+            navigation.navigate('DiscussionScreen', {
+              discussionId: createNewDiscussionRequest.data.id,
+              fromNewDiscussion: true
+            });
+          }
+        } else {
+          setIsLoading(false);
+          dispatch(clearHome());
+          dispatch(getHome());
+          navigation.navigate('DiscussionScreen', {
+            discussionId: createNewDiscussionRequest.data.id,
+            fromNewDiscussion: true
+          });
+        }
       }
     } catch (error) {
+      console.log(error)
       setIsLoading(false);
       setCreateNewDiscussionValidation(true);
       if (error.response.data.msg === 'You have to login first') {
