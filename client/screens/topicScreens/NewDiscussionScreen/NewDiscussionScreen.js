@@ -242,7 +242,6 @@ const NewDiscussionScreen = ({ navigation }) => {
   };
 
   const DiscussionModalContainer = ({ switchName }) => {
-    console.log(switchName)
     return (
       <PrivateDiscussionModal 
         openModal={switchName === selectedSwitch && openModal}
@@ -271,12 +270,22 @@ const NewDiscussionScreen = ({ navigation }) => {
             </TouchableOpacity>
           ) : null
         }
-        <Text style={styles.privateDiscussionText}>{switchName}:  </Text>
+        <Text style={
+          switchName === selectedSwitch && privateDiscussionSwitchValue ? styles.privateDiscussionTextStyle :
+          switchName === selectedSwitch && askToResponseSwitchValue ? styles.privateDiscussionTextStyle :
+          !privateDiscussionSwitchValue && !askToResponseSwitchValue ? styles.privateDiscussionTextStyle :
+          {...styles.privateDiscussionTextStyle, color: "#cccccc"}
+        }>{switchName}:  </Text>
         <Switch
           value={switchName === 'Private discussion' ? privateDiscussionSwitchValue : askToResponseSwitchValue}
           onValueChange={() => changeSwitchValue(switchName)}
           trackColor={{true: "#6505E1", false: ""}}
-          thumbColor={"#6505E1"}
+          thumbColor={
+            switchName === selectedSwitch && privateDiscussionSwitchValue ? "#6505E1" :
+            switchName === selectedSwitch && askToResponseSwitchValue ? "#6505E1" :
+            !privateDiscussionSwitchValue && !askToResponseSwitchValue ? "#6505E1" :
+            "grey"
+          }
           disabled={
             selectedSwitch === 'Private discussion' && privateDiscussionSwitchValue && switchName === selectedSwitch ? false : 
             selectedSwitch === 'Ask to response' && askToResponseSwitchValue && switchName === selectedSwitch ? false : 
@@ -413,7 +422,7 @@ const styles = StyleSheet.create({
     marginBottom: "3%"
   },
 
-  privateDiscussionText: {
+  privateDiscussionTextStyle: {
     fontFamily: bold,
     color: "#73798C"
   },
