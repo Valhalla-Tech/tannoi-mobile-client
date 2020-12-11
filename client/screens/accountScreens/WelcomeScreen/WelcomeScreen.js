@@ -67,7 +67,7 @@ const WelcomeScreen = ({ navigation }) => {
       if (params.screen !== undefined) {
         navigation.navigate(params.screen, {
           token: params.token
-        })
+        });
       }
     })
   }, [])

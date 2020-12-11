@@ -3,7 +3,9 @@ const defaultState = {
   discussionOfTheWeek: '',
   topUser: '',
   trending: '',
-  recommendedTopic: ''
+  recommendedTopic: '',
+  followingDiscussion: '',
+  requestedDiscussion: ''
 };
 
 const reducer = (state = defaultState, action) => {
@@ -14,6 +16,8 @@ const reducer = (state = defaultState, action) => {
       let setTopUser = action.payload.topUser;
       let setTrending = action.payload.trending;
       let setRecommendedTopic = action.payload.recommendedTopic;
+      let setFollowingDiscussion = action.payload.followingDiscussion;
+      let setRequestedDiscussion = action.payload.requestedDiscussion;
       
       return {
         ...state, 
@@ -21,7 +25,9 @@ const reducer = (state = defaultState, action) => {
         discussionOfTheWeek: setDiscussionOfTheWeek, 
         topUser: setTopUser, 
         trending: setTrending, 
-        recommendedTopic: setRecommendedTopic
+        recommendedTopic: setRecommendedTopic,
+        followingDiscussion: setFollowingDiscussion,
+        requestedDiscussion: setRequestedDiscussion
       };
     case 'CLEAR_HOME':
       return {
