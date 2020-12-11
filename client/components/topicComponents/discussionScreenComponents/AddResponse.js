@@ -17,6 +17,7 @@ import { userLogout } from '../../../store/actions/LoginAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
+import branch from 'react-native-branch';
 
 //Components
 import FormInput from '../../publicComponents/FormInput';
@@ -71,9 +72,34 @@ const AddResponse = props => {
           formData.append('response_id', responseId)
         };
   
+        let branchUniversalObject = await branch.createBranchUniversalObject('canonicalIdentifier', {
+          locallyIndex: true,
+          title: 'Response a Discussion',
+          contentDescription: 'This is a link to Discussion',
+          contentMetadata: {
+            ratingAverage: 4.2,
+            customMetadata: {
+              screen: 'DiscussionScreen',
+              payload: JSON.stringify({
+                discussionId: discussionId.toString()
+              })
+            }
+          }
+        });
+        
+        let linkProperties = {
+          feature: 'response a discussion',
+          channel: 'tannoi'
+        };
+        
+        let controlParams = {
+          $desktop_url: 'https://www.entervalhalla.tech/'
+        };
+        let {url} = await branchUniversalObject.generateShortUrl(linkProperties, controlParams);
+
         let createResponseRequest = await axios({
           method: 'post',
-          url: `${BaseUrl}/responses/${discussionId}`,
+          url: `${BaseUrl}/responses/${discussionId}?deep_link=${url}`,
           headers: {
             'Content-Type': 'multipart/form-data',
             'token': access_token

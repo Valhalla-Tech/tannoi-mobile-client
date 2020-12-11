@@ -9,7 +9,6 @@ import {
 import {
   GoogleSignin
 } from '@react-native-community/google-signin';
-import branch from 'react-native-branch';
 import {
   useDispatch
 } from 'react-redux';
@@ -47,29 +46,6 @@ const WelcomeScreen = ({ navigation }) => {
       // accountName: '', // [Android] specifies an account name on the device that should be used
       // iosClientId: '<FROM DEVELOPER CONSOLE>', // [iOS] optional, if you want to specify the client ID of type iOS (otherwise, it is taken from GoogleService-Info.plist)
     });
-
-    branch.subscribe(({error, params, uri}) => {
-      if (error) {
-        console.error('Error from Branch: ' + error)
-      }
-    
-      // params will never be null if error is null
-    
-      if (params['+non_branch_link']) {
-        // Route non-Branch URL if appropriate.
-      }
-    
-      if (!params['+clicked_branch_link']) {
-        // Indicates initialization success and some other conditions.
-        // No link was opened.
-      }
-
-      if (params.screen !== undefined) {
-        navigation.navigate(params.screen, {
-          token: params.token
-        })
-      }
-    })
   }, [])
 
   const WelcomePageUpperSection = () => {
