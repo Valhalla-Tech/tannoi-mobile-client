@@ -233,6 +233,7 @@ const DiscussionScreenCard = props => {
               closeModal={closePrivateModal}
               fromDiscussionScreen={true}
               discussionId={discussionId}
+              modalTitle="Invite your followers to a private discussion"
             />
           )
         }
