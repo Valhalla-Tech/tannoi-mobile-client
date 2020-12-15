@@ -36,8 +36,9 @@ import ActiveUpvote from '../../../assets/topicAssets/activeUpvote.svg';
 import ActiveDownvote from '../../../assets/topicAssets/activeDownvote.svg';
 import TickIcon from '../../../assets/publicAssets/tickIcon.png';
 
-//Component
+//Components
 import AddResponse from '../../../components/topicComponents/discussionScreenComponents/AddResponse';
+import OptionButton from '../../../components/topicComponents/discussionScreenComponents/OptionButton';
 
 class DiscussionScreenPlayerCard extends Component {
   _isMounted = false;
@@ -397,21 +398,37 @@ class DiscussionScreenPlayerCard extends Component {
 
   ProfileAndPostTime = () => {
     return (
-      <View style={styles.profileAndPostTimeContainerStyle}>
-        <View style={styles.profileInfoContainerStyle}>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('UserProfile', {
-            userId: this.props.profileId
-          })}>
-            <Image source={{uri: this.state.profilePicture}} style={styles.profileImageStyle} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('UserProfile', {
-            userId: this.props.profileId
-          })}>
-            <Text style={styles.profileNameStyle}>{this.state.profileName}</Text>
-          </TouchableOpacity>
-          {this.props.profileType === 1 && <Image source={TickIcon} style={styles.tickIconStyle} />}
+      <View>
+        <View style={styles.profileAndPostTimeContainerStyle}>
+          <View style={styles.profileInfoContainerStyle}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('UserProfile', {
+              userId: this.props.profileId
+            })}>
+              <Image source={{uri: this.state.profilePicture}} style={styles.profileImageStyle} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('UserProfile', {
+              userId: this.props.profileId
+            })}>
+              <Text style={styles.profileNameStyle}>{this.state.profileName}</Text>
+            </TouchableOpacity>
+            {this.props.profileType === 1 && <Image source={TickIcon} style={styles.tickIconStyle} />}
+          </View>
+          <Text style={styles.postTimeStyle}>{this.state.postTime ? this.convertPostTime(this.state.postTime) : ''}</Text>
         </View>
-        <Text style={styles.postTimeStyle}>{this.state.postTime ? this.convertPostTime(this.state.postTime) : ''}</Text>
+        <View style={styles.optionButtonContainerStyle}>
+          {
+            this.state.cardIndex !== "discussion" && (
+              <OptionButton
+                customStyle={styles.responseCardMenuStyle}
+                navigation={this.props.navigation}
+                profileId={this.props.profileId}
+                modalType="response"
+                responseId={this.state.responseId}
+                discussionId={this.state.discussionId}
+              />
+            )
+          }
+        </View>
       </View>
     );
   }
@@ -652,8 +669,19 @@ const styles = StyleSheet.create({
     fontFamily: normal
   },
 
+  optionButtonContainerStyle: {
+    alignItems: "flex-end"
+  },
+
+  responseCardMenuStyle: {
+    marginTop: "2%",
+    alignItems: "flex-end",
+    height: 15,
+    width: "10%"
+  },
+
   captionStyle: {
-    marginTop: "7%",
+    marginTop: "3%",
     fontSize: 15,
     fontFamily: normal
   },

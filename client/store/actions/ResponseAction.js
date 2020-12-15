@@ -5,6 +5,7 @@ import BaseUrl from '../../constants/BaseUrl';
 export const getResponse = (discussionId) => {
   return async (dispatch) => {
     try {
+      console.log('heree')
       let access_token = await AsyncStorage.getItem('access_token');
 
       let getResponseRequest = await axios({
@@ -16,6 +17,7 @@ export const getResponse = (discussionId) => {
       });
 
       if (getResponseRequest.data) {
+        console.log('here')
         dispatch({
           type: 'GET_RESPONSE',
           payload: {

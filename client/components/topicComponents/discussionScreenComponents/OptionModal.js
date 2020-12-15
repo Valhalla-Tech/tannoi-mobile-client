@@ -11,6 +11,7 @@ import BigButton from '../../publicComponents/BigButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOneProfile } from '../../../store/actions/ProfileAction';
 import { getHome, clearHome } from '../../../store/actions/HomeAction';
+import { getResponse } from '../../../store/actions/ResponseAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
@@ -22,7 +23,9 @@ const OptionModal = props => {
     discussionId,
     navigation,
     profileId,
-    openPrivateModal
+    openPrivateModal,
+    modalType,
+    responseId
   } = props;
 
   const userId = useSelector(state => state.ProfileReducer.userProfile.id);
@@ -55,7 +58,7 @@ const OptionModal = props => {
           Delete
         </Text>
         <Text style={styles.deleteOptionTextStyle}>
-          Once a discussion is deleted, you can't recover it. All responses associated with this discussion will be deleted too.
+          Once a {modalType === 'discussion' ? 'discussion' : 'response'} is deleted, you can't recover it. {modalType === 'discussion' ? 'All responses associated with this discussion will be deleted too.' : null}
         </Text>
         <View style={styles.deleteConfirmationButtonContainerStyle}>
           <BigButton
@@ -65,7 +68,7 @@ const OptionModal = props => {
               borderColor: "#5152D0",
               marginRight: "2%",
               width: "35%",
-              height: "60%"
+              height: modalType === 'response' ? "70%" : "60%"
             }}
             buttonFunction={() => setDeleteOption(false)}
           />
@@ -76,7 +79,7 @@ const OptionModal = props => {
               borderColor: "#5152D0",
               backgroundColor: "#5152D0",
               width: "35%",
-              height: "60%"
+              height: modalType === 'response' ? "70%" : "60%"
             }}
             buttonFunction={() => DeleteDiscussionOrResponse()}
           />
@@ -91,7 +94,7 @@ const OptionModal = props => {
 
       let deleteDiscussionOrResponseRequest = await axios({
         method: 'delete',
-        url: `${BaseUrl}/discussions/delete/${discussionId}`,
+        url: modalType === 'discussion' ? `${BaseUrl}/discussions/delete/${discussionId}` : `${BaseUrl}/responses/${responseId}`,
         headers: {
           'token': access_token
         }
@@ -100,7 +103,8 @@ const OptionModal = props => {
       if (deleteDiscussionOrResponseRequest.data) {
         dispatch(clearHome());
         dispatch(getHome());
-        navigation.navigate('MainAppNavigation');
+        modalType === 'discussion' ?  navigation.navigate('MainAppNavigation') : dispatch(getResponse(discussionId));
+        modalType === 'response' && closeOptionModal()
       };
     } catch (error) {
       if (error.response.data.msg === 'You have to login first') {
@@ -122,14 +126,14 @@ const OptionModal = props => {
         }} ></TouchableOpacity>
       </View>
       <View style={styles.optionModalContainerStyle}>
-        <View style={deleteOption ? {...styles.modalOptionStyle, width: "75%", height: "28.5%"} : styles.modalOptionStyle}>
+        <View style={deleteOption ? {...styles.modalOptionStyle, width: "75%", height: modalType === 'response' ? "25%" : "28.5%"} : styles.modalOptionStyle}>
           {
             !deleteOption ? (
               <>
-                <Text style={styles.headerTextStyle}>Discussion</Text>
+                <Text style={styles.headerTextStyle}>{modalType === 'discussion' ? 'Discussion' : 'Response'}</Text>
                 {OptionModalButton('Share')}
                 {profileId === userId && OptionModalButton('Edit')}
-                {profileId === userId && type === 2 && OptionModalButton('Edit participant list')}
+                {profileId === userId && type === 2 && modalType === 'discussion' && OptionModalButton('Edit participant list')}
                 {profileId === userId && OptionModalButton('Delete')}
               </>
             ) : (
@@ -158,7 +162,7 @@ const styles = StyleSheet.create({
 
   modalOptionStyle: {
     width: "60%",
-    minHeight: "30%",
+    minHeight: "10%",
     borderRadius: 20,
     padding: "5%",
     paddingBottom: "7%",
