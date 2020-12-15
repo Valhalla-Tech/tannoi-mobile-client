@@ -68,7 +68,7 @@ const OptionModal = props => {
               borderColor: "#5152D0",
               marginRight: "2%",
               width: "35%",
-              height: "60%"
+              height: modalType === 'response' ? "70%" : "60%"
             }}
             buttonFunction={() => setDeleteOption(false)}
           />
@@ -79,7 +79,7 @@ const OptionModal = props => {
               borderColor: "#5152D0",
               backgroundColor: "#5152D0",
               width: "35%",
-              height: "60%"
+              height: modalType === 'response' ? "70%" : "60%"
             }}
             buttonFunction={() => DeleteDiscussionOrResponse()}
           />
@@ -126,7 +126,7 @@ const OptionModal = props => {
         }} ></TouchableOpacity>
       </View>
       <View style={styles.optionModalContainerStyle}>
-        <View style={deleteOption ? {...styles.modalOptionStyle, width: "75%", height: "28.5%"} : styles.modalOptionStyle}>
+        <View style={deleteOption ? {...styles.modalOptionStyle, width: "75%", height: modalType === 'response' ? "25%" : "28.5%"} : styles.modalOptionStyle}>
           {
             !deleteOption ? (
               <>
