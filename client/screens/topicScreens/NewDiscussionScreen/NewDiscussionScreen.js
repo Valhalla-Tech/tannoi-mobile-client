@@ -22,6 +22,7 @@ import { userLogout } from '../../../store/actions/LoginAction';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 import branch from 'react-native-branch';
+import Slider from '@react-native-community/slider';
 
 //Icon
 import EditButton from '../../../assets/topicAssets/edit.svg';
@@ -50,6 +51,7 @@ const NewDiscussionScreen = ({ navigation }) => {
   const [selectedFollowers, setSelectedFollowers] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const [noticeModal, setNoticeModal] = useState(false);
+  const [sliderValue, setSliderValue] = useState(5);
 
   const topics = useSelector(state => state.TopicReducer.topics);
   const dispatch = useDispatch();
@@ -151,43 +153,64 @@ const NewDiscussionScreen = ({ navigation }) => {
           'all_follower': selectAll
         } : {'userArr': JSON.stringify(selectedFollowers)};
 
-        if (selectedSwitch === 'Ask to response') {
-          let branchUniversalObject = await branch.createBranchUniversalObject('canonicalIdentifier', {
-            locallyIndex: true,
-            title: 'Ask For Response',
-            contentDescription: 'This is a link to discussion',
-            contentMetadata: {
-              ratingAverage: 4.2,
-              customMetadata: {
-                screen: 'DiscussionScreen',
-                payload: JSON.stringify({
-                  discussionId: createNewDiscussionRequest.data.id.toString()
-                })
+        let moodRatingRequest = await axios({
+          url: `${BaseUrl}/discussions/add-rating/${createNewDiscussionRequest.data.id}`,
+          method: 'post',
+          headers: {
+            'token': access_token
+          },
+          data: {
+            'mood_rating': sliderValue
+          }
+        });
+
+        if (moodRatingRequest.data) {
+          if (selectedSwitch === 'Ask to response') {
+            let branchUniversalObject = await branch.createBranchUniversalObject('canonicalIdentifier', {
+              locallyIndex: true,
+              title: 'Ask For Response',
+              contentDescription: 'This is a link to discussion',
+              contentMetadata: {
+                ratingAverage: 4.2,
+                customMetadata: {
+                  screen: 'DiscussionScreen',
+                  payload: JSON.stringify({
+                    discussionId: createNewDiscussionRequest.data.id.toString()
+                  })
+                }
               }
+            });
+            
+            let linkProperties = {
+              feature: 'ask for response',
+              channel: 'tannoi'
+            };
+            
+            let controlParams = {
+              $desktop_url: 'https://www.entervalhalla.tech/'
+            };
+            
+            let {url} = await branchUniversalObject.generateShortUrl(linkProperties, controlParams);
+  
+            let askToResponseRequest = await axios({
+              url: `${BaseUrl}/users/ask/${createNewDiscussionRequest.data.id}?deep_link=${url}`,
+              method: 'post',
+              headers: {
+                'token': access_token
+              },
+              data: data
+            });
+  
+            if (askToResponseRequest.data) {
+              setIsLoading(false);
+              dispatch(clearHome());
+              dispatch(getHome());
+              navigation.navigate('DiscussionScreen', {
+                discussionId: createNewDiscussionRequest.data.id,
+                fromNewDiscussion: true
+              });
             }
-          });
-          
-          let linkProperties = {
-            feature: 'ask for response',
-            channel: 'tannoi'
-          };
-          
-          let controlParams = {
-            $desktop_url: 'https://www.entervalhalla.tech/'
-          };
-          
-          let {url} = await branchUniversalObject.generateShortUrl(linkProperties, controlParams);
-
-          let askToResponseRequest = await axios({
-            url: `${BaseUrl}/users/ask/${createNewDiscussionRequest.data.id}?deep_link=${url}`,
-            method: 'post',
-            headers: {
-              'token': access_token
-            },
-            data: data
-          });
-
-          if (askToResponseRequest.data) {
+          } else {
             setIsLoading(false);
             dispatch(clearHome());
             dispatch(getHome());
@@ -196,14 +219,6 @@ const NewDiscussionScreen = ({ navigation }) => {
               fromNewDiscussion: true
             });
           }
-        } else {
-          setIsLoading(false);
-          dispatch(clearHome());
-          dispatch(getHome());
-          navigation.navigate('DiscussionScreen', {
-            discussionId: createNewDiscussionRequest.data.id,
-            fromNewDiscussion: true
-          });
         }
       }
     } catch (error) {
@@ -213,7 +228,6 @@ const NewDiscussionScreen = ({ navigation }) => {
       if (error.response.data.msg === 'You have to login first') {
         dispatch(userLogout());
       };
-      console.log(error.response.data.msg);
     }
   };
 
@@ -403,6 +417,19 @@ const NewDiscussionScreen = ({ navigation }) => {
           formInputTitle="Add hashtags"
           dataInput={hashtagsInput}
         />
+        <View>
+          <Text style={{...styles.formInputTitleStyle, textAlign: "center", marginBottom: "5%"}}>Mood Rating</Text>
+          <Slider
+            minimumValue={0.5}
+            maximumValue={10}
+            onValueChange={value => setSliderValue(value)}
+            step={0.5}
+            value={sliderValue}
+            maximumTrackTintColor="red"
+            minimumTrackTintColor="green"
+            thumbTintColor="#6505E1"
+          />
+        </View>
         {
           createNewDiscussionValidation && (
             <ErrorMessage
