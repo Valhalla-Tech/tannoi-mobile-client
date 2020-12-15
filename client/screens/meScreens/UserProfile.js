@@ -26,8 +26,6 @@ const UserProfile = ({route, navigation}) => {
 
   const followingUserId = useSelector(state => state.HomeReducer.user.id);
 
-  console.log(followingUserId, "Id yg login");
-
   const profile = useSelector(state => state.ProfileReducer.userProfile);
 
   const numberConverter = number => {

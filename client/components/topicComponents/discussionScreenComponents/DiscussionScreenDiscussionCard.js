@@ -13,9 +13,9 @@ import { getDiscussion } from '../../../store/actions/DiscussionAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
+import branch from 'react-native-branch';
 
 //Icons
-import DiscussionCardMenu from '../../../assets/topicAssets/discussionCardMenu.svg';
 import Upvote from '../../../assets/topicAssets/upvote.svg';
 import Downvote from '../../../assets/topicAssets/downvote.svg';
 import ActiveUpvote from '../../../assets/topicAssets/activeUpvote.svg';
@@ -25,9 +25,9 @@ import TickIcon from '../../../assets/publicAssets/tickIcon.png';
 //Components
 import DiscussionScreenPlayerCard from './DiscussionScreenPlayerCard';
 import LoadingSpinner from '../../publicComponents/LoadingSpinner';
-import OptionModal from './OptionModal';
 import PrivateDiscussionModal from '../PrivateDiscussionModal';
-import branch from 'react-native-branch';
+import OptionButton from './OptionButton'
+
 const DiscussionScreenCard = props => {
   const {
     profilePicture,
@@ -180,10 +180,6 @@ const DiscussionScreenCard = props => {
     return `${date} ${month} ${year}, ${time}`;
   };
 
-  const closeOptionModal = () => {
-    setOptionModal(false);
-  };
-
   const openPrivateModal = () => {
     setPrivateModal(true);
   };
@@ -215,16 +211,13 @@ const DiscussionScreenCard = props => {
           </View>
           <Text style={styles.postTimeStyle}>{postTime ? convertPostTime(postTime) : ''}</Text>
         </View>
-        <TouchableOpacity onPress={() => setOptionModal(true)} style={styles.discussionCardMenuStyle}>
-          <DiscussionCardMenu />
-        </TouchableOpacity>
-        <OptionModal 
-          openOptionModal={optionModal}
-          closeOptionModal={closeOptionModal}
-          discussionId={discussionId}
+        <OptionButton
+          customStyle={styles.discussionCardMenuStyle}
           navigation={navigation}
+          discussionId={discussionId}
           profileId={profileId}
           openPrivateModal={openPrivateModal}
+          modalType="discussion"
         />
         {
           discussionType === 2 && (
@@ -364,7 +357,10 @@ const styles = StyleSheet.create({
   },
 
   discussionCardMenuStyle: {
-    marginTop: 12
+    marginTop: 12,
+    height: "30%",
+    width: "10%",
+    alignItems: "center"
   },
 
   discussionVoteAndInfoContainerStyle: {
