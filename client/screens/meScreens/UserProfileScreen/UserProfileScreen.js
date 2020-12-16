@@ -6,24 +6,25 @@ import {
   StyleSheet,
   FlatList
 } from 'react-native';
-import { bold, normal } from '../../assets/FontSize';
+import { bold, normal } from '../../../assets/FontSize';
 import { useSelector, useDispatch } from 'react-redux';
-import { getOneProfile } from '../../store/actions/ProfileAction';
-import { getUserDiscussion } from '../../store/actions/DiscussionAction';
+import { getOneProfile } from '../../../store/actions/ProfileAction';
+import { getUserDiscussion } from '../../../store/actions/DiscussionAction';
 import AsyncStorage from '@react-native-community/async-storage';
-import axios from '../../constants/ApiServices';
-import BaseUrl from '../../constants/BaseUrl';
+import axios from '../../../constants/ApiServices';
+import BaseUrl from '../../../constants/BaseUrl';
 import branch from 'react-native-branch';
-import { getHome, clearHome } from '../../store/actions/HomeAction';
+import { getHome, clearHome } from '../../../store/actions/HomeAction';
+import DisplayBirthDate from '../../../helper/DisplayBirthDate';
 
 //Components
-import BackButton from '../../components/publicComponents/BackButton';
-import ProfileData from '../../components/meComponents/ProfileData';
-import List from '../../components/publicComponents/List';
-import NoticeModal from '../../components/publicComponents/Modal';
-import Card from '../../components/publicComponents/Card';
+import BackButton from '../../../components/publicComponents/BackButton';
+import ProfileData from '../../../components/meComponents/ProfileData';
+import List from '../../../components/publicComponents/List';
+import NoticeModal from '../../../components/publicComponents/Modal';
+import Card from '../../../components/publicComponents/Card';
 
-const UserProfile = ({route, navigation}) => {
+const UserProfileScreen = ({route, navigation}) => {
   const { userId } = route.params;
 
   const [selectedMenu, setSelectedMenu] = useState('Discussions');
@@ -36,6 +37,13 @@ const UserProfile = ({route, navigation}) => {
   const followingUserId = useSelector(state => state.HomeReducer.user.id);
 
   const profile = useSelector(state => state.ProfileReducer.userProfile);
+
+  useEffect(() => {
+    dispatch(getOneProfile(userId));
+    dispatch(clearHome());
+    dispatch(getHome());
+    dispatch(getUserDiscussion(userId));
+  }, []);
 
   const followAccount = async () => {
     try {
@@ -94,13 +102,6 @@ const UserProfile = ({route, navigation}) => {
     setNoticeModal(false);
   };
 
-  useEffect(() => {
-    dispatch(getOneProfile(userId));
-    dispatch(clearHome());
-    dispatch(getHome());
-    dispatch(getUserDiscussion(userId));
-  }, []);
-
   const selectMenu = menu => {
     setSelectedMenu(menu);
   };
@@ -108,8 +109,7 @@ const UserProfile = ({route, navigation}) => {
   const noticeModalChild = () => {
     return <Text style={styles.noticeModalTextStyle}>You don't have access to this discussion</Text>
   };
-  
-  console.log(profile)
+
   const AboutData = (title, data) => {
     return (
       <View style={styles.aboutDataStyle}>
@@ -126,43 +126,32 @@ const UserProfile = ({route, navigation}) => {
 
   const AboutSection = () => {
     return (
-      <View style={styles.aboutSectionStyle}>
+      <View>
         {AboutData('Bio',profile.bio ? profile.bio : '-')}
         {AboutData('Gender', profile.gender ? profile.gender : '-')}
-        {AboutData('Birthday', displayBirthDate(new Date(profile.birth_date)))}
+        {AboutData('Birthday', DisplayBirthDate(new Date(profile.birth_date)))}
       </View>
     );
   };
 
-  const displayBirthDate = (date) => {
-    let birthDate = date.toDateString().split(' ').slice(1, 4);
-    if (birthDate[1][0] === '0') {
-      birthDate[1] = birthDate[1][1];
-    };
-    let birthDateDisplay = `${birthDate[1]} ${birthDate[0]} ${birthDate[2]}`;
-    return birthDateDisplay;
-  };
-
   return (
     <View style={styles.userProfileScreenContainerStyle}>
-      <View style={styles.userProfileHeaderStyle}>
-        <View style={styles.headerStyle}>
-          <BackButton
-            navigation={navigation}
-            styleOption={{
-              marginTop: 0,
-              marginBottom: 0
-            }}
-            navigation={navigation}
-          />
-          {
-            profile.isFollowing !== undefined && (
-              <TouchableOpacity onPress={() => followAccount()}>
-                <Text style={styles.followButtonTextStyle}>{profile.isFollowing ? 'Unfollow' : 'Follow'}</Text>
-              </TouchableOpacity>
-            )
-          }
-        </View>
+      <View style={styles.headerStyle}>
+        <BackButton
+          navigation={navigation}
+          styleOption={{
+            marginTop: 0,
+            marginBottom: 0
+          }}
+          navigation={navigation}
+        />
+        {
+          profile.isFollowing !== undefined && (
+            <TouchableOpacity onPress={() => followAccount()}>
+              <Text style={styles.followButtonTextStyle}>{profile.isFollowing ? 'Unfollow' : 'Follow'}</Text>
+            </TouchableOpacity>
+          )
+        }
       </View>
       <ProfileData
         profile={profile}
@@ -198,12 +187,6 @@ const styles = StyleSheet.create({
     flex: 1
   },
 
-  userProfileHeaderStyle: {
-    backgroundColor: "#FFFFFF",
-    paddingLeft: "3.5%",
-    paddingRight: "5%"
-  },
-
   userProfileStyle: {
     backgroundColor: "#FFFFFF",
     height: "25%",
@@ -212,6 +195,9 @@ const styles = StyleSheet.create({
   },
 
   headerStyle: {
+    backgroundColor: "#FFFFFF",
+    paddingLeft: "3.5%",
+    paddingRight: "5%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -333,4 +319,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default UserProfile;
+export default UserProfileScreen;

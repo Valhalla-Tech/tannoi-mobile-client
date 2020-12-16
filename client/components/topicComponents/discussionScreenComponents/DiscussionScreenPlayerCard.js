@@ -401,12 +401,12 @@ class DiscussionScreenPlayerCard extends Component {
       <View>
         <View style={styles.profileAndPostTimeContainerStyle}>
           <View style={styles.profileInfoContainerStyle}>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('UserProfile', {
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('UserProfileScreen', {
               userId: this.props.profileId
             })}>
               <Image source={{uri: this.state.profilePicture}} style={styles.profileImageStyle} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('UserProfile', {
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('UserProfileScreen', {
               userId: this.props.profileId
             })}>
               <Text style={styles.profileNameStyle}>{this.state.profileName}</Text>

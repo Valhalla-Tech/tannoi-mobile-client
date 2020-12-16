@@ -24,7 +24,7 @@ const SearchResultBox = props => {
   const renderUserList = itemData => {
     return (
       <TouchableOpacity onPress={() => {
-        navigation.navigate('UserProfile', {
+        navigation.navigate('UserProfileScreen', {
           userId: itemData.item.id
         });
       }} style={styles.userContainerStyle}>

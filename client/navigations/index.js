@@ -23,7 +23,7 @@ import VerificationNavigation from '../navigations/VerificationNavigation';
 import NewDiscussionScreen from '../screens/topicScreens/NewDiscussionScreen';
 import DiscussionScreen from '../screens/topicScreens/DiscussionScreen';
 import ResponseScreen from '../screens/topicScreens/ResponseScreen';
-import UserProfile from '../screens/meScreens/UserProfile';
+import UserProfileScreen from '../screens/meScreens/UserProfileScreen';
 import SearchScreen from '../screens/homeScreens/SearchScreen';
 import TopicDetailScreen from '../screens/topicScreens/TopicDetailScreen';
 
@@ -155,7 +155,7 @@ const NavigationIndex = () => {
             <Stack.Screen name="NewDiscussionScreen" component={NewDiscussionScreen} />
             <Stack.Screen name="DiscussionScreen" component={DiscussionScreen} />
             <Stack.Screen name="ResponseScreen" component={ResponseScreen} />
-            <Stack.Screen name="UserProfile" component={UserProfile} />
+            <Stack.Screen name="UserProfileScreen" component={UserProfileScreen} />
             <Stack.Screen name="VerificationNavigation" component={VerificationNavigation} />
             <Stack.Screen 
               name="SearchScreen" 

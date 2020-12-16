@@ -194,14 +194,14 @@ const DiscussionScreenCard = props => {
         <View>
           <View style={styles.profileContainerStyle}>
             <TouchableOpacity onPress={() => {
-                navigation.navigate('UserProfile', {
+                navigation.navigate('UserProfileScreen', {
                   userId: profileId
                 });
             }}>
               <Image source={{uri: profilePicture}} style={styles.profileImageStyle} />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => {
-                navigation.navigate('UserProfile', {
+                navigation.navigate('UserProfileScreen', {
                   userId: profileId
                 });
             }}>

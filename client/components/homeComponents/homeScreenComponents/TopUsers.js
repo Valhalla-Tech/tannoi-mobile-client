@@ -40,7 +40,7 @@ const TopUsers = props => {
             keyExtractor={(item, index) => index.toString()}
             renderItem={itemData => (
               <TouchableOpacity style={styles.topUsersCardConntainerStyle} onPress={() => {
-                navigation.navigate('UserProfile', {
+                navigation.navigate('UserProfileScreen', {
                   userId: itemData.item.id
                 });
               }}>
