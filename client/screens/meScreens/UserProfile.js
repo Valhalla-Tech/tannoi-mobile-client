@@ -4,12 +4,12 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  Image
+  FlatList
 } from 'react-native';
 import { bold, normal } from '../../assets/FontSize';
-import NoProfilePicture from '../../assets/publicAssets/noProfilePicture.png';
 import { useSelector, useDispatch } from 'react-redux';
 import { getOneProfile } from '../../store/actions/ProfileAction';
+import { getUserDiscussion } from '../../store/actions/DiscussionAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
@@ -18,27 +18,24 @@ import { getHome, clearHome } from '../../store/actions/HomeAction';
 
 //Components
 import BackButton from '../../components/publicComponents/BackButton';
+import ProfileData from '../../components/meComponents/ProfileData';
+import List from '../../components/publicComponents/List';
+import NoticeModal from '../../components/publicComponents/Modal';
+import Card from '../../components/publicComponents/Card';
 
 const UserProfile = ({route, navigation}) => {
   const { userId } = route.params;
+
+  const [selectedMenu, setSelectedMenu] = useState('Discussions');
+  const [noticeModal, setNoticeModal] = useState(false);
+
+  const userDiscussion = useSelector(state => state.DiscussionReducer.userDiscussion);
 
   const dispatch = useDispatch();
 
   const followingUserId = useSelector(state => state.HomeReducer.user.id);
 
   const profile = useSelector(state => state.ProfileReducer.userProfile);
-
-  const numberConverter = number => {
-    if (number.length > 3 && number.length <= 6) {
-      return `${number.substring(0, number.length - 3)}k`;
-    } else if (number.length > 6 && number.length <= 9) {
-      return `${number.substring(0, number.length - 6)}m`;
-    } else if (number.length > 9) {
-      return `${number.substring(0, number.length - 9)}b`;
-    } else {
-      return number
-    };
-  };
 
   const followAccount = async () => {
     try {
@@ -89,15 +86,66 @@ const UserProfile = ({route, navigation}) => {
     }
   };
 
+  const openModal = () => {
+    setNoticeModal(true);
+  };
+
+  const closeModal = () => {
+    setNoticeModal(false);
+  };
+
   useEffect(() => {
     dispatch(getOneProfile(userId));
     dispatch(clearHome());
     dispatch(getHome());
-  }, [])
+    dispatch(getUserDiscussion(userId));
+  }, []);
+
+  const selectMenu = menu => {
+    setSelectedMenu(menu);
+  };
+
+  const noticeModalChild = () => {
+    return <Text style={styles.noticeModalTextStyle}>You don't have access to this discussion</Text>
+  };
+  
+  console.log(profile)
+  const AboutData = (title, data) => {
+    return (
+      <View style={styles.aboutDataStyle}>
+        <View style={styles.aboutDataIconStyle}>
+
+        </View>
+        <View>
+          <Text style={styles.dataTextStyle}>{data}</Text>
+          <Text style={styles.dataTitleStyle}>{title}</Text>
+        </View>
+      </View>
+    );
+  };
+
+  const AboutSection = () => {
+    return (
+      <View style={styles.aboutSectionStyle}>
+        {AboutData('Bio',profile.bio ? profile.bio : '-')}
+        {AboutData('Gender', profile.gender ? profile.gender : '-')}
+        {AboutData('Birthday', displayBirthDate(new Date(profile.birth_date)))}
+      </View>
+    );
+  };
+
+  const displayBirthDate = (date) => {
+    let birthDate = date.toDateString().split(' ').slice(1, 4);
+    if (birthDate[1][0] === '0') {
+      birthDate[1] = birthDate[1][1];
+    };
+    let birthDateDisplay = `${birthDate[1]} ${birthDate[0]} ${birthDate[2]}`;
+    return birthDateDisplay;
+  };
 
   return (
     <View style={styles.userProfileScreenContainerStyle}>
-      <View style={styles.userProfileStyle}>
+      <View style={styles.userProfileHeaderStyle}>
         <View style={styles.headerStyle}>
           <BackButton
             navigation={navigation}
@@ -115,30 +163,32 @@ const UserProfile = ({route, navigation}) => {
             )
           }
         </View>
-        <View style={styles.profileInfoContainerStyle}>
-          <View>
-            <Text style={styles.profileNameStyle}>{profile.name}</Text>
-            <Text style={styles.locationStyle}>{profile.location}</Text>
-            <View style={styles.profileInfoStyle}>
-              <View style={styles.profileDataContainerStyle}>
-                <Text style={styles.profileDataStyle}>Discussions</Text>
-                <Text style={styles.profileDataNumberStyle}>{profile.discussions && numberConverter(profile.discussions.length)}</Text>
-              </View>
-              <View style={styles.profileDataContainerStyle}>
-                <Text style={styles.profileDataStyle}>Responses</Text>
-                <Text style={styles.profileDataNumberStyle}>{profile.creator && numberConverter(profile.creator.length)}</Text>
-              </View>
-              <View style={styles.profileDataContainerStyle}>
-                <Text style={styles.profileDataStyle}>Followers</Text>
-                <Text style={styles.profileDataNumberStyle}>{profile.followers && numberConverter(profile.followers.length)}</Text>
-              </View>
-            </View>
-          </View>
-          <View style={styles.profileImageContainerStyle}>
-            <Image source={profile.profile_photo_path ? { uri: profile.profile_photo_path } : NoProfilePicture} style={styles.profileImageStyle} />
-          </View>
-        </View>
       </View>
+      <ProfileData
+        profile={profile}
+        selectMenu={selectMenu}
+        selectedMenu={selectedMenu}
+      />
+      <FlatList
+        ListHeaderComponent={
+          selectedMenu === 'Discussions' ?
+          <List
+            isHeader={false}
+            navigation={navigation}
+            isUsingMoreButton={false}
+            listData={userDiscussion}
+            openModal={openModal}
+          /> : <Card
+            child={selectedMenu === 'About' ? AboutSection : null}
+            customStyle={styles.cardStyle}
+          />
+        }
+      />
+       <NoticeModal 
+        openModal={noticeModal}
+        closeModal={closeModal}
+        child={noticeModalChild}
+      />
     </View>
   );
 };
@@ -148,9 +198,15 @@ const styles = StyleSheet.create({
     flex: 1
   },
 
+  userProfileHeaderStyle: {
+    backgroundColor: "#FFFFFF",
+    paddingLeft: "3.5%",
+    paddingRight: "5%"
+  },
+
   userProfileStyle: {
     backgroundColor: "#FFFFFF",
-    height: "35%",
+    height: "25%",
     paddingLeft: "3.5%",
     paddingRight: "5%"
   },
@@ -214,6 +270,66 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     height: 80,
     width: 80
+  },
+
+  profileInfoMenuContainerStyle: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#FFFFFF"
+  },
+
+  profileInfoMenuButtonStyle: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: "3%"
+  },
+  
+  profileInfoMenutButtonTextStyle: {
+    color: "#464D60",
+    fontFamily: normal,
+    fontSize: 16
+  },
+
+  noticeModalTextStyle: {
+    fontFamily: bold,
+    color: "#6505E1"
+  },
+
+  cardStyle: {
+    marginHorizontal: "1.8%",
+    marginTop: "2%",
+    borderRadius: 8
+  },
+
+  aboutDataStyle: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: "2%",
+    paddingVertical: "3%",
+    borderBottomWidth: 1,
+    borderBottomColor: "#F5F7F9"
+  },
+
+  aboutDataIconStyle: {
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+    marginRight: "3%",
+    backgroundColor: "#F5F7F9"
+  },
+
+  dataTextStyle: {
+    fontFamily: normal,
+    color: "#464D60",
+    fontSize: 16
+  },
+
+  dataTitleStyle: {
+    fontFamily: normal,
+    fontSize: 12,
+    color: "#73798C"
   }
 });
 
