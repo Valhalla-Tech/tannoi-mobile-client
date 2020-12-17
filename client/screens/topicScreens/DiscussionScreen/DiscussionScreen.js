@@ -15,7 +15,7 @@ import { getResponse, clearResponse } from '../../../store/actions/ResponseActio
 import BackButton from '../../../components/publicComponents/BackButton';
 import DiscussionScreenDiscussionCard from '../../../components/topicComponents/discussionScreenComponents/DiscussionScreenDiscussionCard';
 import DiscussionScreenPlayerCard from '../../../components/topicComponents/discussionScreenComponents/DiscussionScreenPlayerCard';
-import AddResponse from '../../../components/topicComponents/discussionScreenComponents/AddResponse';
+import AddResponse from '../../../components/publicComponents/RecorderModal';
 import ClosedCard from '../../../components/topicComponents/discussionScreenComponents/ClosedCard';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 
@@ -168,8 +168,8 @@ const DiscussionScreen = ({ route, navigation }) => {
               )
             }
             <AddResponse
-              openAddResponseModal={openAddResponseModal}
-              closeAddResponseModal={closeAddResponseModal}
+              openModal={openAddResponseModal}
+              closeModal={closeAddResponseModal}
               discussionId={discussionId}
               addResponseForResponse={false}
             />

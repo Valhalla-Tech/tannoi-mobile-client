@@ -17,6 +17,7 @@ import { bold, normal } from '../../../assets/FontSize';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
+import DisplayBirthDate from '../../../helper/DisplayBirthDate';
 
 //Icon
 import NoProfileIcon from '../../../assets/accountAssets/EnterYourProfileScreen/noProfileIcon.svg';
@@ -108,11 +109,7 @@ const EnterYourProfileScreen = ({ navigation }) => {
     setBirthDate(inputDate);
     setCurrentDate(inputDate);
     if (selectedDate !== undefined) {
-      let selectedBirthDate = selectedDate.toDateString().split(' ').slice(1, 4);
-      if (selectedBirthDate[1][0] === '0') {
-        selectedBirthDate[1] = selectedBirthDate[1][1];
-      };
-      let birthDateDisplay = `${selectedBirthDate[1]} ${selectedBirthDate[0]} ${selectedBirthDate[2]}`;
+      let birthDateDisplay = DisplayBirthDate(new Date(selectedDate));
       setBirthDateDisplay(birthDateDisplay);
     }
   };

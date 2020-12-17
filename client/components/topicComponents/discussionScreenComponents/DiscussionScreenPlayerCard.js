@@ -37,7 +37,7 @@ import ActiveDownvote from '../../../assets/topicAssets/activeDownvote.svg';
 import TickIcon from '../../../assets/publicAssets/tickIcon.png';
 
 //Components
-import AddResponse from '../../../components/topicComponents/discussionScreenComponents/AddResponse';
+import AddResponse from '../../publicComponents/RecorderModal';
 import OptionButton from '../../../components/topicComponents/discussionScreenComponents/OptionButton';
 
 class DiscussionScreenPlayerCard extends Component {
@@ -582,8 +582,8 @@ class DiscussionScreenPlayerCard extends Component {
           )
         }
         <AddResponse
-          openAddResponseModal={this.state.openAddResponseModal}
-          closeAddResponseModal={this.closeAddResponseModal}
+          openModal={this.state.openAddResponseModal}
+          closeModal={this.closeAddResponseModal}
           discussionId={this.state.discussionId}
           addResponseForResponse={true}
           responseId={this.state.responseId}

@@ -16,7 +16,7 @@ import VerificationScreenImage from '../../../assets/verificationAssets/verifica
 
 //Components
 import BigButton from '../../../components/publicComponents/BigButton';
-import Recorder from '../../../components/topicComponents/Recorder';
+import Recorder from '../../../components/publicComponents/Recorder';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 import StepCount from '../../../components/verificationComponent/StepCount';

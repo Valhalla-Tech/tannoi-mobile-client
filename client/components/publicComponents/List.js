@@ -21,7 +21,8 @@ const HomeList = props => {
     openModal,
     isFilter,
     isUsingMoreButton,
-    isHeader = true
+    isHeader = true,
+    customStyle
   } = props;
 
   const MoreButton = () => {

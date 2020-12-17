@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import {
-  TouchableOpacity
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Text
 } from 'react-native';
 import {
   Player
@@ -10,6 +13,7 @@ import { connect } from 'react-redux';
 import { getHome } from '../../store/actions/HomeAction';
 import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
+import Slider from '@react-native-community/slider';
 
 //Icons
 import ActivePlayButton from '../../assets/homeAssets/activePlayButton.svg';
@@ -24,13 +28,27 @@ class HomeListPlayerCard extends Component {
 
     this.state = {
       isPlaying: false,
-      playerIsReady: false
+      playerIsReady: false,
+      // recordingFile: this.props.recordingFile
     };
   };
 
   componentDidMount() {
     this.player = null;
     this.loadPlayer();
+  };
+
+  static getDerivedStateFromProps(props, state) {
+    // Re-run the filter whenever the list array or filter text change.
+    // Note we need to store prevPropsList and prevFilterText to detect changes.
+    if (props.recordingFile !== state.prevRecordingFile) {
+      return {
+        savedPrevRecordingFile: state.prevRecordingFile === undefined ? props.recordingFile : state.prevRecordingFile,
+        prevRecordingFile: props.recordingFile,
+        recordingFile: props.recordingFile
+      }
+    }
+    return null;
   };
 
   updateState() {
@@ -65,7 +83,7 @@ class HomeListPlayerCard extends Component {
       this.player.destroy();
     };
 
-    this.player = new Player(this.props.recordingFile, {
+    this.player = new Player(this.state.recordingFile, {
       autoDestroy: false
     }).prepare((error) => {
       if (error) {
@@ -84,37 +102,64 @@ class HomeListPlayerCard extends Component {
   };
 
   playRecording = () => {
-    this.player.playPause((error) => {
-      if (error) {
-        console.log(error);
-      };
-
-      if (this.player.isPlaying && !error && !this.player.isPaused) {
-        this.playCounter();
-      };
-
-      this.updateState();
-    })
+    if (this.state.recordingFile !== this.state.savedPrevRecordingFile) {
+      this.setState({
+        savedPrevRecordingFile: this.state.prevRecordingFile
+      });
+      this.loadPlayer();
+    } else {
+      this.player.playPause((error) => {
+        if (error) {
+          console.log(error);
+        };
+  
+        if (this.player.isPlaying && !error && !this.player.isPaused && !this.props.fromBio) {
+          this.playCounter();
+        };
+  
+        this.updateState();
+      })
+    }
   };
 
   render() {
     return (
-      <TouchableOpacity onPress={() => this.playRecording()}>
-        {
-          this.state.playerIsReady ? (
-            this.state.isPlaying ? (
-              <PauseButton />
+      <View style={styles.playerContainerStyle}>
+        <TouchableOpacity onPress={() => this.playRecording()}>
+          {
+            this.state.playerIsReady ? (
+              this.state.isPlaying ? (
+                <PauseButton />
+              ) : (
+                <ActivePlayButton />
+              ) 
             ) : (
-              <ActivePlayButton />
-            ) 
-          ) : (
-            <LoadingSpinner loadingSpinnerForComponent={true} />
+              <LoadingSpinner loadingSpinnerForComponent={true} />
+            )
+          }
+        </TouchableOpacity>
+        {
+          this.props.isSlider && (
+            <Slider
+              style={styles.sliderStyle}
+              disabled={this.props.recordingFile ? false : true}
+            />
           )
         }
-      </TouchableOpacity>
+      </View>
     )
   };
 };
+
+const styles = StyleSheet.create({
+  playerContainerStyle: {
+    flexDirection: "row"
+  },
+
+  sliderStyle: {
+    width: "90%"
+  }
+});
 
 const dispatchUpdate = () => {
   return {

@@ -53,7 +53,7 @@ const MeScreen = ({ navigation }) => {
   const HeaderContent = () => {
     return (
       <View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('SettingsScreen')}>
           <Text style={styles.settingButtonStyle}>Settings</Text>
         </TouchableOpacity>
       </View>
