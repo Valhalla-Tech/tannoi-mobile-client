@@ -5,6 +5,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { ScreenHeight } from '../../constants/Size';
 
 //Icons
 import HomeIcon from '../../assets/homeAssets/homeIcon.svg';
@@ -24,6 +25,10 @@ import MeNavigation from '../../navigations/MeNavigation';
 
 //Screen
 import NewDiscussionScreen from '../../screens/topicScreens/NewDiscussionScreen';
+
+const calculateHeight = (input) => {
+  return input / 100 * ScreenHeight;
+};
 
 const Tab = createBottomTabNavigator();
 
@@ -112,7 +117,7 @@ const NavigationBar = props => {
                 alignItems: "center", 
                 marginBottom: "35%", 
                 borderWidth: 10,
-                height: "280%",
+                height: calculateHeight(10),
                 width: "60%",
                 borderRadius: 30,
                 backgroundColor: "#2B085C",
