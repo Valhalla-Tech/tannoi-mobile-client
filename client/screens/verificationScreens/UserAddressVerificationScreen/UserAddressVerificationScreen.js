@@ -6,7 +6,8 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
-  ScrollView
+  ScrollView,
+  Image
 } from 'react-native';
 import { Picker } from '@react-native-community/picker';
 import { bold, normal } from '../../../assets/FontSize';
@@ -14,14 +15,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import { inputUserAddress, addStepCount } from '../../../store/actions/VerificationAction';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import axios from '../../../constants/ApiServices';
+import { ScreenHeight } from '../../../constants/Size';
 
 //Image
-import VerificationScreenImage from '../../../assets/verificationAssets/verificationScreenImage.svg';
+import ScreenImage from '../../../assets/verificationAssets/Illustration-Tannoi-Apps-03.png';
 
 //Components
 import BigButton from '../../../components/publicComponents/BigButton';
 import FormInput from '../../../components/publicComponents/FormInput';
 import StepCount from '../../../components/verificationComponent/StepCount';
+
+const calculateHeight = input => {
+  return input / 100 * ScreenHeight;
+};
 
 const UserAddressVerificationScreen = ({ navigation }) => {
   const streetFromStore = useSelector(state => state.VerificationReducer.street);
@@ -146,7 +152,8 @@ const UserAddressVerificationScreen = ({ navigation }) => {
               </View>
               <StepCount />
               <View style={styles.imageContainerStyle}>
-                <VerificationScreenImage />
+                {/* <VerificationScreenImage /> */}
+                <Image source={ScreenImage} style={styles.imageStyle} />
               </View>
               <View>
                 <Text style={styles.boldTextStyle}>We ask for your address to know that you are serious</Text>
@@ -180,8 +187,7 @@ const styles = StyleSheet.create({
   userAddressVerificationScreenContainerStyle: {
     padding: "5%",
     flex: 1,
-    justifyContent: "space-between",
-    marginBottom: "20%"
+    justifyContent: "space-between"
   },
 
   backButtonTextStyle: {
@@ -191,7 +197,16 @@ const styles = StyleSheet.create({
   },
 
   imageContainerStyle: {
-    alignItems: "center"
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: "30%",
+    maxHeight: calculateHeight(35)
+  },
+
+  imageStyle: {
+    resizeMode: "stretch",
+    width: "65%",
+    height: "100%"
   },
 
   boldTextStyle: {
@@ -210,7 +225,7 @@ const styles = StyleSheet.create({
 
   formContainerStyle: {
     justifyContent: "space-between",
-    height: "38%",
+    height: calculateHeight(45),
     marginTop: "10%",
     marginBottom: "12.5%"
   },

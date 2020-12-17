@@ -18,6 +18,7 @@ import ProfileData from '../../../components/meComponents/ProfileData';
 import List from '../../../components/publicComponents/List';
 import NoticeModal from '../../../components/publicComponents/Modal';
 import Card from '../../../components/publicComponents/Card';
+import ListCardPlayer from '../../../components/publicComponents/ListCardPlayer';
 
 const MeScreen = ({ navigation }) => {
   const [selectedMenu, setSelectedMenu] = useState('Discussions');
@@ -67,10 +68,19 @@ const MeScreen = ({ navigation }) => {
   const AboutData = (title, data) => {
     return (
       <View style={styles.aboutDataStyle}>
-        <View style={styles.aboutDataIconStyle}>
+        {
+          title === 'Bio' && userProfile.bio_user_profile !== null ? (
+            <ListCardPlayer
+              recordingFile={userProfile.bio_voice_path}
+              fromBio={true}
+            />
+          ) : (
+            <View style={styles.aboutDataIconStyle}>
 
-        </View>
-        <View>
+            </View>
+          )
+        }
+        <View style={styles.dataContentStyle}>
           <Text style={styles.dataTextStyle}>{data}</Text>
           <Text style={styles.dataTitleStyle}>{title}</Text>
         </View>
@@ -162,8 +172,11 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 50,
-    marginRight: "3%",
     backgroundColor: "#F5F7F9"
+  },
+
+  dataContentStyle: {
+    marginLeft: "5%"
   },
 
   dataTextStyle: {
