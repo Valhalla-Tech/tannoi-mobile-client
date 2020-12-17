@@ -116,7 +116,7 @@ const VoiceVerificationScreen = ({ navigation }) => {
   };
 
   return (
-    <View>
+    <>
      {isLoading && <LoadingSpinner />}
       <View style={styles.voiceVerificationScreenContainerStyle}>
         <View>
@@ -127,7 +127,6 @@ const VoiceVerificationScreen = ({ navigation }) => {
           </View>
           <StepCount />
           <View style={styles.imageContainerStyle}>
-            {/* <VerificationScreenImage /> */}
             <Image source={ScreenImage} style={styles.imageStyle} />
           </View>
           <View style={styles.textContainerStyle}>
@@ -155,7 +154,7 @@ const VoiceVerificationScreen = ({ navigation }) => {
           buttonFunction={nextScreen}
         />
       </View>
-    </View>
+    </>
   );
 };
 
@@ -163,7 +162,7 @@ const styles = StyleSheet.create({
   voiceVerificationScreenContainerStyle: {
     padding: "5%",
     justifyContent: "space-between",
-    height: "100%"
+    flex: 1
   },
 
   backButtonTextStyle: {
@@ -189,7 +188,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: bold,
     fontSize: 20,
-    padding: "5%",
     paddingBottom: -1.5
   },
 
@@ -202,7 +200,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: bold,
     fontSize: 36,
-    marginBottom: -20
+    marginBottom: -30
   }
 });
 
