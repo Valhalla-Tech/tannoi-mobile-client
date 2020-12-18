@@ -159,8 +159,8 @@ class DiscussionScreenPlayerCard extends Component {
 
       if (this.player.isPlaying && !error && !this.state.isPaused) {
         this.playCounter(this.state.responseId ? true : false);
-        this.props.clearHome();
-        this.props.getHome();
+        // this.props.clearHome();
+        // this.props.getHome();
       };
 
       if (this.player.isPlaying && !error) {

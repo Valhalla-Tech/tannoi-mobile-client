@@ -79,7 +79,7 @@ class HomeListPlayerCard extends Component {
       })
 
       if (playCounterRequest.data) {
-        this.props.getHome();
+        // this.props.getHome();
       }
     } catch (error) {
       console.log(error);

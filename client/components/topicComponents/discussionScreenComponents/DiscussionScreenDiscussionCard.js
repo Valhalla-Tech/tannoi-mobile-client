@@ -116,8 +116,8 @@ const DiscussionScreenCard = props => {
   
         if (upvoteRequest.data) {
           dispatch(getDiscussion(discussionId));
-          dispatch(clearHome());
-          dispatch(getHome());
+          // dispatch(clearHome());
+          // dispatch(getHome());
         }
       } else {
         navigation.navigate('VerificationNavigation')
@@ -142,8 +142,8 @@ const DiscussionScreenCard = props => {
   
         if (downvoteRequest.data) {
           dispatch(getDiscussion(discussionId));
-          dispatch(clearHome());
-          dispatch(getHome());
+          // dispatch(clearHome());
+          // dispatch(getHome());
         }
       } else {
         navigation.navigate('VerificationNavigation');

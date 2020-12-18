@@ -120,8 +120,8 @@ const RecorderModal = props => {
             dispatch(getSingleResponse(responseId, 'getDataForResponse'));
             dispatch(getSingleResponse(responseScreenResponseId));
           };
-          dispatch(clearHome());
-          dispatch(getHome());
+          // dispatch(clearHome());
+          // dispatch(getHome());
           dispatch(getDiscussion(discussionId));
           setRecordingFile('');
           setCaption('');
