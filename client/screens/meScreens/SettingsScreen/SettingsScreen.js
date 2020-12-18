@@ -56,8 +56,10 @@ const SettingsScreen = ({ navigation }) => {
           <Text style={styles.menuHeaderTextStyle}>Account</Text>
         </View>
         {MenuButton('Edit profile', null, 'EditProfileScreen')}
+        {/*
         {MenuButton('Change password')}
         {MenuButton('Log in options', null, null, true)}
+        */}
       </View>
     );
   };
@@ -83,7 +85,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: "2.5%",
+    paddingLeft: "2.5%",
+    paddingRight: "5%",
     paddingVertical: "3%"
   },
 
@@ -106,7 +109,7 @@ const styles = StyleSheet.create({
 
   logOutButtonTextStyle: {
     fontFamily: bold,
-    color: "#73798C",
+    color: "#0E4EF4",
     fontSize: 16
   },
 
@@ -115,6 +118,7 @@ const styles = StyleSheet.create({
   },
 
   cardHeaderStyle: {
+    paddingTop: "3%",
     paddingHorizontal: "5%"
   },
 

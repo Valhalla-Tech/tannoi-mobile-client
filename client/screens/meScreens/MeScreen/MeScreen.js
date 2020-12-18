@@ -136,7 +136,7 @@ const MeScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   meScreenContainerStyle: {
-    flex: 1
+    flex: 1,
   },
 
   headerStyle: {

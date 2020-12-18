@@ -200,7 +200,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     minHeight: "30%",
-    maxHeight: calculateHeight(30)
+    maxHeight: calculateHeight(35),
+    marginTop: "5%"
   },
 
   imageStyle: {

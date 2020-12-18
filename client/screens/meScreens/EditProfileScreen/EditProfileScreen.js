@@ -213,7 +213,7 @@ const EditProfileScreen = ({ navigation }) => {
         <View style={styles.recordBioContainerStyle}>
           <Text style={styles.inputTitleStyle}>Audio bio</Text>
           <TouchableOpacity onPress={() => setRecordingModal(true)}>
-            <Text style={styles.inputTitleStyle}>Record new audio bio</Text>
+            <Text style={styles.recordBioTextStyle}>Record new audio bio</Text>
           </TouchableOpacity>
         </View>
         {
@@ -398,6 +398,12 @@ const styles = StyleSheet.create({
 
   inputTitleStyle: {
     color: "#73798C",
+    fontSize: 14,
+    fontFamily: normal
+  },
+
+  recordBioTextStyle: {
+    color: "#0E4EF4",
     fontSize: 14,
     fontFamily: normal
   },
