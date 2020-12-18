@@ -25,7 +25,7 @@ import NoticeModal from '../../../components/publicComponents/Modal';
 import Card from '../../../components/publicComponents/Card';
 
 const UserProfileScreen = ({route, navigation}) => {
-  const { userId } = route.params;
+  const { userId, fromDeepLink } = route.params;
 
   const [selectedMenu, setSelectedMenu] = useState('Discussions');
   const [noticeModal, setNoticeModal] = useState(false);
@@ -42,8 +42,10 @@ const UserProfileScreen = ({route, navigation}) => {
     dispatch(clearUserProfile());
     dispatch(clearDiscussion(true));
     dispatch(getOneProfile(userId));
-    dispatch(clearHome());
-    dispatch(getHome());
+    if (fromDeepLink) {
+      dispatch(clearHome());
+      dispatch(getHome());
+    }
     dispatch(getUserDiscussion(userId));
 
     return () => {
@@ -63,7 +65,7 @@ const UserProfileScreen = ({route, navigation}) => {
         contentMetadata: {
           ratingAverage: 4.2,
           customMetadata: {
-            screen: 'UserProfile',
+            screen: 'UserProfileScreen',
             payload: JSON.stringify({
               userId: followingUserId
             })

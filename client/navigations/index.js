@@ -118,7 +118,11 @@ const NavigationIndex = () => {
         }
       
         if (params.screen !== undefined && getToken) {
-          navigation.push(params.screen, JSON.parse(params.payload));
+          let payload = JSON.parse(params.payload);
+          if (params.screen === 'UserProfileScreen') {
+            payload = {...payload, fromDeepLink: true};
+          }
+          navigation.push(params.screen, payload);
         }
       })
     } catch (err) {
