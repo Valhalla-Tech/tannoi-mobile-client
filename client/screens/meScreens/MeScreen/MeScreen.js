@@ -8,8 +8,8 @@ import {
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
 import { useSelector, useDispatch } from 'react-redux';
-import { getOneProfile } from '../../../store/actions/ProfileAction';
-import { getUserDiscussion } from '../../../store/actions/DiscussionAction';
+import { getOneProfile, clearUserProfile } from '../../../store/actions/ProfileAction';
+import { getUserDiscussion, clearDiscussion } from '../../../store/actions/DiscussionAction';
 import DisplayBirthDate from '../../../helper/DisplayBirthDate';
 
 //Components
@@ -32,12 +32,14 @@ const MeScreen = ({ navigation }) => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
+      dispatch(clearUserProfile());
+      dispatch(clearDiscussion(true));
       dispatch(getOneProfile());
       dispatch(getUserDiscussion(userId));
     });
 
     return unsubscribe;
-  }, [navigation]);
+  }, [navigation, userDiscussion.birth_date]);
 
   const selectMenu = (menu) => {
     setSelectedMenu(menu);
@@ -69,7 +71,7 @@ const MeScreen = ({ navigation }) => {
     return (
       <View style={styles.aboutDataStyle}>
         {
-          title === 'Bio' && userProfile.bio_user_profile !== null ? (
+          title === 'Bio' && userProfile.bio_voice_path !== null ? (
             <ListCardPlayer
               recordingFile={userProfile.bio_voice_path}
               fromBio={true}
@@ -93,7 +95,9 @@ const MeScreen = ({ navigation }) => {
       <View>
         {AboutData('Bio',userProfile.bio ? userProfile.bio : '-')}
         {AboutData('Gender', userProfile.gender ? userProfile.gender : '-')}
-        {AboutData('Birthday', DisplayBirthDate(new Date(userProfile.birth_date)))}
+        {
+          AboutData('Birthday', userProfile.birth_date !== '' && userProfile.birth_date !== null && userProfile.length !== 0 ?  DisplayBirthDate(new Date(userProfile.birth_date)) : '-')
+        }
       </View>
     );
   };

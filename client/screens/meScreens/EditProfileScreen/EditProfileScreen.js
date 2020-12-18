@@ -53,7 +53,7 @@ const EditProfileScreen = ({ navigation }) => {
 
   useEffect(() => {
     dispatch(getOneProfile());
-  }, []);
+  }, [userProfile]);
 
   const gender = [
     { name: 'Male', value: 'Male' },
@@ -334,8 +334,8 @@ const EditProfileScreen = ({ navigation }) => {
               child={EditProfileForm}
               customStyle={styles.cardStyle}
             />
-            {isLoading && <LoadingSpinner />}
           </View>
+          {isLoading && <LoadingSpinner />}
         </ScrollView>
       </View>
     </TouchableWithoutFeedback>
@@ -359,8 +359,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: "1.8%",
     paddingTop: "2%",
     paddingBottom: "2%"
-    // justifyContent: "space-between",
-    // minHeight: "75.5%"
   },
 
   titleTextStyle: {

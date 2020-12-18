@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     marginBottom: "3.5%",
     borderRadius: 8,
     paddingBottom: "6.5%",
-    marginHorizontal: "1.8%"
+    marginHorizontal: "1.8%",
   },
 
   moreButtonContainerStyle: {

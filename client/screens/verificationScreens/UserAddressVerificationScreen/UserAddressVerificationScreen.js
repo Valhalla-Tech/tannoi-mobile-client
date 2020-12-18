@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
 
   formContainerStyle: {
     justifyContent: "space-between",
-    height: calculateHeight(45),
+    height: calculateHeight(39),
     marginTop: "10%",
     marginBottom: "12.5%"
   },

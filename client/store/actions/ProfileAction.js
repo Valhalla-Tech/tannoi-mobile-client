@@ -36,3 +36,11 @@ export const getOneProfile = (id) => {
     }
   };
 };
+
+export const clearUserProfile = () => {
+  return (dispatch) => {
+    dispatch({
+      type: 'CLEAR_USER_PROFILE'
+    });
+  };
+};

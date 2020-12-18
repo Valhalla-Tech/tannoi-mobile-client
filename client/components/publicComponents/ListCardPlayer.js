@@ -29,18 +29,17 @@ class HomeListPlayerCard extends Component {
     this.state = {
       isPlaying: false,
       playerIsReady: false,
-      // recordingFile: this.props.recordingFile
+      progress: 0
     };
   };
 
   componentDidMount() {
     this.player = null;
     this.loadPlayer();
+    this.lastSeek = 0;
   };
 
   static getDerivedStateFromProps(props, state) {
-    // Re-run the filter whenever the list array or filter text change.
-    // Note we need to store prevPropsList and prevFilterText to detect changes.
     if (props.recordingFile !== state.prevRecordingFile) {
       return {
         savedPrevRecordingFile: state.prevRecordingFile === undefined ? props.recordingFile : state.prevRecordingFile,
@@ -112,6 +111,23 @@ class HomeListPlayerCard extends Component {
         if (error) {
           console.log(error);
         };
+
+        if (this.player.isPlaying && !error) {
+          this.progressInterval = setInterval(() => {
+            if (this.player && this.shouldUpdateProgressBar()) {
+              let currentProgress = Math.max(0, this.player.currentTime) / this.player.duration;
+              if (isNaN(currentProgress)) {
+                currentProgress = 0;
+              };
+    
+              if (!this.player.isPlaying) {
+                this.stopProgressInterval();
+              };
+    
+              this.setState({ progress: currentProgress });
+            }
+          }, 100);
+        };
   
         if (this.player.isPlaying && !error && !this.player.isPaused && !this.props.fromBio) {
           this.playCounter();
@@ -120,6 +136,28 @@ class HomeListPlayerCard extends Component {
         this.updateState();
       })
     }
+  };
+
+  shouldUpdateProgressBar() {
+    return Date.now() - this.lastSeek > 200;
+  };
+
+  stopProgressInterval = () => {
+    clearInterval(this.progressInterval);
+  };
+
+  seek(percentage) {
+    if (!this.player) {
+      return;
+    }
+
+    this.lastSeek = Date.now();
+
+    let position = percentage * this.player.duration;
+
+    this.player.seek(position, () => {
+      this.updateState();
+    });
   };
 
   render() {
@@ -141,8 +179,11 @@ class HomeListPlayerCard extends Component {
         {
           this.props.isSlider && (
             <Slider
+              step={0.0001} 
               style={styles.sliderStyle}
               disabled={this.props.recordingFile ? false : true}
+              onValueChange={(percentage) => this.seek(percentage)}
+              value={this.state.progress}
             />
           )
         }

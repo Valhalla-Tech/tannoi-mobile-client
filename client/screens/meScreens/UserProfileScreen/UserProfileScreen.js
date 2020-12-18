@@ -8,8 +8,8 @@ import {
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
 import { useSelector, useDispatch } from 'react-redux';
-import { getOneProfile } from '../../../store/actions/ProfileAction';
-import { getUserDiscussion } from '../../../store/actions/DiscussionAction';
+import { getOneProfile, clearUserProfile } from '../../../store/actions/ProfileAction';
+import { getUserDiscussion, clearDiscussion } from '../../../store/actions/DiscussionAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
@@ -43,6 +43,11 @@ const UserProfileScreen = ({route, navigation}) => {
     dispatch(clearHome());
     dispatch(getHome());
     dispatch(getUserDiscussion(userId));
+
+    return () => {
+      dispatch(clearUserProfile());
+      dispatch(clearDiscussion(true));
+    };
   }, []);
 
   const followAccount = async () => {
@@ -129,7 +134,7 @@ const UserProfileScreen = ({route, navigation}) => {
       <View>
         {AboutData('Bio',profile.bio ? profile.bio : '-')}
         {AboutData('Gender', profile.gender ? profile.gender : '-')}
-        {AboutData('Birthday', DisplayBirthDate(new Date(profile.birth_date)))}
+        {AboutData('Birthday', profile.birth_date !== '' && profile.birth_date !== null && profile.length !== 0 ?  DisplayBirthDate(new Date(profile.birth_date)) : '-')}
       </View>
     );
   };

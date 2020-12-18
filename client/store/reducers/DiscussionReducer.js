@@ -80,6 +80,8 @@ const reducer = (state = defaultState, action) => {
         isLike: '',
         isDislike: ''
       }
+    case 'CLEAR_USER_DISCUSSION':
+      return {...state, userDiscussion: []};
     default:
       return state;
   }
