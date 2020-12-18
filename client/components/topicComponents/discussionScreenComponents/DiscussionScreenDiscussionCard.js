@@ -220,7 +220,7 @@ const DiscussionScreenCard = props => {
           modalType="discussion"
         />
         {
-          discussionType === 2 && (
+          discussionType === 2 && userId === profileId && (
             <PrivateDiscussionModal
               openModal={privateModal}
               closeModal={closePrivateModal}
