@@ -39,6 +39,8 @@ const UserProfileScreen = ({route, navigation}) => {
   const profile = useSelector(state => state.ProfileReducer.userProfile);
 
   useEffect(() => {
+    dispatch(clearUserProfile());
+    dispatch(clearDiscussion(true));
     dispatch(getOneProfile(userId));
     dispatch(clearHome());
     dispatch(getHome());
