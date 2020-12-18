@@ -116,6 +116,7 @@ const HomeScreen = ({ navigation }) => {
             />
             <RecommendedTopics
               topicData={recommendedTopic}
+              navigation={navigation}
             />
           </View>
         }
