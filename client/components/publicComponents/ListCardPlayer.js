@@ -23,6 +23,8 @@ import PauseButton from '../../assets/homeAssets/pauseButton.svg';
 import LoadingSpinner from './LoadingSpinner';
 
 class HomeListPlayerCard extends Component {
+  _isMounted = false;
+
   constructor(props) {
     super(props);
 
@@ -34,9 +36,14 @@ class HomeListPlayerCard extends Component {
   };
 
   componentDidMount() {
+    this._isMounted = true;
     this.player = null;
     this.loadPlayer();
     this.lastSeek = 0;
+  };
+
+  componentWillUnmount() {
+    this._isMounted = false;
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -51,10 +58,12 @@ class HomeListPlayerCard extends Component {
   };
 
   updateState() {
-    this.setState({
-      isPlaying: this.player.isPlaying ? true : false,
-      playerIsReady: this.player && this.player.canPlay
-    })
+    if (this._isMounted) {
+      this.setState({
+        isPlaying: this.player.isPlaying ? true : false,
+        playerIsReady: this.player && this.player.canPlay
+      })
+    }
   };
 
   playCounter = async () => {
@@ -101,7 +110,7 @@ class HomeListPlayerCard extends Component {
   };
 
   playRecording = () => {
-    if (this.state.recordingFile !== this.state.savedPrevRecordingFile) {
+    if (this.state.recordingFile !== this.state.savedPrevRecordingFile && this._isMounted) {
       this.setState({
         savedPrevRecordingFile: this.state.prevRecordingFile
       });
@@ -114,7 +123,7 @@ class HomeListPlayerCard extends Component {
 
         if (this.player.isPlaying && !error) {
           this.progressInterval = setInterval(() => {
-            if (this.player && this.shouldUpdateProgressBar()) {
+            if (this.player && this.shouldUpdateProgressBar() && this._isMounted) {
               let currentProgress = Math.max(0, this.player.currentTime) / this.player.duration;
               if (isNaN(currentProgress)) {
                 currentProgress = 0;
