@@ -15,7 +15,8 @@ const defaultState = {
   responseCount: '',
   type: '',
   userType: '',
-  discussions: []
+  discussions: [],
+  userDiscussion: []
 }
 
 const reducer = (state = defaultState, action) => {
@@ -59,6 +60,10 @@ const reducer = (state = defaultState, action) => {
         type: setType,
         userType: setUserType
       }
+    case 'GET_USER_DISCUSSION':
+      let setUserDiscussion = action.payload.userDiscussion;
+
+      return {...state, userDiscussion: setUserDiscussion};
     case 'CLEAR_DISCUSSION':
       return {
         ...state,
@@ -75,6 +80,8 @@ const reducer = (state = defaultState, action) => {
         isLike: '',
         isDislike: ''
       }
+    case 'CLEAR_USER_DISCUSSION':
+      return {...state, userDiscussion: []};
     default:
       return state;
   }

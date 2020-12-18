@@ -129,3 +129,11 @@ export const unfollowTopic = (topicId) => {
     }
   };
 };
+
+export const clearTopic = () => {
+  return (dispatch) => {
+    dispatch({
+      type: 'CLEAR_TOPIC'
+    });
+  };
+};

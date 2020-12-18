@@ -34,7 +34,7 @@ export const searchUser = (searchInput, initialSearch) => {
 
       };
     } catch (error) {
-      console.log(error);
+      console.log(error, '<');
       if (error.response.data.msg === 'You have to login first') {
         dispatch({
           type: 'LOGOUT',
@@ -86,7 +86,7 @@ export const getAuthorizedFollowers = (discussionId, searchInput, initialSearch)
 
       };
     } catch (error) {
-      console.log(error)
+      console.log(error, '<<')
       if (error.response.data.msg === 'You have to login first') {
         dispatch({
           type: 'LOGOUT',

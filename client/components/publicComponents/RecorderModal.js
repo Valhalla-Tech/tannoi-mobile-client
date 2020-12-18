@@ -8,39 +8,41 @@ import {
   TouchableWithoutFeedback,
   Keyboard
 } from 'react-native';
-import { bold } from '../../../assets/FontSize';
+import { bold } from '../../assets/FontSize';
 import { useDispatch } from 'react-redux';
-import { getHome, clearHome } from '../../../store/actions/HomeAction';
-import { getDiscussion } from '../../../store/actions/DiscussionAction';
-import { getResponse, getSingleResponse } from '../../../store/actions/ResponseAction';
-import { userLogout } from '../../../store/actions/LoginAction';
+import { getHome, clearHome } from '../../store/actions/HomeAction';
+import { getDiscussion } from '../../store/actions/DiscussionAction';
+import { getResponse, getSingleResponse } from '../../store/actions/ResponseAction';
+import { userLogout } from '../../store/actions/LoginAction';
 import AsyncStorage from '@react-native-community/async-storage';
-import axios from '../../../constants/ApiServices';
-import BaseUrl from '../../../constants/BaseUrl';
+import axios from '../../constants/ApiServices';
+import BaseUrl from '../../constants/BaseUrl';
 import branch from 'react-native-branch';
 
 //Components
-import FormInput from '../../publicComponents/FormInput';
-import Recorder from '../Recorder';
-import LoadingSpinner from '../../publicComponents/LoadingSpinner';
-import ErrorMessage from '../../publicComponents/ErrorMessage';
+import FormInput from './FormInput';
+import Recorder from './Recorder';
+import LoadingSpinner from './LoadingSpinner';
+import ErrorMessage from './ErrorMessage';
 
-const AddResponse = props => {
+const RecorderModal = props => {
   const [recordingFile, setRecordingFile] = useState('');
   const [caption, setCaption] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [addResponseValidation, setAddResponseValidation] = useState(false);
+  const [validation, setValidation] = useState(false);
 
   const dispatch = useDispatch();
 
   const {
-    openAddResponseModal,
-    closeAddResponseModal,
+    openModal,
+    closeModal,
     discussionId,
     responseId,
     addResponseForResponse,
     addResponseForResponseInResponseScreen,
-    responseScreenResponseId
+    responseScreenResponseId,
+    forBio,
+    setBioFile
   } = props;
 
   const createResponse = async () => {
@@ -49,7 +51,7 @@ const AddResponse = props => {
 
       if (caption === '') {
         setIsLoading(false);
-        setAddResponseValidation(true);
+        setValidation(true);
       } else {
         let access_token = await AsyncStorage.getItem('access_token');
   
@@ -109,7 +111,7 @@ const AddResponse = props => {
   
         if (createResponseRequest.data) {
           setIsLoading(false);
-          setAddResponseValidation(false);
+          setValidation(false);
           dispatch(getResponse(discussionId));
           if (addResponseForResponse) {
             if (!addResponseForResponseInResponseScreen) {
@@ -118,17 +120,17 @@ const AddResponse = props => {
             dispatch(getSingleResponse(responseId, 'getDataForResponse'));
             dispatch(getSingleResponse(responseScreenResponseId));
           };
-          dispatch(clearHome());
-          dispatch(getHome());
+          // dispatch(clearHome());
+          // dispatch(getHome());
           dispatch(getDiscussion(discussionId));
           setRecordingFile('');
           setCaption('');
-          closeAddResponseModal();
+          closeModal();
         };
       }
     } catch (error) {
       setIsLoading(false);
-      setAddResponseValidation(true);
+      setValidation(true);
       console.log(error);
       if (error.response.data.msg === 'You have to login first') {
         dispatch(userLogout());
@@ -147,15 +149,15 @@ const AddResponse = props => {
   return (
     <Modal
       animationType="slide"
-      visible={openAddResponseModal}
+      visible={openModal}
       transparent={true}
     >
       <View style={styles.backgroundShadowStyle}>
         <TouchableOpacity style={{flex: 1}} onPress={() => {
-            closeAddResponseModal();
+            closeModal();
             setRecordingFile('');
             setCaption('');
-            setAddResponseValidation(false);
+            setValidation(false);
           }} 
         />
       </View>
@@ -168,20 +170,24 @@ const AddResponse = props => {
         <View style={styles.addResponseModalStyle}>
           <View style={styles.contentContainerStyle}>
             <View style={styles.titleAndPublishButtonContainerStyle}>
-              <Text style={styles.addResponseTitleStyle}>Add response</Text>
+              <Text style={styles.addResponseTitleStyle}>{forBio ? 'Record audio bio' : 'Add response'}</Text>
               <TouchableOpacity
-                onPress={() => createResponse()}
+                onPress={() => forBio ? setBioFile(recordingFile) : createResponse()}
               >
-                <Text style={styles.publishButtonTextStyle}>Publish</Text>
+                <Text style={styles.publishButtonTextStyle}>{forBio ? 'Save' : 'Publish'}</Text>
               </TouchableOpacity>
             </View>
-            <FormInput
-              formInputTitle="Add caption"
-              dataInput={inputCaption}
-              capitalize={true}
-            />
             {
-              addResponseValidation && (
+              !forBio && (
+                <FormInput
+                  formInputTitle="Add caption"
+                  dataInput={inputCaption}
+                  capitalize={true}
+                />
+              )
+            }
+            {
+              validation && (
                 <ErrorMessage
                   message="All fields must be filled in, including a voice note!"
                 />
@@ -248,4 +254,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AddResponse;
+export default RecorderModal;

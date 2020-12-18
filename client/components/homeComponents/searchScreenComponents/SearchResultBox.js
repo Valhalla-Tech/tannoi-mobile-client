@@ -24,7 +24,7 @@ const SearchResultBox = props => {
   const renderUserList = itemData => {
     return (
       <TouchableOpacity onPress={() => {
-        navigation.navigate('UserProfile', {
+        navigation.navigate('UserProfileScreen', {
           userId: itemData.item.id
         });
       }} style={styles.userContainerStyle}>
@@ -53,7 +53,7 @@ const SearchResultBox = props => {
     <FlatList
       ListHeaderComponent={
         <View style={styles.searchResultBoxContainerStyle}>
-          <Text style={styles.searchInputTextStyle}>{pluralize(userResults.length, 'discussion')} for <Text style={{fontWeight: "bold"}}>"{searchInput}"</Text>
+          <Text style={styles.searchInputTextStyle}>{pluralize(userResults.length, category === 'Discussions' ? 'discussion': 'user')} for <Text style={{fontWeight: "bold"}}>"{searchInput}"</Text>
           </Text>
           {
             category === 'Discussions' ? null : ShowList(userResults)

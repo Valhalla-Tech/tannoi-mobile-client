@@ -46,7 +46,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    paddingHorizontal: "4.5%",
+    paddingVertical: "1.5%"
   },
 
   verifyButtonStyle: {
@@ -63,9 +65,7 @@ const styles = StyleSheet.create({
   
   profileInfoContainerStyle: {
     flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: "4.5%",
-    paddingVertical: "1.5%"
+    alignItems: "center"
   },
 
   profilePictureStyle: {

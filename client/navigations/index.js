@@ -23,9 +23,11 @@ import VerificationNavigation from '../navigations/VerificationNavigation';
 import NewDiscussionScreen from '../screens/topicScreens/NewDiscussionScreen';
 import DiscussionScreen from '../screens/topicScreens/DiscussionScreen';
 import ResponseScreen from '../screens/topicScreens/ResponseScreen';
-import UserProfile from '../screens/meScreens/UserProfile';
+import UserProfileScreen from '../screens/meScreens/UserProfileScreen';
 import SearchScreen from '../screens/homeScreens/SearchScreen';
 import TopicDetailScreen from '../screens/topicScreens/TopicDetailScreen';
+import SettingsScreen from '../screens/meScreens/SettingsScreen';
+import EditProfileScreen from '../screens/meScreens/EditProfileScreen';
 
 const Stack = createStackNavigator();
 
@@ -116,7 +118,11 @@ const NavigationIndex = () => {
         }
       
         if (params.screen !== undefined && getToken) {
-          navigation.push(params.screen, JSON.parse(params.payload));
+          let payload = JSON.parse(params.payload);
+          if (params.screen === 'UserProfileScreen') {
+            payload = {...payload, fromDeepLink: true};
+          }
+          navigation.push(params.screen, payload);
         }
       })
     } catch (err) {
@@ -155,7 +161,7 @@ const NavigationIndex = () => {
             <Stack.Screen name="NewDiscussionScreen" component={NewDiscussionScreen} />
             <Stack.Screen name="DiscussionScreen" component={DiscussionScreen} />
             <Stack.Screen name="ResponseScreen" component={ResponseScreen} />
-            <Stack.Screen name="UserProfile" component={UserProfile} />
+            <Stack.Screen name="UserProfileScreen" component={UserProfileScreen} />
             <Stack.Screen name="VerificationNavigation" component={VerificationNavigation} />
             <Stack.Screen 
               name="SearchScreen" 
@@ -164,6 +170,8 @@ const NavigationIndex = () => {
               }} 
             />
             <Stack.Screen name="TopicDetailScreen" component={TopicDetailScreen} />
+            <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
+            <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} />
           </>
         ) : (
           <Stack.Screen name="AccountNavigation" component={AccountNavigation} />

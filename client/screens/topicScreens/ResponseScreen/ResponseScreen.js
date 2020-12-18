@@ -247,17 +247,6 @@ const styles = StyleSheet.create({
     fontFamily: bold,
     color: "#464D60",
     marginLeft: "5%"
-  },
-
-  addResponseButtonStyle: {
-    color: "#0E4EF4",
-    fontSize: 16
-  },
-
-  addResponseButtonTextStyle: {
-    color: "#0E4EF4",
-    fontSize: 16,
-    fontFamily: bold
   }
 });
 

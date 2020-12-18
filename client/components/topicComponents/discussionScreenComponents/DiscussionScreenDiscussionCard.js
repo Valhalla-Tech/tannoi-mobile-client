@@ -116,8 +116,8 @@ const DiscussionScreenCard = props => {
   
         if (upvoteRequest.data) {
           dispatch(getDiscussion(discussionId));
-          dispatch(clearHome());
-          dispatch(getHome());
+          // dispatch(clearHome());
+          // dispatch(getHome());
         }
       } else {
         navigation.navigate('VerificationNavigation')
@@ -142,8 +142,8 @@ const DiscussionScreenCard = props => {
   
         if (downvoteRequest.data) {
           dispatch(getDiscussion(discussionId));
-          dispatch(clearHome());
-          dispatch(getHome());
+          // dispatch(clearHome());
+          // dispatch(getHome());
         }
       } else {
         navigation.navigate('VerificationNavigation');
@@ -194,14 +194,14 @@ const DiscussionScreenCard = props => {
         <View>
           <View style={styles.profileContainerStyle}>
             <TouchableOpacity onPress={() => {
-                navigation.navigate('UserProfile', {
+                navigation.navigate('UserProfileScreen', {
                   userId: profileId
                 });
             }}>
               <Image source={{uri: profilePicture}} style={styles.profileImageStyle} />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => {
-                navigation.navigate('UserProfile', {
+                navigation.navigate('UserProfileScreen', {
                   userId: profileId
                 });
             }}>
@@ -220,7 +220,7 @@ const DiscussionScreenCard = props => {
           modalType="discussion"
         />
         {
-          discussionType === 2 && (
+          discussionType === 2 && userId === profileId && (
             <PrivateDiscussionModal
               openModal={privateModal}
               closeModal={closePrivateModal}

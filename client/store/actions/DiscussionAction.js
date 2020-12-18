@@ -84,10 +84,51 @@ export const getDiscussion = (discussionId) => {
   };
 };
 
-export const clearDiscussion = () => {
+export const getUserDiscussion = (userId) => {
+  return async (dispatch) => {
+    try {
+      let access_token = await AsyncStorage.getItem('access_token');
+
+      let getUserDiscussionRequest = await axios({
+        url: `${BaseUrl}/discussions/users?user_id=${userId}`,
+        method: 'get',
+        headers: {
+          'token': access_token
+        }
+      });
+
+      if (getUserDiscussionRequest.data) {
+        dispatch({
+          type: 'GET_USER_DISCUSSION',
+          payload: {
+            userDiscussion: getUserDiscussionRequest.data.data
+          }
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      if (error.response.data.msg === 'You have to login first') {
+        dispatch({
+          type: 'LOGOUT',
+          payload: {
+            loginStatus: false
+          }
+        });
+      };
+    }
+  };
+};
+
+export const clearDiscussion = (clearUserDiscussion) => {
   return (dispatch) => {
-    dispatch({
-      type: 'CLEAR_DISCUSSION'
-    });
+    if (clearUserDiscussion) {
+      dispatch({
+        type: 'CLEAR_USER_DISCUSSION'
+      });
+    } else {
+      dispatch({
+        type: 'CLEAR_DISCUSSION'
+      });
+    }
   }
 };

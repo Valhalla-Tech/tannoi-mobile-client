@@ -22,7 +22,7 @@ const FormInput = props => {
   return (
     <View style={styles.formInputContainerStyle}>
       <TextInput
-        value={formInputValue}
+        value={formInputValue ? formInputValue : null}
         style={{...styles.formInputStyle, ...formInputCustomStyle}} 
         placeholder={formInputTitle}
         placeholderTextColor="#73798C"

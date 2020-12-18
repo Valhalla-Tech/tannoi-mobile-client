@@ -37,7 +37,7 @@ import ActiveDownvote from '../../../assets/topicAssets/activeDownvote.svg';
 import TickIcon from '../../../assets/publicAssets/tickIcon.png';
 
 //Components
-import AddResponse from '../../../components/topicComponents/discussionScreenComponents/AddResponse';
+import AddResponse from '../../publicComponents/RecorderModal';
 import OptionButton from '../../../components/topicComponents/discussionScreenComponents/OptionButton';
 
 class DiscussionScreenPlayerCard extends Component {
@@ -159,8 +159,8 @@ class DiscussionScreenPlayerCard extends Component {
 
       if (this.player.isPlaying && !error && !this.state.isPaused) {
         this.playCounter(this.state.responseId ? true : false);
-        this.props.clearHome();
-        this.props.getHome();
+        // this.props.clearHome();
+        // this.props.getHome();
       };
 
       if (this.player.isPlaying && !error) {
@@ -401,12 +401,12 @@ class DiscussionScreenPlayerCard extends Component {
       <View>
         <View style={styles.profileAndPostTimeContainerStyle}>
           <View style={styles.profileInfoContainerStyle}>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('UserProfile', {
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('UserProfileScreen', {
               userId: this.props.profileId
             })}>
               <Image source={{uri: this.state.profilePicture}} style={styles.profileImageStyle} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('UserProfile', {
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('UserProfileScreen', {
               userId: this.props.profileId
             })}>
               <Text style={styles.profileNameStyle}>{this.state.profileName}</Text>
@@ -582,8 +582,8 @@ class DiscussionScreenPlayerCard extends Component {
           )
         }
         <AddResponse
-          openAddResponseModal={this.state.openAddResponseModal}
-          closeAddResponseModal={this.closeAddResponseModal}
+          openModal={this.state.openAddResponseModal}
+          closeModal={this.closeAddResponseModal}
           discussionId={this.state.discussionId}
           addResponseForResponse={true}
           responseId={this.state.responseId}

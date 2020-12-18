@@ -3,14 +3,15 @@ import {
   View,
   Text,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  Image
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { deleteVerificationData } from '../../../store/actions/VerificationAction';
 import { bold, normal } from '../../../assets/FontSize';
 
 //Image
-import VerificationScreenImage from '../../../assets/verificationAssets/verificationScreenImage.svg';
+import ScreenImage from '../../../assets/verificationAssets/Illustration-Tannoi-Apps-01.png'
 
 //Component
 import BigButton from '../../../components/publicComponents/BigButton';
@@ -34,9 +35,9 @@ const StartVerificationScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <View style={styles.imageContainerStyle}>
-          <VerificationScreenImage />
+          <Image source={ScreenImage} style={styles.imageStyle} />
         </View>
-        <View style={styles.textContainerStyle}>
+        <View>
           <Text style={styles.boldTextStyle}>Become a verified TannOi user</Text>
           <Text style={styles.normalTextStyle}>
             Participate in verified discussions and {"\n"} stand behind what you say
@@ -48,8 +49,7 @@ const StartVerificationScreen = ({ navigation }) => {
         buttonStyle={{
           backgroundColor: "#6505E1",
           color: "#FFFFFF",
-          borderWidth: 0,
-          marginTop: "50%"
+          borderWidth: 0
         }}
         buttonFunction={startButton}
       />
@@ -60,7 +60,7 @@ const StartVerificationScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   startVerificationScreenContainerStyle: {
     padding: "5%",
-    flex: 1,
+    height: "100%",
     justifyContent: "space-between"
   },
 
@@ -72,11 +72,15 @@ const styles = StyleSheet.create({
 
   imageContainerStyle: {
     alignItems: "center",
-    paddingTop: "5%"
+    justifyContent: "center",
+    minHeight: "30%",
+    maxHeight: "55%"
   },
 
-  textContainerStyle: {
-    paddingTop: "10%"
+  imageStyle: {
+    resizeMode: "stretch",
+    width: "63%",
+    height: "100%",
   },
 
   boldTextStyle: {

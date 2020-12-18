@@ -6,22 +6,29 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
-  ScrollView
+  ScrollView,
+  Image,
+  Dimensions
 } from 'react-native';
 import { Picker } from '@react-native-community/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useSelector, useDispatch } from 'react-redux';
 import { inputUserProfile, addStepCount } from '../../../store/actions/VerificationAction';
 import { bold, normal } from '../../../assets/FontSize';
+import { ScreenHeight } from '../../../constants/Size';
 
 //Image
-import VerificationScreenImage from '../../../assets/verificationAssets/verificationScreenImage.svg';
+import ScreenImage from '../../../assets/verificationAssets/Illustration-Tannoi-Apps-02.png';
 
 //Components
 import BigButton from '../../../components/publicComponents/BigButton';
 import FormInput from '../../../components/publicComponents/FormInput';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import StepCount from '../../../components/verificationComponent/StepCount';
+
+const calculateHeight = input => {
+  return input / 100 * ScreenHeight;
+};
 
 const UserProfileVerificationScreen = ({ navigation }) => {
   const firstNameFromStore = useSelector(state => state.VerificationReducer.firstName);
@@ -183,19 +190,27 @@ const UserProfileVerificationScreen = ({ navigation }) => {
     );
   };
 
+  const BackButton = () => {
+    return (
+      <View>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Text style={styles.backButtonTextStyle}>Back</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+ 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <ScrollView>
-        <View style={styles.userProfileVerificationScreenContainerStyle}>
+      <ScrollView style={{flex: 1}}>
+        <View 
+          style={styles.userProfileVerificationScreenContainerStyle}
+        >
           <View>
-            <View>
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Text style={styles.backButtonTextStyle}>Back</Text>
-              </TouchableOpacity>
-            </View>
+            <BackButton />
             <StepCount />
             <View style={styles.imageContainerStyle}>
-              <VerificationScreenImage />
+              <Image source={ScreenImage} style={styles.imageStyle} />
             </View>
             <View>
               <Text style={styles.boldTextStyle}>Can we get to know you a little better?</Text>
@@ -227,10 +242,9 @@ const UserProfileVerificationScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   userProfileVerificationScreenContainerStyle: {
-    padding: "5%",
     flex: 1,
-    justifyContent: "space-between",
-    marginBottom: "20%"
+    padding: "5%",
+    justifyContent: "space-between"
   },
 
   backButtonTextStyle: {
@@ -240,15 +254,23 @@ const styles = StyleSheet.create({
   },
 
   imageContainerStyle: {
-    alignItems: "center"
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: "30%",
+    maxHeight: calculateHeight(35)
+  },
+
+  imageStyle: {
+    resizeMode: "stretch",
+    width: "65%",
+    height: "100%"
   },
 
   boldTextStyle: {
     textAlign: "center",
     fontFamily: bold,
     fontSize: 20,
-    marginBottom: "2%",
-    paddingTop: "5%"
+    marginBottom: "2%"
   },
 
   normalTextStyle: {
@@ -259,7 +281,7 @@ const styles = StyleSheet.create({
 
   formContainerStyle: {
     justifyContent: "space-between",
-    height: "43%",
+    height: calculateHeight(45),
     paddingTop: "10%",
     marginBottom: "12.5%"
   },

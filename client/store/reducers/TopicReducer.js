@@ -13,6 +13,8 @@ const reducer = (state = defaultState, action) => {
       let setTopic = action.payload.topic;
 
       return {...state, topic: setTopic};
+    case 'CLEAR_TOPIC':
+      return {...state, topics: []};
     default:
       return state
   }

@@ -126,7 +126,7 @@ const PrivateDiscussionModal = props => {
         closeModal();
       };
     } catch (error) {
-      console.log(error);
+      console.log(error, '<<<');
     }
   };
 

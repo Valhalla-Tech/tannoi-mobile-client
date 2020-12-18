@@ -31,7 +31,7 @@ import EditButton from '../../../assets/topicAssets/edit.svg';
 import BackButton from '../../../components/publicComponents/BackButton';
 import FormInput from '../../../components/publicComponents/FormInput';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
-import Recorder from '../../../components/topicComponents/Recorder';
+import Recorder from '../../../components/publicComponents/Recorder';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import PrivateDiscussionModal from '../../../components/topicComponents/PrivateDiscussionModal';
 import NoticeModal from '../../../components/publicComponents/Modal';

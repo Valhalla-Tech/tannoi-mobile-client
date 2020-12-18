@@ -3,23 +3,29 @@ import {
   View,
   Text,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  Image
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import { bold, normal } from '../../../assets/FontSize';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
+import { ScreenHeight } from '../../../constants/Size';
 
 //Image
-import VerificationScreenImage from '../../../assets/verificationAssets/verificationScreenImage.svg';
+import ScreenImage from '../../../assets/verificationAssets/Illustration-Tannoi-Apps-04.png';
 
 //Components
 import BigButton from '../../../components/publicComponents/BigButton';
-import Recorder from '../../../components/topicComponents/Recorder';
+import Recorder from '../../../components/publicComponents/Recorder';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 import StepCount from '../../../components/verificationComponent/StepCount';
+
+const calculateHeight = input => {
+  return input / 100 * ScreenHeight;
+};
 
 const VoiceVerificationScreen = ({ navigation }) => {
   const [recordingFile, setRecordingFile] = useState('');
@@ -110,7 +116,7 @@ const VoiceVerificationScreen = ({ navigation }) => {
   };
 
   return (
-    <View>
+    <>
      {isLoading && <LoadingSpinner />}
       <View style={styles.voiceVerificationScreenContainerStyle}>
         <View>
@@ -121,7 +127,7 @@ const VoiceVerificationScreen = ({ navigation }) => {
           </View>
           <StepCount />
           <View style={styles.imageContainerStyle}>
-            <VerificationScreenImage />
+            <Image source={ScreenImage} style={styles.imageStyle} />
           </View>
           <View style={styles.textContainerStyle}>
             <Text style={styles.boldTextStyle}>Lastly we need to make sure you are not a bot</Text>
@@ -148,7 +154,7 @@ const VoiceVerificationScreen = ({ navigation }) => {
           buttonFunction={nextScreen}
         />
       </View>
-    </View>
+    </>
   );
 };
 
@@ -156,7 +162,7 @@ const styles = StyleSheet.create({
   voiceVerificationScreenContainerStyle: {
     padding: "5%",
     justifyContent: "space-between",
-    height: "100%"
+    flex: 1
   },
 
   backButtonTextStyle: {
@@ -166,14 +172,22 @@ const styles = StyleSheet.create({
   },
 
   imageContainerStyle: {
-    alignItems: "center"
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: "30%",
+    maxHeight: calculateHeight(35)
+  },
+
+  imageStyle: {
+    resizeMode: "stretch",
+    width: "65%",
+    height: "100%"
   },
 
   boldTextStyle: {
     textAlign: "center",
     fontFamily: bold,
     fontSize: 20,
-    padding: "5%",
     paddingBottom: -1.5
   },
 
@@ -186,7 +200,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: bold,
     fontSize: 36,
-    marginBottom: -20
+    marginBottom: -30
   }
 });
 

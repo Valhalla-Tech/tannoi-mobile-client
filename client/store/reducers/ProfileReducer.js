@@ -8,6 +8,8 @@ const reducer = (state = defaultState, action) => {
       let setUerProfile = action.payload.userProfile
 
       return {...state, userProfile: setUerProfile};
+    case 'CLEAR_USER_PROFILE':
+      return {...state, userProfile: ''};
     default:
       return state;
   }
