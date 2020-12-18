@@ -145,7 +145,7 @@ const EditProfileScreen = ({ navigation }) => {
       // formData.append('profile_photo_path', {uri: profileImage, name: filename, type});
       formData.append('birth_date', `${birthDate}`);
       formData.append('name', fullName);
-      formData.append('gender', selectedGender);
+      selectedGender !== '' && formData.append('gender', selectedGender);
       formData.append('bio', shortBio);
       formData.append('location', location);
 
@@ -160,36 +160,39 @@ const EditProfileScreen = ({ navigation }) => {
       });
 
       if (saveEditRequest.data) {
-        let voiceBioFormData = new FormData();
-
-        //Recording File
-        const uri = `file://${bioVoiceFile}`;
-        let audioParts = uri.split('.');
-        let fileType = audioParts[audioParts.length - 1];
-
-        voiceBioFormData.append('bio_voice_path', {
-          uri,
-          name: `recording.${fileType}`,
-          type: `audio/${fileType}`
-        });
-
-        let editVoiceBioRequest = await axios({
-          url: `${BaseUrl}/users/profile/edit-bio-voice`,
-          method: 'put',
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            'token': access_token
-          },
-          data: voiceBioFormData
-        });
-
-        if (editVoiceBioRequest.data) {
-          setIsLoading(false);
+        if (bioVoiceFile !== '') {
+          let voiceBioFormData = new FormData();
+  
+          //Recording File
+          const uri = `file://${bioVoiceFile}`;
+          let audioParts = uri.split('.');
+          let fileType = audioParts[audioParts.length - 1];
+  
+          voiceBioFormData.append('bio_voice_path', {
+            uri,
+            name: `recording.${fileType}`,
+            type: `audio/${fileType}`
+          });
+  
+          let editVoiceBioRequest = await axios({
+            url: `${BaseUrl}/users/profile/edit-bio-voice`,
+            method: 'put',
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              'token': access_token
+            },
+            data: voiceBioFormData
+          });
+  
+          if (editVoiceBioRequest.data) {
+            setIsLoading(false);
+          }
         }
+        setIsLoading(false);
       }
     } catch (error) {
       setIsLoading(false);
-      console.log(error);
+      console.log(error.response.data.msg);
     }
   };
 
