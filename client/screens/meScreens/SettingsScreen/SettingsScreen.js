@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { userLogout } from '../../../store/actions/LoginAction';
+import { clearTopic } from '../../../store/actions/TopicAction';
 import { bold, normal } from '../../../assets/FontSize';
 
 //Components
@@ -30,7 +31,10 @@ const SettingsScreen = ({ navigation }) => {
           />
           <Text style={styles.titleTextStyle}>Settings</Text>
         </View>
-        <TouchableOpacity onPress={() => dispatch(userLogout())}>
+        <TouchableOpacity onPress={() => {
+          dispatch(userLogout());
+          dispatch(clearTopic());
+        }}>
           <Text style={styles.logOutButtonTextStyle}>Log out</Text>
         </TouchableOpacity>
       </>
