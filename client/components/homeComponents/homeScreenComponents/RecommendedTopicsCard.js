@@ -13,19 +13,26 @@ const RecommendedTopicsCard = props => {
     firstCardIcon,
     firstCardName,
     firstCardDiscussions,
+    firstCardId,
     secondCardIcon,
     secondCardName,
     secondCardDiscussions,
+    secondCardId,
     thirdCardIcon,
     thirdCardName,
-    thirdCardDiscussions
+    thirdCardDiscussions,
+    thirdCardId,
+    navigation
   } = props;
-  
+
   return (
     <View>
       {
         firstCardName && (
-          <TouchableOpacity style={styles.topicCardStyle}>
+          <TouchableOpacity onPress={() => navigation.navigate('TopicDetailScreen', {
+            topicName: firstCardName,
+            topicId: firstCardId
+          })} style={styles.topicCardStyle}>
             <Image source={firstCardIcon !== '' ? {uri: firstCardIcon} : ''} style={styles.topicIconStyle} />
             <View style={styles.topicCardInfoContainerStyle}>
               {
@@ -42,7 +49,10 @@ const RecommendedTopicsCard = props => {
       }
       {
         secondCardName && (
-          <TouchableOpacity style={styles.topicCardStyle}>
+          <TouchableOpacity onPress={() => navigation.navigate('TopicDetailScreen', {
+            topicName: secondCardName,
+            topicId: secondCardId
+          })} style={styles.topicCardStyle}>
             <Image source={secondCardIcon !== '' ? {uri: secondCardIcon} : ''} style={styles.topicIconStyle} resizeMode="stretch" />
             <View style={styles.topicCardInfoContainerStyle}>
             {
@@ -59,7 +69,10 @@ const RecommendedTopicsCard = props => {
       }
       {
         thirdCardName && (
-          <TouchableOpacity style={styles.topicCardStyle}>
+          <TouchableOpacity onPress={() => navigation.navigate('TopicDetailScreen', {
+            topicName: thirdCardName,
+            topicId: thirdCardId
+          })} style={styles.topicCardStyle}>
             <Image source={thirdCardIcon ? {uri: thirdCardIcon} : ''} style={styles.topicIconStyle} resizeMode="stretch" />
             <View style={styles.topicCardInfoContainerStyle}>
             {

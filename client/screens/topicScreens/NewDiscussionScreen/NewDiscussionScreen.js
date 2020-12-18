@@ -46,7 +46,7 @@ const NewDiscussionScreen = ({ navigation }) => {
   const [createNewDiscussionValidation, setCreateNewDiscussionValidation] = useState(false);
   const [privateDiscussionSwitchValue, setPrivateDiscussionSwitchValue] = useState(false);
   const [askToResponseSwitchValue, setAskToResponseSwitchValue] = useState(false);
-  const [selectedSwitch, setSelectedSwitch] = useState('Private discussion');
+  const [selectedSwitch, setSelectedSwitch] = useState('');
   const [openModal, setOpenModal] = useState(false);
   const [selectedFollowers, setSelectedFollowers] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
@@ -123,7 +123,7 @@ const NewDiscussionScreen = ({ navigation }) => {
 
       formData.append('status', '1');
 
-      formData.append('type', selectAll || selectedFollowers.length > 0 ? '2' : '1');
+      formData.append('type', selectedSwitch === 'Private discussion' ? '2' : '1');
 
       selectedFollowers.length > 0 && formData.append('userArr', JSON.stringify(selectedFollowers));
 
@@ -165,7 +165,7 @@ const NewDiscussionScreen = ({ navigation }) => {
         });
 
         if (moodRatingRequest.data) {
-          if (selectedSwitch === 'Ask to response') {
+          if (selectedSwitch === 'Ask for a response') {
             let branchUniversalObject = await branch.createBranchUniversalObject('canonicalIdentifier', {
               locallyIndex: true,
               title: 'Ask For Response',
@@ -241,6 +241,7 @@ const NewDiscussionScreen = ({ navigation }) => {
     if (!privateDiscussionSwitchValue && selectedFollowers.length === 0 && !selectAll || !askToResponseSwitchValue && selectedFollowers.length === 0 && !selectAll) {
       setOpenModal(true);
     } else {
+      setSelectedSwitch('');
       setSelectedFollowers([]);
       setSelectAll(false);
     }
@@ -253,6 +254,7 @@ const NewDiscussionScreen = ({ navigation }) => {
       setAskToResponseSwitchValue(false);
       setSelectAll(false);
       setSelectedFollowers([]);
+      setSelectedSwitch('');
     } else {
       selectedSwitch === 'Private discussion' ? setPrivateDiscussionSwitchValue(true) : setAskToResponseSwitchValue(true);
     }
@@ -356,7 +358,7 @@ const NewDiscussionScreen = ({ navigation }) => {
           }
           disabled={
             selectedSwitch === 'Private discussion' && privateDiscussionSwitchValue && switchName === selectedSwitch ? false : 
-            selectedSwitch === 'Ask to response' && askToResponseSwitchValue && switchName === selectedSwitch ? false : 
+            selectedSwitch === 'Ask for a response' && askToResponseSwitchValue && switchName === selectedSwitch ? false : 
             !privateDiscussionSwitchValue && !askToResponseSwitchValue ? false :
             true
           }
@@ -451,7 +453,7 @@ const NewDiscussionScreen = ({ navigation }) => {
           <View style={styles.newDiscussionFormContainerStyle}>
             <View style={styles.contentContainerStyle}>
               <DiscussionSwitch switchName="Private discussion" />
-              <DiscussionSwitch switchName="Ask to response" />
+              <DiscussionSwitch switchName="Ask for a response" />
               <View style={styles.recorderContainerStyle}>
                 <Recorder
                   addRecordingFile={addRecordingFile}
