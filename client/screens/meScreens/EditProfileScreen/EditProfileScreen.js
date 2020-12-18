@@ -186,9 +186,11 @@ const EditProfileScreen = ({ navigation }) => {
   
           if (editVoiceBioRequest.data) {
             setIsLoading(false);
+            navigation.navigate('Me');
           }
         }
         setIsLoading(false);
+        navigation.navigate('Me');
       }
     } catch (error) {
       setIsLoading(false);
