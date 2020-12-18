@@ -25,7 +25,7 @@ export const search = (keyword, page) => {
         });
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       if (error.response.data.msg === 'You have to login first') {
         dispatch({
           type: 'LOGOUT',
