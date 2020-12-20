@@ -15,6 +15,8 @@ import { getResponse } from '../../../store/actions/ResponseAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
+import Share from "react-native-share";
+import branch from 'react-native-branch';
 
 const OptionModal = props => {
   const {
@@ -44,11 +46,51 @@ const OptionModal = props => {
         onPress={() => {
           buttonTitle === 'Delete' && setDeleteOption(true);
           buttonTitle === 'Edit participant list' && openPrivateModal();
+          buttonTitle === 'Share' && shareOption();
         }}
       >
         <Text style={styles.optionModalButtonTextStyle}>{buttonTitle}</Text>
       </TouchableOpacity>
     );
+  };
+
+  const shareOption = async () => {
+    try {
+      let branchUniversalObject = await branch.createBranchUniversalObject('canonicalIdentifier', {
+        locallyIndex: true,
+        title: 'Share a Discussion',
+        contentDescription: 'This is a link to Discussion',
+        contentMetadata: {
+          ratingAverage: 4.2,
+          customMetadata: {
+            screen: 'DiscussionScreen',
+            payload: JSON.stringify({
+              discussionId: discussionId.toString()
+            })
+          }
+        }
+      });
+      
+      let linkProperties = {
+        feature: 'share a discussion',
+        channel: 'tannoi'
+      };
+      
+      let controlParams = {
+        $desktop_url: 'https://www.entervalhalla.tech/'
+      };
+      
+      let {url} = await branchUniversalObject.generateShortUrl(linkProperties, controlParams);
+
+      const options = {
+        title: "Share your discussion",
+        message: url
+      };
+
+      await Share.open(options);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const DeleteOption = () => {
