@@ -74,21 +74,26 @@ export const FacebookSignIn = () => {
           } else {
             AccessToken.getCurrentAccessToken().then(
               async (data) => {
-                let facebookSigninRequest = await axios.post(`${BaseUrl}/users/login/facebook`, {
-                  token: data.accessToken.toString(),
-                  device: Platform.OS
-                });
-
-                if (facebookSigninRequest.data.access_token && facebookSigninRequest.data.refresh_token) {
-                  await AsyncStorage.setItem('access_token', facebookSigninRequest.data.access_token);
-                  await AsyncStorage.setItem('refresh_token', facebookSigninRequest.data.refresh_token);
-                  dispatch({
-                    type: 'LOGIN',
-                    payload: {
-                      loginStatus: true
-                    }
+                try {
+                  console.log(data.accessToken)
+                  let facebookSigninRequest = await axios.post(`${BaseUrl}/users/login/facebook`, {
+                    token: data.accessToken.toString(),
+                    device: Platform.OS
                   });
-                };
+  
+                  if (facebookSigninRequest.data.access_token && facebookSigninRequest.data.refresh_token) {
+                    await AsyncStorage.setItem('access_token', facebookSigninRequest.data.access_token);
+                    await AsyncStorage.setItem('refresh_token', facebookSigninRequest.data.refresh_token);
+                    dispatch({
+                      type: 'LOGIN',
+                      payload: {
+                        loginStatus: true
+                      }
+                    });
+                  };
+                } catch (error) {
+                  console.log(error.response.data.msg);
+                }
               }
             )
           }
@@ -98,7 +103,8 @@ export const FacebookSignIn = () => {
         }
       );
     } catch (error) {
-      console.log(error.data.response.msg);
+      console.log('masuk sini')
+      console.log(error);
     }
   };
 };
