@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { bold } from '../../../assets/FontSize';
 
-//Icon
+//Icons
 import NoProfilePicture from '../../../assets/publicAssets/noProfilePicture.png';
 import tickIcon from '../../../assets/publicAssets/tickIcon.png';
 

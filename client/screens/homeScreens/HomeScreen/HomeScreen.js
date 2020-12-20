@@ -11,7 +11,7 @@ import {
 } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import { getHome, clearHome } from '../../../store/actions/HomeAction';
-import { bold, normal } from '../../../assets/FontSize';
+import { bold } from '../../../assets/FontSize';
 
 //Components
 import SearchBar from '../../../components/publicComponents/SearchBar';
@@ -43,14 +43,11 @@ const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // const unsubscribe = navigation.addListener('focus', () => {
-      dispatch(clearHome());
-      dispatch(getHome());
-      SplashScreen.hide();
-    // });
+    dispatch(clearHome());
+    dispatch(getHome());
+    SplashScreen.hide();
 
-    // return unsubscribe;
-  }, [navigation]);
+  }, []);
 
   const noticeModalChild = () => {
     return <Text style={styles.noticeModalTextStyle}>You don't have access to this discussion</Text>

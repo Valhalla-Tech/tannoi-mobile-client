@@ -73,11 +73,11 @@ const HomeList = props => {
                   </>
                 )}
               />
-              {
-                isUsingMoreButton && <MoreButton />
-              }
             </>
           )
+        }
+        {
+          isUsingMoreButton && <MoreButton />
         }
       </View>
     );
