@@ -20,26 +20,34 @@ import NoticeModal from '../../../components/publicComponents/Modal';
 import Card from '../../../components/publicComponents/Card';
 import ListCardPlayer from '../../../components/publicComponents/ListCardPlayer';
 
-const MeScreen = ({ navigation }) => {
+const MeScreen = ({ navigation, route }) => {
   const [selectedMenu, setSelectedMenu] = useState('Discussions');
   const [noticeModal, setNoticeModal] = useState(false);
 
-  const userProfile = useSelector(state => state.ProfileReducer.userProfile);
+  const { fromEditScreen } = route.params !== undefined && route.params;
+
+  const userProfile = useSelector(state => state.ProfileReducer.loggedinUserProfile);
   const userId = useSelector(state => state.HomeReducer.user.id);
   const userDiscussion = useSelector(state => state.DiscussionReducer.userDiscussion);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
+    const meScreenRequest = () => {
       dispatch(clearUserProfile());
       dispatch(clearDiscussion(true));
-      dispatch(getOneProfile());
+      dispatch(getOneProfile(null, true));
       dispatch(getUserDiscussion(userId));
+    };
+
+    meScreenRequest();
+
+    const unsubscribe = navigation.addListener('focus', () => {
+      meScreenRequest();
     });
 
-    return unsubscribe;
-  }, [navigation, userDiscussion.birth_date]);
+    return fromEditScreen && unsubscribe;
+  }, [userDiscussion.birth_date]);
 
   const selectMenu = (menu) => {
     setSelectedMenu(menu);

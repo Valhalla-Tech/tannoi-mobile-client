@@ -72,7 +72,7 @@ const HomeScreen = ({ navigation }) => {
               requestedDiscussion.length !== 0 && (
                 <View style={styles.sectionStyle}>
                   <List
-                    listTitle="Discussions Especially For You"
+                    listTitle="You're Asked to Respond"
                     listData={requestedDiscussion}
                     navigation={navigation}
                     openModal={openModal}
