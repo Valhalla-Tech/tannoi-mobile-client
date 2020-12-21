@@ -27,7 +27,8 @@ const OptionModal = props => {
     profileId,
     openPrivateModal,
     modalType,
-    responseId
+    responseId,
+    discussionTitle
   } = props;
 
   const userId = useSelector(state => state.ProfileReducer.userProfile.id);
@@ -58,8 +59,8 @@ const OptionModal = props => {
     try {
       let branchUniversalObject = await branch.createBranchUniversalObject('canonicalIdentifier', {
         locallyIndex: true,
-        title: 'Share a Discussion',
-        contentDescription: 'This is a link to Discussion',
+        title: discussionTitle,
+        contentDescription: 'Check out this discussion on the tannOi app!',
         contentMetadata: {
           ratingAverage: 4.2,
           customMetadata: {
@@ -77,13 +78,13 @@ const OptionModal = props => {
       };
       
       let controlParams = {
-        $desktop_url: 'https://www.entervalhalla.tech/'
+        $desktop_url: 'https://www.tannoi.app/'
       };
       
       let {url} = await branchUniversalObject.generateShortUrl(linkProperties, controlParams);
 
       const options = {
-        title: "Share your discussion",
+        title: discussionTitle,
         message: url
       };
 
