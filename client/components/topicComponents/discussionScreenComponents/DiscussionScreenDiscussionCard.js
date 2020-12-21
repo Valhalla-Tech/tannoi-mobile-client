@@ -101,7 +101,7 @@ const DiscussionScreenCard = props => {
         };
         
         let controlParams = {
-          $desktop_url: 'https://www.entervalhalla.tech/'
+          $desktop_url: 'https://www.tannoi.app/'
         };
         
         let {url} = await branchUniversalObject.generateShortUrl(linkProperties, controlParams);
@@ -218,6 +218,7 @@ const DiscussionScreenCard = props => {
           profileId={profileId}
           openPrivateModal={openPrivateModal}
           modalType="discussion"
+          discussionTitle={discussionTitle}
         />
         {
           discussionType === 2 && userId === profileId && (

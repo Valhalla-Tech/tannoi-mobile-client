@@ -57,7 +57,7 @@ const ResetPasswordWithEmailScreen = ({ navigation }) => {
         };
         
         let controlParams = {
-          $desktop_url: 'https://www.entervalhalla.tech/'
+          $desktop_url: 'https://www.tannoi.app/'
         };
         
         let {url} = await branchUniversalObject.generateShortUrl(linkProperties, controlParams);

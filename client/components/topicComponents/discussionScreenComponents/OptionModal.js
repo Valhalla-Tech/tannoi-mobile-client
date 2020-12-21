@@ -15,6 +15,8 @@ import { getResponse } from '../../../store/actions/ResponseAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
+import Share from "react-native-share";
+import branch from 'react-native-branch';
 
 const OptionModal = props => {
   const {
@@ -25,7 +27,8 @@ const OptionModal = props => {
     profileId,
     openPrivateModal,
     modalType,
-    responseId
+    responseId,
+    discussionTitle
   } = props;
 
   const userId = useSelector(state => state.ProfileReducer.userProfile.id);
@@ -44,11 +47,51 @@ const OptionModal = props => {
         onPress={() => {
           buttonTitle === 'Delete' && setDeleteOption(true);
           buttonTitle === 'Edit participant list' && openPrivateModal();
+          buttonTitle === 'Share' && shareOption();
         }}
       >
         <Text style={styles.optionModalButtonTextStyle}>{buttonTitle}</Text>
       </TouchableOpacity>
     );
+  };
+
+  const shareOption = async () => {
+    try {
+      let branchUniversalObject = await branch.createBranchUniversalObject('canonicalIdentifier', {
+        locallyIndex: true,
+        title: discussionTitle,
+        contentDescription: 'Check out this discussion on the tannOi app!',
+        contentMetadata: {
+          ratingAverage: 4.2,
+          customMetadata: {
+            screen: 'DiscussionScreen',
+            payload: JSON.stringify({
+              discussionId: discussionId.toString()
+            })
+          }
+        }
+      });
+      
+      let linkProperties = {
+        feature: 'share a discussion',
+        channel: 'tannoi'
+      };
+      
+      let controlParams = {
+        $desktop_url: 'https://www.tannoi.app/'
+      };
+      
+      let {url} = await branchUniversalObject.generateShortUrl(linkProperties, controlParams);
+
+      const options = {
+        title: discussionTitle,
+        message: url
+      };
+
+      await Share.open(options);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const DeleteOption = () => {
