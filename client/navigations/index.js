@@ -117,13 +117,15 @@ const NavigationIndex = () => {
           // Indicates initialization success and some other conditions.
           // No link was opened.
         }
-      
+
         if (params.screen !== undefined && getToken) {
           let payload = JSON.parse(params.payload);
           if (params.screen === 'UserProfileScreen') {
             payload = {...payload, fromDeepLink: true};
           }
           navigation.push(params.screen, payload);
+        } else if (params.screen !== undefined && params.screen === 'CreateNewPasswordScreen') {
+          navigation.navigate(params.screen, JSON.parse(params.payload));
         }
       })
     } catch (err) {

@@ -6,11 +6,13 @@ import {
   StyleSheet
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
+import { GlobalPadding } from '../../../constants/Size';
 
 //Components
 import Header from '../../../components/publicComponents/Header';
 import List from '../../../components/publicComponents/List';
 import BackButton from '../../../components/publicComponents/BackButton';
+import Card from '../../../components/publicComponents/Card';
 
 const HomeSectionDetailScreen = ({ navigation, route }) => {
   const { sectionTitle } = route.params;
@@ -36,6 +38,11 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
         child={HeaderContent}
         customStyle={styles.headerStyle}
       />
+      <View style={styles.cardContainerStyle}>
+        <List
+
+        />
+      </View>
     </View>
   );
 };
@@ -56,6 +63,10 @@ const styles = StyleSheet.create({
     fontFamily: bold,
     fontSize: 20,
     color: "#464D60"
+  },
+
+  cardContainerStyle: {
+    paddingHorizontal: GlobalPadding
   }
 });
 
