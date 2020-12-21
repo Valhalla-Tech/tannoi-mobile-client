@@ -5,7 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity
 } from 'react-native';
-import { bold } from '../../assets/FontSize';
+import { bold, normal } from '../../assets/FontSize';
 
 //Icon
 import DownArrow from '../../assets/homeAssets/downArrow.svg';
@@ -18,7 +18,9 @@ const ListHeader = props => {
     listTitle,
     isFilter,
     headerButton,
-    customStyle
+    customStyle,
+    useSeeAllButton,
+    navigation
   } = props;
 
   const ListFilter = () => {
@@ -30,6 +32,16 @@ const ListHeader = props => {
     );
   };
 
+  const SeeAllButton = () => {
+    return (
+      <TouchableOpacity onPress={() => navigation.navigate('HomeSectionDetailScreen', {
+        sectionTitle: listTitle
+      })}>
+        <Text style={styles.seeAllButtonTextStyle}>See all</Text>
+      </TouchableOpacity>
+    )
+  };
+
   const ListHeaderContent = () => {
     return (
       <View style={styles.headerStyle}>
@@ -37,6 +49,11 @@ const ListHeader = props => {
         {
           isFilter && (
             <ListFilter />
+          )
+        }
+        {
+          useSeeAllButton && (
+            <SeeAllButton />
           )
         }
         {
@@ -56,7 +73,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: "2%",
+    paddingHorizontal: "5%",
     height: 50
   },
 
@@ -64,8 +81,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: bold,
     color: "#FFFFFF",
-    marginVertical: "4%",
-    marginLeft: "2.5%"
+    marginVertical: "4%"
   },
 
   filterStyle: {
@@ -78,7 +94,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#FFFFFF",
     marginRight: "5%"
-  }
+  },
+
+  seeAllButtonTextStyle: {
+    color: "#FFFFFF",
+    fontSize: 14,
+    fontFamily: normal
+  },
 });
 
 export default ListHeader;

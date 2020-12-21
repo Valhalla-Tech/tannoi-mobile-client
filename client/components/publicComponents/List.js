@@ -22,13 +22,14 @@ const HomeList = props => {
     isFilter,
     isUsingMoreButton,
     isHeader = true,
-    customStyle
+    customStyle,
+    useSeeAllButton
   } = props;
 
   const MoreButton = () => {
     return (
       <View style={styles.moreButtonContainerStyle}>
-        <TouchableOpacity style={styles.moreButton}>
+        <TouchableOpacity onPress={() => console.log('pressed')} style={styles.moreButton}>
           <Text style={styles.moreButtonTextStyle}>More</Text>
         </TouchableOpacity>
       </View>
@@ -39,7 +40,13 @@ const HomeList = props => {
     return (
       <View>
         {
-          isHeader && <ListHeader isFilter={isFilter} listTitle={listTitle} />
+          isHeader && <ListHeader
+            listTitle={listTitle}
+            isFilter={isFilter}
+            istTitle={listTitle}
+            useSeeAllButton={useSeeAllButton}
+            navigation={navigation}
+          />
         }
         {
           !listData ? (
@@ -51,7 +58,7 @@ const HomeList = props => {
                 listKey={(item, index) => index.toString()}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={itemData => (
-                  <>
+                  <View style={styles.listCardContainerStyle}>
                     <HomeListCard
                       imageUrl={itemData.item.creator.profile_photo_path}
                       recordingFile={itemData.item.voice_note_path}
@@ -70,7 +77,7 @@ const HomeList = props => {
                       isAuthorized={itemData.item.isAuthorized}
                       profileType={itemData.item.creator.type}
                     />
-                  </>
+                  </View>
                 )}
               />
             </>
@@ -94,23 +101,26 @@ const styles = StyleSheet.create({
     marginTop: "2%",
     marginBottom: "3.5%",
     borderRadius: 8,
-    paddingBottom: "6.5%",
-    marginHorizontal: "1.8%",
+    paddingBottom: "6.5%"
+  },
+
+  listCardContainerStyle: {
+    paddingHorizontal: "5%"
   },
 
   moreButtonContainerStyle: {
-    flex: 1, 
+    flex: 1,
     alignItems: "center"
   },
 
   moreButton: {
-    position: "absolute", 
+    position: "absolute",
     borderWidth: 1.5, 
     borderColor: "#5152D0", 
     paddingHorizontal: 20, 
     paddingVertical: 4, 
-    borderRadius: 25, 
-    top: 10, 
+    borderRadius: 25,
+    top: 10,
     backgroundColor: "#FFFFFF"
   },
 

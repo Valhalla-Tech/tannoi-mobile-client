@@ -129,7 +129,6 @@ const HomeListCard = props => {
 const styles = StyleSheet.create({
   homeListCardContainerStyle:{
     flexDirection: "row",
-    paddingHorizontal: "6.5%",
     paddingVertical: "5%",
     borderBottomWidth: 1,
     borderBottomColor: "#F5F7F9",
@@ -140,7 +139,7 @@ const styles = StyleSheet.create({
     flexDirection: "row", 
     alignItems: "center", 
     marginBottom: "1.5%",
-    marginLeft: -1.5
+    // marginLeft: -1.5
   },
 
   profilePictureStyle: {
@@ -180,7 +179,7 @@ const styles = StyleSheet.create({
   },
 
   cardInfoStyle: {
-    marginRight: "6%", 
+    marginRight: "6%",
     fontSize: 12, 
     color: "#73798C",
     fontFamily: normal

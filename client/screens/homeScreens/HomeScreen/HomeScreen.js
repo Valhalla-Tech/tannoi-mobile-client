@@ -12,6 +12,7 @@ import {
 import SplashScreen from 'react-native-splash-screen';
 import { getHome, clearHome } from '../../../store/actions/HomeAction';
 import { bold } from '../../../assets/FontSize';
+import { GlobalPadding } from '../../../constants/Size';
 
 //Components
 import SearchBar from '../../../components/publicComponents/SearchBar';
@@ -68,53 +69,56 @@ const HomeScreen = ({ navigation }) => {
                 navigation={navigation}
               />
             </View>
-            {
-              requestedDiscussion.length !== 0 && (
-                <View style={styles.sectionStyle}>
-                  <List
-                    listTitle="You're Asked to Respond"
-                    listData={requestedDiscussion}
-                    navigation={navigation}
-                    openModal={openModal}
-                  />
-                </View>
-              )
-            }
-            {
-              followingDiscussion.length !== 0 && (
-                <View style={styles.sectionStyle}>
-                  <List
-                    listTitle="Discussions by People You Follow"
-                    listData={followingDiscussion}
-                    navigation={navigation}
-                    openModal={openModal}
-                  />
-                </View>
-              )
-            }
-            <List
-              listTitle="Discussions of the Week"
-              listData={discussionOfTheWeek}
-              navigation={navigation}
-              openModal={openModal}
-              isUsingMoreButton={true}
-            />
-            <TopUsers
-              topUserData={topUser}
-              navigation={navigation}
-            />
-            <List 
-              listTitle="Trending"
-              listData={trending}
-              navigation={navigation}
-              openModal={openModal}
-              isFilter={true}
-              isUsingMoreButton={true}
-            />
-            <RecommendedTopics
-              topicData={recommendedTopic}
-              navigation={navigation}
-            />
+            <View style={styles.homeScreenCardContainerStyle}>
+              {
+                requestedDiscussion.length !== 0 && (
+                  <View style={styles.sectionStyle}>
+                    <List
+                      listTitle="You're Asked to Respond"
+                      listData={requestedDiscussion}
+                      navigation={navigation}
+                      openModal={openModal}
+                    />
+                  </View>
+                )
+              }
+              {
+                followingDiscussion.length !== 0 && (
+                  <View style={styles.sectionStyle}>
+                    <List
+                      listTitle="Discussions by People You Follow"
+                      listData={followingDiscussion}
+                      navigation={navigation}
+                      openModal={openModal}
+                    />
+                  </View>
+                )
+              }
+              <List
+                listTitle="Discussions of the Week"
+                listData={discussionOfTheWeek}
+                navigation={navigation}
+                openModal={openModal}
+                isUsingMoreButton={true}
+                useSeeAllButton={true}
+              />
+              <TopUsers
+                topUserData={topUser}
+                navigation={navigation}
+              />
+              <List 
+                listTitle="Trending"
+                listData={trending}
+                navigation={navigation}
+                openModal={openModal}
+                isUsingMoreButton={true}
+                useSeeAllButton={true}
+              />
+              <RecommendedTopics
+                topicData={recommendedTopic}
+                navigation={navigation}
+              />
+            </View>
           </View>
         }
       />
@@ -130,6 +134,10 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   homeScreenContainerStyle: {
     flex: 1
+  },
+
+  homeScreenCardContainerStyle: {
+    paddingHorizontal: GlobalPadding
   },
 
   noticeModalTextStyle: {

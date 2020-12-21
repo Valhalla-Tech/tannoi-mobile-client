@@ -70,7 +70,6 @@ const TopUsers = props => {
 const styles = StyleSheet.create({
   topUsersContainerStyle: {
     marginTop: "2%",
-    marginHorizontal: "1.8%",
     borderRadius: 8
   },
 
