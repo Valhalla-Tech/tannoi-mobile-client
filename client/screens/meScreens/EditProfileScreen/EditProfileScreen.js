@@ -21,6 +21,7 @@ import DisplayBirthDate from '../../../helper/DisplayBirthDate';
 import axios from '../../../constants/ApiServices';
 import AsyncStorage from '@react-native-community/async-storage';
 import BaseUrl from '../../../constants/BaseUrl';
+import { ScreenHeight } from '../../../constants/Size';
 
 //Components
 import Header from '../../../components/publicComponents/Header';
@@ -31,6 +32,13 @@ import ListCardPlayer from '../../../components/publicComponents/ListCardPlayer'
 import RecorderModal from '../../../components/publicComponents/RecorderModal';
 import BigButton from '../../../components/publicComponents/BigButton';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
+
+//Icon
+import NoProfileIcon from '../../../assets/publicAssets/noProfilePicture.png';
+
+const calculateHeight = input => {
+  return input / 100 * ScreenHeight;
+};
 
 const EditProfileScreen = ({ navigation }) => {
   const userProfile = useSelector(state => state.ProfileReducer.userProfile);
@@ -44,16 +52,28 @@ const EditProfileScreen = ({ navigation }) => {
   const [fullName, setFullName] = useState(userProfile.name ? userProfile.name : '');
   const [location, setLocation] = useState(userProfile.location ? userProfile.location : '');
   const [shortBio, setShortBio] = useState(userProfile.bio ? userProfile.bio : '');
-  const [profileImage, setProfileImage] = useState(userProfile.profile_photo_path ? userProfile.profile_photo_path : '');
+  const [profileImage, setProfileImage] = useState('');
   const [bioVoiceFile, setBioVoiceFile] = useState(userProfile.bio_voice_path ? userProfile.bio_voice_path : '');
   const [recordingModal, setRecordingModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [firstRender, setFirstRender] = useState(true);
 
   const dispatch = useDispatch();
 
+  const updateState = () => {
+    if (fullName === undefined && firstRender || fullName === '' && firstRender) {
+      setFullName(userProfile.name);
+    } else if (location === undefined && firstRender || location === '' && firstRender) {
+      setLocation(userProfile.location);
+    } else if (shortBio === undefined && firstRender || shortBio === '' && firstRender) {
+      setShortBio(userProfile.bio);
+    }
+  };
+
   useEffect(() => {
     dispatch(getOneProfile());
-  }, [userProfile]);
+    updateState();
+  }, [userProfile, updateState]);
 
   const gender = [
     { name: 'Male', value: 'Male' },
@@ -97,14 +117,17 @@ const EditProfileScreen = ({ navigation }) => {
   };
 
   const inputFullName = input => {
+    input === '' && setFirstRender(false);
     setFullName(input);
   };
 
   const inputLocation = input => {
+    input === '' && setFirstRender(false);
     setLocation(input);
   };
 
   const inputShortBio = input => {
+    input === '' && setFirstRender(false);
     setShortBio(input);
   };
 
@@ -130,80 +153,101 @@ const EditProfileScreen = ({ navigation }) => {
     setRecordingModal(false);
   };
 
+  const editVoiceBio = async () => {
+    try {
+      let access_token = await AsyncStorage.getItem('access_token');
+
+      let voiceBioFormData = new FormData();
+        //Recording File
+        const uri = `file://${bioVoiceFile}`;
+        let audioParts = uri.split('.');
+        let fileType = audioParts[audioParts.length - 1];
+
+        voiceBioFormData.append('bio_voice_path', {
+          uri,
+          name: `recording.${fileType}`,
+          type: `audio/${fileType}`
+        });
+
+        let editVoiceBioRequest = await axios({
+          url: `${BaseUrl}/users/profile/edit-bio-voice`,
+          method: 'put',
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'token': access_token
+          },
+          data: voiceBioFormData
+        });
+
+        if (editVoiceBioRequest.data) {
+          setIsLoading(false);
+          navigation.navigate('Me');
+        }
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
+    }
+  };
+
   const saveEdit = async () => {
     try {
       setIsLoading(true);
       let access_token = await AsyncStorage.getItem('access_token');
-
-      //Image File
-      let filename = profileImage.split('/').pop();
-      let match = /\.(\w+)$/.exec(filename);
-      let type = match ? `image/${match[1]}` : `image`;
-
-      let formData = new FormData();
-
-      // formData.append('profile_photo_path', {uri: profileImage, name: filename, type});
-      formData.append('birth_date', `${birthDate}`);
-      formData.append('name', fullName);
-      selectedGender !== '' && formData.append('gender', selectedGender);
-      formData.append('bio', shortBio);
-      formData.append('location', location);
-
-      let saveEditRequest = await axios({
-        url: `${BaseUrl}/users/profile/edit`,
-        method: 'put',
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'token': access_token
-        },
-        data: formData
-      });
-
-      if (saveEditRequest.data) {
-        if (bioVoiceFile !== '') {
-          let voiceBioFormData = new FormData();
+      if (profileImage !== '' || birthDate !== '' || fullName !== '' || selectedGender !== '' || shortBio !== '' || location !== '') {
+        //Image File
+        let filename = profileImage.split('/').pop();
+        let match = /\.(\w+)$/.exec(filename);
+        let type = match ? `image/${match[1]}` : `image`;
   
-          //Recording File
-          const uri = `file://${bioVoiceFile}`;
-          let audioParts = uri.split('.');
-          let fileType = audioParts[audioParts.length - 1];
+        let formData = new FormData();
   
-          voiceBioFormData.append('bio_voice_path', {
-            uri,
-            name: `recording.${fileType}`,
-            type: `audio/${fileType}`
-          });
+        profileImage !== '' && formData.append('profile_photo_path', {uri: profileImage, name: filename, type});
+        birthDate !== '' && formData.append('birth_date', `${birthDate}`);
+        fullName !== '' && formData.append('name', fullName);
+        selectedGender !== '' && formData.append('gender', selectedGender);
+        shortBio !== '' && formData.append('bio', shortBio);
+        location !== '' && formData.append('location', location);
   
-          let editVoiceBioRequest = await axios({
-            url: `${BaseUrl}/users/profile/edit-bio-voice`,
-            method: 'put',
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              'token': access_token
-            },
-            data: voiceBioFormData
-          });
-  
-          if (editVoiceBioRequest.data) {
-            setIsLoading(false);
-            navigation.navigate('Me');
+        let saveEditRequest = await axios({
+          url: `${BaseUrl}/users/profile/edit`,
+          method: 'put',
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'token': access_token
+          },
+          data: formData
+        });
+
+        if (saveEditRequest.data) {
+          if (bioVoiceFile !== '' && bioVoiceFile !== userProfile.bio_voice_path) {
+            editVoiceBio();
           }
+          setIsLoading(false);
+          navigation.navigate('Me', { fromEditScreen: true });
         }
-        setIsLoading(false);
+      } else if (bioVoiceFile !== '' && bioVoiceFile !== userProfile.bio_voice_path) {
+        editVoiceBio();
+      } else {
         navigation.navigate('Me');
       }
     } catch (error) {
       setIsLoading(false);
-      console.log(error.response.data.msg);
+      console.log(error);
     }
   };
 
   const EditProfilePicture = () => {
     return (
-      <TouchableOpacity onPress={uploadProfileImage} style={styles.editProfileButtonStyle}>
-        <Image source={{uri: profileImage}} style={styles.profileImageStyle} />
-        <Text style={styles.changeProfileTextStyle}>Change profile pic</Text>
-      </TouchableOpacity>
+      <>
+        {
+          userProfile !== '' ? (
+            <TouchableOpacity onPress={uploadProfileImage} style={styles.editProfileButtonStyle}>
+              <Image source={profileImage === '' ? {uri: userProfile.profile_photo_path} : {uri: profileImage}} style={styles.profileImageStyle} />
+              <Text style={styles.changeProfileTextStyle}>Change profile pic</Text>
+            </TouchableOpacity>
+          ) : (<LoadingSpinner loadingSpinnerForComponent={true} />)
+        }
+      </>
     );
   };
 
@@ -217,9 +261,9 @@ const EditProfileScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         {
-          bioVoiceFile ? (
+          bioVoiceFile || userProfile.bio_voice_path ? (
             <ListCardPlayer
-              recordingFile={bioVoiceFile}
+              recordingFile={bioVoiceFile === '' ? userProfile.bio_voice_path : bioVoiceFile}
               fromBio={true}
               isSlider={true}
             />
@@ -247,8 +291,8 @@ const EditProfileScreen = ({ navigation }) => {
               inputTitle === 'Short bio' && inputShortBio
             }
             formInputValue={
-              inputTitle === 'Full name' && fullName ||
-              inputTitle === 'Location' && location ||
+              inputTitle === 'Full name' ? fullName :
+              inputTitle === 'Location' ? location :
               inputTitle === 'Short bio' && shortBio
             }
             capitalize={true}
@@ -260,7 +304,7 @@ const EditProfileScreen = ({ navigation }) => {
               show ? (
                 <DateTimePicker 
                   testID="dateTimePicker"
-                  value={currentDate}
+                  value={birthDate === '' && userProfile.birth_date !== null ? new Date(userProfile.birth_date) : currentDate}
                   mode={mode}
                   is24Hour={true}
                   display="default"
@@ -271,7 +315,7 @@ const EditProfileScreen = ({ navigation }) => {
                   style={styles.formInputStyle}
                   onPress={showDatepicker}
                 >
-                  <Text style={styles.inputTextStyle}>{birthDateDisplay}</Text>
+                  <Text style={styles.inputTextStyle}>{birthDate === '' && userProfile.birth_date !== null ? DisplayBirthDate(new Date(userProfile.birth_date)) : birthDateDisplay}</Text>
                 </TouchableOpacity>
               )
             }
@@ -280,7 +324,7 @@ const EditProfileScreen = ({ navigation }) => {
         {isPicker && (
           <View>
             <Picker
-              selectedValue={selectedGender}
+              selectedValue={selectedGender === '' ? userProfile.gender : selectedGender}
               style={styles.pickerStyle}
               onValueChange={(itemValue, itemIndex) => setSelectedGender(itemValue)}
             >
@@ -299,23 +343,29 @@ const EditProfileScreen = ({ navigation }) => {
 
   const EditProfileForm = () => {
     return (
-      <View>
-        {EditProfileInput('Full name')}
-        {EditProfileInput('Date of birth', true)}
-        {EditProfileInput('Gender', null, true)}
-        {EditProfileInput('Location')}
-        {EditProfileInput('Short bio')}
-        {AudioBio()}
-        <BigButton
-          buttonTitle="Save Changes"
-          buttonStyle={{
-            color: "#FFFFFF",
-            backgroundColor: "#5152D0",
-            borderWidth: 0,
-            marginTop: "5%"
-          }}
-          buttonFunction={saveEdit}
-        />
+      <View style={userProfile !== '' ? styles.formContainerStyle : {...styles.formContainerStyle, justifyContent: "center", alignItems: "center"}}>
+        {
+          userProfile !== '' ? (
+            <>
+              {EditProfileInput('Full name')}
+              {EditProfileInput('Date of birth', true)}
+              {EditProfileInput('Gender', null, true)}
+              {EditProfileInput('Location')}
+              {EditProfileInput('Short bio')}
+              {AudioBio()}
+              <BigButton
+                buttonTitle="Save Changes"
+                buttonStyle={{
+                  color: "#FFFFFF",
+                  backgroundColor: "#5152D0",
+                  borderWidth: 0,
+                  marginTop: "5%"
+                }}
+                buttonFunction={saveEdit}
+              />
+            </>
+          ) : (<LoadingSpinner loadingSpinnerForComponent={true} />)
+        }
       </View>
     );
   };
@@ -333,11 +383,19 @@ const EditProfileScreen = ({ navigation }) => {
           <View style={styles.editProfileContainerStyle}>
             <Card
               child={EditProfilePicture}
-              customStyle={{...styles.cardStyle, marginBottom: "2%"}}
+              customStyle={userProfile === '' ? {
+                ...styles.cardStyle, marginBottom: "2%",
+                maxHeight: calculateHeight(5),
+                justifyContent: "center",
+                alignItems: "center"
+              } : {
+                ...styles.cardStyle,
+                marginBottom: "2%"
+              }}
             />
             <Card
               child={EditProfileForm}
-              customStyle={styles.cardStyle}
+              customStyle={{...styles.cardStyle, minHeight: calculateHeight(20)}}
             />
           </View>
           {isLoading && <LoadingSpinner />}
@@ -406,6 +464,10 @@ const styles = StyleSheet.create({
     color: "#0E4EF4",
     fontSize: 14,
     fontFamily: normal
+  },
+
+  formContainerStyle: {
+    minHeight: calculateHeight(20)
   },
 
   formInputStyle: {

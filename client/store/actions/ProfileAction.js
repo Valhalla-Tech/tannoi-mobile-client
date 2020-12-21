@@ -2,7 +2,7 @@ import axios from '../../constants/ApiServices';
 import AsyncStorage from '@react-native-community/async-storage';
 import BaseUrl from '../../constants/BaseUrl';
 
-export const getOneProfile = (id) => {
+export const getOneProfile = (id, forMeScreen) => {
   return async (dispatch) => {
     try {
       let access_token = await AsyncStorage.getItem('access_token');
@@ -16,12 +16,21 @@ export const getOneProfile = (id) => {
       })
 
       if (getOneProfileRequest.data) {
-        dispatch({
-          type: 'GET_ONE_PROFILE',
-          payload: {
-            userProfile: getOneProfileRequest.data
-          }
-        });
+        if (forMeScreen) {
+          dispatch({
+            type: 'GET_LOGGED_IN_USER_PROFILE',
+            payload: {
+              loggedinUserProfile: getOneProfileRequest.data
+            }
+          });
+        } else {
+          dispatch({
+            type: 'GET_ONE_PROFILE',
+            payload: {
+              userProfile: getOneProfileRequest.data
+            }
+          });
+        }
       };
     } catch (error) {
       console.log(error);
