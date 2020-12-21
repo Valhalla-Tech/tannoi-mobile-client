@@ -101,6 +101,9 @@ const HomeScreen = ({ navigation }) => {
                 openModal={openModal}
                 isUsingMoreButton={true}
                 useSeeAllButton={true}
+                sectionType="discussion"
+                sectionQuery="discussionOfTheWeek"
+                queryId="=true"
               />
               <TopUsers
                 topUserData={topUser}
@@ -113,6 +116,7 @@ const HomeScreen = ({ navigation }) => {
                 openModal={openModal}
                 isUsingMoreButton={true}
                 useSeeAllButton={true}
+                sectionType="discussion"
               />
               <RecommendedTopics
                 topicData={recommendedTopic}

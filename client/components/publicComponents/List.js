@@ -23,7 +23,10 @@ const HomeList = props => {
     isUsingMoreButton,
     isHeader = true,
     customStyle,
-    useSeeAllButton
+    useSeeAllButton,
+    sectionType,
+    sectionQuery,
+    queryId
   } = props;
 
   const MoreButton = () => {
@@ -46,6 +49,9 @@ const HomeList = props => {
             istTitle={listTitle}
             useSeeAllButton={useSeeAllButton}
             navigation={navigation}
+            sectionType={sectionType}
+            sectionQuery={sectionQuery}
+            queryId={queryId}
           />
         }
         {
@@ -91,7 +97,7 @@ const HomeList = props => {
   }
 
   return (
-    <Card child={HomeListContent} customStyle={styles.homeListContainerStyle} />
+    <Card child={HomeListContent} customStyle={{...styles.homeListContainerStyle, ...customStyle}} />
   );
 };
 

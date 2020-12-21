@@ -2,12 +2,13 @@ import axios from '../../constants/ApiServices';
 import AsyncStorage from '@react-native-community/async-storage';
 import BaseUrl from '../../constants/BaseUrl';
 
-export const getAllDiscussion = (option, optionId) => {
+export const getAllDiscussion = (option, optionId, sort, page) => {
   return async (dispatch) => {
+    console.log(`${BaseUrl}/discussions/all${`?sort=${sort ? sort : 'newest'}`}${option ? `&${option}` : ''}${optionId ? optionId : ''}${`&page=${page ? page : '1'}`}`)
     try {
       let access_token = await AsyncStorage.getItem('access_token');
       let getAllDiscussionRequest = await axios({
-        url: `${BaseUrl}/discussions/all${option ? option : ''}${optionId ? optionId : ''}`,
+        url: `${BaseUrl}/discussions/all${`?sort=${sort ? sort : 'newest'}`}${option ? `&${option}` : ''}${optionId ? optionId : ''}${`&page=${page ? page : '1'}`}`,
         method: 'get',
         headers: {
           'token': access_token
@@ -23,7 +24,7 @@ export const getAllDiscussion = (option, optionId) => {
         });
       }
     } catch (error) {
-      console.log(error.response.data.msg);
+      console.log(error);
       if (error.response.data.msg === 'You have to login first') {
         dispatch({
           type: 'LOGOUT',

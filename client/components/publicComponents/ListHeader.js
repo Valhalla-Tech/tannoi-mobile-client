@@ -20,7 +20,10 @@ const ListHeader = props => {
     headerButton,
     customStyle,
     useSeeAllButton,
-    navigation
+    navigation,
+    sectionType,
+    sectionQuery,
+    queryId
   } = props;
 
   const ListFilter = () => {
@@ -35,7 +38,10 @@ const ListHeader = props => {
   const SeeAllButton = () => {
     return (
       <TouchableOpacity onPress={() => navigation.navigate('HomeSectionDetailScreen', {
-        sectionTitle: listTitle
+        sectionTitle: listTitle,
+        sectionType: sectionType,
+        sectionQuery: sectionQuery,
+        queryId: queryId
       })}>
         <Text style={styles.seeAllButtonTextStyle}>See all</Text>
       </TouchableOpacity>
@@ -85,7 +91,6 @@ const styles = StyleSheet.create({
   },
 
   filterStyle: {
-    marginRight: ".8%",
     flexDirection: "row",
     alignItems: "center"
   },
