@@ -39,9 +39,8 @@ export const getSingleTopic = (topicId) => {
   return async (dispatch) => {
     try {
       let access_token = await AsyncStorage.getItem('access_token');
-
       let getSingleTopicRequest = await axios({
-        url: `${BaseUrl}/topics/${topicId}`,
+        url: `${BaseUrl}/topics/single/${topicId}`,
         method: 'get',
         headers: {
           'token': access_token

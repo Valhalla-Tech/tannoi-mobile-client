@@ -32,7 +32,7 @@ const TopicDetail = props => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllDiscussion('?topic_id=', topicId));
+    dispatch(getAllDiscussion('topic_id=', topicId));
     dispatch(getSingleTopic(topicId));
   }, []);
 

@@ -386,8 +386,9 @@ const NewDiscussionScreen = ({ navigation }) => {
         </View>
         <TouchableOpacity
           onPress={() => createNewDiscussion()}
+          disabled={recordingFile === '' && true}
         >
-          <Text style={styles.publishButtonTextStyle}>Publish</Text>
+          <Text style={recordingFile !== '' ? styles.publishButtonTextStyle : {...styles.publishButtonTextStyle, color:"#cccccc"}}>Publish</Text>
         </TouchableOpacity>
       </View>
     );

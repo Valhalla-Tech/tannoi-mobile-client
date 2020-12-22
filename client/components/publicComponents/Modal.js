@@ -15,7 +15,7 @@ const NoticeModal = props => {
     modalButton,
     customStyle,
     customContainerStyle,
-    animation = "slide"
+    animation = "fade"
   } = props;
 
   return (
