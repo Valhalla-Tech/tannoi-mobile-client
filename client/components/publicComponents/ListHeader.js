@@ -25,14 +25,14 @@ const ListHeader = props => {
     sectionQuery,
     queryId,
     openModal,
-    current,
+    currentSort,
     endpoint
   } = props;
 
   const ListSort = () => {
     return (
       <TouchableOpacity onPress={() => openModal()} style={styles.filterStyle}>
-        <Text style={styles.filterTextStyle}>Most recent</Text>
+        <Text style={styles.filterTextStyle}>{currentSort}</Text>
         <DownArrow />
       </TouchableOpacity>
     );

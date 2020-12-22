@@ -28,6 +28,8 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
   const [selectedSort, setSelectedSort] = useState('newest');
   const [sortValue, setSortValue] = useState('newest');
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedSortName, setSelectedSortName] = useState('Newest');
+  const [sortName, setSortName] = useState('Newest');
 
   const { sectionTitle, sectionType, sectionQuery, queryId, endpoint } = route.params;
   const dispatch = useDispatch();
@@ -45,17 +47,20 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
   const closeModal = (notFinish) => {
     if (selectedSort !== sortValue && notFinish) {
       setSelectedSort(sortValue);
+      setSelectedSortName(sortName);
     };
 
     setSortModal(false);
   };
 
-  const saveSort = input => {
-    setSortValue(input);
-    setSelectedSort(input);
+  const saveSort = (value, name) => {
+    setSortValue(value);
+    setSelectedSort(value);
+    setSelectedSortName(name)
+    setSortName(name);
     setCurrentPage(1);
     dispatch(clearDiscussion());
-    dispatch(getAllDiscussion(null, null, selectedSort, 1, endpoint ? endpoint : null));
+    dispatch(getAllDiscussion(sectionQuery ? sectionQuery : null, queryId ? queryId : null, selectedSort, 1, endpoint ? endpoint : null));
     closeModal();
   }
 
@@ -81,7 +86,10 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
 
   const ModalButton = (title, value) => {
     return (
-      <TouchableOpacity onPress={() => setSelectedSort(value)} style={
+      <TouchableOpacity onPress={() => {
+        setSelectedSort(value);
+        setSelectedSortName(title);
+      }} style={
         selectedSort === value ? {
           ...styles.modalButtonStyle,
           backgroundColor: "#6505E1",
@@ -117,7 +125,7 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
             marginTop: "8%"
           }}
           buttonTitle="Sort"
-          buttonFunction={() => saveSort(selectedSort)}
+          buttonFunction={() => saveSort(selectedSort, selectedSortName)}
         />
       </View>
     );
@@ -138,6 +146,7 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
           openModal={openModal}
           closeModal={closeModal}
           isSort={true}
+          currentSort={sortName}
         />
       </View>
       <FlatList
