@@ -2,13 +2,14 @@ import axios from '../../constants/ApiServices';
 import AsyncStorage from '@react-native-community/async-storage';
 import BaseUrl from '../../constants/BaseUrl';
 
-export const getAllDiscussion = (option, optionId, sort, page) => {
+export const getAllDiscussion = (option, optionId, sort, page, endpoint) => {
   return async (dispatch) => {
-    console.log(`${BaseUrl}/discussions/all${`?sort=${sort ? sort : 'newest'}`}${option ? `&${option}` : ''}${optionId ? optionId : ''}${`&page=${page ? page : '1'}`}`)
     try {
       let access_token = await AsyncStorage.getItem('access_token');
       let getAllDiscussionRequest = await axios({
-        url: `${BaseUrl}/discussions/all${`?sort=${sort ? sort : 'newest'}`}${option ? `&${option}` : ''}${optionId ? optionId : ''}${`&page=${page ? page : '1'}`}`,
+        url: `${BaseUrl}/discussions/all${
+          `${endpoint ? endpoint : ''}?sort=${sort ? sort : 'newest'}`}${option ? `&${option}` : ''}${optionId ? optionId : ''}${`&page=${page ? page : '1'}`
+        }`,
         method: 'get',
         headers: {
           'token': access_token
@@ -16,12 +17,23 @@ export const getAllDiscussion = (option, optionId, sort, page) => {
       });
 
       if (getAllDiscussionRequest.data) {
-        dispatch({
-          type: 'GET_ALL_DISCUSSION',
-          payload: {
-            discussions: getAllDiscussionRequest.data.data
-          }
-        });
+        if (page && page > 1) {
+          dispatch({
+            type: 'ADD_DISCUSSION_LIST',
+            payload: {
+              discussions: getAllDiscussionRequest.data.data,
+              discussionCount: getAllDiscussionRequest.data.numOfResult
+            }
+          });
+        } else {
+          dispatch({
+            type: 'GET_ALL_DISCUSSION',
+            payload: {
+              discussions: getAllDiscussionRequest.data.data,
+              discussionCount: getAllDiscussionRequest.data.numOfResult
+            }
+          });
+        } 
       }
     } catch (error) {
       console.log(error);

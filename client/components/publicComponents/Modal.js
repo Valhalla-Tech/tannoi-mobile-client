@@ -13,12 +13,14 @@ const NoticeModal = props => {
     closeModal,
     child,
     modalButton,
-    customStyle
+    customStyle,
+    customContainerStyle,
+    animation = "slide"
   } = props;
 
   return (
     <Modal
-      animationType="fade"
+      animationType={animation}
       transparent={true}
       visible={openModal}
     >
@@ -27,7 +29,7 @@ const NoticeModal = props => {
           closeModal();
         }} ></TouchableOpacity>
       </View>
-      <View style={styles.modalContainerStyle}>
+      <View style={{...styles.modalContainerStyle, ...customContainerStyle}}>
         <View style={{...styles.noticeModalStyle, ...customStyle}}>
           {child && child()}
           {modalButton && modalButton()}

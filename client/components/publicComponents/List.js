@@ -12,6 +12,7 @@ import HomeListCard from './ListCard';
 import LoadingSpinner from './LoadingSpinner';
 import Card from './Card';
 import ListHeader from './ListHeader';
+import BigButton from '../publicComponents/BigButton';
 
 const HomeList = props => {
   const { 
@@ -19,14 +20,17 @@ const HomeList = props => {
     listData,
     navigation,
     openModal,
-    isFilter,
+    isSort,
     isUsingMoreButton,
     isHeader = true,
     customStyle,
     useSeeAllButton,
     sectionType,
     sectionQuery,
-    queryId
+    queryId,
+    useMoreButton,
+    moreButtonFunction,
+    endpoint
   } = props;
 
   const MoreButton = () => {
@@ -45,13 +49,14 @@ const HomeList = props => {
         {
           isHeader && <ListHeader
             listTitle={listTitle}
-            isFilter={isFilter}
+            isSort={isSort}
             istTitle={listTitle}
             useSeeAllButton={useSeeAllButton}
             navigation={navigation}
             sectionType={sectionType}
             sectionQuery={sectionQuery}
             queryId={queryId}
+            endpoint={endpoint}
           />
         }
         {
@@ -85,6 +90,22 @@ const HomeList = props => {
                     />
                   </View>
                 )}
+                ListFooterComponent={
+                  useMoreButton && (
+                    <View style={styles.loadMoreButtonContainerStyle}>
+                      <BigButton
+                        buttonStyle={{
+                          color: "#6505E1",
+                          borderColor: "#6505E1",
+                          paddingVertical: ".5%",
+                          paddingHorizontal: "5%"
+                        }}
+                        buttonTitle="More"
+                        buttonFunction={moreButtonFunction}
+                      />
+                    </View>
+                  )
+                }
               />
             </>
           )
@@ -133,6 +154,12 @@ const styles = StyleSheet.create({
   moreButtonTextStyle: {
     color: "#5152D0", 
     fontSize: 14
+  },
+
+  loadMoreButtonContainerStyle: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "5%"
   }
 });
 

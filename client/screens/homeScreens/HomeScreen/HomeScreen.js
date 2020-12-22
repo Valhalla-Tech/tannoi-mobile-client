@@ -84,14 +84,16 @@ const HomeScreen = ({ navigation }) => {
               }
               {
                 followingDiscussion.length !== 0 && (
-                  <View style={styles.sectionStyle}>
-                    <List
-                      listTitle="Discussions by People You Follow"
-                      listData={followingDiscussion}
-                      navigation={navigation}
-                      openModal={openModal}
-                    />
-                  </View>
+                  <List
+                    listTitle="Discussions by People You Follow"
+                    listData={followingDiscussion}
+                    navigation={navigation}
+                    openModal={openModal}
+                    isUsingMoreButton={true}
+                    useSeeAllButton={true}
+                    sectionType="discussion"
+                    endpoint="/following"
+                  />
                 )
               }
               <List

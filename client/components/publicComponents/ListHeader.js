@@ -16,19 +16,22 @@ import Header from '../../components/publicComponents/Header';
 const ListHeader = props => {
   const {
     listTitle,
-    isFilter,
+    isSort,
     headerButton,
     customStyle,
     useSeeAllButton,
     navigation,
     sectionType,
     sectionQuery,
-    queryId
+    queryId,
+    openModal,
+    current,
+    endpoint
   } = props;
 
-  const ListFilter = () => {
+  const ListSort = () => {
     return (
-      <TouchableOpacity style={styles.filterStyle}>
+      <TouchableOpacity onPress={() => openModal()} style={styles.filterStyle}>
         <Text style={styles.filterTextStyle}>Most recent</Text>
         <DownArrow />
       </TouchableOpacity>
@@ -41,7 +44,8 @@ const ListHeader = props => {
         sectionTitle: listTitle,
         sectionType: sectionType,
         sectionQuery: sectionQuery,
-        queryId: queryId
+        queryId: queryId,
+        endpoint: endpoint
       })}>
         <Text style={styles.seeAllButtonTextStyle}>See all</Text>
       </TouchableOpacity>
@@ -53,8 +57,8 @@ const ListHeader = props => {
       <View style={styles.headerStyle}>
         <Text style={styles.headerTitleStyle}>{listTitle}</Text>
         {
-          isFilter && (
-            <ListFilter />
+          isSort && (
+            <ListSort />
           )
         }
         {

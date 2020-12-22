@@ -9,7 +9,7 @@ import {
 import { bold, normal } from '../../../assets/FontSize';
 import { GlobalPadding } from '../../../constants/Size';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllDiscussion } from '../../../store/actions/DiscussionAction';
+import { getAllDiscussion, clearDiscussion } from '../../../store/actions/DiscussionAction';
 
 //Components
 import Header from '../../../components/publicComponents/Header';
@@ -17,18 +17,52 @@ import List from '../../../components/publicComponents/List';
 import BackButton from '../../../components/publicComponents/BackButton';
 import Card from '../../../components/publicComponents/Card';
 import ListHeader from '../../../components/publicComponents/ListHeader';
+import Modal from '../../../components/publicComponents/Modal';
+import BigButton from '../../../components/publicComponents/BigButton';
 
 const HomeSectionDetailScreen = ({ navigation, route }) => {
   const discussions = useSelector(state => state.DiscussionReducer.discussions);
+  const discussionCount = useSelector(state => state.DiscussionReducer.discussionCount);
 
-  const { sectionTitle, sectionType, sectionQuery, queryId } = route.params;
+  const [sortModal, setSortModal] = useState(false);
+  const [selectedSort, setSelectedSort] = useState('newest');
+  const [sortValue, setSortValue] = useState('newest');
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const { sectionTitle, sectionType, sectionQuery, queryId, endpoint } = route.params;
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (sectionType === 'discussion') {
-      dispatch(getAllDiscussion(sectionQuery ? sectionQuery : null, queryId ? queryId : null));
+      dispatch(getAllDiscussion(sectionQuery ? sectionQuery : null, queryId ? queryId : null, null, null, endpoint ? endpoint : null));
     }
   }, []);
+
+  const openModal = () => {
+    setSortModal(true);
+  };
+
+  const closeModal = (notFinish) => {
+    if (selectedSort !== sortValue && notFinish) {
+      setSelectedSort(sortValue);
+    };
+
+    setSortModal(false);
+  };
+
+  const saveSort = input => {
+    setSortValue(input);
+    setSelectedSort(input);
+    setCurrentPage(1);
+    dispatch(clearDiscussion());
+    dispatch(getAllDiscussion(null, null, selectedSort, 1, endpoint ? endpoint : null));
+    closeModal();
+  }
+
+  const nextPage = () => {
+    setCurrentPage(prevState => prevState + 1);
+    dispatch(getAllDiscussion(null, null, selectedSort, currentPage + 1, endpoint ? endpoint : null));
+  };
 
   const HeaderContent = () => {
     return (
@@ -45,6 +79,50 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
     )
   };
 
+  const ModalButton = (title, value) => {
+    return (
+      <TouchableOpacity onPress={() => setSelectedSort(value)} style={
+        selectedSort === value ? {
+          ...styles.modalButtonStyle,
+          backgroundColor: "#6505E1",
+          borderRadius: 8
+        } : styles.modalButtonStyle
+      }>
+        <Text style={selectedSort === value ? {
+          ...styles.modalButtonTextStyle,
+          color: "#FFFFFF"
+        } : styles.modalButtonTextStyle}>{title}</Text>
+      </TouchableOpacity>
+    );
+  };
+
+  const ModalContent = () => {
+    return (
+      <View style={styles.modalContenStyle}>
+        <View style={styles.modalHeaderStyle}>
+          <Text style={styles.modalHeaderTextStyle}>Sort by</Text>
+        </View>
+        <View style={styles.modalButtonContainerStyle}>
+          {ModalButton('Newest', 'newest')}
+          {ModalButton('Like', 'like')}
+          {ModalButton('View', 'view')}
+          {ModalButton('Best mood', 'best_mood')}
+          {ModalButton('Worst mood', 'worst_mood')}
+        </View>
+        <BigButton
+          buttonStyle={{
+            color: "#FFFFFF",
+            backgroundColor: "#6505E1",
+            borderWidth: 0,
+            marginTop: "8%"
+          }}
+          buttonTitle="Sort"
+          buttonFunction={() => saveSort(selectedSort)}
+        />
+      </View>
+    );
+  };
+
   return (
     <View>
       <Header
@@ -57,13 +135,16 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
             marginTop: "2%"
           }} 
           isFilter={true}
+          openModal={openModal}
+          closeModal={closeModal}
+          isSort={true}
         />
       </View>
       <FlatList
         ListHeaderComponent={
           <View style={styles.cardContainerStyle}>
             <List
-              isFilter={true}
+              isSort={true}
               listData={discussions}
               navigation={navigation}
               isHeader={false}
@@ -73,9 +154,28 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
                 borderBottomLeftRadius: 8,
                 borderBottomRightRadius: 8
               }}
+              useMoreButton={discussionCount > 10 && discussions.length < discussionCount && true}
+              moreButtonFunction={nextPage}
             />
           </View>
         }
+      />
+      <Modal
+        openModal={sortModal}
+        closeModal={() => closeModal(true)}
+        customContainerStyle={{
+          justifyContent: "flex-end"
+        }}
+        customStyle={{
+          borderRadius: 0,
+          width: "100%",
+          height: "55%",
+          borderTopLeftRadius: 30,
+          borderTopRightRadius: 30,
+          justifyContent: "flex-start",
+          alignItems: "flex-start"
+        }}
+        child={ModalContent}
       />
     </View>
   );
@@ -109,6 +209,39 @@ const styles = StyleSheet.create({
   cardContainerStyle: {
     paddingHorizontal: GlobalPadding,
     paddingBottom: "30%"
+  },
+
+  modalContenStyle: {
+    flex: 1,
+    width: "100%"
+  },
+
+  modalHeaderStyle: {
+    paddingHorizontal: "2%"
+  },
+
+  modalHeaderTextStyle: {
+    fontFamily: bold,
+    color: "#6505E1",
+    fontSize: 20
+  },
+
+  modalButtonContainerStyle: {
+    // alignItems: "center",
+    width: "100%",
+    marginTop: "2%"
+  },
+
+  modalButtonStyle: {
+    width: "100%",
+    paddingVertical: "2%",
+    paddingHorizontal: "2%"
+  },
+  
+  modalButtonTextStyle: {
+    fontFamily: bold,
+    fontSize: 16,
+    color: "#464D60"
   }
 });
 
