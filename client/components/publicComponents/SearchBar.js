@@ -63,6 +63,41 @@ const SearchBar = props => {
     setCurrentSelectedDiscussion(discussion);
   };
 
+  const CategoryButton = (buttonName) => {
+    return (
+      <TouchableOpacity 
+        style={
+          category === buttonName ? {
+            ...styles.searchCategoryStyle,
+            borderBottomColor: "#5152D0",
+            borderRightWidth: 1,
+            borderRightColor: "#F5F7F9"
+          } : {
+            ...styles.searchCategoryStyle, 
+            borderBottomColor: "#F5F7F9",
+            borderRightWidth: 1, 
+            borderRightColor: "#F5F7F9"
+          }
+        }
+        onPress={() => {
+          setSearchCategory(buttonName);
+        }}
+        disabled={category === buttonName ? true : false}
+      >
+        <Text style={category === buttonName ? {
+            ...styles.searchCategoryTitleStyle, 
+            color: "#5152D0"
+          } : {
+            ...styles.searchCategoryTitleStyle,
+            color: "#464D60"
+          }
+        }>
+          {buttonName}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <View style={styles.searchBarContainerStyle}>
       <View style={searchBarStyle}>
@@ -123,60 +158,8 @@ const SearchBar = props => {
       {
         searchBoxIsFilled && (
           <View style={styles.searchResultCategoryContainerStyle}>
-            <TouchableOpacity 
-              style={
-                category === 'Discussions' ? {
-                  ...styles.searchCategoryStyle,
-                  borderBottomColor: "#5152D0",
-                  borderRightWidth: 1,
-                  borderRightColor: "#F5F7F9"
-                } : {
-                  ...styles.searchCategoryStyle, 
-                  borderBottomColor: "#F5F7F9",
-                  borderRightWidth: 1, 
-                  borderRightColor: "#F5F7F9"
-                }
-              }
-              onPress={() => {
-                setSearchCategory('Discussions');
-              }}
-              disabled={category === 'Discussions' ? true : false}
-            >
-              <Text style={category === 'Discussions' ? {
-                  ...styles.searchCategoryTitleStyle, 
-                  color: "#5152D0"
-                } : {
-                  ...styles.searchCategoryTitleStyle,
-                  color: "#464D60"
-                }
-              }>
-                Discussions
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity 
-              style={category === 'User' ? {
-                ...styles.searchCategoryStyle, 
-                borderBottomColor: "#5152D0"
-              } : {
-                ...styles.searchCategoryStyle, 
-                borderBottomColor: "#F5F7F9"
-              }}
-              onPress={() => {
-                setSearchCategory('User');
-              }}
-              disabled={category === 'User' ? true : false}
-            >
-              <Text style={category === 'User' ? {
-                  ...styles.searchCategoryTitleStyle,
-                  color: "#5152D0"
-                } : {
-                  ...styles.searchCategoryTitleStyle,
-                  color: "#464D60"
-                }
-              }>
-                User
-              </Text>
-            </TouchableOpacity>
+            {CategoryButton('User')}
+            {CategoryButton('Discussions')}
           </View>
         )
       }
