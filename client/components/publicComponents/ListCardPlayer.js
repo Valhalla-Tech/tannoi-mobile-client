@@ -31,7 +31,8 @@ class HomeListPlayerCard extends Component {
     this.state = {
       isPlaying: false,
       playerIsReady: false,
-      progress: 0
+      progress: 0,
+      playerReload: false
     };
   };
 
@@ -40,6 +41,7 @@ class HomeListPlayerCard extends Component {
     this.player = null;
     this.loadPlayer();
     this.lastSeek = 0;
+    // console.log(this.props.recordingFile)
   };
 
   componentWillUnmount() {
@@ -58,6 +60,7 @@ class HomeListPlayerCard extends Component {
   };
 
   updateState() {
+    // console.log(this.player.player, this.player.canPlay)
     if (this._isMounted) {
       this.setState({
         isPlaying: this.player.isPlaying ? true : false,
@@ -86,19 +89,27 @@ class HomeListPlayerCard extends Component {
     }
   };
 
-  loadPlayer() {
+  loadPlayer(propsChanged) {
     if (this.player) {
       this.player.destroy();
     };
 
     this.player = new Player(this.state.recordingFile, {
       autoDestroy: false
-    }).prepare((error) => {
+    })
+
+    this.player.speed = 0.0;
+    
+    this.player.prepare((error) => {
       if (error) {
         console.log(error);
       };
 
       this.updateState();
+
+      if (propsChanged) {
+        this.playRecording()
+      }
     });
 
     this.player.on('ended', () => {
@@ -112,16 +123,26 @@ class HomeListPlayerCard extends Component {
   playRecording = () => {
     if (this.state.recordingFile !== this.state.savedPrevRecordingFile && this._isMounted) {
       this.setState({
-        savedPrevRecordingFile: this.state.prevRecordingFile
+        savedPrevRecordingFile: this.state.prevRecordingFile,
+        playerReload: true
       });
-      this.loadPlayer();
+      this.loadPlayer(true);
     } else {
       this.player.playPause((error) => {
         if (error) {
           console.log(error);
+          this.loadPlayer();
         };
 
         if (this.player.isPlaying && !error) {
+          this.setState({
+            playerReload: false
+          });
+
+          if (this.player) {
+            this.player.speed = 1.0;
+          }
+
           this.progressInterval = setInterval(() => {
             if (this.player && this.shouldUpdateProgressBar() && this._isMounted) {
               let currentProgress = Math.max(0, this.player.currentTime) / this.player.duration;
@@ -174,7 +195,7 @@ class HomeListPlayerCard extends Component {
       <View style={styles.playerContainerStyle}>
         <TouchableOpacity onPress={() => this.playRecording()}>
           {
-            this.state.playerIsReady ? (
+            this.state.playerIsReady && !this.state.playerReload ? (
               this.state.isPlaying ? (
                 <PauseButton />
               ) : (
