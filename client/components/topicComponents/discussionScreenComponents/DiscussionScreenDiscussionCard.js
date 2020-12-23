@@ -10,6 +10,7 @@ import { bold, normal } from '../../../assets/FontSize';
 import { useSelector, useDispatch } from 'react-redux';
 import { getHome, clearHome } from '../../../store/actions/HomeAction';
 import { getDiscussion } from '../../../store/actions/DiscussionAction';
+import { getAuthorizedUsers } from '../../../store/actions/PrivateDiscussionAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
@@ -183,6 +184,7 @@ const DiscussionScreenCard = props => {
 
   const openPrivateModal = () => {
     setPrivateModal(true);
+    dispatch(getAuthorizedUsers(discussionId, false, true));
   };
 
   const closePrivateModal = () => {

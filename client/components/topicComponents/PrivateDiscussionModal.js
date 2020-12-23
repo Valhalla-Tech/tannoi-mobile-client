@@ -48,13 +48,13 @@ const PrivateDiscussionModal = props => {
   
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (fromDiscussionScreen) {
-      dispatch(getAuthorizedUsers(discussionId, false, true));
-    } else {
-      dispatch(searchUser(false, true));
-    }
-  }, []);
+  // useEffect(() => {
+    // if (fromDiscussionScreen) {
+    //   dispatch(getAuthorizedUsers(discussionId, false, true));
+    // } else {
+    //   dispatch(searchUser(false, true));
+    // }
+  // }, []);
 
   const searchUserName = (searchInput, clearSearch) => {
     setSearchKeyword(clearSearch ? '' : searchInput);
