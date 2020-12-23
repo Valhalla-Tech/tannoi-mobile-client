@@ -113,6 +113,12 @@ const NewDiscussionScreen = ({ navigation }) => {
       setIsLoading(true);
       setCreateNewDiscussionValidation(false);
 
+      if (selectedTopic === 'Select topic') {
+        setIsLoading(false);
+        setCreateNewDiscussionValidation(true);
+        return null;
+      }
+
       let access_token = await AsyncStorage.getItem('access_token');
       
       const uri = `file://${recordingFile}`;
