@@ -22,6 +22,7 @@ import axios from '../../../constants/ApiServices';
 import AsyncStorage from '@react-native-community/async-storage';
 import BaseUrl from '../../../constants/BaseUrl';
 import { ScreenHeight } from '../../../constants/Size';
+import ImageResizer from 'react-native-image-resizer';
 
 //Components
 import Header from '../../../components/publicComponents/Header';
@@ -135,9 +136,27 @@ const EditProfileScreen = ({ navigation }) => {
     ImagePicker.openPicker({
       width: 300,
       height: 400,
-      cropping: true
+      cropping: false
     }).then(image => {
-      setProfileImage(image.path)
+      let divider = 1;
+      if (image.size > 300000) {
+        divider = image.size / 300000;
+      }
+      ImageResizer.createResizedImage(
+        image.path,
+        image.width / divider,
+        image.height / divider,
+        'JPEG',
+        100,
+        0,
+        null,
+      ).then(resp => {
+        ImagePicker.openCropper({
+          path: resp.uri,
+        }).then(image => {
+          setProfileImage(image.path);
+        })
+      })
     })
     .catch(error => {
       console.log(error)
@@ -219,6 +238,7 @@ const EditProfileScreen = ({ navigation }) => {
         });
 
         if (saveEditRequest.data) {
+          console.log(saveEditRequest.data)
           if (bioVoiceFile !== '' && bioVoiceFile !== userProfile.bio_voice_path) {
             editVoiceBio();
           }
