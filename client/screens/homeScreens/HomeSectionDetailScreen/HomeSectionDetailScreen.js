@@ -26,9 +26,7 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
 
   const [sortModal, setSortModal] = useState(false);
   const [selectedSort, setSelectedSort] = useState('newest');
-  const [sortValue, setSortValue] = useState('newest');
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedSortName, setSelectedSortName] = useState('Newest');
   const [sortName, setSortName] = useState('Newest');
 
   const { sectionTitle, sectionType, sectionQuery, queryId } = route.params;
@@ -48,23 +46,16 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
     setSortModal(true);
   };
 
-  const closeModal = (notFinish) => {
-    if (selectedSort !== sortValue && notFinish) {
-      setSelectedSort(sortValue);
-      setSelectedSortName(sortName);
-    };
-
+  const closeModal = () => {
     setSortModal(false);
   };
 
   const saveSort = (value, name) => {
-    setSortValue(value);
     setSelectedSort(value);
-    setSelectedSortName(name)
     setSortName(name);
     setCurrentPage(1);
     dispatch(clearDiscussion());
-    dispatch(getAllDiscussion(sectionQuery ? sectionQuery : null, queryId ? queryId : null, selectedSort, 1));
+    dispatch(getAllDiscussion(sectionQuery ? sectionQuery : null, queryId ? queryId : null, value, 1));
     closeModal();
   }
 
@@ -90,20 +81,13 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
 
   const ModalButton = (title, value) => {
     return (
-      <TouchableOpacity onPress={() => {
-        setSelectedSort(value);
-        setSelectedSortName(title);
-      }} style={
-        selectedSort === value ? {
-          ...styles.modalButtonStyle,
-          backgroundColor: "#6505E1",
-          borderRadius: 8
-        } : styles.modalButtonStyle
-      }>
-        <Text style={selectedSort === value ? {
-          ...styles.modalButtonTextStyle,
-          color: "#FFFFFF"
-        } : styles.modalButtonTextStyle}>{title}</Text>
+      <TouchableOpacity 
+        onPress={() => {
+          saveSort(value, title);
+        }} 
+        style={styles.modalButtonStyle}
+      >
+        <Text style={styles.modalButtonTextStyle}>{title}</Text>
       </TouchableOpacity>
     );
   };
@@ -116,21 +100,11 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
         </View>
         <View style={styles.modalButtonContainerStyle}>
           {ModalButton('Newest', 'newest')}
-          {ModalButton('Like', 'like')}
-          {ModalButton('View', 'view')}
+          {ModalButton('Votes', 'like')}
+          {ModalButton('Plays', 'view')}
           {ModalButton('Best mood', 'best_mood')}
           {ModalButton('Worst mood', 'worst_mood')}
         </View>
-        <BigButton
-          buttonStyle={{
-            color: "#FFFFFF",
-            backgroundColor: "#6505E1",
-            borderWidth: 0,
-            marginTop: "8%"
-          }}
-          buttonTitle="Sort"
-          buttonFunction={() => saveSort(selectedSort, selectedSortName)}
-        />
       </View>
     );
   };
@@ -175,14 +149,15 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
       />
       <Modal
         openModal={sortModal}
-        closeModal={() => closeModal(true)}
+        animation="slide"
+        closeModal={closeModal}
         customContainerStyle={{
           justifyContent: "flex-end"
         }}
         customStyle={{
           borderRadius: 0,
           width: "100%",
-          height: "55%",
+          height: "45%",
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           justifyContent: "flex-start",

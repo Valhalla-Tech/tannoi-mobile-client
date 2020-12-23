@@ -44,7 +44,6 @@ const RecommendedTopics = props => {
         <ListHeader 
           listTitle="Recommended Topics"
           customStyle={{marginBottom: "3.5%"}}
-          useSeeAllButton={true}
         />
         {
           topicData !== '' ? (
