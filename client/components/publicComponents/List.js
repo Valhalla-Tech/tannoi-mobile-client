@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   FlatList
 } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { clearCurrentPlayerId } from '../../store/actions/PlayerAction';
 
 //Components
 import HomeListCard from './ListCard';
@@ -31,6 +33,20 @@ const HomeList = props => {
     useMoreButton,
     moreButtonFunction
   } = props;
+
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    const blur = navigation.addListener('blur', () => {
+      dispatch(clearCurrentPlayerId());
+    });
+
+    const unsubscribe = navigation.addListener('focus', () => {
+      dispatch(clearCurrentPlayerId())
+    });
+
+    return (blur, unsubscribe);
+  }, [navigation]);
 
   const MoreButton = () => {
     return (

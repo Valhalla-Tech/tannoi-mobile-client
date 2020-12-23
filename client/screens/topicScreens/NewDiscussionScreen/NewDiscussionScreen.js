@@ -19,6 +19,7 @@ import {
 import { getTopic } from '../../../store/actions/TopicAction';
 import { getHome, clearHome } from '../../../store/actions/HomeAction';
 import { userLogout } from '../../../store/actions/LoginAction';
+import { searchUser } from '../../../store/actions/PrivateDiscussionAction';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 import branch from 'react-native-branch';
@@ -74,6 +75,10 @@ const NewDiscussionScreen = ({ navigation }) => {
     } else if (isSelectAll) {
       setSelectAll(true);
     };
+  };
+
+  const removeRecordingFile = () => {
+    setRecordingFile('');
   };
 
   const hashtagsInput = input => {
@@ -239,6 +244,7 @@ const NewDiscussionScreen = ({ navigation }) => {
     switchName === 'Private discussion' ? setPrivateDiscussionSwitchValue(previousState => !previousState) : setAskToResponseSwitchValue(previousState => !previousState);
     setSelectedSwitch(switchName);
     if (!privateDiscussionSwitchValue && selectedFollowers.length === 0 && !selectAll || !askToResponseSwitchValue && selectedFollowers.length === 0 && !selectAll) {
+      dispatch(searchUser(false, true))
       setOpenModal(true);
     } else {
       setSelectedSwitch('');
@@ -458,6 +464,7 @@ const NewDiscussionScreen = ({ navigation }) => {
               <View style={styles.recorderContainerStyle}>
                 <Recorder
                   addRecordingFile={addRecordingFile}
+                  removeRecordingFile={removeRecordingFile}
                 />
               </View>
               {NewDiscussionForm()}

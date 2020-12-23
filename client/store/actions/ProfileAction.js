@@ -53,3 +53,11 @@ export const clearUserProfile = () => {
     });
   };
 };
+
+export const clearLogedInProfile = () => {
+  return (dispatch) => {
+    dispatch({
+      type: 'CLEAR_LOGED_IN_USER_PROFILE'
+    });
+  };
+};

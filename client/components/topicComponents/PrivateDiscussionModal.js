@@ -48,13 +48,13 @@ const PrivateDiscussionModal = props => {
   
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (fromDiscussionScreen) {
-      dispatch(getAuthorizedUsers(discussionId, false, true));
-    } else {
-      dispatch(searchUser(false, true));
-    }
-  }, []);
+  // useEffect(() => {
+    // if (fromDiscussionScreen) {
+    //   dispatch(getAuthorizedUsers(discussionId, false, true));
+    // } else {
+    //   dispatch(searchUser(false, true));
+    // }
+  // }, []);
 
   const searchUserName = (searchInput, clearSearch) => {
     setSearchKeyword(clearSearch ? '' : searchInput);
@@ -100,13 +100,15 @@ const PrivateDiscussionModal = props => {
     )
   };
 
-  const renderFollowerList = itemData => (
-    <FollowerList 
-      profileImage={itemData.item.profile_photo_path} 
-      profileName={itemData.item.name} 
-      userId={itemData.item.id}
-    />
-  );
+  const renderFollowerList = itemData => {
+    return (
+      <FollowerList 
+        profileImage={itemData.item.profile_photo_path} 
+        profileName={itemData.item.name} 
+        userId={itemData.item.id}
+      />
+    );
+  };
 
   const editList = async () => {
     try {
@@ -197,61 +199,61 @@ const PrivateDiscussionModal = props => {
       <View style={styles.modalContainerStyle}>
         <View style={styles.privateDiscussionModalStyle}>
         <Text style={styles.privateDiscussionTextStyle}>{modalTitle}</Text>
-          <View>
-            <FormInput 
-              formInputTitle="Search"
-              formInputCustomStyle={{
-                paddingVertical: 0,
-                height: 35,
-                marginBottom: "5%"
-              }}
-              formInputValue={searchKeyword}
-              dataInput={searchUserName}
-              Icon={searchKeyword !== '' && XMark}
-              iconStyle={{
-                height: 18,
-                width: 18,
-                margin: {
-                  marginBottom: "2.5%"
+          <FormInput 
+            formInputTitle="Search"
+            formInputCustomStyle={{
+              paddingVertical: 0,
+              height: 35,
+              marginBottom: "5%"
+            }}
+            formInputValue={searchKeyword}
+            dataInput={searchUserName}
+            Icon={searchKeyword !== '' && XMark}
+            iconStyle={{
+              height: 18,
+              width: 18,
+              margin: {
+                marginBottom: "2.5%"
+              }
+            }}
+            iconFunction={() => searchUserName('', true)}
+          />
+          {
+            selectedUser.length !== 0 && !isSelectAll && <Text style={styles.counterTextStyle}>You have selected {selectedUser.length} follower{selectedUser.length > 1 && 's'}</Text>
+          }
+          {
+            isSelectAll && <Text style={styles.counterTextStyle}>You have selected all of your followers</Text>
+          }
+          {
+            noFollowers ? (
+              <Text style={styles.noFollowersTextStyle}>You have no followers yet!</Text>
+            ) : (
+              <FlatList
+                data={fromDiscussionScreen ? authorized : followers}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={
+                  renderFollowerList
                 }
-              }}
-              iconFunction={() => searchUserName('', true)}
-            />
-            {
-              selectedUser.length !== 0 && !isSelectAll && <Text style={styles.counterTextStyle}>You have selected {selectedUser.length} follower{selectedUser.length > 1 && 's'}</Text>
-            }
-            {
-              isSelectAll && <Text style={styles.counterTextStyle}>You have selected all of your followers</Text>
-            }
-            {
-              noFollowers ? (
-                <Text style={styles.noFollowersTextStyle}>You have no followers yet!</Text>
-              ) : (
-                <FlatList
-                  data={fromDiscussionScreen ? authorized : followers}
-                  keyExtractor={(item, index) => index.toString()}
-                  renderItem={renderFollowerList}
-                  ListFooterComponent={
-                    userCount > 20 && (
-                      <View style={styles.moreButtonContainerStyle}>
-                        <BigButton
-                          buttonStyle={{
-                            color: "#6505E1",
-                            borderColor: "#6505E1",
-                            paddingVertical: ".5%",
-                            paddingHorizontal: "5%"
-                          }}
-                          buttonTitle="More"
-                          buttonFunction={nextPage}
-                        />
-                      </View>
-                    )
-                  }
-                />
-              )
-            }
-            <Buttons />
-          </View>
+                ListFooterComponent={
+                  userCount > 20 && (
+                    <View style={styles.moreButtonContainerStyle}>
+                      <BigButton
+                        buttonStyle={{
+                          color: "#6505E1",
+                          borderColor: "#6505E1",
+                          paddingVertical: ".5%",
+                          paddingHorizontal: "5%"
+                        }}
+                        buttonTitle="More"
+                        buttonFunction={nextPage}
+                      />
+                    </View>
+                  )
+                }
+              />
+            )
+          }
+          <Buttons />
         </View>
       </View>
     </Modal>
@@ -274,7 +276,8 @@ const styles = StyleSheet.create({
 
   privateDiscussionModalStyle: {
     width: "95%",
-    maxHeight: "90%",
+    height: 500,
+    maxHeight: 800,
     borderRadius: 20,
     padding: "3.5%",
     backgroundColor: "#FFFFFF"

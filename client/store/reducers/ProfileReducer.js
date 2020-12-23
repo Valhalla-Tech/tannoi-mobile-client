@@ -15,6 +15,8 @@ const reducer = (state = defaultState, action) => {
       return {...state, loggedinUserProfile: setLoggedinUserProfile};
     case 'CLEAR_USER_PROFILE':
       return {...state, userProfile: ''};
+    case 'CLEAR_LOGED_IN_USER_PROFILE':
+      return {...state, loggedinUserProfile: ''}
     default:
       return state;
   }

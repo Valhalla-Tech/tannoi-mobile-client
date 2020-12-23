@@ -74,7 +74,8 @@ class DiscussionScreenPlayerCard extends Component {
       durationDisplay: '',
       durationPlayerDisplay: '',
       isPaused: false,
-      caption: this.props.caption
+      caption: this.props.caption,
+      openAddResponse: false
     }
   }
 
@@ -181,7 +182,7 @@ class DiscussionScreenPlayerCard extends Component {
               this.stopProgressInterval();
             };
 
-            if (this.player.isPlaying && this.props.isRecorderModalOpen || this.player.isPlaying && this.state.openAddResponseModal) {
+            if (this.player.isPlaying && this.props.isRecorderModalOpen || this.player.isPlaying && this.state.openAddResponse) {
               this.playRecording();
             }
   
@@ -396,7 +397,8 @@ class DiscussionScreenPlayerCard extends Component {
 
   closeAddResponseModal = () => {
     this.setState({
-      openAddResponseModal: false
+      openAddResponseModal: false,
+      openAddResponse: false
     })
   }
 
@@ -467,8 +469,9 @@ class DiscussionScreenPlayerCard extends Component {
             style={styles.addResponseButtonStyle}
             onPress={() => {
               this.props.userData.type !== 0 || this.props.userData.id === this.props.profileId ? this.setState({
-                openAddResponseModal: true
-              }) : this.props.navigation.navigate('VerificationNavigation'); 
+                openAddResponseModal: true,
+                openAddResponse: true
+              }) : (this.props.navigation.navigate('VerificationNavigation'), this.setState({ openAddResponse: true })); 
             }}
           >
             <Text style={styles.addResponseButtonTextStyle}>Add response</Text>

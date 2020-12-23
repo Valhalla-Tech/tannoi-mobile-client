@@ -18,6 +18,7 @@ import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 import DisplayBirthDate from '../../../helper/DisplayBirthDate';
+import ImageResizer from 'react-native-image-resizer';
 
 //Icon
 import NoProfileIcon from '../../../assets/accountAssets/EnterYourProfileScreen/noProfileIcon.svg';
@@ -42,9 +43,27 @@ const EnterYourProfileScreen = ({ navigation }) => {
     ImagePicker.openPicker({
       width: 300,
       height: 400,
-      cropping: true
+      cropping: false
     }).then(image => {
-      setProfileImage(image.path)
+      let divider = 1;
+      if (image.size > 300000) {
+        divider = image.size / 300000;
+      }
+      ImageResizer.createResizedImage(
+        image.path,
+        image.width / divider,
+        image.height / divider,
+        'JPEG',
+        100,
+        0,
+        null,
+      ).then(resp => {
+        ImagePicker.openCropper({
+          path: resp.uri,
+        }).then(image => {
+          setProfileImage(image.path);
+        })
+      })
     })
     .catch(error => {
       console.log(error)

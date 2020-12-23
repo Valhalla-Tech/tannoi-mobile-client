@@ -23,6 +23,7 @@ const DiscussionScreen = ({ route, navigation }) => {
   const [openAddResponseModal, setOpenAddResponseModal] = useState(false);
   const [selectedCard, setSelectedCard] = useState('discussion');
   const [fromNextPreviousButton, setFromNextPreviousButton] = useState(false);
+  const [openAddResponse, setOpenAddRespone] = useState(false);
 
   const profileId = useSelector(state => state.DiscussionReducer.profileId);
   const profilePicture = useSelector(state => state.DiscussionReducer.profilePicture);
@@ -52,6 +53,7 @@ const DiscussionScreen = ({ route, navigation }) => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
+      setOpenAddRespone(false);
       dispatch(clearDiscussion());
       dispatch(clearResponse());
       dispatch(getDiscussion(discussionId));
@@ -63,6 +65,7 @@ const DiscussionScreen = ({ route, navigation }) => {
 
   const closeAddResponseModal = () => {
     setOpenAddResponseModal(false);
+    setOpenAddRespone(false);
   };
 
   const selectCard = cardIndex => {
@@ -117,7 +120,7 @@ const DiscussionScreen = ({ route, navigation }) => {
           <TouchableOpacity
             style={styles.addResponseButtonStyle}
             onPress={() => {
-              userType !== 0 || userId === profileId ? setOpenAddResponseModal(true) : navigation.navigate('VerificationNavigation') ;
+              userType !== 0 || userId === profileId ? (setOpenAddResponseModal(true), setOpenAddRespone(true)) : (navigation.navigate('VerificationNavigation'), setOpenAddRespone(true)) ;
             }}
           >
             <Text style={styles.addResponseButtonTextStyle}>Add response</Text>
@@ -154,7 +157,7 @@ const DiscussionScreen = ({ route, navigation }) => {
                   profileType={profileType}
                   userType={userType}
                   userId={userId}
-                  isRecorderModalOpen={openAddResponseModal}
+                  isRecorderModalOpen={openAddResponse}
                 />
               ) : (
                 <ClosedCard
@@ -211,6 +214,7 @@ const DiscussionScreen = ({ route, navigation }) => {
                   profileType={itemData.item.creator.type}
                   userType={userType}
                   selectedCard={selectedCard}
+                  isRecorderModalOpen={openAddResponse}
                 />
               ) : (
                 <ClosedCard
