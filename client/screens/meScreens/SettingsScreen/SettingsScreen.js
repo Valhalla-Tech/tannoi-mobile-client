@@ -8,6 +8,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { userLogout } from '../../../store/actions/LoginAction';
 import { clearTopic } from '../../../store/actions/TopicAction';
+import { clearLogedInProfile } from '../../../store/actions/ProfileAction';
 import { bold, normal } from '../../../assets/FontSize';
 
 //Components
@@ -34,6 +35,7 @@ const SettingsScreen = ({ navigation }) => {
         <TouchableOpacity onPress={() => {
           dispatch(userLogout());
           dispatch(clearTopic());
+          dispatch(clearLogedInProfile());
         }}>
           <Text style={styles.logOutButtonTextStyle}>Log out</Text>
         </TouchableOpacity>
