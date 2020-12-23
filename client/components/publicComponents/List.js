@@ -124,7 +124,6 @@ const styles = StyleSheet.create({
   homeListContainerStyle: {
     backgroundColor: "#FFFFFF",
     marginTop: "2%",
-    marginBottom: "3.5%",
     borderRadius: 8,
     paddingBottom: "6.5%"
   },
