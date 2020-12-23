@@ -154,6 +154,7 @@ const DiscussionScreen = ({ route, navigation }) => {
                   profileType={profileType}
                   userType={userType}
                   userId={userId}
+                  isRecorderModalOpen={openAddResponseModal}
                 />
               ) : (
                 <ClosedCard

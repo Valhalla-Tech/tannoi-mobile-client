@@ -180,6 +180,10 @@ class DiscussionScreenPlayerCard extends Component {
 
               this.stopProgressInterval();
             };
+
+            if (this.player.isPlaying && this.props.isRecorderModalOpen || this.player.isPlaying && this.state.openAddResponseModal) {
+              this.playRecording();
+            }
   
             this.setState({ progress: currentProgress });
           }
