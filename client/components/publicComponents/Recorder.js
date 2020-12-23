@@ -143,6 +143,7 @@ class NewDiscussionScreenRecorder extends Component {
           this.stopCounter();
           this.playRecording();
         } else {
+          this.props.removeRecordingFile && this.props.removeRecordingFile()
           this.setState({
             timer: 30
           });

@@ -76,6 +76,10 @@ const NewDiscussionScreen = ({ navigation }) => {
     };
   };
 
+  const removeRecordingFile = () => {
+    setRecordingFile('');
+  };
+
   const hashtagsInput = input => {
     let hashtagArray = [];
     let hashtag = '';
@@ -458,6 +462,7 @@ const NewDiscussionScreen = ({ navigation }) => {
               <View style={styles.recorderContainerStyle}>
                 <Recorder
                   addRecordingFile={addRecordingFile}
+                  removeRecordingFile={removeRecordingFile}
                 />
               </View>
               {NewDiscussionForm()}
