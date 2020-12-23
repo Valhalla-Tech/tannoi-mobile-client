@@ -15,7 +15,7 @@ const defaultState = {
   responseCount: '',
   type: '',
   userType: '',
-  discussions: [],
+  discussions: '',
   discussionCount: '',
   userDiscussion: []
 }
