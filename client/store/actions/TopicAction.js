@@ -40,7 +40,7 @@ export const getSingleTopic = (topicId) => {
     try {
       let access_token = await AsyncStorage.getItem('access_token');
       let getSingleTopicRequest = await axios({
-        url: `${BaseUrl}/topics/single/${topicId}`,
+        url: `${BaseUrl}/topics/${topicId}`,
         method: 'get',
         headers: {
           'token': access_token
@@ -48,6 +48,7 @@ export const getSingleTopic = (topicId) => {
       });
 
       if (getSingleTopicRequest.data) {
+        console.log(getSingleTopicRequest.data)
         dispatch({
           type: 'GET_SINGLE_TOPIC',
           payload: {

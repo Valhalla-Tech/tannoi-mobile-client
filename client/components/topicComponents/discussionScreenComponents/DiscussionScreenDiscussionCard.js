@@ -52,7 +52,8 @@ const DiscussionScreenCard = props => {
     profileId,
     userType,
     profileType,
-    userId
+    userId,
+    isRecorderModalOpen
   } = props;
 
   const [optionModal, setOptionModal] = useState(false);
@@ -297,6 +298,7 @@ const DiscussionScreenCard = props => {
                   discussionId={discussionId}
                   fromNextPreviousButton={fromNextPreviousButton}
                   updateFromNextPreviousButton={updateFromNextPreviousButton}
+                  isRecorderModalOpen={isRecorderModalOpen}
                 />
               )
             }
