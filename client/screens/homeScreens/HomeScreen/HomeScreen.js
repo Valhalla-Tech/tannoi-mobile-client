@@ -12,6 +12,7 @@ import {
 import SplashScreen from 'react-native-splash-screen';
 import { getHome, clearHome } from '../../../store/actions/HomeAction';
 import { bold } from '../../../assets/FontSize';
+import { GlobalPadding } from '../../../constants/Size';
 
 //Components
 import SearchBar from '../../../components/publicComponents/SearchBar';
@@ -68,53 +69,66 @@ const HomeScreen = ({ navigation }) => {
                 navigation={navigation}
               />
             </View>
-            {
-              requestedDiscussion.length !== 0 && (
-                <View style={styles.sectionStyle}>
+            <View style={styles.homeScreenCardContainerStyle}>
+              {
+                requestedDiscussion.length !== 0 && (
                   <List
                     listTitle="You're Asked to Respond"
                     listData={requestedDiscussion}
                     navigation={navigation}
                     openModal={openModal}
+                    isUsingMoreButton={true}
+                    useSeeAllButton={true}
+                    sectionType="discussion"
+                    sectionQuery="responseRequest"
+                    queryId="=true"
                   />
-                </View>
-              )
-            }
-            {
-              followingDiscussion.length !== 0 && (
-                <View style={styles.sectionStyle}>
+                )
+              }
+              {
+                followingDiscussion.length !== 0 && (
                   <List
                     listTitle="Discussions by People You Follow"
                     listData={followingDiscussion}
                     navigation={navigation}
                     openModal={openModal}
+                    isUsingMoreButton={true}
+                    useSeeAllButton={true}
+                    sectionType="discussion"
+                    sectionQuery="followingDiscussion"
+                    queryId="=true"
                   />
-                </View>
-              )
-            }
-            <List
-              listTitle="Discussions of the Week"
-              listData={discussionOfTheWeek}
-              navigation={navigation}
-              openModal={openModal}
-              isUsingMoreButton={true}
-            />
-            <TopUsers
-              topUserData={topUser}
-              navigation={navigation}
-            />
-            <List 
-              listTitle="Trending"
-              listData={trending}
-              navigation={navigation}
-              openModal={openModal}
-              isFilter={true}
-              isUsingMoreButton={true}
-            />
-            <RecommendedTopics
-              topicData={recommendedTopic}
-              navigation={navigation}
-            />
+                )
+              }
+              <List
+                listTitle="Discussions of the Week"
+                listData={discussionOfTheWeek}
+                navigation={navigation}
+                openModal={openModal}
+                isUsingMoreButton={true}
+                useSeeAllButton={true}
+                sectionType="discussion"
+                sectionQuery="discussionOfTheWeek"
+                queryId="=true"
+              />
+              <TopUsers
+                topUserData={topUser}
+                navigation={navigation}
+              />
+              <List 
+                listTitle="Trending"
+                listData={trending}
+                navigation={navigation}
+                openModal={openModal}
+                isUsingMoreButton={true}
+                useSeeAllButton={true}
+                sectionType="discussion"
+              />
+              <RecommendedTopics
+                topicData={recommendedTopic}
+                navigation={navigation}
+              />
+            </View>
           </View>
         }
       />
@@ -130,6 +144,10 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   homeScreenContainerStyle: {
     flex: 1
+  },
+
+  homeScreenCardContainerStyle: {
+    paddingHorizontal: GlobalPadding
   },
 
   noticeModalTextStyle: {

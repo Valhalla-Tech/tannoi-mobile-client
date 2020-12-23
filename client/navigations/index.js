@@ -28,6 +28,7 @@ import SearchScreen from '../screens/homeScreens/SearchScreen';
 import TopicDetailScreen from '../screens/topicScreens/TopicDetailScreen';
 import SettingsScreen from '../screens/meScreens/SettingsScreen';
 import EditProfileScreen from '../screens/meScreens/EditProfileScreen';
+import HomeSectionDetailScreen from '../screens/homeScreens/HomeSectionDetailScreen';
 
 const Stack = createStackNavigator();
 
@@ -116,13 +117,15 @@ const NavigationIndex = () => {
           // Indicates initialization success and some other conditions.
           // No link was opened.
         }
-      
+
         if (params.screen !== undefined && getToken) {
           let payload = JSON.parse(params.payload);
           if (params.screen === 'UserProfileScreen') {
             payload = {...payload, fromDeepLink: true};
           }
           navigation.push(params.screen, payload);
+        } else if (params.screen !== undefined && params.screen === 'CreateNewPasswordScreen') {
+          navigation.navigate(params.screen, JSON.parse(params.payload));
         }
       })
     } catch (err) {
@@ -172,6 +175,7 @@ const NavigationIndex = () => {
             <Stack.Screen name="TopicDetailScreen" component={TopicDetailScreen} />
             <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
             <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} />
+            <Stack.Screen name="HomeSectionDetailScreen" component={HomeSectionDetailScreen} />
           </>
         ) : (
           <Stack.Screen name="AccountNavigation" component={AccountNavigation} />

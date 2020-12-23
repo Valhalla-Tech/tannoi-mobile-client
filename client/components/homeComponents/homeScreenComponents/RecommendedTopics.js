@@ -44,11 +44,7 @@ const RecommendedTopics = props => {
         <ListHeader 
           listTitle="Recommended Topics"
           customStyle={{marginBottom: "3.5%"}}
-          headerButton={() => (
-            <TouchableOpacity style={styles.seeAllButton}>
-              <Text style={styles.seeAllButtonTextStyle}>See all</Text>
-            </TouchableOpacity>
-          )} 
+          useSeeAllButton={true}
         />
         {
           topicData !== '' ? (
@@ -124,7 +120,6 @@ const RecommendedTopics = props => {
 
 const styles = StyleSheet.create({
   recommendedTopicsContainerStyle: {
-    marginHorizontal: "1.8%",
     marginTop: "2%",
     marginBottom: 70,
     backgroundColor: "#FFFFFF",
@@ -137,16 +132,6 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     marginVertical: "4%",
     marginLeft: "5%"
-  },
-
-  seeAllButton: {
-    marginRight: 16
-  },
-
-  seeAllButtonTextStyle: {
-    color: "#FFFFFF",
-    fontSize: 14,
-    fontFamily: normal
   },
 
   topicCardContainerStyle: {

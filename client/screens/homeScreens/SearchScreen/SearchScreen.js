@@ -15,7 +15,7 @@ import SearchResultBox from '../../../components/homeComponents/searchScreenComp
 
 const SearchScreen = ({ navigation }) => {
   const [searchInput, setSearchInput] = useState('');
-  const [category, setCategory] = useState('Discussions');
+  const [category, setCategory] = useState('User');
 
   const discussions = useSelector(state => state.SearchReducer.discussions);
   const users = useSelector(state => state.SearchReducer.users);

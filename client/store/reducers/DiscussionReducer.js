@@ -15,7 +15,8 @@ const defaultState = {
   responseCount: '',
   type: '',
   userType: '',
-  discussions: [],
+  discussions: '',
+  discussionCount: '',
   userDiscussion: []
 }
 
@@ -23,8 +24,14 @@ const reducer = (state = defaultState, action) => {
   switch (action.type) {
     case 'GET_ALL_DISCUSSION':
       let setDiscussions = action.payload.discussions;
+      let setDiscussionCount = action.payload.discussionCount;
 
-      return {...state, discussions: setDiscussions};
+      return {...state, discussions: setDiscussions, discussionCount: setDiscussionCount};
+    case 'ADD_DISCUSSION_LIST':
+      let setDiscussionList = state.discussions.concat(action.payload.discussions);
+      let setDiscussionListCount = action.payload.discussionCount;
+
+      return {...state, discussions: setDiscussionList, discussionCount: setDiscussionListCount};
     case 'GET_DISCUSSION':
       let setProfileId = action.payload.profileId;
       let setProfilePicture = action.payload.profilePicture;
@@ -78,7 +85,8 @@ const reducer = (state = defaultState, action) => {
         plays: '',
         recordingFile: '',
         isLike: '',
-        isDislike: ''
+        isDislike: '',
+        discussions: ''
       }
     case 'CLEAR_USER_DISCUSSION':
       return {...state, userDiscussion: []};

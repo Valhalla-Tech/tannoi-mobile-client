@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getOneProfile, clearUserProfile } from '../../../store/actions/ProfileAction';
 import { getUserDiscussion, clearDiscussion } from '../../../store/actions/DiscussionAction';
 import DisplayBirthDate from '../../../helper/DisplayBirthDate';
+import { GlobalPadding } from '../../../constants/Size'
 
 //Components
 import Header from '../../../components/publicComponents/Header';
@@ -120,17 +121,21 @@ const MeScreen = ({ navigation, route }) => {
       />
       <FlatList
         ListHeaderComponent={
-          selectedMenu === 'Discussions' ?
-          <List
-            isHeader={false}
-            navigation={navigation}
-            isUsingMoreButton={false}
-            listData={userDiscussion}
-            openModal={openModal}
-          /> : <Card
-            child={selectedMenu === 'About' ? AboutSection : null}
-            customStyle={styles.cardStyle}
-          />
+          <View style={styles.cardContainerStyle}>
+            {
+              selectedMenu === 'Discussions' ?
+              <List
+                isHeader={false}
+                navigation={navigation}
+                isUsingMoreButton={false}
+                listData={userDiscussion}
+                openModal={openModal}
+              /> : <Card
+                child={selectedMenu === 'About' ? AboutSection : null}
+                customStyle={styles.cardStyle}
+              />
+            }
+          </View>
         }
       />
       <NoticeModal 
@@ -160,8 +165,11 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
 
+  cardContainerStyle: {
+    paddingHorizontal: GlobalPadding
+  },
+
   cardStyle: {
-    marginHorizontal: "1.8%",
     marginTop: "2%",
     borderRadius: 8
   },

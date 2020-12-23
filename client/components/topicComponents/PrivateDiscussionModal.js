@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { bold, normal } from '../../assets/FontSize';
 import { useSelector, useDispatch } from 'react-redux';
-import { searchUser, getAuthorizedFollowers } from '../../store/actions/PrivateDiscussionAction';
+import { searchUser, getAuthorizedUsers } from '../../store/actions/PrivateDiscussionAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
@@ -35,20 +35,22 @@ const PrivateDiscussionModal = props => {
     modalTitle
   } = props;
 
-  const followers = useSelector(state => state.PrivateDiscussionReducer.followers);
+  const followers = useSelector(state => state.PrivateDiscussionReducer.users);
   const authorized = useSelector(state => state.PrivateDiscussionReducer.authorized);
   const authorizedId = useSelector(state => state.PrivateDiscussionReducer.authorizedId);
-  const noFollowers = useSelector(state => state.PrivateDiscussionReducer.noFollowers);
+  const noFollowers = useSelector(state => state.PrivateDiscussionReducer.noUsers);
+  const userCount = useSelector(state => state.PrivateDiscussionReducer.userCount);
 
   const [selectedUser, setSelectedUser] = useState(fromDiscussionScreen ? authorizedId : selectedFollowers);
   const [isSelectAll, setIsSelectAll] = useState(selectedAll);
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
   
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (fromDiscussionScreen) {
-      dispatch(getAuthorizedFollowers(discussionId, false, true));
+      dispatch(getAuthorizedUsers(discussionId, false, true));
     } else {
       dispatch(searchUser(false, true));
     }
@@ -58,7 +60,7 @@ const PrivateDiscussionModal = props => {
     setSearchKeyword(clearSearch ? '' : searchInput);
 
     if (fromDiscussionScreen) {
-      dispatch(getAuthorizedFollowers(discussionId, clearSearch ? '' : searchInput));
+      dispatch(getAuthorizedUsers(discussionId, clearSearch ? '' : searchInput));
     } else {
       dispatch(searchUser(clearSearch ? '' : searchInput));
     };
@@ -117,7 +119,7 @@ const PrivateDiscussionModal = props => {
           'token': access_token
         },
         data: {
-          'all_follower': isSelectAll,
+          'all_user': isSelectAll,
           'userArr': JSON.stringify(selectedUser)
         }
       });
@@ -126,7 +128,7 @@ const PrivateDiscussionModal = props => {
         closeModal();
       };
     } catch (error) {
-      console.log(error, '<<<');
+      console.log(error);
     }
   };
 
@@ -136,6 +138,16 @@ const PrivateDiscussionModal = props => {
     } else {
       addSelectedFollowers(selectedUser, isSelectAll);
     }
+  };
+
+  const nextPage = () => {
+    setCurrentPage(prevState => prevState + 1);
+
+    if (fromDiscussionScreen) {
+      dispatch(getAuthorizedUsers(discussionId, clearSearch ? '' : searchInput, false, currentPage + 1));
+    } else {
+      dispatch(searchUser(clearSearch ? '' : searchInput, false, currentPage + 1));
+    };
   };
 
   const Buttons = () => {
@@ -197,8 +209,11 @@ const PrivateDiscussionModal = props => {
               dataInput={searchUserName}
               Icon={searchKeyword !== '' && XMark}
               iconStyle={{
-                height: 25,
-                width: 25
+                height: 18,
+                width: 18,
+                margin: {
+                  marginBottom: "2.5%"
+                }
               }}
               iconFunction={() => searchUserName('', true)}
             />
@@ -216,6 +231,22 @@ const PrivateDiscussionModal = props => {
                   data={fromDiscussionScreen ? authorized : followers}
                   keyExtractor={(item, index) => index.toString()}
                   renderItem={renderFollowerList}
+                  ListFooterComponent={
+                    userCount > 20 && (
+                      <View style={styles.moreButtonContainerStyle}>
+                        <BigButton
+                          buttonStyle={{
+                            color: "#6505E1",
+                            borderColor: "#6505E1",
+                            paddingVertical: ".5%",
+                            paddingHorizontal: "5%"
+                          }}
+                          buttonTitle="More"
+                          buttonFunction={nextPage}
+                        />
+                      </View>
+                    )
+                  }
                 />
               )
             }
@@ -311,6 +342,11 @@ const styles = StyleSheet.create({
   modalOptionButtonContainerStyle: {
     height: 80,
     justifyContent: "space-between"
+  },
+
+  moreButtonContainerStyle: {
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
 

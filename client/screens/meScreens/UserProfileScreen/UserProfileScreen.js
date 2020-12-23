@@ -16,6 +16,7 @@ import BaseUrl from '../../../constants/BaseUrl';
 import branch from 'react-native-branch';
 import { getHome, clearHome } from '../../../store/actions/HomeAction';
 import DisplayBirthDate from '../../../helper/DisplayBirthDate';
+import { GlobalPadding } from '../../../constants/Size';
 
 //Components
 import BackButton from '../../../components/publicComponents/BackButton';
@@ -179,17 +180,21 @@ const UserProfileScreen = ({route, navigation}) => {
       />
       <FlatList
         ListHeaderComponent={
-          selectedMenu === 'Discussions' ?
-          <List
-            isHeader={false}
-            navigation={navigation}
-            isUsingMoreButton={false}
-            listData={userDiscussion}
-            openModal={openModal}
-          /> : <Card
-            child={selectedMenu === 'About' ? AboutSection : null}
-            customStyle={styles.cardStyle}
-          />
+          <View style={styles.cardContainerStyle}>
+            {
+              selectedMenu === 'Discussions' ?
+              <List
+                isHeader={false}
+                navigation={navigation}
+                isUsingMoreButton={false}
+                listData={userDiscussion}
+                openModal={openModal}
+              /> : <Card
+                child={selectedMenu === 'About' ? AboutSection : null}
+                customStyle={styles.cardStyle}
+              />
+            }
+          </View>
         }
       />
        <NoticeModal 
@@ -227,6 +232,10 @@ const styles = StyleSheet.create({
     color: "#0E4EF4",
     fontSize: 16,
     fontFamily: bold
+  },
+
+  cardContainerStyle: {
+    paddingHorizontal: GlobalPadding
   },
 
   profileInfoContainerStyle: {
@@ -303,7 +312,6 @@ const styles = StyleSheet.create({
   },
 
   cardStyle: {
-    marginHorizontal: "1.8%",
     marginTop: "2%",
     borderRadius: 8
   },

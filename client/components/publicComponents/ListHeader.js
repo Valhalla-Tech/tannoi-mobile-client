@@ -5,7 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity
 } from 'react-native';
-import { bold } from '../../assets/FontSize';
+import { bold, normal } from '../../assets/FontSize';
 
 //Icon
 import DownArrow from '../../assets/homeAssets/downArrow.svg';
@@ -16,18 +16,38 @@ import Header from '../../components/publicComponents/Header';
 const ListHeader = props => {
   const {
     listTitle,
-    isFilter,
+    isSort,
     headerButton,
-    customStyle
+    customStyle,
+    useSeeAllButton,
+    navigation,
+    sectionType,
+    sectionQuery,
+    queryId,
+    openModal,
+    currentSort
   } = props;
 
-  const ListFilter = () => {
+  const ListSort = () => {
     return (
-      <TouchableOpacity style={styles.filterStyle}>
-        <Text style={styles.filterTextStyle}>Most recent</Text>
+      <TouchableOpacity onPress={() => openModal()} style={styles.filterStyle}>
+        <Text style={styles.filterTextStyle}>{currentSort}</Text>
         <DownArrow />
       </TouchableOpacity>
     );
+  };
+
+  const SeeAllButton = () => {
+    return (
+      <TouchableOpacity onPress={() => navigation.navigate('HomeSectionDetailScreen', {
+        sectionTitle: listTitle,
+        sectionType: sectionType,
+        sectionQuery: sectionQuery,
+        queryId: queryId
+      })}>
+        <Text style={styles.seeAllButtonTextStyle}>See all</Text>
+      </TouchableOpacity>
+    )
   };
 
   const ListHeaderContent = () => {
@@ -35,8 +55,13 @@ const ListHeader = props => {
       <View style={styles.headerStyle}>
         <Text style={styles.headerTitleStyle}>{listTitle}</Text>
         {
-          isFilter && (
-            <ListFilter />
+          isSort && (
+            <ListSort />
+          )
+        }
+        {
+          useSeeAllButton && (
+            <SeeAllButton />
           )
         }
         {
@@ -56,20 +81,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: "2%",
+    paddingHorizontal: "3.5%",
     height: 50
   },
 
   headerTitleStyle: {
-    fontSize: 18,
+    fontSize: 16.5,
     fontFamily: bold,
     color: "#FFFFFF",
-    marginVertical: "4%",
-    marginLeft: "2.5%"
+    marginVertical: "4%"
   },
 
   filterStyle: {
-    marginRight: ".8%",
     flexDirection: "row",
     alignItems: "center"
   },
@@ -78,7 +101,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#FFFFFF",
     marginRight: "5%"
-  }
+  },
+
+  seeAllButtonTextStyle: {
+    color: "#FFFFFF",
+    fontSize: 14,
+    fontFamily: normal
+  },
 });
 
 export default ListHeader;

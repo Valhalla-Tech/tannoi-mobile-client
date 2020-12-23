@@ -127,7 +127,7 @@ const NewDiscussionScreen = ({ navigation }) => {
 
       selectedFollowers.length > 0 && formData.append('userArr', JSON.stringify(selectedFollowers));
 
-      selectAll && formData.append('all_follower', true);
+      selectAll && formData.append('all_user', true);
 
       formData.append('hashtag', JSON.stringify(hashtags));
 
@@ -148,11 +148,6 @@ const NewDiscussionScreen = ({ navigation }) => {
       });
 
       if (createNewDiscussionRequest.data) {
-        const data = selectAll ? {
-          'userArr': JSON.stringify(selectedFollowers),
-          'all_follower': selectAll
-        } : {'userArr': JSON.stringify(selectedFollowers)};
-
         let moodRatingRequest = await axios({
           url: `${BaseUrl}/discussions/add-rating/${createNewDiscussionRequest.data.id}`,
           method: 'post',
@@ -163,9 +158,14 @@ const NewDiscussionScreen = ({ navigation }) => {
             'mood_rating': sliderValue
           }
         });
-
+        
         if (moodRatingRequest.data) {
           if (selectedSwitch === 'Ask for a response') {
+            const data = selectAll ? {
+              'userArr': JSON.stringify(selectedFollowers),
+              'all_user': selectAll
+            } : {'userArr': JSON.stringify(selectedFollowers)};
+            
             let branchUniversalObject = await branch.createBranchUniversalObject('canonicalIdentifier', {
               locallyIndex: true,
               title: 'Ask For Response',
@@ -386,8 +386,9 @@ const NewDiscussionScreen = ({ navigation }) => {
         </View>
         <TouchableOpacity
           onPress={() => createNewDiscussion()}
+          disabled={recordingFile === '' && true}
         >
-          <Text style={styles.publishButtonTextStyle}>Publish</Text>
+          <Text style={recordingFile !== '' ? styles.publishButtonTextStyle : {...styles.publishButtonTextStyle, color:"#cccccc"}}>Publish</Text>
         </TouchableOpacity>
       </View>
     );

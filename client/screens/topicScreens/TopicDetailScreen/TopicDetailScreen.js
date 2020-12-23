@@ -7,8 +7,9 @@ import {
   FlatList
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllDiscussion } from '../../../store/actions/DiscussionAction';
+import { getAllDiscussion, clearDiscussion } from '../../../store/actions/DiscussionAction';
 import { bold, normal } from '../../../assets/FontSize';
+import { GlobalPadding } from '../../../constants/Size';
 
 //Components
 import Header from '../../../components/publicComponents/Header';
@@ -31,8 +32,12 @@ const TopicDetail = props => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllDiscussion('?topic_id=', topicId));
+    dispatch(getAllDiscussion('topic_id=', topicId));
     dispatch(getSingleTopic(topicId));
+
+    return () => {
+      dispatch(clearDiscussion());
+    }
   }, []);
 
   const discussions = useSelector(state => state.DiscussionReducer.discussions);
@@ -85,13 +90,15 @@ const TopicDetail = props => {
         ListHeaderComponent={
           <>
             <Header child={HeaderContent} customStyle={styles.headerStyle} />
-            <List
-              listTitle="Discussions"
-              listData={discussions}
-              navigation={navigation}
-              openModal={openModal}
-              isFilter={true}
-            />
+            <View style={styles.listContainerStyle}>
+              <List
+                listTitle="Discussions"
+                listData={discussions}
+                navigation={navigation}
+                openModal={openModal}
+                isFilter={true}
+              />
+            </View>
             <NoticeModal 
               openModal={noticeModal}
               closeModal={closeModal}
@@ -115,6 +122,10 @@ const styles = StyleSheet.create({
     fontFamily: bold,
     fontSize: 20,
     color: "#464D60"
+  },
+
+  listContainerStyle: {
+    paddingHorizontal: GlobalPadding
   },
 
   newDiscussionButtonStyle: {

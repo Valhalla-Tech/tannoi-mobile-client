@@ -11,6 +11,7 @@ import {
 } from '@react-native-community/audio-toolkit';
 import { connect } from 'react-redux';
 import { getHome } from '../../store/actions/HomeAction';
+import { changeCurrentPlayerId } from '../../store/actions/PlayerAction';
 import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
 import Slider from '@react-native-community/slider';
@@ -31,7 +32,9 @@ class HomeListPlayerCard extends Component {
     this.state = {
       isPlaying: false,
       playerIsReady: false,
-      progress: 0
+      progress: 0,
+      playerReload: false,
+      playerId: ''
     };
   };
 
@@ -44,6 +47,9 @@ class HomeListPlayerCard extends Component {
 
   componentWillUnmount() {
     this._isMounted = false;
+    if (this.state.isPlaying) {
+      this.playRecording()
+    }
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -86,19 +92,27 @@ class HomeListPlayerCard extends Component {
     }
   };
 
-  loadPlayer() {
+  loadPlayer(propsChanged) {
     if (this.player) {
       this.player.destroy();
     };
 
     this.player = new Player(this.state.recordingFile, {
       autoDestroy: false
-    }).prepare((error) => {
+    })
+
+    this.player.speed = 0.0;
+    
+    this.player.prepare((error) => {
       if (error) {
         console.log(error);
       };
 
       this.updateState();
+
+      if (propsChanged) {
+        this.playRecording()
+      }
     });
 
     this.player.on('ended', () => {
@@ -110,28 +124,47 @@ class HomeListPlayerCard extends Component {
   };
 
   playRecording = () => {
+    if (this.props.currentPlayerId !== this.player._playerId && !this.player.isPlaying) {
+      this.props.changeCurrentPlayerId(this.player._playerId);
+    }
+
     if (this.state.recordingFile !== this.state.savedPrevRecordingFile && this._isMounted) {
       this.setState({
-        savedPrevRecordingFile: this.state.prevRecordingFile
+        savedPrevRecordingFile: this.state.prevRecordingFile,
+        playerReload: true
       });
-      this.loadPlayer();
+      this.loadPlayer(true);
     } else {
       this.player.playPause((error) => {
         if (error) {
           console.log(error);
+          this.loadPlayer();
         };
-
+        
         if (this.player.isPlaying && !error) {
+          this.setState({
+            playerReload: false,
+            playerId: this.player._playerId
+          });
+          
+          if (this.player) {
+            this.player.speed = 1.0;
+          }
+          
           this.progressInterval = setInterval(() => {
             if (this.player && this.shouldUpdateProgressBar() && this._isMounted) {
               let currentProgress = Math.max(0, this.player.currentTime) / this.player.duration;
               if (isNaN(currentProgress)) {
                 currentProgress = 0;
               };
-    
+              
               if (!this.player.isPlaying) {
                 this.stopProgressInterval();
               };
+              
+              if (this.props.currentPlayerId !== this.player._playerId && this.player.isPlaying) {
+                this.playRecording();
+              }
     
               this.setState({ progress: currentProgress });
             }
@@ -174,7 +207,7 @@ class HomeListPlayerCard extends Component {
       <View style={styles.playerContainerStyle}>
         <TouchableOpacity onPress={() => this.playRecording()}>
           {
-            this.state.playerIsReady ? (
+            this.state.playerIsReady && !this.state.playerReload ? (
               this.state.isPlaying ? (
                 <PauseButton />
               ) : (
@@ -213,11 +246,18 @@ const styles = StyleSheet.create({
 
 const dispatchUpdate = () => {
   return {
-    getHome
+    getHome,
+    changeCurrentPlayerId
+  }
+};
+
+const mapStateToProps = (state) => {
+  return {
+    currentPlayerId: state.PlayerReducer.currentPlayerId
   }
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   dispatchUpdate()
 )(HomeListPlayerCard);
