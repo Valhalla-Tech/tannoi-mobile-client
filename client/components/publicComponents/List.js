@@ -29,8 +29,7 @@ const HomeList = props => {
     sectionQuery,
     queryId,
     useMoreButton,
-    moreButtonFunction,
-    endpoint
+    moreButtonFunction
   } = props;
 
   const MoreButton = () => {
@@ -56,7 +55,6 @@ const HomeList = props => {
             sectionType={sectionType}
             sectionQuery={sectionQuery}
             queryId={queryId}
-            endpoint={endpoint}
           />
         }
         {

@@ -31,7 +31,7 @@ const FormInput = props => {
         autoCapitalize={capitalize ? "sentences" : "none"}
       />
       {Icon && (
-        <TouchableOpacity onPress={iconFunction}>
+        <TouchableOpacity onPress={iconFunction} style={{...iconStyle.margin}}>
           <Icon height={iconStyle.height} width={iconStyle.width} />
         </TouchableOpacity>
       )}

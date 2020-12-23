@@ -25,8 +25,7 @@ const ListHeader = props => {
     sectionQuery,
     queryId,
     openModal,
-    currentSort,
-    endpoint
+    currentSort
   } = props;
 
   const ListSort = () => {
@@ -44,8 +43,7 @@ const ListHeader = props => {
         sectionTitle: listTitle,
         sectionType: sectionType,
         sectionQuery: sectionQuery,
-        queryId: queryId,
-        endpoint: endpoint
+        queryId: queryId
       })}>
         <Text style={styles.seeAllButtonTextStyle}>See all</Text>
       </TouchableOpacity>
@@ -83,12 +81,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: "5%",
+    paddingHorizontal: "3.5%",
     height: 50
   },
 
   headerTitleStyle: {
-    fontSize: 18,
+    fontSize: 16.5,
     fontFamily: bold,
     color: "#FFFFFF",
     marginVertical: "4%"

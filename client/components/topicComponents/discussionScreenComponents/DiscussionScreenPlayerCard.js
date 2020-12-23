@@ -92,10 +92,10 @@ class DiscussionScreenPlayerCard extends Component {
   };
 
   componentWillUnmount() {
+    this._isMounted = false;
     if (this.state.playPauseButton === 'Pause') {
       this.playRecording();
     };
-    this._isMounted = false;
     clearInterval(this.progressInterval);
   };
 

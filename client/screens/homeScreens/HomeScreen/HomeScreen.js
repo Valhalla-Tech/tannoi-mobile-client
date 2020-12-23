@@ -72,14 +72,17 @@ const HomeScreen = ({ navigation }) => {
             <View style={styles.homeScreenCardContainerStyle}>
               {
                 requestedDiscussion.length !== 0 && (
-                  <View style={styles.sectionStyle}>
-                    <List
-                      listTitle="You're Asked to Respond"
-                      listData={requestedDiscussion}
-                      navigation={navigation}
-                      openModal={openModal}
-                    />
-                  </View>
+                  <List
+                    listTitle="You're Asked to Respond"
+                    listData={requestedDiscussion}
+                    navigation={navigation}
+                    openModal={openModal}
+                    isUsingMoreButton={true}
+                    useSeeAllButton={true}
+                    sectionType="discussion"
+                    sectionQuery="responseRequest"
+                    queryId="=true"
+                  />
                 )
               }
               {
@@ -92,7 +95,8 @@ const HomeScreen = ({ navigation }) => {
                     isUsingMoreButton={true}
                     useSeeAllButton={true}
                     sectionType="discussion"
-                    endpoint="/following"
+                    sectionQuery="followingDiscussion"
+                    queryId="=true"
                   />
                 )
               }

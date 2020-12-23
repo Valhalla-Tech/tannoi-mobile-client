@@ -7,7 +7,7 @@ import {
   FlatList
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllDiscussion } from '../../../store/actions/DiscussionAction';
+import { getAllDiscussion, clearDiscussion } from '../../../store/actions/DiscussionAction';
 import { bold, normal } from '../../../assets/FontSize';
 import { GlobalPadding } from '../../../constants/Size';
 
@@ -34,6 +34,10 @@ const TopicDetail = props => {
   useEffect(() => {
     dispatch(getAllDiscussion('topic_id=', topicId));
     dispatch(getSingleTopic(topicId));
+
+    return () => {
+      dispatch(clearDiscussion());
+    }
   }, []);
 
   const discussions = useSelector(state => state.DiscussionReducer.discussions);

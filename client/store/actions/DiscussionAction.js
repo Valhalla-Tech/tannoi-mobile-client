@@ -2,13 +2,13 @@ import axios from '../../constants/ApiServices';
 import AsyncStorage from '@react-native-community/async-storage';
 import BaseUrl from '../../constants/BaseUrl';
 
-export const getAllDiscussion = (option, optionId, sort, page, endpoint) => {
+export const getAllDiscussion = (option, optionId, sort, page) => {
   return async (dispatch) => {
     try {
       let access_token = await AsyncStorage.getItem('access_token');
       let getAllDiscussionRequest = await axios({
         url: `${BaseUrl}/discussions/all${
-          `${endpoint ? endpoint : ''}?sort=${sort ? sort : 'newest'}`}${option ? `&${option}` : ''}${optionId ? optionId : ''}${`&page=${page ? page : '1'}`
+          `?sort=${sort ? sort : 'newest'}`}${option ? `&${option}` : ''}${optionId ? optionId : ''}${`&page=${page ? page : '1'}`
         }`,
         method: 'get',
         headers: {

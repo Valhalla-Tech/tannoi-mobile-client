@@ -31,12 +31,16 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
   const [selectedSortName, setSelectedSortName] = useState('Newest');
   const [sortName, setSortName] = useState('Newest');
 
-  const { sectionTitle, sectionType, sectionQuery, queryId, endpoint } = route.params;
+  const { sectionTitle, sectionType, sectionQuery, queryId } = route.params;
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (sectionType === 'discussion') {
-      dispatch(getAllDiscussion(sectionQuery ? sectionQuery : null, queryId ? queryId : null, null, null, endpoint ? endpoint : null));
+      dispatch(getAllDiscussion(sectionQuery ? sectionQuery : null, queryId ? queryId : null, null, null));
+    }
+
+    return () => {
+      dispatch(clearDiscussion());
     }
   }, []);
 
@@ -60,13 +64,13 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
     setSortName(name);
     setCurrentPage(1);
     dispatch(clearDiscussion());
-    dispatch(getAllDiscussion(sectionQuery ? sectionQuery : null, queryId ? queryId : null, selectedSort, 1, endpoint ? endpoint : null));
+    dispatch(getAllDiscussion(sectionQuery ? sectionQuery : null, queryId ? queryId : null, selectedSort, 1));
     closeModal();
   }
 
   const nextPage = () => {
     setCurrentPage(prevState => prevState + 1);
-    dispatch(getAllDiscussion(null, null, selectedSort, currentPage + 1, endpoint ? endpoint : null));
+    dispatch(getAllDiscussion(null, null, selectedSort, currentPage + 1));
   };
 
   const HeaderContent = () => {

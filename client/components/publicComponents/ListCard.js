@@ -118,7 +118,10 @@ const HomeListCard = props => {
           discussionType === 2 ? (
               <Image source={LockIcon} style={styles.lockIconStyle} />
             ) : (
-              <HomeListCardPlayer recordingFile={recordingFile} discussionId={discussionId} />
+              <HomeListCardPlayer
+                recordingFile={recordingFile}
+                discussionId={discussionId}
+              />
           )
         }
       </View>

@@ -85,7 +85,8 @@ const reducer = (state = defaultState, action) => {
         plays: '',
         recordingFile: '',
         isLike: '',
-        isDislike: ''
+        isDislike: '',
+        discussions: ''
       }
     case 'CLEAR_USER_DISCUSSION':
       return {...state, userDiscussion: []};
