@@ -47,7 +47,7 @@ class HomeListPlayerCard extends Component {
 
   componentWillUnmount() {
     this._isMounted = false;
-    if (this.state.isPlaying) {
+    if (this.player.isPlaying) {
       this.playRecording()
     }
   };

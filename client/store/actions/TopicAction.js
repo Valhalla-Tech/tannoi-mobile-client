@@ -48,7 +48,6 @@ export const getSingleTopic = (topicId) => {
       });
 
       if (getSingleTopicRequest.data) {
-        console.log(getSingleTopicRequest.data)
         dispatch({
           type: 'GET_SINGLE_TOPIC',
           payload: {
