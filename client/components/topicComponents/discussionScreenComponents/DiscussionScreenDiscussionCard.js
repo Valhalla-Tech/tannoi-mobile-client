@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 import branch from 'react-native-branch';
+import { GetFontSize } from '../../../helper/GetFontSize';
 
 //Icons
 import Upvote from '../../../assets/topicAssets/upvote.svg';
@@ -312,7 +313,7 @@ const DiscussionScreenCard = props => {
     </View>
   )
 };
-
+console.log(GetFontSize(2))
 const styles = StyleSheet.create({
   discussionScreenCardContainerStyle: {
     backgroundColor: "#FFFFFF",
@@ -392,7 +393,7 @@ const styles = StyleSheet.create({
 
   discussionTitleStyle: {
     fontFamily: bold,
-    fontSize: 20
+    fontSize: GetFontSize(2)
   },
 
   topicStyle: {
