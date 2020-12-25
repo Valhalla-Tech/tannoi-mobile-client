@@ -71,20 +71,22 @@ const TopicIndexScreen = ({ navigation }) => {
 
   const TopicScreenContent = () => {
     return (
-      <View>
-        <FlatList
-          data={topics}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={renderTopics}
-        />
-      </View>
+      <FlatList
+        data={topics}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={renderTopics}
+      />
     );
   };
 
   return (
-    <View>
+    <View style={{flex: 1}}>
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
-      <Card child={TopicScreenContent} customStyle={styles.cardContainerStyle} />
+      <FlatList
+        ListHeaderComponent={
+          <Card child={TopicScreenContent} customStyle={styles.cardContainerStyle} />
+        }
+      />
     </View>
   );
 };
@@ -118,7 +120,8 @@ const styles = StyleSheet.create({
   cardContainerStyle: {
     marginHorizontal: "1.8%",
     marginVertical: "2%",
-    borderRadius: 8
+    borderRadius: 8,
+    marginBottom: "8%"
   },
 
   topicStyle: {

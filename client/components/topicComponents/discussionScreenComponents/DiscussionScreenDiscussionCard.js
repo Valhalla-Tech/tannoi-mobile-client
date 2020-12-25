@@ -301,6 +301,8 @@ const DiscussionScreenCard = props => {
                   fromNextPreviousButton={fromNextPreviousButton}
                   updateFromNextPreviousButton={updateFromNextPreviousButton}
                   isRecorderModalOpen={isRecorderModalOpen}
+                  profileId={profileId}
+                  navigation={navigation}
                 />
               )
             }

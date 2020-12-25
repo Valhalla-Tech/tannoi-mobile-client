@@ -61,7 +61,7 @@ const DiscussionScreen = ({ route, navigation }) => {
     });
 
     return unsubscribe;
-  }, []);
+  }, [navigation]);
 
   const closeAddResponseModal = () => {
     setOpenAddResponseModal(false);

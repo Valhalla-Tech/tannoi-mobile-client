@@ -32,13 +32,17 @@ const TopicDetail = props => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllDiscussion('topic_id=', topicId));
-    dispatch(getSingleTopic(topicId));
+    const unsubscribe = navigation.addListener('focus', () => {
+      dispatch(getAllDiscussion('topic_id=', topicId));
+      dispatch(getSingleTopic(topicId));
+    });
 
-    return () => {
+    const clearList = () => {
       dispatch(clearDiscussion());
-    }
-  }, []);
+    };
+
+    return (unsubscribe, clearList)
+  }, [navigation]);
 
   const discussions = useSelector(state => state.DiscussionReducer.discussions);
   const { description } = useSelector(state => state.TopicReducer.topic);
