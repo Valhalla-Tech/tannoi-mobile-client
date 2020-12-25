@@ -43,18 +43,26 @@ const UserProfileScreen = ({route, navigation}) => {
   useEffect(() => {
     dispatch(clearUserProfile());
     dispatch(clearDiscussion(true));
-    dispatch(getOneProfile(userId));
+
+    const unsubscribe = navigation.addListener('focus', () => {
+      dispatch(clearUserProfile());
+      dispatch(clearDiscussion(true));
+      dispatch(getOneProfile(userId));
+      dispatch(getUserDiscussion(userId));
+    });
+
+    const clearScreen = () => {
+      dispatch(clearUserProfile());
+      dispatch(clearDiscussion(true));
+    };
+
     if (fromDeepLink) {
       dispatch(clearHome());
       dispatch(getHome());
     }
-    dispatch(getUserDiscussion(userId));
 
-    return () => {
-      dispatch(clearUserProfile());
-      dispatch(clearDiscussion(true));
-    };
-  }, []);
+    return (unsubscribe, clearScreen)
+  }, [navigation]);
 
   const followAccount = async () => {
     try {

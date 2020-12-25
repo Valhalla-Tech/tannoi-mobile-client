@@ -9,7 +9,7 @@ import {
 import { normal, bold } from '../../../assets/FontSize';
 import BigButton from '../../publicComponents/BigButton';
 import { useDispatch, useSelector } from 'react-redux';
-import { getOneProfile } from '../../../store/actions/ProfileAction';
+import { getOneProfile, clearUserProfile } from '../../../store/actions/ProfileAction';
 import { getHome, clearHome } from '../../../store/actions/HomeAction';
 import { getResponse } from '../../../store/actions/ResponseAction';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -37,6 +37,10 @@ const OptionModal = props => {
 
   useEffect(() => {
     dispatch(getOneProfile());
+
+    return () => {
+      clearUserProfile()
+    }
   }, [])
 
   const [deleteOption, setDeleteOption] = useState(false);

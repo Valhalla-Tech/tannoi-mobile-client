@@ -32,15 +32,20 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
   const { sectionTitle, sectionType, sectionQuery, queryId } = route.params;
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (sectionType === 'discussion') {
-      dispatch(getAllDiscussion(sectionQuery ? sectionQuery : null, queryId ? queryId : null, null, null));
-    }
 
-    return () => {
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      if (sectionType === 'discussion') {
+        dispatch(getAllDiscussion(sectionQuery ? sectionQuery : null, queryId ? queryId : null, null, null));
+      }      
+    });
+
+    const clearListDiscussion = () => {
       dispatch(clearDiscussion());
-    }
-  }, []);
+    };
+
+    return (unsubscribe, clearListDiscussion)
+  }, [navigation]);
 
   const openModal = () => {
     setSortModal(true);
