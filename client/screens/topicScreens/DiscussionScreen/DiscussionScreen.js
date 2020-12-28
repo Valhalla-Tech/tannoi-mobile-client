@@ -167,7 +167,7 @@ const DiscussionScreen = ({ route, navigation }) => {
                   selectCard={selectCard}
                   postTime={postTime}
                   discussionTitle={discussionTitle}
-                  userType={profileType}
+                  profileType={profileType}
                 />
               )
             }
@@ -188,6 +188,7 @@ const DiscussionScreen = ({ route, navigation }) => {
           <>
             {
               selectedCard === itemData.index ? (
+                <>
                 <DiscussionScreenPlayerCard
                   navigation={navigation}
                   cardType="response"
@@ -216,6 +217,7 @@ const DiscussionScreen = ({ route, navigation }) => {
                   selectedCard={selectedCard}
                   isRecorderModalOpen={openAddResponse}
                 />
+                </>
               ) : (
                 <ClosedCard
                   profilePicture={itemData.item.creator.profile_photo_path}
@@ -227,7 +229,7 @@ const DiscussionScreen = ({ route, navigation }) => {
                   responseLike={itemData.item.likes}
                   responseReply={itemData.item.response_count}
                   responsePlay={itemData.item.play_count !== null ? itemData.item.play_count : 0}
-                  userType={itemData.item.creator.type}
+                  profileType={itemData.item.creator.type}
                 />
               )
             }
