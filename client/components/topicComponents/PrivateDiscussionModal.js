@@ -20,7 +20,7 @@ import XMark from '../../assets/topicAssets/x-mark.svg';
 
 //Components
 import FormInput from '../publicComponents/FormInput';
-import BigButton from '../publicComponents/BigButton';
+import BigButton from '../publicComponents/Button';
 
 const PrivateDiscussionModal = props => {
   const {

@@ -21,7 +21,7 @@ import { ScreenHeight } from '../../../constants/Size';
 import ScreenImage from '../../../assets/verificationAssets/Illustration-Tannoi-Apps-03.png';
 
 //Components
-import BigButton from '../../../components/publicComponents/BigButton';
+import BigButton from '../../../components/publicComponents/Button';
 import FormInput from '../../../components/publicComponents/FormInput';
 import StepCount from '../../../components/verificationComponent/StepCount';
 

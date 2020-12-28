@@ -19,7 +19,7 @@ import BaseUrl from '../../../constants/BaseUrl';
 //Components
 import BackButton from '../../../components/publicComponents/BackButton';
 import Card from '../../../components/accountComponents/FollowSomeTopicsScreenComponents/Card';
-import DoneButton from '../../../components/publicComponents/BigButton';
+import DoneButton from '../../../components/publicComponents/Button';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 
 const numColumns = 3

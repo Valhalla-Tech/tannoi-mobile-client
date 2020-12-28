@@ -7,7 +7,7 @@ import {
   Modal
 } from 'react-native';
 import { normal, bold } from '../../../assets/FontSize';
-import BigButton from '../../publicComponents/BigButton';
+import BigButton from '../../publicComponents/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOneProfile, clearUserProfile } from '../../../store/actions/ProfileAction';
 import { getHome, clearHome } from '../../../store/actions/HomeAction';

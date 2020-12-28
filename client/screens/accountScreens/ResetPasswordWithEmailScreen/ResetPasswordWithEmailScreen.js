@@ -6,14 +6,14 @@ import {
   TouchableWithoutFeedback,
   Keyboard
 } from 'react-native';
-import branch from 'react-native-branch'
 import axios from '../../../constants/ApiServices';
 import { bold, normal } from '../../../assets/FontSize';
 import BaseUrl from '../../../constants/BaseUrl';
+import { GenerateDeepLink } from '../../../helper/GenerateDeepLink';
 
 //Components
 import BackButton from '../../../components/publicComponents/BackButton';
-import SendResetPasswordButton from '../../../components/publicComponents/BigButton';
+import SendResetPasswordButton from '../../../components/publicComponents/Button';
 import FormInput from '../../../components/publicComponents/FormInput';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
@@ -26,7 +26,7 @@ const ResetPasswordWithEmailScreen = ({ navigation }) => {
   const emailInput = emailData => {
     setResetPasswordEmail(emailData);
   };
-
+  
   const resetPassword = async () => {
     try {
       setIsloading(true);
@@ -36,45 +36,35 @@ const ResetPasswordWithEmailScreen = ({ navigation }) => {
       });
       
       if (getResetPasswordToken.data.token) {
-        let branchUniversalObject = await branch.createBranchUniversalObject('canonicalIdentifier', {
-          locallyIndex: true,
-          title: 'Reset Your Password',
-          contentDescription: 'This is a link to reset password',
-          contentMetadata: {
-            ratingAverage: 4.2,
-            customMetadata: {
-              screen: 'CreateNewPasswordScreen',
-              payload: JSON.stringify({
-                token: getResetPasswordToken.data.token
-              })
+        GenerateDeepLink(
+          'Reset Your Password',
+          'This is a link to reset password',
+          'CreateNewPasswordScreen',
+          {
+            token: getResetPasswordToken.data.token
+          },
+          'reset password',
+          async url => {
+            try {
+              let resetPasswordRequest =  await axios.post(`${BaseUrl}/users/password/send-reset-token`, {
+                link: url,
+                email: resetPasswordEmail
+              });
+              
+              if (resetPasswordRequest.data.msg === 'Success') {
+                setIsloading(false);
+                navigation.navigate('ResetPasswordWithEmailVerificationScreen', {
+                  url: url
+                });
+              }
+            } catch (error) {
+              console.log(error);
+              setIsloading(false);
+              setEmailCheck(!emailCheck);
             }
           }
-        });
-        
-        let linkProperties = {
-          feature: 'reset password',
-          channel: 'tannoi'
-        };
-        
-        let controlParams = {
-          $desktop_url: 'https://www.tannoi.app/'
-        };
-        
-        let {url} = await branchUniversalObject.generateShortUrl(linkProperties, controlParams);
-        
-        let resetPasswordRequest =  await axios.post(`${BaseUrl}/users/password/send-reset-token`, {
-          link: url,
-          email: resetPasswordEmail
-        });
-        
-        if (resetPasswordRequest.data.msg === 'Success') {
-          setIsloading(false);
-          navigation.navigate('ResetPasswordWithEmailVerificationScreen', {
-            url: url
-          });
-        };
+        );
       };
-
     } catch (error) {
       setIsloading(false);
       setEmailCheck(!emailCheck)

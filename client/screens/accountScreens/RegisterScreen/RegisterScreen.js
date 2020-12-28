@@ -14,7 +14,7 @@ import BaseUrl from '../../../constants/BaseUrl';
 
 //Components
 import FormInput from '../../../components/publicComponents/FormInput';
-import SaveAndContinueButton from '../../../components/publicComponents/BigButton';
+import SaveAndContinueButton from '../../../components/publicComponents/Button';
 import EmailConfirmationModal from '../../../components/accountComponents/RegisterScreenComponents/EmailConfirmationModal';
 import BackButton from '../../../components/publicComponents/BackButton';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';

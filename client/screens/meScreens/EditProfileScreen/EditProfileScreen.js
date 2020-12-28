@@ -31,7 +31,7 @@ import BackButton from '../../../components/publicComponents/BackButton';
 import FormInput from '../../../components/publicComponents/FormInput';
 import ListCardPlayer from '../../../components/publicComponents/ListCardPlayer';
 import RecorderModal from '../../../components/publicComponents/RecorderModal';
-import BigButton from '../../../components/publicComponents/BigButton';
+import BigButton from '../../../components/publicComponents/Button';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 
 //Icon

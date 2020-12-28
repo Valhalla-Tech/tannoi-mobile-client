@@ -22,7 +22,7 @@ import WelcomeScreenBackground from '../../../assets/accountAssets/WelcomeScreen
 import TannoiLogo from '../../../assets/publicAssets/tannoiLogo.svg';
 
 //Component
-import WelcomePageButton from '../../../components/publicComponents/BigButton';
+import Button from '../../../components/publicComponents/Button';
 
 const WelcomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -48,9 +48,9 @@ const WelcomeScreen = ({ navigation }) => {
     });
   }, [])
 
-  const WelcomePageUpperSection = () => {
+  const WelcomeScreenUpperSection = () => {
     return (
-      <View style={styles.welcomePageGreetingContainerStyle}>
+      <View style={styles.welcomeScreenGreetingContainerStyle}>
         <Image 
           source={WelcomeScreenBackground} 
           style={styles.welcomeScreenBackgroundStyle} 
@@ -62,7 +62,7 @@ const WelcomeScreen = ({ navigation }) => {
     );
   };
 
-  const WelcomePageLoginButton = () => {
+  const WelcomeScreenLoginButton = () => {
     return (
       <View style={{flexDirection:"row"}}>
         <Text style={styles.loginButtonTextStyle}>
@@ -80,81 +80,94 @@ const WelcomeScreen = ({ navigation }) => {
     );
   };
 
-  const WelcomePageButtonSection = () => {
+  const WelcomeScreenButton = (title, customStyle, page, type, buttonFuntion, iconTitle) => {
     return (
-      <View style={styles.welcomePageLoginButtonStyle}>
-        <WelcomePageButton 
-          buttonTitle="Sign up with email"
-          buttonStyle={
+      <Button
+        buttonTitle={title}
+        buttonStyle={customStyle}
+        navigation={navigation}
+        navigationPage={page}
+        buttonType={type}
+        buttonFunction={buttonFuntion}
+        buttonIconTitle={iconTitle}
+      />
+    );
+  };
+
+  const WelcomeScreenButtonSection = () => {
+    return (
+      <View style={styles.welcomeScreenLoginButtonStyle}>
+        {
+          WelcomeScreenButton(
+            'Sign up with email',
             {
               backgroundColor: "#5152D0",
               borderColor: "#5152D0",
               color: "#FFFFFF",
               width: "75%",
               height: "18%"
-            }
-          }
-          navigation={navigation}
-          navigationPage="RegisterScreen"
-          buttonType="navigationButton"
-        />
-        <WelcomePageButton 
-          buttonTitle="Continue with Facebook"
-          buttonStyle={
+            },
+            'RegisterScreen',
+            'navigationButton'
+          )
+        }
+        {
+          WelcomeScreenButton(
+            'Continue with Facebook',
             {
               backgroundColor: "#3B5998",
               borderColor: "#3B5998",
               color: "#FFFFFF",
               width: "75%",
               height: "18%"
-            }
-          }
-          buttonType="navigationButton"
-          buttonIconTitle="facebook"
-          buttonType="buttonFunction"
-          buttonFunction={facebookSignIn}
-        />
-        <WelcomePageButton 
-          buttonTitle="Continue with Google"
-          buttonStyle={
+            },
+            null,
+            'buttonFunction',
+            facebookSignIn,
+            'facebook'
+          )
+        }
+        {
+          WelcomeScreenButton(
+            'Continue with Google',
             {
               backgroundColor: "#FFFFFF",
               borderColor: "#E2E2E2",
               color: "#464D60",
               width: "75%",
               height: "18%"
-            }
-          }
-          navigation={navigation}
-          buttonIconTitle="google"
-          buttonType="buttonFunction"
-          buttonFunction={googleSignIn}
-        />
-        <WelcomePageLoginButton />
+            },
+            null,
+            'buttonFunction',
+            googleSignIn,
+            'google'
+          )
+        }
+        <WelcomeScreenLoginButton />
       </View>
     );
   };
 
   return (
-    <View style={styles.welcomePageContainerStyle}>
-      <WelcomePageUpperSection />
-      <WelcomePageButtonSection />
+    <View style={styles.welcomeScreenContainerStyle}>
+      <WelcomeScreenUpperSection />
+      <WelcomeScreenButtonSection />
     </View>
   )
 };
 
 const styles = StyleSheet.create({
-  welcomePageContainerStyle: {
+  welcomeScreenContainerStyle: {
     flex: 1
   },
   
-  welcomePageLoginButtonStyle: {
+  welcomeScreenLoginButtonStyle: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
 
-  welcomePageGreetingContainerStyle: {
+  welcomeScreenGreetingContainerStyle: {
     flex: 1.5,
     alignItems: "center",
     justifyContent: "center",

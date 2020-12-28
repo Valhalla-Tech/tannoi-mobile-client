@@ -12,7 +12,7 @@ import { bold, normal } from '../../../assets/FontSize';
 import TickIcon from '../../../assets/verificationAssets/tickIcon.svg';
 
 //Component
-import BigButton from '../../../components/publicComponents/BigButton';
+import BigButton from '../../../components/publicComponents/Button';
 
 const FinishVerificationScreen = ({ navigation }) => {
   const dispatch = useDispatch();

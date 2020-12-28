@@ -36,7 +36,7 @@ import Recorder from '../../../components/publicComponents/Recorder';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import PrivateDiscussionModal from '../../../components/topicComponents/PrivateDiscussionModal';
 import NoticeModal from '../../../components/publicComponents/Modal';
-import BigButton from '../../../components/publicComponents/BigButton';
+import BigButton from '../../../components/publicComponents/Button';
 
 const NewDiscussionScreen = ({ navigation }) => {
   const [discussionTitle, setDiscussionTitle] = useState('');

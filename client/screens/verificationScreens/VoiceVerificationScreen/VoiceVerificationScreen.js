@@ -17,7 +17,7 @@ import { ScreenHeight } from '../../../constants/Size';
 import ScreenImage from '../../../assets/verificationAssets/Illustration-Tannoi-Apps-04.png';
 
 //Components
-import BigButton from '../../../components/publicComponents/BigButton';
+import BigButton from '../../../components/publicComponents/Button';
 import Recorder from '../../../components/publicComponents/Recorder';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
