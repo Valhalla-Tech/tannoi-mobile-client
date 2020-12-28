@@ -17,7 +17,7 @@ import { userLogout } from '../../store/actions/LoginAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
-import branch from 'react-native-branch';
+import { GenerateDeepLink } from '../../helper/GenerateDeepLink';
 
 //Components
 import FormInput from './FormInput';
@@ -73,65 +73,58 @@ const RecorderModal = props => {
         if (addResponseForResponse) {
           formData.append('response_id', responseId)
         };
-  
-        let branchUniversalObject = await branch.createBranchUniversalObject('canonicalIdentifier', {
-          locallyIndex: true,
-          title: 'Response a Discussion',
-          contentDescription: 'This is a link to Discussion',
-          contentMetadata: {
-            ratingAverage: 4.2,
-            customMetadata: {
-              screen: 'DiscussionScreen',
-              payload: JSON.stringify({
-                discussionId: discussionId.toString()
-              })
+
+        GenerateDeepLink(
+          'Response a Discussion',
+          'This is a link to Discussion',
+          'DiscussionScreen',
+          {
+            discussionId: discussionId.toString()
+          },
+          'response a discussion',
+          async url => {
+            try {
+              let createResponseRequest = await axios({
+                method: 'post',
+                url: `${BaseUrl}/responses/${discussionId}?deep_link=${url}`,
+                headers: {
+                  'Content-Type': 'multipart/form-data',
+                  'token': access_token
+                },
+                data: formData
+              });
+        
+              if (createResponseRequest.data) {
+                setIsLoading(false);
+                setValidation(false);
+                dispatch(getResponse(discussionId));
+                if (addResponseForResponse) {
+                  if (!addResponseForResponseInResponseScreen) {
+                    dispatch(getSingleResponse(responseId));
+                  };
+                  dispatch(getSingleResponse(responseId, 'getDataForResponse'));
+                  dispatch(getSingleResponse(responseScreenResponseId));
+                };
+                dispatch(getDiscussion(discussionId));
+                setRecordingFile('');
+                setCaption('');
+                closeModal();
+              }
+            } catch (error) {
+              console.log(error);
+              setIsLoading(false);
+              setValidation(true);
+              if (error.response.data.msg === 'You have to login first') {
+                dispatch(userLogout());
+              }
             }
           }
-        });
-        
-        let linkProperties = {
-          feature: 'response a discussion',
-          channel: 'tannoi'
-        };
-        
-        let controlParams = {
-          $desktop_url: 'https://www.tannoi.app/'
-        };
-        let {url} = await branchUniversalObject.generateShortUrl(linkProperties, controlParams);
-
-        let createResponseRequest = await axios({
-          method: 'post',
-          url: `${BaseUrl}/responses/${discussionId}?deep_link=${url}`,
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            'token': access_token
-          },
-          data: formData
-        });
-  
-        if (createResponseRequest.data) {
-          setIsLoading(false);
-          setValidation(false);
-          dispatch(getResponse(discussionId));
-          if (addResponseForResponse) {
-            if (!addResponseForResponseInResponseScreen) {
-              dispatch(getSingleResponse(responseId));
-            };
-            dispatch(getSingleResponse(responseId, 'getDataForResponse'));
-            dispatch(getSingleResponse(responseScreenResponseId));
-          };
-          // dispatch(clearHome());
-          // dispatch(getHome());
-          dispatch(getDiscussion(discussionId));
-          setRecordingFile('');
-          setCaption('');
-          closeModal();
-        };
+        );
       }
     } catch (error) {
+      console.log(error);
       setIsLoading(false);
       setValidation(true);
-      console.log(error);
       if (error.response.data.msg === 'You have to login first') {
         dispatch(userLogout());
       };

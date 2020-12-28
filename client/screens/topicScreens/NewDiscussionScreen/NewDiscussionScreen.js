@@ -22,8 +22,8 @@ import { userLogout } from '../../../store/actions/LoginAction';
 import { searchUser } from '../../../store/actions/PrivateDiscussionAction';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
-import branch from 'react-native-branch';
 import Slider from '@react-native-community/slider';
+import { GenerateDeepLink } from '../../../helper/GenerateDeepLink';
 
 //Icon
 import EditButton from '../../../assets/topicAssets/edit.svg';
@@ -176,51 +176,45 @@ const NewDiscussionScreen = ({ navigation }) => {
               'userArr': JSON.stringify(selectedFollowers),
               'all_user': selectAll
             } : {'userArr': JSON.stringify(selectedFollowers)};
-            
-            let branchUniversalObject = await branch.createBranchUniversalObject('canonicalIdentifier', {
-              locallyIndex: true,
-              title: 'Ask For Response',
-              contentDescription: 'This is a link to discussion',
-              contentMetadata: {
-                ratingAverage: 4.2,
-                customMetadata: {
-                  screen: 'DiscussionScreen',
-                  payload: JSON.stringify({
-                    discussionId: createNewDiscussionRequest.data.id.toString()
-                  })
+
+            GenerateDeepLink(
+              'Ask For Response',
+              'This is a link to discussion',
+              'DiscussionScreen',
+              {
+                discussionId: createNewDiscussionRequest.data.id.toString()
+              },
+              'ask for response',
+              async url => {
+                try {
+                  let askToResponseRequest = await axios({
+                    url: `${BaseUrl}/users/ask/${createNewDiscussionRequest.data.id}?deep_link=${url}`,
+                    method: 'post',
+                    headers: {
+                      'token': access_token
+                    },
+                    data: data
+                  });
+        
+                  if (askToResponseRequest.data) {
+                    setIsLoading(false);
+                    dispatch(clearHome());
+                    dispatch(getHome());
+                    navigation.navigate('DiscussionScreen', {
+                      discussionId: createNewDiscussionRequest.data.id,
+                      fromNewDiscussion: true
+                    });
+                  }
+                } catch (error) {
+                  console.log(error)
+                  setIsLoading(false);
+                  setCreateNewDiscussionValidation(true);
+                  if (error.response.data.msg === 'You have to login first') {
+                    dispatch(userLogout());
+                  };
                 }
               }
-            });
-            
-            let linkProperties = {
-              feature: 'ask for response',
-              channel: 'tannoi'
-            };
-            
-            let controlParams = {
-              $desktop_url: 'https://www.tannoi.app/'
-            };
-            
-            let {url} = await branchUniversalObject.generateShortUrl(linkProperties, controlParams);
-  
-            let askToResponseRequest = await axios({
-              url: `${BaseUrl}/users/ask/${createNewDiscussionRequest.data.id}?deep_link=${url}`,
-              method: 'post',
-              headers: {
-                'token': access_token
-              },
-              data: data
-            });
-  
-            if (askToResponseRequest.data) {
-              setIsLoading(false);
-              dispatch(clearHome());
-              dispatch(getHome());
-              navigation.navigate('DiscussionScreen', {
-                discussionId: createNewDiscussionRequest.data.id,
-                fromNewDiscussion: true
-              });
-            }
+            );
           } else {
             setIsLoading(false);
             dispatch(clearHome());

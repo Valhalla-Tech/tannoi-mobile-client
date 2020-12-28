@@ -8,14 +8,13 @@ import {
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
 import { useSelector, useDispatch } from 'react-redux';
-import { getHome, clearHome } from '../../../store/actions/HomeAction';
 import { getDiscussion } from '../../../store/actions/DiscussionAction';
 import { getAuthorizedUsers } from '../../../store/actions/PrivateDiscussionAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
-import branch from 'react-native-branch';
 import { CalculateHeight } from '../../../helper/CalculateSize';
+import { GenerateDeepLink } from '../../../helper/GenerateDeepLink';
 
 //Icons
 import Upvote from '../../../assets/topicAssets/upvote.svg';
@@ -82,48 +81,35 @@ const DiscussionScreenCard = props => {
     try {
       if (userType !== 0 || profileId === userId) {
         const access_token = await AsyncStorage.getItem('access_token');
-  
-        let branchUniversalObject = await branch.createBranchUniversalObject('canonicalIdentifier', {
-          locallyIndex: true,
-          title: 'Like a Discussion',
-          contentDescription: 'This is a link to Discussion',
-          contentMetadata: {
-            ratingAverage: 4.2,
-            customMetadata: {
-              screen: 'DiscussionScreen',
-              payload: JSON.stringify({
-                discussionId: discussionId.toString()
+
+        GenerateDeepLink(
+          'Like a Discussion',
+          'This is a link to Discussion',
+          'DiscussionScreen',
+          {
+            discussionId: discussionId.toString()
+          },
+          'like discussion',
+          async url => {
+            try {
+              let upvoteRequest = await axios({
+                method: 'get',
+                url: `${BaseUrl}/discussions/like/${discussionId}?deep_link=${url}`,
+                headers: {
+                  token: access_token
+                }
               })
+        
+              if (upvoteRequest.data) {
+                dispatch(getDiscussion(discussionId));
+              }
+            } catch (error) {
+              console.log(error);
             }
           }
-        });
-        
-        let linkProperties = {
-          feature: 'like discussion',
-          channel: 'tannoi'
-        };
-        
-        let controlParams = {
-          $desktop_url: 'https://www.tannoi.app/'
-        };
-        
-        let {url} = await branchUniversalObject.generateShortUrl(linkProperties, controlParams);
-
-        let upvoteRequest = await axios({
-          method: 'get',
-          url: `${BaseUrl}/discussions/like/${discussionId}?deep_link=${url}`,
-          headers: {
-            token: access_token
-          }
-        })
-  
-        if (upvoteRequest.data) {
-          dispatch(getDiscussion(discussionId));
-          // dispatch(clearHome());
-          // dispatch(getHome());
-        }
+        );
       } else {
-        navigation.navigate('VerificationNavigation')
+        navigation.navigate('VerificationNavigation');
       }
     } catch (error) {
       console.log(error);
@@ -145,8 +131,6 @@ const DiscussionScreenCard = props => {
   
         if (downvoteRequest.data) {
           dispatch(getDiscussion(discussionId));
-          // dispatch(clearHome());
-          // dispatch(getHome());
         }
       } else {
         navigation.navigate('VerificationNavigation');

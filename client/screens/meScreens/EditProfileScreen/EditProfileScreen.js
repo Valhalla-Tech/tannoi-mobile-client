@@ -34,9 +34,6 @@ import RecorderModal from '../../../components/publicComponents/RecorderModal';
 import BigButton from '../../../components/publicComponents/Button';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 
-//Icon
-import NoProfileIcon from '../../../assets/publicAssets/noProfilePicture.png';
-
 const calculateHeight = input => {
   return input / 100 * ScreenHeight;
 };
@@ -73,8 +70,11 @@ const EditProfileScreen = ({ navigation }) => {
 
   useEffect(() => {
     dispatch(getOneProfile());
-    updateState();
-  }, [userProfile, updateState]);
+  }, []);
+
+  useEffect(() => {
+    updateState()
+  }, [updateState])
 
   const gender = [
     { name: 'Male', value: 'Male' },
@@ -324,7 +324,7 @@ const EditProfileScreen = ({ navigation }) => {
               show ? (
                 <DateTimePicker 
                   testID="dateTimePicker"
-                  value={birthDate === '' && userProfile.birth_date !== null ? new Date(userProfile.birth_date) : currentDate}
+                  value={birthDate === '' && userProfile.birth_date !== null ? new Date(userProfile.birth_date): currentDate}
                   mode={mode}
                   is24Hour={true}
                   display="default"
@@ -391,37 +391,41 @@ const EditProfileScreen = ({ navigation }) => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={() => {
-      Keyboard.dismiss()
-    }}>
-      <View  style={styles.rootStyle}>
-        <Header
-          child={HeaderContent}
-          customStyle={styles.headerStyle}
-        />
-        <ScrollView>
-          <View style={styles.editProfileContainerStyle}>
-            <Card
-              child={EditProfilePicture}
-              customStyle={userProfile === '' ? {
-                ...styles.cardStyle, marginBottom: "2%",
-                maxHeight: calculateHeight(5),
-                justifyContent: "center",
-                alignItems: "center"
-              } : {
-                ...styles.cardStyle,
-                marginBottom: "2%"
-              }}
-            />
-            <Card
-              child={EditProfileForm}
-              customStyle={{...styles.cardStyle, minHeight: calculateHeight(20)}}
-            />
-          </View>
-          {isLoading && <LoadingSpinner />}
-        </ScrollView>
-      </View>
-    </TouchableWithoutFeedback>
+    <View  style={styles.rootStyle}>
+      <TouchableWithoutFeedback 
+        onPress={() => {
+          Keyboard.dismiss()
+        }}
+      >
+        <>
+          <Header
+            child={HeaderContent}
+            customStyle={styles.headerStyle}
+          />
+          <ScrollView>
+            <View style={styles.editProfileContainerStyle}>
+              <Card
+                child={EditProfilePicture}
+                customStyle={userProfile === '' ? {
+                  ...styles.cardStyle, marginBottom: "2%",
+                  maxHeight: calculateHeight(5),
+                  justifyContent: "center",
+                  alignItems: "center"
+                } : {
+                  ...styles.cardStyle,
+                  marginBottom: "2%"
+                }}
+              />
+              <Card
+                child={EditProfileForm}
+                customStyle={{...styles.cardStyle, minHeight: calculateHeight(20)}}
+              />
+            </View>
+            {isLoading && <LoadingSpinner />}
+          </ScrollView>
+        </>
+      </TouchableWithoutFeedback>
+    </View>
   );
 };
 
