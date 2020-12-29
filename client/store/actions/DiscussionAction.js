@@ -62,6 +62,7 @@ export const getDiscussion = (discussionId) => {
       });
 
       if (getDiscussionRequest.data) {
+        
         dispatch({
           type: 'GET_DISCUSSION',
           payload: {

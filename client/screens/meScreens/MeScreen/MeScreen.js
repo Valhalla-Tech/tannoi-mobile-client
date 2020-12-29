@@ -10,16 +10,14 @@ import { bold, normal } from '../../../assets/FontSize';
 import { useSelector, useDispatch } from 'react-redux';
 import { getOneProfile, clearUserProfile } from '../../../store/actions/ProfileAction';
 import { getUserDiscussion, clearDiscussion } from '../../../store/actions/DiscussionAction';
-import DisplayBirthDate from '../../../helper/DisplayBirthDate';
-import { GlobalPadding } from '../../../constants/Size'
+import { GlobalPadding } from '../../../constants/Size';
+import AboutSection from '../../../components/meComponents/AboutSection';
 
 //Components
 import Header from '../../../components/publicComponents/Header';
 import ProfileData from '../../../components/meComponents/ProfileData';
 import List from '../../../components/publicComponents/List';
 import NoticeModal from '../../../components/publicComponents/Modal';
-import Card from '../../../components/publicComponents/Card';
-import ListCardPlayer from '../../../components/publicComponents/ListCardPlayer';
 
 const MeScreen = ({ navigation, route }) => {
   const [selectedMenu, setSelectedMenu] = useState('Discussions');
@@ -76,41 +74,6 @@ const MeScreen = ({ navigation, route }) => {
     return <Text style={styles.noticeModalTextStyle}>You don't have access to this discussion</Text>
   };
 
-  const AboutData = (title, data) => {
-    return (
-      <View style={styles.aboutDataStyle}>
-        {
-          title === 'Bio' && userProfile.bio_voice_path !== null ? (
-            <ListCardPlayer
-              recordingFile={userProfile.bio_voice_path}
-              fromBio={true}
-            />
-          ) : (
-            <View style={styles.aboutDataIconStyle}>
-
-            </View>
-          )
-        }
-        <View style={styles.dataContentStyle}>
-          <Text style={styles.dataTextStyle}>{data}</Text>
-          <Text style={styles.dataTitleStyle}>{title}</Text>
-        </View>
-      </View>
-    );
-  };
-
-  const AboutSection = () => {
-    return (
-      <View>
-        {AboutData('Bio',userProfile.bio ? userProfile.bio : '-')}
-        {AboutData('Gender', userProfile.gender ? userProfile.gender : '-')}
-        {
-          AboutData('Birthday', userProfile.birth_date !== '' && userProfile.birth_date !== null && userProfile.length !== 0 ?  DisplayBirthDate(new Date(userProfile.birth_date)) : '-')
-        }
-      </View>
-    );
-  };
-
   return (
     <View style={styles.meScreenContainerStyle}>
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
@@ -130,10 +93,15 @@ const MeScreen = ({ navigation, route }) => {
                 isUsingMoreButton={false}
                 listData={userDiscussion}
                 openModal={openModal}
-              /> : <Card
-                child={selectedMenu === 'About' ? AboutSection : null}
+              /> : selectedMenu === 'About' ?
+              <AboutSection
                 customStyle={styles.cardStyle}
-              />
+                bio={userProfile.bio}
+                gender={userProfile.gender}
+                birthDate={userProfile ? userProfile.birth_date : null}
+                bioVoiceFile={userProfile.bio_voice_path}
+                isLoading={userProfile ? false : true}
+              /> : null
             }
           </View>
         }

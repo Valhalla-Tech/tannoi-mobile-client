@@ -20,7 +20,7 @@ import BaseUrl from '../../../constants/BaseUrl';
 
 //Components
 import BackButton from '../../../components/publicComponents/BackButton';
-import LoginButton from '../../../components/publicComponents/BigButton';
+import LoginButton from '../../../components/publicComponents/Button';
 import FormInput from '../../../components/publicComponents/FormInput';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
@@ -51,7 +51,6 @@ const LoginWithEmailScreen = ({ navigation }) => {
       })
 
       if (loginRequest.data) {
-        console.log(loginRequest.data);
         setIsLoading(false);
         await AsyncStorage.setItem('access_token', loginRequest.data.access_token);
         await AsyncStorage.setItem('refresh_token', loginRequest.data.refresh_token);

@@ -12,10 +12,9 @@ import { GoogleSignIn, FacebookSignIn } from '../../../store/actions/LoginAction
 
 //Components
 import BackButton from '../../../components/publicComponents/BackButton';
-import LoginScreenButton from '../../../components/publicComponents/BigButton';
+import Button from '../../../components/publicComponents/Button';
 
 const LoginScreen = ({ navigation }) => {
-
   const dispatch = useDispatch();
 
   const googleSignIn = () => {
@@ -26,56 +25,71 @@ const LoginScreen = ({ navigation }) => {
     dispatch(FacebookSignIn());
   };
 
+  const LoginScreenButton = (title, customStyle, page, type, buttonFuntion, iconTitle) => {
+    return (
+      <Button
+        buttonTitle={title}
+        buttonStyle={customStyle}
+        navigation={navigation}
+        navigationPage={page}
+        buttonType={type}
+        buttonFunction={buttonFuntion}
+        buttonIconTitle={iconTitle}
+      />
+    );
+  };
+
   const LoginButton = () => {
     return (
       <>
-        <LoginScreenButton 
-          buttonTitle="Log in with email"
-          buttonStyle={
+        {
+          LoginScreenButton(
+            'Log in with email',
             {
               backgroundColor: "#5152D0",
               borderColor: "#5152D0",
               color: "#FFFFFF",
               width: "100%",
               height: "10%"
-            }
-          }
-          navigation={navigation}
-          navigationPage="LoginWithEmailScreen"
-          buttonType="navigationButton"
-        />
-        <LoginScreenButton 
-          buttonTitle="Continue with Facebook"
-          buttonStyle={
+            },
+            'LoginWithEmailScreen',
+            'navigationButton',
+            null,
+            null
+          )
+        }
+        {
+          LoginScreenButton(
+            'Continue with Facebook',
             {
               backgroundColor: "#3B5998",
               borderColor: "#3B5998",
               color: "#FFFFFF",
               width: "100%",
               height: "10%"
-            }
-          }
-          navigation={navigation}
-          buttonIconTitle="facebook"
-          buttonType="buttonFunction"
-          buttonFunction={facebookSignIn}
-        />
-        <LoginScreenButton 
-          buttonTitle="Continue with Google"
-          buttonStyle={
+            },
+            null,
+            'buttonFunction',
+            facebookSignIn,
+            'facebook'
+          )
+        }
+        {
+          LoginScreenButton(
+            'Continue with Google',
             {
               backgroundColor: "#FFFFFF",
               borderColor: "#E2E2E2",
               color: "#464D60",
               width: "100%",
               height: "10%"
-            }
-          }
-          navigation={navigation}
-          buttonIconTitle="google"
-          buttonType="buttonFunction"
-          buttonFunction={googleSignIn}
-        />
+            },
+            null,
+            'buttonFunction',
+            googleSignIn,
+            'google'
+          )
+        }
       </>
     );
   };

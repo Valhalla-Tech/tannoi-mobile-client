@@ -7,8 +7,7 @@ import {
 } from 'react-redux';
 import store from './store';
 import {
-  KeyboardAvoidingView,
-  Alert
+  KeyboardAvoidingView
 } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 

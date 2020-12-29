@@ -19,7 +19,7 @@ import { getResponse, getSingleResponse, clearResponse } from '../../../store/ac
 import LoadingSpinner from '../../publicComponents/LoadingSpinner';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
-import branch from 'react-native-branch';
+import { GenerateDeepLink } from '../../../helper/GenerateDeepLink';
 
 //Icons
 import PlayerSpeed from '../../../assets/topicAssets/playerSpeed.svg';
@@ -131,7 +131,7 @@ class DiscussionScreenPlayerCard extends Component {
       
       this.updateState();
 
-      if (this.state.fromNextPreviousButton && this.player.canPlay) {
+      if (this.state.fromNextPreviousButton && this.player.canPlay && this._isMounted) {
         this.playRecording();
         this.state.updateFromNextPreviousButton(false);
       }
@@ -160,8 +160,6 @@ class DiscussionScreenPlayerCard extends Component {
 
       if (this.player.isPlaying && !error && !this.state.isPaused) {
         this.playCounter(this.state.responseId ? true : false);
-        // this.props.clearHome();
-        // this.props.getHome();
       };
 
       if (this.player.isPlaying && !error) {
@@ -307,44 +305,29 @@ class DiscussionScreenPlayerCard extends Component {
     try {
       if (this.props.userType !== 0) {
         const access_token = await AsyncStorage.getItem('access_token');
-  
-        let branchUniversalObject = await branch.createBranchUniversalObject('canonicalIdentifier', {
-          locallyIndex: true,
-          title: 'Like a Response',
-          contentDescription: 'This is a link to Discussion',
-          contentMetadata: {
-            ratingAverage: 4.2,
-            customMetadata: {
-              screen: 'DiscussionScreen',
-              payload: JSON.stringify({
-                discussionId: this.state.discussionId.toString()
-              })
+
+        GenerateDeepLink(
+          'Like a Response',
+          'This is a link to Discussion',
+          'DiscussionScreen',
+          {
+            discussionId: this.state.discussionId.toString()
+          },
+          'like response',
+          async url => {
+            let upvoteRequest = await axios({
+              method: 'get',
+              url: `${BaseUrl}/responses/like/${this.state.responseId}?deep_link=${url}`,
+              headers: {
+                token: access_token
+              }
+            })
+      
+            if (upvoteRequest.data) {
+              this.props.getSingleResponse(this.state.responseId, 'getDataForResponse');
             }
           }
-        });
-        
-        let linkProperties = {
-          feature: 'like response',
-          channel: 'tannoi'
-        };
-        
-        let controlParams = {
-          $desktop_url: 'https://www.tannoi.app/'
-        };
-        
-        let {url} = await branchUniversalObject.generateShortUrl(linkProperties, controlParams);
-
-        let upvoteRequest = await axios({
-          method: 'get',
-          url: `${BaseUrl}/responses/like/${this.state.responseId}?deep_link=${url}`,
-          headers: {
-            token: access_token
-          }
-        })
-  
-        if (upvoteRequest.data) {
-          this.props.getSingleResponse(this.state.responseId, 'getDataForResponse');
-        }
+        );
       } else {
         this.props.navigation.navigate('VerificationNavigation');
       }
@@ -626,7 +609,7 @@ const dispatchUpdate = () => {
 const styles = StyleSheet.create({
   discussionPlayerContainerStyle: {
     backgroundColor: "#FFFFFF",
-    paddingHorizontal: "4%",
+    paddingHorizontal: "3.5%",
     paddingVertical: "6%",
     borderBottomRightRadius: 8,
     borderBottomLeftRadius: 8

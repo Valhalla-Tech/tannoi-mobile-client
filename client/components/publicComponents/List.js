@@ -14,7 +14,7 @@ import HomeListCard from './ListCard';
 import LoadingSpinner from './LoadingSpinner';
 import Card from './Card';
 import ListHeader from './ListHeader';
-import BigButton from '../publicComponents/BigButton';
+import BigButton from '../publicComponents/Button';
 
 const HomeList = props => {
   const { 

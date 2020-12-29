@@ -3,7 +3,8 @@ import {
   StyleSheet,
   View,
   Text,
-  FlatList
+  FlatList,
+  RefreshControl
 } from 'react-native';
 import {
   useSelector,
@@ -32,6 +33,7 @@ const HomeScreen = ({ navigation }) => {
   const requestedDiscussion = useSelector(state => state.HomeReducer.requestedDiscussion);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   const closeModal = () => {
     setModalIsOpen(false);
@@ -49,6 +51,11 @@ const HomeScreen = ({ navigation }) => {
     SplashScreen.hide();
 
   }, []);
+
+  const onRefresh = () => {
+    dispatch(clearHome());
+    dispatch(getHome());
+  };
 
   const noticeModalChild = () => {
     return <Text style={styles.noticeModalTextStyle}>You don't have access to this discussion</Text>
@@ -126,6 +133,12 @@ const HomeScreen = ({ navigation }) => {
               />
             </View>
           </View>
+        }
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
         }
       />
       <NoticeModal 

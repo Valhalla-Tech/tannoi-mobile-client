@@ -3,7 +3,6 @@ import {
   StyleSheet,
   View,
   Text,
-  TextInput,
   Image,
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -12,19 +11,18 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import ImagePicker from 'react-native-image-crop-picker';
 import { bold, normal } from '../../../assets/FontSize';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 import DisplayBirthDate from '../../../helper/DisplayBirthDate';
-import ImageResizer from 'react-native-image-resizer';
+import { UploadImage } from '../../../helper/UploadImage';
 
 //Icon
 import NoProfileIcon from '../../../assets/accountAssets/EnterYourProfileScreen/noProfileIcon.svg';
 
 //Components
-import SaveAndContinueButton from '../../../components/publicComponents/BigButton';
+import SaveAndContinueButton from '../../../components/publicComponents/Button';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 import FormInput from '../../../components/publicComponents/FormInput';
 
@@ -39,35 +37,8 @@ const EnterYourProfileScreen = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [fullNameValidation, setFullNameValidation] = useState(false);
 
-  const uploadProfileImage = () => {
-    ImagePicker.openPicker({
-      width: 300,
-      height: 400,
-      cropping: false
-    }).then(image => {
-      let divider = 1;
-      if (image.size > 300000) {
-        divider = image.size / 300000;
-      }
-      ImageResizer.createResizedImage(
-        image.path,
-        image.width / divider,
-        image.height / divider,
-        'JPEG',
-        100,
-        0,
-        null,
-      ).then(resp => {
-        ImagePicker.openCropper({
-          path: resp.uri,
-        }).then(image => {
-          setProfileImage(image.path);
-        })
-      })
-    })
-    .catch(error => {
-      console.log(error)
-    })
+  const uploadProfileImage = async () => {
+    UploadImage(image => setProfileImage(image));
   };
 
   const enterYourProfileRequest = async () => {

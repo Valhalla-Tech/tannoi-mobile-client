@@ -15,10 +15,8 @@ import { getAllDiscussion, clearDiscussion } from '../../../store/actions/Discus
 import Header from '../../../components/publicComponents/Header';
 import List from '../../../components/publicComponents/List';
 import BackButton from '../../../components/publicComponents/BackButton';
-import Card from '../../../components/publicComponents/Card';
 import ListHeader from '../../../components/publicComponents/ListHeader';
 import Modal from '../../../components/publicComponents/Modal';
-import BigButton from '../../../components/publicComponents/BigButton';
 
 const HomeSectionDetailScreen = ({ navigation, route }) => {
   const discussions = useSelector(state => state.DiscussionReducer.discussions);
@@ -220,7 +218,6 @@ const styles = StyleSheet.create({
   },
 
   modalButtonContainerStyle: {
-    // alignItems: "center",
     width: "100%",
     marginTop: "2%"
   },

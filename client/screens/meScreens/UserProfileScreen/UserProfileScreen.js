@@ -13,18 +13,16 @@ import { getUserDiscussion, clearDiscussion } from '../../../store/actions/Discu
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
-import branch from 'react-native-branch';
 import { getHome, clearHome } from '../../../store/actions/HomeAction';
-import DisplayBirthDate from '../../../helper/DisplayBirthDate';
 import { GlobalPadding } from '../../../constants/Size';
+import { GenerateDeepLink } from '../../../helper/GenerateDeepLink';
+import AboutSection from '../../../components/meComponents/AboutSection';
 
 //Components
 import BackButton from '../../../components/publicComponents/BackButton';
 import ProfileData from '../../../components/meComponents/ProfileData';
 import List from '../../../components/publicComponents/List';
 import NoticeModal from '../../../components/publicComponents/Modal';
-import Card from '../../../components/publicComponents/Card';
-import ListCardPlayer from '../../../components/publicComponents/ListCardPlayer';
 
 const UserProfileScreen = ({route, navigation}) => {
   const { userId, fromDeepLink } = route.params;
@@ -68,44 +66,34 @@ const UserProfileScreen = ({route, navigation}) => {
     try {
       let access_token = await AsyncStorage.getItem('access_token');
 
-      let branchUniversalObject = await branch.createBranchUniversalObject('canonicalIdentifier', {
-        locallyIndex: true,
-        title: 'Follow an Account',
-        contentDescription: 'This is a link to User Profile',
-        contentMetadata: {
-          ratingAverage: 4.2,
-          customMetadata: {
-            screen: 'UserProfileScreen',
-            payload: JSON.stringify({
-              userId: followingUserId
-            })
+      GenerateDeepLink(
+        'Follow an Account',
+        'This is a link to User Profile',
+        'UserProfileScreen',
+        {
+          userId: followingUserId
+        },
+        'follow user',
+        async url => {
+          try {
+            let followAccountRequest = await axios({
+              method: 'get',
+              url: `${BaseUrl}/users/${profile.isFollowing ? 'unfollow' : 'follow'}/${userId}?deep_link=${url}`,
+              headers: {
+                'token': access_token
+              }
+            });
+      
+            if (followAccountRequest) {
+              dispatch(getOneProfile(userId));
+            }
+          } catch (error) {
+            if (error.response.data.msg === 'You have to login first') {
+              dispatch(userLogout());
+            };
           }
         }
-      });
-      
-      let linkProperties = {
-        feature: 'follow user',
-        channel: 'tannoi'
-      };
-      
-      let controlParams = {
-        $desktop_url: 'https://www.tannoi.app/'
-      };
-      
-      let {url} = await branchUniversalObject.generateShortUrl(linkProperties, controlParams);
-
-      let followAccountRequest = await axios({
-        method: 'get',
-        url: `${BaseUrl}/users/${profile.isFollowing ? 'unfollow' : 'follow'}/${userId}?deep_link=${url}`,
-        headers: {
-          'token': access_token
-        }
-      });
-
-      if (followAccountRequest) {
-        console.log(followAccountRequest.data);
-        dispatch(getOneProfile(userId));
-      }
+      );
     } catch (error) {
       if (error.response.data.msg === 'You have to login first') {
         dispatch(userLogout());
@@ -127,39 +115,6 @@ const UserProfileScreen = ({route, navigation}) => {
 
   const noticeModalChild = () => {
     return <Text style={styles.noticeModalTextStyle}>You don't have access to this discussion</Text>
-  };
-
-  const AboutData = (title, data) => {
-    return (
-      <View style={styles.aboutDataStyle}>
-        {
-          title === 'Bio' && profile.bio_voice_path !== null ? (
-            <ListCardPlayer
-              recordingFile={profile.bio_voice_path}
-              fromBio={true}
-            />
-          ) : (
-            <View style={styles.aboutDataIconStyle}>
-
-            </View>
-          )
-        }
-        <View style={styles.dataContentStyle}>
-          <Text style={styles.dataTextStyle}>{data}</Text>
-          <Text style={styles.dataTitleStyle}>{title}</Text>
-        </View>
-      </View>
-    );
-  };
-
-  const AboutSection = () => {
-    return (
-      <View>
-        {AboutData('Bio',profile.bio ? profile.bio : '-')}
-        {AboutData('Gender', profile.gender ? profile.gender : '-')}
-        {AboutData('Birthday', profile.birth_date !== '' && profile.birth_date !== null && profile.length !== 0 ?  DisplayBirthDate(new Date(profile.birth_date)) : '-')}
-      </View>
-    );
   };
 
   return (
@@ -197,10 +152,15 @@ const UserProfileScreen = ({route, navigation}) => {
                 isUsingMoreButton={false}
                 listData={userDiscussion}
                 openModal={openModal}
-              /> : <Card
-                child={selectedMenu === 'About' ? AboutSection : null}
+              /> : selectedMenu === 'About' ?
+              <AboutSection
                 customStyle={styles.cardStyle}
-              />
+                bio={profile.bio}
+                gender={profile.gender}
+                birthDate={profile ? profile.birth_date : null}
+                bioVoiceFile={profile.bio_voice_path}
+                isLoading={profile ? false : true}
+              /> : null
             }
           </View>
         }

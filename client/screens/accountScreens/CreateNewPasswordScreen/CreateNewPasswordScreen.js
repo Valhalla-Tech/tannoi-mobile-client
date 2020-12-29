@@ -4,8 +4,7 @@ import {
   View,
   Text,
   TouchableWithoutFeedback,
-  Keyboard,
-  Alert
+  Keyboard
 } from 'react-native';
 import { bold } from '../../../assets/FontSize';
 import axios from '../../../constants/ApiServices';
@@ -13,7 +12,7 @@ import BaseUrl from '../../../constants/BaseUrl';
 
 //Components
 import FormInput from '../../../components/publicComponents/FormInput';
-import LoginButton from '../../../components/publicComponents/BigButton';
+import LoginButton from '../../../components/publicComponents/Button';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import BackButton from '../../../components/publicComponents/BackButton';
 
@@ -44,22 +43,9 @@ const CreateNewPasswordScreen = ({ route, navigation }) => {
             new_password: newPassword
           });
   
-          console.log(submitNewPasswordRequest.data.msg);
-  
-          Alert.alert(
-            'Reset Password Success',
-            'Reset password success, welcome to Tannoi',
-            [
-              {
-                text: 'Cancel',
-                onPress: () => console.log('Cancel Pressed'),
-                style: 'cancel'
-              },
-              { text: 'OK', onPress: () => navigation.navigate('LoginWithEmailScreen') }
-            ],
-            { cancelable: false }
-          );
-
+          if (submitNewPasswordRequest.data) {
+            navigation.navigate('LoginWithEmailScreen');
+          }
         } else {
           setPasswordValidation(true);
         };

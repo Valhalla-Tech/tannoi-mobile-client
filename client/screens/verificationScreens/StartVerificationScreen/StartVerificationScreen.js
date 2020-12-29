@@ -14,7 +14,7 @@ import { bold, normal } from '../../../assets/FontSize';
 import ScreenImage from '../../../assets/verificationAssets/Illustration-Tannoi-Apps-01.png'
 
 //Component
-import BigButton from '../../../components/publicComponents/BigButton';
+import BigButton from '../../../components/publicComponents/Button';
 
 const StartVerificationScreen = ({ navigation }) => {
   const dispatch = useDispatch();

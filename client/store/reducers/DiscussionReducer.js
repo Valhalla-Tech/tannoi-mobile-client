@@ -17,7 +17,7 @@ const defaultState = {
   userType: '',
   discussions: '',
   discussionCount: '',
-  userDiscussion: []
+  userDiscussion: ''
 }
 
 const reducer = (state = defaultState, action) => {
@@ -89,7 +89,7 @@ const reducer = (state = defaultState, action) => {
         discussions: ''
       }
     case 'CLEAR_USER_DISCUSSION':
-      return {...state, userDiscussion: []};
+      return {...state, userDiscussion: ''};
     default:
       return state;
   }

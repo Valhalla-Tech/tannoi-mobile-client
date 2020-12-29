@@ -8,21 +8,19 @@ import {
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
-  ScrollView,
-  FlatList
+  ScrollView
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { getOneProfile } from '../../../store/actions/ProfileAction';
 import { bold, normal } from '../../../assets/FontSize';
 import { Picker } from '@react-native-community/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import ImagePicker from 'react-native-image-crop-picker';
 import DisplayBirthDate from '../../../helper/DisplayBirthDate';
 import axios from '../../../constants/ApiServices';
 import AsyncStorage from '@react-native-community/async-storage';
 import BaseUrl from '../../../constants/BaseUrl';
 import { ScreenHeight } from '../../../constants/Size';
-import ImageResizer from 'react-native-image-resizer';
+import { UploadImage } from '../../../helper/UploadImage';
 
 //Components
 import Header from '../../../components/publicComponents/Header';
@@ -31,11 +29,8 @@ import BackButton from '../../../components/publicComponents/BackButton';
 import FormInput from '../../../components/publicComponents/FormInput';
 import ListCardPlayer from '../../../components/publicComponents/ListCardPlayer';
 import RecorderModal from '../../../components/publicComponents/RecorderModal';
-import BigButton from '../../../components/publicComponents/BigButton';
+import BigButton from '../../../components/publicComponents/Button';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
-
-//Icon
-import NoProfileIcon from '../../../assets/publicAssets/noProfilePicture.png';
 
 const calculateHeight = input => {
   return input / 100 * ScreenHeight;
@@ -73,8 +68,11 @@ const EditProfileScreen = ({ navigation }) => {
 
   useEffect(() => {
     dispatch(getOneProfile());
-    updateState();
-  }, [userProfile, updateState]);
+  }, []);
+
+  useEffect(() => {
+    updateState()
+  }, [updateState])
 
   const gender = [
     { name: 'Male', value: 'Male' },
@@ -133,34 +131,7 @@ const EditProfileScreen = ({ navigation }) => {
   };
 
   const uploadProfileImage = () => {
-    ImagePicker.openPicker({
-      width: 300,
-      height: 400,
-      cropping: false
-    }).then(image => {
-      let divider = 1;
-      if (image.size > 300000) {
-        divider = image.size / 300000;
-      }
-      ImageResizer.createResizedImage(
-        image.path,
-        image.width / divider,
-        image.height / divider,
-        'JPEG',
-        100,
-        0,
-        null,
-      ).then(resp => {
-        ImagePicker.openCropper({
-          path: resp.uri,
-        }).then(image => {
-          setProfileImage(image.path);
-        })
-      })
-    })
-    .catch(error => {
-      console.log(error)
-    })
+    UploadImage(image => setProfileImage(image));
   };
 
   const closeRecordingModal = () => {
@@ -324,7 +295,7 @@ const EditProfileScreen = ({ navigation }) => {
               show ? (
                 <DateTimePicker 
                   testID="dateTimePicker"
-                  value={birthDate === '' && userProfile.birth_date !== null ? new Date(userProfile.birth_date) : currentDate}
+                  value={birthDate === '' && userProfile.birth_date !== null ? new Date(userProfile.birth_date): currentDate}
                   mode={mode}
                   is24Hour={true}
                   display="default"
@@ -391,37 +362,41 @@ const EditProfileScreen = ({ navigation }) => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={() => {
-      Keyboard.dismiss()
-    }}>
-      <View  style={styles.rootStyle}>
-        <Header
-          child={HeaderContent}
-          customStyle={styles.headerStyle}
-        />
-        <ScrollView>
-          <View style={styles.editProfileContainerStyle}>
-            <Card
-              child={EditProfilePicture}
-              customStyle={userProfile === '' ? {
-                ...styles.cardStyle, marginBottom: "2%",
-                maxHeight: calculateHeight(5),
-                justifyContent: "center",
-                alignItems: "center"
-              } : {
-                ...styles.cardStyle,
-                marginBottom: "2%"
-              }}
-            />
-            <Card
-              child={EditProfileForm}
-              customStyle={{...styles.cardStyle, minHeight: calculateHeight(20)}}
-            />
-          </View>
-          {isLoading && <LoadingSpinner />}
-        </ScrollView>
-      </View>
-    </TouchableWithoutFeedback>
+    <View  style={styles.rootStyle}>
+      <TouchableWithoutFeedback 
+        onPress={() => {
+          Keyboard.dismiss()
+        }}
+      >
+        <>
+          <Header
+            child={HeaderContent}
+            customStyle={styles.headerStyle}
+          />
+          <ScrollView>
+            <View style={styles.editProfileContainerStyle}>
+              <Card
+                child={EditProfilePicture}
+                customStyle={userProfile === '' ? {
+                  ...styles.cardStyle, marginBottom: "2%",
+                  maxHeight: calculateHeight(5),
+                  justifyContent: "center",
+                  alignItems: "center"
+                } : {
+                  ...styles.cardStyle,
+                  marginBottom: "2%"
+                }}
+              />
+              <Card
+                child={EditProfileForm}
+                customStyle={{...styles.cardStyle, minHeight: calculateHeight(20)}}
+              />
+            </View>
+            {isLoading && <LoadingSpinner />}
+          </ScrollView>
+        </>
+      </TouchableWithoutFeedback>
+    </View>
   );
 };
 

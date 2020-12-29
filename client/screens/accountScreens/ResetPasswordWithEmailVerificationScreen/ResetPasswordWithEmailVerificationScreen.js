@@ -23,7 +23,6 @@ const ResetPasswordWithEmailVerificationScreen = ({ route, navigation }) => {
     let startCounter = setInterval(() => {
       counter = counter - 1;
       setCountNumber(counter);
-      console.log(counter);
 
       if (counter === 0) {
         clearInterval(startCounter);

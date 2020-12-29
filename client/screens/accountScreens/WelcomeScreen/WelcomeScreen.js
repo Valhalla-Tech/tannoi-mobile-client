@@ -22,7 +22,7 @@ import WelcomeScreenBackground from '../../../assets/accountAssets/WelcomeScreen
 import TannoiLogo from '../../../assets/publicAssets/tannoiLogo.svg';
 
 //Component
-import WelcomePageButton from '../../../components/publicComponents/BigButton';
+import Button from '../../../components/publicComponents/Button';
 
 const WelcomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -38,7 +38,7 @@ const WelcomeScreen = ({ navigation }) => {
   useEffect(() => {
     GoogleSignin.configure({
       // scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
-      webClientId: '1036887341767-4foinu1uvd66srmivikbplncka4ind72.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
+      webClientId: '1036887341767-94hfnudqi9rr5mmsotqnffe5o02fdgfq.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
       offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
       // hostedDomain: '', // specifies a hosted domain restriction
       // loginHint: '', // [iOS] The user's ID, or email address, to be prefilled in the authentication UI if possible. [See docs here](https://developers.google.com/identity/sign-in/ios/api/interface_g_i_d_sign_in.html#a0a68c7504c31ab0b728432565f6e33fd)
@@ -48,9 +48,9 @@ const WelcomeScreen = ({ navigation }) => {
     });
   }, [])
 
-  const WelcomePageUpperSection = () => {
+  const WelcomeScreenUpperSection = () => {
     return (
-      <View style={styles.welcomePageGreetingContainerStyle}>
+      <View style={styles.welcomeScreenGreetingContainerStyle}>
         <Image 
           source={WelcomeScreenBackground} 
           style={styles.welcomeScreenBackgroundStyle} 
@@ -62,7 +62,7 @@ const WelcomeScreen = ({ navigation }) => {
     );
   };
 
-  const WelcomePageLoginButton = () => {
+  const WelcomeScreenLoginButton = () => {
     return (
       <View style={{flexDirection:"row"}}>
         <Text style={styles.loginButtonTextStyle}>
@@ -80,81 +80,94 @@ const WelcomeScreen = ({ navigation }) => {
     );
   };
 
-  const WelcomePageButtonSection = () => {
+  const WelcomeScreenButton = (title, customStyle, page, type, buttonFuntion, iconTitle) => {
     return (
-      <View style={styles.welcomePageLoginButtonStyle}>
-        <WelcomePageButton 
-          buttonTitle="Sign up with email"
-          buttonStyle={
+      <Button
+        buttonTitle={title}
+        buttonStyle={customStyle}
+        navigation={navigation}
+        navigationPage={page}
+        buttonType={type}
+        buttonFunction={buttonFuntion}
+        buttonIconTitle={iconTitle}
+      />
+    );
+  };
+
+  const WelcomeScreenButtonSection = () => {
+    return (
+      <View style={styles.welcomeScreenLoginButtonStyle}>
+        {
+          WelcomeScreenButton(
+            'Sign up with email',
             {
               backgroundColor: "#5152D0",
               borderColor: "#5152D0",
               color: "#FFFFFF",
               width: "75%",
               height: "18%"
-            }
-          }
-          navigation={navigation}
-          navigationPage="RegisterScreen"
-          buttonType="navigationButton"
-        />
-        <WelcomePageButton 
-          buttonTitle="Continue with Facebook"
-          buttonStyle={
+            },
+            'RegisterScreen',
+            'navigationButton'
+          )
+        }
+        {
+          WelcomeScreenButton(
+            'Continue with Facebook',
             {
               backgroundColor: "#3B5998",
               borderColor: "#3B5998",
               color: "#FFFFFF",
               width: "75%",
               height: "18%"
-            }
-          }
-          buttonType="navigationButton"
-          buttonIconTitle="facebook"
-          buttonType="buttonFunction"
-          buttonFunction={facebookSignIn}
-        />
-        <WelcomePageButton 
-          buttonTitle="Continue with Google"
-          buttonStyle={
+            },
+            null,
+            'buttonFunction',
+            facebookSignIn,
+            'facebook'
+          )
+        }
+        {
+          WelcomeScreenButton(
+            'Continue with Google',
             {
               backgroundColor: "#FFFFFF",
               borderColor: "#E2E2E2",
               color: "#464D60",
               width: "75%",
               height: "18%"
-            }
-          }
-          navigation={navigation}
-          buttonIconTitle="google"
-          buttonType="buttonFunction"
-          buttonFunction={googleSignIn}
-        />
-        <WelcomePageLoginButton />
+            },
+            null,
+            'buttonFunction',
+            googleSignIn,
+            'google'
+          )
+        }
+        <WelcomeScreenLoginButton />
       </View>
     );
   };
 
   return (
-    <View style={styles.welcomePageContainerStyle}>
-      <WelcomePageUpperSection />
-      <WelcomePageButtonSection />
+    <View style={styles.welcomeScreenContainerStyle}>
+      <WelcomeScreenUpperSection />
+      <WelcomeScreenButtonSection />
     </View>
   )
 };
 
 const styles = StyleSheet.create({
-  welcomePageContainerStyle: {
+  welcomeScreenContainerStyle: {
     flex: 1
   },
   
-  welcomePageLoginButtonStyle: {
+  welcomeScreenLoginButtonStyle: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
 
-  welcomePageGreetingContainerStyle: {
+  welcomeScreenGreetingContainerStyle: {
     flex: 1.5,
     alignItems: "center",
     justifyContent: "center",
