@@ -131,7 +131,7 @@ class DiscussionScreenPlayerCard extends Component {
       
       this.updateState();
 
-      if (this.state.fromNextPreviousButton && this.player.canPlay) {
+      if (this.state.fromNextPreviousButton && this.player.canPlay && this._isMounted) {
         this.playRecording();
         this.state.updateFromNextPreviousButton(false);
       }

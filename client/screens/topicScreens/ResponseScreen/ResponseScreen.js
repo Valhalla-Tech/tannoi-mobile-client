@@ -3,11 +3,13 @@ import {
   StyleSheet,
   View,
   Text,
-  FlatList
+  FlatList,
+  TouchableOpacity
 } from 'react-native';
 import { bold } from '../../../assets/FontSize';
 import { useDispatch, useSelector } from 'react-redux';
 import { getResponse, getSingleResponse, clearResponse } from '../../../store/actions/ResponseAction';
+import { CalculateHeight } from '../../../helper/CalculateSize';
 
 //Components
 import BackButton from '../../../components/publicComponents/BackButton';
@@ -113,6 +115,11 @@ const ReplyScreen = ({route, navigation}) => {
             )
           }
         </View>
+        <TouchableOpacity onPress={() => navigation.navigate('DiscussionScreen', {
+            discussionId: discussionId
+        })}>
+          <Text style={styles.discussionButton}>Discussion</Text>
+        </TouchableOpacity>
       </View>
       {
         !profileName && (
@@ -247,6 +254,12 @@ const styles = StyleSheet.create({
     fontFamily: bold,
     color: "#464D60",
     marginLeft: "5%"
+  },
+
+  discussionButton: {
+    fontFamily: bold,
+    color: "#0E4EF4",
+    fontSize: CalculateHeight(2)
   }
 });
 

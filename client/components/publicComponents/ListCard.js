@@ -141,8 +141,7 @@ const styles = StyleSheet.create({
   profileContainerStyle: {
     flexDirection: "row", 
     alignItems: "center", 
-    marginBottom: "1.5%",
-    // marginLeft: -1.5
+    marginBottom: "1.5%"
   },
 
   profilePictureStyle: {
