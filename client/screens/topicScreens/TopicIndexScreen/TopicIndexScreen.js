@@ -10,6 +10,7 @@ import {
 import { getTopic, followTopic, unfollowTopic } from '../../../store/actions/TopicAction';
 import { useSelector, useDispatch } from 'react-redux';
 import { bold, normal } from '../../../assets/FontSize';
+import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 
 //Icons
 import StarIcon from '../../../assets/topicAssets/starIcon.svg';
@@ -71,11 +72,15 @@ const TopicIndexScreen = ({ navigation }) => {
 
   const TopicScreenContent = () => {
     return (
-      <FlatList
-        data={topics}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={renderTopics}
-      />
+      topics.length !== 0 ? (
+        <FlatList
+          data={topics}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={renderTopics}
+        />
+      ) : (
+        <LoadingSpinner loadingSpinnerForComponent={true} />
+      )
     );
   };
 

@@ -7,6 +7,7 @@ import {
   StyleSheet
 } from 'react-native';
 import { bold, normal } from '../../assets/FontSize';
+import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
 
 //Icon
 import NoProfilePicture from '../../assets/publicAssets/noProfilePicture.png'
@@ -96,13 +97,19 @@ const ProfileData = props => {
 
   return (
     <>
-      <View style={styles.userProfileStyle}>
-        <View style={styles.profileInfoContainerStyle}>
-          <UserProfileData />
-          <View style={styles.profileImageContainerStyle}>
-            <Image source={profile.profile_photo_path ? { uri: profile.profile_photo_path } : NoProfilePicture} style={styles.profileImageStyle} />
+      <View style={profile !== '' ? styles.userProfileStyle : {...styles.userProfileStyle, height: "15%"}}>
+        {
+          profile !== '' ? (
+          <View style={styles.profileInfoContainerStyle}>
+            <UserProfileData />
+            <View style={styles.profileImageContainerStyle}>
+              <Image source={profile.profile_photo_path ? { uri: profile.profile_photo_path } : NoProfilePicture} style={styles.profileImageStyle} />
+            </View>
           </View>
-        </View>
+          ) : (
+            <LoadingSpinner loadingSpinnerForComponent={true} />
+          )
+        }
       </View>
       <ProfileInfoMenu />
     </>

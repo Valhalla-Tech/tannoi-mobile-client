@@ -14,17 +14,15 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 import { getHome, clearHome } from '../../../store/actions/HomeAction';
-import DisplayBirthDate from '../../../helper/DisplayBirthDate';
 import { GlobalPadding } from '../../../constants/Size';
 import { GenerateDeepLink } from '../../../helper/GenerateDeepLink';
+import AboutSection from '../../../components/meComponents/AboutSection';
 
 //Components
 import BackButton from '../../../components/publicComponents/BackButton';
 import ProfileData from '../../../components/meComponents/ProfileData';
 import List from '../../../components/publicComponents/List';
 import NoticeModal from '../../../components/publicComponents/Modal';
-import Card from '../../../components/publicComponents/Card';
-import ListCardPlayer from '../../../components/publicComponents/ListCardPlayer';
 
 const UserProfileScreen = ({route, navigation}) => {
   const { userId, fromDeepLink } = route.params;
@@ -119,39 +117,6 @@ const UserProfileScreen = ({route, navigation}) => {
     return <Text style={styles.noticeModalTextStyle}>You don't have access to this discussion</Text>
   };
 
-  const AboutData = (title, data) => {
-    return (
-      <View style={styles.aboutDataStyle}>
-        {
-          title === 'Bio' && profile.bio_voice_path !== null ? (
-            <ListCardPlayer
-              recordingFile={profile.bio_voice_path}
-              fromBio={true}
-            />
-          ) : (
-            <View style={styles.aboutDataIconStyle}>
-
-            </View>
-          )
-        }
-        <View style={styles.dataContentStyle}>
-          <Text style={styles.dataTextStyle}>{data}</Text>
-          <Text style={styles.dataTitleStyle}>{title}</Text>
-        </View>
-      </View>
-    );
-  };
-
-  const AboutSection = () => {
-    return (
-      <View>
-        {AboutData('Bio',profile.bio ? profile.bio : '-')}
-        {AboutData('Gender', profile.gender ? profile.gender : '-')}
-        {AboutData('Birthday', profile.birth_date !== '' && profile.birth_date !== null && profile.length !== 0 ?  DisplayBirthDate(new Date(profile.birth_date)) : '-')}
-      </View>
-    );
-  };
-
   return (
     <View style={styles.userProfileScreenContainerStyle}>
       <View style={styles.headerStyle}>
@@ -187,10 +152,15 @@ const UserProfileScreen = ({route, navigation}) => {
                 isUsingMoreButton={false}
                 listData={userDiscussion}
                 openModal={openModal}
-              /> : <Card
-                child={selectedMenu === 'About' ? AboutSection : null}
+              /> : selectedMenu === 'About' ?
+              <AboutSection
                 customStyle={styles.cardStyle}
-              />
+                bio={profile.bio}
+                gender={profile.gender}
+                birthDate={profile ? profile.birth_date : null}
+                bioVoiceFile={profile.bio_voice_path}
+                isLoading={profile ? false : true}
+              /> : null
             }
           </View>
         }
