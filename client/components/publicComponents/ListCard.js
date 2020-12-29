@@ -7,6 +7,7 @@ import {
   Image
 } from 'react-native';
 import { bold, normal } from '../../assets/FontSize';
+import ConvertPostTime from '../../helper/ConvertPostTime';
 
 //Icon
 import LockIcon from '../../assets/homeAssets/lockIcon.png';
@@ -45,24 +46,6 @@ const HomeListCard = props => {
     } else {
       return number
     };
-  };
-
-  const convertPostTime = postTimeInput => {
-    let postTimeToNewDate = new Date(postTimeInput);
-    let postTimeToGMTString = postTimeToNewDate.toGMTString();
-    let postTimeToNewDateSplitted = postTimeToGMTString.split(' ');
-    
-    
-    let date = postTimeToNewDateSplitted[1];
-    let month = postTimeToNewDateSplitted[2];
-    let year = postTimeToNewDateSplitted[3];
-    let time = postTimeToNewDateSplitted[4].substring(0, 5);
-    
-    if (date[0] === '0') {
-      date = date[1]
-    }
-
-    return `${date} ${month} ${year}, ${time}`;
   };
 
   const HomeListCardData = () => {
@@ -113,10 +96,10 @@ const HomeListCard = props => {
     >
       <HomeListCardData />
       <View style={styles.playButtonAndDurationContainerStyle}>
-        <Text style={styles.postTimeStyle}>{convertPostTime(postTime)}</Text>
+        <Text style={styles.postTimeStyle}>{ConvertPostTime(postTime)}</Text>
         {
           discussionType === 2 ? (
-              <Image source={LockIcon} style={styles.lockIconStyle} />
+              null
             ) : (
               <HomeListCardPlayer
                 recordingFile={recordingFile}
