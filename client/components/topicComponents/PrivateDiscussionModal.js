@@ -146,11 +146,11 @@ const PrivateDiscussionModal = props => {
     setCurrentPage(prevState => prevState + 1);
 
     if (fromDiscussionScreen) {
-      dispatch(getAuthorizedUsers(discussionId, clearSearch ? '' : searchInput, false, currentPage + 1));
+      dispatch(getAuthorizedUsers(discussionId, searchKeyword, false, currentPage + 1));
     } else {
-      dispatch(searchUser(clearSearch ? '' : searchInput, false, currentPage + 1));
+      dispatch(searchUser(searchKeyword, false, currentPage + 1));
     };
-  };
+  }
 
   const Buttons = () => {
     return (
@@ -180,7 +180,7 @@ const PrivateDiscussionModal = props => {
       </View>
     );
   };
-
+  console.log(authorized.length, userCount)
   return (
     <Modal
       animationType="fade"
@@ -235,7 +235,7 @@ const PrivateDiscussionModal = props => {
                   renderFollowerList
                 }
                 ListFooterComponent={
-                  userCount > 20 && (
+                fromDiscussionScreen && authorized.length < userCount &&  userCount > 20 || followers.length < userCount && userCount > 20 && !fromDiscussionScreen ? (
                     <View style={styles.moreButtonContainerStyle}>
                       <BigButton
                         buttonStyle={{
@@ -248,7 +248,7 @@ const PrivateDiscussionModal = props => {
                         buttonFunction={nextPage}
                       />
                     </View>
-                  )
+                  ) : null
                 }
               />
             )
@@ -259,7 +259,6 @@ const PrivateDiscussionModal = props => {
     </Modal>
   );
 };
-
 const styles = StyleSheet.create({
   optionModalBackground: {
     position: "absolute", 
