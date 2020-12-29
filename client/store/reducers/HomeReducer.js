@@ -36,7 +36,9 @@ const reducer = (state = defaultState, action) => {
         discussionOfTheWeek: '',
         topUser: '',
         trending: '',
-        recommendedTopic: ''
+        recommendedTopic: '',
+        followingDiscussion: '',
+        requestedDiscussion: ''
       }
     default:
       return state;
