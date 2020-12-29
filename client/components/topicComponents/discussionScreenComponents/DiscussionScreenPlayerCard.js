@@ -609,7 +609,7 @@ const dispatchUpdate = () => {
 const styles = StyleSheet.create({
   discussionPlayerContainerStyle: {
     backgroundColor: "#FFFFFF",
-    paddingHorizontal: "4%",
+    paddingHorizontal: "3.5%",
     paddingVertical: "6%",
     borderBottomRightRadius: 8,
     borderBottomLeftRadius: 8

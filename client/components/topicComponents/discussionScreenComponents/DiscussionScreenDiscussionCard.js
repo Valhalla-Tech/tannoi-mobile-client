@@ -307,7 +307,7 @@ const styles = StyleSheet.create({
   },
   
   discussionInfoSectionStyle: {
-    padding: 16,
+    padding: "3%",
     borderBottomWidth: 1,
     borderBottomColor: "#F5F7F9"
   },
@@ -372,7 +372,8 @@ const styles = StyleSheet.create({
   },
 
   discussionInfoContainerStyle: {
-    paddingLeft: 24
+    paddingLeft: "7.5%",
+    maxWidth: "80%"
   },
 
   discussionTitleStyle: {
@@ -388,7 +389,7 @@ const styles = StyleSheet.create({
   discussionHashtag: {
     fontFamily: normal,
     fontSize: 14,
-    color: "#73798C"
+    color: "#73798C",
   },
 
   repliesAndPlaysNumberContainerStyle: {
