@@ -180,7 +180,7 @@ const PrivateDiscussionModal = props => {
       </View>
     );
   };
-  console.log(authorized.length, userCount)
+
   return (
     <Modal
       animationType="fade"

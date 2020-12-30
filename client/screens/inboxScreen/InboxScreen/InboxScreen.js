@@ -14,6 +14,7 @@ import axios from '../../../constants/ApiServices';
 import AsyncStorage from '@react-native-community/async-storage';
 import BaseUrl from '../../../constants/BaseUrl';
 import ConvertPostTime from '../../../helper/ConvertPostTime';
+import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 
 //Components
 import Header from '../../../components/publicComponents/Header';
@@ -22,6 +23,7 @@ import SearchBar from '../../../components/publicComponents/SearchBar';
 
 const InboxScreen = ({ navigation }) => {
   const [inbox, setInbox] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   
   const getInbox = async () => {
     try {
@@ -36,6 +38,7 @@ const InboxScreen = ({ navigation }) => {
       });
 
       if (getInboxRequest.data) {
+        setIsLoading(false);
         setInbox(getInboxRequest.data);
       }
     } catch (error) {
@@ -44,6 +47,7 @@ const InboxScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     getInbox();
   }, []);
 
@@ -88,11 +92,17 @@ const InboxScreen = ({ navigation }) => {
 
   const inboxContent = () => {
     return (
-      <FlatList
-        data={inbox}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={inboxCard}
-      />
+      <>
+      {
+        !isLoading ?(
+          <FlatList
+            data={inbox}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={inboxCard}
+          />
+        ) : <LoadingSpinner loadingSpinnerForComponent={true} />
+      }
+      </>
     );
   };
 
