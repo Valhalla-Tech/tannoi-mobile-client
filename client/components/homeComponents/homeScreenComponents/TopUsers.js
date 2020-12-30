@@ -8,6 +8,7 @@ import {
   Image
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
+import { CalculateHeight } from '../../../helper/CalculateSize';
 
 //Icon
 import NoProfilePicture from '../../../assets/publicAssets/noProfilePicture.png';
@@ -84,8 +85,8 @@ const styles = StyleSheet.create({
   },
 
   profilePictureStyle: {
-    height: 75,
-    width: 75,
+    height: CalculateHeight(10.5),
+    width: CalculateHeight(10.5),
     borderRadius: 50,
     marginBottom: 8
   },
