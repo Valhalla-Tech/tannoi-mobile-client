@@ -67,26 +67,36 @@ const InboxScreen = ({ navigation }) => {
       </>
     );
   };
-  console.log(inbox)
+
   const inboxCard = (itemData) => {
-    return (
-      <TouchableOpacity
-        style={styles.inboxCardStyle}
-        onPress={() => {
-          navigation.navigate('DiscussionScreen', {
-            discussionId: itemData.item.discussion_id
-          })
-        }}
-      >
-        <View style={styles.imageContainerStyle}>
-          <Image source={{uri: itemData.item.user.profile_photo_path}} style={styles.profilePhotoStyle} />
-        </View>
-        <View style={styles.inboxMessageContainerStyle}>
-          <Text style={styles.inboxMessageStyle}>{itemData.item.message}</Text>
-          <Text style={styles.postTimeStyle}>{ConvertPostTime(itemData.item.created_at)}</Text>
-        </View>
-      </TouchableOpacity>
-    );
+    if (itemData.item !== null) {
+      return (
+        <TouchableOpacity
+          style={styles.inboxCardStyle}
+          onPress={() => {
+            if (itemData.item.type === 'Followers') {
+              navigation.navigate('UserProfileScreen', {
+                userId: itemData.item.user.id
+              });
+            } else {
+              navigation.navigate('DiscussionScreen', {
+                discussionId: itemData.item.discussion_id
+              });
+            }
+          }}
+        >
+          <View style={styles.imageContainerStyle}>
+            <Image source={{uri: itemData.item.user.profile_photo_path}} style={styles.profilePhotoStyle} />
+          </View>
+          <View style={styles.inboxMessageContainerStyle}>
+            <Text style={styles.inboxMessageStyle}>{itemData.item.message}</Text>
+            <Text style={styles.postTimeStyle}>{ConvertPostTime(itemData.item.created_at)}</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    } else {
+      return null;
+    }
   };
 
   const inboxContent = () => {

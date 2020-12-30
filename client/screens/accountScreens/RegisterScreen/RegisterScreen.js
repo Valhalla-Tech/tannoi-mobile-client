@@ -53,6 +53,7 @@ const RegisterPage = ({ navigation }) => {
     try {
       if (passwordRegister.length >= 5 && passwordRegister.length <= 20 && passwordRegister === reEnterPassword) {
         setIsLoading(!isLoading);
+        setPasswordCheck(!passwordCheck);
         let registerRequest = await axios.post(`${BaseUrl}/users/register`, {
           email: emailRegister,
           password: passwordRegister
@@ -152,16 +153,20 @@ const RegisterPage = ({ navigation }) => {
         />
         {
           passwordCheck && (
-            <ErrorMessage message={reEnterPassword !== passwordRegister ? "Your passwords do not match" : "Password must be 5 - 20 charachters" }/>
+            <ErrorMessage
+              message={reEnterPassword !== passwordRegister ? "Your passwords do not match" : passwordRegister.length >= 5 && passwordRegister.length <= 20 ? setPasswordCheck(false) : "Password must be 5 - 20 charachters" }
+            />
           )
         }
         <FormInput
           formInputTitle="Password"
           dataInput={passwordInput}
+          hidePassword={true}
         />
         <FormInput
           formInputTitle="Re-enter Password"
-          dataInput={passwordInput}
+          dataInput={setReEnterPassword}
+          hidePassword={true}
         />
       </>
     );
