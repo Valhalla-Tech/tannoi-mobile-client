@@ -31,6 +31,7 @@ const RegisterPage = ({ navigation }) => {
   const [emailAlreadyRegistered, setEmailAlreadyRegistered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [termsOfServiceModalIsOpen, setTermsOfServiceModalIsOpen] = useState(false);
+  const [reEnterPassword, setReEnterPassword] = useState('');
 
   useEffect(() => {
     clearStorage();
@@ -50,7 +51,7 @@ const RegisterPage = ({ navigation }) => {
 
   const emailConfirmation = async () => {
     try {
-      if (passwordRegister.length >= 5 && passwordRegister.length <= 20) {
+      if (passwordRegister.length >= 5 && passwordRegister.length <= 20 && passwordRegister === reEnterPassword) {
         setIsLoading(!isLoading);
         let registerRequest = await axios.post(`${BaseUrl}/users/register`, {
           email: emailRegister,
@@ -151,11 +152,15 @@ const RegisterPage = ({ navigation }) => {
         />
         {
           passwordCheck && (
-            <ErrorMessage message="Password must be 5 - 20 charachters" />
+            <ErrorMessage message={reEnterPassword !== passwordRegister ? "Your passwords do not match" : "Password must be 5 - 20 charachters" }/>
           )
         }
         <FormInput
           formInputTitle="Password"
+          dataInput={passwordInput}
+        />
+        <FormInput
+          formInputTitle="Re-enter Password"
           dataInput={passwordInput}
         />
       </>
