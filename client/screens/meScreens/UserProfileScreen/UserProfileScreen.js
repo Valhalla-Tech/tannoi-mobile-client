@@ -152,6 +152,9 @@ const UserProfileScreen = ({route, navigation}) => {
                 isUsingMoreButton={false}
                 listData={userDiscussion}
                 openModal={openModal}
+                customStyle={{
+                  marginBottom: "5%"
+                }}
               /> : selectedMenu === 'About' ?
               <AboutSection
                 customStyle={styles.cardStyle}
