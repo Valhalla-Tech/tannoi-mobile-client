@@ -8,6 +8,7 @@ import {
   Image
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
+import { CalculateHeight, CalculateWidth } from '../../../helper/CalculateSize';
 
 //Icon
 import NoProfilePicture from '../../../assets/publicAssets/noProfilePicture.png';
@@ -74,20 +75,22 @@ const styles = StyleSheet.create({
   },
 
   listStyle: {
-    paddingLeft: "4%",
-    marginVertical: "5.5%"
+    paddingVertical: "3%",
+    maxHeight: CalculateHeight(23),
+    justifyContent: "center",
+    alignItems: "center"
   },
 
   topUsersCardConntainerStyle: {
     alignItems: "center",
-    marginRight: 16
+    width: CalculateWidth(30),
+    height: CalculateWidth(30)
   },
 
   profilePictureStyle: {
-    height: 75,
-    width: 75,
+    height: "80%",
+    width: "80%",
     borderRadius: 50,
-    marginBottom: 8
   },
 
   topUsersNameStyle: {

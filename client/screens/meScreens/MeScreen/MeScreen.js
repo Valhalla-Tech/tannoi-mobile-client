@@ -93,6 +93,9 @@ const MeScreen = ({ navigation, route }) => {
                 isUsingMoreButton={false}
                 listData={userDiscussion}
                 openModal={openModal}
+                customStyle={{
+                  marginBottom: "5%"
+                }}
               /> : selectedMenu === 'About' ?
               <AboutSection
                 customStyle={styles.cardStyle}
