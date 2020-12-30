@@ -378,7 +378,7 @@ const styles = StyleSheet.create({
 
   discussionTitleStyle: {
     fontFamily: bold,
-    fontSize: CalculateHeight(2)
+    fontSize: CalculateHeight(2.2)
   },
 
   topicStyle: {
