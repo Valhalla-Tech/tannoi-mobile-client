@@ -82,6 +82,9 @@ class DiscussionScreenPlayerCard extends Component {
   componentDidMount() {
     this._isMounted = true;
     this.state.cardIndex !== 'discussion' && this.props.getSingleResponse(this.state.responseId, 'getDataForResponse');
+    this._unsubscribe = this.props.navigation.addListener('focus', () => {
+      this.state.cardIndex !== 'discussion' && this.props.getSingleResponse(this.state.responseId, 'getDataForResponse');
+    });
     this.player = null;
     this.lastSeek = 0;
 
@@ -98,6 +101,7 @@ class DiscussionScreenPlayerCard extends Component {
       this.playRecording();
     };
     clearInterval(this.progressInterval);
+    this._unsubscribe();
   };
 
   updateState(err) {

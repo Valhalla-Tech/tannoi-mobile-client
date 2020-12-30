@@ -84,11 +84,11 @@ const HomeListCard = props => {
         if (discussionType === 2 && !isAuthorized) {
           openModal();
         } else if (discussionType === 2 && isAuthorized) {
-          navigation.navigate('DiscussionScreen', {
+          navigation.push('DiscussionScreen', {
             discussionId: discussionId
           })
         } else {
-          navigation.navigate('DiscussionScreen', {
+          navigation.push('DiscussionScreen', {
             discussionId: discussionId
           })
         };
