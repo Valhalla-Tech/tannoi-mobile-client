@@ -181,7 +181,6 @@ const styles = StyleSheet.create({
   inboxMessageStyle: {
     maxWidth: "90%",
     fontFamily: normal,
-    lineHeight: 25,
     fontSize: CalculateHeight(1.8)
   },
 
