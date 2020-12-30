@@ -8,6 +8,7 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Keyboard,
+  Platform
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { bold, normal } from '../../../assets/FontSize';
@@ -50,11 +51,12 @@ const EmailConfirmationModal = props => {
   const emailVerified = async () => {
     try {
       setIsLoading(true);
-      let emailActivationRequest = await axios.get(`${BaseUrl}/users/activation?token=${getCode()}`);
+      let emailActivationRequest = await axios.get(`${BaseUrl}/users/activation?token=${getCode()}&device=${Platform.OS}`);
       if(emailActivationRequest.data.msg === 'Email Activated'){
         setIsLoading(false);
         emailConfirmed();
         await AsyncStorage.setItem('access_token', emailActivationRequest.data.access_token)
+        await AsyncStorage.setItem('refresh_token', emailActivationRequest.data.refresh_token);
         navigation.navigate('EnterYourProfileScreen');
       };
     } catch (error) {

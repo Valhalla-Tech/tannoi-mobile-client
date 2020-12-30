@@ -26,6 +26,8 @@ http.interceptors.response.use(function (response) {
           await AsyncStorage.setItem('access_token', res.data.access_token);
           originalRequest.headers['token'] = res.data.access_token;
           return http.request(originalRequest);
+        } else {
+          store.dispatch(userLogout());
         }
       })
   }
