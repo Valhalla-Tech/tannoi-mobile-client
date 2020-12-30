@@ -67,15 +67,14 @@ const InboxScreen = ({ navigation }) => {
       </>
     );
   };
-
+  console.log(inbox)
   const inboxCard = (itemData) => {
     return (
       <TouchableOpacity
         style={styles.inboxCardStyle}
-        disabled={itemData.item.discussion.type !== 2 ? true : false}
         onPress={() => {
           navigation.navigate('DiscussionScreen', {
-            discussionId: itemData.item.discussion.id
+            discussionId: itemData.item.discussion_id
           })
         }}
       >
