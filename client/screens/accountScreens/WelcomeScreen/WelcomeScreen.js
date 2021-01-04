@@ -13,7 +13,8 @@ import {
   useDispatch
 } from 'react-redux';
 import { bold, normal } from '../../../assets/FontSize';
-import { GoogleSignIn, FacebookSignIn } from '../../../store/actions/LoginAction'
+import { GoogleSignIn, FacebookSignIn } from '../../../store/actions/LoginAction';
+require('dotenv').config();
 
 //Image
 import WelcomeScreenBackground from '../../../assets/accountAssets/WelcomeScreen/welcomeScreenBackground.png';
@@ -38,7 +39,7 @@ const WelcomeScreen = ({ navigation }) => {
   useEffect(() => {
     GoogleSignin.configure({
       // scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
-      webClientId: '1036887341767-4foinu1uvd66srmivikbplncka4ind72.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
+      webClientId: process.env.GOOGLE_CLIENT_ID, // client ID of type WEB for your server (needed to verify user ID and offline access)
       offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
       // hostedDomain: '', // specifies a hosted domain restriction
       // loginHint: '', // [iOS] The user's ID, or email address, to be prefilled in the authentication UI if possible. [See docs here](https://developers.google.com/identity/sign-in/ios/api/interface_g_i_d_sign_in.html#a0a68c7504c31ab0b728432565f6e33fd)
