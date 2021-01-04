@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -6,12 +6,15 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { bold, normal } from '../../assets/FontSize';
+import { useDispatch } from 'react-redux';
+import { getAllDiscussion, clearDiscussion } from '../../store/actions/DiscussionAction';
 
 //Icon
 import DownArrow from '../../assets/homeAssets/downArrow.svg';
 
-//Component
+//Components
 import Header from '../../components/publicComponents/Header';
+import SortModal from '../../components/publicComponents/SortModal';
 
 const ListHeader = props => {
   const {
@@ -24,18 +27,36 @@ const ListHeader = props => {
     sectionType,
     sectionQuery,
     queryId,
-    openModal,
-    currentSort
+    changeSelectedSort,
+    changeCurrentPage
   } = props;
+
+  const [openModal, setOpenModal] = useState(false);
+  const [currentSort, setCurrentSort] = useState('newest');
+
+  const dispatch = useDispatch();
+
+  const closeModal = () => {
+    setOpenModal(false);
+  };
 
   const ListSort = () => {
     return (
-      <TouchableOpacity onPress={() => openModal()} style={styles.filterStyle}>
+      <TouchableOpacity onPress={() => setOpenModal(true)} style={styles.filterStyle}>
         <Text style={styles.filterTextStyle}>{currentSort}</Text>
         <DownArrow />
       </TouchableOpacity>
     );
   };
+
+  const saveSort = (value, name) => {
+    setCurrentSort(name);
+    changeSelectedSort(value);
+    changeCurrentPage(1);
+    dispatch(clearDiscussion());
+    dispatch(getAllDiscussion(sectionQuery ? sectionQuery : null, queryId ? queryId : null, value, 1));
+    closeModal();
+  }
 
   const SeeAllButton = () => {
     return (
@@ -72,7 +93,14 @@ const ListHeader = props => {
   };
 
   return (
-    <Header child={ListHeaderContent} customStyle={{backgroundColor: "#7817FF", borderTopLeftRadius: 8, borderTopRightRadius: 8, ...customStyle}} />
+    <>
+      <Header child={ListHeaderContent} customStyle={{backgroundColor: "#7817FF", borderTopLeftRadius: 8, borderTopRightRadius: 8, ...customStyle}} />
+      <SortModal
+        openModal={openModal}
+        closeModal={closeModal}
+        saveSort={saveSort}
+      />
+    </>
   );
 };
 

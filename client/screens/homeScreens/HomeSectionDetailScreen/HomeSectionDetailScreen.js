@@ -16,20 +16,17 @@ import Header from '../../../components/publicComponents/Header';
 import List from '../../../components/publicComponents/List';
 import BackButton from '../../../components/publicComponents/BackButton';
 import ListHeader from '../../../components/publicComponents/ListHeader';
-import Modal from '../../../components/publicComponents/Modal';
 
 const HomeSectionDetailScreen = ({ navigation, route }) => {
   const discussions = useSelector(state => state.DiscussionReducer.discussions);
   const discussionCount = useSelector(state => state.DiscussionReducer.discussionCount);
 
-  const [sortModal, setSortModal] = useState(false);
   const [selectedSort, setSelectedSort] = useState('newest');
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortName, setSortName] = useState('Newest');
 
   const { sectionTitle, sectionType, sectionQuery, queryId } = route.params;
+ 
   const dispatch = useDispatch();
-
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -45,26 +42,12 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
     return (unsubscribe, clearListDiscussion)
   }, [navigation]);
 
-  const openModal = () => {
-    setSortModal(true);
+  const changeSelectedSort = input => {
+    setSelectedSort(input);
   };
 
-  const closeModal = () => {
-    setSortModal(false);
-  };
-
-  const saveSort = (value, name) => {
-    setSelectedSort(value);
-    setSortName(name);
-    setCurrentPage(1);
-    dispatch(clearDiscussion());
-    dispatch(getAllDiscussion(sectionQuery ? sectionQuery : null, queryId ? queryId : null, value, 1));
-    closeModal();
-  }
-
-  const nextPage = () => {
-    setCurrentPage(prevState => prevState + 1);
-    dispatch(getAllDiscussion(null, null, selectedSort, currentPage + 1));
+  const changeCurrentPage = input => {
+    setCurrentPage(input);
   };
 
   const HeaderContent = () => {
@@ -82,36 +65,6 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
     )
   };
 
-  const ModalButton = (title, value) => {
-    return (
-      <TouchableOpacity 
-        onPress={() => {
-          saveSort(value, title);
-        }} 
-        style={styles.modalButtonStyle}
-      >
-        <Text style={styles.modalButtonTextStyle}>{title}</Text>
-      </TouchableOpacity>
-    );
-  };
-
-  const ModalContent = () => {
-    return (
-      <View style={styles.modalContenStyle}>
-        <View style={styles.modalHeaderStyle}>
-          <Text style={styles.modalHeaderTextStyle}>Sort by</Text>
-        </View>
-        <View style={styles.modalButtonContainerStyle}>
-          {ModalButton('Newest', 'newest')}
-          {ModalButton('Votes', 'like')}
-          {ModalButton('Plays', 'view')}
-          {ModalButton('Best mood', 'best_mood')}
-          {ModalButton('Worst mood', 'worst_mood')}
-        </View>
-      </View>
-    );
-  };
-
   return (
     <View>
       <Header
@@ -124,10 +77,12 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
             marginTop: "2%"
           }} 
           isFilter={true}
-          openModal={openModal}
-          closeModal={closeModal}
           isSort={true}
-          currentSort={sortName}
+          sectionType={sectionType}
+          sectionQuery={sectionQuery}
+          queryId={queryId}
+          changeCurrentPage={changeCurrentPage}
+          changeSelectedSort={changeSelectedSort}
         />
       </View>
       <FlatList
@@ -142,31 +97,18 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
                 marginTop: 0,
                 borderRadius: 0,
                 borderBottomLeftRadius: 8,
-                borderBottomRightRadius: 8
+                borderBottomRightRadius: 8,
+                marginBottom: "35%"
               }}
               useMoreButton={discussionCount > 10 && discussions.length < discussionCount && true}
-              moreButtonFunction={nextPage}
+              sectionQuery={sectionQuery}
+              queryId={queryId}
+              selectedSort={selectedSort}
+              currentPage={currentPage}
+              changeCurrentPage={changeCurrentPage}
             />
           </View>
         }
-      />
-      <Modal
-        openModal={sortModal}
-        animation="slide"
-        closeModal={closeModal}
-        customContainerStyle={{
-          justifyContent: "flex-end"
-        }}
-        customStyle={{
-          borderRadius: 0,
-          width: "100%",
-          height: "45%",
-          borderTopLeftRadius: 30,
-          borderTopRightRadius: 30,
-          justifyContent: "flex-start",
-          alignItems: "flex-start"
-        }}
-        child={ModalContent}
       />
     </View>
   );
@@ -198,40 +140,7 @@ const styles = StyleSheet.create({
   },
 
   cardContainerStyle: {
-    paddingHorizontal: GlobalPadding,
-    paddingBottom: "30%"
-  },
-
-  modalContenStyle: {
-    flex: 1,
-    width: "100%"
-  },
-
-  modalHeaderStyle: {
-    paddingHorizontal: "2%"
-  },
-
-  modalHeaderTextStyle: {
-    fontFamily: bold,
-    color: "#6505E1",
-    fontSize: 20
-  },
-
-  modalButtonContainerStyle: {
-    width: "100%",
-    marginTop: "2%"
-  },
-
-  modalButtonStyle: {
-    width: "100%",
-    paddingVertical: "2%",
-    paddingHorizontal: "2%"
-  },
-  
-  modalButtonTextStyle: {
-    fontFamily: bold,
-    fontSize: 16,
-    color: "#464D60"
+    paddingHorizontal: GlobalPadding
   }
 });
 

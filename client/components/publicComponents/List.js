@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { clearCurrentPlayerId } from '../../store/actions/PlayerAction';
+import { getAllDiscussion } from '../../store/actions/DiscussionAction';
 
 //Components
 import HomeListCard from './ListCard';
@@ -31,7 +32,9 @@ const HomeList = props => {
     sectionQuery,
     queryId,
     useMoreButton,
-    moreButtonFunction
+    selectedSort,
+    currentPage,
+    changeCurrentPage
   } = props;
 
   const dispatch = useDispatch();
@@ -47,6 +50,11 @@ const HomeList = props => {
 
     return (blur, unsubscribe);
   }, [navigation]);
+
+  const nextPage = () => {
+    changeCurrentPage(currentPage + 1);
+    dispatch(getAllDiscussion(sectionQuery ? sectionQuery : null, queryId ? queryId : null, selectedSort, currentPage + 1));
+  };
 
   const MoreButton = () => {
     return (
@@ -115,7 +123,7 @@ const HomeList = props => {
                           paddingHorizontal: "5%"
                         }}
                         buttonTitle="More"
-                        buttonFunction={moreButtonFunction}
+                        buttonFunction={nextPage}
                       />
                     </View>
                   )
