@@ -16,7 +16,8 @@ const FormInput = props => {
     capitalize,
     Icon,
     iconStyle,
-    iconFunction
+    iconFunction,
+    hidePassword
   } = props;
 
   return (
@@ -27,7 +28,7 @@ const FormInput = props => {
         placeholder={formInputTitle}
         placeholderTextColor="#73798C"
         onChangeText={value => dataInput(value)}
-        secureTextEntry={formInputTitle === 'Password' || formInputTitle === 'New password' || formInputTitle === 'Confirm new password' ? true : false}
+        secureTextEntry={hidePassword ? true : false}
         autoCapitalize={capitalize ? "sentences" : "none"}
       />
       {Icon && (

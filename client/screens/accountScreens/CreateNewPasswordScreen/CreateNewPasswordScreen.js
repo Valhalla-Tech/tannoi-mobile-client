@@ -109,10 +109,12 @@ const CreateNewPasswordScreen = ({ route, navigation }) => {
           <FormInput 
             formInputTitle="New password"
             dataInput={inputNewPassword}
+            hidePassword={true}
           />
           <FormInput 
             formInputTitle="Confirm new password"
             dataInput={inputConfirmPassword}
+            hidePassword={true}
           />
         </View>
       </>
