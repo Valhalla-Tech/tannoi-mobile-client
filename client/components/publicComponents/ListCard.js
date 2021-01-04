@@ -8,8 +8,9 @@ import {
 } from 'react-native';
 import { bold, normal } from '../../assets/FontSize';
 import ConvertPostTime from '../../helper/ConvertPostTime';
+import { CalculateWidth } from '../../helper/CalculateSize';
 
-//Icon
+//Icons
 import LockIcon from '../../assets/homeAssets/lockIcon.png';
 import tickIcon from '../../assets/publicAssets/tickIcon.png';
 
@@ -99,7 +100,7 @@ const HomeListCard = props => {
         <Text style={styles.postTimeStyle}>{ConvertPostTime(postTime)}</Text>
         {
           discussionType === 2 ? (
-              null
+              <Image source={LockIcon} style={styles.lockIconStyle} />
             ) : (
               <HomeListCardPlayer
                 recordingFile={recordingFile}
@@ -182,8 +183,8 @@ const styles = StyleSheet.create({
   },
 
   lockIconStyle: {
-    width: 28,
-    height: 34.8,
+    width: CalculateWidth(6.5),
+    height: CalculateWidth(8.15),
     borderWidth: 1,
     marginRight: "10%"
   }
