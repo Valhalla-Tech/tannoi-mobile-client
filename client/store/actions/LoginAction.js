@@ -67,7 +67,7 @@ export const GoogleSignIn = () => {
 export const FacebookSignIn = () => {
   return async (dispatch) => {
     try {
-      LoginManager.logInWithPermissions(['public_profile']).then(
+      LoginManager.logInWithPermissions(['public_profile', 'email']).then(
         function(result) {
           if (result.isCancelled) {
             console.log("Login cancelled");

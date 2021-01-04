@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "1036887341767-j1tmjmulmhh5ar0hi301embeatnn0a8a.apps.googleusercontent.com",
+          "client_id": "1036887341767-94hfnudqi9rr5mmsotqnffe5o02fdgfq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "tannoi.client",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+            "certificate_hash": "d8fdf3d37179b5d029893d7fa2f3d9861f6a2eff"
           }
         },
         {
@@ -36,14 +36,14 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1036887341767-7rf3phle071q36tcdtc90fguevlrubo2.apps.googleusercontent.com",
+              "client_id": "1036887341767-4foinu1uvd66srmivikbplncka4ind72.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "1036887341767-8st29lm4inmbfncv8id51lvclb7cs51c.apps.googleusercontent.com",
+              "client_id": "1036887341767-4e5tvpv5033l03p7lkm5e44sdu3c3ctd.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "host.exp.exponent"
+                "bundle_id": "tannoi"
               }
             }
           ]
