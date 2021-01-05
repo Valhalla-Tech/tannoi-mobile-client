@@ -109,11 +109,11 @@ const UserAddressVerificationScreen = ({ navigation }) => {
     return (
       <View style={styles.formContainerStyle}>
         <View>
-          <FormInput dataInput={streetInput} formInputCustomStyle={styles.formInputCustomStyle} formInputValue={street} capitalize={true} />
+          <FormInput dataInput={streetInput} formInputCustomStyle={styles.formInputCustomStyle} customContainerStyle={styles.formInputContainerStyle} formInputValue={street} capitalize={true} />
           <Text style={styles.inputNameStyle}>Street {streetValidation && <ErrorMessage message="Please input your street address" />}</Text>
         </View>
         <View>
-          <FormInput dataInput={cityInput} formInputCustomStyle={styles.formInputCustomStyle} formInputValue={city} capitalize={true} />
+          <FormInput dataInput={cityInput} formInputCustomStyle={styles.formInputCustomStyle} customContainerStyle={styles.formInputContainerStyle} formInputValue={city} capitalize={true} />
           <Text style={styles.inputNameStyle}>City {cityValidation && <ErrorMessage message="Please input your city" />}</Text>
         </View>
         <View>
@@ -133,7 +133,7 @@ const UserAddressVerificationScreen = ({ navigation }) => {
           {countryValidation && <ErrorMessage message="Please input your country" />}
         </View>
         <View>
-          <FormInput dataInput={postCodeInput} formInputCustomStyle={styles.formInputCustomStyle} formInputValue={postCode} />
+          <FormInput dataInput={postCodeInput} formInputCustomStyle={styles.formInputCustomStyle} customContainerStyle={styles.formInputContainerStyle} formInputValue={postCode} />
           <Text style={styles.inputNameStyle}>Postal code {postalCodeValidation && <ErrorMessage message="Please input your postal code" />}</Text>
         </View>
       </View>
@@ -152,7 +152,6 @@ const UserAddressVerificationScreen = ({ navigation }) => {
               </View>
               <StepCount />
               <View style={styles.imageContainerStyle}>
-                {/* <VerificationScreenImage /> */}
                 <Image source={ScreenImage} style={styles.imageStyle} />
               </View>
               <View>
@@ -228,6 +227,10 @@ const styles = StyleSheet.create({
     height: calculateHeight(39),
     marginTop: "10%",
     marginBottom: "12.5%"
+  },
+
+  formInputContainerStyle: {
+    marginBottom: 0
   },
 
   formInputCustomStyle: {

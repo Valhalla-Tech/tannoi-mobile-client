@@ -22,7 +22,7 @@ const CreateNewPasswordScreen = ({ route, navigation }) => {
   const [confirmPasswordValidation, setConfirmPasswordValidation] = useState(false);
   const [passwordValidation, setPasswordValidation] = useState(false);
 
-  const { token } = route.params;
+  // const { token } = route.params;
 
   const inputNewPassword = newPasswordData => {
     setNewPassword(newPasswordData);
@@ -110,11 +110,13 @@ const CreateNewPasswordScreen = ({ route, navigation }) => {
             formInputTitle="New password"
             dataInput={inputNewPassword}
             hidePassword={true}
+            isEyeIcon={true}
           />
           <FormInput 
             formInputTitle="Confirm new password"
             dataInput={inputConfirmPassword}
             hidePassword={true}
+            isEyeIcon={true}
           />
         </View>
       </>
