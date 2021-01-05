@@ -21,7 +21,6 @@ const FormInput = props => {
     Icon,
     iconStyle,
     iconFunction,
-    // hidePassword,
     isEyeIcon,
     customContainerStyle
   } = props;
