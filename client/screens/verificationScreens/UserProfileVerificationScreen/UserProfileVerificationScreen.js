@@ -172,7 +172,7 @@ const UserProfileVerificationScreen = ({ navigation }) => {
                 value={currentDate}
                 mode={mode}
                 is24Hour={true}
-                display="default"
+                display="spinner"
                 onChange={dateInput}
               />
             ) : (

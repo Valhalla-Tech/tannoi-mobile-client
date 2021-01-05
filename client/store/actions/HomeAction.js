@@ -25,7 +25,8 @@ export const getHome = () => {
             trending: getHomeRequest.data.discussion.data,
             recommendedTopic: getHomeRequest.data.recommended_topic,
             followingDiscussion: getHomeRequest.data.followingDiscussion,
-            requestedDiscussion: getHomeRequest.data.requestedDiscussion
+            requestedDiscussion: getHomeRequest.data.requestedDiscussion,
+            topHashtag: getHomeRequest.data.topHashtag
           }
         });
       };

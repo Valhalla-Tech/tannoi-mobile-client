@@ -298,7 +298,7 @@ const EditProfileScreen = ({ navigation }) => {
                   value={birthDate === '' && userProfile.birth_date !== null ? new Date(userProfile.birth_date): currentDate}
                   mode={mode}
                   is24Hour={true}
-                  display="default"
+                  display="spinner"
                   onChange={dateInput}
                 />
               ) : (

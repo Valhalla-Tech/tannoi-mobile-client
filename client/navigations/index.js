@@ -29,6 +29,7 @@ import TopicDetailScreen from '../screens/topicScreens/TopicDetailScreen';
 import SettingsScreen from '../screens/meScreens/SettingsScreen';
 import EditProfileScreen from '../screens/meScreens/EditProfileScreen';
 import HomeSectionDetailScreen from '../screens/homeScreens/HomeSectionDetailScreen';
+import HashtagDetailScreen from '../screens/homeScreens/HashtagDetailScreen';
 
 const Stack = createStackNavigator();
 
@@ -176,6 +177,7 @@ const NavigationIndex = () => {
             <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
             <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} />
             <Stack.Screen name="HomeSectionDetailScreen" component={HomeSectionDetailScreen} />
+            <Stack.Screen name="HashtagDetailScreen" component={HashtagDetailScreen} />
           </>
         ) : (
           <Stack.Screen name="AccountNavigation" component={AccountNavigation} />

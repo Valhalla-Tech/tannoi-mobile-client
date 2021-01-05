@@ -13,7 +13,7 @@ import {
   useDispatch
 } from 'react-redux';
 import { bold, normal } from '../../../assets/FontSize';
-import { GoogleSignIn, FacebookSignIn } from '../../../store/actions/LoginAction'
+import { GoogleSignIn, FacebookSignIn } from '../../../store/actions/LoginAction';
 
 //Image
 import WelcomeScreenBackground from '../../../assets/accountAssets/WelcomeScreen/welcomeScreenBackground.png';
