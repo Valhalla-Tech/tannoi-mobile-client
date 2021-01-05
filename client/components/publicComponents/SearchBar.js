@@ -51,10 +51,10 @@ const SearchBar = props => {
     searchBoxInput,
     showCard,
     customStyle,
-    setSearchCategory
+    setSearchCategory,
+    topHashtag
   } = props;
-  
-  const [currentSelectedDiscussion, setCurrentSelectedDiscussion] = useState('All discussions');
+
   const [searchBoxIsFilled, setSearchBoxIsFilled] = useState(false);
 
   const searchBarStyle = {...styles.searchBarStyle, ...customStyle};
@@ -141,15 +141,22 @@ const SearchBar = props => {
       {
         !searchBarIsOpen && showCard && (
           <FlatList
-            data={DATA}
+            data={topHashtag}
             horizontal={true}
             contentContainerStyle={styles.searchBarCardContainerStyle}
+            keyExtractor={(item, index) => index.toString()}
+            ListHeaderComponent={
+              <SearchBarCard
+                cardTitle="All discussions"
+                isAllDiscussion={true}
+              />
+            }
             showsHorizontalScrollIndicator={false}
             renderItem={itemData => (
               <SearchBarCard 
-                cardTitle={itemData.item.title}
-                selectedDiscussion={currentSelectedDiscussion}
-                changeDiscussion={changeSelectedDiscussion}
+                cardTitle={itemData.item.name}
+                navigation={navigation}
+                hashtagId={itemData.item.id}
               />
             )}
           />
@@ -196,10 +203,7 @@ const styles = StyleSheet.create({
   },
 
   searchBarCardContainerStyle: {
-    marginLeft: 16,
-    paddingVertical: 8,
-    paddingRight: 20,
-    marginTop: -8
+    paddingVertical: "2%"
   },
 
   searchResultCategoryContainerStyle: {

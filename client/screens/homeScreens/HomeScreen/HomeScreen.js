@@ -31,6 +31,7 @@ const HomeScreen = ({ navigation }) => {
   const recommendedTopic = useSelector(state => state.HomeReducer.recommendedTopic);
   const followingDiscussion = useSelector(state => state.HomeReducer.followingDiscussion);
   const requestedDiscussion = useSelector(state => state.HomeReducer.requestedDiscussion);
+  const topHashtag = useSelector(state => state.HomeReducer.topHashtag);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -73,6 +74,9 @@ const HomeScreen = ({ navigation }) => {
             <View style={styles.searchBarContainer}>
               <SearchBar
                 searchBarIsOpen={false}
+                navigation={navigation}
+                showCard={true}
+                topHashtag={topHashtag}
                 navigation={navigation}
               />
             </View>

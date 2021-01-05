@@ -10,29 +10,25 @@ import { normal } from '../../assets/FontSize';
 const SearchBarCard = props => {
   const { 
     cardTitle,
-    selectedDiscussion,
-    changeDiscussion
+    hashtagId,
+    navigation,
+    isAllDiscussion
   } = props;
 
   return (
-    <>
-      {
-        cardTitle === selectedDiscussion ? (
-            <View style={{...styles.searchBarCardStyle, backgroundColor: "#B219FF", borderWidth: 0}}>
-              <Text style={{...styles.searchBarCardTextStyle, color: "#FFFFFF"}}>{cardTitle}</Text>
-            </View>
-        ) : (
-          <TouchableOpacity 
-            style={{...styles.searchBarCardStyle}}
-            onPress={() => {
-              changeDiscussion(cardTitle);
-            }}
-          >
-            <Text style={styles.searchBarCardTextStyle}>{cardTitle}</Text>
-          </TouchableOpacity>
-        )
-      }
-    </>
+    <TouchableOpacity 
+      style={isAllDiscussion ? {...styles.searchBarCardStyle, backgroundColor: "#B219FF", borderWidth: 0} : {...styles.searchBarCardStyle}}
+      onPress={() => {
+        navigation.navigate('HashtagDetailScreen', {
+          query: 'hashtag_id=',
+          queryId: hashtagId,
+          hashtagDetailTitle: cardTitle
+        });
+      }}
+      disabled={isAllDiscussion ? true : false}
+    >
+      <Text style={isAllDiscussion ? {...styles.searchBarCardTextStyle, color: "#FFFFFF"} : styles.searchBarCardTextStyle}>{cardTitle}</Text>
+    </TouchableOpacity>
   )
 };
 
