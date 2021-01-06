@@ -40,6 +40,7 @@ const ReplyScreen = ({route, navigation}) => {
   const {
     responseId,
     discussionId,
+    fromInbox
   } = route.params;
 
   useEffect(() => {
@@ -64,7 +65,6 @@ const ReplyScreen = ({route, navigation}) => {
 
     reply.forEach(response => {
       if (response.id === responseIdInput) {
-        console.log(response)
         if (input === 'isLike') {
          isLikeAndIsDislike = response.isLike;
         } else if (input === 'isDislike') {
@@ -175,7 +175,7 @@ const ReplyScreen = ({route, navigation}) => {
         data={reply}
         keyExtractor={(item, index) => index.toString()}
         renderItem={itemData => (
-          <>
+          !fromInbox ? <>
             {
               selectedCard === itemData.index ? (
                 <DiscussionScreenPlayerCard
@@ -220,7 +220,7 @@ const ReplyScreen = ({route, navigation}) => {
                 />
               )
             }
-          </>
+          </> : null
         )}
       />
     </View>

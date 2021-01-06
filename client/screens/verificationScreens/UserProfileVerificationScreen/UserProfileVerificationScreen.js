@@ -141,11 +141,11 @@ const UserProfileVerificationScreen = ({ navigation }) => {
     return (
       <View style={styles.formContainerStyle}>
         <View>
-          <FormInput dataInput={firstNameInput} formInputCustomStyle={styles.formInputCustomStyle} formInputValue={firstName} capitalize={true} />
+          <FormInput dataInput={firstNameInput} formInputCustomStyle={styles.formInputCustomStyle} customContainerStyle={styles.formInputContainerStyle} formInputValue={firstName} capitalize={true} />
           <Text style={styles.inputNameStyle}>First name {firstNameValidation && <ErrorMessage message="Please input your first name" />}</Text>
         </View>
         <View>
-          <FormInput dataInput={lastNameInput} formInputCustomStyle={styles.formInputCustomStyle} formInputValue={lastName} capitalize={true} />
+          <FormInput dataInput={lastNameInput} formInputCustomStyle={styles.formInputCustomStyle} customContainerStyle={styles.formInputContainerStyle} formInputValue={lastName} capitalize={true} />
           <Text style={styles.inputNameStyle}>Last Name {lastNameValidation && <ErrorMessage message="Please input your last name" />}</Text>
         </View>
         <View>
@@ -286,8 +286,12 @@ const styles = StyleSheet.create({
     marginBottom: "12.5%"
   },
 
+  formInputContainerStyle: {
+    marginBottom: 0
+  },
+
   formInputCustomStyle: {
-    marginBottom: ".5%",
+    marginBottom: 0,
     height: 30,
     fontSize: 16,
     paddingVertical: 0

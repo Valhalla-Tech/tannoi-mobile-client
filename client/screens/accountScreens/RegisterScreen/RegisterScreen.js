@@ -162,11 +162,13 @@ const RegisterPage = ({ navigation }) => {
           formInputTitle="Password"
           dataInput={passwordInput}
           hidePassword={true}
+          isEyeIcon={true}
         />
         <FormInput
           formInputTitle="Re-enter Password"
           dataInput={setReEnterPassword}
           hidePassword={true}
+          isEyeIcon={true}
         />
       </>
     );

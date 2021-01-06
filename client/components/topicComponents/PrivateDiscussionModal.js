@@ -213,7 +213,7 @@ const PrivateDiscussionModal = props => {
               height: 18,
               width: 18,
               margin: {
-                marginBottom: "2.5%"
+                marginBottom: "5%"
               }
             }}
             iconFunction={() => searchUserName('', true)}

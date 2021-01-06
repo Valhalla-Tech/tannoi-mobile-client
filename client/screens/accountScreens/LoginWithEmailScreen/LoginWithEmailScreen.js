@@ -129,6 +129,7 @@ const LoginWithEmailScreen = ({ navigation }) => {
           formInputTitle="Password"
           dataInput={passwordInput}
           hidePassword={true}
+          isEyeIcon={true}
         />
       </>
     )
