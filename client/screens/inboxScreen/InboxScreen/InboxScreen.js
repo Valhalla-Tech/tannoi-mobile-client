@@ -24,7 +24,7 @@ import SearchBar from '../../../components/publicComponents/SearchBar';
 const InboxScreen = ({ navigation }) => {
   const [inbox, setInbox] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  
+  console.log(inbox)
   const getInbox = async () => {
     try {
       let access_token = await AsyncStorage.getItem('access_token');
@@ -77,6 +77,12 @@ const InboxScreen = ({ navigation }) => {
             if (itemData.item.type === 'Followers') {
               navigation.navigate('UserProfileScreen', {
                 userId: itemData.item.user.id
+              });
+            } else if (itemData.item.type === 'Response Response') {
+              navigation.navigate('ResponseScreen', {
+                responseId: itemData.item.response_response_id,
+                discussionId: itemData.item.response.discussion_id,
+                fromInbox: true
               });
             } else {
               navigation.navigate('DiscussionScreen', {
