@@ -39,6 +39,7 @@ import TickIcon from '../../../assets/publicAssets/tickIcon.png';
 //Components
 import AddResponse from '../../publicComponents/RecorderModal';
 import OptionButton from '../../../components/topicComponents/discussionScreenComponents/OptionButton';
+import RecordPlayer from '../../publicComponents/RecordPlayer';
 
 class DiscussionScreenPlayerCard extends Component {
   _isMounted = false;
@@ -463,6 +464,12 @@ class DiscussionScreenPlayerCard extends Component {
             <Text style={styles.captionStyle}>{this.state.caption}</Text>
           )
         }
+        {/* <RecordPlayer
+          customStyle={{
+            marginTop: "10%"
+          }}
+          recordingFile={this.state.recordingFile}
+        /> */}
         <View style={styles.sliderStyle}>
           <View style={styles.durationContainerStyle}>
             <Text style={styles.durationStyle}>{this.state.durationDisplay}</Text>

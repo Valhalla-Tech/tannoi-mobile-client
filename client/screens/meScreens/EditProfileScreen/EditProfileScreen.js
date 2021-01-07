@@ -209,7 +209,6 @@ const EditProfileScreen = ({ navigation }) => {
         });
 
         if (saveEditRequest.data) {
-          console.log(saveEditRequest.data)
           if (bioVoiceFile !== '' && bioVoiceFile !== userProfile.bio_voice_path) {
             editVoiceBio();
           }
