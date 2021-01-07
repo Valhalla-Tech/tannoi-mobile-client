@@ -28,7 +28,8 @@ const OptionModal = props => {
     openPrivateModal,
     modalType,
     responseId,
-    discussionTitle
+    discussionTitle,
+    responseTitle,
   } = props;
 
   const userId = useSelector(state => state.ProfileReducer.userProfile.id);
@@ -62,11 +63,18 @@ const OptionModal = props => {
   const shareOption = async () => {
     try {
       GenerateDeepLink(
-        discussionTitle,
-        'Check out this discussion on the tannOi app!',
-        'DiscussionScreen',
+        modalType === 'discussion' ? discussionTitle : responseTitle,
+        modalType === 'discussion' ? 'Check out this discussion on the tannOi app!': 'Check out this response on the tannOi app!',
+        modalType === 'discussion' ? 'DiscussionScreen' : "ResponseScreen",
+        modalType === 'discussion' ?
         {
           discussionId: discussionId.toString()
+        }
+          :
+        {
+          responseId: responseId.toString(),
+          discussionId: discussionId.toString(),
+          fromInbox: true
         },
         'share a discussion',
         async url => {

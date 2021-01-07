@@ -312,10 +312,12 @@ class DiscussionScreenPlayerCard extends Component {
 
         GenerateDeepLink(
           'Like a Response',
-          'This is a link to Discussion',
-          'DiscussionScreen',
+          'This is a link to Response',
+          'ResponseScreen',
           {
-            discussionId: this.state.discussionId.toString()
+            responseId: this.state.responseId.toString(),
+            discussionId: this.state.discussionId.toString(),
+            fromInbox: true
           },
           'like response',
           async url => {

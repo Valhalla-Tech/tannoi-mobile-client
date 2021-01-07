@@ -75,13 +75,20 @@ const RecorderModal = props => {
         };
 
         GenerateDeepLink(
-          'Response a Discussion',
-          'This is a link to Discussion',
-          'DiscussionScreen',
+          addResponseForResponse ? "Response a Response" : 'Response a Discussion',
+          addResponseForResponse ? "This is a link to Response" : 'This is a link to Discussion',
+          addResponseForResponse? "ResponseScreen" : 'DiscussionScreen',
+          addResponseForResponse ? 
+          {
+            responseId: responseId.toString(),
+            discussionId: discussionId.toString(),
+            fromInbox: true
+          }
+            :
           {
             discussionId: discussionId.toString()
           },
-          'response a discussion',
+          addResponseForResponse ? "response a response" : 'response a discussion',
           async url => {
             try {
               let createResponseRequest = await axios({
