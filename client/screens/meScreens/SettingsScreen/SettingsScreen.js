@@ -34,7 +34,7 @@ const SettingsScreen = ({ navigation }) => {
         </View>
         <TouchableOpacity onPress={() => {
           dispatch(userLogout());
-          // dispatch(clearTopic());
+          dispatch(clearTopic());
           dispatch(clearLogedInProfile());
         }}>
           <Text style={styles.logOutButtonTextStyle}>Log out</Text>
