@@ -21,9 +21,9 @@ const AccountNavigation = () => {
         headerShown: false
       }}
     >
-      <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
+      {/* <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
       <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-      <Stack.Screen name="EnterYourProfileScreen" component={EnterYourProfileScreen} />
+      <Stack.Screen name="EnterYourProfileScreen" component={EnterYourProfileScreen} /> */}
       <Stack.Screen name="FollowSomeTopicsScreen" component={FollowSomeTopicsScreen} />
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
       <Stack.Screen name="LoginWithEmailScreen" component={LoginWithEmailScreen} />

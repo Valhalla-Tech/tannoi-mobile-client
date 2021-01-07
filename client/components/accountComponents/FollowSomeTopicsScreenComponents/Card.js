@@ -57,7 +57,6 @@ const Card = props => {
 const styles = StyleSheet.create({
   cardContainerStyle: {
     flex: 1,
-    height: 168,
     margin: 2,
     marginBottom: 24,
     padding: 2.5,
