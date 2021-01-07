@@ -17,7 +17,6 @@ import { userLogout } from '../../store/actions/LoginAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
-import { GenerateDeepLink } from '../../helper/GenerateDeepLink';
 
 //Components
 import FormInput from './FormInput';
@@ -68,7 +67,7 @@ const RecorderModal = props => {
           type: `audio/${fileType}`
         });
         
-        formData.append('caption', caption);
+        formData.append('caption', caption.trim());
   
         if (addResponseForResponse) {
           formData.append('response_id', responseId)

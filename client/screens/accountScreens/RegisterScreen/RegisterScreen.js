@@ -55,7 +55,7 @@ const RegisterPage = ({ navigation }) => {
         setIsLoading(!isLoading);
         setPasswordCheck(!passwordCheck);
         let registerRequest = await axios.post(`${BaseUrl}/users/register`, {
-          email: emailRegister,
+          email: emailRegister.trim(),
           password: passwordRegister
         });
 
