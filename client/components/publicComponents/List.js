@@ -100,7 +100,7 @@ const HomeList = props => {
                       votes={itemData.item.likes}
                       replies={itemData.item.response_count}
                       plays={itemData.item.play_count}
-                      postTime={itemData.item.created_at}
+                      postTime={itemData.item.timeSince}
                       discussionId={itemData.item.id}
                       navigation={navigation}
                       topic={itemData.item.topic ? itemData.item.topic.name : ''}
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
   },
 
   listCardContainerStyle: {
-    paddingHorizontal: "5%"
+    // paddingHorizontal: "5%"
   },
 
   moreButtonContainerStyle: {

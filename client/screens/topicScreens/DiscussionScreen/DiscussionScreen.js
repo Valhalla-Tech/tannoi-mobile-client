@@ -57,7 +57,15 @@ const DiscussionScreen = ({ route, navigation }) => {
     dispatch(clearResponse());
     dispatch(getDiscussion(discussionId));
     dispatch(getResponse(discussionId));
-  }, []);
+  }, [navigation]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      dispatch(getResponse(discussionId));
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   const closeAddResponseModal = () => {
     setOpenAddResponseModal(false);
@@ -197,7 +205,7 @@ const DiscussionScreen = ({ route, navigation }) => {
                   nextPlayerAvailable={replies > 0 ? true : false}
                   cardIndex={itemData.index}
                   cardLength={response.length}
-                  postTime={itemData.item.created_at}
+                  postTime={itemData.item.timeSince}
                   fromNextPreviousButton={fromNextPreviousButton}
                   updateFromNextPreviousButton={updateFromNextPreviousButton}
                   changePlayer={changePlayer}
@@ -220,7 +228,7 @@ const DiscussionScreen = ({ route, navigation }) => {
                   cardIndex={itemData.index}
                   selectCard={selectCard}
                   profileName={itemData.item.creator.name}
-                  postTime={itemData.item.created_at}
+                  postTime={itemData.item.timeSince}
                   caption={itemData.item.caption}
                   responseLike={itemData.item.likes}
                   responseReply={itemData.item.response_count}

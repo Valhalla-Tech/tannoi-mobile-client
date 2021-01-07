@@ -48,7 +48,7 @@ const ReplyScreen = ({route, navigation}) => {
       setSelectedCard('response');
       dispatch(clearResponse());
       dispatch(getSingleResponse(responseId));
-      dispatch(getResponse(discussionId));
+      // dispatch(getResponse(discussionId));
     });
 
     return unsubscribe;
@@ -188,7 +188,7 @@ const ReplyScreen = ({route, navigation}) => {
                   nextPlayerAvailable={reply.length > 0 ? true : false}
                   cardIndex={itemData.index}
                   cardLength={reply.length}
-                  postTime={itemData.item.created_at}
+                  postTime={itemData.item.timeSince}
                   fromNextPreviousButton={fromNextPreviousButton}
                   updateFromNextPreviousButton={updateFromNextPreviousButton}
                   changePlayer={changePlayer}
@@ -211,7 +211,7 @@ const ReplyScreen = ({route, navigation}) => {
                   cardIndex={itemData.index}
                   selectCard={selectCard}
                   profileName={itemData.item.creator.name}
-                  postTime={itemData.item.created_at}
+                  postTime={itemData.item.timeSince}
                   caption={itemData.item.caption}
                   responseLike={itemData.item.likes}
                   responseReply={itemData.item.response_count}

@@ -13,7 +13,6 @@ import { GlobalPadding } from '../../../constants/Size';
 import axios from '../../../constants/ApiServices';
 import AsyncStorage from '@react-native-community/async-storage';
 import BaseUrl from '../../../constants/BaseUrl';
-import ConvertPostTime from '../../../helper/ConvertPostTime';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 
 //Components
@@ -96,7 +95,7 @@ const InboxScreen = ({ navigation }) => {
           </View>
           <View style={styles.inboxMessageContainerStyle}>
             <Text style={styles.inboxMessageStyle}>{itemData.item.message}</Text>
-            <Text style={styles.postTimeStyle}>{ConvertPostTime(itemData.item.created_at)}</Text>
+            <Text style={styles.postTimeStyle}>{itemData.item.timeSince}</Text>
           </View>
         </TouchableOpacity>
       );
