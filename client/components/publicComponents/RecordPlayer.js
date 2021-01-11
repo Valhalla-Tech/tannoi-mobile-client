@@ -21,143 +21,6 @@ import ActivePreviousButton from '../../assets/topicAssets/activePreviousButton.
 //Component
 import LoadingSpinner from '../publicComponents/LoadingSpinner';
 
-// const RecordPlayer = props => {
-//   const {
-//     customStyle,
-//     recordingFile
-//   } = props;
-
-//   const [playPauseButton, setPlayPauseButton] = useState(true);
-//   const [playButtonDisabled, setPlayButtonDisabled] = useState(true);
-//   const [loading, setLoading] = useState(false);
-
-  // const audioPlayer = new AudioRecorderPlayer();
-
-  // let player = null;
-
-  // useEffect(() => {
-    // setLoading(true);
-  //   loadPLayer();
-  // }, []);
-
-  // const updateState = (currentPosition, duration) => {
-  //   setPlayPauseButton(currentPosition !== duration ? false : true);
-  // };
-
-  // let audioPlayer = new Sound(recordingFile, Sound.MAIN_BUNDLE, (error) => {
-  //   if (error) {
-  //     console.log(error);
-  //   }
-
-  //   console.log(audioPlayer.getDuration());
-  //   setLoading(false);
-  // });
-  
-  // const loadPLayer = () => {
-  //   setLoading(true);
-  //   audioPlayer;
-    // if (player) {
-    //   player.destroy();
-    // }
-
-    // player = new Player(recordingFile, {
-    //   autoDestroy: false
-    // });
-
-    // player.speed = 0.0;
-
-    // player.prepare((error) => {
-    //   if (error) {
-    //     console.log(error);
-    //   }
-    //   console.log(player)
-    //   updateState();
-    // });
-
-    // player.on('ended', () => {
-    //   updateState();
-    // });
-
-    // player.on('pause', () => {
-    //   updateState();
-    // });
-  // }
-
-  // const playRecording = async (isPlaying) => {
-  //   if (isPlaying) {
-  //     audioPlayer.pause();
-  //     // setPlayPauseButton(true);
-  //   } else {
-  //     setPlayPauseButton(false);
-  //     audioPlayer.play(success => {
-  //       setPlayPauseButton(true);
-  //       audioPlayer.getCurrentTime((seconds) => console.log('at ' + seconds));
-  //     });
-  //   }
-    // loader(async () => {
-    //   try {
-    //     const play = await audioPlayer.startPlayer(recordingFile);
-  
-    //     if (play) {
-    //       setLoading(false);
-  
-    //       audioPlayer.addPlayBackListener((e) => {
-    //         if (e.current_position === e.duration) {
-    //           setPlayPauseButton(true);
-    //           audioPlayer.stopPlayer();
-    //         } else {
-    //           updateState(e.currentPosition, e.duration);
-    //         }
-    
-    //         return;
-    //       });
-    //     }
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // });
-    // console.log(player)
-    // player.playPause((error, paused) => {
-    //   if (error) {
-    //     console.log(error);
-    //     loadPLayer();
-    //     updateState();
-    //   }
-
-    //   updateState();
-    // });
-//   };
-
-//   return (
-//     <View style={{...customStyle}}>
-//       <Slider
-
-//       />
-//       <View style={styles.playerContainerStyle}>
-//         <PlayerSpeed />
-//         <TouchableOpacity>
-//           <PreviousButton />
-//         </TouchableOpacity>
-//         {
-//           loading ? <Text>Loading</Text> : (
-//             <TouchableOpacity onPress={() => playRecording(!playPauseButton ? true : false)}>
-//               {
-//                 playPauseButton ? <ActivePlayButton /> : <PauseButton />
-//               }
-//             </TouchableOpacity>
-//           )
-//         }
-//         <TouchableOpacity>
-//           <NextButton />
-//         </TouchableOpacity>
-//         <TouchableOpacity>
-//           <ForwardTenButton />
-//         </TouchableOpacity>
-//       </View>
-//     </View>
-//   );
-// };
-
 class RecordPlayer extends Component {
   _isMounted = false;
 
@@ -227,12 +90,12 @@ class RecordPlayer extends Component {
 
   updateProgressBar() {
     this.progressInterval = setInterval(() => {
-      this.soundPlayer.getCurrentTime(second => {
+      this.soundPlayer.getCurrentTime(seconds => {
         if (this.props.isRecorderModalOpen || this.props.openAddResponse) {
           this.playRecording(this.state.isPlaying);
         }
         this.getDuration();
-        let currentProgress = Math.max(0, second) / this.soundPlayer.getDuration();
+        let currentProgress = Math.max(0, seconds) / this.soundPlayer.getDuration();
         if (this._isMounted) {
           this.setState({
             progress: currentProgress
@@ -285,9 +148,7 @@ class RecordPlayer extends Component {
       this.updateProgressBar();
       this.soundPlayer.play(success => {
         this.setState({
-          isPlaying: false
-        });
-        this.setState({
+          isPlaying: false,
           progress: 0
         });
         this.stopUpdateProgressBar();

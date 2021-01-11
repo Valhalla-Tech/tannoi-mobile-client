@@ -104,6 +104,7 @@ const HomeListCard = props => {
               <HomeListCardPlayer
                 recordingFile={recordingFile}
                 discussionId={discussionId}
+                navigation={navigation}
               />
           )
         }
