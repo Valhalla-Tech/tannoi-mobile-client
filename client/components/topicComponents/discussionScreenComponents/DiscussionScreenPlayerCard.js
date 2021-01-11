@@ -89,7 +89,7 @@ class DiscussionScreenPlayerCard extends Component {
     this.player = null;
     this.lastSeek = 0;
 
-    this.loadPlayer();
+    // this.loadPlayer();
 
     this.props.clearResponse(true);
 
@@ -105,153 +105,153 @@ class DiscussionScreenPlayerCard extends Component {
     this._unsubscribe();
   };
 
-  updateState(err) {
-    if (this._isMounted) {
-      this.setState({
-        playPauseButton: this.player && this.player.isPlaying ? 'Pause' : 'Play',
+  // updateState(err) {
+  //   if (this._isMounted) {
+  //     this.setState({
+  //       playPauseButton: this.player && this.player.isPlaying ? 'Pause' : 'Play',
   
-        playButtonDisabled: !this.player || !this.player.canPlay,
+  //       playButtonDisabled: !this.player || !this.player.canPlay,
   
-        isPaused: this.player.isPaused
-      });
-    }
-  };
+  //       isPaused: this.player.isPaused
+  //     });
+  //   }
+  // };
   
-  loadPlayer() {
-    if (this.player) {
-      this.player.destroy();
-    }
+  // loadPlayer() {
+  //   if (this.player) {
+  //     this.player.destroy();
+  //   }
     
-    this.player = new Player(this.state.recordingFile, {
-      autoDestroy: false
-    })
-    this.player.speed = 0.0;
-    this.player.prepare((error) => {
-      if (error) {
-        console.log('error at _reloadPlayer():');
-        console.log(error);
-      }
+  //   this.player = new Player(this.state.recordingFile, {
+  //     autoDestroy: false
+  //   })
+  //   this.player.speed = 0.0;
+  //   this.player.prepare((error) => {
+  //     if (error) {
+  //       console.log('error at _reloadPlayer():');
+  //       console.log(error);
+  //     }
 
-      this.getDuration();
+  //     this.getDuration();
       
-      this.updateState();
+  //     this.updateState();
 
-      if (this.state.fromNextPreviousButton && this.player.canPlay && this._isMounted) {
-        this.playRecording();
-        this.state.updateFromNextPreviousButton(false);
-      }
-    });
+  //     if (this.state.fromNextPreviousButton && this.player.canPlay && this._isMounted) {
+  //       this.playRecording();
+  //       this.state.updateFromNextPreviousButton(false);
+  //     }
+  //   });
     
-    this.updateState();
+  //   this.updateState();
     
-    this.player.on('ended', () => {
-      this.updateState();
-    });
-    this.player.on('pause', () => {
-      this.updateState();
-    });
-  };
+  //   this.player.on('ended', () => {
+  //     this.updateState();
+  //   });
+  //   this.player.on('pause', () => {
+  //     this.updateState();
+  //   });
+  // };
 
-  stopProgressInterval = () => {
-    clearInterval(this.progressInterval);
-  };
+  // stopProgressInterval = () => {
+  //   clearInterval(this.progressInterval);
+  // };
   
-  playRecording() {
-    this.player.playPause((error, paused) => {
-      if (error) {
-        console.log(error);
-        this.loadPlayer();
-      };
+  // playRecording() {
+  //   this.player.playPause((error, paused) => {
+  //     if (error) {
+  //       console.log(error);
+  //       this.loadPlayer();
+  //     };
 
-      if (this.player.isPlaying && !error && !this.state.isPaused) {
-        this.playCounter(this.state.responseId ? true : false);
-      };
+  //     if (this.player.isPlaying && !error && !this.state.isPaused) {
+  //       this.playCounter(this.state.responseId ? true : false);
+  //     };
 
-      if (this.player.isPlaying && !error) {
-        this.progressInterval = setInterval(() => {
-          if (this.player && this.shouldUpdateProgressBar()) {
-            let currentProgress = Math.max(0, this.player.currentTime) / this.player.duration;
-            if (isNaN(currentProgress)) {
-              currentProgress = 0;
-            };
+  //     if (this.player.isPlaying && !error) {
+  //       this.progressInterval = setInterval(() => {
+  //         if (this.player && this.shouldUpdateProgressBar()) {
+  //           let currentProgress = Math.max(0, this.player.currentTime) / this.player.duration;
+  //           if (isNaN(currentProgress)) {
+  //             currentProgress = 0;
+  //           };
 
-            this.updateDuration(this.player.currentTime);
+  //           this.updateDuration(this.player.currentTime);
   
-            if (!this.player.isPlaying) {
-              if (!this.player.isPaused) {
-                this.getDuration();
-              };
+  //           if (!this.player.isPlaying) {
+  //             if (!this.player.isPaused) {
+  //               this.getDuration();
+  //             };
 
-              this.stopProgressInterval();
-            };
+  //             this.stopProgressInterval();
+  //           };
 
-            if (this.player.isPlaying && this.props.isRecorderModalOpen || this.player.isPlaying && this.state.openAddResponse) {
-              this.playRecording();
-            }
+  //           if (this.player.isPlaying && this.props.isRecorderModalOpen || this.player.isPlaying && this.state.openAddResponse) {
+  //             this.playRecording();
+  //           }
   
-            this.setState({ progress: currentProgress });
-          }
-        }, 100);
-      };
+  //           this.setState({ progress: currentProgress });
+  //         }
+  //       }, 100);
+  //     };
 
-      this.updateState();
-    });
-  };
+  //     this.updateState();
+  //   });
+  // };
 
-  updateDuration = currentTime => {
-    let durationRemaining = this.player.duration - currentTime;
-    let durationRemainingToString = durationRemaining.toString();
-    let currentTimeToString = currentTime.toString();
+  // updateDuration = currentTime => {
+  //   let durationRemaining = this.player.duration - currentTime;
+  //   let durationRemainingToString = durationRemaining.toString();
+  //   let currentTimeToString = currentTime.toString();
     
-    this.setState({
-      durationDisplay: durationRemainingToString.length === 4 ? (`0:0${durationRemainingToString[0]}`) : (
-        durationRemainingToString.length === 5 ? `0:${durationRemainingToString[0]}${durationRemainingToString[1]}` : '0:00'
-      ),
-      durationPlayedDisplay: currentTimeToString.length === 4 ? (`0:0${currentTimeToString[0]}`) : (
-        currentTimeToString.length === 5 ? `0:${currentTimeToString[0]}${currentTimeToString[1]}` : '0:00'
-      )
-    });
-  };
+  //   this.setState({
+  //     durationDisplay: durationRemainingToString.length === 4 ? (`0:0${durationRemainingToString[0]}`) : (
+  //       durationRemainingToString.length === 5 ? `0:${durationRemainingToString[0]}${durationRemainingToString[1]}` : '0:00'
+  //     ),
+  //     durationPlayedDisplay: currentTimeToString.length === 4 ? (`0:0${currentTimeToString[0]}`) : (
+  //       currentTimeToString.length === 5 ? `0:${currentTimeToString[0]}${currentTimeToString[1]}` : '0:00'
+  //     )
+  //   });
+  // };
 
-  getDuration = () => {
-    let durationToString = this.player.duration.toString();
+  // getDuration = () => {
+  //   let durationToString = this.player.duration.toString();
     
-    if (durationToString.length === 4 && this._isMounted) {
-      this.setState({
-        durationDisplay: `0:0${durationToString[0]}`,
-        durationPlayedDisplay: '0:00'
-      });
-    } else if (durationToString.length === 5 && this._isMounted) {
-      this.setState({
-        durationDisplay: `0:${durationToString[0]}${durationToString[1]}`,
-        durationPlayedDisplay: '0:00'
-      });
-    };
-  };
+  //   if (durationToString.length === 4 && this._isMounted) {
+  //     this.setState({
+  //       durationDisplay: `0:0${durationToString[0]}`,
+  //       durationPlayedDisplay: '0:00'
+  //     });
+  //   } else if (durationToString.length === 5 && this._isMounted) {
+  //     this.setState({
+  //       durationDisplay: `0:${durationToString[0]}${durationToString[1]}`,
+  //       durationPlayedDisplay: '0:00'
+  //     });
+  //   };
+  // };
 
-  seek(percentage) {
-    if (!this.player) {
-      return;
-    }
+  // seek(percentage) {
+  //   if (!this.player) {
+  //     return;
+  //   }
 
-    this.lastSeek = Date.now();
+  //   this.lastSeek = Date.now();
 
-    let position = percentage * this.player.duration;
+  //   let position = percentage * this.player.duration;
 
-    this.player.seek(position, () => {
-      this.updateState();
-    });
-  };
+  //   this.player.seek(position, () => {
+  //     this.updateState();
+  //   });
+  // };
 
-  shouldUpdateProgressBar() {
-    return Date.now() - this.lastSeek > 200;
-  };
+  // shouldUpdateProgressBar() {
+  //   return Date.now() - this.lastSeek > 200;
+  // };
   
-  forwardTenSeconds() {
-    this.player.seek(this.player.currentTime + 10000, () => {
-      this.updateState();
-    });
-  };
+  // forwardTenSeconds() {
+  //   this.player.seek(this.player.currentTime + 10000, () => {
+  //     this.updateState();
+  //   });
+  // };
   
   numberConverter = number => {
     let numberToString = number.toString();
@@ -464,13 +464,22 @@ class DiscussionScreenPlayerCard extends Component {
             <Text style={styles.captionStyle}>{this.state.caption}</Text>
           )
         }
-        {/* <RecordPlayer
+        <RecordPlayer
           customStyle={{
             marginTop: "10%"
           }}
           recordingFile={this.state.recordingFile}
-        /> */}
-        <View style={styles.sliderStyle}>
+          isNextPlayerAvailable={this.state.nextPlayerAvailable && this.state.cardIndex !== this.state.cardLength - 1 ? true: false}
+          isPreviousPlayerAvailable={this.state.cardType !== 'discussion' && this.state.cardIndex !== 'response' ? true : false}
+          nextPlayerFunction={() => {this.props.changePlayer(this.state.cardIndex, 'next')}}
+          previousPlayerFunction={() => {this.props.changePlayer(this.state.cardIndex, 'previous')}}
+          fromNextPreviousButton={this.props.fromNextPreviousButton}
+          updateFromNextPreviousButton={this.props.updateFromNextPreviousButton}
+          isRecorderModalOpen={this.props.isRecorderModalOpen}
+          openAddResponse={this.state.openAddResponse}
+          playCounter={() => this.playCounter(this.state.responseId ? true : false)}
+        />
+        {/* <View style={styles.sliderStyle}>
           <View style={styles.durationContainerStyle}>
             <Text style={styles.durationStyle}>{this.state.durationDisplay}</Text>
             <Text style={styles.durationStyle}>{this.state.durationPlayedDisplay}</Text>
@@ -543,7 +552,7 @@ class DiscussionScreenPlayerCard extends Component {
           <TouchableOpacity onPress={() => this.forwardTenSeconds()}>
             <ForwardTenButton />
           </TouchableOpacity>
-        </View>
+        </View> */}
         {
           this.state.cardType === 'response' && (
             <this.VoteAndResponse />
