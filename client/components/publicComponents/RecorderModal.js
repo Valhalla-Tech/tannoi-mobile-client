@@ -17,7 +17,6 @@ import { userLogout } from '../../store/actions/LoginAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
-import { GenerateDeepLink } from '../../helper/GenerateDeepLink';
 
 //Components
 import FormInput from './FormInput';
@@ -68,65 +67,38 @@ const RecorderModal = props => {
           type: `audio/${fileType}`
         });
         
-        formData.append('caption', caption);
+        formData.append('caption', caption.trim());
   
         if (addResponseForResponse) {
           formData.append('response_id', responseId)
         };
 
-        GenerateDeepLink(
-          addResponseForResponse ? "Response a Response" : 'Response a Discussion',
-          addResponseForResponse ? "This is a link to Response" : 'This is a link to Discussion',
-          addResponseForResponse? "ResponseScreen" : 'DiscussionScreen',
-          addResponseForResponse ? 
-          {
-            responseId: responseId.toString(),
-            discussionId: discussionId.toString(),
-            fromInbox: true
-          }
-            :
-          {
-            discussionId: discussionId.toString()
+        let createResponseRequest = await axios({
+          method: 'post',
+          url: `${BaseUrl}/responses/${discussionId}`,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'token': access_token
           },
-          addResponseForResponse ? "response a response" : 'response a discussion',
-          async url => {
-            try {
-              let createResponseRequest = await axios({
-                method: 'post',
-                url: `${BaseUrl}/responses/${discussionId}?deep_link=${url}`,
-                headers: {
-                  'Content-Type': 'multipart/form-data',
-                  'token': access_token
-                },
-                data: formData
-              });
-        
-              if (createResponseRequest.data) {
-                setIsLoading(false);
-                setValidation(false);
-                dispatch(getResponse(discussionId));
-                if (addResponseForResponse) {
-                  if (!addResponseForResponseInResponseScreen) {
-                    dispatch(getSingleResponse(responseId));
-                  };
-                  dispatch(getSingleResponse(responseId, 'getDataForResponse'));
-                  dispatch(getSingleResponse(responseScreenResponseId));
-                };
-                dispatch(getDiscussion(discussionId));
-                setRecordingFile('');
-                setCaption('');
-                closeModal();
-              }
-            } catch (error) {
-              console.log(error);
-              setIsLoading(false);
-              setValidation(true);
-              if (error.response.data.msg === 'You have to login first') {
-                dispatch(userLogout());
-              }
-            }
-          }
-        );
+          data: formData
+        });
+
+        if (createResponseRequest.data) {
+          setIsLoading(false);
+          setValidation(false);
+          dispatch(getResponse(discussionId));
+          if (addResponseForResponse) {
+            if (!addResponseForResponseInResponseScreen) {
+              dispatch(getSingleResponse(responseId));
+            };
+            dispatch(getSingleResponse(responseId, 'getDataForResponse'));
+            dispatch(getSingleResponse(responseScreenResponseId));
+          };
+          dispatch(getDiscussion(discussionId));
+          setRecordingFile('');
+          setCaption('');
+          closeModal();
+        }
       }
     } catch (error) {
       console.log(error);

@@ -16,7 +16,8 @@ const OptionButton = props => {
     openPrivateModal,
     modalType,
     responseId,
-    discussionTitle
+    discussionTitle,
+    responseTitle
   } = props;
 
   const [optionModal, setOptionModal] = useState(false);
@@ -40,6 +41,7 @@ const OptionButton = props => {
         modalType={modalType}
         responseId={responseId}
         discussionTitle={discussionTitle}
+        responseTitle={responseTitle}
       />
     </>
   );

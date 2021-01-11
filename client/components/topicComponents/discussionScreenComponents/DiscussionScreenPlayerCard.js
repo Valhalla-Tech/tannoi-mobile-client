@@ -39,6 +39,7 @@ import TickIcon from '../../../assets/publicAssets/tickIcon.png';
 //Components
 import AddResponse from '../../publicComponents/RecorderModal';
 import OptionButton from '../../../components/topicComponents/discussionScreenComponents/OptionButton';
+import RecordPlayer from '../../publicComponents/RecordPlayer';
 
 class DiscussionScreenPlayerCard extends Component {
   _isMounted = false;
@@ -310,30 +311,17 @@ class DiscussionScreenPlayerCard extends Component {
       if (this.props.userType !== 0) {
         const access_token = await AsyncStorage.getItem('access_token');
 
-        GenerateDeepLink(
-          'Like a Response',
-          'This is a link to Response',
-          'ResponseScreen',
-          {
-            responseId: this.state.responseId.toString(),
-            discussionId: this.state.discussionId.toString(),
-            fromInbox: true
-          },
-          'like response',
-          async url => {
-            let upvoteRequest = await axios({
-              method: 'get',
-              url: `${BaseUrl}/responses/like/${this.state.responseId}?deep_link=${url}`,
-              headers: {
-                token: access_token
-              }
-            })
-      
-            if (upvoteRequest.data) {
-              this.props.getSingleResponse(this.state.responseId, 'getDataForResponse');
-            }
+        let upvoteRequest = await axios({
+          method: 'get',
+          url: `${BaseUrl}/responses/like/${this.state.responseId}`,
+          headers: {
+            token: access_token
           }
-        );
+        })
+  
+        if (upvoteRequest.data) {
+          this.props.getSingleResponse(this.state.responseId, 'getDataForResponse');
+        }
       } else {
         this.props.navigation.navigate('VerificationNavigation');
       }
@@ -366,24 +354,6 @@ class DiscussionScreenPlayerCard extends Component {
     };
   };
 
-  convertPostTime = postTimeInput => {
-    let postTimeToNewDate = new Date(postTimeInput);
-    let postTimeToGMTString = postTimeToNewDate.toGMTString();
-    let postTimeToNewDateSplitted = postTimeToGMTString.split(' ');
-    
-    
-    let date = postTimeToNewDateSplitted[1];
-    let month = postTimeToNewDateSplitted[2];
-    let year = postTimeToNewDateSplitted[3];
-    let time = postTimeToNewDateSplitted[4].substring(0, 5);
-    
-    if (date[0] === '0') {
-      date = date[1]
-    }
-
-    return `${date} ${month} ${year}, ${time}`;
-  };
-
   closeAddResponseModal = () => {
     this.setState({
       openAddResponseModal: false,
@@ -408,7 +378,7 @@ class DiscussionScreenPlayerCard extends Component {
             </TouchableOpacity>
             {this.props.profileType === 1 && <Image source={TickIcon} style={styles.tickIconStyle} />}
           </View>
-          <Text style={styles.postTimeStyle}>{this.state.postTime ? this.convertPostTime(this.state.postTime) : ''}</Text>
+          <Text style={styles.postTimeStyle}>{this.state.postTime ? this.state.postTime : ''}</Text>
         </View>
         <View style={styles.optionButtonContainerStyle}>
           {
@@ -420,6 +390,7 @@ class DiscussionScreenPlayerCard extends Component {
                 modalType="response"
                 responseId={this.state.responseId}
                 discussionId={this.state.discussionId}
+                responseTitle={this.state.caption}
               />
             )
           }
@@ -493,6 +464,12 @@ class DiscussionScreenPlayerCard extends Component {
             <Text style={styles.captionStyle}>{this.state.caption}</Text>
           )
         }
+        {/* <RecordPlayer
+          customStyle={{
+            marginTop: "10%"
+          }}
+          recordingFile={this.state.recordingFile}
+        /> */}
         <View style={styles.sliderStyle}>
           <View style={styles.durationContainerStyle}>
             <Text style={styles.durationStyle}>{this.state.durationDisplay}</Text>

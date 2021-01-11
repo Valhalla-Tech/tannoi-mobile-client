@@ -69,7 +69,7 @@ export const getDiscussion = (discussionId) => {
             profileId: getDiscussionRequest.data.creator.id,
             profilePicture: getDiscussionRequest.data.creator.profile_photo_path,
             profileName: getDiscussionRequest.data.creator.name,
-            postTime: getDiscussionRequest.data.created_at,
+            postTime: getDiscussionRequest.data.timeSince,
             like: getDiscussionRequest.data.likes,
             topic: getDiscussionRequest.data.topic.name,
             discussionTitle: getDiscussionRequest.data.title,

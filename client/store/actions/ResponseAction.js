@@ -69,7 +69,7 @@ export const getSingleResponse = (responseId, responseOption) => {
                 profileId: getResponseRequest.data.creator.id,
                 profilePicture: getResponseRequest.data.creator.profile_photo_path,
                 profileName: getResponseRequest.data.creator.name,
-                postTime: getResponseRequest.data.created_at,
+                postTime: getResponseRequest.data.timeSince,
                 like: getResponseRequest.data.likes,
                 recordingFile: getResponseRequest.data.voice_note_path,
                 reply: getResponseRequest.data.chain_response,

@@ -197,7 +197,7 @@ const DiscussionScreenCard = props => {
             </TouchableOpacity>
             {profileType === 1 && <Image source={TickIcon} style={styles.tickIconStyle} />}
           </View>
-          <Text style={styles.postTimeStyle}>{postTime ? convertPostTime(postTime) : ''}</Text>
+          <Text style={styles.postTimeStyle}>{postTime ? postTime : ''}</Text>
         </View>
         <OptionButton
           customStyle={styles.discussionCardMenuStyle}

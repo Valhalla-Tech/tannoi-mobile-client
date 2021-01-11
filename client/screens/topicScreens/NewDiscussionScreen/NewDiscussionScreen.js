@@ -128,7 +128,7 @@ const NewDiscussionScreen = ({ navigation }) => {
       let audioParts = uri.split('.');
       let fileType = audioParts[audioParts.length - 1];
       
-      formData.append('title', discussionTitle);
+      formData.append('title', discussionTitle.trim());
 
       formData.append('topic_id', selectedTopic);
 

@@ -7,7 +7,6 @@ import {
   Image
 } from 'react-native';
 import { bold, normal } from '../../assets/FontSize';
-import ConvertPostTime from '../../helper/ConvertPostTime';
 import { CalculateWidth } from '../../helper/CalculateSize';
 
 //Icons
@@ -97,7 +96,7 @@ const HomeListCard = props => {
     >
       <HomeListCardData />
       <View style={styles.playButtonAndDurationContainerStyle}>
-        <Text style={styles.postTimeStyle}>{ConvertPostTime(postTime)}</Text>
+        <Text style={styles.postTimeStyle}>{postTime}</Text>
         {
           discussionType === 2 ? (
               <Image source={LockIcon} style={styles.lockIconStyle} />
@@ -117,9 +116,10 @@ const styles = StyleSheet.create({
   homeListCardContainerStyle:{
     flexDirection: "row",
     paddingVertical: "5%",
+    paddingHorizontal: "3%",
     borderBottomWidth: 1,
     borderBottomColor: "#F5F7F9",
-    justifyContent: "space-around"
+    justifyContent: "space-between"
   },
 
   profileContainerStyle: {

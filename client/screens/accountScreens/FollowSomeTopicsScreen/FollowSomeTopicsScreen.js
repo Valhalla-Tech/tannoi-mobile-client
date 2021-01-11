@@ -117,6 +117,7 @@ const FollowSomeTopicsScreen = ({ navigation }) => {
                   data={lastRow(topics, numColumns)}
                   contentContainerStyle={styles.cardsContainerStyle}
                   numColumns={numColumns}
+                  style={{marginBottom: "80%"}}
                   renderItem={itemData => (
                     <Card 
                       cardData={itemData.item.name} 

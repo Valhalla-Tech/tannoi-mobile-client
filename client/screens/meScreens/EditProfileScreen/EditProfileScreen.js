@@ -195,8 +195,8 @@ const EditProfileScreen = ({ navigation }) => {
         birthDate !== '' && formData.append('birth_date', `${birthDate}`);
         fullName !== '' && formData.append('name', fullName);
         selectedGender !== '' && formData.append('gender', selectedGender);
-        shortBio !== '' && formData.append('bio', shortBio);
-        location !== '' && formData.append('location', location);
+        shortBio !== '' && formData.append('bio', shortBio.trim());
+        location !== '' && formData.append('location', location.trim());
   
         let saveEditRequest = await axios({
           url: `${BaseUrl}/users/profile/edit`,
@@ -209,7 +209,6 @@ const EditProfileScreen = ({ navigation }) => {
         });
 
         if (saveEditRequest.data) {
-          console.log(saveEditRequest.data)
           if (bioVoiceFile !== '' && bioVoiceFile !== userProfile.bio_voice_path) {
             editVoiceBio();
           }

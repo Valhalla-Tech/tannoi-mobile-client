@@ -80,7 +80,7 @@ const OptionModal = props => {
         async url => {
           try {
             const options = {
-              title: discussionTitle,
+              title: modalType === 'discussion' ? discussionTitle : responseTitle,
               message: url
             };
       
