@@ -32,7 +32,7 @@ const ListHeader = props => {
   } = props;
 
   const [openModal, setOpenModal] = useState(false);
-  const [currentSort, setCurrentSort] = useState('newest');
+  const [currentSort, setCurrentSort] = useState('Newest');
 
   const dispatch = useDispatch();
 

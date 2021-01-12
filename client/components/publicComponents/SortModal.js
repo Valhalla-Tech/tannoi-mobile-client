@@ -37,7 +37,7 @@ const SortModal = props => {
         <View style={styles.modalButtonContainerStyle}>
           {ModalButton('Newest', 'newest')}
           {ModalButton('Votes', 'like')}
-          {ModalButton('Most response', 'mostResponse')}
+          {ModalButton('Most responses', 'mostResponse')}
           {ModalButton('Plays', 'view')}
           {ModalButton('Best mood', 'best_mood')}
           {ModalButton('Worst mood', 'worst_mood')}

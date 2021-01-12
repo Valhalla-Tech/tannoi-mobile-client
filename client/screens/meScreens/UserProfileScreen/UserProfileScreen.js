@@ -163,6 +163,7 @@ const UserProfileScreen = ({route, navigation}) => {
                 birthDate={profile ? profile.birth_date : null}
                 bioVoiceFile={profile.bio_voice_path}
                 isLoading={profile ? false : true}
+                navigation={navigation}
               /> : null
             }
           </View>

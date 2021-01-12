@@ -145,12 +145,6 @@ const SearchBar = props => {
             horizontal={true}
             contentContainerStyle={styles.searchBarCardContainerStyle}
             keyExtractor={(item, index) => index.toString()}
-            ListHeaderComponent={
-              <SearchBarCard
-                cardTitle="All discussions"
-                isAllDiscussion={true}
-              />
-            }
             showsHorizontalScrollIndicator={false}
             renderItem={itemData => (
               <SearchBarCard 

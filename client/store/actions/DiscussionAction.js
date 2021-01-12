@@ -49,15 +49,17 @@ export const getAllDiscussion = (option, optionId, sort, page) => {
   };
 };
 
-export const getDiscussion = (discussionId) => {
+export const getDiscussion = (discussionId, isLoading) => {
   return async (dispatch) => {
     try {
-      dispatch({
-        type: 'SET_IS_LOADING',
-        payload: {
-          isLoading: true
-        }
-      });
+      if (isLoading) {
+        dispatch({
+          type: 'SET_IS_LOADING',
+          payload: {
+            isLoading: true
+          }
+        });
+      }
 
       let access_token = await AsyncStorage.getItem('access_token');
       let getDiscussionRequest = await axios({
@@ -90,12 +92,14 @@ export const getDiscussion = (discussionId) => {
           }
         });
 
-        dispatch({
-          type: 'SET_IS_LOADING',
-          payload: {
-            isLoading: false
-          }
-        });
+        if (isLoading) {
+          dispatch({
+            type: 'SET_IS_LOADING',
+            payload: {
+              isLoading: false
+            }
+          });
+        }
       }
     } catch (error) {
       console.log(error.response.data.msg);
