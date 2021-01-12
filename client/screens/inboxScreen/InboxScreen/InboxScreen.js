@@ -23,7 +23,7 @@ import SearchBar from '../../../components/publicComponents/SearchBar';
 const InboxScreen = ({ navigation }) => {
   const [inbox, setInbox] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  console.log(inbox)
+
   const getInbox = async () => {
     try {
       let access_token = await AsyncStorage.getItem('access_token');
