@@ -56,11 +56,6 @@ class DiscussionScreenPlayerCard extends Component {
       openAddResponseModal: false,
       isChainResponse: this.props.isChainResponse,
       getIsLikeAndIsDislike: this.props.getIsLikeAndIsDislike,
-      progress: 0,
-      duration: 0,
-      durationRemaining: 0,
-      durationDisplay: '',
-      durationPlayerDisplay: '',
       isPaused: false,
       caption: this.props.caption,
       openAddResponse: false
@@ -73,8 +68,6 @@ class DiscussionScreenPlayerCard extends Component {
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
       this.state.cardIndex !== 'discussion' && this.props.getSingleResponse(this.state.responseId, 'getDataForResponse');
     });
-    this.player = null;
-    this.lastSeek = 0;
 
     this.props.clearResponse(true);
 
@@ -83,10 +76,7 @@ class DiscussionScreenPlayerCard extends Component {
 
   componentWillUnmount() {
     this._isMounted = false;
-    if (this.state.playPauseButton === 'Pause') {
-      this.playRecording();
-    };
-    clearInterval(this.progressInterval);
+
     this._unsubscribe();
   };
   
@@ -428,21 +418,6 @@ const styles = StyleSheet.create({
   captionStyle: {
     marginTop: "3%",
     fontSize: 15,
-    fontFamily: normal
-  },
-
-  sliderStyle: {
-    marginTop: "7%",
-    color: "#464D60"
-  },
-
-  durationContainerStyle: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
-  },
-
-  durationStyle: {
     fontFamily: normal
   },
 

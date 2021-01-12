@@ -168,6 +168,7 @@ const RecorderModal = props => {
             <View style={styles.recorderContainerStyle}>
               <Recorder
                 addRecordingFile={addRecordingFile}
+                openModal={openModal}
               />
             </View>
           </View>

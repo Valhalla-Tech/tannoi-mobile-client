@@ -18,6 +18,8 @@ import { bold, normal } from '../../assets/FontSize';
 import RecordButton from '../../assets/topicAssets/recordButton.svg';
 
 class NewDiscussionScreenRecorder extends Component {
+  _isMounted = false;
+
   constructor(props) {
     super(props);
 
@@ -43,22 +45,33 @@ class NewDiscussionScreenRecorder extends Component {
 
     this.counter = null;
     this.progressInterval = null;
+    this._isMounted = true;
   };
+
+  componentWillUnmount() {
+    this._isMounted = false;
+    this.player.isPlaying && this.playRecording()
+    this.recorder.isRecording && this.voiceRecord(false);
+    this.stopProgressInterval();
+  }
 
   startCounter = () => {
     this.counter = setInterval(() => {
-      this.setState({
-        timer: this.state.timer - 1
-      });
+      if (this._isMounted) {
+        this.setState({
+          timer: this.state.timer - 1
+        });
+      }
     }, 1000);
   };
 
   stopCounter = () => {
     clearInterval(this.counter);
-    
-    this.setState({
-      timer: ''
-    });
+    if (this._isMounted) {
+      this.setState({
+        timer: ''
+      });
+    }
   };
 
   loadRecorder() {
@@ -118,11 +131,11 @@ class NewDiscussionScreenRecorder extends Component {
     if (this.player) {
       this.player.destroy();
     }
-    
+
     let permission = this.checkPermission();
     
     permission.then((hasPermission) => {
-      if (toggleFromTimer && this.recorder.isRecording) {
+      if (toggleFromTimer && this.recorder.isRecording && this._isMounted) {
 
         this.recorder.toggleRecord((error, stopped) => {
           if (stopped) {
@@ -139,14 +152,16 @@ class NewDiscussionScreenRecorder extends Component {
           }
         });
 
-        if (this.recorder.isRecording) {
+        if (this.recorder.isRecording && this._isMounted) {
           this.stopCounter();
           this.playRecording();
-        } else {
+        } else if (this._isMounted) {
           this.props.removeRecordingFile && this.props.removeRecordingFile()
-          this.setState({
-            timer: 30
-          });
+          if (this._isMounted) {
+            this.setState({
+              timer: 30
+            });
+          }
 
           this.recordingTimer();
           this.startCounter();
@@ -156,40 +171,46 @@ class NewDiscussionScreenRecorder extends Component {
   };
 
   playRecording = () => {
-    this.setState({
-      recordingFile: '/data/user/0/tannoi.client/files/discussionRecord.mp4'
-    });
+    if (this._isMounted) {
+      this.setState({
+        recordingFile: '/data/user/0/tannoi.client/files/discussionRecord.mp4'
+      });
+    }
     this.props.addRecordingFile('/data/user/0/tannoi.client/files/discussionRecord.mp4');
     this.clearTimer();
 
-    this.player.playPause((error, paused) => {
-      if (error) {
-        console.log(error);
-      };
-
-      if (this.player.isPlaying && !error) {
-        this.progressInterval = setInterval(() => {
-          if (this.player && this.shouldUpdateProgressBar()) {
-            let currentProgress = Math.max(0, this.player.currentTime) / this.player.duration;
-            if (isNaN(currentProgress)) {
-              currentProgress = 0;
-            };
-
-            this.updateDuration(this.player.currentTime);
+    if (this._isMounted || !this._isMounted && this.player.isPlaying) {
+      this.player.playPause((error, paused) => {
+        if (error) {
+          console.log(error);
+        };
   
-            if (!this.player.isPlaying) {
-              if (!this.player.isPaused) {
-                this.getDuration();
+        if (this.player.isPlaying && !error) {
+          this.progressInterval = setInterval(() => {
+            if (this.player && this.shouldUpdateProgressBar() && this._isMounted) {
+              let currentProgress = Math.max(0, this.player.currentTime) / this.player.duration;
+              if (isNaN(currentProgress)) {
+                currentProgress = 0;
               };
-
-              this.stopProgressInterval();
-            };
   
-            this.setState({ progress: currentProgress });
-          }
-        }, 100);
-      };
-    });
+              this.updateDuration(this.player.currentTime);
+    
+              if (!this.player.isPlaying) {
+                if (!this.player.isPaused) {
+                  this.getDuration();
+                };
+  
+                this.stopProgressInterval();
+              };
+              
+              if (this._isMounted) {
+                this.setState({ progress: currentProgress });
+              }
+            }
+          }, 100);
+        };
+      });
+    }
   };
 
   stopPlayer = () => {
@@ -197,9 +218,11 @@ class NewDiscussionScreenRecorder extends Component {
       console.log(error);
       this.getDuration();
       this.stopProgressInterval();
-      this.setState({
-        progress: 0
-      });
+      if (this._isMounted) {
+        this.setState({
+          progress: 0
+        });
+      }  
     });
   };
 
@@ -212,25 +235,27 @@ class NewDiscussionScreenRecorder extends Component {
     let durationRemainingToString = durationRemaining.toString();
     let currentTimeToString = currentTime.toString();
     
-    this.setState({
-      durationDisplay: durationRemainingToString.length === 4 ? (`0:0${durationRemainingToString[0]}`) : (
-        durationRemainingToString.length === 5 ? `0:${durationRemainingToString[0]}${durationRemainingToString[1]}` : '0:00'
-      ),
-      durationPlayedDisplay: currentTimeToString.length === 4 ? (`0:0${currentTimeToString[0]}`) : (
-        currentTimeToString.length === 5 ? `0:${currentTimeToString[0]}${currentTimeToString[1]}` : '0:00'
-      )
-    });
+    if (this._isMounted) {
+      this.setState({
+        durationDisplay: durationRemainingToString.length === 4 ? (`0:0${durationRemainingToString[0]}`) : (
+          durationRemainingToString.length === 5 ? `0:${durationRemainingToString[0]}${durationRemainingToString[1]}` : '0:00'
+        ),
+        durationPlayedDisplay: currentTimeToString.length === 4 ? (`0:0${currentTimeToString[0]}`) : (
+          currentTimeToString.length === 5 ? `0:${currentTimeToString[0]}${currentTimeToString[1]}` : '0:00'
+        )
+      });
+    }
   };
 
   getDuration = () => {
     let durationToString = this.player.duration.toString();
     
-    if (durationToString.length === 4) {
+    if (durationToString.length === 4 && this._isMounted) {
       this.setState({
         durationDisplay: `0:0${durationToString[0]}`,
         durationPlayedDisplay: '0:00'
       });
-    } else if (durationToString.length === 5) {
+    } else if (durationToString.length === 5 && this._isMounted) {
       this.setState({
         durationDisplay: `0:${durationToString[0]}${durationToString[1]}`,
         durationPlayedDisplay: '0:00'

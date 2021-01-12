@@ -256,6 +256,7 @@ const EditProfileScreen = ({ navigation }) => {
               recordingFile={bioVoiceFile === '' ? userProfile.bio_voice_path : bioVoiceFile}
               fromBio={true}
               isSlider={true}
+              navigation={navigation}
             />
           ) : null
         }
