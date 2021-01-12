@@ -83,6 +83,11 @@ const InboxScreen = ({ navigation }) => {
                 discussionId: itemData.item.response.discussion_id,
                 fromInbox: true
               });
+            } else if (itemData.item.type === 'Response Like') {
+              navigation.navigate('ResponseScreen', {
+                responseId: itemData.item.response.id,
+                discussionId: itemData.item.response.discussion_id
+              })
             } else {
               navigation.navigate('DiscussionScreen', {
                 discussionId: itemData.item.discussion_id
