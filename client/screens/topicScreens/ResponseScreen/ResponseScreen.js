@@ -175,52 +175,48 @@ const ReplyScreen = ({route, navigation}) => {
         data={reply}
         keyExtractor={(item, index) => index.toString()}
         renderItem={itemData => (
-          !fromInbox ? <>
-            {
-              selectedCard === itemData.index ? (
-                <DiscussionScreenPlayerCard
-                  navigation={navigation}
-                  cardType="response"
-                  profilePicture={itemData.item.creator.profile_photo_path}
-                  profileName={itemData.item.creator.name}
-                  recordingFile={itemData.item.voice_note_path}
-                  responseId={itemData.item.id}
-                  nextPlayerAvailable={reply.length > 0 ? true : false}
-                  cardIndex={itemData.index}
-                  cardLength={reply.length}
-                  postTime={itemData.item.timeSince}
-                  fromNextPreviousButton={fromNextPreviousButton}
-                  updateFromNextPreviousButton={updateFromNextPreviousButton}
-                  changePlayer={changePlayer}
-                  discussionId={discussionId}
-                  responseCount={itemData.item.chain_response}
-                  isChainResponse={true}
-                  mainResponseId={responseId}
-                  getIsLikeAndIsDislike={getIsLikeAndIsDislike}
-                  caption={itemData.item.caption}
-                  responseScreenResponseId={responseId}
-                  navigation={navigation}
-                  profileId={itemData.item.creator.id}
-                  profileType={itemData.item.creator.type}
-                  userType={userType}
-                  selectedCard={selectedCard}
-                />
-              ) : (
-                <ClosedCard
-                  profilePicture={itemData.item.creator.profile_photo_path}
-                  cardIndex={itemData.index}
-                  selectCard={selectCard}
-                  profileName={itemData.item.creator.name}
-                  postTime={itemData.item.timeSince}
-                  caption={itemData.item.caption}
-                  responseLike={itemData.item.likes}
-                  responseReply={itemData.item.response_count}
-                  responsePlay={itemData.item.play_count !== null ? itemData.item.play_count : 0}
-                  profileType={itemData.item.creator.type}
-                />
-              )
-            }
-          </> : null
+          selectedCard === itemData.index ? (
+            <DiscussionScreenPlayerCard
+              navigation={navigation}
+              cardType="response"
+              profilePicture={itemData.item.creator.profile_photo_path}
+              profileName={itemData.item.creator.name}
+              recordingFile={itemData.item.voice_note_path}
+              responseId={itemData.item.id}
+              nextPlayerAvailable={reply.length > 0 ? true : false}
+              cardIndex={itemData.index}
+              cardLength={reply.length}
+              postTime={itemData.item.timeSince}
+              fromNextPreviousButton={fromNextPreviousButton}
+              updateFromNextPreviousButton={updateFromNextPreviousButton}
+              changePlayer={changePlayer}
+              discussionId={discussionId}
+              responseCount={itemData.item.chain_response}
+              isChainResponse={true}
+              mainResponseId={responseId}
+              getIsLikeAndIsDislike={getIsLikeAndIsDislike}
+              caption={itemData.item.caption}
+              responseScreenResponseId={responseId}
+              navigation={navigation}
+              profileId={itemData.item.creator.id}
+              profileType={itemData.item.creator.type}
+              userType={userType}
+              selectedCard={selectedCard}
+            />
+          ) : (
+            <ClosedCard
+              profilePicture={itemData.item.creator.profile_photo_path}
+              cardIndex={itemData.index}
+              selectCard={selectCard}
+              profileName={itemData.item.creator.name}
+              postTime={itemData.item.timeSince}
+              caption={itemData.item.caption}
+              responseLike={itemData.item.likes}
+              responseReply={itemData.item.response_count}
+              responsePlay={itemData.item.play_count !== null ? itemData.item.play_count : 0}
+              profileType={itemData.item.creator.type}
+            />
+          )
         )}
       />
     </View>

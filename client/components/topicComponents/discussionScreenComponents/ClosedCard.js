@@ -7,9 +7,13 @@ import {
   Image
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
+import { useSelector } from 'react-redux';
 
 //Icon
 import TickIcon from '../../../assets/publicAssets/tickIcon.png';
+
+//Component
+import LoadingSpinner from '../../publicComponents/LoadingSpinner';
 
 const ClosedCard = props => {
   const {
@@ -25,6 +29,8 @@ const ClosedCard = props => {
     responseReply,
     profileType
   } = props;
+
+  const isLoading  = useSelector(state => state.DiscussionReducer.isLoading);
 
   const numberConverter = number => {
     let numberToString = number.toString();
@@ -56,31 +62,39 @@ const ClosedCard = props => {
       onPress={() => {
         selectCard(cardIndex);
       }}
+      disabled={isLoading ? true : false}
     >
-      <View style={styles.profileAndPostTimeContainerStyle}>
-        <View style={styles.profileInfoContainerStyle}>
-          <Image source={{uri: profilePicture}} style={styles.profileImageStyle} />
-          <Text style={styles.profileNameStyle}>{profileName}</Text>
-          {profileType === 1 && <Image source={TickIcon} style={styles.tickIconStyle} />}
-        </View>
-        <Text style={styles.postTimeStyle}>{postTime ? postTime : ''}</Text>
-      </View>
       {
-        cardIndex === 'discussion' ? (
-          (
-            discussionTitle.length > 45 ? (
-              <Text style={styles.discussionTitleStyle}>{discussionTitle.substring(0,42)}...</Text>
-            ) : (
-              <Text style={styles.discussionTitleStyle}>{discussionTitle}</Text>
-            )
-          )
-        ) : (
-          <Text style={styles.captionTextStyle}>{caption}</Text>
-        )
-      }
-      {
-        responseLike !== undefined && (
-          <ResponseData />
+        isLoading ? <LoadingSpinner loadingSpinnerForComponent={true} /> :
+        (
+          <>
+            <View style={styles.profileAndPostTimeContainerStyle}>
+              <View style={styles.profileInfoContainerStyle}>
+                <Image source={{uri: profilePicture}} style={styles.profileImageStyle} />
+                <Text style={styles.profileNameStyle}>{profileName}</Text>
+                {profileType === 1 && <Image source={TickIcon} style={styles.tickIconStyle} />}
+              </View>
+              <Text style={styles.postTimeStyle}>{postTime ? postTime : ''}</Text>
+            </View>
+            {
+              cardIndex === 'discussion' ? (
+                (
+                  discussionTitle.length > 45 ? (
+                    <Text style={styles.discussionTitleStyle}>{discussionTitle.substring(0,42)}...</Text>
+                  ) : (
+                    <Text style={styles.discussionTitleStyle}>{discussionTitle}</Text>
+                  )
+                )
+              ) : (
+                <Text style={styles.captionTextStyle}>{caption}</Text>
+              )
+            }
+            {
+              responseLike !== undefined && (
+                <ResponseData />
+              )
+            }
+          </>
         )
       }
     </TouchableOpacity>

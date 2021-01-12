@@ -7,31 +7,18 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
-import {
-  Player
-} from '@react-native-community/audio-toolkit';
 import AsyncStorage from '@react-native-community/async-storage';
-import Slider from '@react-native-community/slider';
 import { connect } from 'react-redux';
 import { getHome, clearHome } from '../../../store/actions/HomeAction';
 import { getDiscussion } from '../../../store/actions/DiscussionAction';
 import { getResponse, getSingleResponse, clearResponse } from '../../../store/actions/ResponseAction';
-import LoadingSpinner from '../../publicComponents/LoadingSpinner';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 import { GenerateDeepLink } from '../../../helper/GenerateDeepLink';
 
 //Icons
-import PlayerSpeed from '../../../assets/topicAssets/playerSpeed.svg';
-import PreviousButton from '../../../assets/topicAssets/notActivePreviousButton.svg';
-import NextButton from '../../../assets/topicAssets/notActiveNextButton.svg';
-import ActivePlayButton from '../../../assets/topicAssets/activePlayButton.svg';
-import PauseButton from '../../../assets/topicAssets/pauseButton.svg';
-import ForwardTenButton from '../../../assets/topicAssets/forwardTenButton.svg';
 import Upvote from '../../../assets/topicAssets/upvote.svg';
 import Downvote from '../../../assets/topicAssets/downvote.svg';
-import ActiveNextButton from '../../../assets/topicAssets/activeNextButton.svg';
-import ActivePreviousButton from '../../../assets/topicAssets/activePreviousButton.svg';
 import ActiveUpvote from '../../../assets/topicAssets/activeUpvote.svg';
 import ActiveDownvote from '../../../assets/topicAssets/activeDownvote.svg';
 import TickIcon from '../../../assets/publicAssets/tickIcon.png';
@@ -69,11 +56,6 @@ class DiscussionScreenPlayerCard extends Component {
       openAddResponseModal: false,
       isChainResponse: this.props.isChainResponse,
       getIsLikeAndIsDislike: this.props.getIsLikeAndIsDislike,
-      progress: 0,
-      duration: 0,
-      durationRemaining: 0,
-      durationDisplay: '',
-      durationPlayerDisplay: '',
       isPaused: false,
       caption: this.props.caption,
       openAddResponse: false
@@ -86,10 +68,6 @@ class DiscussionScreenPlayerCard extends Component {
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
       this.state.cardIndex !== 'discussion' && this.props.getSingleResponse(this.state.responseId, 'getDataForResponse');
     });
-    this.player = null;
-    this.lastSeek = 0;
-
-    this.loadPlayer();
 
     this.props.clearResponse(true);
 
@@ -98,159 +76,8 @@ class DiscussionScreenPlayerCard extends Component {
 
   componentWillUnmount() {
     this._isMounted = false;
-    if (this.state.playPauseButton === 'Pause') {
-      this.playRecording();
-    };
-    clearInterval(this.progressInterval);
+
     this._unsubscribe();
-  };
-
-  updateState(err) {
-    if (this._isMounted) {
-      this.setState({
-        playPauseButton: this.player && this.player.isPlaying ? 'Pause' : 'Play',
-  
-        playButtonDisabled: !this.player || !this.player.canPlay,
-  
-        isPaused: this.player.isPaused
-      });
-    }
-  };
-  
-  loadPlayer() {
-    if (this.player) {
-      this.player.destroy();
-    }
-    
-    this.player = new Player(this.state.recordingFile, {
-      autoDestroy: false
-    })
-    this.player.speed = 0.0;
-    this.player.prepare((error) => {
-      if (error) {
-        console.log('error at _reloadPlayer():');
-        console.log(error);
-      }
-
-      this.getDuration();
-      
-      this.updateState();
-
-      if (this.state.fromNextPreviousButton && this.player.canPlay && this._isMounted) {
-        this.playRecording();
-        this.state.updateFromNextPreviousButton(false);
-      }
-    });
-    
-    this.updateState();
-    
-    this.player.on('ended', () => {
-      this.updateState();
-    });
-    this.player.on('pause', () => {
-      this.updateState();
-    });
-  };
-
-  stopProgressInterval = () => {
-    clearInterval(this.progressInterval);
-  };
-  
-  playRecording() {
-    this.player.playPause((error, paused) => {
-      if (error) {
-        console.log(error);
-        this.loadPlayer();
-      };
-
-      if (this.player.isPlaying && !error && !this.state.isPaused) {
-        this.playCounter(this.state.responseId ? true : false);
-      };
-
-      if (this.player.isPlaying && !error) {
-        this.progressInterval = setInterval(() => {
-          if (this.player && this.shouldUpdateProgressBar()) {
-            let currentProgress = Math.max(0, this.player.currentTime) / this.player.duration;
-            if (isNaN(currentProgress)) {
-              currentProgress = 0;
-            };
-
-            this.updateDuration(this.player.currentTime);
-  
-            if (!this.player.isPlaying) {
-              if (!this.player.isPaused) {
-                this.getDuration();
-              };
-
-              this.stopProgressInterval();
-            };
-
-            if (this.player.isPlaying && this.props.isRecorderModalOpen || this.player.isPlaying && this.state.openAddResponse) {
-              this.playRecording();
-            }
-  
-            this.setState({ progress: currentProgress });
-          }
-        }, 100);
-      };
-
-      this.updateState();
-    });
-  };
-
-  updateDuration = currentTime => {
-    let durationRemaining = this.player.duration - currentTime;
-    let durationRemainingToString = durationRemaining.toString();
-    let currentTimeToString = currentTime.toString();
-    
-    this.setState({
-      durationDisplay: durationRemainingToString.length === 4 ? (`0:0${durationRemainingToString[0]}`) : (
-        durationRemainingToString.length === 5 ? `0:${durationRemainingToString[0]}${durationRemainingToString[1]}` : '0:00'
-      ),
-      durationPlayedDisplay: currentTimeToString.length === 4 ? (`0:0${currentTimeToString[0]}`) : (
-        currentTimeToString.length === 5 ? `0:${currentTimeToString[0]}${currentTimeToString[1]}` : '0:00'
-      )
-    });
-  };
-
-  getDuration = () => {
-    let durationToString = this.player.duration.toString();
-    
-    if (durationToString.length === 4 && this._isMounted) {
-      this.setState({
-        durationDisplay: `0:0${durationToString[0]}`,
-        durationPlayedDisplay: '0:00'
-      });
-    } else if (durationToString.length === 5 && this._isMounted) {
-      this.setState({
-        durationDisplay: `0:${durationToString[0]}${durationToString[1]}`,
-        durationPlayedDisplay: '0:00'
-      });
-    };
-  };
-
-  seek(percentage) {
-    if (!this.player) {
-      return;
-    }
-
-    this.lastSeek = Date.now();
-
-    let position = percentage * this.player.duration;
-
-    this.player.seek(position, () => {
-      this.updateState();
-    });
-  };
-
-  shouldUpdateProgressBar() {
-    return Date.now() - this.lastSeek > 200;
-  };
-  
-  forwardTenSeconds() {
-    this.player.seek(this.player.currentTime + 10000, () => {
-      this.updateState();
-    });
   };
   
   numberConverter = number => {
@@ -464,86 +291,21 @@ class DiscussionScreenPlayerCard extends Component {
             <Text style={styles.captionStyle}>{this.state.caption}</Text>
           )
         }
-        {/* <RecordPlayer
+        <RecordPlayer
           customStyle={{
             marginTop: "10%"
           }}
           recordingFile={this.state.recordingFile}
-        /> */}
-        <View style={styles.sliderStyle}>
-          <View style={styles.durationContainerStyle}>
-            <Text style={styles.durationStyle}>{this.state.durationDisplay}</Text>
-            <Text style={styles.durationStyle}>{this.state.durationPlayedDisplay}</Text>
-          </View>
-          <Slider 
-            step={0.0001} 
-            onValueChange={(percentage) => this.seek(percentage)} value={this.state.progress} 
-            thumbTintColor="#5152D0"
-            minimumTrackTintColor="#5152D0"
-            disabled={this.state.playButtonDisabled}
-          />
-        </View>
-        <View style={styles.playerContainerStyle}>
-          <TouchableOpacity>
-            <PlayerSpeed />
-          </TouchableOpacity>
-          {
-            this.state.cardType !== 'discussion' && this.state.cardIndex !== 'response' ? (
-              <TouchableOpacity
-                onPress={() => {
-                  if (this.state.playPauseButton === 'Pause') {
-                    this.state.changePlayer(this.state.cardIndex, 'previous');
-                    this.playRecording();
-                    this.state.updateFromNextPreviousButton(true);
-                  } else {
-                    this.state.changePlayer(this.state.cardIndex, 'previous');
-                    this.state.updateFromNextPreviousButton(true);
-                  }
-                }}
-              >
-                <ActivePreviousButton />
-              </TouchableOpacity>
-            ) : (
-              <PreviousButton />
-            )
-          }
-          <TouchableOpacity onPress={() => this.playRecording()}>
-            {
-              this.state.playButtonDisabled ? (
-                <LoadingSpinner loadingSpinnerForComponent={true} />
-              ) : (
-                this.state.playPauseButton === 'Play' ? (
-                  <ActivePlayButton />
-                ) : this.state.playPauseButton === 'Pause' && (
-                  <PauseButton />
-                )
-              )
-            }
-          </TouchableOpacity>
-          {
-            this.state.nextPlayerAvailable && this.state.cardIndex !== this.state.cardLength - 1 ? (
-              <TouchableOpacity 
-                onPress={() => {
-                  if (this.state.playPauseButton === 'Pause') {
-                    this.state.changePlayer(this.state.cardIndex, 'next');
-                    this.playRecording();
-                    this.state.updateFromNextPreviousButton(true);
-                  } else {
-                    this.state.changePlayer(this.state.cardIndex, 'next');
-                    this.state.updateFromNextPreviousButton(true);
-                  }
-                }}
-              >
-                <ActiveNextButton />
-              </TouchableOpacity>
-            ) : (
-              <NextButton />
-            )
-          }
-          <TouchableOpacity onPress={() => this.forwardTenSeconds()}>
-            <ForwardTenButton />
-          </TouchableOpacity>
-        </View>
+          isNextPlayerAvailable={this.state.nextPlayerAvailable && this.state.cardIndex !== this.state.cardLength - 1 ? true: false}
+          isPreviousPlayerAvailable={this.state.cardType !== 'discussion' && this.state.cardIndex !== 'response' ? true : false}
+          nextPlayerFunction={() => {this.props.changePlayer(this.state.cardIndex, 'next')}}
+          previousPlayerFunction={() => {this.props.changePlayer(this.state.cardIndex, 'previous')}}
+          fromNextPreviousButton={this.props.fromNextPreviousButton}
+          updateFromNextPreviousButton={this.props.updateFromNextPreviousButton}
+          isRecorderModalOpen={this.props.isRecorderModalOpen}
+          openAddResponse={this.state.openAddResponse}
+          playCounter={() => this.playCounter(this.state.responseId ? true : false)}
+        />
         {
           this.state.cardType === 'response' && (
             <this.VoteAndResponse />
@@ -656,21 +418,6 @@ const styles = StyleSheet.create({
   captionStyle: {
     marginTop: "3%",
     fontSize: 15,
-    fontFamily: normal
-  },
-
-  sliderStyle: {
-    marginTop: "7%",
-    color: "#464D60"
-  },
-
-  durationContainerStyle: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
-  },
-
-  durationStyle: {
     fontFamily: normal
   },
 

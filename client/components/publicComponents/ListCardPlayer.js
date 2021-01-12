@@ -6,15 +6,13 @@ import {
   StyleSheet,
   Text
 } from 'react-native';
-import {
-  Player
-} from '@react-native-community/audio-toolkit';
 import { connect } from 'react-redux';
 import { getHome } from '../../store/actions/HomeAction';
 import { changeCurrentPlayerId } from '../../store/actions/PlayerAction';
 import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
 import Slider from '@react-native-community/slider';
+import Sound from 'react-native-sound';
 
 //Icons
 import ActivePlayButton from '../../assets/homeAssets/activePlayButton.svg';
@@ -31,7 +29,9 @@ class HomeListPlayerCard extends Component {
 
     this.state = {
       isPlaying: false,
-      playerIsReady: false,
+      isPaused: false,
+      playerIsReady: true,
+      firstPlay: true,
       progress: 0,
       playerReload: false,
       playerId: ''
@@ -39,17 +39,18 @@ class HomeListPlayerCard extends Component {
   };
 
   componentDidMount() {
+    this.soundPlayer = null;
     this._isMounted = true;
-    this.player = null;
-    this.loadPlayer();
-    this.lastSeek = 0;
+    this.progressInterval = null;
+
+    this._blur = this.props.navigation.addListener('blur', () => {
+      this._isMounted = false;
+    });
   };
 
   componentWillUnmount() {
     this._isMounted = false;
-    if (this.player.isPlaying) {
-      this.playRecording()
-    }
+    this._blur;
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -61,15 +62,6 @@ class HomeListPlayerCard extends Component {
       }
     }
     return null;
-  };
-
-  updateState() {
-    if (this._isMounted) {
-      this.setState({
-        isPlaying: this.player.isPlaying ? true : false,
-        playerIsReady: this.player && this.player.canPlay
-      })
-    }
   };
 
   playCounter = async () => {
@@ -93,121 +85,109 @@ class HomeListPlayerCard extends Component {
   };
 
   loadPlayer(propsChanged) {
-    if (this.player) {
-      this.player.destroy();
-    };
+    this.setState({
+      playerIsReady: false
+    });
 
-    this.player = new Player(this.state.recordingFile, {
-      autoDestroy: false
-    })
-
-    this.player.speed = 0.0;
-    
-    this.player.prepare((error) => {
+    this.soundPlayer = new Sound(this.props.recordingFile, Sound.MAIN_BUNDLE, (error) => {
       if (error) {
         console.log(error);
-      };
-
-      this.updateState();
-
-      if (propsChanged) {
-        this.playRecording()
-      }
-    });
-
-    this.player.on('ended', () => {
-      this.updateState();
-    });
-    this.player.on('pause', () => {
-      this.updateState();
-    });
-  };
-
-  playRecording = () => {
-    if (this.props.currentPlayerId !== this.player._playerId && !this.player.isPlaying) {
-      this.props.changeCurrentPlayerId(this.player._playerId);
-    }
-
-    if (this.state.recordingFile !== this.state.savedPrevRecordingFile && this._isMounted) {
-      this.setState({
-        savedPrevRecordingFile: this.state.prevRecordingFile,
-        playerReload: true
-      });
-      this.loadPlayer(true);
-    } else {
-      this.player.playPause((error) => {
-        if (error) {
-          console.log(error);
-          this.loadPlayer();
-        };
-        
-        if (this.player.isPlaying && !error) {
+      } else if (this._isMounted) {
+        {
           this.setState({
-            playerReload: false,
-            playerId: this.player._playerId
+            playerIsReady: true,
+            firstPlay: false
+          })
+        }
+
+        this.playRecording(this.state.isPlaying);
+      }
+    })
+  };
+
+  playRecording = (isPlaying) => {
+    if (isPlaying) {
+      this.soundPlayer.pause(() => {
+        this.setState({
+          isPlaying: false,
+          isPaused: true
+        });
+      });
+      this.stopUpdateProgressBar();
+    } else {
+      if (this.state.recordingFile !== this.state.savedPrevRecordingFile && this._isMounted) {
+        this.setState({
+          savedPrevRecordingFile: this.state.prevRecordingFile
+        });
+
+        this.loadPlayer()
+      }
+
+      if (!this.state.isPaused) {
+        this.playCounter();
+      }
+
+      this.setState({
+        isPlaying: true,
+        isPaused: false
+      });
+
+      if (this.props.currentPlayerId !== this.props.discussionId) {
+        this.props.changeCurrentPlayerId(this.props.discussionId);
+      }
+
+      this.updateProgressBar();
+
+      if (this._isMounted) {
+        this.soundPlayer.play(success => {
+          this.setState({
+            isPlaying: false,
+            progress: 0
           });
-          
-          if (this.player) {
-            this.player.speed = 1.0;
-          }
-          
-          this.progressInterval = setInterval(() => {
-            if (this.player && this.shouldUpdateProgressBar() && this._isMounted) {
-              let currentProgress = Math.max(0, this.player.currentTime) / this.player.duration;
-              if (isNaN(currentProgress)) {
-                currentProgress = 0;
-              };
-              
-              if (!this.player.isPlaying) {
-                this.stopProgressInterval();
-              };
-              
-              if (this.props.currentPlayerId !== this.player._playerId && this.player.isPlaying) {
-                this.playRecording();
-              }
-    
-              this.setState({ progress: currentProgress });
-            }
-          }, 100);
-        };
   
-        if (this.player.isPlaying && !error && !this.player.isPaused && !this.props.fromBio) {
-          this.playCounter();
-        };
-  
-        this.updateState();
-      })
+          this.stopUpdateProgressBar();
+        });
+      }
     }
   };
+  
+  updateProgressBar() {
+    this.progressInterval = setInterval(() => {
+      this.soundPlayer.getCurrentTime(seconds => {
+        if (this.props.currentPlayerId !== this.props.discussionId) {
+          this.playRecording(true);
+          this.stopUpdateProgressBar();
+        }
 
-  shouldUpdateProgressBar() {
-    return Date.now() - this.lastSeek > 200;
-  };
+        let currentProgress = Math.max(0, seconds) / this.soundPlayer.getDuration();
+        if (this._isMounted) {
+          this.setState({
+            progress: currentProgress
+          });
+        }
+      })
+    }, 100);
+  }
 
-  stopProgressInterval = () => {
+  stopUpdateProgressBar() {
     clearInterval(this.progressInterval);
-  };
+  }
 
   seek(percentage) {
-    if (!this.player) {
-      return;
-    }
+    let position = percentage * this.soundPlayer.getDuration();
 
-    this.lastSeek = Date.now();
-
-    let position = percentage * this.player.duration;
-
-    this.player.seek(position, () => {
-      this.updateState();
-    });
+    this.setState({
+      progress: percentage
+    })
+    this.soundPlayer.setCurrentTime(position);
   };
 
   render() {
     return (
       <View style={styles.playerContainerStyle}>
-        <TouchableOpacity onPress={() => this.playRecording()}>
+        <TouchableOpacity onPress={() => this.state.firstPlay ? this.loadPlayer() : this.playRecording(this.state.isPlaying)}>
           {
-            this.state.playerIsReady && !this.state.playerReload ? (
+            this.state.playerIsReady ? (
               this.state.isPlaying ? (
                 <PauseButton />
               ) : (
@@ -226,6 +206,8 @@ class HomeListPlayerCard extends Component {
               disabled={this.props.recordingFile ? false : true}
               onValueChange={(percentage) => this.seek(percentage)}
               value={this.state.progress}
+              thumbTintColor="#5152D0"
+              minimumTrackTintColor="#5152D0"
             />
           )
         }

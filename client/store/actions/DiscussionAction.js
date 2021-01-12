@@ -52,6 +52,13 @@ export const getAllDiscussion = (option, optionId, sort, page) => {
 export const getDiscussion = (discussionId) => {
   return async (dispatch) => {
     try {
+      dispatch({
+        type: 'SET_IS_LOADING',
+        payload: {
+          isLoading: true
+        }
+      });
+
       let access_token = await AsyncStorage.getItem('access_token');
       let getDiscussionRequest = await axios({
         url: `${BaseUrl}/discussions/single/${discussionId}`,
@@ -62,7 +69,6 @@ export const getDiscussion = (discussionId) => {
       });
 
       if (getDiscussionRequest.data) {
-        
         dispatch({
           type: 'GET_DISCUSSION',
           payload: {
@@ -82,7 +88,14 @@ export const getDiscussion = (discussionId) => {
             type: getDiscussionRequest.data.type,
             userType: getDiscussionRequest.data.creator.type
           }
-        })
+        });
+
+        dispatch({
+          type: 'SET_IS_LOADING',
+          payload: {
+            isLoading: false
+          }
+        });
       }
     } catch (error) {
       console.log(error.response.data.msg);

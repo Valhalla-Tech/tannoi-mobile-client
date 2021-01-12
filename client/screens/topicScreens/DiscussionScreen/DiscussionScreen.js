@@ -61,6 +61,9 @@ const DiscussionScreen = ({ route, navigation }) => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
+      dispatch(clearDiscussion());
+      dispatch(clearResponse());
+      dispatch(getDiscussion(discussionId));
       dispatch(getResponse(discussionId));
     });
 

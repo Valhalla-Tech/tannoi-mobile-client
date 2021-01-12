@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -59,7 +59,9 @@ const DiscussionScreenCard = props => {
 
   const [optionModal, setOptionModal] = useState(false);
   const [privateModal, setPrivateModal] = useState(false);
+
   const discussionType = useSelector(state => state.DiscussionReducer.type);
+  const isLoading = useSelector(state => state.DiscussionReducer.isLoading);
 
   const dispatch = useDispatch();
 
@@ -186,7 +188,9 @@ const DiscussionScreenCard = props => {
                   userId: profileId
                 });
             }}>
-              <Image source={{uri: profilePicture}} style={styles.profileImageStyle} />
+              {
+                profilePicture ? <Image source={{uri: profilePicture}} style={styles.profileImageStyle} /> : null
+              }
             </TouchableOpacity>
             <TouchableOpacity onPress={() => {
                 navigation.navigate('UserProfileScreen', {
@@ -263,7 +267,7 @@ const DiscussionScreenCard = props => {
   return (
     <View style={styles.discussionScreenCardContainerStyle}>
       {
-        !profileName ? (
+        isLoading ? (
           <LoadingSpinner loadingSpinnerForComponent={true} />
         ) : (
           <>
