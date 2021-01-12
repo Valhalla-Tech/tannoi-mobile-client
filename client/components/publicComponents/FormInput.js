@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     // alignItems: "flex-start",
     borderBottomColor: "#E3E6EB",
     // marginBottom: "1.2%",
-    paddingBottom: "1.5%"
+    paddingBottom: "2.5%"
   }
 })
 
