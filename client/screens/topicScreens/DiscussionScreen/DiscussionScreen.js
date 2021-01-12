@@ -55,7 +55,7 @@ const DiscussionScreen = ({ route, navigation }) => {
     setOpenAddRespone(false);
     dispatch(clearDiscussion());
     dispatch(clearResponse());
-    dispatch(getDiscussion(discussionId));
+    dispatch(getDiscussion(discussionId, true));
     dispatch(getResponse(discussionId));
   }, [navigation]);
 
@@ -63,7 +63,7 @@ const DiscussionScreen = ({ route, navigation }) => {
     const unsubscribe = navigation.addListener('focus', () => {
       dispatch(clearDiscussion());
       dispatch(clearResponse());
-      dispatch(getDiscussion(discussionId));
+      dispatch(getDiscussion(discussionId, true));
       dispatch(getResponse(discussionId));
     });
 
