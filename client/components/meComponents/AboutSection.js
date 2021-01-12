@@ -17,7 +17,8 @@ const AboutSection = props => {
     gender,
     birthDate,
     bioVoiceFile,
-    isLoading
+    isLoading,
+    navigation
   } = props;
 
   const AboutData = (title, data) => {
@@ -28,6 +29,7 @@ const AboutSection = props => {
             <ListCardPlayer
               recordingFile={bioVoiceFile}
               fromBio={true}
+              navigation={navigation}
             />
           ) : (
             <View style={styles.aboutDataIconStyle}>

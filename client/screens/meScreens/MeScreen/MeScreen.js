@@ -104,6 +104,7 @@ const MeScreen = ({ navigation, route }) => {
                 birthDate={userProfile ? userProfile.birth_date : null}
                 bioVoiceFile={userProfile.bio_voice_path}
                 isLoading={userProfile ? false : true}
+                navigation={navigation}
               /> : null
             }
           </View>
