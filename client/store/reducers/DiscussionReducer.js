@@ -17,7 +17,8 @@ const defaultState = {
   userType: '',
   discussions: '',
   discussionCount: '',
-  userDiscussion: ''
+  userDiscussion: '',
+  isLoading: false
 }
 
 const reducer = (state = defaultState, action) => {
@@ -90,6 +91,10 @@ const reducer = (state = defaultState, action) => {
       }
     case 'CLEAR_USER_DISCUSSION':
       return {...state, userDiscussion: ''};
+    case 'SET_IS_LOADING':
+      let setIsLoading = action.payload.isLoading;
+
+      return {...state, isLoading: setIsLoading};
     default:
       return state;
   }
