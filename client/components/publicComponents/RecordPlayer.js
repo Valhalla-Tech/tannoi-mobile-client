@@ -26,7 +26,7 @@ class RecordPlayer extends Component {
 
   constructor(props) {
     super(props);
-
+    
     this.state = {
       loading: false,
       isPlaying: false,
@@ -110,7 +110,7 @@ class RecordPlayer extends Component {
   }
 
   loadPlayer() {
-    this.soundPlayer = new Sound(this.props.recordingFile, Sound.MAIN_BUNDLE, (error) => {
+    this.soundPlayer = new Sound(this.props.recordingFile, null, (error) => {
       if (error) {
         console.log(error);
       }
