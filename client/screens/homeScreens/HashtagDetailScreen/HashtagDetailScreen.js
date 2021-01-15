@@ -42,16 +42,12 @@ const HashtagDetailScreen = ({ route, navigation }) => {
   };
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
     dispatch(getAllDiscussion(query, queryId, null, null));
-    });
-
-    const clearListDiscussion = () => {
-      dispatch(clearDiscussion());
-    };
-
-    return (unsubscribe, clearListDiscussion)
   }, [navigation]);
+  
+  const clearDiscussionList = () => {
+    dispatch(clearDiscussion(null, true));
+  };
 
   const HeaderContent = () => {
     return (
@@ -62,6 +58,7 @@ const HashtagDetailScreen = ({ route, navigation }) => {
             marginTop: 0,
             marginBottom: 0
           }}
+          buttonOption={clearDiscussionList}
         />
         <Text style={styles.headerTitleStyle}>{hashtagDetailTitle}</Text>
       </>

@@ -32,17 +32,13 @@ const TopicDetail = props => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      dispatch(getAllDiscussion('topic_id=', topicId));
-      dispatch(getSingleTopic(topicId));
-    });
-
-    const clearList = () => {
-      dispatch(clearDiscussion());
-    };
-
-    return (unsubscribe, clearList)
+    dispatch(getAllDiscussion('topic_id=', topicId));
+    dispatch(getSingleTopic(topicId));
   }, [navigation]);
+
+  const clearList = () => {
+    dispatch(clearDiscussion(null, true));
+  };
 
   const discussions = useSelector(state => state.DiscussionReducer.discussions);
   const { description } = useSelector(state => state.TopicReducer.topic);
@@ -71,6 +67,7 @@ const TopicDetail = props => {
                 marginRight: "10%"
               }}
               navigation={navigation}
+              buttonOption={clearList}
             />
             <Text style={styles.headerTextStyle}>{topicName}</Text>
           </View>

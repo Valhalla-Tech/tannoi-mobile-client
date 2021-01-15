@@ -150,12 +150,16 @@ export const getUserDiscussion = (userId) => {
   };
 };
 
-export const clearDiscussion = (clearUserDiscussion) => {
+export const clearDiscussion = (clearUserDiscussion, clearAllDiscussion) => {
   return (dispatch) => {
     if (clearUserDiscussion) {
       dispatch({
         type: 'CLEAR_USER_DISCUSSION'
       });
+    } else if (clearAllDiscussion) {
+      dispatch({
+        type: 'CLEAR_ALL_DISCUSSION'
+      })
     } else {
       dispatch({
         type: 'CLEAR_DISCUSSION'

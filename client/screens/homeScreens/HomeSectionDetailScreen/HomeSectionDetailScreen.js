@@ -29,18 +29,14 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      if (sectionType === 'discussion') {
-        dispatch(getAllDiscussion(sectionQuery ? sectionQuery : null, queryId ? queryId : null, null, null));
-      }      
-    });
-
-    const clearListDiscussion = () => {
-      dispatch(clearDiscussion());
-    };
-
-    return (unsubscribe, clearListDiscussion)
+    if (sectionType === 'discussion') {
+      dispatch(getAllDiscussion(sectionQuery ? sectionQuery : null, queryId ? queryId : null, null, null));
+    }
   }, [navigation]);
+
+  const clearListDiscussion = () => {
+    dispatch(clearDiscussion(null, true));
+  };
 
   const changeSelectedSort = input => {
     setSelectedSort(input);
@@ -59,6 +55,7 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
             marginTop: 0,
             marginBottom: 0
           }}
+          buttonOption={clearListDiscussion}
         />
         <Text style={styles.headerTitleStyle}>{sectionTitle}</Text>
       </View>
