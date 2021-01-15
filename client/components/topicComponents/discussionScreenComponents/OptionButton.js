@@ -17,7 +17,9 @@ const OptionButton = props => {
     modalType,
     responseId,
     discussionTitle,
-    responseTitle
+    responseTitle,
+    changePlayer,
+    cardIndex
   } = props;
 
   const [optionModal, setOptionModal] = useState(false);
@@ -42,6 +44,8 @@ const OptionButton = props => {
         responseId={responseId}
         discussionTitle={discussionTitle}
         responseTitle={responseTitle}
+        changePlayer={changePlayer}
+        cardIndex={cardIndex}
       />
     </>
   );

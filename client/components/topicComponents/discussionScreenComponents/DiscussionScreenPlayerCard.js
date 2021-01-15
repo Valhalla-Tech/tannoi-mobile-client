@@ -70,6 +70,7 @@ class DiscussionScreenPlayerCard extends Component {
     });
 
     this.props.clearResponse(true);
+    // console.log(this.props.responseId)
 
     this.progressInterval = null;
   };
@@ -218,6 +219,8 @@ class DiscussionScreenPlayerCard extends Component {
                 responseId={this.state.responseId}
                 discussionId={this.state.discussionId}
                 responseTitle={this.state.caption}
+                changePlayer={this.props.changePlayer}
+                cardIndex={this.props.cardIndex}
               />
             )
           }
