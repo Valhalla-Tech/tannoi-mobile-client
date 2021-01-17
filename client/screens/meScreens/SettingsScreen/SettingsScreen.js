@@ -66,6 +66,17 @@ const SettingsScreen = ({ navigation }) => {
     );
   };
 
+  const NotificationsMenu = () => {
+    return (
+      <View>
+        <View style={styles.cardHeaderStyle}>
+          <Text style={styles.menuHeaderTextStyle}>Notifications</Text>
+        </View>
+        {MenuButton('Notification settings', null, 'NotificationSettingsScreen')}
+      </View>
+    );
+  };
+
   return (
     <View>
       <Header
@@ -76,6 +87,10 @@ const SettingsScreen = ({ navigation }) => {
         <Card
           child={AccountMenu}
           customStyle={styles.cardStyle}
+        />
+        <Card
+          child={NotificationsMenu}
+          customStyle={{...styles.cardStyle, marginTop: "2%"}}
         />
       </View>
     </View>
