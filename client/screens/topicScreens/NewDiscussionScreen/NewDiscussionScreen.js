@@ -326,7 +326,7 @@ const NewDiscussionScreen = ({ navigation }) => {
         isFilled={selectAll || selectedFollowers.length > 0 ? true : false}
         selectedFollowers={selectedFollowers}
         selectedAll={selectAll}
-        modalTitle={switchName === 'Private discussion' ? 'Invite your followers to a private discussion' : 'Ask your followers to response this discussion'}
+        modalTitle={switchName === 'Private discussion' ? 'Invite your followers to a private discussion' : 'Ask your followers to respond to this discussion'}
         switchName={switchName}
       />
     );
