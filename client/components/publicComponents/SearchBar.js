@@ -16,33 +16,6 @@ import BackButtonIcon from '../../assets/publicAssets/back-button.svg';
 //Component
 import SearchBarCard from './SearchBarCard';
 
-const DATA = [
-  {
-    id: '1',
-    title: 'All discussions',
-  },
-  {
-    id: '2',
-    title: 'Music',
-  },
-  {
-    id: '3',
-    title: 'Football',
-  },
-  {
-    id: '4',
-    title: 'Games',
-  },
-  {
-    id: '5',
-    title: 'Cars',
-  },
-  {
-    id: '6',
-    title: 'Entertainment',
-  }
-];
-
 const SearchBar = props => {
   const {
     category,
@@ -58,10 +31,6 @@ const SearchBar = props => {
   const [searchBoxIsFilled, setSearchBoxIsFilled] = useState(false);
 
   const searchBarStyle = {...styles.searchBarStyle, ...customStyle};
-
-  const changeSelectedDiscussion = discussion => {
-    setCurrentSelectedDiscussion(discussion);
-  };
 
   const CategoryButton = (buttonName) => {
     return (

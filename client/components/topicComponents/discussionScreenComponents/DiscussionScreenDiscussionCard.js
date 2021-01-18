@@ -142,15 +142,13 @@ const DiscussionScreenCard = props => {
     }
   };
 
-  const convertHashtagForDisplay = hashtagsInput => {
-    let hashtagDisplayOutput = '';
-
-    hashtagsInput.forEach(hashtag => {
-      hashtagDisplayOutput += `${hashtag.name} `;
-    });
-
-    return hashtagDisplayOutput;
-  };
+  const convertHashtagForDisplay = (item, index) => (
+    <Text onPress={() => navigation.navigate('HashtagDetailScreen', {
+      query: 'hashtag_id=',
+      queryId: item.id,
+      hashtagDetailTitle: item.name
+    })} key={index}>{item.name}  </Text>
+  );
 
   const openPrivateModal = () => {
     setPrivateModal(true);
@@ -237,7 +235,7 @@ const DiscussionScreenCard = props => {
         <View style={styles.discussionInfoContainerStyle}>
           <Text style={styles.discussionTitleStyle}>{discussionTitle}</Text>
           <Text style={styles.topicStyle}>{topic}</Text>
-          <Text style={styles.discussionHashtag}>{hashtags ? convertHashtagForDisplay(hashtags) : ''}</Text>
+          <Text style={styles.discussionHashtag}>{hashtags ? hashtags.map(convertHashtagForDisplay) : ''}</Text>
           <View style={styles.repliesAndPlaysNumberContainerStyle}>
             <Text style={styles.repliesAndPlaysNumberStyle}>{numberConverter(replies)} Replies</Text>
             <Text style={styles.repliesAndPlaysNumberStyle}>{numberConverter(plays)} Plays</Text>
@@ -376,6 +374,7 @@ const styles = StyleSheet.create({
   discussionHashtag: {
     fontFamily: normal,
     fontSize: 14,
+    lineHeight: 25,
     color: "#73798C",
   },
 
