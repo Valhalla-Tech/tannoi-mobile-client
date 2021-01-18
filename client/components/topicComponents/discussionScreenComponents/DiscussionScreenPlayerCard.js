@@ -27,6 +27,7 @@ import TickIcon from '../../../assets/publicAssets/tickIcon.png';
 import AddResponse from '../../publicComponents/RecorderModal';
 import OptionButton from '../../../components/topicComponents/discussionScreenComponents/OptionButton';
 import RecordPlayer from '../../publicComponents/RecordPlayer';
+import TopResponsePreview from '../../topicComponents/discussionScreenComponents/TopResponsePreview';
 
 class DiscussionScreenPlayerCard extends Component {
   _isMounted = false;
@@ -70,7 +71,6 @@ class DiscussionScreenPlayerCard extends Component {
     });
 
     this.props.clearResponse(true);
-    // console.log(this.props.responseId)
 
     this.progressInterval = null;
   };
@@ -310,15 +310,28 @@ class DiscussionScreenPlayerCard extends Component {
           playCounter={() => this.playCounter(this.state.responseId ? true : false)}
         />
         {
+          this.props.topResponse && this.props.topResponse.length > 0 && 
+          <TopResponsePreview
+            navigation={this.props.navigation}
+            topResponseData={this.props.topResponse}
+            discussionId={this.props.discussionId}
+            customStyle={{
+              marginTop: "6%"
+            }}
+            responseCount={this.props.responseCount}
+            responseId={this.props.responseId}
+          />
+        }
+        {
           this.state.cardType === 'response' && (
             <this.VoteAndResponse />
           )
         }
-        {
+        {/* {
           this.props.responseCountForResponse >= 1 && this.state.cardIndex !== 'response' && this.state.cardType !== 'discussion' && (
             <this.ReplyButton />
           )
-        }
+        } */}
         <AddResponse
           openModal={this.state.openAddResponseModal}
           closeModal={this.closeAddResponseModal}

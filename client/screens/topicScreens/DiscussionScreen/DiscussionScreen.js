@@ -58,7 +58,7 @@ const DiscussionScreen = ({ route, navigation }) => {
     dispatch(getDiscussion(discussionId, true));
     dispatch(getResponse(discussionId));
   }, [navigation]);
-
+ 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       dispatch(clearDiscussion());
@@ -195,7 +195,6 @@ const DiscussionScreen = ({ route, navigation }) => {
           <>
             {
               selectedCard === itemData.index ? (
-                <>
                 <DiscussionScreenPlayerCard
                   navigation={navigation}
                   cardType="response"
@@ -223,8 +222,9 @@ const DiscussionScreen = ({ route, navigation }) => {
                   userType={userType}
                   selectedCard={selectedCard}
                   isRecorderModalOpen={openAddResponse}
+                  topResponse={itemData.item.chain_response}
+                  responseCount={itemData.item.response_count}
                 />
-                </>
               ) : (
                 <ClosedCard
                   profilePicture={itemData.item.creator.profile_photo_path}
@@ -237,6 +237,11 @@ const DiscussionScreen = ({ route, navigation }) => {
                   responseReply={itemData.item.response_count}
                   responsePlay={itemData.item.play_count !== null ? itemData.item.play_count : 0}
                   profileType={itemData.item.creator.type}
+                  navigation={navigation}
+                  topResponse={itemData.item.chain_response}
+                  responseCount={itemData.item.response_count}
+                  discussionId={discussionId}
+                  responseId={itemData.item.id}
                 />
               )
             }

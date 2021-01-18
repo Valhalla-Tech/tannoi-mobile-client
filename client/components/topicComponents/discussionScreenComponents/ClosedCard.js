@@ -12,8 +12,9 @@ import { useSelector } from 'react-redux';
 //Icon
 import TickIcon from '../../../assets/publicAssets/tickIcon.png';
 
-//Component
+//Components
 import LoadingSpinner from '../../publicComponents/LoadingSpinner';
+import TopResponsePreview from '../../topicComponents/discussionScreenComponents/TopResponsePreview';
 
 const ClosedCard = props => {
   const {
@@ -27,7 +28,12 @@ const ClosedCard = props => {
     responseLike,
     responsePlay,
     responseReply,
-    profileType
+    profileType,
+    navigation,
+    responseId,
+    discussionId,
+    topResponse,
+    responseCount
   } = props;
 
   const isLoading  = useSelector(state => state.DiscussionReducer.isLoading);
@@ -94,6 +100,16 @@ const ClosedCard = props => {
                 <ResponseData />
               )
             }
+            <TopResponsePreview
+              navigation={navigation}
+              topResponseData={topResponse}
+              discussionId={discussionId}
+              customStyle={{
+                marginTop: "6%"
+              }}
+              responseCount={responseCount}
+              responseId={responseId}
+            />
           </>
         )
       }
