@@ -202,6 +202,8 @@ const ReplyScreen = ({route, navigation}) => {
               profileType={itemData.item.creator.type}
               userType={userType}
               selectedCard={selectedCard}
+              topResponse={itemData.item.chain_response}
+              responseCount={itemData.item.response_count}
             />
           ) : (
             <ClosedCard
@@ -215,6 +217,11 @@ const ReplyScreen = ({route, navigation}) => {
               responseReply={itemData.item.response_count}
               responsePlay={itemData.item.play_count !== null ? itemData.item.play_count : 0}
               profileType={itemData.item.creator.type}
+              navigation={navigation}
+              topResponse={itemData.item.chain_response}
+              responseCount={itemData.item.response_count}
+              discussionId={discussionId}
+              responseId={itemData.item.id}
             />
           )
         )}

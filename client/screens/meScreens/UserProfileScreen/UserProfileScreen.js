@@ -126,7 +126,6 @@ const UserProfileScreen = ({route, navigation}) => {
             marginTop: 0,
             marginBottom: 0
           }}
-          navigation={navigation}
         />
         {
           profile.isFollowing !== undefined && (

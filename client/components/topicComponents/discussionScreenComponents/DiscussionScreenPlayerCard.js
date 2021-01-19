@@ -11,7 +11,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { connect } from 'react-redux';
 import { getHome, clearHome } from '../../../store/actions/HomeAction';
 import { getDiscussion } from '../../../store/actions/DiscussionAction';
-import { getResponse, getSingleResponse, clearResponse } from '../../../store/actions/ResponseAction';
+import { getResponse, getSingleResponse, clearResponse, editResponse } from '../../../store/actions/ResponseAction';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 import { GenerateDeepLink } from '../../../helper/GenerateDeepLink';
@@ -27,6 +27,7 @@ import TickIcon from '../../../assets/publicAssets/tickIcon.png';
 import AddResponse from '../../publicComponents/RecorderModal';
 import OptionButton from '../../../components/topicComponents/discussionScreenComponents/OptionButton';
 import RecordPlayer from '../../publicComponents/RecordPlayer';
+import TopResponsePreview from '../../topicComponents/discussionScreenComponents/TopResponsePreview';
 
 class DiscussionScreenPlayerCard extends Component {
   _isMounted = false;
@@ -109,10 +110,10 @@ class DiscussionScreenPlayerCard extends Component {
 
         if (responsePlayCounterRequest.data) {
           if (this.props.responseScreenResponseId) {
-            this.props.getSingleResponse(this.props.responseScreenResponseId);
+            // this.props.getSingleResponse(this.props.responseScreenResponseId);
           } else if (this.state.responseId) {
-            this.props.getSingleResponse(this.state.responseId);
-            this.props.getResponse(this.state.discussionId);
+            // this.props.getSingleResponse(this.state.responseId);
+            // this.props.getResponse(this.state.discussionId);
           }
         }
       } else {
@@ -125,7 +126,7 @@ class DiscussionScreenPlayerCard extends Component {
         });
   
         if (playCounterRequest.data) {
-          this.props.getDiscussion(this.state.discussionId);
+          // this.props.getDiscussion(this.state.discussionId);
         }
       }
     } catch (error) {
@@ -218,6 +219,8 @@ class DiscussionScreenPlayerCard extends Component {
                 responseId={this.state.responseId}
                 discussionId={this.state.discussionId}
                 responseTitle={this.state.caption}
+                changePlayer={this.props.changePlayer}
+                cardIndex={this.props.cardIndex}
               />
             )
           }
@@ -267,20 +270,20 @@ class DiscussionScreenPlayerCard extends Component {
     );
   };
 
-  ReplyButton = () => {
-    return (
-      <View style={styles.showReplyButtonContainerStyle}>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.push('ResponseScreen', {
-            responseId: this.state.responseId,
-            discussionId: this.state.discussionId
-          })}
-        >
-        <Text style={styles.showReplyButtonTextStyle}>{this.props.responseCountForResponse} Rep{this.props.responseCountForResponse > 1 ? 'lies' : 'ly'}</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  };
+  // ReplyButton = () => {
+  //   return (
+  //     <View style={styles.showReplyButtonContainerStyle}>
+  //       <TouchableOpacity
+  //         onPress={() => this.props.navigation.push('ResponseScreen', {
+  //           responseId: this.state.responseId,
+  //           discussionId: this.state.discussionId
+  //         })}
+  //       >
+  //       <Text style={styles.showReplyButtonTextStyle}>{this.props.responseCountForResponse} Rep{this.props.responseCountForResponse > 1 ? 'lies' : 'ly'}</Text>
+  //       </TouchableOpacity>
+  //     </View>
+  //   );
+  // };
 
   render() {
     return (
@@ -307,15 +310,28 @@ class DiscussionScreenPlayerCard extends Component {
           playCounter={() => this.playCounter(this.state.responseId ? true : false)}
         />
         {
+          this.props.topResponse && this.props.topResponse.length > 0 && 
+          <TopResponsePreview
+            navigation={this.props.navigation}
+            topResponseData={this.props.topResponse}
+            discussionId={this.props.discussionId}
+            customStyle={{
+              marginTop: "6%"
+            }}
+            responseCount={this.props.responseCount}
+            responseId={this.props.responseId}
+          />
+        }
+        {
           this.state.cardType === 'response' && (
             <this.VoteAndResponse />
           )
         }
-        {
+        {/* {
           this.props.responseCountForResponse >= 1 && this.state.cardIndex !== 'response' && this.state.cardType !== 'discussion' && (
             <this.ReplyButton />
           )
-        }
+        } */}
         <AddResponse
           openModal={this.state.openAddResponseModal}
           closeModal={this.closeAddResponseModal}
@@ -347,7 +363,8 @@ const dispatchUpdate = () => {
     getDiscussion,
     getResponse,
     getSingleResponse,
-    clearResponse
+    clearResponse,
+    editResponse
   };
 };
 

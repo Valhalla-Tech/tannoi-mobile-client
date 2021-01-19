@@ -39,15 +39,15 @@ const ProfileData = props => {
         <View style={styles.profileInfoStyle}>
           <View style={styles.profileDataContainerStyle}>
             <Text style={styles.profileDataStyle}>Discussions</Text>
-            <Text style={styles.profileDataNumberStyle}>{profile.discussions && numberConverter(profile.discussions.length)}</Text>
+            <Text style={styles.profileDataNumberStyle}>{profile.discussions && numberConverter(profile.discussion_count)}</Text>
           </View>
           <View style={styles.profileDataContainerStyle}>
             <Text style={styles.profileDataStyle}>Responses</Text>
-            <Text style={styles.profileDataNumberStyle}>{profile.creator && numberConverter(profile.creator.length)}</Text>
+            <Text style={styles.profileDataNumberStyle}>{profile.creator && numberConverter(profile.response_count)}</Text>
           </View>
           <View style={styles.profileDataContainerStyle}>
             <Text style={styles.profileDataStyle}>Followers</Text>
-            <Text style={styles.profileDataNumberStyle}>{profile.followers && numberConverter(profile.followers.length)}</Text>
+            <Text style={styles.profileDataNumberStyle}>{profile.followers && numberConverter(profile.follower_count)}</Text>
           </View>
         </View>
       </View>

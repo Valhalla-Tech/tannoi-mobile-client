@@ -33,7 +33,10 @@ const HomeListCard = props => {
     discussionType,
     openModal,
     isAuthorized,
-    profileType
+    profileType,
+    isTopResponsePreview,
+    responseId,
+    caption
   } = props;
 
   const numberConverter = number => {
@@ -50,7 +53,7 @@ const HomeListCard = props => {
 
   const HomeListCardData = () => {
     return (
-      <View >
+      <View style={isTopResponsePreview ? {maxWidth: "75%"} : ''}>
         <View style={styles.profileContainerStyle}>
           <Image source={{uri: imageUrl}} style={styles.profilePictureStyle} />
           <Text style={styles.nameTextStyle}>{name}</Text>
@@ -59,16 +62,19 @@ const HomeListCard = props => {
           }
         </View>
         {
-          topic !== '' && (
+          topic !== '' && !isTopResponsePreview && (
             <Text style={styles.topicStyle}>{topic}</Text>
           )
         }
-        <Text style={styles.titleTextStyle}>{title}</Text>
-        <View style={styles.cardInfoContainerStyle}>
-          <Text style={styles.cardInfoStyle}>{numberConverter(votes)} Votes</Text>
-          <Text style={styles.cardInfoStyle}>{numberConverter(replies)} Replies</Text>
-          <Text style={{...styles.cardInfoStyle}}>{numberConverter(plays)} Plays</Text>
-        </View>
+        <Text style={isTopResponsePreview ? {...styles.titleTextStyle, fontFamily: normal} : styles.titleTextStyle}>{isTopResponsePreview ? caption : title}</Text>
+        {
+          !isTopResponsePreview &&
+          <View style={styles.cardInfoContainerStyle}>
+            <Text style={styles.cardInfoStyle}>{numberConverter(votes)} Votes</Text>
+            <Text style={styles.cardInfoStyle}>{numberConverter(replies)} Replies</Text>
+            <Text style={{...styles.cardInfoStyle}}>{numberConverter(plays)} Plays</Text>
+          </View>
+        }
       </View>
     );
   };
@@ -76,15 +82,29 @@ const HomeListCard = props => {
   return (
     <TouchableOpacity 
       style={
-        isBorder ? styles.homeListCardContainerStyle : 
-        {...styles.homeListCardContainerStyle, borderBottomWidth: 0, paddingBottom: "2%"}
+        isTopResponsePreview ? {...styles.homeListCardContainerStyle,
+          paddingHorizontal: "5%",
+          borderLeftWidth: 3,
+          borderLeftColor: "#F5F7F9",
+          borderBottomWidth: 0,
+          paddingVertical: "3%"
+        } : isBorder ? styles.homeListCardContainerStyle : {
+          ...styles.homeListCardContainerStyle,
+          borderBottomWidth: 0,
+          paddingBottom: "2%"
+        }
       }
 
       onPress={() => {
-        if (discussionType === 2 && !isAuthorized) {
+        if (discussionType === 2 && !isAuthorized && !isTopResponsePreview) {
           openModal();
-        } else if (discussionType === 2 && isAuthorized) {
+        } else if (discussionType === 2 && isAuthorized && !isTopResponsePreview) {
           navigation.push('DiscussionScreen', {
+            discussionId: discussionId
+          })
+        } else if (isTopResponsePreview) {
+          navigation.push('ResponseScreen', {
+            responseId: responseId,
             discussionId: discussionId
           })
         } else {
@@ -98,6 +118,7 @@ const HomeListCard = props => {
       <View style={styles.playButtonAndDurationContainerStyle}>
         <Text style={styles.postTimeStyle}>{postTime}</Text>
         {
+          isTopResponsePreview ? null :
           discussionType === 2 ? (
               <Image source={LockIcon} style={styles.lockIconStyle} />
             ) : (

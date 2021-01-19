@@ -30,6 +30,8 @@ const OptionModal = props => {
     responseId,
     discussionTitle,
     responseTitle,
+    changePlayer,
+    cardIndex
   } = props;
 
   const userId = useSelector(state => state.ProfileReducer.userProfile.id);
@@ -37,8 +39,6 @@ const OptionModal = props => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getOneProfile());
-
     return () => {
       clearUserProfile()
     }
@@ -145,10 +145,14 @@ const OptionModal = props => {
       })
 
       if (deleteDiscussionOrResponseRequest.data) {
-        dispatch(clearHome());
-        dispatch(getHome());
-        modalType === 'discussion' ?  navigation.navigate('MainAppNavigation') : dispatch(getResponse(discussionId));
-        modalType === 'response' && closeOptionModal()
+        if (modalType === 'discussion') {
+          dispatch(clearHome());
+          dispatch(getHome());
+          navigation.navigate('MainAppNavigation');
+        } else {
+          dispatch(getResponse(discussionId));
+          changePlayer(cardIndex, 'previous');
+        }
       };
     } catch (error) {
       if (error.response.data.msg === 'You have to login first') {

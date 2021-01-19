@@ -11,7 +11,8 @@ const BackButton = props => {
     navigation,
     screen,
     styleOption,
-    buttonFunction
+    buttonFunction,
+    buttonOption
   } = props;
 
   return (
@@ -21,6 +22,9 @@ const BackButton = props => {
           buttonFunction();
         } else if (screen) {
           navigation.navigate(screen);
+        } else if (buttonOption) {
+          buttonOption();
+          navigation.goBack();
         } else {
           navigation.goBack();
         }

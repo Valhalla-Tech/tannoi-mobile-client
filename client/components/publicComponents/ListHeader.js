@@ -53,7 +53,7 @@ const ListHeader = props => {
     setCurrentSort(name);
     changeSelectedSort(value);
     changeCurrentPage(1);
-    dispatch(clearDiscussion());
+    dispatch(clearDiscussion(null, true));
     dispatch(getAllDiscussion(sectionQuery ? sectionQuery : null, queryId ? queryId : null, value, 1));
     closeModal();
   }

@@ -22,7 +22,7 @@ const CreateNewPasswordScreen = ({ route, navigation }) => {
   const [confirmPasswordValidation, setConfirmPasswordValidation] = useState(false);
   const [passwordValidation, setPasswordValidation] = useState(false);
 
-  // const { token } = route.params;
+  const { token } = route.params;
 
   const inputNewPassword = newPasswordData => {
     setNewPassword(newPasswordData);
