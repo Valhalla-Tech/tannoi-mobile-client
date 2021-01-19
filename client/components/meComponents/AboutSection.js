@@ -89,13 +89,15 @@ const styles = StyleSheet.create({
   },
 
   dataContentStyle: {
-    marginLeft: "3%"
+    width: "100%",
+    paddingLeft: "2%"
   },
 
   dataTextStyle: {
     fontFamily: normal,
     color: "#464D60",
-    fontSize: 16
+    fontSize: 16,
+    maxWidth: "90%"
   },
 
   dataTitleStyle: {

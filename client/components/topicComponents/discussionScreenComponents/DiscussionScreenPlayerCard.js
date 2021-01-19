@@ -270,20 +270,20 @@ class DiscussionScreenPlayerCard extends Component {
     );
   };
 
-  ReplyButton = () => {
-    return (
-      <View style={styles.showReplyButtonContainerStyle}>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.push('ResponseScreen', {
-            responseId: this.state.responseId,
-            discussionId: this.state.discussionId
-          })}
-        >
-        <Text style={styles.showReplyButtonTextStyle}>{this.props.responseCountForResponse} Rep{this.props.responseCountForResponse > 1 ? 'lies' : 'ly'}</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  };
+  // ReplyButton = () => {
+  //   return (
+  //     <View style={styles.showReplyButtonContainerStyle}>
+  //       <TouchableOpacity
+  //         onPress={() => this.props.navigation.push('ResponseScreen', {
+  //           responseId: this.state.responseId,
+  //           discussionId: this.state.discussionId
+  //         })}
+  //       >
+  //       <Text style={styles.showReplyButtonTextStyle}>{this.props.responseCountForResponse} Rep{this.props.responseCountForResponse > 1 ? 'lies' : 'ly'}</Text>
+  //       </TouchableOpacity>
+  //     </View>
+  //   );
+  // };
 
   render() {
     return (
