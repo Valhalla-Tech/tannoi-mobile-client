@@ -5,6 +5,7 @@ const defaultState = {
   postTime: '',
   like: '',
   topic: '',
+  topicId: '',
   discussionTitle: '',
   hashtags: '',
   replies: '',
@@ -40,6 +41,7 @@ const reducer = (state = defaultState, action) => {
       let setPostTime = action.payload.postTime;
       let setLike = action.payload.like;
       let setTopic = action.payload.topic;
+      let setTopicId = action.payload.topicId;
       let setDiscussionTitle = action.payload.discussionTitle;
       let setHashtags = action.payload.hashtags;
       let setReplies = action.payload.replies;
@@ -58,6 +60,7 @@ const reducer = (state = defaultState, action) => {
         postTime: setPostTime,
         like: setLike,
         topic: setTopic,
+        topicId: setTopicId,
         discussionTitle: setDiscussionTitle,
         hashtags: setHashtags,
         replies: setReplies,
@@ -80,6 +83,7 @@ const reducer = (state = defaultState, action) => {
         postTime: '',
         like: '',
         topic: '',
+        topicId: '',
         discussionTitle: '',
         hashtags: '',
         replies: '',

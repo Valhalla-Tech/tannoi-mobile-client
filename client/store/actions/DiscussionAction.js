@@ -80,6 +80,7 @@ export const getDiscussion = (discussionId, isLoading) => {
             postTime: getDiscussionRequest.data.timeSince,
             like: getDiscussionRequest.data.likes,
             topic: getDiscussionRequest.data.topic.name,
+            topicId: getDiscussionRequest.data.topic.id,
             discussionTitle: getDiscussionRequest.data.title,
             hashtags: getDiscussionRequest.data.hashtags,
             replies: getDiscussionRequest.data.response_count,
