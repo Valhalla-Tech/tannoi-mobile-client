@@ -83,7 +83,8 @@ const HomeListCard = props => {
     <TouchableOpacity 
       style={
         isTopResponsePreview ? {...styles.homeListCardContainerStyle,
-          paddingHorizontal: "5%",
+          paddingLeft: "5%",
+          paddingHorizontal: 0,
           borderLeftWidth: 3,
           borderLeftColor: "#F5F7F9",
           borderBottomWidth: 0,

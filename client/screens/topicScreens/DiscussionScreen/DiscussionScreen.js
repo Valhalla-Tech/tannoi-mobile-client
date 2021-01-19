@@ -31,6 +31,7 @@ const DiscussionScreen = ({ route, navigation }) => {
   const postTime = useSelector(state => state.DiscussionReducer.postTime);
   const like = useSelector(state => state.DiscussionReducer.like);
   const topic = useSelector(state => state.DiscussionReducer.topic);
+  const topicId = useSelector(state => state.DiscussionReducer.topicId);
   const discussionTitle = useSelector(state => state.DiscussionReducer.discussionTitle);
   const hashtags = useSelector(state => state.DiscussionReducer.hashtags);
   const replies = useSelector(state => state.DiscussionReducer.replies);
@@ -146,6 +147,7 @@ const DiscussionScreen = ({ route, navigation }) => {
                   postTime={postTime}
                   like={like}
                   topic={topic}
+                  topicId={topicId}
                   discussionTitle={discussionTitle}
                   hashtags={hashtags}
                   replies={replies}

@@ -36,6 +36,7 @@ const DiscussionScreenCard = props => {
     postTime,
     like,
     topic,
+    topicId,
     discussionTitle,
     hashtags,
     replies,
@@ -234,7 +235,12 @@ const DiscussionScreenCard = props => {
         </View>
         <View style={styles.discussionInfoContainerStyle}>
           <Text style={styles.discussionTitleStyle}>{discussionTitle}</Text>
-          <Text style={styles.topicStyle}>{topic}</Text>
+          <Text onPress={() => {
+            navigation.navigate('TopicDetailScreen', {
+              topicName: topic,
+              topicId: topicId
+            })
+          }} style={styles.topicStyle}>{topic}</Text>
           <Text style={styles.discussionHashtag}>{hashtags ? hashtags.map(convertHashtagForDisplay) : ''}</Text>
           <View style={styles.repliesAndPlaysNumberContainerStyle}>
             <Text style={styles.repliesAndPlaysNumberStyle}>{numberConverter(replies)} Replies</Text>
