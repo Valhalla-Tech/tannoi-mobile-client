@@ -152,7 +152,6 @@ const OptionModal = props => {
         } else {
           dispatch(getResponse(discussionId));
           changePlayer(cardIndex, 'previous');
-          closeOptionModal();
         }
       };
     } catch (error) {
