@@ -100,16 +100,19 @@ const ClosedCard = props => {
                 <ResponseData />
               )
             }
-            <TopResponsePreview
-              navigation={navigation}
-              topResponseData={topResponse}
-              discussionId={discussionId}
-              customStyle={{
-                marginTop: "6%"
-              }}
-              responseCount={responseCount}
-              responseId={responseId}
-            />
+            {
+              topResponse && topResponse.length !== 0 &&
+              <TopResponsePreview
+                navigation={navigation}
+                topResponseData={topResponse}
+                discussionId={discussionId}
+                customStyle={{
+                  marginTop: "6%"
+                }}
+                responseCount={responseCount}
+                responseId={responseId}
+              />
+            }
           </>
         )
       }
