@@ -97,6 +97,33 @@ export const getSingleResponse = (responseId, responseOption) => {
   };
 };
 
+export const editResponse = (data, id, editLike, editLikeStatus, editIsLike, isLikeStatus, editIsDislike, isDislikeStatus, editResponseCount) => {
+  return (dispatch) => {
+    data.forEach(data => {
+      if (data.id === id && editLike) {
+        data.likes = editLikeStatus ? data.likes + 1 : data.likes - 1;
+      }
+      if (data.id === id && editIsLike) {
+        data.isLike = isLikeStatus;
+      }
+      if (data.id === id && editIsDislike) {
+        data.isDislike = isDislikeStatus;
+      }
+      if (data.id === id && editResponseCount) {
+        data.response_count = data.response_count + 1;
+      }
+
+    });
+    
+    dispatch({
+      type: 'GET_RESPONSE',
+      payload: {
+        response: data
+      }
+    });
+  };
+};
+
 export const clearResponse = (clearResponseData) => {
   return (dispatch) => {
     if (clearResponseData) {

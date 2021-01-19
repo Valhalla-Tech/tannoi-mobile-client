@@ -3,7 +3,10 @@ import {
   TouchableOpacity,
   StyleSheet
 } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { getOneProfile } from '../../../store/actions/ProfileAction';
 
+//Components
 import DiscussionCardMenu from '../../../assets/topicAssets/discussionCardMenu.svg';
 import OptionModal from './OptionModal';
 
@@ -22,15 +25,22 @@ const OptionButton = props => {
     cardIndex
   } = props;
 
+  const dispatch = useDispatch();
+
   const [optionModal, setOptionModal] = useState(false);
 
   const closeOptionModal = () => {
     setOptionModal(false);
   };
 
+  const openOptionModal = () => {
+    setOptionModal(true);
+    dispatch(getOneProfile());
+  };
+
   return (
     <>
-      <TouchableOpacity onPress={() => setOptionModal(true)} style={customStyle}>
+      <TouchableOpacity onPress={() => openOptionModal()} style={customStyle}>
         <DiscussionCardMenu />
       </TouchableOpacity>
       <OptionModal 

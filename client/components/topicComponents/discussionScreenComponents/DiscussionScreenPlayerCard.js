@@ -11,7 +11,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { connect } from 'react-redux';
 import { getHome, clearHome } from '../../../store/actions/HomeAction';
 import { getDiscussion } from '../../../store/actions/DiscussionAction';
-import { getResponse, getSingleResponse, clearResponse } from '../../../store/actions/ResponseAction';
+import { getResponse, getSingleResponse, clearResponse, editResponse } from '../../../store/actions/ResponseAction';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 import { GenerateDeepLink } from '../../../helper/GenerateDeepLink';
@@ -110,10 +110,10 @@ class DiscussionScreenPlayerCard extends Component {
 
         if (responsePlayCounterRequest.data) {
           if (this.props.responseScreenResponseId) {
-            this.props.getSingleResponse(this.props.responseScreenResponseId);
+            // this.props.getSingleResponse(this.props.responseScreenResponseId);
           } else if (this.state.responseId) {
-            this.props.getSingleResponse(this.state.responseId);
-            this.props.getResponse(this.state.discussionId);
+            // this.props.getSingleResponse(this.state.responseId);
+            // this.props.getResponse(this.state.discussionId);
           }
         }
       } else {
@@ -126,7 +126,7 @@ class DiscussionScreenPlayerCard extends Component {
         });
   
         if (playCounterRequest.data) {
-          this.props.getDiscussion(this.state.discussionId);
+          // this.props.getDiscussion(this.state.discussionId);
         }
       }
     } catch (error) {
@@ -363,7 +363,8 @@ const dispatchUpdate = () => {
     getDiscussion,
     getResponse,
     getSingleResponse,
-    clearResponse
+    clearResponse,
+    editResponse
   };
 };
 

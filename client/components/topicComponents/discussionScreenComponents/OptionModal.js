@@ -39,8 +39,6 @@ const OptionModal = props => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getOneProfile());
-
     return () => {
       clearUserProfile()
     }
