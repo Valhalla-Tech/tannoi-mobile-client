@@ -193,7 +193,7 @@ const EditProfileScreen = ({ navigation }) => {
   
         profileImage !== '' && formData.append('profile_photo_path', {uri: profileImage, name: filename, type});
         birthDate !== '' && formData.append('birth_date', `${birthDate}`);
-        fullName !== '' && formData.append('name', fullName);
+        fullName !== '' && formData.append('name', fullName.trim());
         selectedGender !== '' && formData.append('gender', selectedGender);
         shortBio !== '' && formData.append('bio', shortBio.trim());
         location !== '' && formData.append('location', location.trim());

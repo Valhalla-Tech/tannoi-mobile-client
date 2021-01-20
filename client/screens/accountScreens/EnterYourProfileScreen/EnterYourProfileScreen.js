@@ -66,8 +66,8 @@ const EnterYourProfileScreen = ({ navigation }) => {
           formData.append('birth_date', `${birthDate}`);
         }
   
-        if (fullName !== '') {
-          formData.append('name', fullName);
+        if (fullName.trim() !== '') {
+          formData.append('name', fullName.trim());
         } else {
           formData.append('name', '');
         }
