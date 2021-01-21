@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import {
   StyleSheet,
-  Modal,
   View,
   Text,
   TouchableOpacity,
@@ -19,6 +18,7 @@ import BaseUrl from '../../../constants/BaseUrl';
 import LoadingSpinner from '../../publicComponents/LoadingSpinner';
 import ErrorMessage from '../../publicComponents/ErrorMessage';
 import CloseButton from '../../publicComponents/CloseButton';
+import Modal from '../../publicComponents/Modal';
 
 const EmailConfirmationModal = props => {
   const [code1, setCode1] = useState('');
@@ -81,88 +81,112 @@ const EmailConfirmationModal = props => {
     setCode4('');
   };
 
-  return (
-    <Modal
-        animationType="slide"
-        visible={openEmailConfirmationModal}
-        transparent={true}
-      >
-      <View style={styles.backgroundShadowStyle}></View>
-      <TouchableWithoutFeedback
-        onPress={() => Keyboard.dismiss()}
-      >
-        <View
-          style={styles.confirmationModalStyle}
+  const InputBox = () => {
+    return (
+      <View style={styles.codeBoxStyle}>
+        <TextInput
+          ref={codeBox1}
+          autoFocus={true}
+          style={styles.codeInputStyle}
+          maxLength={1}
+          keyboardType="number-pad"
+          onChangeText={value => {
+            setCode1(value);
+            if (value !== '') codeBox2.current.focus();
+          }}
+        />
+        <TextInput 
+          ref={codeBox2}
+          style={styles.codeInputStyle}
+          maxLength={1}
+          keyboardType="number-pad"
+          onChangeText={value => {
+            setCode2(value);
+            if (value !== '') codeBox3.current.focus();
+            else codeBox1.current.focus();
+          }}
+        />
+        <TextInput
+          ref={codeBox3}
+          style={styles.codeInputStyle}
+          maxLength={1}
+          keyboardType="number-pad"
+          onChangeText={value => {
+            setCode3(value);
+            if (value !== '') codeBox4.current.focus();
+            else codeBox2.current.focus();
+          }}
+        />
+        <TextInput
+          ref={codeBox4}
+          style={styles.codeInputStyle}
+          maxLength={1}
+          keyboardType="number-pad"
+          onChangeText={value => {
+            setCode4(value);
+            if (value === '') codeBox3.current.focus();
+          }}
+        />
+      </View>
+    );
+  };
+
+  const ModalContent = () => {
+    return (
+      <>
+        <TouchableWithoutFeedback
+          onPress={() => Keyboard.dismiss()}
         >
-          <CloseButton closeFunction={closeEmailConfirmationModal} />
-          <Text style={styles.confirmationEmailModalTitleStyle}>Confirm your email</Text>
-          <Text style={styles.confirmationEmailModalInstructionStyle}>Enter the 4-digit code tannOi just sent to {emailAddress}</Text>
-          {
-            codeValidation && (
-              <ErrorMessage message="Wrong code" />
-            )
-          }
-          <View style={styles.codeBoxStyle}>
-            <TextInput
-              ref={codeBox1}
-              autoFocus={true}
-              style={styles.codeInputStyle}
-              maxLength={1}
-              keyboardType="number-pad"
-              onChangeText={value => {
-                setCode1(value);
-                if (value !== '') codeBox2.current.focus();
-              }}
-            />
-            <TextInput 
-              ref={codeBox2}
-              style={styles.codeInputStyle}
-              maxLength={1}
-              keyboardType="number-pad"
-              onChangeText={value => {
-                setCode2(value);
-                if (value !== '') codeBox3.current.focus();
-                else codeBox1.current.focus();
-              }}
-            />
-            <TextInput
-              ref={codeBox3}
-              style={styles.codeInputStyle}
-              maxLength={1}
-              keyboardType="number-pad"
-              onChangeText={value => {
-                setCode3(value);
-                if (value !== '') codeBox4.current.focus();
-                else codeBox2.current.focus();
-              }}
-            />
-            <TextInput
-              ref={codeBox4}
-              style={styles.codeInputStyle}
-              maxLength={1}
-              keyboardType="number-pad"
-              onChangeText={value => {
-                setCode4(value);
-                if (value === '') codeBox3.current.focus();
-              }}
-            />
+          <View
+            style={styles.confirmationModalStyle}
+          >
+            <CloseButton closeFunction={closeEmailConfirmationModal} />
+            <Text style={styles.confirmationEmailModalTitleStyle}>Confirm your email</Text>
+            <Text style={styles.confirmationEmailModalInstructionStyle}>Enter the 4-digit code tannOi just sent to {emailAddress}</Text>
+            {
+              codeValidation && (
+                <ErrorMessage message="Wrong code" />
+              )
+            }
+            {InputBox()}
+            <View style={styles.sendAgainEmailContainerStyle}>
+              <Text style={styles.sendAgainEmailTextStyle}>Didn't get an email? </Text>
+              <TouchableOpacity
+                onPress={resendCode}
+              >
+                <Text style={styles.sendAgainEmailButtonTextStyle}>Send again</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={styles.sendAgainEmailContainerStyle}>
-            <Text style={styles.sendAgainEmailTextStyle}>Didn't get an email? </Text>
-            <TouchableOpacity
-              onPress={resendCode}
-            >
-              <Text style={styles.sendAgainEmailButtonTextStyle}>Send again</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </TouchableWithoutFeedback>
-      {
-        isLoading && (
-          <LoadingSpinner />
-        )
+        </TouchableWithoutFeedback>
+        {
+          isLoading && (
+            <LoadingSpinner />
+          )
       }
-    </Modal>
+      </>
+    );
+  };
+
+  return (
+   <Modal
+      openModal={openEmailConfirmationModal}
+      closeModal={closeEmailConfirmationModal}
+      child={ModalContent}
+      animation="slide"
+      customStyle={{
+        width: "100%",
+        height: "60%",
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+        padding: "8%",
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 0
+      }}
+      customContainerStyle={{
+        justifyContent: "flex-end"
+      }}
+   />
   );
 };
 
@@ -173,28 +197,16 @@ const styles = StyleSheet.create({
     height:"100%"
   },
 
-  confirmationModalStyle: {
-    position: "absolute",
-    top: 65,
-    backgroundColor: "#FFFFFF",
-    width: "100%",
-    height: "100%",
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    display: "flex",
-    padding: 20
-  },
-
   confirmationEmailModalTitleStyle: {
-    marginTop: 45,
+    marginTop: "10%",
     color: "#464D60",
     fontSize: 28,
     fontFamily: bold
   },
 
   confirmationEmailModalInstructionStyle: {
-    marginTop: 16,
-    marginBottom: 5,
+    marginTop: "5%",
+    marginBottom: "2%",
     fontSize: 16,
     lineHeight: 24,
     color: "#73798C"
@@ -202,24 +214,24 @@ const styles = StyleSheet.create({
 
   codeBoxStyle: {
     flexDirection: "row",
-    marginTop: 24
+    marginTop: "8%"
   },
 
   codeInputStyle: {
     borderWidth: 1,
-    width: 56,
+    width: "18%",
     height: 56,
     textAlign: "center",
     justifyContent: "center",
     fontSize: 30,
     borderRadius: 5,
     borderColor: "#E3E6EB",
-    marginRight: 12
+    marginRight: "5%"
   },
 
   sendAgainEmailContainerStyle: {
     flexDirection: "row",
-    marginTop: 32
+    marginTop: "10%"
   },
 
   sendAgainEmailTextStyle: {
