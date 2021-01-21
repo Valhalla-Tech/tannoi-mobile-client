@@ -7,7 +7,7 @@ import {
   StyleSheet
 } from 'react-native';
 import { bold, normal } from '../../assets/FontSize';
-import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
+import LoadingSpinner from '../publicComponents/LoadingSpinner';
 
 //Icon
 import NoProfilePicture from '../../assets/publicAssets/noProfilePicture.png'

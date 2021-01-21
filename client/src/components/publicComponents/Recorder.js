@@ -273,7 +273,7 @@ class NewDiscussionScreenRecorder extends Component {
     let position = percentage * this.player.duration;
 
     this.player.seek(position, () => {
-      this.updateState();
+      // this.updateState();
     });
   };
 

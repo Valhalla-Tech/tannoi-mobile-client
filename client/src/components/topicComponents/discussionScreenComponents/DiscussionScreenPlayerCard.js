@@ -25,9 +25,9 @@ import TickIcon from '../../../assets/publicAssets/tickIcon.png';
 
 //Components
 import AddResponse from '../../publicComponents/RecorderModal';
-import OptionButton from '../../../components/topicComponents/discussionScreenComponents/OptionButton';
+import OptionButton from './OptionButton';
 import RecordPlayer from '../../publicComponents/RecordPlayer';
-import TopResponsePreview from '../../topicComponents/discussionScreenComponents/TopResponsePreview';
+import TopResponsePreview from './TopResponsePreview';
 
 class DiscussionScreenPlayerCard extends Component {
   _isMounted = false;

@@ -14,7 +14,7 @@ import TickIcon from '../../../assets/publicAssets/tickIcon.png';
 
 //Components
 import LoadingSpinner from '../../publicComponents/LoadingSpinner';
-import TopResponsePreview from '../../topicComponents/discussionScreenComponents/TopResponsePreview';
+import TopResponsePreview from './TopResponsePreview';
 
 const ClosedCard = props => {
   const {

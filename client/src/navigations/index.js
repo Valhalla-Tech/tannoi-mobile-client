@@ -17,7 +17,7 @@ import branch from 'react-native-branch';
 //Navigations
 import AccountNavigation from './AccountNavigation';
 import MainAppNavigation from './MainAppNavigation';
-import VerificationNavigation from '../navigations/VerificationNavigation';
+import VerificationNavigation from './VerificationNavigation';
 
 //Screens
 import NewDiscussionScreen from '../screens/topicScreens/NewDiscussionScreen';

@@ -19,7 +19,7 @@ import ActiveNextButton from '../../assets/topicAssets/activeNextButton.svg';
 import ActivePreviousButton from '../../assets/topicAssets/activePreviousButton.svg';
 
 //Component
-import LoadingSpinner from '../publicComponents/LoadingSpinner';
+import LoadingSpinner from './LoadingSpinner';
 
 class RecordPlayer extends Component {
   _isMounted = false;

@@ -13,8 +13,8 @@ import { getAllDiscussion, clearDiscussion } from '../../store/actions/Discussio
 import DownArrow from '../../assets/homeAssets/downArrow.svg';
 
 //Components
-import Header from '../../components/publicComponents/Header';
-import SortModal from '../../components/publicComponents/SortModal';
+import Header from './Header';
+import SortModal from './SortModal';
 
 const ListHeader = props => {
   const {

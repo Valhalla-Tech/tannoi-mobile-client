@@ -5,7 +5,8 @@ import {
   Text,
   TouchableOpacity,
   Image,
-  FlatList
+  FlatList,
+  RefreshControl
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
 import { CalculateHeight } from '../../../helper/CalculateSize';
@@ -23,6 +24,7 @@ import SearchBar from '../../../components/publicComponents/SearchBar';
 const InboxScreen = ({ navigation }) => {
   const [inbox, setInbox] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   const getInbox = async () => {
     try {
@@ -43,6 +45,12 @@ const InboxScreen = ({ navigation }) => {
     } catch (error) {
       console.log(error.response.data.msg);
     }
+  };
+
+  const onRefresh = () => {
+    setIsLoading(true);
+    setInbox('');
+    getInbox();
   };
 
   useEffect(() => {
@@ -81,6 +89,12 @@ const InboxScreen = ({ navigation }) => {
               navigation.navigate('ResponseScreen', {
                 responseId: itemData.item.response_response_id,
                 discussionId: itemData.item.response.discussion_id,
+                fromInbox: true
+              });
+            } else if (itemData.item.type === 'Discussion Response' && itemData.item.response_id !== null) {
+              navigation.navigate('ResponseScreen', {
+                responseId: itemData.item.response_id,
+                discussionId: itemData.item.discussion_id,
                 fromInbox: true
               });
             } else if (itemData.item.type === 'Response Like') {
@@ -133,6 +147,12 @@ const InboxScreen = ({ navigation }) => {
           <View style={styles.inboxScreenContainerStyle}>
             <Card child={inboxContent} customStyle={styles.cardStyle} />
           </View>
+        }
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
         }
       />
     </View>
