@@ -57,11 +57,9 @@ const FormInput = props => {
 const styles = StyleSheet.create({
   formInputStyle: {
     flex: 1,
-    // height: 47,
     borderBottomWidth: 1,
     borderBottomColor: "#E3E6EB",
     fontSize: 16,
-    // marginBottom: 24,
     fontFamily: normal
   },
 
@@ -70,14 +68,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignItems: "flex-end",
     marginBottom: "6%"
-    // borderWidth: 1
   },
 
   eyeIconStyle: {
     borderBottomWidth: 1,
-    // alignItems: "flex-start",
     borderBottomColor: "#E3E6EB",
-    // marginBottom: "1.2%",
     paddingBottom: "2.5%"
   }
 })

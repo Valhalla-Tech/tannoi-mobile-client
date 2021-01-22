@@ -67,7 +67,7 @@ const ResetPasswordWithEmailScreen = ({ navigation }) => {
       };
     } catch (error) {
       setIsloading(false);
-      setEmailCheck(!emailCheck)
+      setEmailCheck(!emailCheck);
       console.log(error);
     };
   };
