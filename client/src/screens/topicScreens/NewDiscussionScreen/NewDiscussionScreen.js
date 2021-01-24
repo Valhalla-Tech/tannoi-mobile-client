@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -7,23 +7,20 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   ScrollView,
-  Switch
+  Switch,
 } from 'react-native';
-import { bold, normal } from '../../../assets/FontSize';
-import { Picker } from '@react-native-community/picker';
+import {bold, normal} from '../../../assets/FontSize';
+import {Picker} from '@react-native-community/picker';
 import AsyncStorage from '@react-native-community/async-storage';
-import {
-  useSelector,
-  useDispatch
-} from 'react-redux';
-import { getTopic } from '../../../store/actions/TopicAction';
-import { getHome, clearHome } from '../../../store/actions/HomeAction';
-import { userLogout } from '../../../store/actions/LoginAction';
-import { searchUser } from '../../../store/actions/PrivateDiscussionAction';
+import {useSelector, useDispatch} from 'react-redux';
+import {getTopic} from '../../../store/actions/TopicAction';
+import {getHome, clearHome} from '../../../store/actions/HomeAction';
+import {userLogout} from '../../../store/actions/LoginAction';
+import {searchUser} from '../../../store/actions/PrivateDiscussionAction';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 import Slider from '@react-native-community/slider';
-import { GenerateDeepLink } from '../../../helper/GenerateDeepLink';
+import {GenerateDeepLink} from '../../../helper/GenerateDeepLink';
 
 //Icon
 import EditButton from '../../../assets/topicAssets/edit.svg';
@@ -38,15 +35,23 @@ import PrivateDiscussionModal from '../../../components/topicComponents/PrivateD
 import NoticeModal from '../../../components/publicComponents/Modal';
 import BigButton from '../../../components/publicComponents/Button';
 
-const NewDiscussionScreen = ({ navigation }) => {
+const NewDiscussionScreen = ({navigation}) => {
   const [discussionTitle, setDiscussionTitle] = useState('');
   const [selectedTopic, setSelectedTopic] = useState('Select topic');
   const [hashtags, setHashtags] = useState([]);
   const [recordingFile, setRecordingFile] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [createNewDiscussionValidation, setCreateNewDiscussionValidation] = useState(false);
-  const [privateDiscussionSwitchValue, setPrivateDiscussionSwitchValue] = useState(false);
-  const [askToResponseSwitchValue, setAskToResponseSwitchValue] = useState(false);
+  const [
+    createNewDiscussionValidation,
+    setCreateNewDiscussionValidation,
+  ] = useState(false);
+  const [
+    privateDiscussionSwitchValue,
+    setPrivateDiscussionSwitchValue,
+  ] = useState(false);
+  const [askToResponseSwitchValue, setAskToResponseSwitchValue] = useState(
+    false,
+  );
   const [selectedSwitch, setSelectedSwitch] = useState('');
   const [openModal, setOpenModal] = useState(false);
   const [selectedFollowers, setSelectedFollowers] = useState([]);
@@ -54,14 +59,14 @@ const NewDiscussionScreen = ({ navigation }) => {
   const [noticeModal, setNoticeModal] = useState(false);
   const [sliderValue, setSliderValue] = useState(5);
 
-  const topics = useSelector(state => state.TopicReducer.topics);
+  const topics = useSelector((state) => state.TopicReducer.topics);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getTopic());
-  }, [])
+  }, []);
 
-  const discussionTitleInput = input => {
+  const discussionTitleInput = (input) => {
     setDiscussionTitle(input);
   };
 
@@ -74,18 +79,22 @@ const NewDiscussionScreen = ({ navigation }) => {
       setSelectAll(false);
     } else if (isSelectAll) {
       setSelectAll(true);
-    };
+    }
   };
 
   const removeRecordingFile = () => {
     setRecordingFile('');
   };
 
-  const hashtagsInput = input => {
+  const hashtagsInput = (input) => {
     let hashtagArray = [];
     let hashtag = '';
 
-    for (let hashtagInputIndex = 0; hashtagInputIndex < input.length; hashtagInputIndex++) {
+    for (
+      let hashtagInputIndex = 0;
+      hashtagInputIndex < input.length;
+      hashtagInputIndex++
+    ) {
       if (input[hashtagInputIndex] === ' ') {
         if (hashtag[0] === '#') {
           hashtagArray.push(hashtag);
@@ -95,9 +104,9 @@ const NewDiscussionScreen = ({ navigation }) => {
         hashtag = '';
       } else {
         hashtag += input[hashtagInputIndex];
-      };
-    };
-    
+      }
+    }
+
     if (hashtag[0] === '#') {
       hashtagArray.push(hashtag);
     } else {
@@ -105,10 +114,10 @@ const NewDiscussionScreen = ({ navigation }) => {
     }
     hashtag = '';
 
-    setHashtags(hashtagArray.filter(item => item.length > 1));
+    setHashtags(hashtagArray.filter((item) => item.length > 1));
   };
 
-  const createNewDiscussion =  async () => {
+  const createNewDiscussion = async () => {
     try {
       setIsLoading(true);
       setCreateNewDiscussionValidation(false);
@@ -120,23 +129,27 @@ const NewDiscussionScreen = ({ navigation }) => {
       }
 
       let access_token = await AsyncStorage.getItem('access_token');
-      
+
       const uri = `file://${recordingFile}`;
-    
+
       let formData = new FormData();
 
       let audioParts = uri.split('.');
       let fileType = audioParts[audioParts.length - 1];
-      
+
       formData.append('title', discussionTitle.trim());
 
       formData.append('topic_id', selectedTopic);
 
       formData.append('status', '1');
 
-      formData.append('type', selectedSwitch === 'Private discussion' ? '2' : '1');
+      formData.append(
+        'type',
+        selectedSwitch === 'Private discussion' ? '2' : '1',
+      );
 
-      selectedFollowers.length > 0 && formData.append('userArr', JSON.stringify(selectedFollowers));
+      selectedFollowers.length > 0 &&
+        formData.append('userArr', JSON.stringify(selectedFollowers));
 
       selectAll && formData.append('all_user', true);
 
@@ -145,7 +158,7 @@ const NewDiscussionScreen = ({ navigation }) => {
       formData.append('voice_note_path', {
         uri,
         name: `recording.${fileType}`,
-        type: `audio/${fileType}`
+        type: `audio/${fileType}`,
       });
 
       let createNewDiscussionRequest = await axios({
@@ -153,9 +166,9 @@ const NewDiscussionScreen = ({ navigation }) => {
         url: `${BaseUrl}/discussions`,
         headers: {
           'Content-Type': 'multipart/form-data',
-          'token': access_token
+          token: access_token,
         },
-        data: formData
+        data: formData,
       });
 
       if (createNewDiscussionRequest.data) {
@@ -163,57 +176,59 @@ const NewDiscussionScreen = ({ navigation }) => {
           url: `${BaseUrl}/discussions/add-rating/${createNewDiscussionRequest.data.id}`,
           method: 'post',
           headers: {
-            'token': access_token
+            token: access_token,
           },
           data: {
-            'mood_rating': sliderValue
-          }
+            mood_rating: sliderValue,
+          },
         });
-        
+
         if (moodRatingRequest.data) {
           if (selectedSwitch === 'Ask for a response') {
-            const data = selectAll ? {
-              'userArr': JSON.stringify(selectedFollowers),
-              'all_user': selectAll
-            } : {'userArr': JSON.stringify(selectedFollowers)};
+            const data = selectAll
+              ? {
+                  userArr: JSON.stringify(selectedFollowers),
+                  all_user: selectAll,
+                }
+              : {userArr: JSON.stringify(selectedFollowers)};
 
             GenerateDeepLink(
               'Ask For Response',
               'This is a link to discussion',
               'DiscussionScreen',
               {
-                discussionId: createNewDiscussionRequest.data.id.toString()
+                discussionId: createNewDiscussionRequest.data.id.toString(),
               },
               'ask for response',
-              async url => {
+              async (url) => {
                 try {
                   let askToResponseRequest = await axios({
                     url: `${BaseUrl}/users/ask/${createNewDiscussionRequest.data.id}?deep_link=${url}`,
                     method: 'post',
                     headers: {
-                      'token': access_token
+                      token: access_token,
                     },
-                    data: data
+                    data: data,
                   });
-        
+
                   if (askToResponseRequest.data) {
                     setIsLoading(false);
                     dispatch(clearHome());
                     dispatch(getHome());
                     navigation.navigate('DiscussionScreen', {
                       discussionId: createNewDiscussionRequest.data.id,
-                      fromNewDiscussion: true
+                      fromNewDiscussion: true,
                     });
                   }
                 } catch (error) {
-                  console.log(error)
+                  console.log(error);
                   setIsLoading(false);
                   setCreateNewDiscussionValidation(true);
                   if (error.response.data.msg === 'You have to login first') {
                     dispatch(userLogout());
-                  };
+                  }
                 }
-              }
+              },
             );
           } else {
             setIsLoading(false);
@@ -221,30 +236,39 @@ const NewDiscussionScreen = ({ navigation }) => {
             dispatch(getHome());
             navigation.navigate('DiscussionScreen', {
               discussionId: createNewDiscussionRequest.data.id,
-              fromNewDiscussion: true
+              fromNewDiscussion: true,
             });
           }
         }
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       setIsLoading(false);
       setCreateNewDiscussionValidation(true);
       if (error.response.data.msg === 'You have to login first') {
         dispatch(userLogout());
-      };
+      }
     }
   };
 
-  const addRecordingFile = recordingFileInput => {
+  const addRecordingFile = (recordingFileInput) => {
     setRecordingFile(recordingFileInput);
   };
 
   const changeSwitchValue = (switchName) => {
-    switchName === 'Private discussion' ? setPrivateDiscussionSwitchValue(previousState => !previousState) : setAskToResponseSwitchValue(previousState => !previousState);
+    switchName === 'Private discussion'
+      ? setPrivateDiscussionSwitchValue((previousState) => !previousState)
+      : setAskToResponseSwitchValue((previousState) => !previousState);
     setSelectedSwitch(switchName);
-    if (!privateDiscussionSwitchValue && selectedFollowers.length === 0 && !selectAll || !askToResponseSwitchValue && selectedFollowers.length === 0 && !selectAll) {
-      dispatch(searchUser(false, true))
+    if (
+      (!privateDiscussionSwitchValue &&
+        selectedFollowers.length === 0 &&
+        !selectAll) ||
+      (!askToResponseSwitchValue &&
+        selectedFollowers.length === 0 &&
+        !selectAll)
+    ) {
+      dispatch(searchUser(false, true));
       setOpenModal(true);
     } else {
       setSelectedSwitch('');
@@ -262,7 +286,9 @@ const NewDiscussionScreen = ({ navigation }) => {
       setSelectedFollowers([]);
       setSelectedSwitch('');
     } else {
-      selectedSwitch === 'Private discussion' ? setPrivateDiscussionSwitchValue(true) : setAskToResponseSwitchValue(true);
+      selectedSwitch === 'Private discussion'
+        ? setPrivateDiscussionSwitchValue(true)
+        : setAskToResponseSwitchValue(true);
     }
   };
 
@@ -280,24 +306,24 @@ const NewDiscussionScreen = ({ navigation }) => {
         <BigButton
           buttonTitle="Cancel"
           buttonStyle={{
-            color: "#5152D0",
-            borderColor: "#5152D0",
-            marginRight: "2%",
-            width: "35%",
-            height: "80%",
-            marginBottom: 0
+            color: '#5152D0',
+            borderColor: '#5152D0',
+            marginRight: '2%',
+            width: '35%',
+            height: '80%',
+            marginBottom: 0,
           }}
           buttonFunction={closeNoticeModal}
         />
         <BigButton
           buttonTitle="Go back"
           buttonStyle={{
-            color: "#FFFFFF",
+            color: '#FFFFFF',
             borderWidth: 0,
-            backgroundColor: "#6505E1",
-            width: "35%",
-            height: "80%",
-            marginBottom: 0
+            backgroundColor: '#6505E1',
+            width: '35%',
+            height: '80%',
+            marginBottom: 0,
           }}
           buttonFunction={() => {
             closeNoticeModal();
@@ -312,66 +338,92 @@ const NewDiscussionScreen = ({ navigation }) => {
     return (
       <>
         <Text style={styles.noticeModalHeaderStyle}>Confirm</Text>
-        <Text style={styles.noticeModalMessageStyle}>Are you sure you want to go back? Your progress will not be saved</Text>
+        <Text style={styles.noticeModalMessageStyle}>
+          Are you sure you want to go back? Your progress will not be saved
+        </Text>
       </>
     );
   };
 
-  const DiscussionModalContainer = ({ switchName }) => {
+  const DiscussionModalContainer = ({switchName}) => {
     return (
-      <PrivateDiscussionModal 
+      <PrivateDiscussionModal
         openModal={switchName === selectedSwitch && openModal}
         closeModal={closeModal}
         addSelectedFollowers={addSelectedFollowers}
         isFilled={selectAll || selectedFollowers.length > 0 ? true : false}
         selectedFollowers={selectedFollowers}
         selectedAll={selectAll}
-        modalTitle={switchName === 'Private discussion' ? 'Invite your followers to a private discussion' : 'Ask your followers to respond to this discussion'}
+        modalTitle={
+          switchName === 'Private discussion'
+            ? 'Invite your followers to a private discussion'
+            : 'Ask your followers to respond to this discussion'
+        }
         switchName={switchName}
       />
     );
   };
 
-  const DiscussionSwitch = ({ switchName }) => {
+  const DiscussionSwitch = ({switchName}) => {
     return (
       <View style={styles.privateDiscussionSwitchContainerStyle}>
-        {
-          privateDiscussionSwitchValue && selectedSwitch === switchName ? (
-            <TouchableOpacity style={styles.editButtonStyle} onPress={() => setOpenModal(true)}>
-              <EditButton height={20} width={20} />
-            </TouchableOpacity>
-          ) : askToResponseSwitchValue && selectedSwitch === switchName ? (
-            <TouchableOpacity style={styles.editButtonStyle} onPress={() => setOpenModal(true)}>
-              <EditButton height={20} width={20} />
-            </TouchableOpacity>
-          ) : null
-        }
-        <Text style={
-          switchName === selectedSwitch && privateDiscussionSwitchValue ? styles.privateDiscussionTextStyle :
-          switchName === selectedSwitch && askToResponseSwitchValue ? styles.privateDiscussionTextStyle :
-          !privateDiscussionSwitchValue && !askToResponseSwitchValue ? styles.privateDiscussionTextStyle :
-          {...styles.privateDiscussionTextStyle, color: "#cccccc"}
-        }>{switchName}:  </Text>
+        {privateDiscussionSwitchValue && selectedSwitch === switchName ? (
+          <TouchableOpacity
+            style={styles.editButtonStyle}
+            onPress={() => setOpenModal(true)}>
+            <EditButton height={20} width={20} />
+          </TouchableOpacity>
+        ) : askToResponseSwitchValue && selectedSwitch === switchName ? (
+          <TouchableOpacity
+            style={styles.editButtonStyle}
+            onPress={() => setOpenModal(true)}>
+            <EditButton height={20} width={20} />
+          </TouchableOpacity>
+        ) : null}
+        <Text
+          style={
+            switchName === selectedSwitch && privateDiscussionSwitchValue
+              ? styles.privateDiscussionTextStyle
+              : switchName === selectedSwitch && askToResponseSwitchValue
+              ? styles.privateDiscussionTextStyle
+              : !privateDiscussionSwitchValue && !askToResponseSwitchValue
+              ? styles.privateDiscussionTextStyle
+              : {...styles.privateDiscussionTextStyle, color: '#cccccc'}
+          }>
+          {switchName}:{' '}
+        </Text>
         <Switch
-          value={switchName === 'Private discussion' ? privateDiscussionSwitchValue : askToResponseSwitchValue}
+          value={
+            switchName === 'Private discussion'
+              ? privateDiscussionSwitchValue
+              : askToResponseSwitchValue
+          }
           onValueChange={() => changeSwitchValue(switchName)}
-          trackColor={{true: "#6505E1", false: ""}}
+          trackColor={{true: '#6505E1', false: ''}}
           thumbColor={
-            switchName === selectedSwitch && privateDiscussionSwitchValue ? "#6505E1" :
-            switchName === selectedSwitch && askToResponseSwitchValue ? "#6505E1" :
-            !privateDiscussionSwitchValue && !askToResponseSwitchValue ? "#6505E1" :
-            "grey"
+            switchName === selectedSwitch && privateDiscussionSwitchValue
+              ? '#6505E1'
+              : switchName === selectedSwitch && askToResponseSwitchValue
+              ? '#6505E1'
+              : !privateDiscussionSwitchValue && !askToResponseSwitchValue
+              ? '#6505E1'
+              : 'grey'
           }
           disabled={
-            selectedSwitch === 'Private discussion' && privateDiscussionSwitchValue && switchName === selectedSwitch ? false : 
-            selectedSwitch === 'Ask for a response' && askToResponseSwitchValue && switchName === selectedSwitch ? false : 
-            !privateDiscussionSwitchValue && !askToResponseSwitchValue ? false :
-            true
+            selectedSwitch === 'Private discussion' &&
+            privateDiscussionSwitchValue &&
+            switchName === selectedSwitch
+              ? false
+              : selectedSwitch === 'Ask for a response' &&
+                askToResponseSwitchValue &&
+                switchName === selectedSwitch
+              ? false
+              : !privateDiscussionSwitchValue && !askToResponseSwitchValue
+              ? false
+              : true
           }
         />
-        {
-
-        }
+        {}
         <DiscussionModalContainer switchName={switchName} />
       </View>
     );
@@ -384,7 +436,7 @@ const NewDiscussionScreen = ({ navigation }) => {
           <BackButton
             styleOption={{
               marginTop: 0,
-              marginBottom: 0
+              marginBottom: 0,
             }}
             buttonFunction={openNoticeModal}
           />
@@ -392,9 +444,15 @@ const NewDiscussionScreen = ({ navigation }) => {
         </View>
         <TouchableOpacity
           onPress={() => createNewDiscussion()}
-          disabled={recordingFile === '' && true}
-        >
-          <Text style={recordingFile !== '' ? styles.publishButtonTextStyle : {...styles.publishButtonTextStyle, color:"#cccccc"}}>Publish</Text>
+          disabled={recordingFile === '' && true}>
+          <Text
+            style={
+              recordingFile !== ''
+                ? styles.publishButtonTextStyle
+                : {...styles.publishButtonTextStyle, color: '#cccccc'}
+            }>
+            Publish
+          </Text>
         </TouchableOpacity>
       </View>
     );
@@ -413,25 +471,26 @@ const NewDiscussionScreen = ({ navigation }) => {
           selectedValue={selectedTopic}
           style={styles.topicPickerStyle}
           selectedValue={selectedTopic}
-          onValueChange={(itemValue, itemIndex) => setSelectedTopic(itemValue)}
-        >
+          onValueChange={(itemValue, itemIndex) => setSelectedTopic(itemValue)}>
           <Picker.Item label="Select topic" value="Select topic" />
-          { 
-            topics.map((topic, index) => (
-              <Picker.Item key={index} label={topic.name} value={topic.id} />
-            ))
-          }
+          {topics.map((topic, index) => (
+            <Picker.Item key={index} label={topic.name} value={topic.id} />
+          ))}
         </Picker>
-        <FormInput
-          formInputTitle="Add hashtags"
-          dataInput={hashtagsInput}
-        />
+        <FormInput formInputTitle="Add hashtags" dataInput={hashtagsInput} />
         <View>
-          <Text style={{...styles.formInputTitleStyle, textAlign: "center", marginBottom: "5%"}}>Mood Rating</Text>
+          <Text
+            style={{
+              ...styles.formInputTitleStyle,
+              textAlign: 'center',
+              marginBottom: '5%',
+            }}>
+            Mood Rating
+          </Text>
           <Slider
             minimumValue={0.5}
             maximumValue={10}
-            onValueChange={value => setSliderValue(value)}
+            onValueChange={(value) => setSliderValue(value)}
             step={0.5}
             value={sliderValue}
             maximumTrackTintColor="red"
@@ -439,22 +498,16 @@ const NewDiscussionScreen = ({ navigation }) => {
             thumbTintColor="#6505E1"
           />
         </View>
-        {
-          createNewDiscussionValidation && (
-            <ErrorMessage
-              message="All fields must be filled in, including a voice note!"
-            />
-          )
-        }
+        {createNewDiscussionValidation && (
+          <ErrorMessage message="All fields must be filled in, including a voice note!" />
+        )}
       </>
     );
   };
 
   return (
     <ScrollView>
-      <TouchableWithoutFeedback
-        onPress={() => Keyboard.dismiss()}
-      >
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View style={styles.newDiscussionContainerStyle}>
           <NewDiscussionHeader />
           <View style={styles.newDiscussionFormContainerStyle}>
@@ -469,19 +522,15 @@ const NewDiscussionScreen = ({ navigation }) => {
               </View>
               {NewDiscussionForm()}
             </View>
-            {
-              isLoading && (
-                <LoadingSpinner />
-              )
-            }
+            {isLoading && <LoadingSpinner />}
           </View>
-          <NoticeModal 
+          <NoticeModal
             openModal={noticeModal}
             closeModal={closeNoticeModal}
             message="Are you sure you want to go back? Your progress will not be saved"
             modalButton={noticeModalButton}
             customStyle={{
-              height: "25%"
+              height: '25%',
             }}
             child={NoticeModalChild}
           />
@@ -493,106 +542,106 @@ const NewDiscussionScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   newDiscussionContainerStyle: {
-    flex: 1
+    flex: 1,
   },
 
   newDiscussionUpperBarStyle: {
-    backgroundColor: "#FFFFFF",
-    flexDirection: "row",
+    backgroundColor: '#FFFFFF',
+    flexDirection: 'row',
     paddingLeft: 22,
     paddingRight: 16,
-    paddingVertical: "3%",
-    justifyContent: "space-between",
-    alignItems: "center"
+    paddingVertical: '3%',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 
   privateDiscussionSwitchContainerStyle: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    marginBottom: "3%"
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    marginBottom: '3%',
   },
 
   privateDiscussionTextStyle: {
     fontFamily: bold,
-    color: "#73798C"
+    color: '#73798C',
   },
 
   editButtonStyle: {
-    marginRight: "2.5%"
+    marginRight: '2.5%',
   },
 
   backButtonAndTitleContainerStyle: {
-    flexDirection: "row",
-    alignItems: "center"
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 
   newDiscussionTitleStyle: {
     fontFamily: bold,
     fontSize: 20,
-    color: "#464D60",
-    marginLeft: 14
+    color: '#464D60',
+    marginLeft: 14,
   },
 
   publishButtonTextStyle: {
-    color: "#0E4EF4",
+    color: '#0E4EF4',
     fontSize: 16,
-    fontFamily: bold
+    fontFamily: bold,
   },
 
   newDiscussionFormContainerStyle: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: '#FFFFFF',
     margin: 8,
-    borderRadius: 8
+    borderRadius: 8,
   },
 
   contentContainerStyle: {
     paddingHorizontal: 16,
-    paddingTop: "5%",
-    paddingBottom: "5%"
+    paddingTop: '5%',
+    paddingBottom: '5%',
   },
 
   formInputTitleStyle: {
-    color: "#73798C",
+    color: '#73798C',
     fontFamily: normal,
     fontSize: 14,
-    marginBottom: 12
+    marginBottom: 12,
   },
 
   topicPickerStyle: {
     height: 47,
-    borderBottomColor: "#E3E6EB",
+    borderBottomColor: '#E3E6EB',
     fontSize: 16,
     marginBottom: 24,
     fontFamily: normal,
-    color: "#73798C"
+    color: '#73798C',
   },
 
   recorderContainerStyle: {
-    marginVertical: "5%"
+    marginVertical: '5%',
   },
 
   noticeModalButtonContainerStyle: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    marginTop: "5%",
-    width: "100%",
-    marginBottom: "2.5%"
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    marginTop: '5%',
+    width: '100%',
+    marginBottom: '2.5%',
   },
 
   noticeModalHeaderStyle: {
     fontFamily: bold,
-    color: "#6505E1",
-    fontSize: 18
+    color: '#6505E1',
+    fontSize: 18,
   },
 
   noticeModalMessageStyle: {
-    color: "#464D60",
+    color: '#464D60',
     fontFamily: normal,
     lineHeight: 25,
-    fontSize: 16
-  }
+    fontSize: 16,
+  },
 });
 
 export default NewDiscussionScreen;

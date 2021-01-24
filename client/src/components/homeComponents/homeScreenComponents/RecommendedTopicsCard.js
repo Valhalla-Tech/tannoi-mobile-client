@@ -1,14 +1,9 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  Image
-} from 'react-native';
-import { normal } from '../../../assets/FontSize';
+import {StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
+import {normal} from '../../../assets/FontSize';
+import {CalculateWidth} from '../../../helper/CalculateSize';
 
-const RecommendedTopicsCard = props => {
+const RecommendedTopicsCard = (props) => {
   const {
     firstCardIcon,
     firstCardName,
@@ -22,105 +17,107 @@ const RecommendedTopicsCard = props => {
     thirdCardName,
     thirdCardDiscussions,
     thirdCardId,
-    navigation
+    navigation,
   } = props;
 
+  const CardContent = (cardName, cardId, cardIcon, discussionCount) => {
+    return (
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate('TopicDetailScreen', {
+            topicName: cardName,
+            topicId: cardId,
+          })
+        }
+        style={styles.topicCardStyle}>
+        <Image
+          source={cardIcon !== '' ? {uri: cardIcon} : ''}
+          style={styles.topicIconStyle}
+        />
+        <View style={styles.topicCardInfoContainerStyle}>
+          {cardName.length > 13 ? (
+            <Text style={styles.topicNameStyle}>{`${cardName.substr(
+              0,
+              12,
+            )}...`}</Text>
+          ) : (
+            <Text style={styles.topicNameStyle}>{cardName}</Text>
+          )}
+          <Text style={styles.topicDiscussionStyle}>
+            {discussionCount} discussions
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   return (
-    <View>
-      {
-        firstCardName && (
-          <TouchableOpacity onPress={() => navigation.navigate('TopicDetailScreen', {
-            topicName: firstCardName,
-            topicId: firstCardId
-          })} style={styles.topicCardStyle}>
-            <Image source={firstCardIcon !== '' ? {uri: firstCardIcon} : ''} style={styles.topicIconStyle} />
-            <View style={styles.topicCardInfoContainerStyle}>
-              {
-                firstCardName.length > 13 ? (
-                  <Text style={styles.topicNameStyle}>{`${firstCardName.substr(0, 12)}...`}</Text>
-                ) : (
-                  <Text style={styles.topicNameStyle}>{firstCardName}</Text>
-                )
-              }
-              <Text style={styles.topicDiscussionStyle}>{firstCardDiscussions} discussions</Text>
-            </View>
-          </TouchableOpacity>
-        )
-      }
-      {
-        secondCardName && (
-          <TouchableOpacity onPress={() => navigation.navigate('TopicDetailScreen', {
-            topicName: secondCardName,
-            topicId: secondCardId
-          })} style={styles.topicCardStyle}>
-            <Image source={secondCardIcon !== '' ? {uri: secondCardIcon} : ''} style={styles.topicIconStyle} resizeMode="stretch" />
-            <View style={styles.topicCardInfoContainerStyle}>
-            {
-                secondCardName.length >= 13 ? (
-                  <Text style={styles.topicNameStyle}>{`${secondCardName.substr(0, 12)}...`}</Text>
-                ) : (
-                  <Text style={styles.topicNameStyle}>{secondCardName}</Text>
-                )
-              }
-              <Text style={styles.topicDiscussionStyle}>{secondCardDiscussions} discussions</Text>
-            </View>
-          </TouchableOpacity>
-        )
-      }
-      {
-        thirdCardName && (
-          <TouchableOpacity onPress={() => navigation.navigate('TopicDetailScreen', {
-            topicName: thirdCardName,
-            topicId: thirdCardId
-          })} style={styles.topicCardStyle}>
-            <Image source={thirdCardIcon ? {uri: thirdCardIcon} : ''} style={styles.topicIconStyle} resizeMode="stretch" />
-            <View style={styles.topicCardInfoContainerStyle}>
-            {
-                thirdCardName.length >= 13 ? (
-                  <Text style={styles.topicNameStyle}>{`${thirdCardName.substr(0, 12)}...`}</Text>
-                ) : (
-                  <Text style={styles.topicNameStyle}>{thirdCardName}</Text>
-                )
-              }
-              <Text style={styles.topicDiscussionStyle}>{thirdCardDiscussions} discussions</Text>
-            </View>
-          </TouchableOpacity>
-        )
-      }
-    </View>
+    <>
+      {firstCardName && (
+        <>
+          {CardContent(
+            firstCardName,
+            firstCardId,
+            firstCardIcon,
+            firstCardDiscussions,
+          )}
+        </>
+      )}
+      {secondCardName && (
+        <>
+          {CardContent(
+            secondCardName,
+            secondCardId,
+            secondCardIcon,
+            secondCardDiscussions,
+          )}
+        </>
+      )}
+      {thirdCardName && (
+        <>
+          {CardContent(
+            thirdCardName,
+            thirdCardId,
+            thirdCardIcon,
+            thirdCardDiscussions,
+          )}
+        </>
+      )}
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   topicCardStyle: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 24,
-    marginRight: 31
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '90%',
+    height: CalculateWidth(16),
   },
 
   topicCardInfoContainerStyle: {
-    marginLeft: 12
+    marginLeft: 12,
+    width: '72%',
   },
 
   topicIconStyle: {
     height: 40,
     width: 40,
-    borderRadius: 50
+    borderRadius: 50,
   },
-  
+
   topicNameStyle: {
-    color: "#464D60",
+    color: '#464D60',
     fontSize: 16,
     fontFamily: normal,
-    marginBottom: -5
+    marginBottom: -5,
   },
 
   topicDiscussionStyle: {
-    color: "#73798C",
+    color: '#73798C',
     fontSize: 12,
-    fontFamily: normal
-  }
+    fontFamily: normal,
+  },
 });
 
 export default RecommendedTopicsCard;

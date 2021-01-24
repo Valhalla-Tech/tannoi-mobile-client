@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 
 //Screens
 import TopicIndexScreen from '../screens/topicScreens/TopicIndexScreen';
@@ -11,12 +11,11 @@ const TopicNavigation = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: false
-      }}
-    >
+        headerShown: false,
+      }}>
       <Stack.Screen name="TopicIndexScreen" component={TopicIndexScreen} />
     </Stack.Navigator>
-  )
+  );
 };
 
 export default TopicNavigation;

@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   View,
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../../constants/ApiServices';
-import { bold, normal } from '../../../assets/FontSize';
+import {bold, normal} from '../../../assets/FontSize';
 import BaseUrl from '../../../constants/BaseUrl';
 
 //Components
@@ -21,42 +21,48 @@ import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 import TermsOfServiceModal from '../../../components/accountComponents/RegisterScreenComponents/TermsOfServiceModal';
 
-const RegisterPage = ({ navigation }) => {
+const RegisterPage = ({navigation}) => {
   const [emailRegister, setEmailRegister] = useState('');
   const [passwordRegister, setPasswordRegister] = useState('');
   const [openConfirmationModal, setOpenConfirmationModal] = useState(false);
   const [userId, setUserId] = useState('');
-  const [emailCheck, setEmailCheck] = useState(false)
+  const [emailCheck, setEmailCheck] = useState(false);
   const [passwordCheck, setPasswordCheck] = useState(false);
   const [emailAlreadyRegistered, setEmailAlreadyRegistered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [termsOfServiceModalIsOpen, setTermsOfServiceModalIsOpen] = useState(false);
+  const [termsOfServiceModalIsOpen, setTermsOfServiceModalIsOpen] = useState(
+    false,
+  );
   const [reEnterPassword, setReEnterPassword] = useState('');
 
   useEffect(() => {
     clearStorage();
   }, []);
 
-  const emailInput = emailData => {
+  const emailInput = (emailData) => {
     setEmailRegister(emailData);
   };
 
-  const passwordInput = passwordData => {
+  const passwordInput = (passwordData) => {
     setPasswordRegister(passwordData);
   };
 
   const clearStorage = async () => {
-    await AsyncStorage.removeItem('access_token')
+    await AsyncStorage.removeItem('access_token');
   };
 
   const emailConfirmation = async () => {
     try {
-      if (passwordRegister.length >= 5 && passwordRegister.length <= 20 && passwordRegister === reEnterPassword) {
+      if (
+        passwordRegister.length >= 5 &&
+        passwordRegister.length <= 20 &&
+        passwordRegister === reEnterPassword
+      ) {
         setIsLoading(!isLoading);
         setPasswordCheck(!passwordCheck);
         let registerRequest = await axios.post(`${BaseUrl}/users/register`, {
           email: emailRegister.trim(),
-          password: passwordRegister
+          password: passwordRegister,
         });
 
         if (registerRequest.data) {
@@ -69,11 +75,11 @@ const RegisterPage = ({ navigation }) => {
       }
     } catch (error) {
       setIsLoading(false);
-       if (error.response.data.msg[0] === 'Must enter a valid email') {
+      if (error.response.data.msg[0] === 'Must enter a valid email') {
         setEmailCheck(!emailCheck);
-       } else if (error.response.data.msg === 'Email already registered') {
+      } else if (error.response.data.msg === 'Email already registered') {
         setEmailAlreadyRegistered(!emailAlreadyRegistered);
-       }
+      }
     }
   };
 
@@ -88,16 +94,17 @@ const RegisterPage = ({ navigation }) => {
 
   const closeTermsOfServiceModal = () => {
     setTermsOfServiceModalIsOpen(false);
-  }
+  };
 
   const TermsAndService = () => {
     return (
-      <View style={styles.termsOfServiceContainerStyle}>  
-        <Text style={styles.signupTermsAndPrivacyStyle}>By signing up, you agree to our </Text>
-        <TouchableOpacity
-          onPress={() => setTermsOfServiceModalIsOpen(true)}
-        >
-          <Text style={{...styles.signupTermsAndPrivacyStyle, color: "#2f3dfa"}}>
+      <View style={styles.termsOfServiceContainerStyle}>
+        <Text style={styles.signupTermsAndPrivacyStyle}>
+          By signing up, you agree to our{' '}
+        </Text>
+        <TouchableOpacity onPress={() => setTermsOfServiceModalIsOpen(true)}>
+          <Text
+            style={{...styles.signupTermsAndPrivacyStyle, color: '#2f3dfa'}}>
             Terms of Service, Privacy Policies
           </Text>
         </TouchableOpacity>
@@ -114,23 +121,27 @@ const RegisterPage = ({ navigation }) => {
         <SaveAndContinueButton
           buttonTitle="Save and Continue"
           buttonStyle={
-            emailRegister && passwordRegister.length >= 5 ? {
-              backgroundColor: "#5152D0",
-              borderColor: "#5152D0",
-              color: "#FFFFFF",
-              width: "100%",
-              height: "100%"
-            } : {
-              backgroundColor: "#a1a5ab",
-              borderColor: "#a1a5ab",
-              color: "#FFFFFF",
-              width: "100%",
-              height: "100%"
-            }
+            emailRegister && passwordRegister.length >= 5
+              ? {
+                  backgroundColor: '#5152D0',
+                  borderColor: '#5152D0',
+                  color: '#FFFFFF',
+                  width: '100%',
+                  height: '100%',
+                }
+              : {
+                  backgroundColor: '#a1a5ab',
+                  borderColor: '#a1a5ab',
+                  color: '#FFFFFF',
+                  width: '100%',
+                  height: '100%',
+                }
           }
           buttonType="funtionButton"
           buttonFunction={emailConfirmation}
-          disableButton={emailRegister && passwordRegister.length >= 5 ? false : true}
+          disableButton={
+            emailRegister && passwordRegister.length >= 5 ? false : true
+          }
         />
         <TermsAndService />
       </View>
@@ -140,24 +151,25 @@ const RegisterPage = ({ navigation }) => {
   const RegisterForm = () => {
     return (
       <>
-        {
-          emailCheck ? (
-            <ErrorMessage message="Must enter a valid email" />
-          ) : emailAlreadyRegistered && (
+        {emailCheck ? (
+          <ErrorMessage message="Must enter a valid email" />
+        ) : (
+          emailAlreadyRegistered && (
             <ErrorMessage message="Email already registered" />
           )
-        }
-        <FormInput 
-          formInputTitle="Email address"
-          dataInput={emailInput}
-        />
-        {
-          passwordCheck && (
-            <ErrorMessage
-              message={reEnterPassword !== passwordRegister ? "Your passwords do not match" : passwordRegister.length >= 5 && passwordRegister.length <= 20 ? setPasswordCheck(false) : "Password must be 5 - 20 charachters" }
-            />
-          )
-        }
+        )}
+        <FormInput formInputTitle="Email address" dataInput={emailInput} />
+        {passwordCheck && (
+          <ErrorMessage
+            message={
+              reEnterPassword !== passwordRegister
+                ? 'Your passwords do not match'
+                : passwordRegister.length >= 5 && passwordRegister.length <= 20
+                ? setPasswordCheck(false)
+                : 'Password must be 5 - 20 charachters'
+            }
+          />
+        )}
         <FormInput
           formInputTitle="Password"
           dataInput={passwordInput}
@@ -175,16 +187,14 @@ const RegisterPage = ({ navigation }) => {
   };
 
   return (
-    <TouchableWithoutFeedback
-      onPress={() => Keyboard.dismiss()}
-    >
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={{flex: 1}}>
         <View style={styles.registerPageContainerStyle}>
           <BackButton navigation={navigation} />
           <Text style={styles.registerTitleStyle}>Sign up to TannOi</Text>
           {RegisterForm()}
           <SignUpButton />
-          <EmailConfirmationModal 
+          <EmailConfirmationModal
             openEmailConfirmationModal={openConfirmationModal}
             closeEmailConfirmationModal={closeConfirmationModal}
             emailAddress={emailRegister}
@@ -197,11 +207,7 @@ const RegisterPage = ({ navigation }) => {
             closeTermsOfServiceModal={closeTermsOfServiceModal}
           />
         </View>
-        {
-          isLoading && (
-            <LoadingSpinner />
-          )
-        }
+        {isLoading && <LoadingSpinner />}
       </View>
     </TouchableWithoutFeedback>
   );
@@ -211,33 +217,33 @@ const styles = StyleSheet.create({
   registerPageContainerStyle: {
     flex: 1,
     paddingLeft: 24,
-    paddingRight: 24
+    paddingRight: 24,
   },
 
   registerTitleStyle: {
     fontFamily: bold,
-    color: "#464D60",
+    color: '#464D60',
     fontSize: 28,
-    marginBottom: "15%"
+    marginBottom: '15%',
   },
 
   signupButtonContainerStyle: {
-    alignItems:"center",
-    height: 55
+    alignItems: 'center',
+    height: 55,
   },
 
   termsOfServiceContainerStyle: {
-    flexDirection: 'row', 
+    flexDirection: 'row',
     justifyContent: 'center',
-    flexWrap: "wrap"
+    flexWrap: 'wrap',
   },
 
   signupTermsAndPrivacyStyle: {
     fontFamily: normal,
     fontSize: 12,
-    textAlign: "center",
-    color: "#73798C"
-  }
+    textAlign: 'center',
+    color: '#73798C',
+  },
 });
 
 export default RegisterPage;

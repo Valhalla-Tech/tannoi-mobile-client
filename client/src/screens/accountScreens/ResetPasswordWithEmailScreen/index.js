@@ -1,1 +1,1 @@
-export { default } from './ResetPasswordWithEmailScreen';
+export {default} from './ResetPasswordWithEmailScreen';

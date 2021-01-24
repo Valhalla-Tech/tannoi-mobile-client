@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
+import {StyleSheet, View, Text, TouchableOpacity, FlatList} from 'react-native';
+import {bold, normal} from '../../../assets/FontSize';
+import {useSelector, useDispatch} from 'react-redux';
 import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  FlatList
-} from 'react-native';
-import { bold, normal } from '../../../assets/FontSize';
-import { useSelector, useDispatch } from 'react-redux';
-import { getOneProfile, clearUserProfile } from '../../../store/actions/ProfileAction';
-import { getUserDiscussion, clearDiscussion } from '../../../store/actions/DiscussionAction';
-import { GlobalPadding } from '../../../constants/Size';
+  getOneProfile,
+  clearUserProfile,
+} from '../../../store/actions/ProfileAction';
+import {
+  getUserDiscussion,
+  clearDiscussion,
+} from '../../../store/actions/DiscussionAction';
+import {GlobalPadding} from '../../../constants/Size';
 import AboutSection from '../../../components/meComponents/AboutSection';
 
 //Components
@@ -19,15 +19,19 @@ import ProfileData from '../../../components/meComponents/ProfileData';
 import List from '../../../components/publicComponents/List';
 import NoticeModal from '../../../components/publicComponents/Modal';
 
-const MeScreen = ({ navigation, route }) => {
+const MeScreen = ({navigation, route}) => {
   const [selectedMenu, setSelectedMenu] = useState('Discussions');
   const [noticeModal, setNoticeModal] = useState(false);
 
-  const { fromEditScreen } = route.params !== undefined && route.params;
+  const {fromEditScreen} = route.params !== undefined && route.params;
 
-  const userProfile = useSelector(state => state.ProfileReducer.loggedinUserProfile);
-  const userId = useSelector(state => state.HomeReducer.user.id);
-  const userDiscussion = useSelector(state => state.DiscussionReducer.userDiscussion);
+  const userProfile = useSelector(
+    (state) => state.ProfileReducer.loggedinUserProfile,
+  );
+  const userId = useSelector((state) => state.HomeReducer.user.id);
+  const userDiscussion = useSelector(
+    (state) => state.DiscussionReducer.userDiscussion,
+  );
 
   const dispatch = useDispatch();
 
@@ -67,11 +71,15 @@ const MeScreen = ({ navigation, route }) => {
           <Text style={styles.settingButtonStyle}>Settings</Text>
         </TouchableOpacity>
       </View>
-    )
+    );
   };
 
   const noticeModalChild = () => {
-    return <Text style={styles.noticeModalTextStyle}>You don't have access to this discussion</Text>
+    return (
+      <Text style={styles.noticeModalTextStyle}>
+        You don't have access to this discussion
+      </Text>
+    );
   };
 
   return (
@@ -85,8 +93,7 @@ const MeScreen = ({ navigation, route }) => {
       <FlatList
         ListHeaderComponent={
           <View style={styles.cardContainerStyle}>
-            {
-              selectedMenu === 'Discussions' ?
+            {selectedMenu === 'Discussions' ? (
               <List
                 isHeader={false}
                 navigation={navigation}
@@ -94,9 +101,10 @@ const MeScreen = ({ navigation, route }) => {
                 listData={userDiscussion}
                 openModal={openModal}
                 customStyle={{
-                  marginBottom: "5%"
+                  marginBottom: '5%',
                 }}
-              /> : selectedMenu === 'About' ?
+              />
+            ) : selectedMenu === 'About' ? (
               <AboutSection
                 customStyle={styles.cardStyle}
                 bio={userProfile.bio}
@@ -105,12 +113,12 @@ const MeScreen = ({ navigation, route }) => {
                 bioVoiceFile={userProfile.bio_voice_path}
                 isLoading={userProfile ? false : true}
                 navigation={navigation}
-              /> : null
-            }
+              />
+            ) : null}
           </View>
         }
       />
-      <NoticeModal 
+      <NoticeModal
         openModal={noticeModal}
         closeModal={closeModal}
         child={noticeModalChild}
@@ -125,63 +133,63 @@ const styles = StyleSheet.create({
   },
 
   headerStyle: {
-    justifyContent: "center",
-    alignItems: "flex-end",
-    paddingVertical: "3%",
-    paddingHorizontal: "5%"
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    paddingVertical: '3%',
+    paddingHorizontal: '5%',
   },
 
   settingButtonStyle: {
-    color: "#0E4EF4",
+    color: '#0E4EF4',
     fontFamily: bold,
-    fontSize: 16
+    fontSize: 16,
   },
 
   cardContainerStyle: {
-    paddingHorizontal: GlobalPadding
+    paddingHorizontal: GlobalPadding,
   },
 
   cardStyle: {
-    marginTop: "2%",
-    borderRadius: 8
+    marginTop: '2%',
+    borderRadius: 8,
   },
 
   noticeModalTextStyle: {
     fontFamily: bold,
-    color: "#6505E1"
+    color: '#6505E1',
   },
 
   aboutDataStyle: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: "2%",
-    paddingVertical: "3%",
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: '2%',
+    paddingVertical: '3%',
     borderBottomWidth: 1,
-    borderBottomColor: "#F5F7F9"
+    borderBottomColor: '#F5F7F9',
   },
 
   aboutDataIconStyle: {
     width: 50,
     height: 50,
     borderRadius: 50,
-    backgroundColor: "#F5F7F9"
+    backgroundColor: '#F5F7F9',
   },
 
   dataContentStyle: {
-    marginLeft: "5%"
+    marginLeft: '5%',
   },
 
   dataTextStyle: {
     fontFamily: normal,
-    color: "#464D60",
-    fontSize: 16
+    color: '#464D60',
+    fontSize: 16,
   },
 
   dataTitleStyle: {
     fontFamily: normal,
     fontSize: 12,
-    color: "#73798C"
-  }
+    color: '#73798C',
+  },
 });
 
 export default MeScreen;

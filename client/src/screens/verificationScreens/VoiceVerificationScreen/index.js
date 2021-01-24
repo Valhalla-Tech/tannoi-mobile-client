@@ -1,1 +1,1 @@
-export { default } from './VoiceVerificationScreen';
+export {default} from './VoiceVerificationScreen';

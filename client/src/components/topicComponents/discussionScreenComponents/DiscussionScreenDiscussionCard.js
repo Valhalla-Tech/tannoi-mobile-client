@@ -1,20 +1,14 @@
-import React, { useState } from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  Image
-} from 'react-native';
-import { bold, normal } from '../../../assets/FontSize';
-import { useSelector, useDispatch } from 'react-redux';
-import { getDiscussion } from '../../../store/actions/DiscussionAction';
-import { getAuthorizedUsers } from '../../../store/actions/PrivateDiscussionAction';
+import React, {useState} from 'react';
+import {StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
+import {bold, normal} from '../../../assets/FontSize';
+import {useSelector, useDispatch} from 'react-redux';
+import {getDiscussion} from '../../../store/actions/DiscussionAction';
+import {getAuthorizedUsers} from '../../../store/actions/PrivateDiscussionAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
-import { CalculateHeight } from '../../../helper/CalculateSize';
-import { GenerateDeepLink } from '../../../helper/GenerateDeepLink';
+import {CalculateHeight} from '../../../helper/CalculateSize';
+import {GenerateDeepLink} from '../../../helper/GenerateDeepLink';
 
 //Icons
 import Upvote from '../../../assets/topicAssets/upvote.svg';
@@ -27,9 +21,9 @@ import TickIcon from '../../../assets/publicAssets/tickIcon.png';
 import DiscussionScreenPlayerCard from './DiscussionScreenPlayerCard';
 import LoadingSpinner from '../../publicComponents/LoadingSpinner';
 import PrivateDiscussionModal from '../PrivateDiscussionModal';
-import OptionButton from './OptionButton'
+import OptionButton from './OptionButton';
 
-const DiscussionScreenCard = props => {
+const DiscussionScreenCard = (props) => {
   const {
     profilePicture,
     profileName,
@@ -55,18 +49,18 @@ const DiscussionScreenCard = props => {
     userType,
     profileType,
     userId,
-    isRecorderModalOpen
+    isRecorderModalOpen,
   } = props;
 
   const [optionModal, setOptionModal] = useState(false);
   const [privateModal, setPrivateModal] = useState(false);
 
-  const discussionType = useSelector(state => state.DiscussionReducer.type);
-  const isLoading = useSelector(state => state.DiscussionReducer.isLoading);
+  const discussionType = useSelector((state) => state.DiscussionReducer.type);
+  const isLoading = useSelector((state) => state.DiscussionReducer.isLoading);
 
   const dispatch = useDispatch();
 
-  const numberConverter = number => {
+  const numberConverter = (number) => {
     let numberToString = number.toString();
 
     if (numberToString.length > 3 && numberToString.length <= 6) {
@@ -76,8 +70,8 @@ const DiscussionScreenCard = props => {
     } else if (numberToString.length > 9) {
       return `${numberToString.substring(0, numberToString.length - 9)}b`;
     } else {
-      return numberToString
-    };
+      return numberToString;
+    }
   };
 
   const upvote = async () => {
@@ -90,48 +84,48 @@ const DiscussionScreenCard = props => {
           'This is a link to Discussion',
           'DiscussionScreen',
           {
-            discussionId: discussionId.toString()
+            discussionId: discussionId.toString(),
           },
           'like discussion',
-          async url => {
+          async (url) => {
             try {
               let upvoteRequest = await axios({
                 method: 'get',
                 url: `${BaseUrl}/discussions/like/${discussionId}?deep_link=${url}`,
                 headers: {
-                  token: access_token
-                }
-              })
-        
+                  token: access_token,
+                },
+              });
+
               if (upvoteRequest.data) {
                 dispatch(getDiscussion(discussionId));
               }
             } catch (error) {
               console.log(error);
             }
-          }
+          },
         );
       } else {
         navigation.navigate('VerificationNavigation');
       }
     } catch (error) {
       console.log(error);
-    };
+    }
   };
 
   const downvote = async () => {
     try {
       if (userType !== 0 || userType === userId) {
         const access_token = await AsyncStorage.getItem('access_token');
-  
+
         let downvoteRequest = await axios({
           method: 'get',
           url: `${BaseUrl}/discussions/dislike/${discussionId}`,
           headers: {
-            token: access_token
-          }
-        })
-  
+            token: access_token,
+          },
+        });
+
         if (downvoteRequest.data) {
           dispatch(getDiscussion(discussionId));
         }
@@ -144,11 +138,17 @@ const DiscussionScreenCard = props => {
   };
 
   const convertHashtagForDisplay = (item, index) => (
-    <Text onPress={() => navigation.navigate('HashtagDetailScreen', {
-      query: 'hashtag_id=',
-      queryId: item.id,
-      hashtagDetailTitle: item.name
-    })} key={index}>{item.name}  </Text>
+    <Text
+      onPress={() =>
+        navigation.navigate('HashtagDetailScreen', {
+          query: 'hashtag_id=',
+          queryId: item.id,
+          hashtagDetailTitle: item.name,
+        })
+      }
+      key={index}>
+      {item.name}{' '}
+    </Text>
   );
 
   const openPrivateModal = () => {
@@ -165,23 +165,30 @@ const DiscussionScreenCard = props => {
       <View style={styles.profileAndMenuContainerStyle}>
         <View>
           <View style={styles.profileContainerStyle}>
-            <TouchableOpacity onPress={() => {
+            <TouchableOpacity
+              onPress={() => {
                 navigation.navigate('UserProfileScreen', {
-                  userId: profileId
+                  userId: profileId,
                 });
-            }}>
-              {
-                profilePicture ? <Image source={{uri: profilePicture}} style={styles.profileImageStyle} /> : null
-              }
+              }}>
+              {profilePicture ? (
+                <Image
+                  source={{uri: profilePicture}}
+                  style={styles.profileImageStyle}
+                />
+              ) : null}
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => {
+            <TouchableOpacity
+              onPress={() => {
                 navigation.navigate('UserProfileScreen', {
-                  userId: profileId
+                  userId: profileId,
                 });
-            }}>
+              }}>
               <Text style={styles.profileNameStyle}>{profileName}</Text>
             </TouchableOpacity>
-            {profileType === 1 && <Image source={TickIcon} style={styles.tickIconStyle} />}
+            {profileType === 1 && (
+              <Image source={TickIcon} style={styles.tickIconStyle} />
+            )}
           </View>
           <Text style={styles.postTimeStyle}>{postTime ? postTime : ''}</Text>
         </View>
@@ -194,17 +201,15 @@ const DiscussionScreenCard = props => {
           modalType="discussion"
           discussionTitle={discussionTitle}
         />
-        {
-          discussionType === 2 && userId === profileId && (
-            <PrivateDiscussionModal
-              openModal={privateModal}
-              closeModal={closePrivateModal}
-              fromDiscussionScreen={true}
-              discussionId={discussionId}
-              modalTitle="Invite your followers to a private discussion"
-            />
-          )
-        }
+        {discussionType === 2 && userId === profileId && (
+          <PrivateDiscussionModal
+            openModal={privateModal}
+            closeModal={closePrivateModal}
+            fromDiscussionScreen={true}
+            discussionId={discussionId}
+            modalTitle="Invite your followers to a private discussion"
+          />
+        )}
       </View>
     );
   };
@@ -214,37 +219,35 @@ const DiscussionScreenCard = props => {
       <View style={styles.discussionVoteAndInfoContainerStyle}>
         <View style={styles.voteContainerStyle}>
           <TouchableOpacity onPress={() => upvote()}>
-            {
-              isLike ? (
-                <ActiveUpvote />
-              ) : (
-                <Upvote />
-              )
-            }
+            {isLike ? <ActiveUpvote /> : <Upvote />}
           </TouchableOpacity>
-            <Text style={styles.voteNumberStyle}>{numberConverter(like)}</Text>
+          <Text style={styles.voteNumberStyle}>{numberConverter(like)}</Text>
           <TouchableOpacity onPress={() => downvote()}>
-            {
-              isDislike ? (
-                <ActiveDownvote />
-              ) : (
-                <Downvote />
-              )
-            }
+            {isDislike ? <ActiveDownvote /> : <Downvote />}
           </TouchableOpacity>
         </View>
         <View style={styles.discussionInfoContainerStyle}>
           <Text style={styles.discussionTitleStyle}>{discussionTitle}</Text>
-          <Text onPress={() => {
-            navigation.navigate('TopicDetailScreen', {
-              topicName: topic,
-              topicId: topicId
-            })
-          }} style={styles.topicStyle}>{topic}</Text>
-          <Text style={styles.discussionHashtag}>{hashtags ? hashtags.map(convertHashtagForDisplay) : ''}</Text>
+          <Text
+            onPress={() => {
+              navigation.navigate('TopicDetailScreen', {
+                topicName: topic,
+                topicId: topicId,
+              });
+            }}
+            style={styles.topicStyle}>
+            {topic}
+          </Text>
+          <Text style={styles.discussionHashtag}>
+            {hashtags ? hashtags.map(convertHashtagForDisplay) : ''}
+          </Text>
           <View style={styles.repliesAndPlaysNumberContainerStyle}>
-            <Text style={styles.repliesAndPlaysNumberStyle}>{numberConverter(replies)} Replies</Text>
-            <Text style={styles.repliesAndPlaysNumberStyle}>{numberConverter(plays)} Plays</Text>
+            <Text style={styles.repliesAndPlaysNumberStyle}>
+              {numberConverter(replies)} Replies
+            </Text>
+            <Text style={styles.repliesAndPlaysNumberStyle}>
+              {numberConverter(plays)} Plays
+            </Text>
           </View>
         </View>
       </View>
@@ -253,148 +256,144 @@ const DiscussionScreenCard = props => {
 
   return (
     <View style={styles.discussionScreenCardContainerStyle}>
-      {
-        isLoading ? (
-          <LoadingSpinner loadingSpinnerForComponent={true} />
-        ) : (
-          <>
-            <View style={styles.discussionInfoSectionStyle}>
-              <ProfileAndMenu />
-              <DiscussionVoteAndInfo />
-            </View>
-            {
-              recordingFile !== '' && (
-                <DiscussionScreenPlayerCard
-                  cardType="discussion"
-                  profilePicture={profilePicture}
-                  profileName={profileName}
-                  postTime={postTime}
-                  recordingFile={recordingFile}
-                  nextPlayerAvailable={nextPlayerAvailable}
-                  changePlayer={changePlayer}
-                  cardIndex={cardIndex}
-                  discussionId={discussionId}
-                  fromNextPreviousButton={fromNextPreviousButton}
-                  updateFromNextPreviousButton={updateFromNextPreviousButton}
-                  isRecorderModalOpen={isRecorderModalOpen}
-                  profileId={profileId}
-                  navigation={navigation}
-                />
-              )
-            }
-          </>
-        )
-      }
+      {isLoading ? (
+        <LoadingSpinner loadingSpinnerForComponent={true} />
+      ) : (
+        <>
+          <View style={styles.discussionInfoSectionStyle}>
+            <ProfileAndMenu />
+            <DiscussionVoteAndInfo />
+          </View>
+          {recordingFile !== '' && (
+            <DiscussionScreenPlayerCard
+              cardType="discussion"
+              profilePicture={profilePicture}
+              profileName={profileName}
+              postTime={postTime}
+              recordingFile={recordingFile}
+              nextPlayerAvailable={nextPlayerAvailable}
+              changePlayer={changePlayer}
+              cardIndex={cardIndex}
+              discussionId={discussionId}
+              fromNextPreviousButton={fromNextPreviousButton}
+              updateFromNextPreviousButton={updateFromNextPreviousButton}
+              isRecorderModalOpen={isRecorderModalOpen}
+              profileId={profileId}
+              navigation={navigation}
+            />
+          )}
+        </>
+      )}
     </View>
-  )
+  );
 };
 
 const styles = StyleSheet.create({
   discussionScreenCardContainerStyle: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: '#FFFFFF',
     marginHorizontal: 8,
     marginBottom: 8,
-    borderRadius: 8
+    borderRadius: 8,
   },
-  
+
   discussionInfoSectionStyle: {
-    padding: "3%",
+    padding: '3%',
     borderBottomWidth: 1,
-    borderBottomColor: "#F5F7F9"
+    borderBottomColor: '#F5F7F9',
   },
 
   profileAndMenuContainerStyle: {
-    flexDirection: "row",
-    justifyContent: "space-between"
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
-  
+
   profileContainerStyle: {
-    flexDirection: "row",
-    alignItems: "center"
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 
   profileImageStyle: {
     borderRadius: 50,
     height: 24,
     width: 24,
-    marginRight: 12
+    marginRight: 12,
   },
 
   profileNameStyle: {
-    color: "#464D60",
-    fontFamily: bold
+    color: '#464D60',
+    fontFamily: bold,
   },
 
   tickIconStyle: {
-    height: 15, 
-    width: 15, 
-    marginLeft: "2%"
+    height: 15,
+    width: 15,
+    marginLeft: '2%',
   },
 
   postTimeStyle: {
     marginLeft: 36,
     fontFamily: normal,
-    color: "#73798C",
+    color: '#73798C',
     fontSize: 12,
-    marginTop: "-5%"
+    marginTop: '-5%',
   },
 
   discussionCardMenuStyle: {
     marginTop: 12,
-    height: "30%",
-    width: "10%",
-    alignItems: "center"
+    height: '30%',
+    width: '10%',
+    alignItems: 'center',
   },
 
   discussionVoteAndInfoContainerStyle: {
-    flexDirection: "row",
-    marginTop: "3%"
+    flexDirection: 'row',
+    marginTop: '3%',
   },
 
   voteContainerStyle: {
-    alignItems: "center"
+    alignItems: 'center',
   },
 
   voteNumberStyle: {
     marginVertical: 6,
     fontFamily: normal,
     fontSize: 14,
-    color: "#73798C"
+    color: '#73798C',
   },
 
   discussionInfoContainerStyle: {
-    paddingLeft: "7.5%",
-    maxWidth: "80%"
+    paddingLeft: '7.5%',
+    maxWidth: '80%',
   },
 
   discussionTitleStyle: {
     fontFamily: bold,
-    fontSize: CalculateHeight(2.2)
+    fontSize: CalculateHeight(2.2),
   },
 
   topicStyle: {
-    color: "#5152D0",
-    fontFamily: bold
+    color: '#5152D0',
+    fontFamily: bold,
   },
 
   discussionHashtag: {
     fontFamily: normal,
     fontSize: 14,
     lineHeight: 25,
-    color: "#73798C",
+    color: '#73798C',
   },
 
   repliesAndPlaysNumberContainerStyle: {
-    flexDirection: "row",
-    marginTop: 16
+    flexDirection: 'row',
+    marginTop: 16,
   },
-  
+
   repliesAndPlaysNumberStyle: {
     fontSize: 12,
     marginRight: 16,
-    color: "#73798C",
-    fontFamily: normal
-  }
+    color: '#73798C',
+    fontFamily: normal,
+  },
 });
 
 export default DiscussionScreenCard;

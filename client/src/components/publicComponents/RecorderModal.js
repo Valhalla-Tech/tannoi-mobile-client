@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -6,14 +6,17 @@ import {
   Modal,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
 } from 'react-native';
-import { bold } from '../../assets/FontSize';
-import { useDispatch } from 'react-redux';
-import { getHome, clearHome } from '../../store/actions/HomeAction';
-import { getDiscussion } from '../../store/actions/DiscussionAction';
-import { getResponse, getSingleResponse } from '../../store/actions/ResponseAction';
-import { userLogout } from '../../store/actions/LoginAction';
+import {bold} from '../../assets/FontSize';
+import {useDispatch} from 'react-redux';
+import {getHome, clearHome} from '../../store/actions/HomeAction';
+import {getDiscussion} from '../../store/actions/DiscussionAction';
+import {
+  getResponse,
+  getSingleResponse,
+} from '../../store/actions/ResponseAction';
+import {userLogout} from '../../store/actions/LoginAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
@@ -24,7 +27,7 @@ import Recorder from './Recorder';
 import LoadingSpinner from './LoadingSpinner';
 import ErrorMessage from './ErrorMessage';
 
-const RecorderModal = props => {
+const RecorderModal = (props) => {
   const [recordingFile, setRecordingFile] = useState('');
   const [caption, setCaption] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +44,7 @@ const RecorderModal = props => {
     addResponseForResponseInResponseScreen,
     responseScreenResponseId,
     forBio,
-    setBioFile
+    setBioFile,
   } = props;
 
   const createResponse = async () => {
@@ -53,34 +56,34 @@ const RecorderModal = props => {
         setValidation(true);
       } else {
         let access_token = await AsyncStorage.getItem('access_token');
-  
+
         const uri = `file://${recordingFile}`;
-  
+
         let audioParts = uri.split('.');
         let fileType = audioParts[audioParts.length - 1];
-        
+
         let formData = new FormData();
-        
+
         formData.append('voice_note_path', {
           uri,
           name: `recording.${fileType}`,
-          type: `audio/${fileType}`
+          type: `audio/${fileType}`,
         });
-        
+
         formData.append('caption', caption.trim());
-  
+
         if (addResponseForResponse) {
-          formData.append('response_id', responseId)
-        };
+          formData.append('response_id', responseId);
+        }
 
         let createResponseRequest = await axios({
           method: 'post',
           url: `${BaseUrl}/responses/${discussionId}`,
           headers: {
             'Content-Type': 'multipart/form-data',
-            'token': access_token
+            token: access_token,
           },
-          data: formData
+          data: formData,
         });
 
         if (createResponseRequest.data) {
@@ -90,10 +93,10 @@ const RecorderModal = props => {
           if (addResponseForResponse) {
             if (!addResponseForResponseInResponseScreen) {
               dispatch(getSingleResponse(responseId));
-            };
+            }
             dispatch(getSingleResponse(responseId, 'getDataForResponse'));
             dispatch(getSingleResponse(responseScreenResponseId));
-          };
+          }
           dispatch(getDiscussion(discussionId));
           setRecordingFile('');
           setCaption('');
@@ -106,65 +109,61 @@ const RecorderModal = props => {
       setValidation(true);
       if (error.response.data.msg === 'You have to login first') {
         dispatch(userLogout());
-      };
+      }
     }
   };
 
-  const addRecordingFile = recordingFileInput => {
+  const addRecordingFile = (recordingFileInput) => {
     setRecordingFile(recordingFileInput);
   };
 
-  const inputCaption = captionInput => {
+  const inputCaption = (captionInput) => {
     setCaption(captionInput);
   };
 
   return (
-    <Modal
-      animationType="slide"
-      visible={openModal}
-      transparent={true}
-    >
+    <Modal animationType="slide" visible={openModal} transparent={true}>
       <View style={styles.backgroundShadowStyle}>
-        <TouchableOpacity style={{flex: 1}} onPress={() => {
+        <TouchableOpacity
+          style={{flex: 1}}
+          onPress={() => {
             closeModal();
             setRecordingFile('');
             setCaption('');
             setValidation(false);
-          }} 
+          }}
         />
       </View>
       <View style={{flex: 1}} />
       <TouchableWithoutFeedback
         onPress={() => {
           Keyboard.dismiss();
-        }}
-      >
+        }}>
         <View style={styles.addResponseModalStyle}>
           <View style={styles.contentContainerStyle}>
             <View style={styles.titleAndPublishButtonContainerStyle}>
-              <Text style={styles.addResponseTitleStyle}>{forBio ? 'Record audio bio' : 'Add response'}</Text>
+              <Text style={styles.addResponseTitleStyle}>
+                {forBio ? 'Record audio bio' : 'Add response'}
+              </Text>
               <TouchableOpacity
-                onPress={() => forBio ? setBioFile(recordingFile) : createResponse()}
-              >
-                <Text style={styles.publishButtonTextStyle}>{forBio ? 'Save' : 'Publish'}</Text>
+                onPress={() =>
+                  forBio ? setBioFile(recordingFile) : createResponse()
+                }>
+                <Text style={styles.publishButtonTextStyle}>
+                  {forBio ? 'Save' : 'Publish'}
+                </Text>
               </TouchableOpacity>
             </View>
-            {
-              !forBio && (
-                <FormInput
-                  formInputTitle="Add caption"
-                  dataInput={inputCaption}
-                  capitalize={true}
-                />
-              )
-            }
-            {
-              validation && (
-                <ErrorMessage
-                  message="All fields must be filled in, including a voice note!"
-                />
-              )
-            }
+            {!forBio && (
+              <FormInput
+                formInputTitle="Add caption"
+                dataInput={inputCaption}
+                capitalize={true}
+              />
+            )}
+            {validation && (
+              <ErrorMessage message="All fields must be filled in, including a voice note!" />
+            )}
             <View style={styles.recorderContainerStyle}>
               <Recorder
                 addRecordingFile={addRecordingFile}
@@ -172,11 +171,7 @@ const RecorderModal = props => {
               />
             </View>
           </View>
-          {
-            isLoading && (
-              <LoadingSpinner />
-            )
-          }
+          {isLoading && <LoadingSpinner />}
         </View>
       </TouchableWithoutFeedback>
     </Modal>
@@ -185,46 +180,46 @@ const RecorderModal = props => {
 
 const styles = StyleSheet.create({
   backgroundShadowStyle: {
-    position: "absolute",
-    backgroundColor:'rgba(0,0,0,0.8)',
-    height:"100%",
-    width: "100%"
+    position: 'absolute',
+    backgroundColor: 'rgba(0,0,0,0.8)',
+    height: '100%',
+    width: '100%',
   },
 
   addResponseModalStyle: {
-    backgroundColor: "#FFFFFF",
-    width: "100%",
-    height: "50%",
+    backgroundColor: '#FFFFFF',
+    width: '100%',
+    height: '50%',
     borderTopLeftRadius: 20,
-    borderTopRightRadius: 20
+    borderTopRightRadius: 20,
   },
 
   contentContainerStyle: {
-    padding: 20, 
-    paddingBottom: 55
+    padding: 20,
+    paddingBottom: 55,
   },
 
   titleAndPublishButtonContainerStyle: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 
   addResponseTitleStyle: {
     fontSize: 20,
     fontFamily: bold,
-    color: "#464D60"
+    color: '#464D60',
   },
 
   publishButtonTextStyle: {
     fontSize: 16,
-    color: "#0E4EF4",
-    fontFamily: bold
+    color: '#0E4EF4',
+    fontFamily: bold,
   },
 
   recorderContainerStyle: {
-    marginTop: "10%"
-  }
+    marginTop: '10%',
+  },
 });
 
 export default RecorderModal;

@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
+import {View, Text, TouchableOpacity, StyleSheet, FlatList} from 'react-native';
+import {bold, normal} from '../../../assets/FontSize';
+import {GlobalPadding} from '../../../constants/Size';
+import {useSelector, useDispatch} from 'react-redux';
 import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  FlatList
-} from 'react-native';
-import { bold, normal } from '../../../assets/FontSize';
-import { GlobalPadding } from '../../../constants/Size';
-import { useSelector, useDispatch } from 'react-redux';
-import { getAllDiscussion, clearDiscussion } from '../../../store/actions/DiscussionAction';
+  getAllDiscussion,
+  clearDiscussion,
+} from '../../../store/actions/DiscussionAction';
 
 //Components
 import Header from '../../../components/publicComponents/Header';
@@ -17,20 +14,31 @@ import List from '../../../components/publicComponents/List';
 import BackButton from '../../../components/publicComponents/BackButton';
 import ListHeader from '../../../components/publicComponents/ListHeader';
 
-const HomeSectionDetailScreen = ({ navigation, route }) => {
-  const discussions = useSelector(state => state.DiscussionReducer.discussions);
-  const discussionCount = useSelector(state => state.DiscussionReducer.discussionCount);
+const HomeSectionDetailScreen = ({navigation, route}) => {
+  const discussions = useSelector(
+    (state) => state.DiscussionReducer.discussions,
+  );
+  const discussionCount = useSelector(
+    (state) => state.DiscussionReducer.discussionCount,
+  );
 
   const [selectedSort, setSelectedSort] = useState('newest');
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { sectionTitle, sectionType, sectionQuery, queryId } = route.params;
- 
+  const {sectionTitle, sectionType, sectionQuery, queryId} = route.params;
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (sectionType === 'discussion') {
-      dispatch(getAllDiscussion(sectionQuery ? sectionQuery : null, queryId ? queryId : null, null, null));
+      dispatch(
+        getAllDiscussion(
+          sectionQuery ? sectionQuery : null,
+          queryId ? queryId : null,
+          null,
+          null,
+        ),
+      );
     }
   }, [navigation]);
 
@@ -38,11 +46,11 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
     dispatch(clearDiscussion(null, true));
   };
 
-  const changeSelectedSort = input => {
+  const changeSelectedSort = (input) => {
     setSelectedSort(input);
   };
 
-  const changeCurrentPage = input => {
+  const changeCurrentPage = (input) => {
     setCurrentPage(input);
   };
 
@@ -53,26 +61,23 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
           navigation={navigation}
           styleOption={{
             marginTop: 0,
-            marginBottom: 0
+            marginBottom: 0,
           }}
           buttonOption={clearListDiscussion}
         />
         <Text style={styles.headerTitleStyle}>{sectionTitle}</Text>
       </View>
-    )
+    );
   };
 
   return (
     <View>
-      <Header
-        child={HeaderContent}
-        customStyle={styles.headerStyle}
-      />
+      <Header child={HeaderContent} customStyle={styles.headerStyle} />
       <View style={styles.listHeaderContainerStyle}>
-        <ListHeader 
+        <ListHeader
           customStyle={{
-            marginTop: "2%"
-          }} 
+            marginTop: '2%',
+          }}
           isFilter={true}
           isSort={true}
           sectionType={sectionType}
@@ -95,9 +100,13 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
                 borderRadius: 0,
                 borderBottomLeftRadius: 8,
                 borderBottomRightRadius: 8,
-                marginBottom: "35%"
+                marginBottom: '35%',
               }}
-              useMoreButton={discussionCount > 10 && discussions.length < discussionCount && true}
+              useMoreButton={
+                discussionCount > 10 &&
+                discussions.length < discussionCount &&
+                true
+              }
               sectionQuery={sectionQuery}
               queryId={queryId}
               selectedSort={selectedSort}
@@ -113,32 +122,32 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   headerStyle: {
-    paddingHorizontal: "3%",
-    paddingVertical: "3.5%",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
+    paddingHorizontal: '3%',
+    paddingVertical: '3.5%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 
   headerTitleAndButtonContainerStyle: {
-    flexDirection: "row",
-    alignItems: "center"
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 
   headerTitleStyle: {
-    marginLeft: "5%",
+    marginLeft: '5%',
     fontFamily: bold,
     fontSize: 20,
-    color: "#464D60"
+    color: '#464D60',
   },
 
   listHeaderContainerStyle: {
-    paddingHorizontal: GlobalPadding
+    paddingHorizontal: GlobalPadding,
   },
 
   cardContainerStyle: {
-    paddingHorizontal: GlobalPadding
-  }
+    paddingHorizontal: GlobalPadding,
+  },
 });
 
 export default HomeSectionDetailScreen;

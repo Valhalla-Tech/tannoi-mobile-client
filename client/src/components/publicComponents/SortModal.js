@@ -1,28 +1,18 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet
-} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import Modal from './Modal';
-import { bold, normal } from '../../assets/FontSize';
+import {bold, normal} from '../../assets/FontSize';
 
-const SortModal = props => {
-  const {
-    openModal,
-    closeModal,
-    saveSort
-  } = props;
+const SortModal = (props) => {
+  const {openModal, closeModal, saveSort} = props;
 
   const ModalButton = (title, value) => {
     return (
-      <TouchableOpacity 
+      <TouchableOpacity
         onPress={() => {
           saveSort(value, title);
-        }} 
-        style={styles.modalButtonStyle}
-      >
+        }}
+        style={styles.modalButtonStyle}>
         <Text style={styles.modalButtonTextStyle}>{title}</Text>
       </TouchableOpacity>
     );
@@ -52,16 +42,16 @@ const SortModal = props => {
       animation="slide"
       closeModal={closeModal}
       customContainerStyle={{
-        justifyContent: "flex-end"
+        justifyContent: 'flex-end',
       }}
       customStyle={{
         borderRadius: 0,
-        width: "100%",
-        height: "50%",
+        width: '100%',
+        height: '50%',
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
-        justifyContent: "flex-start",
-        alignItems: "flex-start"
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
       }}
       child={ModalContent}
     />
@@ -71,35 +61,35 @@ const SortModal = props => {
 const styles = StyleSheet.create({
   modalContenStyle: {
     flex: 1,
-    width: "100%"
+    width: '100%',
   },
 
   modalHeaderStyle: {
-    paddingHorizontal: "2%"
+    paddingHorizontal: '2%',
   },
 
   modalHeaderTextStyle: {
     fontFamily: bold,
-    color: "#6505E1",
-    fontSize: 20
+    color: '#6505E1',
+    fontSize: 20,
   },
 
   modalButtonContainerStyle: {
-    width: "100%",
-    marginTop: "2%"
+    width: '100%',
+    marginTop: '2%',
   },
 
   modalButtonStyle: {
-    width: "100%",
-    paddingVertical: "2%",
-    paddingHorizontal: "2%"
+    width: '100%',
+    paddingVertical: '2%',
+    paddingHorizontal: '2%',
   },
-  
+
   modalButtonTextStyle: {
     fontFamily: bold,
     fontSize: 16,
-    color: "#464D60"
-  }
+    color: '#464D60',
+  },
 });
 
 export default SortModal;

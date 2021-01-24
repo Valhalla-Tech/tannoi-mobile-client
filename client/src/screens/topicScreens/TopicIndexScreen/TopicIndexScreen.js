@@ -1,15 +1,19 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import {
   StyleSheet,
   View,
   Text,
   TouchableOpacity,
   FlatList,
-  Image
+  Image,
 } from 'react-native';
-import { getTopic, followTopic, unfollowTopic } from '../../../store/actions/TopicAction';
-import { useSelector, useDispatch } from 'react-redux';
-import { bold, normal } from '../../../assets/FontSize';
+import {
+  getTopic,
+  followTopic,
+  unfollowTopic,
+} from '../../../store/actions/TopicAction';
+import {useSelector, useDispatch} from 'react-redux';
+import {bold, normal} from '../../../assets/FontSize';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 
 //Icons
@@ -21,14 +25,14 @@ import Header from '../../../components/publicComponents/Header';
 import SearchBar from '../../../components/publicComponents/SearchBar';
 import Card from '../../../components/publicComponents/Card';
 
-const TopicIndexScreen = ({ navigation }) => {
+const TopicIndexScreen = ({navigation}) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getTopic());
   }, []);
 
-  const topics = useSelector(state => state.TopicReducer.topics);
+  const topics = useSelector((state) => state.TopicReducer.topics);
 
   const HeaderContent = () => {
     return (
@@ -46,41 +50,48 @@ const TopicIndexScreen = ({ navigation }) => {
 
   const renderTopics = (itemData) => {
     return (
-      <TouchableOpacity onPress={() => navigation.navigate('TopicDetailScreen', {
-        topicName: itemData.item.name,
-        topicId: itemData.item.id
-      })} style={styles.topicStyle}>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate('TopicDetailScreen', {
+            topicName: itemData.item.name,
+            topicId: itemData.item.id,
+          })
+        }
+        style={styles.topicStyle}>
         <View style={styles.topicDataContainerStyle}>
-          <Image source={{uri: itemData.item.image_path}} style={styles.topicIconStyle} />
+          <Image
+            source={{uri: itemData.item.image_path}}
+            style={styles.topicIconStyle}
+          />
           <View>
             <Text style={styles.topicNameStyle}>{itemData.item.name}</Text>
-            <Text style={styles.discussionCountStyle}>{itemData.item.discussion_count} discussion{itemData.item.discussion_count > 1 ? 's' : null}</Text>
+            <Text style={styles.discussionCountStyle}>
+              {itemData.item.discussion_count} discussion
+              {itemData.item.discussion_count > 1 ? 's' : null}
+            </Text>
           </View>
         </View>
-        <TouchableOpacity onPress={() => itemData.item.isFollowing ? dispatch(unfollowTopic(itemData.item.id)) : dispatch(followTopic(itemData.item.id))}>
-          {
-            itemData.item.isFollowing ? (
-              <StarIcon />
-            ) : (
-              <InactiveStarIcon />
-            )
-          } 
+        <TouchableOpacity
+          onPress={() =>
+            itemData.item.isFollowing
+              ? dispatch(unfollowTopic(itemData.item.id))
+              : dispatch(followTopic(itemData.item.id))
+          }>
+          {itemData.item.isFollowing ? <StarIcon /> : <InactiveStarIcon />}
         </TouchableOpacity>
       </TouchableOpacity>
     );
   };
 
   const TopicScreenContent = () => {
-    return (
-      topics.length !== 0 ? (
-        <FlatList
-          data={topics}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={renderTopics}
-        />
-      ) : (
-        <LoadingSpinner loadingSpinnerForComponent={true} />
-      )
+    return topics.length !== 0 ? (
+      <FlatList
+        data={topics}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={renderTopics}
+      />
+    ) : (
+      <LoadingSpinner loadingSpinnerForComponent={true} />
     );
   };
 
@@ -89,7 +100,10 @@ const TopicIndexScreen = ({ navigation }) => {
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
       <FlatList
         ListHeaderComponent={
-          <Card child={TopicScreenContent} customStyle={styles.cardContainerStyle} />
+          <Card
+            child={TopicScreenContent}
+            customStyle={styles.cardContainerStyle}
+          />
         }
       />
     </View>
@@ -98,72 +112,72 @@ const TopicIndexScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   headerStyle: {
-    paddingHorizontal: "5%",
-    paddingTop: "3.5%",
-    paddingBottom: "1%"
+    paddingHorizontal: '5%',
+    paddingTop: '3.5%',
+    paddingBottom: '1%',
   },
 
   headerTextStyle: {
     fontFamily: bold,
     fontSize: 20,
-    color: "#464D60"
+    color: '#464D60',
   },
 
   editButtonStyle: {
     fontSize: 16,
     fontFamily: bold,
-    color: "#0E4EF4"
+    color: '#0E4EF4',
   },
 
   headerTitleAndButtonContainerStyle: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: "2%"
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: '2%',
   },
 
   cardContainerStyle: {
-    marginHorizontal: "1.8%",
-    marginVertical: "2%",
+    marginHorizontal: '1.8%',
+    marginVertical: '2%',
     borderRadius: 8,
-    marginBottom: "8%"
+    marginBottom: '8%',
   },
 
   topicStyle: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: "5%",
-    paddingVertical: "2%",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: '5%',
+    paddingVertical: '2%',
     borderBottomWidth: 1,
-    borderBottomColor: "#F5F7F9"
+    borderBottomColor: '#F5F7F9',
   },
 
   topicDataContainerStyle: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between"
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 
   topicIconStyle: {
     width: 35,
     height: 35,
     borderRadius: 50,
-    marginRight: "3%"
+    marginRight: '3%',
   },
 
   topicNameStyle: {
-    color: "#464D60",
+    color: '#464D60',
     fontFamily: normal,
     fontSize: 16,
-    marginBottom: -5
+    marginBottom: -5,
   },
 
   discussionCountStyle: {
-    color: "#73798C",
+    color: '#73798C',
     fontFamily: normal,
-    fontSize: 12
-  }
+    fontSize: 12,
+  },
 });
 
 export default TopicIndexScreen;

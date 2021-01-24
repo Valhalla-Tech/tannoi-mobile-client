@@ -1,16 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
+import {View, Text, TouchableOpacity, StyleSheet, FlatList} from 'react-native';
+import {bold, normal} from '../../../assets/FontSize';
+import {useSelector, useDispatch} from 'react-redux';
+import {CalculateHeight} from '../../../helper/CalculateSize';
 import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  FlatList
-} from 'react-native';
-import { bold, normal } from '../../../assets/FontSize';
-import { useSelector, useDispatch } from 'react-redux';
-import { CalculateHeight } from '../../../helper/CalculateSize';
-import { getAllDiscussion, clearDiscussion } from '../../../store/actions/DiscussionAction';
-import { GlobalPadding } from '../../../constants/Size';
+  getAllDiscussion,
+  clearDiscussion,
+} from '../../../store/actions/DiscussionAction';
+import {GlobalPadding} from '../../../constants/Size';
 
 //Components
 import Header from '../../../components/publicComponents/Header';
@@ -18,33 +15,33 @@ import List from '../../../components/publicComponents/List';
 import BackButton from '../../../components/publicComponents/BackButton';
 import ListHeader from '../../../components/publicComponents/ListHeader';
 
-const HashtagDetailScreen = ({ route, navigation }) => {
-  const {
-    query,
-    queryId,
-    hashtagDetailTitle
-  } = route.params;
+const HashtagDetailScreen = ({route, navigation}) => {
+  const {query, queryId, hashtagDetailTitle} = route.params;
 
-  const discussions = useSelector(state => state.DiscussionReducer.discussions);
-  const discussionCount = useSelector(state => state.DiscussionReducer.discussionCount);
+  const discussions = useSelector(
+    (state) => state.DiscussionReducer.discussions,
+  );
+  const discussionCount = useSelector(
+    (state) => state.DiscussionReducer.discussionCount,
+  );
 
   const dispatch = useDispatch();
 
   const [selectedSort, setSelectedSort] = useState('newest');
   const [currentPage, setCurrentPage] = useState(1);
 
-  const changeSelectedSort = input => {
+  const changeSelectedSort = (input) => {
     setSelectedSort(input);
   };
 
-  const changeCurrentPage = input => {
+  const changeCurrentPage = (input) => {
     setCurrentPage(input);
   };
 
   useEffect(() => {
     dispatch(getAllDiscussion(query, queryId, null, null));
   }, [navigation]);
-  
+
   const clearDiscussionList = () => {
     dispatch(clearDiscussion(null, true));
   };
@@ -56,13 +53,13 @@ const HashtagDetailScreen = ({ route, navigation }) => {
           navigation={navigation}
           styleOption={{
             marginTop: 0,
-            marginBottom: 0
+            marginBottom: 0,
           }}
           buttonOption={clearDiscussionList}
         />
         <Text style={styles.headerTitleStyle}>{hashtagDetailTitle}</Text>
       </>
-    )
+    );
   };
 
   return (
@@ -71,7 +68,7 @@ const HashtagDetailScreen = ({ route, navigation }) => {
       <View style={styles.hashtagDetailContainerStyle}>
         <ListHeader
           customStyle={{
-            marginTop: "2%"
+            marginTop: '2%',
           }}
           isFilter={true}
           isSort={true}
@@ -91,9 +88,13 @@ const HashtagDetailScreen = ({ route, navigation }) => {
                 borderRadius: 0,
                 borderBottomLeftRadius: 8,
                 borderBottomRightRadius: 8,
-                marginBottom: "35%"
+                marginBottom: '35%',
               }}
-              useMoreButton={discussionCount > 10 && discussions.length < discussionCount && true}
+              useMoreButton={
+                discussionCount > 10 &&
+                discussions.length < discussionCount &&
+                true
+              }
               sectionQuery={query}
               queryId={queryId}
               selectedSort={selectedSort}
@@ -109,22 +110,22 @@ const HashtagDetailScreen = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   headerStyle: {
-    flexDirection: "row",
-    paddingHorizontal: "3%",
-    paddingVertical: "3.5%",
-    alignItems: "center"
+    flexDirection: 'row',
+    paddingHorizontal: '3%',
+    paddingVertical: '3.5%',
+    alignItems: 'center',
   },
 
   headerTitleStyle: {
-    marginLeft: "5%",
+    marginLeft: '5%',
     fontFamily: bold,
     fontSize: CalculateHeight(2.5),
-    color: "#464D60"
+    color: '#464D60',
   },
 
   hashtagDetailContainerStyle: {
-    paddingHorizontal: GlobalPadding
-  }
+    paddingHorizontal: GlobalPadding,
+  },
 });
 
 export default HashtagDetailScreen;

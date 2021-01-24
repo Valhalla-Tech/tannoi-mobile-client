@@ -1,26 +1,20 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  FlatList
-} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity, FlatList} from 'react-native';
 
 const RECENT_SEARCHES_DATA = [
   {
-    id: "1",
-    name: "Mark Crown"
+    id: '1',
+    name: 'Mark Crown',
   },
   {
-    id: "2",
-    name: "Apple"
+    id: '2',
+    name: 'Apple',
   },
   {
-    id: "3",
-    name: "Manchester United"
+    id: '3',
+    name: 'Manchester United',
   },
-]
+];
 
 const RecentSearches = () => {
   return (
@@ -33,7 +27,7 @@ const RecentSearches = () => {
       </View>
       <FlatList
         data={RECENT_SEARCHES_DATA}
-        renderItem={itemData => (
+        renderItem={(itemData) => (
           <TouchableOpacity style={styles.recentSearchesCardStyle}>
             <Text style={styles.cardTitleStyle}>{itemData.item.name}</Text>
           </TouchableOpacity>
@@ -45,39 +39,39 @@ const RecentSearches = () => {
 
 const styles = StyleSheet.create({
   recentSearchesContainerStyle: {
-    margin: "2%",
-    backgroundColor: "#FFFFFF",
-    borderRadius: 8
+    margin: '2%',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 8,
   },
 
   recentSearchesTitleAndClearAllButtonContainerStyle: {
-    flexDirection: "row",
+    flexDirection: 'row',
     padding: 16,
-    justifyContent: "space-between",
-    alignItems: "center"
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 
   recentSearchesTitleStyle: {
     fontSize: 16,
-    color: "#464D60",
-    fontWeight: "bold"
+    color: '#464D60',
+    fontWeight: 'bold',
   },
 
   clearAllButtonTextStyle: {
     fontSize: 14,
-    color: "#0E4EF4"
+    color: '#0E4EF4',
   },
 
   recentSearchesCardStyle: {
-    padding: "4%",
+    padding: '4%',
     borderBottomWidth: 1,
-    borderBottomColor: "#F5F7F9"
+    borderBottomColor: '#F5F7F9',
   },
 
   cardTitleStyle: {
-    color: "#464D60",
-    fontSize: 16
-  }
+    color: '#464D60',
+    fontSize: 16,
+  },
 });
 
 export default RecentSearches;

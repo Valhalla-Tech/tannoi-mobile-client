@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 
 //Screen
 import InboxScreen from '../screens/inboxScreen/InboxScreen';
@@ -10,12 +10,11 @@ const InboxNavigation = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: false
-      }}
-    >
+        headerShown: false,
+      }}>
       <Stack.Screen name="InboxScreen" component={InboxScreen} />
     </Stack.Navigator>
-  )
+  );
 };
 
 export default InboxNavigation;

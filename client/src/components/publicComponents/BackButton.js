@@ -1,19 +1,10 @@
 import React from 'react';
-import {
-  StyleSheet,
-  TouchableOpacity
-} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 
 import BackButtonIcon from '../../assets/publicAssets/back-button.svg';
 
-const BackButton = props => {
-  const { 
-    navigation,
-    screen,
-    styleOption,
-    buttonFunction,
-    buttonOption
-  } = props;
+const BackButton = (props) => {
+  const {navigation, screen, styleOption, buttonFunction, buttonOption} = props;
 
   return (
     <TouchableOpacity
@@ -28,22 +19,21 @@ const BackButton = props => {
         } else {
           navigation.goBack();
         }
-      }}
-    >
+      }}>
       <BackButtonIcon
         width={20}
         height={25}
         style={{...styles.backButtonStyle, ...styleOption}}
       />
-  </TouchableOpacity>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   backButtonStyle: {
     marginTop: 56,
-    marginBottom: 44
-  }
+    marginBottom: 44,
+  },
 });
 
 export default BackButton;

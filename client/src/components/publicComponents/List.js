@@ -1,14 +1,8 @@
-import React, { useEffect } from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  FlatList
-} from 'react-native';
-import { useDispatch } from 'react-redux';
-import { clearCurrentPlayerId } from '../../store/actions/PlayerAction';
-import { getAllDiscussion } from '../../store/actions/DiscussionAction';
+import React, {useEffect} from 'react';
+import {StyleSheet, View, Text, TouchableOpacity, FlatList} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {clearCurrentPlayerId} from '../../store/actions/PlayerAction';
+import {getAllDiscussion} from '../../store/actions/DiscussionAction';
 
 //Components
 import HomeListCard from './ListCard';
@@ -17,9 +11,9 @@ import Card from './Card';
 import ListHeader from './ListHeader';
 import BigButton from './Button';
 
-const HomeList = props => {
-  const { 
-    listTitle, 
+const HomeList = (props) => {
+  const {
+    listTitle,
     listData,
     navigation,
     openModal,
@@ -34,32 +28,41 @@ const HomeList = props => {
     useMoreButton,
     selectedSort,
     currentPage,
-    changeCurrentPage
+    changeCurrentPage,
   } = props;
 
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     const blur = navigation.addListener('blur', () => {
       dispatch(clearCurrentPlayerId());
     });
 
     const unsubscribe = navigation.addListener('focus', () => {
-      dispatch(clearCurrentPlayerId())
+      dispatch(clearCurrentPlayerId());
     });
 
-    return (blur, unsubscribe);
+    return blur, unsubscribe;
   }, [navigation]);
 
   const nextPage = () => {
     changeCurrentPage(currentPage + 1);
-    dispatch(getAllDiscussion(sectionQuery ? sectionQuery : null, queryId ? queryId : null, selectedSort, currentPage + 1));
+    dispatch(
+      getAllDiscussion(
+        sectionQuery ? sectionQuery : null,
+        queryId ? queryId : null,
+        selectedSort,
+        currentPage + 1,
+      ),
+    );
   };
 
   const MoreButton = () => {
     return (
       <View style={styles.moreButtonContainerStyle}>
-        <TouchableOpacity onPress={() => console.log('pressed')} style={styles.moreButton}>
+        <TouchableOpacity
+          onPress={() => console.log('pressed')}
+          style={styles.moreButton}>
           <Text style={styles.moreButtonTextStyle}>More</Text>
         </TouchableOpacity>
       </View>
@@ -69,8 +72,8 @@ const HomeList = props => {
   const HomeListContent = () => {
     return (
       <View>
-        {
-          isHeader && <ListHeader
+        {isHeader && (
+          <ListHeader
             listTitle={listTitle}
             isSort={isSort}
             istTitle={listTitle}
@@ -80,76 +83,77 @@ const HomeList = props => {
             sectionQuery={sectionQuery}
             queryId={queryId}
           />
-        }
-        {
-          !listData ? (
-            <LoadingSpinner loadingSpinnerForComponent={true} />
-          ) : (
-            <>
-              <FlatList
-                data={listData}
-                listKey={(item, index) => index.toString()}
-                keyExtractor={(item, index) => index.toString()}
-                renderItem={itemData => (
-                  <View style={styles.listCardContainerStyle}>
-                    <HomeListCard
-                      imageUrl={itemData.item.creator.profile_photo_path}
-                      recordingFile={itemData.item.voice_note_path}
-                      name={itemData.item.creator.name}
-                      title={itemData.item.title}
-                      votes={itemData.item.likes}
-                      replies={itemData.item.response_count}
-                      plays={itemData.item.play_count}
-                      postTime={itemData.item.timeSince}
-                      discussionId={itemData.item.id}
-                      navigation={navigation}
-                      topic={itemData.item.topic ? itemData.item.topic.name : ''}
-                      isBorder={itemData.index === listData.length - 1 ? false : true}
-                      discussionType={itemData.item.type}
-                      openModal={openModal}
-                      isAuthorized={itemData.item.isAuthorized}
-                      profileType={itemData.item.creator.type}
+        )}
+        {!listData ? (
+          <LoadingSpinner loadingSpinnerForComponent={true} />
+        ) : (
+          <>
+            <FlatList
+              data={listData}
+              listKey={(item, index) => index.toString()}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={(itemData) => (
+                <View style={styles.listCardContainerStyle}>
+                  <HomeListCard
+                    imageUrl={itemData.item.creator.profile_photo_path}
+                    recordingFile={itemData.item.voice_note_path}
+                    name={itemData.item.creator.name}
+                    title={itemData.item.title}
+                    votes={itemData.item.likes}
+                    replies={itemData.item.response_count}
+                    plays={itemData.item.play_count}
+                    postTime={itemData.item.timeSince}
+                    discussionId={itemData.item.id}
+                    navigation={navigation}
+                    topic={itemData.item.topic ? itemData.item.topic.name : ''}
+                    isBorder={
+                      itemData.index === listData.length - 1 ? false : true
+                    }
+                    discussionType={itemData.item.type}
+                    openModal={openModal}
+                    isAuthorized={itemData.item.isAuthorized}
+                    profileType={itemData.item.creator.type}
+                  />
+                </View>
+              )}
+              ListFooterComponent={
+                useMoreButton && (
+                  <View style={styles.loadMoreButtonContainerStyle}>
+                    <BigButton
+                      buttonStyle={{
+                        color: '#6505E1',
+                        borderColor: '#6505E1',
+                        paddingVertical: '.5%',
+                        paddingHorizontal: '5%',
+                      }}
+                      buttonTitle="More"
+                      buttonFunction={nextPage}
                     />
                   </View>
-                )}
-                ListFooterComponent={
-                  useMoreButton && (
-                    <View style={styles.loadMoreButtonContainerStyle}>
-                      <BigButton
-                        buttonStyle={{
-                          color: "#6505E1",
-                          borderColor: "#6505E1",
-                          paddingVertical: ".5%",
-                          paddingHorizontal: "5%"
-                        }}
-                        buttonTitle="More"
-                        buttonFunction={nextPage}
-                      />
-                    </View>
-                  )
-                }
-              />
-            </>
-          )
-        }
-        {
-          isUsingMoreButton && <MoreButton />
-        }
+                )
+              }
+            />
+          </>
+        )}
+        {isUsingMoreButton && <MoreButton />}
       </View>
     );
-  }
+  };
 
   return (
-    <Card child={HomeListContent} customStyle={{...styles.homeListContainerStyle, ...customStyle}} />
+    <Card
+      child={HomeListContent}
+      customStyle={{...styles.homeListContainerStyle, ...customStyle}}
+    />
   );
 };
 
 const styles = StyleSheet.create({
   homeListContainerStyle: {
-    backgroundColor: "#FFFFFF",
-    marginTop: "2%",
+    backgroundColor: '#FFFFFF',
+    marginTop: '2%',
     borderRadius: 8,
-    paddingBottom: "6.5%"
+    paddingBottom: '6.5%',
   },
 
   listCardContainerStyle: {
@@ -158,30 +162,30 @@ const styles = StyleSheet.create({
 
   moreButtonContainerStyle: {
     flex: 1,
-    alignItems: "center"
+    alignItems: 'center',
   },
 
   moreButton: {
-    position: "absolute",
-    borderWidth: 1.5, 
-    borderColor: "#5152D0", 
-    paddingHorizontal: 20, 
-    paddingVertical: 4, 
+    position: 'absolute',
+    borderWidth: 1.5,
+    borderColor: '#5152D0',
+    paddingHorizontal: 20,
+    paddingVertical: 4,
     borderRadius: 25,
     top: 10,
-    backgroundColor: "#FFFFFF"
+    backgroundColor: '#FFFFFF',
   },
 
   moreButtonTextStyle: {
-    color: "#5152D0", 
-    fontSize: 14
+    color: '#5152D0',
+    fontSize: 14,
   },
 
   loadMoreButtonContainerStyle: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: "5%"
-  }
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '5%',
+  },
 });
 
 export default HomeList;

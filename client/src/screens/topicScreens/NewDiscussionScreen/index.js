@@ -1,1 +1,1 @@
-export { default } from './NewDiscussionScreen';
+export {default} from './NewDiscussionScreen';

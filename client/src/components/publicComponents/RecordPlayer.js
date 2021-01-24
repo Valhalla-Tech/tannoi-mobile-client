@@ -1,10 +1,5 @@
-import React, { useState, useEffect, Component } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity
-} from 'react-native';
+import React, {useState, useEffect, Component} from 'react';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Slider from '@react-native-community/slider';
 import Sound from 'react-native-sound';
 
@@ -26,22 +21,22 @@ class RecordPlayer extends Component {
 
   constructor(props) {
     super(props);
-    
+
     this.state = {
       loading: false,
       isPlaying: false,
       progress: 0,
       isPaused: false,
       durationLeft: '',
-      durationPlayed: ''
-    }
+      durationPlayed: '',
+    };
   }
 
   componentDidMount() {
     this._isMounted = true;
     this.setState({
-      loading: true
-    })
+      loading: true,
+    });
     this.soundPlayer = null;
     this.progressInterval = null;
     this.loadPlayer();
@@ -57,21 +52,22 @@ class RecordPlayer extends Component {
     let position = percentage * this.soundPlayer.getDuration();
 
     this.setState({
-      progress: percentage
-    })
+      progress: percentage,
+    });
     this.soundPlayer.setCurrentTime(position);
-  };
+  }
 
   forwardTenSecond() {
-    this.soundPlayer.getCurrentTime(seconds => {
+    this.soundPlayer.getCurrentTime((seconds) => {
       this.soundPlayer.setCurrentTime(seconds + 10);
     });
   }
 
   getDuration() {
-    this.soundPlayer.getCurrentTime(seconds => {
+    this.soundPlayer.getCurrentTime((seconds) => {
       let floredSecondPlayed = Math.floor(seconds);
-      let floredSecondLeft = Math.floor(this.soundPlayer.getDuration()) - floredSecondPlayed;
+      let floredSecondLeft =
+        Math.floor(this.soundPlayer.getDuration()) - floredSecondPlayed;
 
       if (floredSecondPlayed < 10) {
         floredSecondPlayed = `0${floredSecondPlayed}`;
@@ -83,22 +79,23 @@ class RecordPlayer extends Component {
 
       this.setState({
         durationPlayed: `0:${floredSecondPlayed}`,
-        durationLeft: `0:${floredSecondLeft}`
-      })
+        durationLeft: `0:${floredSecondLeft}`,
+      });
     });
   }
 
   updateProgressBar() {
     this.progressInterval = setInterval(() => {
-      this.soundPlayer.getCurrentTime(seconds => {
+      this.soundPlayer.getCurrentTime((seconds) => {
         if (this.props.isRecorderModalOpen || this.props.openAddResponse) {
           this.playRecording(this.state.isPlaying);
         }
         this.getDuration();
-        let currentProgress = Math.max(0, seconds) / this.soundPlayer.getDuration();
+        let currentProgress =
+          Math.max(0, seconds) / this.soundPlayer.getDuration();
         if (this._isMounted) {
           this.setState({
-            progress: currentProgress
+            progress: currentProgress,
           });
         }
       });
@@ -117,7 +114,7 @@ class RecordPlayer extends Component {
 
       if (this._isMounted) {
         this.setState({
-          loading: false
+          loading: false,
         });
         this.getDuration();
         if (this.props.fromNextPreviousButton) {
@@ -133,7 +130,7 @@ class RecordPlayer extends Component {
       this.soundPlayer.pause(() => {
         this.setState({
           isPlaying: false,
-          isPaused: true
+          isPaused: true,
         });
       });
       this.stopUpdateProgressBar();
@@ -143,13 +140,13 @@ class RecordPlayer extends Component {
       }
       this.setState({
         isPlaying: true,
-        isPaused: false
+        isPaused: false,
       });
       this.updateProgressBar();
-      this.soundPlayer.play(success => {
+      this.soundPlayer.play((success) => {
         this.setState({
           isPlaying: false,
-          progress: 0
+          progress: 0,
         });
         this.stopUpdateProgressBar();
       });
@@ -169,64 +166,67 @@ class RecordPlayer extends Component {
           minimumTrackTintColor="#5152D0"
           value={this.state.progress}
           disabled={this.state.loading}
-          onValueChange={percentage => this.seek(percentage)}
+          onValueChange={(percentage) => this.seek(percentage)}
         />
         <View style={styles.playerContainerStyle}>
           <PlayerSpeed />
           <TouchableOpacity
-            onPress={() => this.props.isPreviousPlayerAvailable && (
-              this.props.previousPlayerFunction(),
-              this.props.updateFromNextPreviousButton(true)
-            )}
-            disabled={this.props.isPreviousPlayerAvailable ? false : true}
-          >
-            {
-              this.props.isPreviousPlayerAvailable ? <ActivePreviousButton /> : <PreviousButton />
+            onPress={() =>
+              this.props.isPreviousPlayerAvailable &&
+              (this.props.previousPlayerFunction(),
+              this.props.updateFromNextPreviousButton(true))
             }
+            disabled={this.props.isPreviousPlayerAvailable ? false : true}>
+            {this.props.isPreviousPlayerAvailable ? (
+              <ActivePreviousButton />
+            ) : (
+              <PreviousButton />
+            )}
           </TouchableOpacity>
-          {
-            this.state.loading ? <LoadingSpinner loadingSpinnerForComponent={true} /> : (
-              <TouchableOpacity onPress={() => {
+          {this.state.loading ? (
+            <LoadingSpinner loadingSpinnerForComponent={true} />
+          ) : (
+            <TouchableOpacity
+              onPress={() => {
                 this.playRecording(this.state.isPlaying);
               }}>
-                {
-                  !this.state.isPlaying ? <ActivePlayButton /> : <PauseButton />
-                }
-              </TouchableOpacity>
-            )
-          }
+              {!this.state.isPlaying ? <ActivePlayButton /> : <PauseButton />}
+            </TouchableOpacity>
+          )}
           <TouchableOpacity
-            onPress={() => this.props.isNextPlayerAvailable && (
-              this.props.nextPlayerFunction(),
-              this.props.updateFromNextPreviousButton(true)
-            )}
-            disabled={this.props.isNextPlayerAvailable ? false : true}
-          >
-            {
-              this.props.isNextPlayerAvailable ? <ActiveNextButton /> : <NextButton />
+            onPress={() =>
+              this.props.isNextPlayerAvailable &&
+              (this.props.nextPlayerFunction(),
+              this.props.updateFromNextPreviousButton(true))
             }
+            disabled={this.props.isNextPlayerAvailable ? false : true}>
+            {this.props.isNextPlayerAvailable ? (
+              <ActiveNextButton />
+            ) : (
+              <NextButton />
+            )}
           </TouchableOpacity>
           <TouchableOpacity onPress={() => this.forwardTenSecond()}>
             <ForwardTenButton />
           </TouchableOpacity>
         </View>
       </View>
-    )
+    );
   }
 }
 
 const styles = StyleSheet.create({
   playerContainerStyle: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: "8%"
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: '8%',
   },
 
   durationContainerStyle: {
-    flexDirection: "row",
-    justifyContent: "space-between"
-  }
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
 });
 
 export default RecordPlayer;

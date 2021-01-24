@@ -1,16 +1,13 @@
-import React, { useState } from 'react';
-import {
-  TouchableOpacity,
-  StyleSheet
-} from 'react-native';
-import { useDispatch } from 'react-redux';
-import { getOneProfile } from '../../../store/actions/ProfileAction';
+import React, {useState} from 'react';
+import {TouchableOpacity, StyleSheet} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {getOneProfile} from '../../../store/actions/ProfileAction';
 
 //Components
 import DiscussionCardMenu from '../../../assets/topicAssets/discussionCardMenu.svg';
 import OptionModal from './OptionModal';
 
-const OptionButton = props => {
+const OptionButton = (props) => {
   const {
     customStyle,
     navigation,
@@ -22,7 +19,7 @@ const OptionButton = props => {
     discussionTitle,
     responseTitle,
     changePlayer,
-    cardIndex
+    cardIndex,
   } = props;
 
   const dispatch = useDispatch();
@@ -43,7 +40,7 @@ const OptionButton = props => {
       <TouchableOpacity onPress={() => openOptionModal()} style={customStyle}>
         <DiscussionCardMenu />
       </TouchableOpacity>
-      <OptionModal 
+      <OptionModal
         openOptionModal={optionModal}
         closeOptionModal={closeOptionModal}
         discussionId={discussionId}
@@ -61,8 +58,6 @@ const OptionButton = props => {
   );
 };
 
-const styles = StyleSheet.create({
-
-});
+const styles = StyleSheet.create({});
 
 export default OptionButton;

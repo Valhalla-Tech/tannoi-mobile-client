@@ -1,4 +1,4 @@
-import { Dimensions, Platform, PixelRatio } from 'react-native';
+import {Dimensions, Platform, PixelRatio} from 'react-native';
 
 export const CalculateHeight = (input) => {
   const height = Dimensions.get('window').height;

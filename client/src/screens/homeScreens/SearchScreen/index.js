@@ -1,1 +1,1 @@
-export { default } from './SearchScreen';
+export {default} from './SearchScreen';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 
 //Screens
 import WelcomeScreen from '../screens/accountScreens/WelcomeScreen';
@@ -18,20 +18,37 @@ const AccountNavigation = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: false
-      }}
-    >
+        headerShown: false,
+      }}>
       <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
       <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-      <Stack.Screen name="EnterYourProfileScreen" component={EnterYourProfileScreen} />
-      <Stack.Screen name="FollowSomeTopicsScreen" component={FollowSomeTopicsScreen} />
+      <Stack.Screen
+        name="EnterYourProfileScreen"
+        component={EnterYourProfileScreen}
+      />
+      <Stack.Screen
+        name="FollowSomeTopicsScreen"
+        component={FollowSomeTopicsScreen}
+      />
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
-      <Stack.Screen name="LoginWithEmailScreen" component={LoginWithEmailScreen} />
-      <Stack.Screen name="ResetPasswordWithEmailScreen" component={ResetPasswordWithEmailScreen} />
-      <Stack.Screen name="ResetPasswordWithEmailVerificationScreen" component={ResetPasswordWithEmailVerificationScreen} />
-      <Stack.Screen name="CreateNewPasswordScreen" component={CreateNewPasswordScreen} />
+      <Stack.Screen
+        name="LoginWithEmailScreen"
+        component={LoginWithEmailScreen}
+      />
+      <Stack.Screen
+        name="ResetPasswordWithEmailScreen"
+        component={ResetPasswordWithEmailScreen}
+      />
+      <Stack.Screen
+        name="ResetPasswordWithEmailVerificationScreen"
+        component={ResetPasswordWithEmailVerificationScreen}
+      />
+      <Stack.Screen
+        name="CreateNewPasswordScreen"
+        component={CreateNewPasswordScreen}
+      />
     </Stack.Navigator>
-  )
+  );
 };
 
 export default AccountNavigation;

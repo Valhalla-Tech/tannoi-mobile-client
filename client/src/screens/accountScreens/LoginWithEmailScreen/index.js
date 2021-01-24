@@ -1,1 +1,1 @@
-export { default } from './LoginWithEmailScreen';
+export {default} from './LoginWithEmailScreen';

@@ -1,22 +1,17 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet
-} from 'react-native';
-import { useDispatch } from 'react-redux';
-import { userLogout } from '../../../store/actions/LoginAction';
-import { clearTopic } from '../../../store/actions/TopicAction';
-import { clearLogedInProfile } from '../../../store/actions/ProfileAction';
-import { bold, normal } from '../../../assets/FontSize';
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {userLogout} from '../../../store/actions/LoginAction';
+import {clearTopic} from '../../../store/actions/TopicAction';
+import {clearLogedInProfile} from '../../../store/actions/ProfileAction';
+import {bold, normal} from '../../../assets/FontSize';
 
 //Components
 import Header from '../../../components/publicComponents/Header';
 import Card from '../../../components/publicComponents/Card';
 import BackButton from '../../../components/publicComponents/BackButton';
 
-const SettingsScreen = ({ navigation }) => {
+const SettingsScreen = ({navigation}) => {
   const dispatch = useDispatch();
 
   const HeaderContent = () => {
@@ -27,16 +22,17 @@ const SettingsScreen = ({ navigation }) => {
             navigation={navigation}
             styleOption={{
               marginTop: 0,
-              marginBottom: 0
+              marginBottom: 0,
             }}
           />
           <Text style={styles.titleTextStyle}>Settings</Text>
         </View>
-        <TouchableOpacity onPress={() => {
-          dispatch(userLogout());
-          dispatch(clearTopic());
-          dispatch(clearLogedInProfile());
-        }}>
+        <TouchableOpacity
+          onPress={() => {
+            dispatch(userLogout());
+            dispatch(clearTopic());
+            dispatch(clearLogedInProfile());
+          }}>
           <Text style={styles.logOutButtonTextStyle}>Log out</Text>
         </TouchableOpacity>
       </>
@@ -45,7 +41,13 @@ const SettingsScreen = ({ navigation }) => {
 
   const MenuButton = (buttonTitle, buttonIcon, screenName, lastButton) => {
     return (
-      <TouchableOpacity onPress={() => navigation.navigate(screenName)} style={lastButton ? {...styles.menuButtonStyle, borderBottomWidth: 0} : styles.menuButtonStyle}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate(screenName)}
+        style={
+          lastButton
+            ? {...styles.menuButtonStyle, borderBottomWidth: 0}
+            : styles.menuButtonStyle
+        }>
         <Text style={styles.menuButtonTextStyle}>{buttonTitle}</Text>
       </TouchableOpacity>
     );
@@ -72,25 +74,23 @@ const SettingsScreen = ({ navigation }) => {
         <View style={styles.cardHeaderStyle}>
           <Text style={styles.menuHeaderTextStyle}>Notifications</Text>
         </View>
-        {MenuButton('Notification settings', null, 'NotificationSettingsScreen')}
+        {MenuButton(
+          'Notification settings',
+          null,
+          'NotificationSettingsScreen',
+        )}
       </View>
     );
   };
 
   return (
     <View>
-      <Header
-        child={HeaderContent}
-        customStyle={styles.headerStyle}
-      />
+      <Header child={HeaderContent} customStyle={styles.headerStyle} />
       <View style={styles.settingsScreenContainerStyle}>
-        <Card
-          child={AccountMenu}
-          customStyle={styles.cardStyle}
-        />
+        <Card child={AccountMenu} customStyle={styles.cardStyle} />
         <Card
           child={NotificationsMenu}
-          customStyle={{...styles.cardStyle, marginTop: "2%"}}
+          customStyle={{...styles.cardStyle, marginTop: '2%'}}
         />
       </View>
     </View>
@@ -99,64 +99,64 @@ const SettingsScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   headerStyle: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingLeft: "2.5%",
-    paddingRight: "5%",
-    paddingVertical: "3%"
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingLeft: '2.5%',
+    paddingRight: '5%',
+    paddingVertical: '3%',
   },
 
   settingsScreenContainerStyle: {
-    paddingHorizontal: "1.8%",
-    paddingVertical: "2%"
+    paddingHorizontal: '1.8%',
+    paddingVertical: '2%',
   },
 
   backButtonAndTitleContainerStyle: {
-    flexDirection: "row",
-    alignItems: "center"
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 
   titleTextStyle: {
-    marginLeft: "8%",
+    marginLeft: '8%',
     fontFamily: bold,
-    color: "#464D60",
-    fontSize: 20
+    color: '#464D60',
+    fontSize: 20,
   },
 
   logOutButtonTextStyle: {
     fontFamily: bold,
-    color: "#0E4EF4",
-    fontSize: 16
+    color: '#0E4EF4',
+    fontSize: 16,
   },
 
   cardStyle: {
-    borderRadius: 8
+    borderRadius: 8,
   },
 
   cardHeaderStyle: {
-    paddingTop: "3%",
-    paddingHorizontal: "5%"
+    paddingTop: '3%',
+    paddingHorizontal: '5%',
   },
 
   menuHeaderTextStyle: {
-    color: "#464D60",
+    color: '#464D60',
     fontFamily: bold,
-    fontSize: 16
+    fontSize: 16,
   },
 
   menuButtonStyle: {
-    paddingHorizontal: "5%",
+    paddingHorizontal: '5%',
     borderBottomWidth: 1,
-    borderBottomColor: "#F5F7F9",
-    paddingVertical: "3%"
+    borderBottomColor: '#F5F7F9',
+    paddingVertical: '3%',
   },
 
   menuButtonTextStyle: {
-    color: "#464D60",
+    color: '#464D60',
     fontSize: 16,
-    fontFamily: normal
-  }
+    fontFamily: normal,
+  },
 });
 
 export default SettingsScreen;

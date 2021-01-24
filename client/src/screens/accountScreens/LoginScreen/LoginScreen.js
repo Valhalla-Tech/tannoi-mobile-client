@@ -1,20 +1,14 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text
-} from 'react-native';
-import {
-  useDispatch
-} from 'react-redux';
-import { bold } from '../../../assets/FontSize';
-import { GoogleSignIn, FacebookSignIn } from '../../../store/actions/LoginAction';
+import {StyleSheet, View, Text} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {bold} from '../../../assets/FontSize';
+import {GoogleSignIn, FacebookSignIn} from '../../../store/actions/LoginAction';
 
 //Components
 import BackButton from '../../../components/publicComponents/BackButton';
 import Button from '../../../components/publicComponents/Button';
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = ({navigation}) => {
   const dispatch = useDispatch();
 
   const googleSignIn = () => {
@@ -25,7 +19,14 @@ const LoginScreen = ({ navigation }) => {
     dispatch(FacebookSignIn());
   };
 
-  const LoginScreenButton = (title, customStyle, page, type, buttonFuntion, iconTitle) => {
+  const LoginScreenButton = (
+    title,
+    customStyle,
+    page,
+    type,
+    buttonFuntion,
+    iconTitle,
+  ) => {
     return (
       <Button
         buttonTitle={title}
@@ -42,54 +43,48 @@ const LoginScreen = ({ navigation }) => {
   const LoginButton = () => {
     return (
       <>
-        {
-          LoginScreenButton(
-            'Log in with email',
-            {
-              backgroundColor: "#5152D0",
-              borderColor: "#5152D0",
-              color: "#FFFFFF",
-              width: "100%",
-              height: "10%"
-            },
-            'LoginWithEmailScreen',
-            'navigationButton',
-            null,
-            null
-          )
-        }
-        {
-          LoginScreenButton(
-            'Continue with Facebook',
-            {
-              backgroundColor: "#3B5998",
-              borderColor: "#3B5998",
-              color: "#FFFFFF",
-              width: "100%",
-              height: "10%"
-            },
-            null,
-            'buttonFunction',
-            facebookSignIn,
-            'facebook'
-          )
-        }
-        {
-          LoginScreenButton(
-            'Continue with Google',
-            {
-              backgroundColor: "#FFFFFF",
-              borderColor: "#E2E2E2",
-              color: "#464D60",
-              width: "100%",
-              height: "10%"
-            },
-            null,
-            'buttonFunction',
-            googleSignIn,
-            'google'
-          )
-        }
+        {LoginScreenButton(
+          'Log in with email',
+          {
+            backgroundColor: '#5152D0',
+            borderColor: '#5152D0',
+            color: '#FFFFFF',
+            width: '100%',
+            height: '10%',
+          },
+          'LoginWithEmailScreen',
+          'navigationButton',
+          null,
+          null,
+        )}
+        {LoginScreenButton(
+          'Continue with Facebook',
+          {
+            backgroundColor: '#3B5998',
+            borderColor: '#3B5998',
+            color: '#FFFFFF',
+            width: '100%',
+            height: '10%',
+          },
+          null,
+          'buttonFunction',
+          facebookSignIn,
+          'facebook',
+        )}
+        {LoginScreenButton(
+          'Continue with Google',
+          {
+            backgroundColor: '#FFFFFF',
+            borderColor: '#E2E2E2',
+            color: '#464D60',
+            width: '100%',
+            height: '10%',
+          },
+          null,
+          'buttonFunction',
+          googleSignIn,
+          'google',
+        )}
       </>
     );
   };
@@ -102,21 +97,21 @@ const LoginScreen = ({ navigation }) => {
         <LoginButton />
       </View>
     </View>
-  )
+  );
 };
 
 const styles = StyleSheet.create({
   loginScreenContainerStyle: {
     paddingLeft: 24,
-    paddingRight: 24
+    paddingRight: 24,
   },
 
   loginTitleStyle: {
-    color: "#464D60",
+    color: '#464D60',
     fontSize: 28,
     fontFamily: bold,
-    marginBottom: "10%"
-  }
+    marginBottom: '10%',
+  },
 });
 
 export default LoginScreen;

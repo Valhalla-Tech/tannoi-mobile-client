@@ -1,1 +1,1 @@
-export { default } from './InboxScreen';
+export {default} from './InboxScreen';

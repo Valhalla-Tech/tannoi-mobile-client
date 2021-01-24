@@ -1,1 +1,1 @@
-export { default } from './StartVerificationScreen'
+export {default} from './StartVerificationScreen';

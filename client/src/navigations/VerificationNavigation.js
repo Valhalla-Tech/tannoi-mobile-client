@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 
 //Screens
 import StartVerificationScreen from '../screens/verificationScreens/StartVerificationScreen';
@@ -14,16 +14,30 @@ const VerificationNavigation = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: false
-      }}
-    >
-      <Stack.Screen name="StartVerificationScreen" component={StartVerificationScreen} />
-      <Stack.Screen name="UserProfileVerificationScreen" component={UserProfileVerificationScreen} />
-      <Stack.Screen name="UserAddressVerificationScreen" component={UserAddressVerificationScreen} />
-      <Stack.Screen name="VoiceVerificationScreen" component={VoiceVerificationScreen} />
-      <Stack.Screen name="FinishVerificationScreen" component={FinishVerificationScreen} />
+        headerShown: false,
+      }}>
+      <Stack.Screen
+        name="StartVerificationScreen"
+        component={StartVerificationScreen}
+      />
+      <Stack.Screen
+        name="UserProfileVerificationScreen"
+        component={UserProfileVerificationScreen}
+      />
+      <Stack.Screen
+        name="UserAddressVerificationScreen"
+        component={UserAddressVerificationScreen}
+      />
+      <Stack.Screen
+        name="VoiceVerificationScreen"
+        component={VoiceVerificationScreen}
+      />
+      <Stack.Screen
+        name="FinishVerificationScreen"
+        component={FinishVerificationScreen}
+      />
     </Stack.Navigator>
-  )
+  );
 };
 
 export default VerificationNavigation;

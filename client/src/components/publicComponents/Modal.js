@@ -1,13 +1,7 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Modal
-} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Modal} from 'react-native';
 
-const NoticeModal = props => {
+const NoticeModal = (props) => {
   const {
     openModal,
     closeModal,
@@ -15,19 +9,17 @@ const NoticeModal = props => {
     modalButton,
     customStyle,
     customContainerStyle,
-    animation = "fade"
+    animation = 'fade',
   } = props;
 
   return (
-    <Modal
-      animationType={animation}
-      transparent={true}
-      visible={openModal}
-    >
+    <Modal animationType={animation} transparent={true} visible={openModal}>
       <View style={styles.modalBackground}>
-        <TouchableOpacity style={{flex: 1}} onPress={()=> {
-          closeModal();
-        }} ></TouchableOpacity>
+        <TouchableOpacity
+          style={{flex: 1}}
+          onPress={() => {
+            closeModal();
+          }}></TouchableOpacity>
       </View>
       <View style={{...styles.modalContainerStyle, ...customContainerStyle}}>
         <View style={{...styles.noticeModalStyle, ...customStyle}}>
@@ -41,27 +33,27 @@ const NoticeModal = props => {
 
 const styles = StyleSheet.create({
   modalBackground: {
-    position: "absolute", 
-    backgroundColor: 'rgba(0,0,0,0.8)', 
-    height: "100%", 
-    width: "100%"
+    position: 'absolute',
+    backgroundColor: 'rgba(0,0,0,0.8)',
+    height: '100%',
+    width: '100%',
   },
 
   modalContainerStyle: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   noticeModalStyle: {
-    width: "85%",
-    height: "10%",
+    width: '85%',
+    height: '10%',
     borderRadius: 20,
-    padding: "5%",
-    backgroundColor: "#FFFFFF",
-    justifyContent: "center",
-    alignItems: "center"
-  }
+    padding: '5%',
+    backgroundColor: '#FFFFFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 export default NoticeModal;
