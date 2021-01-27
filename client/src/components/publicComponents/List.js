@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity, FlatList} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {clearCurrentPlayerId} from '../../store/actions/PlayerAction';
-import {getAllDiscussion} from '../../store/actions/DiscussionAction';
+import {getAllDiscussion } from '../../store/actions/DiscussionAction';
 
 //Components
 import HomeListCard from './ListCard';
@@ -29,6 +29,7 @@ const HomeList = (props) => {
     selectedSort,
     currentPage,
     changeCurrentPage,
+    isUserDiscussion,
   } = props;
 
   const dispatch = useDispatch();
@@ -53,6 +54,7 @@ const HomeList = (props) => {
         queryId ? queryId : null,
         selectedSort,
         currentPage + 1,
+        isUserDiscussion
       ),
     );
   };

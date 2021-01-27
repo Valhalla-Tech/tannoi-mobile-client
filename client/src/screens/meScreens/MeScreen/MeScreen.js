@@ -7,8 +7,8 @@ import {
   clearUserProfile,
 } from '../../../store/actions/ProfileAction';
 import {
-  getUserDiscussion,
   clearDiscussion,
+  getAllDiscussion,
 } from '../../../store/actions/DiscussionAction';
 import {GlobalPadding} from '../../../constants/Size';
 import AboutSection from '../../../components/meComponents/AboutSection';
@@ -22,6 +22,7 @@ import NoticeModal from '../../../components/publicComponents/Modal';
 const MeScreen = ({navigation, route}) => {
   const [selectedMenu, setSelectedMenu] = useState('Discussions');
   const [noticeModal, setNoticeModal] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const {fromEditScreen} = route.params !== undefined && route.params;
 
@@ -29,8 +30,11 @@ const MeScreen = ({navigation, route}) => {
     (state) => state.ProfileReducer.loggedinUserProfile,
   );
   const userId = useSelector((state) => state.HomeReducer.user.id);
-  const userDiscussion = useSelector(
+  const discussions = useSelector(
     (state) => state.DiscussionReducer.userDiscussion,
+  );
+  const discussionCount = useSelector(
+    (state) => state.DiscussionReducer.userDiscussionCount,
   );
 
   const dispatch = useDispatch();
@@ -40,7 +44,7 @@ const MeScreen = ({navigation, route}) => {
       dispatch(clearUserProfile());
       dispatch(clearDiscussion(true));
       dispatch(getOneProfile(null, true));
-      dispatch(getUserDiscussion(userId));
+      dispatch(getAllDiscussion('user_id=', userId, null, null, true));
     };
 
     meScreenRequest();
@@ -50,7 +54,7 @@ const MeScreen = ({navigation, route}) => {
     });
 
     return fromEditScreen && unsubscribe;
-  }, [userDiscussion.birth_date]);
+  }, []);
 
   const selectMenu = (menu) => {
     setSelectedMenu(menu);
@@ -62,6 +66,10 @@ const MeScreen = ({navigation, route}) => {
 
   const closeModal = () => {
     setNoticeModal(false);
+  };
+
+  const changeCurrentPage = (input) => {
+    setCurrentPage(input);
   };
 
   const HeaderContent = () => {
@@ -95,14 +103,25 @@ const MeScreen = ({navigation, route}) => {
           <View style={styles.cardContainerStyle}>
             {selectedMenu === 'Discussions' ? (
               <List
+                sectionType="discussion"
+                sectionQuery="user_id="
+                queryId={userId}
                 isHeader={false}
                 navigation={navigation}
                 isUsingMoreButton={false}
-                listData={userDiscussion}
+                listData={discussions}
+                useMoreButton={
+                  discussionCount > 20 &&
+                  discussions.length < discussionCount &&
+                  true
+                }
                 openModal={openModal}
                 customStyle={{
                   marginBottom: '5%',
                 }}
+                currentPage={currentPage}
+                changeCurrentPage={changeCurrentPage}
+                isUserDiscussion={true}
               />
             ) : selectedMenu === 'About' ? (
               <AboutSection

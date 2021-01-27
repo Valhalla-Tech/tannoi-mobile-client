@@ -6,6 +6,9 @@ import {bold} from '../../../assets/FontSize';
 import NoProfilePicture from '../../../assets/publicAssets/noProfilePicture.png';
 import tickIcon from '../../../assets/publicAssets/tickIcon.png';
 
+//Component
+import Button from '../../publicComponents/Button';
+
 const ProfileBar = (props) => {
   const {user, navigation} = props;
 
@@ -32,6 +35,18 @@ const ProfileBar = (props) => {
           <Text style={styles.verifyButtonTextStyle}>VERIFY</Text>
         </TouchableOpacity>
       )}
+      <Button
+        buttonTitle='Communities'
+        buttonStyle={{
+          color: '#6505E1',
+          borderColor: '#6505E1',
+          padding: 0,
+          marginBottom: 0,
+          fontSize: 12.5,
+          paddingHorizontal: "2%"
+        }}
+        buttonFunction={() => navigation.navigate('CommunitiesScreen')}
+      />
     </View>
   );
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import {bold, normal} from '../../../assets/FontSize';
 import {useSelector} from 'react-redux';
@@ -31,6 +31,10 @@ const ClosedCard = (props) => {
   } = props;
 
   const isLoading = useSelector((state) => state.DiscussionReducer.isLoading);
+
+  useEffect(() => {
+
+  }, [responseCount]);
 
   const numberConverter = (number) => {
     let numberToString = number.toString();

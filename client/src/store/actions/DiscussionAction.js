@@ -2,7 +2,7 @@ import axios from '../../constants/ApiServices';
 import AsyncStorage from '@react-native-community/async-storage';
 import BaseUrl from '../../constants/BaseUrl';
 
-export const getAllDiscussion = (option, optionId, sort, page) => {
+export const getAllDiscussion = (option, optionId, sort, page, isUserDiscussion) => {
   return async (dispatch) => {
     try {
       let access_token = await AsyncStorage.getItem('access_token');
@@ -17,7 +17,25 @@ export const getAllDiscussion = (option, optionId, sort, page) => {
       });
 
       if (getAllDiscussionRequest.data) {
-        if (page && page > 1) {
+        if (isUserDiscussion) {
+          if (page === null) {
+            dispatch({
+              type: 'GET_USER_DISCUSSION',
+              payload: {
+                discussions: getAllDiscussionRequest.data.data,
+                discussionCount: getAllDiscussionRequest.data.numOfResult
+              }
+            });
+          } else {
+            dispatch({
+              type: 'ADD_USER_DISCUSSION_LIST',
+              payload: {
+                discussions: getAllDiscussionRequest.data.data,
+                discussionCount: getAllDiscussionRequest.data.numOfResult
+              }
+            });
+          }
+        } else if (page && page > 1) {
           dispatch({
             type: 'ADD_DISCUSSION_LIST',
             payload: {
@@ -104,41 +122,6 @@ export const getDiscussion = (discussionId, isLoading) => {
       }
     } catch (error) {
       console.log(error.response.data.msg);
-      if (error.response.data.msg === 'You have to login first') {
-        dispatch({
-          type: 'LOGOUT',
-          payload: {
-            loginStatus: false
-          }
-        });
-      };
-    }
-  };
-};
-
-export const getUserDiscussion = (userId) => {
-  return async (dispatch) => {
-    try {
-      let access_token = await AsyncStorage.getItem('access_token');
-
-      let getUserDiscussionRequest = await axios({
-        url: `${BaseUrl}/discussions/users?user_id=${userId}`,
-        method: 'get',
-        headers: {
-          'token': access_token
-        }
-      });
-
-      if (getUserDiscussionRequest.data) {
-        dispatch({
-          type: 'GET_USER_DISCUSSION',
-          payload: {
-            userDiscussion: getUserDiscussionRequest.data.data
-          }
-        });
-      }
-    } catch (error) {
-      console.log(error);
       if (error.response.data.msg === 'You have to login first') {
         dispatch({
           type: 'LOGOUT',

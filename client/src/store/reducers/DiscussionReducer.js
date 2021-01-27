@@ -19,8 +19,9 @@ const defaultState = {
   discussions: '',
   discussionCount: '',
   userDiscussion: '',
-  isLoading: false
-}
+  userDiscussionCount: '',
+  isLoading: false,
+};
 
 const reducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -28,12 +29,27 @@ const reducer = (state = defaultState, action) => {
       let setDiscussions = action.payload.discussions;
       let setDiscussionCount = action.payload.discussionCount;
 
-      return {...state, discussions: setDiscussions, discussionCount: setDiscussionCount};
+      return {
+        ...state,
+        discussions: setDiscussions,
+        discussionCount: setDiscussionCount,
+      };
     case 'ADD_DISCUSSION_LIST':
-      let setDiscussionList = state.discussions.concat(action.payload.discussions);
+      let setDiscussionList = state.discussions.concat(
+        action.payload.discussions,
+      );
       let setDiscussionListCount = action.payload.discussionCount;
 
-      return {...state, discussions: setDiscussionList, discussionCount: setDiscussionListCount};
+      return {
+        ...state,
+        discussions: setDiscussionList,
+        discussionCount: setDiscussionListCount,
+      };
+    case 'ADD_USER_DISCUSSION_LIST':
+      let setAddUserDiscussionList = state.userDiscussion.concat(action.payload.discussions);
+      let setAddUserDiscussionCount = action.payload.userDiscussionCount;
+
+      return {...state, userDiscussion: setAddUserDiscussionList, userDiscussionCount: setAddUserDiscussionCount};
     case 'GET_DISCUSSION':
       let setProfileId = action.payload.profileId;
       let setProfilePicture = action.payload.profilePicture;
@@ -69,12 +85,13 @@ const reducer = (state = defaultState, action) => {
         isLike: setIsLike,
         isDislike: setIsDislike,
         type: setType,
-        userType: setUserType
-      }
+        userType: setUserType,
+      };
     case 'GET_USER_DISCUSSION':
-      let setUserDiscussion = action.payload.userDiscussion;
+      let setUserDiscussion = action.payload.discussions;
+      let setUserDiscussionCount = action.payload.discussionCount;
 
-      return {...state, userDiscussion: setUserDiscussion};
+      return {...state, userDiscussion: setUserDiscussion, userDiscussionCount: setUserDiscussionCount};
     case 'CLEAR_DISCUSSION':
       return {
         ...state,
@@ -90,10 +107,10 @@ const reducer = (state = defaultState, action) => {
         plays: '',
         recordingFile: '',
         isLike: '',
-        isDislike: ''
-      }
+        isDislike: '',
+      };
     case 'CLEAR_ALL_DISCUSSION':
-      return {...state, discussions: ''}
+      return {...state, discussions: ''};
     case 'CLEAR_USER_DISCUSSION':
       return {...state, userDiscussion: ''};
     case 'SET_IS_LOADING':

@@ -16,7 +16,10 @@ const defaultState = {
   isLikeForResponse: '',
   isDislikeForResponse: '',
   responseCountForResponse: '',
-  userType: ''
+  userType: '',
+  responseCount: '',
+  responseForResponseCount: '',
+  topResponsePreview: '',
 };
 
 const reducer = (state = defaultState, action) => {
@@ -24,8 +27,32 @@ const reducer = (state = defaultState, action) => {
     case 'GET_RESPONSE':
       let setResponse = action.payload.response;
       let setIsResponse = action.payload.response.length !== 0 ? true : false;
+      let setNumOfResponse = action.payload.responseCount;
 
-      return {...state, response: setResponse, isResponse: setIsResponse};
+      if (setIsResponse !== null && setNumOfResponse !== undefined) {
+        return {
+          ...state,
+          response: setResponse,
+          isResponse: setIsResponse,
+          responseCount: setNumOfResponse,
+        };
+      } else {
+        return {
+          ...state,
+          response: setResponse,
+          isResponse: state.isResponse,
+          responseCount: state.responseCount,
+        };
+      }
+    case 'ADD_RESPONSE':
+      let setAddResponse = state.response.concat(action.payload.response);
+      let setAddResponseCount = action.payload.responseCount;
+
+      return {
+        ...state,
+        response: setAddResponse,
+        responseCount: setAddResponseCount,
+      };
     case 'GET_SINGLE_RESPONSE':
       let setProfileId = action.payload.profileId;
       let setProfilePicture = action.payload.profilePicture;
@@ -40,6 +67,7 @@ const reducer = (state = defaultState, action) => {
       let setCaption = action.payload.caption;
       let setResponseCount = action.payload.responseCount;
       let setUserType = action.payload.userType;
+      let setResponseForResponseCount = action.payload.responseForResponseCount;
 
       return {
         ...state,
@@ -55,20 +83,28 @@ const reducer = (state = defaultState, action) => {
         isDislike: setIsDislike,
         caption: setCaption,
         responseCount: setResponseCount,
-        userType: setUserType
+        userType: setUserType,
+        responseForResponseCount: setResponseForResponseCount,
       };
+    case 'ADD_RESPONSE_FOR_RESPONSE':
+      let setAddResponseForResponse = state.reply.concat(action.payload.reply);
+      let setAddResponseForResponseCount = action.payload.responseForResponseCount;
+
+      return {...state, reply: setAddResponseForResponse, responseForResponseCount: setAddResponseForResponseCount};
     case 'GET_DATA_FOR_RESPONSE':
       let setLikeForResponse = action.payload.likeForResponse;
       let setIsLikeForResponse = action.payload.isLikeForResponse;
       let setIsDislikeForResponse = action.payload.isDislikeForResponse;
       let setResponseCountForResponse = action.payload.responseCountForResponse;
+      let setTopResponsePreview = action.payload.topResponsePreview;
 
       return {
         ...state,
         likeForResponse: setLikeForResponse,
         isLikeForResponse: setIsLikeForResponse,
         isDislikeForResponse: setIsDislikeForResponse,
-        responseCountForResponse: setResponseCountForResponse
+        responseCountForResponse: setResponseCountForResponse,
+        topResponsePreview: setTopResponsePreview,
       };
     case 'CLEAR_RESPONSE':
       return {
@@ -82,7 +118,9 @@ const reducer = (state = defaultState, action) => {
         reply: '',
         isLike: '',
         isDislike: '',
-        caption: ''
+        caption: '',
+        responseCount: '',
+        responseForResponseCount: '',
       };
     case 'CLEAR_RESPONSE_DATA':
       return {
@@ -90,7 +128,7 @@ const reducer = (state = defaultState, action) => {
         likeForResponse: '',
         isLikeForResponse: '',
         isDislikeForResponse: '',
-        responseCountForResponse: ''
+        responseCountForResponse: '',
       };
     default:
       return state;

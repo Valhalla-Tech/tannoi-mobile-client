@@ -15,6 +15,7 @@ import {getDiscussion} from '../../store/actions/DiscussionAction';
 import {
   getResponse,
   getSingleResponse,
+  getResponseData
 } from '../../store/actions/ResponseAction';
 import {userLogout} from '../../store/actions/LoginAction';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -45,6 +46,8 @@ const RecorderModal = (props) => {
     responseScreenResponseId,
     forBio,
     setBioFile,
+    openModalFromHeader,
+    dataForUpdate
   } = props;
 
   const createResponse = async () => {
@@ -89,18 +92,19 @@ const RecorderModal = (props) => {
         if (createResponseRequest.data) {
           setIsLoading(false);
           setValidation(false);
-          dispatch(getResponse(discussionId));
           if (addResponseForResponse) {
-            if (!addResponseForResponseInResponseScreen) {
-              dispatch(getSingleResponse(responseId));
-            }
-            dispatch(getSingleResponse(responseId, 'getDataForResponse'));
+            // if (!addResponseForResponseInResponseScreen) {
+            //   dispatch(getSingleResponse(responseId));
+            // }
+            dispatch(getResponseData(responseId, dataForUpdate));
             dispatch(getSingleResponse(responseScreenResponseId));
+          } else {
+            dispatch(getResponse(discussionId));
           }
-          dispatch(getDiscussion(discussionId));
+          // dispatch(getDiscussion(discussionId));
           setRecordingFile('');
           setCaption('');
-          closeModal();
+          closeModal(openModalFromHeader);
         }
       }
     } catch (error) {

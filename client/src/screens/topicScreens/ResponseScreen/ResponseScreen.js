@@ -11,31 +11,17 @@ import {CalculateHeight} from '../../../helper/CalculateSize';
 
 //Components
 import BackButton from '../../../components/publicComponents/BackButton';
-import DiscussionScreenPlayerCard from '../../../components/topicComponents/discussionScreenComponents/DiscussionScreenPlayerCard';
-import ClosedCard from '../../../components/topicComponents/discussionScreenComponents/ClosedCard';
+import DiscussionAndResponseList from '../../../components/topicComponents/discussionScreenComponents/DiscussionAndResponseList';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 
 const ReplyScreen = ({route, navigation}) => {
   const [fromNextPreviousButton, setFromNextPreviousButton] = useState(false);
   const [selectedCard, setSelectedCard] = useState('response');
 
-  const profileId = useSelector((state) => state.ResponseReducer.profileId);
-  const profilePicture = useSelector(
-    (state) => state.ResponseReducer.profilePicture,
-  );
   const profileName = useSelector((state) => state.ResponseReducer.profileName);
-  const postTime = useSelector((state) => state.ResponseReducer.postTime);
-  const like = useSelector((state) => state.ResponseReducer.like);
-  const recordingFile = useSelector(
-    (state) => state.ResponseReducer.recordingFile,
-  );
   const reply = useSelector((state) => state.ResponseReducer.reply);
   const isLike = useSelector((state) => state.ResponseReducer.isLike);
   const isDislike = useSelector((state) => state.ResponseReducer.isDislike);
-  const caption = useSelector((state) => state.ResponseReducer.caption);
-  const play = useSelector((state) => state.ResponseReducer.play);
-  const profileType = useSelector((state) => state.ResponseReducer.userType);
-  const userType = useSelector((state) => state.HomeReducer.user.type);
 
   const dispatch = useDispatch();
 
@@ -46,7 +32,6 @@ const ReplyScreen = ({route, navigation}) => {
       setSelectedCard('response');
       dispatch(clearResponse());
       dispatch(getSingleResponse(responseId));
-      // dispatch(getResponse(discussionId));
     });
 
     return unsubscribe;
@@ -120,106 +105,22 @@ const ReplyScreen = ({route, navigation}) => {
           <Text style={styles.discussionButton}>Discussion</Text>
         </TouchableOpacity>
       </View>
-      {!profileName && <LoadingSpinner loadingSpinnerForComponent={true} />}
-      <FlatList
-        ListHeaderComponent={
-          <View>
-            {recordingFile !== '' &&
-              (selectedCard === 'response' ? (
-                <DiscussionScreenPlayerCard
-                  cardType="response"
-                  profilePicture={profilePicture}
-                  profileName={profileName}
-                  postTime={postTime}
-                  recordingFile={recordingFile}
-                  nextPlayerAvailable={reply.length > 0 ? true : false}
-                  changePlayer={changePlayer}
-                  fromNextPreviousButton={fromNextPreviousButton}
-                  updateFromNextPreviousButton={updateFromNextPreviousButton}
-                  responseLike={like}
-                  discussionId={discussionId}
-                  responseId={responseId}
-                  cardIndex="response"
-                  getIsLikeAndIsDislike={getIsLikeAndIsDislike}
-                  caption={caption}
-                  navigation={navigation}
-                  profileId={profileId}
-                  profileType={profileType}
-                  userType={userType}
-                  selectedCard={selectedCard}
-                />
-              ) : (
-                <ClosedCard
-                  profilePicture={profilePicture}
-                  profileName={profileName}
-                  cardIndex="response"
-                  selectCard={selectCard}
-                  postTime={postTime}
-                  caption={caption}
-                  responseLike={like}
-                  responseReply={reply.length}
-                  responsePlay={play !== null ? play : 0}
-                  profileType={profileType}
-                />
-              ))}
-          </View>
-        }
-        data={reply}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={(itemData) =>
-          selectedCard === itemData.index ? (
-            <DiscussionScreenPlayerCard
-              navigation={navigation}
-              cardType="response"
-              profilePicture={itemData.item.creator.profile_photo_path}
-              profileName={itemData.item.creator.name}
-              recordingFile={itemData.item.voice_note_path}
-              responseId={itemData.item.id}
-              nextPlayerAvailable={reply.length > 0 ? true : false}
-              cardIndex={itemData.index}
-              cardLength={reply.length}
-              postTime={itemData.item.timeSince}
-              fromNextPreviousButton={fromNextPreviousButton}
-              updateFromNextPreviousButton={updateFromNextPreviousButton}
-              changePlayer={changePlayer}
-              discussionId={discussionId}
-              responseCount={itemData.item.chain_response}
-              isChainResponse={true}
-              mainResponseId={responseId}
-              getIsLikeAndIsDislike={getIsLikeAndIsDislike}
-              caption={itemData.item.caption}
-              responseScreenResponseId={responseId}
-              navigation={navigation}
-              profileId={itemData.item.creator.id}
-              profileType={itemData.item.creator.type}
-              userType={userType}
-              selectedCard={selectedCard}
-              topResponse={itemData.item.chain_response}
-              responseCount={itemData.item.response_count}
-            />
-          ) : (
-            <ClosedCard
-              profilePicture={itemData.item.creator.profile_photo_path}
-              cardIndex={itemData.index}
-              selectCard={selectCard}
-              profileName={itemData.item.creator.name}
-              postTime={itemData.item.timeSince}
-              caption={itemData.item.caption}
-              responseLike={itemData.item.likes}
-              responseReply={itemData.item.response_count}
-              responsePlay={
-                itemData.item.play_count !== null ? itemData.item.play_count : 0
-              }
-              profileType={itemData.item.creator.type}
-              navigation={navigation}
-              topResponse={itemData.item.chain_response}
-              responseCount={itemData.item.response_count}
-              discussionId={discussionId}
-              responseId={itemData.item.id}
-            />
-          )
-        }
-      />
+      {!profileName ? (
+        <LoadingSpinner loadingSpinnerForComponent={true} />
+      ) : (
+        <DiscussionAndResponseList
+          isResponseScreen={true}
+          changePlayer={changePlayer}
+          discussionId={discussionId}
+          fromNextPreviousButton={fromNextPreviousButton}
+          updateFromNextPreviousButton={updateFromNextPreviousButton}
+          navigation={navigation}
+          selectCard={selectCard}
+          selectedCard={selectedCard}
+          getIsLikeAndIsDislike={getIsLikeAndIsDislike}
+          responseId={responseId}
+        />
+      )}
     </View>
   );
 };

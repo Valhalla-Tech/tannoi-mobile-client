@@ -1,8 +1,4 @@
-import {
-  createStore,
-  combineReducers,
-  applyMiddleware
-} from 'redux';
+import {createStore, combineReducers, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 
 //Reducers
@@ -16,6 +12,7 @@ import VerificationReducer from './reducers/VerificationReducer';
 import PrivateDiscussionReducer from './reducers/PrivateDiscussionReducer';
 import SearchReducer from './reducers/SearchReducer';
 import PlayerReducer from './reducers/PlayerReducer';
+import CreateCommunityReducer from './reducers/CreateCommunityReducer';
 
 const reducer = combineReducers({
   LoginReducer,
@@ -27,7 +24,8 @@ const reducer = combineReducers({
   VerificationReducer,
   PrivateDiscussionReducer,
   SearchReducer,
-  PlayerReducer
+  PlayerReducer,
+  CreateCommunityReducer,
 });
 
 const store = createStore(reducer, applyMiddleware(thunk));

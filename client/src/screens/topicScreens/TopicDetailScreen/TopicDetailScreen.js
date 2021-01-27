@@ -18,6 +18,7 @@ import {getSingleTopic} from '../../../store/actions/TopicAction';
 
 const TopicDetail = (props) => {
   const [noticeModal, setNoticeModal] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const {route, navigation} = props;
 
@@ -37,6 +38,10 @@ const TopicDetail = (props) => {
   const discussions = useSelector(
     (state) => state.DiscussionReducer.discussions,
   );
+  const discussionCount = useSelector(
+    (state) => state.DiscussionReducer.discussionCount,
+  );
+
   const {description} = useSelector((state) => state.TopicReducer.topic);
 
   const openModal = () => {
@@ -45,6 +50,10 @@ const TopicDetail = (props) => {
 
   const closeModal = () => {
     setNoticeModal(false);
+  };
+
+  const changeCurrentPage = (input) => {
+    setCurrentPage(input);
   };
 
   const noticeModalChild = () => {
@@ -97,6 +106,15 @@ const TopicDetail = (props) => {
                 navigation={navigation}
                 openModal={openModal}
                 isFilter={true}
+                sectionQuery="topic_id="
+                queryId={topicId}
+                currentPage={currentPage}
+                changeCurrentPage={changeCurrentPage}
+                useMoreButton={
+                  discussionCount > 20 &&
+                  discussions.length < discussionCount &&
+                  true
+                }
               />
             </View>
             <NoticeModal
@@ -126,6 +144,7 @@ const styles = StyleSheet.create({
 
   listContainerStyle: {
     paddingHorizontal: GlobalPadding,
+    marginBottom: '10%',
   },
 
   newDiscussionButtonStyle: {

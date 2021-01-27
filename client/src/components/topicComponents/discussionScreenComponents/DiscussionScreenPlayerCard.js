@@ -10,10 +10,10 @@ import {
   getSingleResponse,
   clearResponse,
   editResponse,
+  getResponseData,
 } from '../../../store/actions/ResponseAction';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
-import {GenerateDeepLink} from '../../../helper/GenerateDeepLink';
 
 //Icons
 import Upvote from '../../../assets/topicAssets/upvote.svg';
@@ -65,13 +65,10 @@ class DiscussionScreenPlayerCard extends Component {
   componentDidMount() {
     this._isMounted = true;
     this.state.cardIndex !== 'discussion' &&
-      this.props.getSingleResponse(this.state.responseId, 'getDataForResponse');
+      this.props.getResponseData(this.props.responseId);
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
       this.state.cardIndex !== 'discussion' &&
-        this.props.getSingleResponse(
-          this.state.responseId,
-          'getDataForResponse',
-        );
+        this.props.getResponseData(this.props.responseId);
     });
 
     this.props.clearResponse(true);
@@ -113,12 +110,6 @@ class DiscussionScreenPlayerCard extends Component {
         });
 
         if (responsePlayCounterRequest.data) {
-          if (this.props.responseScreenResponseId) {
-            // this.props.getSingleResponse(this.props.responseScreenResponseId);
-          } else if (this.state.responseId) {
-            // this.props.getSingleResponse(this.state.responseId);
-            // this.props.getResponse(this.state.discussionId);
-          }
         }
       } else {
         let playCounterRequest = await axios({
@@ -130,7 +121,6 @@ class DiscussionScreenPlayerCard extends Component {
         });
 
         if (playCounterRequest.data) {
-          // this.props.getDiscussion(this.state.discussionId);
         }
       }
     } catch (error) {
@@ -152,10 +142,7 @@ class DiscussionScreenPlayerCard extends Component {
         });
 
         if (upvoteRequest.data) {
-          this.props.getSingleResponse(
-            this.state.responseId,
-            'getDataForResponse',
-          );
+          this.props.getResponseData(this.props.responseId);
         }
       } else {
         this.props.navigation.navigate('VerificationNavigation');
@@ -179,10 +166,7 @@ class DiscussionScreenPlayerCard extends Component {
         });
 
         if (downvoteRequest.data) {
-          this.props.getSingleResponse(
-            this.state.responseId,
-            'getDataForResponse',
-          );
+          this.props.getResponseData(this.props.responseId);
         }
       } else {
         this.props.navigation.navigate('VerificationNavigation');
@@ -288,21 +272,6 @@ class DiscussionScreenPlayerCard extends Component {
     );
   };
 
-  // ReplyButton = () => {
-  //   return (
-  //     <View style={styles.showReplyButtonContainerStyle}>
-  //       <TouchableOpacity
-  //         onPress={() => this.props.navigation.push('ResponseScreen', {
-  //           responseId: this.state.responseId,
-  //           discussionId: this.state.discussionId
-  //         })}
-  //       >
-  //       <Text style={styles.showReplyButtonTextStyle}>{this.props.responseCountForResponse} Rep{this.props.responseCountForResponse > 1 ? 'lies' : 'ly'}</Text>
-  //       </TouchableOpacity>
-  //     </View>
-  //   );
-  // };
-
   render() {
     return (
       <View
@@ -346,24 +315,22 @@ class DiscussionScreenPlayerCard extends Component {
             this.playCounter(this.state.responseId ? true : false)
           }
         />
-        {this.props.topResponse && this.props.topResponse.length > 0 && (
-          <TopResponsePreview
-            navigation={this.props.navigation}
-            topResponseData={this.props.topResponse}
-            discussionId={this.props.discussionId}
-            customStyle={{
-              marginTop: '6%',
-            }}
-            responseCount={this.props.responseCount}
-            responseId={this.props.responseId}
-          />
-        )}
+        {this.props.cardIndex !== 'discussion' &&
+          this.props.cardIndex !== 'response' &&
+          // this.props.topResponsePreview &&
+          this.props.topResponsePreview.length > 0 && (
+            <TopResponsePreview
+              navigation={this.props.navigation}
+              topResponseData={this.props.topResponsePreview}
+              discussionId={this.props.discussionId}
+              customStyle={{
+                marginTop: '6%',
+              }}
+              responseCount={this.props.responseCountForResponse}
+              responseId={this.props.responseId}
+            />
+          )}
         {this.state.cardType === 'response' && <this.VoteAndResponse />}
-        {/* {
-          this.props.responseCountForResponse >= 1 && this.state.cardIndex !== 'response' && this.state.cardType !== 'discussion' && (
-            <this.ReplyButton />
-          )
-        } */}
         <AddResponse
           openModal={this.state.openAddResponseModal}
           closeModal={this.closeAddResponseModal}
@@ -374,6 +341,8 @@ class DiscussionScreenPlayerCard extends Component {
             this.state.cardIndex !== 'response' ? true : false
           }
           responseScreenResponseId={this.props.responseScreenResponseId}
+          openModalFromHeader={false}
+          dataForUpdate={this.props.response}
         />
       </View>
     );
@@ -387,6 +356,8 @@ const mapStateToProps = (state) => {
     isDislikeForResponse: state.ResponseReducer.isDislikeForResponse,
     responseCountForResponse: state.ResponseReducer.responseCountForResponse,
     userData: state.HomeReducer.user,
+    topResponsePreview: state.ResponseReducer.topResponsePreview,
+    response: state.ResponseReducer.response,
   };
 };
 
@@ -399,6 +370,7 @@ const dispatchUpdate = () => {
     getSingleResponse,
     clearResponse,
     editResponse,
+    getResponseData,
   };
 };
 
