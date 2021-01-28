@@ -23,6 +23,7 @@ import TopicIcon from '../../assets/communitiesAssets/ic-topics.svg';
 //Components
 import CreateCommunityHeader from '../../components/communityComponent/CreateCommunityHeader';
 import CreateCommunityInput from '../../components/communityComponent/CreateCommunityInput';
+import CreateCommunityTopicInput from '../../components/communityComponent/CreateCommunityTopicInput';
 import CreateCommunityProgress from '../../components/communityComponent/CreateCommunityProgress';
 import Button from '../../components/publicComponents/Button';
 import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
@@ -173,7 +174,7 @@ const CreateCommunityTopicScreen = ({navigation}) => {
                 <Text style={styles.topicDisplayStyle}>{item.value}</Text>
               </LinearTextGradient>
             ) : (
-              <CreateCommunityInput
+              <CreateCommunityTopicInput
                 placeholder={item.name}
                 customStyle={{
                   fontSize: CalculateHeight(3),
@@ -243,7 +244,7 @@ const styles = StyleSheet.create({
   },
 
   inputListContainerStyle: {
-    marginTop: '30%',
+    marginTop: '20%',
     paddingBottom: '20%',
   },
 
@@ -251,7 +252,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: '10%',
+    marginTop: '7%',
   },
 
   topicInputContainerStyle: {
