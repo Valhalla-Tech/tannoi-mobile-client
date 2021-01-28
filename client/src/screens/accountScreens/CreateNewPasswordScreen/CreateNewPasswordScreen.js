@@ -51,7 +51,6 @@ const CreateNewPasswordScreen = ({route, navigation}) => {
           );
 
           if (submitNewPasswordRequest.data) {
-            // navigation.navigate('LoginWithEmailScreen');
             setOpenModal(true);
           }
         } else {

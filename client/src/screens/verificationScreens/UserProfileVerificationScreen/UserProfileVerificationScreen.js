@@ -19,6 +19,7 @@ import {
 } from '../../../store/actions/VerificationAction';
 import {bold, normal} from '../../../assets/FontSize';
 import {ScreenHeight} from '../../../constants/Size';
+import DisplayBirthDate from '../../../helper/DisplayBirthDate';
 
 //Image
 import ScreenImage from '../../../assets/verificationAssets/Illustration-Tannoi-Apps-02.png';
@@ -127,14 +128,7 @@ const UserProfileVerificationScreen = ({navigation}) => {
 
   const displayBirthDate = (selectedDate, fromDateInput) => {
     if (birthDateFromStore !== '' || fromDateInput) {
-      let selectedBirthDate = selectedDate
-        .toDateString()
-        .split(' ')
-        .slice(1, 4);
-      if (selectedBirthDate[1][0] === '0') {
-        selectedBirthDate[1] = selectedBirthDate[1][1];
-      }
-      let birthDateDisplay = `${selectedBirthDate[1]} ${selectedBirthDate[0]} ${selectedBirthDate[2]}`;
+      let birthDateDisplay = DisplayBirthDate(new Date(selectedDate));
       setBirthDateDisplay(birthDateDisplay);
     }
   };

@@ -56,25 +56,23 @@ const CommunityGuidelineScreen = ({navigation}) => {
         </Text>
         <View style={styles.progressContainerStyle}>
           <CreateCommunityProgress stepNumber={3} />
-          {guideline.length > 0 && (
-            <Button
-              buttonStyle={{
-                color: '#FFFFFF',
-                backgroundColor: '#5152D0',
-                borderWidth: 0,
-                width: '25%',
-                marginBottom: 0,
-                fontSize: 15,
-                padding: 0,
-                paddingVertical: '1%',
-              }}
-              buttonTitle="OK"
-              buttonFunction={() => {
-                dispatch(addGuideline(guideline, privateCommunity ? 2 : 1));
-                navigation.navigate('CreateCommunityTopicScreen');
-              }}
-            />
-          )}
+          <Button
+            buttonStyle={{
+              color: '#FFFFFF',
+              backgroundColor: '#5152D0',
+              borderWidth: 0,
+              width: '25%',
+              marginBottom: 0,
+              fontSize: 15,
+              padding: 0,
+              paddingVertical: '1%',
+            }}
+            buttonTitle="OK"
+            buttonFunction={() => {
+              dispatch(addGuideline(guideline, privateCommunity ? 2 : 1));
+              navigation.navigate('CreateCommunityTopicScreen');
+            }}
+          />
         </View>
       </View>
     );

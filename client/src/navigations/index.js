@@ -30,6 +30,7 @@ import HomeSectionDetailScreen from '../screens/homeScreens/HomeSectionDetailScr
 import HashtagDetailScreen from '../screens/homeScreens/HashtagDetailScreen';
 import NotificationSettingsScreen from '../screens/meScreens/NotificationSettingsScreen';
 import CommunitiesScreen from '../screens/communitiesScreens/CommunitiesScreen';
+import BrowseCommunityScreen from '../screens/communitiesScreens/BrowseCommunityScreen';
 
 const Stack = createStackNavigator();
 
@@ -221,6 +222,10 @@ const NavigationIndex = () => {
           <Stack.Screen
             name="CreateCommunityNavigation"
             component={CreateCommunityNavigation}
+          />
+          <Stack.Screen
+            name="BrowseCommunityScreen"
+            component={BrowseCommunityScreen}
           />
         </>
       ) : (

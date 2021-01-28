@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import BaseUrl from '../../constants/BaseUrl';
 import {useSelector, useDispatch} from 'react-redux';
 import { clearData } from '../../store/actions/CreateCommunityAction';
+import {LinearTextGradient} from 'react-native-text-gradient';
 
 //Icon
 import TopicIcon from '../../assets/communitiesAssets/ic-topics.svg';
@@ -47,7 +48,7 @@ const CreateCommunityTopicScreen = ({navigation}) => {
   const dispatch = useDispatch();
 
   const addTopic = (id) => {
-    if (inputHolder !== '') {
+    if (inputHolder.trim() !== '') {
       setTopic((prevValue) => [...prevValue, inputHolder]);
       inputList.forEach((data) => {
         if (data.id === id) {
@@ -157,13 +158,20 @@ const CreateCommunityTopicScreen = ({navigation}) => {
             <View
               style={
                 item.value !== ''
-                  ? {...styles.topicIconStyle, marginTop: '8%'}
+                  ? {...styles.topicIconStyle, marginTop: '5%'}
                   : styles.topicIconStyle
               }>
               <TopicIcon />
             </View>
             {item.value !== '' ? (
-              <Text style={styles.topicDisplayStyle}>{item.value}</Text>
+              <LinearTextGradient
+              style={{fontWeight: 'bold', fontSize: CalculateHeight(3), marginLeft: '7.5%'}}
+              locations={[0, 1]}
+              colors={['#5051DB', '#7E37B6']}
+              start={{x: 0, y: 0}}
+              end={{x: 1, y: 0}}>
+                <Text style={styles.topicDisplayStyle}>{item.value}</Text>
+              </LinearTextGradient>
             ) : (
               <CreateCommunityInput
                 placeholder={item.name}

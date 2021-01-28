@@ -8,9 +8,10 @@ import {
   Keyboard,
   Image,
 } from 'react-native';
-import { CalculateWidth } from '../../helper/CalculateSize';
+import {CalculateWidth, CalculateHeight} from '../../helper/CalculateSize';
 import {useDispatch, useSelector} from 'react-redux';
 import {addName} from '../../store/actions/CreateCommunityAction';
+import {LinearTextGradient} from 'react-native-text-gradient';
 
 //Icon
 import NoProfileIcon from '../../assets/communitiesAssets/img-no-profile-pic.svg';
@@ -25,11 +26,18 @@ import {UploadImage} from '../../helper/UploadImage';
 const CommunityNameScreen = ({navigation}) => {
   const [communityName, setCommunityName] = useState('');
   const [communityProfileImage, setCommunityProfileImage] = useState('');
+  const [textDisplay, setTextDisplay] = useState('');
+  const [editMode, setEditMode] = useState(true);
 
   const dispatch = useDispatch();
 
   const inputCommunityName = (value) => {
     setCommunityName(value);
+  };
+
+  const onBlur = () => {
+    setEditMode(false);
+    setTextDisplay(communityName);
   };
 
   return (
@@ -50,22 +58,41 @@ const CommunityNameScreen = ({navigation}) => {
               }
               style={styles.communityProfilePictureButtonStyle}>
               {communityProfileImage !== '' ? (
-                <Image source={{uri: communityProfileImage}} style={styles.communityProfileImageStyle} />
+                <Image
+                  source={{uri: communityProfileImage}}
+                  style={styles.communityProfileImageStyle}
+                />
               ) : (
                 <NoProfileIcon />
               )}
             </TouchableOpacity>
-            <CreateCommunityInput
-              placeholder="Community Name"
-              inputFunction={inputCommunityName}
-            />
+            {textDisplay !== '' && !editMode ? (
+              <TouchableOpacity style={styles.textDisplayButtonStyle} onPress={() => setEditMode(true)}>
+                <LinearTextGradient
+                  style={{fontWeight: 'bold', fontSize: CalculateHeight(3.5)}}
+                  locations={[0, 1]}
+                  colors={['#5051DB', '#7E37B6']}
+                  start={{x: 0, y: 0}}
+                  end={{x: 1, y: 0}}>
+                  <Text>{textDisplay}</Text>
+                </LinearTextGradient>
+              </TouchableOpacity>
+            ) : (
+              <CreateCommunityInput
+                placeholder="Community Name"
+                inputFunction={inputCommunityName}
+                onBlur={onBlur}
+                value={communityName}
+                autoFocus={editMode && textDisplay !== ''}
+              />
+            )}
             <Text style={styles.instructionTextStyle}>
               eg: Newcastle United Fans
             </Text>
           </View>
           <View style={styles.footerContainerStyle}>
             <CreateCommunityProgress stepNumber={1} />
-            {communityName.length > 0 && (
+            {communityName.trim().length > 0 && (
               <Button
                 buttonStyle={{
                   color: '#FFFFFF',
@@ -78,7 +105,7 @@ const CommunityNameScreen = ({navigation}) => {
                   paddingVertical: '1%',
                 }}
                 buttonTitle="OK"
-                buttonFunction={() =>{
+                buttonFunction={() => {
                   dispatch(addName(communityName, communityProfileImage));
                   navigation.navigate('CommunityDescriptionScreen');
                 }}
@@ -108,7 +135,11 @@ const styles = StyleSheet.create({
   communityProfileImageStyle: {
     height: CalculateWidth(20),
     width: CalculateWidth(20),
-    borderRadius: 50
+    borderRadius: 50,
+  },
+
+  textDisplayButtonStyle: {
+    marginLeft: '1%'
   },
 
   instructionTextStyle: {

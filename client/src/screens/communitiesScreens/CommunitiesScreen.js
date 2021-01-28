@@ -7,14 +7,25 @@ import { GlobalPadding } from '../../constants/Size';
 //Components
 import Card from '../../components/publicComponents/Card';
 import Header from '../../components/publicComponents/Header';
+import BackButton from '../../components/publicComponents/BackButton';
 
 const CommunitiesScreen = ({navigation}) => {
   const HeaderContent = () => {
     return (
       <>
         <View style={styles.headerContentStyle}>
-          <Text style={styles.headerTextStyle}>Communities</Text>
-          <TouchableOpacity>
+          <View style={styles.backButtonAndTitleContainerStyle}>
+            <BackButton
+              navigation={navigation}
+              styleOption={{
+                marginTop: 0,
+                marginBottom: 0,
+                marginRight: '5%'
+              }}
+            />
+            <Text style={styles.headerTextStyle}>Communities</Text>
+          </View>
+          <TouchableOpacity onPress={() => navigation.navigate('BrowseCommunityScreen')}>
             <Text style={styles.headerButtonTextStyle}>Browse Community</Text>
           </TouchableOpacity>
         </View>
@@ -51,6 +62,11 @@ const styles = StyleSheet.create({
   headerContentStyle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+
+  backButtonAndTitleContainerStyle: {
+    flexDirection: 'row',
     alignItems: 'center'
   },
 
