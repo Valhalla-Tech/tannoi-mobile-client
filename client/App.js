@@ -5,14 +5,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { 
   Provider
 } from 'react-redux';
-import store from './store';
+import store from './src/store';
 import {
   KeyboardAvoidingView
 } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 
 //Navigation
-import NavigationIndex from './navigations';
+import NavigationIndex from './src/navigations';
 
 const Stack = createStackNavigator();
 
