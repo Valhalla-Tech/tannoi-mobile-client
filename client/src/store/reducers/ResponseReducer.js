@@ -109,7 +109,6 @@ const reducer = (state = defaultState, action) => {
     case 'CLEAR_RESPONSE':
       return {
         ...state,
-        response: [],
         profilePicture: '',
         profileName: '',
         postTime: '',
@@ -122,6 +121,11 @@ const reducer = (state = defaultState, action) => {
         responseCount: '',
         responseForResponseCount: '',
       };
+    case 'CLEAR_RESPONSES':
+      return {
+        ...state,
+        response: [],
+      };
     case 'CLEAR_RESPONSE_DATA':
       return {
         ...state,
@@ -129,6 +133,7 @@ const reducer = (state = defaultState, action) => {
         isLikeForResponse: '',
         isDislikeForResponse: '',
         responseCountForResponse: '',
+        topResponsePreview: '',
       };
     default:
       return state;

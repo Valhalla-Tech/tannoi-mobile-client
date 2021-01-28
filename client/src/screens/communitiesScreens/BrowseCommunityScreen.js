@@ -135,7 +135,6 @@ const styles = StyleSheet.create({
   communityDataContainerStyle: {
     marginLeft: '5%',
     height: '90%',
-    justifyContent: 'space-between'
   },
 
   communityNameStyle: {

@@ -195,11 +195,15 @@ export const editResponse = (
   };
 };
 
-export const clearResponse = (clearResponseData) => {
+export const clearResponse = (clearResponseData, clearResponses) => {
   return (dispatch) => {
     if (clearResponseData) {
       dispatch({
         type: 'CLEAR_RESPONSE_DATA',
+      });
+    } else if (clearResponses) {
+      dispatch({
+        type: 'CLEAR_RESPONSES',
       });
     } else {
       dispatch({
