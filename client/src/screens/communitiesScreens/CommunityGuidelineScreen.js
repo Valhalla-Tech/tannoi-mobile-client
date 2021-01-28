@@ -52,7 +52,7 @@ const CommunityGuidelineScreen = ({navigation}) => {
         </View>
         <Text style={styles.privateCommuityInstructionTextStyle}>
           When a community is set to private, members of your community can only
-          view or join it by invitation.
+          view or join by invitation.
         </Text>
         <View style={styles.progressContainerStyle}>
           <CreateCommunityProgress stepNumber={3} />
@@ -86,10 +86,10 @@ const CommunityGuidelineScreen = ({navigation}) => {
           <View style={styles.communityGuidelineContainerStyle}>
             <View>
               <Text style={styles.guidelineTextStyle}>
-                Guidelines of community (optional)
+                Guidelines of your community (optional)
               </Text>
               <CreateCommunityInput
-                placeholder="Write guidelines of your community"
+                placeholder="Tell us the guidelines of your community"
                 customStyle={{
                   fontSize: CalculateHeight(2),
                 }}
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   },
 
   guidelineTextStyle: {
-    marginTop: '30%',
+    marginTop: '20%',
     fontFamily: normal,
     fontSize: CalculateHeight(2),
     marginLeft: '.8%',
@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginTop: '3%',
     marginBottom: '1.5%',
   },
 

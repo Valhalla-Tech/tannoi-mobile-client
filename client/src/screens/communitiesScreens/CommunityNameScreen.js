@@ -88,7 +88,7 @@ const CommunityNameScreen = ({navigation}) => {
               />
             )}
             <Text style={styles.instructionTextStyle}>
-              eg: Newcastle United Fans
+              eg: Arsenal FC Fans
             </Text>
           </View>
           <View style={styles.footerContainerStyle}>
