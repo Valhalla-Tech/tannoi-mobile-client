@@ -165,7 +165,7 @@ const CreateCommunityTopicScreen = ({navigation}) => {
             </View>
             {item.value !== '' ? (
               <LinearTextGradient
-              style={{fontWeight: 'bold', fontSize: CalculateHeight(3), marginLeft: '7.5%'}}
+              style={{fontFamily: normal, fontSize: CalculateHeight(3), marginLeft: '7.5%'}}
               locations={[0, 1]}
               colors={['#5051DB', '#7E37B6']}
               start={{x: 0, y: 0}}

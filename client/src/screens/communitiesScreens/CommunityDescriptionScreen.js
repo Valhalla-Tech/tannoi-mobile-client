@@ -11,6 +11,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {addDescription} from '../../store/actions/CreateCommunityAction';
 import {LinearTextGradient} from 'react-native-text-gradient';
 import {CalculateHeight} from '../../helper/CalculateSize';
+import {normal} from '../../assets/FontSize';
 
 //Components
 import CreateCommunityHeader from '../../components/communityComponent/CreateCommunityHeader';
@@ -50,7 +51,7 @@ const CommunityDescriptionScreen = ({navigation}) => {
               style={styles.textDisplayButtonStyle}
               onPress={() => setEditMode(true)}>
               <LinearTextGradient
-                style={{fontWeight: 'bold', fontSize: CalculateHeight(3.5)}}
+                style={{fontFamily: normal, fontSize: CalculateHeight(3.5)}}
                 locations={[0, 1]}
                 colors={['#5051DB', '#7E37B6']}
                 start={{x: 0, y: 0}}

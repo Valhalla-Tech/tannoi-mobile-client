@@ -12,6 +12,7 @@ import {CalculateWidth, CalculateHeight} from '../../helper/CalculateSize';
 import {useDispatch, useSelector} from 'react-redux';
 import {addName} from '../../store/actions/CreateCommunityAction';
 import {LinearTextGradient} from 'react-native-text-gradient';
+import {normal} from '../../assets/FontSize';
 
 //Icon
 import NoProfileIcon from '../../assets/communitiesAssets/img-no-profile-pic.svg';
@@ -69,7 +70,7 @@ const CommunityNameScreen = ({navigation}) => {
             {textDisplay !== '' && !editMode ? (
               <TouchableOpacity style={styles.textDisplayButtonStyle} onPress={() => setEditMode(true)}>
                 <LinearTextGradient
-                  style={{fontWeight: 'bold', fontSize: CalculateHeight(3.5)}}
+                  style={{fontFamily: normal, fontSize: CalculateHeight(3.5)}}
                   locations={[0, 1]}
                   colors={['#5051DB', '#7E37B6']}
                   start={{x: 0, y: 0}}
