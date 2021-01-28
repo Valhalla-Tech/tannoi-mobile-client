@@ -61,7 +61,7 @@ const CommunityDescriptionScreen = ({navigation}) => {
             </TouchableOpacity>
           ) : (
             <CreateCommunityInput
-              placeholder="Tell us about your community"
+              placeholder="Tell us more about your community"
               customStyle={{
                 marginTop: '30%',
               }}
