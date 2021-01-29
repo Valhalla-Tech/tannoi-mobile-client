@@ -36,18 +36,9 @@ const DiscussionScreen = ({route, navigation}) => {
   useEffect(() => {
     setOpenAddRespone(false);
     dispatch(clearDiscussion());
-    dispatch(clearResponse());
+    dispatch(clearResponse(null, true));
     dispatch(getDiscussion(discussionId, true));
     dispatch(getResponse(discussionId));
-  }, [navigation]);
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      dispatch(clearResponse());
-      dispatch(getResponse(discussionId));
-    });
-
-    return unsubscribe;
   }, [navigation]);
 
   const closeAddResponseModal = (openModalFromHeader) => {

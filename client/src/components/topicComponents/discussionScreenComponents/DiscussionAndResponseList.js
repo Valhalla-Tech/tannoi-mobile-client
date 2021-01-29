@@ -30,9 +30,6 @@ const DiscussionAndResponseList = (props) => {
   } = props;
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [responseData, setResponseData] = useState([]);
-  const [responseCountData, setResponseCountData] = useState('');
-  const [firstRender, setFirstRender] = useState(true);
 
   // useEffect(() => {
   //   setCurrentPage(1);
@@ -105,14 +102,13 @@ const DiscussionAndResponseList = (props) => {
   const responseForResponseCount = useSelector(
     (state) => state.ResponseReducer.responseForResponseCount,
   );
-
+  console.log(response)
   useEffect(() => {
     response;
   }, [response]);
 
   const nextPage = () => {
     setCurrentPage((prevState) => prevState + 1);
-    setFirstRender(true);
     isResponseScreen
       ? dispatch(getSingleResponse(responseId, currentPage + 1))
       : dispatch(getResponse(discussionId, currentPage + 1));
