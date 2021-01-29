@@ -17,7 +17,7 @@ import BaseUrl from '../../constants/BaseUrl';
 //Components
 import Header from '../../components/publicComponents/Header';
 import BackButton from '../../components/publicComponents/BackButton';
-import Card from '../../components/publicComponents/Card';
+import CommunityList from '../../components/communityComponent/CommunityList';
 
 const BrowseCommunityScreen = ({navigation}) => {
   const [communities, setCommunities] = useState('');
@@ -61,34 +61,11 @@ const BrowseCommunityScreen = ({navigation}) => {
     );
   };
 
-  const RenderCommunity = (itemData) => {
-    return (
-      <TouchableOpacity style={styles.communityContainerStyle}>
-        <Image source={{uri: itemData.item.image_path}} style={styles.communityProfileImageStyle} />
-        <View style={styles.communityDataContainerStyle}>
-          <Text style={styles.communityNameStyle}>{itemData.item.name}</Text>
-          <Text style={styles.communityDescriptionStyle}>{itemData.item.description}</Text>
-          <Text style={styles.communityMemberStyle}>{itemData.item.member_count} member{itemData.item.member_count > 1 ? 's' : null}</Text>
-        </View>
-      </TouchableOpacity>
-    );
-  };
-
-  const CommunityList = () => {
-    return (
-      <FlatList
-        data={communities}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={RenderCommunity}
-      />
-    );
-  };
-
   return (
     <View>
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
       <View style={styles.browseCommunityContainerStyle}>
-        <Card child={CommunityList} customStyle={styles.communityListCustomStyle} />
+        <CommunityList communities={communities} navigation={navigation} />
       </View>
     </View>
   );
@@ -97,8 +74,7 @@ const BrowseCommunityScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   headerStyle: {
     flexDirection: 'row',
-    paddingVertical: '3%',
-    paddingHorizontal: '5%',
+    padding: '3%',
     alignItems: 'center',
   },
 
@@ -125,33 +101,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#E3E6EB'
   },
-
-  communityProfileImageStyle: {
-    width: CalculateWidth(15),
-    height: CalculateWidth(15),
-    borderRadius: 50
-  },
-
-  communityDataContainerStyle: {
-    marginLeft: '5%',
-    height: '90%',
-  },
-
-  communityNameStyle: {
-    fontFamily: normal,
-    fontSize: CalculateHeight(2)
-  },
-
-  communityDescriptionStyle: {
-    fontFamily: normal,
-    color: '#73798C',
-    fontSize: CalculateHeight(1.8)
-  },
-
-  communityMemberStyle: {
-    fontFamily: normal,
-    color: '#73798C'
-  }
 });
 
 export default BrowseCommunityScreen;
