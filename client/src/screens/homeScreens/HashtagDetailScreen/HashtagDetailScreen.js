@@ -63,7 +63,7 @@ const HashtagDetailScreen = ({route, navigation}) => {
   };
 
   return (
-    <View>
+    <View style={{flex: 1}}>
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
       <View style={styles.hashtagDetailContainerStyle}>
         <ListHeader

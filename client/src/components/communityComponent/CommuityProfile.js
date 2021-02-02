@@ -11,11 +11,11 @@ import Header from '../publicComponents/Header';
 import Card from '../../components/publicComponents/Card';
 import BackButton from '../publicComponents/BackButton';
 import {CalculateHeight, CalculateWidth} from '../../helper/CalculateSize';
+import Button from '../publicComponents/Button';
+import LoadingSpinner from '../publicComponents/LoadingSpinner';
 
 const CommunityProfile = (props) => {
-  const {navigation, profile} = props;
-
-  const [selectedDisplay, setSelectedDisplay] = useState('discussions');
+  const {navigation, profile, selectedDisplay, changeSelectedDisplay} = props;
 
   const HeaderContent = () => {
     return (
@@ -37,24 +37,44 @@ const CommunityProfile = (props) => {
         <TouchableOpacity
           style={
             selectedDisplay === 'discussions'
-              ? {...styles.displayButtonStyle, borderBottomWidth: 1, borderBottomColor: '#5152D0'}
+              ? {
+                  ...styles.displayButtonStyle,
+                  borderBottomWidth: 1,
+                  borderBottomColor: '#5152D0',
+                }
               : styles.displayButtonStyle
           }
-          onPress={() => setSelectedDisplay('discussions')}
-          disabled={selectedDisplay === 'discussions' ? true : false}
-          >
-          <Text style={selectedDisplay === 'discussions' ? {...styles.displayButtonTextStyle, color: '#5152D0'} : styles.displayButtonTextStyle}>Discussions</Text>
+          onPress={() => changeSelectedDisplay('discussions')}
+          disabled={selectedDisplay === 'discussions' ? true : false}>
+          <Text
+            style={
+              selectedDisplay === 'discussions'
+                ? {...styles.displayButtonTextStyle, color: '#5152D0'}
+                : styles.displayButtonTextStyle
+            }>
+            Discussions
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={
             selectedDisplay === 'members'
-              ? {...styles.displayButtonStyle, borderBottomWidth: 1, borderBottomColor: '#5152D0'}
+              ? {
+                  ...styles.displayButtonStyle,
+                  borderBottomWidth: 1,
+                  borderBottomColor: '#5152D0',
+                }
               : styles.displayButtonStyle
           }
-          onPress={() => setSelectedDisplay('members')}
-          disabled={selectedDisplay === 'members' ? true : false}
-          >
-          <Text style={selectedDisplay === 'members' ? {...styles.displayButtonTextStyle, color: '#5152D0'} : styles.displayButtonTextStyle}>Members</Text>
+          onPress={() => changeSelectedDisplay('members')}
+          disabled={selectedDisplay === 'members' ? true : false}>
+          <Text
+            style={
+              selectedDisplay === 'members'
+                ? {...styles.displayButtonTextStyle, color: '#5152D0'}
+                : styles.displayButtonTextStyle
+            }>
+            Members
+          </Text>
         </TouchableOpacity>
       </View>
     );
@@ -63,46 +83,73 @@ const CommunityProfile = (props) => {
   const CommunityProfileContent = () => {
     return (
       <>
-        <View style={styles.communityProfileContainerStyle}>
-          <View style={styles.communityDataContainerStyle}>
-            <View style={styles.communityNameContainerStyle}>
-            <Text style={styles.communityNameStyle}>{profile.name}</Text>
-            </View>
-            <Text style={styles.communityDescriptionStyle}>
-              {profile.description}
-            </Text>
-            <View style={styles.createdAndUniqueCodeContainerStyle}>
-              <View>
-                <Text style={styles.createdAndUniqueCodeStyle}>
-                  Created March 2020
+        {profile === '' ? (
+          <LoadingSpinner loadingSpinnerForComponent={true} />
+        ) : (
+          <>
+            <View style={styles.communityProfileContainerStyle}>
+              <View style={styles.communityDataContainerStyle}>
+                <View style={styles.communityNameContainerStyle}>
+                  <Text style={styles.communityNameStyle}>{profile.name}</Text>
+                </View>
+                <Text style={styles.communityDescriptionStyle}>
+                  {profile.description}
                 </Text>
+                <View style={styles.createdAndUniqueCodeContainerStyle}>
+                  <View>
+                    <Text style={styles.createdAndUniqueCodeStyle}>
+                      Created {profile.created}
+                    </Text>
+                  </View>
+                  <View>
+                    <Text style={styles.createdAndUniqueCodeStyle}>
+                      Community unique code: 1356
+                    </Text>
+                  </View>
+                </View>
+                <View style={styles.countDataContainerStyle}>
+                  <View style={styles.countDataStyle}>
+                    <Text style={styles.countDataTitleStyle}>Discussions</Text>
+                    <Text style={styles.countNumberStyle}>
+                      {profile.discussion_count}
+                    </Text>
+                  </View>
+                  <View style={styles.countDataStyle}>
+                    <Text style={styles.countDataTitleStyle}>Responses</Text>
+                    <Text style={styles.countNumberStyle}>
+                      {profile.response_count}
+                    </Text>
+                  </View>
+                  <View style={styles.countDataStyle}>
+                    <Text style={styles.countDataTitleStyle}>Members</Text>
+                    <Text style={styles.countNumberStyle}>
+                      {profile.member_count}
+                    </Text>
+                  </View>
+                </View>
               </View>
-              <View>
-                <Text style={styles.createdAndUniqueCodeStyle}>
-                  Community unique code: 1356
-                </Text>
+              <View style={styles.imageAndFollowContainer}>
+                <Image
+                  source={{uri: profile.image_path}}
+                  style={styles.imageStyle}
+                />
+                <Button
+                  buttonStyle={{
+                    color: '#FFFFFF',
+                    backgroundColor: '#5152D0',
+                    borderWidth: 0,
+                    padding: 0,
+                    paddingHorizontal: '10%',
+                    paddingVertical: '2.5%',
+                    marginTop: '15%',
+                  }}
+                  buttonTitle="Join"
+                />
               </View>
             </View>
-            <View style={styles.countDataContainerStyle}>
-              <View style={styles.countDataStyle}>
-                <Text style={styles.countDataTitleStyle}>Discussions</Text>
-                <Text style={styles.countNumberStyle}>{profile.discussion_count}</Text>
-              </View>
-              <View style={styles.countDataStyle}>
-                <Text style={styles.countDataTitleStyle}>Responses</Text>
-                <Text style={styles.countNumberStyle}>{profile.response_count}</Text>
-              </View>
-              <View style={styles.countDataStyle}>
-                <Text style={styles.countDataTitleStyle}>Members</Text>
-                <Text style={styles.countNumberStyle}>{profile.member_count}</Text>
-              </View>
-            </View>
-          </View>
-          <View style={styles.imageAndFollowContainer}>
-            <Image source={{uri: profile.image_path}} style={styles.imageStyle} />
-          </View>
-        </View>
-        {ProfileDisplayButton()}
+            {ProfileDisplayButton()}
+          </>
+        )}
       </>
     );
   };
@@ -143,7 +190,7 @@ const styles = StyleSheet.create({
   communityDescriptionStyle: {
     fontFamily: normal,
     color: '#464D60',
-    lineHeight: 25,
+    lineHeight: 26,
     marginBottom: '5%',
   },
 
@@ -179,13 +226,13 @@ const styles = StyleSheet.create({
   imageAndFollowContainer: {
     flex: 1,
     paddingTop: '2%',
-    alignItems: 'flex-end'
+    alignItems: 'flex-end',
   },
 
   imageStyle: {
     width: CalculateWidth(20),
     height: CalculateWidth(20),
-    borderRadius: 50
+    borderRadius: 50,
   },
 
   profileDisplayButtonContainerStyle: {
@@ -202,7 +249,7 @@ const styles = StyleSheet.create({
   displayButtonTextStyle: {
     fontFamily: bold,
     color: '#464D60',
-    fontSize: CalculateHeight(2)
+    fontSize: CalculateHeight(2),
   },
 });
 
