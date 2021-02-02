@@ -51,14 +51,14 @@ const CommunityList = (props) => {
         <View style={styles.communityDataContainerStyle}>
           <View style={styles.communityNameContainerStyle}>
             <Text style={styles.communityNameStyle}>{itemData.item.name}</Text>
-            <EarthIcon />
+            <EarthIcon/>
           </View>
-          <View>
+          <View style={styles.communityDescriptionContainerStyle}>
             <Text style={styles.communityDescriptionStyle} numberOfLines={2}>
               {itemData.item.description}
             </Text>
           </View>
-          <View style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row', flex: 1}}>
               {itemData.item.community_topic_conjunctions && itemData.item.community_topic_conjunctions.map(showCommunityTopics)}
           </View>
           <View style={styles.communityMemberAndDiscussionContainerStyle}>
@@ -131,13 +131,14 @@ const styles = StyleSheet.create({
 
   communityProfileImageStyle: {
     marginTop: '2%',
-    width: CalculateWidth(15),
-    height: CalculateWidth(15),
+    width: CalculateWidth(14),
+    height: CalculateWidth(14),
     borderRadius: 50,
   },
 
   communityDataContainerStyle: {
     marginLeft: '5%',
+    paddingRight: '1.5%',
     width: '80%',
   },
 
@@ -148,9 +149,13 @@ const styles = StyleSheet.create({
 
   communityNameStyle: {
     fontFamily: bold,
-    fontSize: CalculateHeight(2.3),
+    fontSize: CalculateHeight(2.5),
     marginRight: CalculateWidth(1.5),
     color: '#464D60',
+  },
+
+  communityDescriptionContainerStyle: {
+    marginTop: '-1.5%'
   },
 
   communityDescriptionStyle: {
@@ -170,6 +175,8 @@ const styles = StyleSheet.create({
   },
 
   topicNameContainerStyle: {
+    paddingTop: '2%',
+    paddingRight: '1.5%',
     flex: 1,
   },
 
