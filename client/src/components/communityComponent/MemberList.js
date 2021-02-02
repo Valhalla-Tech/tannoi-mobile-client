@@ -23,9 +23,13 @@ const MemberList = (props) => {
       <TouchableOpacity style={itemData.index + 1 !== memberList.length ? styles.memberListDataStyle : {...styles.memberListDataStyle, borderBottomWidth: 0}}>
         <View style={styles.imageProfileAndNameStyle}>
           <Image source={{uri: itemData.item.profile_photo_path}} style={styles.profileImageStyle} />
-          <Text style={styles.memberNameStyle}>{itemData.item.name}</Text>
+          <View style={{ justifyContent: 'center'}}>
+            <Text style={styles.memberNameStyle}>{itemData.item.name}</Text>
+          </View>
         </View>
-        <Text style={styles.adminStyle}>Admin</Text>
+        <View style={{paddingRight: '2%'}}>
+          <Text style={styles.adminStyle}>Admin</Text>
+        </View>
       </TouchableOpacity>
     );
   };

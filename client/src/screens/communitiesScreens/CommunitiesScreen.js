@@ -13,6 +13,10 @@ import Header from '../../components/publicComponents/Header';
 import BackButton from '../../components/publicComponents/BackButton';
 import CommunityList from '../../components/communityComponent/CommunityList';
 
+//Assets
+import RightArrowIcon from '../../assets/communitiesAssets/rightArrow.svg'
+import AddCircleIcon from '../../assets/communitiesAssets/ic-add-circle.svg'
+
 const CommunitiesScreen = ({navigation}) => {
   const [userCommunity, setUserCommunity] = useState('');
 
@@ -69,9 +73,19 @@ const CommunitiesScreen = ({navigation}) => {
       <>
         <TouchableOpacity
           onPress={() => navigation.navigate('CreateCommunityNavigation')}>
-          <Text style={styles.createCommunityButtonTextStyle}>
-            Create a community
-          </Text>
+          <View style={styles.createCommunityContainerStyle}>
+            <View style={{flexDirection: 'row'}}>
+              <View style={{ justifyContent: 'center', marginRight: '3%'}}>
+                <AddCircleIcon/>
+              </View>
+              <Text style={styles.createCommunityButtonTextStyle}>
+                Create a community
+              </Text>
+            </View>
+            <View style={{ justifyContent: 'center'}}>
+              <RightArrowIcon/>
+            </View>
+          </View>
         </TouchableOpacity>
       </>
     );
@@ -117,10 +131,15 @@ const styles = StyleSheet.create({
     color: '#464D60',
   },
 
+  createCommunityContainerStyle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+
   headerButtonTextStyle: {
     fontFamily: bold,
     color: '#0E4EF4',
-    fontSize: CalculateHeight(2),
+    fontSize: CalculateHeight(2.5),
   },
 
   createCommunityCardStyle: {
@@ -133,6 +152,7 @@ const styles = StyleSheet.create({
     fontFamily: normal,
     color: '#464D60',
     fontSize: CalculateHeight(2.2),
+    paddingLeft: '2%'
   },
 });
 
