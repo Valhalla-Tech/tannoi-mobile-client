@@ -123,7 +123,7 @@ const VoiceVerificationScreen = ({navigation}) => {
           </View>
           <View style={styles.textContainerStyle}>
             <Text style={styles.boldTextStyle}>
-              Lastly we need to make sure you are not a bot
+              Lastly, we need to make sure you are not a bot
             </Text>
             <Text style={styles.normalTextStyle}>
               Please say the word below 3 times
@@ -132,7 +132,7 @@ const VoiceVerificationScreen = ({navigation}) => {
           <Text style={styles.randomWordStyle}>{word}</Text>
           <View style={{alignItems: 'center', marginTop: '1%'}}>
             {recordingFileValidation && (
-              <ErrorMessage message="Please input your voice" />
+              <ErrorMessage message="Please record your voice" />
             )}
           </View>
           <Recorder addRecordingFile={addRecordingFile} isVerification={true} />
@@ -181,28 +181,29 @@ const styles = StyleSheet.create({
   },
 
   imageStyle: {
-    resizeMode: 'stretch',
+    resizeMode: 'contain',
     width: '65%',
-    height: '100%',
+    height: '85%',
   },
 
   boldTextStyle: {
     textAlign: 'center',
     fontFamily: bold,
-    fontSize: 20,
+    fontSize: 24,
     paddingBottom: -1.5,
   },
 
   normalTextStyle: {
     textAlign: 'center',
     fontFamily: normal,
+    fontSize: 16
   },
 
   randomWordStyle: {
     textAlign: 'center',
     fontFamily: bold,
     fontSize: 36,
-    marginBottom: -30,
+    marginBottom: -40,
   },
 });
 

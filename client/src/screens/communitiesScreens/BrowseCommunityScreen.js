@@ -56,7 +56,7 @@ const BrowseCommunityScreen = ({navigation}) => {
             marginBottom: 0,
           }}
         />
-        <Text style={styles.headerTextStyle}>Browse Community</Text>
+        <Text style={styles.headerTextStyle}>Browse Communities</Text>
       </>
     );
   };
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   },
 
   headerTextStyle: {
-    marginLeft: '5%',
+    marginLeft: '3%',
     fontFamily: bold,
     fontSize: CalculateHeight(2.5),
     color: '#464D60',
