@@ -57,7 +57,7 @@ const CommunitiesScreen = ({navigation}) => {
           </View>
           <TouchableOpacity
             onPress={() => navigation.navigate('BrowseCommunityScreen')}>
-            <Text style={styles.headerButtonTextStyle}>Browse Community</Text>
+            <Text style={styles.headerButtonTextStyle}>Browse Communities</Text>
           </TouchableOpacity>
         </View>
       </>
@@ -80,7 +80,7 @@ const CommunitiesScreen = ({navigation}) => {
   return (
     <View>
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
-      <View style={styles.communitiesScreeConatainerStyle}>
+      <View style={styles.communitiesScreeContainerStyle}>
         <Card
           child={CreateCommunityButton}
           customStyle={styles.createCommunityCardStyle}
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  communitiesScreeConatainerStyle: {
+  communitiesScreeContainerStyle: {
     paddingHorizontal: GlobalPadding,
   },
 
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   headerButtonTextStyle: {
     fontFamily: bold,
     color: '#0E4EF4',
-    fontSize: CalculateHeight(1.8),
+    fontSize: CalculateHeight(2),
   },
 
   createCommunityCardStyle: {
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   createCommunityButtonTextStyle: {
     fontFamily: normal,
     color: '#464D60',
-    fontSize: CalculateHeight(2),
+    fontSize: CalculateHeight(2.2),
   },
 });
 

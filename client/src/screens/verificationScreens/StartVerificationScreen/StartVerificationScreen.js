@@ -34,11 +34,10 @@ const StartVerificationScreen = ({navigation}) => {
         </View>
         <View>
           <Text style={styles.boldTextStyle}>
-            Become a verified TannOi user
+            Become a verified tannOi user
           </Text>
           <Text style={styles.normalTextStyle}>
-            Participate in verified discussions and {'\n'} stand behind what you
-            say
+            Participate in verified discussions and {'\n'} stand behind your voice
           </Text>
         </View>
       </View>
@@ -84,12 +83,13 @@ const styles = StyleSheet.create({
   boldTextStyle: {
     textAlign: 'center',
     fontFamily: bold,
-    fontSize: 20,
+    fontSize: 26,
   },
 
   normalTextStyle: {
     textAlign: 'center',
     fontFamily: normal,
+    fontSize: 16,
   },
 });
 
