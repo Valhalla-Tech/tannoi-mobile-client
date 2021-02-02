@@ -32,6 +32,7 @@ import NotificationSettingsScreen from '../screens/meScreens/NotificationSetting
 import CommunitiesScreen from '../screens/communitiesScreens/CommunitiesScreen';
 import BrowseCommunityScreen from '../screens/communitiesScreens/BrowseCommunityScreen';
 import CommunityProfileScreen from '../screens/communitiesScreens/CommunityProfileScreen';
+import NewCommunityDiscussionScreen from '../screens/communitiesScreens/NewCommunityDiscussionScreen';
 
 const Stack = createStackNavigator();
 
@@ -231,6 +232,10 @@ const NavigationIndex = () => {
            <Stack.Screen
             name="CommunityProfileScreen"
             component={CommunityProfileScreen}
+          />
+          <Stack.Screen
+            name="NewCommunityDiscussionScreen"
+            component={NewCommunityDiscussionScreen}
           />
         </>
       ) : (
