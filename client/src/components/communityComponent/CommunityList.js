@@ -23,8 +23,8 @@ const CommunityList = (props) => {
   const { communities, navigation } = props;
 
   const showCommunityTopics = (data, index) => (
-    <View style={styles.topicNameContainerStyle}>
-      <Text key={index} style={styles.topicNameStyle} numberOfLines={1}>
+    <View key={index} style={styles.topicNameContainerStyle}>
+      <Text style={styles.topicNameStyle} numberOfLines={1}>
         {data.community_topic.name}
       </Text>
     </View>

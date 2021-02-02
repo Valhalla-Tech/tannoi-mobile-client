@@ -26,7 +26,6 @@ import {
   getAllDiscussion,
   clearDiscussion,
 } from '../../store/actions/DiscussionAction';
-import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
 
 const CommunityProfileScreen = ({ navigation, route }) => {
   const { communityId } = route.params;
@@ -139,16 +138,18 @@ const CommunityProfileScreen = ({ navigation, route }) => {
           </>
         )}
       </View>
-      <TouchableOpacity
-        onPress={() =>
-          navigation.navigate('NewCommunityDiscussionScreen', {
-            communityId: communityProfile.id,
-            communityTopics: communityProfile.community_topics,
-          })
-        }
-        style={{ position: 'absolute', bottom: '5%', right: '5%' }}>
-        <NewDiscussionButton />
-      </TouchableOpacity>
+      {communityProfile.isMember && (
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('NewCommunityDiscussionScreen', {
+              communityId: communityProfile.id,
+              communityTopics: communityProfile.community_topics,
+            })
+          }
+          style={{ position: 'absolute', bottom: '5%', right: '5%' }}>
+          <NewDiscussionButton />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

@@ -133,18 +133,20 @@ const CommunityProfile = (props) => {
                   source={{ uri: profile.image_path }}
                   style={styles.imageStyle}
                 />
-                <Button
-                  buttonStyle={{
-                    color: '#FFFFFF',
-                    backgroundColor: '#5152D0',
-                    borderWidth: 0,
-                    padding: 0,
-                    paddingHorizontal: '16%',
-                    paddingVertical: '2.5%',
-                    marginTop: '15%',
-                  }}
-                  buttonTitle="Join"
-                />
+                {!profile.isMember && (
+                  <Button
+                    buttonStyle={{
+                      color: '#FFFFFF',
+                      backgroundColor: '#5152D0',
+                      borderWidth: 0,
+                      padding: 0,
+                      paddingHorizontal: '16%',
+                      paddingVertical: '2.5%',
+                      marginTop: '15%',
+                    }}
+                    buttonTitle="Join"
+                  />
+                )}
               </View>
             </View>
             {ProfileDisplayButton()}

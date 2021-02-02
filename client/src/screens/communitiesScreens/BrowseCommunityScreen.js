@@ -32,7 +32,7 @@ const BrowseCommunityScreen = ({ navigation }) => {
 
       let getCommunitiesRequest = await axios({
         method: 'get',
-        url: `${BaseUrl}/communities/all`,
+        url: `${BaseUrl}/communities/all?isNotMember=true`,
         headers: {
           token: access_token,
         },
