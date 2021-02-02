@@ -139,7 +139,7 @@ const CommunityProfile = (props) => {
                     backgroundColor: '#5152D0',
                     borderWidth: 0,
                     padding: 0,
-                    paddingHorizontal: '10%',
+                    paddingHorizontal: '16%',
                     paddingVertical: '2.5%',
                     marginTop: '15%',
                   }}
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
   communityDescriptionStyle: {
     fontFamily: normal,
     color: '#464D60',
-    lineHeight: 26,
+    lineHeight: 20,
     marginBottom: '5%',
   },
 
@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
   displayButtonTextStyle: {
     fontFamily: bold,
     color: '#464D60',
-    fontSize: CalculateHeight(2),
+    fontSize: CalculateHeight(2.5),
   },
 });
 

@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
   imageContainerStyle: {
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: '30%',
+    minHeight: '35%',
     maxHeight: calculateHeight(35),
   },
 
@@ -336,14 +336,14 @@ const styles = StyleSheet.create({
   boldTextStyle: {
     textAlign: 'center',
     fontFamily: bold,
-    fontSize: 20,
+    fontSize: 24,
     marginBottom: '2%',
   },
 
   normalTextStyle: {
     textAlign: 'center',
     fontFamily: normal,
-    marginTop: -10,
+    fontSize: 16,
   },
 
   formContainerStyle: {

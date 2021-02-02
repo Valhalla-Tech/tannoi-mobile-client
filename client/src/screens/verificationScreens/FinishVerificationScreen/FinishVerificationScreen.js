@@ -39,7 +39,7 @@ const FinishVerificationScreen = ({ navigation }) => {
           color: '#FFFFFF',
           backgroundColor: '#6505E1',
           borderWidth: 0,
-          marginTop: '60%',
+          marginTop: '30%',
         }}
         buttonFunction={nextButton}
       />
@@ -66,12 +66,13 @@ const styles = StyleSheet.create({
   boldTextStyle: {
     textAlign: 'center',
     fontFamily: bold,
-    fontSize: 24,
+    fontSize: 26,
   },
 
   normalTextStyle: {
     textAlign: 'center',
     fontFamily: normal,
+    fontSize: 16
   },
 });
 

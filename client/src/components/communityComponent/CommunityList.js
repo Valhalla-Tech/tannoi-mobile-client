@@ -23,9 +23,11 @@ const CommunityList = (props) => {
   const { communities, navigation } = props;
 
   const showCommunityTopics = (data, index) => (
-    <Text key={index} style={styles.topicNameStyle}>
-      {data.community_topic.name}{' '}
-    </Text>
+    <View style={styles.topicNameContainerStyle}>
+      <Text key={index} style={styles.topicNameStyle} numberOfLines={1}>
+        {data.community_topic.name}
+      </Text>
+    </View>
   );
 
   const RenderCommunity = (itemData) => {
@@ -50,16 +52,16 @@ const CommunityList = (props) => {
             <Text style={styles.communityNameStyle}>{itemData.item.name}</Text>
             <EarthIcon />
           </View>
-          <Text style={styles.communityDescriptionStyle}>
-            {itemData.item.description}
-          </Text>
           <View>
-            <Text>
-              {itemData.item.community_topic_conjunctions &&
-                itemData.item.community_topic_conjunctions.map(
-                  showCommunityTopics,
-                )}
+            <Text style={styles.communityDescriptionStyle} numberOfLines={2}>
+              {itemData.item.description}
             </Text>
+          </View>
+          <View style={{ flexDirection: 'row' }}>
+            {itemData.item.community_topic_conjunctions &&
+              itemData.item.community_topic_conjunctions.map(
+                showCommunityTopics,
+              )}
           </View>
           <View style={styles.communityMemberAndDiscussionContainerStyle}>
             <View
@@ -130,6 +132,7 @@ const styles = StyleSheet.create({
   },
 
   communityProfileImageStyle: {
+    marginTop: '2%',
     width: CalculateWidth(15),
     height: CalculateWidth(15),
     borderRadius: 50,
@@ -146,15 +149,16 @@ const styles = StyleSheet.create({
   },
 
   communityNameStyle: {
-    fontFamily: normal,
-    fontSize: CalculateHeight(2),
+    fontFamily: bold,
+    fontSize: CalculateHeight(2.3),
     marginRight: CalculateWidth(1.5),
+    color: '#464D60',
   },
 
   communityDescriptionStyle: {
     fontFamily: normal,
     color: '#73798C',
-    fontSize: CalculateHeight(1.8),
+    fontSize: CalculateHeight(2),
   },
 
   communityMemberAndDiscussionContainerStyle: {
@@ -165,6 +169,10 @@ const styles = StyleSheet.create({
   communityMemberAndDiscussionStyle: {
     fontFamily: normal,
     color: '#73798C',
+  },
+
+  topicNameContainerStyle: {
+    flex: 1,
   },
 
   topicNameStyle: {
