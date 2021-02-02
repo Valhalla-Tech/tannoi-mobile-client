@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Modal} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 
 const NoticeModal = (props) => {
   const {
@@ -16,13 +16,13 @@ const NoticeModal = (props) => {
     <Modal animationType={animation} transparent={true} visible={openModal}>
       <View style={styles.modalBackground}>
         <TouchableOpacity
-          style={{flex: 1}}
+          style={{ flex: 1 }}
           onPress={() => {
             closeModal();
           }}></TouchableOpacity>
       </View>
-      <View style={{...styles.modalContainerStyle, ...customContainerStyle}}>
-        <View style={{...styles.noticeModalStyle, ...customStyle}}>
+      <View style={{ ...styles.modalContainerStyle, ...customContainerStyle }}>
+        <View style={{ ...styles.noticeModalStyle, ...customStyle }}>
           {child && child()}
           {modalButton && modalButton()}
         </View>

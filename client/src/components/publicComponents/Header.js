@@ -1,10 +1,10 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 const Header = (props) => {
-  const {child, customStyle} = props;
+  const { child, customStyle } = props;
 
-  const headerStyle = {...styles.rootStyle, ...customStyle};
+  const headerStyle = { ...styles.rootStyle, ...customStyle };
 
   return <View style={headerStyle}>{child && child()}</View>;
 };

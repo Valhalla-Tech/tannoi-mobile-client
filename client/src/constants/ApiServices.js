@@ -1,7 +1,7 @@
 import axios from 'axios';
 import BaseUrl from './BaseUrl';
 import AsyncStorage from '@react-native-community/async-storage';
-import {userLogout} from '../store/actions/LoginAction';
+import { userLogout } from '../store/actions/LoginAction';
 import store from '../store';
 
 const http = axios.create();

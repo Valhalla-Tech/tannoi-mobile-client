@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import {GlobalPadding} from '../../constants/Size';
-import {bold, normal} from '../../assets/FontSize';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { GlobalPadding } from '../../constants/Size';
+import { bold, normal } from '../../assets/FontSize';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
@@ -10,12 +10,12 @@ import BaseUrl from '../../constants/BaseUrl';
 import Header from '../publicComponents/Header';
 import Card from '../../components/publicComponents/Card';
 import BackButton from '../publicComponents/BackButton';
-import {CalculateHeight, CalculateWidth} from '../../helper/CalculateSize';
+import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
 import Button from '../publicComponents/Button';
 import LoadingSpinner from '../publicComponents/LoadingSpinner';
 
 const CommunityProfile = (props) => {
-  const {navigation, profile, selectedDisplay, changeSelectedDisplay} = props;
+  const { navigation, profile, selectedDisplay, changeSelectedDisplay } = props;
 
   const HeaderContent = () => {
     return (
@@ -49,7 +49,7 @@ const CommunityProfile = (props) => {
           <Text
             style={
               selectedDisplay === 'discussions'
-                ? {...styles.displayButtonTextStyle, color: '#5152D0'}
+                ? { ...styles.displayButtonTextStyle, color: '#5152D0' }
                 : styles.displayButtonTextStyle
             }>
             Discussions
@@ -70,7 +70,7 @@ const CommunityProfile = (props) => {
           <Text
             style={
               selectedDisplay === 'members'
-                ? {...styles.displayButtonTextStyle, color: '#5152D0'}
+                ? { ...styles.displayButtonTextStyle, color: '#5152D0' }
                 : styles.displayButtonTextStyle
             }>
             Members
@@ -130,7 +130,7 @@ const CommunityProfile = (props) => {
               </View>
               <View style={styles.imageAndFollowContainer}>
                 <Image
-                  source={{uri: profile.image_path}}
+                  source={{ uri: profile.image_path }}
                   style={styles.imageStyle}
                 />
                 <Button

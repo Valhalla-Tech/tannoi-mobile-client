@@ -1,9 +1,9 @@
 import React from 'react';
-import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
-import {normal} from '../../assets/FontSize';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { normal } from '../../assets/FontSize';
 
 const SearchBarCard = (props) => {
-  const {cardTitle, hashtagId, navigation} = props;
+  const { cardTitle, hashtagId, navigation } = props;
 
   return (
     <TouchableOpacity

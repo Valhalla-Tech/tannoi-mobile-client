@@ -1,7 +1,7 @@
 import React from 'react';
-import {StyleSheet, View, FlatList} from 'react-native';
-import {bold, normal} from '../../../assets/FontSize';
-import {CalculateWidth} from '../../../helper/CalculateSize';
+import { StyleSheet, View, FlatList } from 'react-native';
+import { bold, normal } from '../../../assets/FontSize';
+import { CalculateWidth } from '../../../helper/CalculateSize';
 
 //Components
 import RecommendedTopicsCard from './RecommendedTopicsCard';
@@ -10,7 +10,7 @@ import Card from '../../publicComponents/Card';
 import ListHeader from '../../publicComponents/ListHeader';
 
 const RecommendedTopics = (props) => {
-  const {topicData, navigation} = props;
+  const { topicData, navigation } = props;
 
   const topicGroup = (topicData) => {
     let arrayGroup = [];
@@ -35,7 +35,7 @@ const RecommendedTopics = (props) => {
       <View>
         <ListHeader
           listTitle="Recommended Topics"
-          customStyle={{marginBottom: '3.5%'}}
+          customStyle={{ marginBottom: '3.5%' }}
         />
         {topicData !== '' ? (
           <View style={styles.topicCardContainerStyle}>

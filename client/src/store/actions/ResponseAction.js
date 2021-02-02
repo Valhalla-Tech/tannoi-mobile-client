@@ -148,7 +148,7 @@ export const getResponseData = (responseId, data) => {
           dispatch({
             type: 'GET_RESPONSE',
             payload: {
-              response: data
+              response: data,
             },
           });
         }

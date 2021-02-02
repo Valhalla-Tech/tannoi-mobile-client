@@ -1,1 +1,1 @@
-export {default} from './UserProfileVerificationScreen';
+export { default } from './UserProfileVerificationScreen';

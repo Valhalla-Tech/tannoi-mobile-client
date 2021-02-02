@@ -1,1 +1,1 @@
-export {default} from './NotificationSettingsScreen';
+export { default } from './NotificationSettingsScreen';

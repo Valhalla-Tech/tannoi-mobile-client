@@ -1,16 +1,16 @@
-import React, {useState} from 'react';
-import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
-import {bold, normal} from '../../../assets/FontSize';
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { bold, normal } from '../../../assets/FontSize';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 
 //Component
 import BackButton from '../../../components/publicComponents/BackButton';
 
-const ResetPasswordWithEmailVerificationScreen = ({route, navigation}) => {
+const ResetPasswordWithEmailVerificationScreen = ({ route, navigation }) => {
   const [countNumber, setCountNumber] = useState(60);
 
-  const {url} = route.params;
+  const { url } = route.params;
 
   const sendEmailCounter = () => {
     let counter = 60;
@@ -64,7 +64,7 @@ const ResetPasswordWithEmailVerificationScreen = ({route, navigation}) => {
           <Text
             style={
               countNumber !== 60 && countNumber !== 0
-                ? {...styles.sendAgainEmailButtonStyle, color: '#a1a5ab'}
+                ? { ...styles.sendAgainEmailButtonStyle, color: '#a1a5ab' }
                 : styles.sendAgainEmailButtonStyle
             }>
             Send again

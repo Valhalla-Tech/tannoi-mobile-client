@@ -1,13 +1,19 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet, FlatList} from 'react-native';
-import {bold, normal} from '../../../assets/FontSize';
-import {useSelector, useDispatch} from 'react-redux';
-import {CalculateHeight} from '../../../helper/CalculateSize';
+import React, { useState, useEffect } from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  FlatList,
+} from 'react-native';
+import { bold, normal } from '../../../assets/FontSize';
+import { useSelector, useDispatch } from 'react-redux';
+import { CalculateHeight } from '../../../helper/CalculateSize';
 import {
   getAllDiscussion,
   clearDiscussion,
 } from '../../../store/actions/DiscussionAction';
-import {GlobalPadding} from '../../../constants/Size';
+import { GlobalPadding } from '../../../constants/Size';
 
 //Components
 import Header from '../../../components/publicComponents/Header';
@@ -15,8 +21,8 @@ import List from '../../../components/publicComponents/List';
 import BackButton from '../../../components/publicComponents/BackButton';
 import ListHeader from '../../../components/publicComponents/ListHeader';
 
-const HashtagDetailScreen = ({route, navigation}) => {
-  const {query, queryId, hashtagDetailTitle} = route.params;
+const HashtagDetailScreen = ({ route, navigation }) => {
+  const { query, queryId, hashtagDetailTitle } = route.params;
 
   const discussions = useSelector(
     (state) => state.DiscussionReducer.discussions,
@@ -63,7 +69,7 @@ const HashtagDetailScreen = ({route, navigation}) => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
       <View style={styles.hashtagDetailContainerStyle}>
         <ListHeader

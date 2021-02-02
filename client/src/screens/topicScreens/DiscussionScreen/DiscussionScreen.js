@@ -1,7 +1,13 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Text, TouchableOpacity, FlatList} from 'react-native';
-import {bold, normal} from '../../../assets/FontSize';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+} from 'react-native';
+import { bold, normal } from '../../../assets/FontSize';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   getDiscussion,
   clearDiscussion,
@@ -10,14 +16,14 @@ import {
   getResponse,
   clearResponse,
 } from '../../../store/actions/ResponseAction';
-import {CalculateHeight} from '../../../helper/CalculateSize';
+import { CalculateHeight } from '../../../helper/CalculateSize';
 
 //Components
 import BackButton from '../../../components/publicComponents/BackButton';
 import DiscussionAndResponseList from '../../../components/topicComponents/discussionScreenComponents/DiscussionAndResponseList';
 import AddResponse from '../../../components/publicComponents/RecorderModal';
 
-const DiscussionScreen = ({route, navigation}) => {
+const DiscussionScreen = ({ route, navigation }) => {
   const [openAddResponseModal, setOpenAddResponseModal] = useState(false);
   const [selectedCard, setSelectedCard] = useState('discussion');
   const [fromNextPreviousButton, setFromNextPreviousButton] = useState(false);
@@ -29,7 +35,7 @@ const DiscussionScreen = ({route, navigation}) => {
   const userId = useSelector((state) => state.HomeReducer.user.id);
   const userType = useSelector((state) => state.HomeReducer.user.type);
 
-  const {discussionId, fromNewDiscussion} = route.params;
+  const { discussionId, fromNewDiscussion } = route.params;
 
   const dispatch = useDispatch();
 
@@ -101,11 +107,9 @@ const DiscussionScreen = ({route, navigation}) => {
           style={styles.addResponseButtonStyle}
           onPress={() => {
             userType !== 0 || userId === profileId
-              ? (
-                setOpenAddResponseModal(true),
+              ? (setOpenAddResponseModal(true),
                 setOpenAddRespone(true),
-                setOpenModalFromHeader(true)
-              )
+                setOpenModalFromHeader(true))
               : (navigation.navigate('VerificationNavigation'),
                 setOpenAddRespone(true));
           }}>

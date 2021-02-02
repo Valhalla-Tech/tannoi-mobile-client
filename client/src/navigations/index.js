@@ -1,14 +1,14 @@
-import React, {useEffect} from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
-import {useSelector, useDispatch} from 'react-redux';
+import React, { useEffect } from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import { useSelector, useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
-import {userLogin, userLogout} from '../store/actions/LoginAction';
+import { userLogin, userLogout } from '../store/actions/LoginAction';
 import SplashScreen from 'react-native-splash-screen';
 import messaging from '@react-native-firebase/messaging';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import axios from '../constants/ApiServices';
 import BaseUrl from '../constants/BaseUrl';
-import {Platform} from 'react-native';
+import { Platform } from 'react-native';
 import branch from 'react-native-branch';
 
 //Navigations
@@ -76,7 +76,7 @@ const NavigationIndex = () => {
   const saveTokenToDatabase = async (fcmToken) => {
     try {
       let access_token = await AsyncStorage.getItem('access_token');
-      const {data} = await axios({
+      const { data } = await axios({
         method: 'POST',
         url: BaseUrl + '/users/add-firebase-token',
         data: {
@@ -112,7 +112,7 @@ const NavigationIndex = () => {
   const branchSubscribe = async () => {
     try {
       let getToken = await AsyncStorage.getItem('access_token');
-      branch.subscribe(({error, params, uri}) => {
+      branch.subscribe(({ error, params, uri }) => {
         if (error) {
           console.error('Error from Branch: ' + error);
         }
@@ -131,7 +131,7 @@ const NavigationIndex = () => {
         if (params.screen !== undefined && getToken) {
           let payload = JSON.parse(params.payload);
           if (params.screen === 'UserProfileScreen') {
-            payload = {...payload, fromDeepLink: true};
+            payload = { ...payload, fromDeepLink: true };
           }
           navigation.push(params.screen, payload);
         } else if (
@@ -229,7 +229,7 @@ const NavigationIndex = () => {
             name="BrowseCommunityScreen"
             component={BrowseCommunityScreen}
           />
-           <Stack.Screen
+          <Stack.Screen
             name="CommunityProfileScreen"
             component={CommunityProfileScreen}
           />

@@ -7,8 +7,8 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-import {CalculateHeight, CalculateWidth} from '../../helper/CalculateSize';
-import {normal, bold} from '../../assets/FontSize';
+import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
+import { normal, bold } from '../../assets/FontSize';
 import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
 
 //Icon
@@ -20,14 +20,15 @@ import DiscussionIcon from '../../assets/communitiesAssets/ic-discussion.svg';
 import Card from '../../components/publicComponents/Card';
 
 const CommunityList = (props) => {
-  const {communities, navigation} = props;
+  const { communities, navigation } = props;
 
   const showCommunityTopics = (data, index) => (
-    <Text key={index} style={styles.topicNameStyle}>{data.community_topic.name}  </Text>
+    <Text key={index} style={styles.topicNameStyle}>
+      {data.community_topic.name}{' '}
+    </Text>
   );
 
   const RenderCommunity = (itemData) => {
-
     return (
       <TouchableOpacity
         onPress={() =>
@@ -37,11 +38,11 @@ const CommunityList = (props) => {
         }
         style={
           itemData.index + 1 === communities.length
-            ? {...styles.communityContainerStyle, borderBottomWidth: 0}
+            ? { ...styles.communityContainerStyle, borderBottomWidth: 0 }
             : styles.communityContainerStyle
         }>
         <Image
-          source={{uri: itemData.item.image_path}}
+          source={{ uri: itemData.item.image_path }}
           style={styles.communityProfileImageStyle}
         />
         <View style={styles.communityDataContainerStyle}>
@@ -54,7 +55,10 @@ const CommunityList = (props) => {
           </Text>
           <View>
             <Text>
-              {itemData.item.community_topic_conjunctions && itemData.item.community_topic_conjunctions.map(showCommunityTopics)}
+              {itemData.item.community_topic_conjunctions &&
+                itemData.item.community_topic_conjunctions.map(
+                  showCommunityTopics,
+                )}
             </Text>
           </View>
           <View style={styles.communityMemberAndDiscussionContainerStyle}>
@@ -166,7 +170,7 @@ const styles = StyleSheet.create({
   topicNameStyle: {
     color: '#5152D0',
     fontFamily: normal,
-    lineHeight: 20
+    lineHeight: 20,
   },
 });
 

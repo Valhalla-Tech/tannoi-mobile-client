@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../../constants/ApiServices';
-import {bold, normal} from '../../../assets/FontSize';
+import { bold, normal } from '../../../assets/FontSize';
 import BaseUrl from '../../../constants/BaseUrl';
 
 //Components
@@ -21,7 +21,7 @@ import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 import TermsOfServiceModal from '../../../components/accountComponents/RegisterScreenComponents/TermsOfServiceModal';
 
-const RegisterPage = ({navigation}) => {
+const RegisterPage = ({ navigation }) => {
   const [emailRegister, setEmailRegister] = useState('');
   const [passwordRegister, setPasswordRegister] = useState('');
   const [openConfirmationModal, setOpenConfirmationModal] = useState(false);
@@ -104,7 +104,7 @@ const RegisterPage = ({navigation}) => {
         </Text>
         <TouchableOpacity onPress={() => setTermsOfServiceModalIsOpen(true)}>
           <Text
-            style={{...styles.signupTermsAndPrivacyStyle, color: '#2f3dfa'}}>
+            style={{ ...styles.signupTermsAndPrivacyStyle, color: '#2f3dfa' }}>
             Terms of Service, Privacy Policies
           </Text>
         </TouchableOpacity>
@@ -188,7 +188,7 @@ const RegisterPage = ({navigation}) => {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <View style={styles.registerPageContainerStyle}>
           <BackButton navigation={navigation} />
           <Text style={styles.registerTitleStyle}>Sign up to TannOi</Text>

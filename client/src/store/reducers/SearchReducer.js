@@ -1,6 +1,6 @@
 const defaultState = {
   discussions: [],
-  users: []
+  users: [],
 };
 
 const reducer = (state = defaultState, action) => {
@@ -8,8 +8,8 @@ const reducer = (state = defaultState, action) => {
     case 'GET_SEARCH':
       let setDiscussions = action.payload.discussions;
       let setUsers = action.payload.users;
-      
-      return {...state, discussions: setDiscussions, users: setUsers};
+
+      return { ...state, discussions: setDiscussions, users: setUsers };
     default:
       return state;
   }

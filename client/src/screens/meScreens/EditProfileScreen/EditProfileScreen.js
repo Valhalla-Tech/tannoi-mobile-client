@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -10,17 +10,17 @@ import {
   Keyboard,
   ScrollView,
 } from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {getOneProfile} from '../../../store/actions/ProfileAction';
-import {bold, normal} from '../../../assets/FontSize';
-import {Picker} from '@react-native-community/picker';
+import { useSelector, useDispatch } from 'react-redux';
+import { getOneProfile } from '../../../store/actions/ProfileAction';
+import { bold, normal } from '../../../assets/FontSize';
+import { Picker } from '@react-native-community/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DisplayBirthDate from '../../../helper/DisplayBirthDate';
 import axios from '../../../constants/ApiServices';
 import AsyncStorage from '@react-native-community/async-storage';
 import BaseUrl from '../../../constants/BaseUrl';
-import {ScreenHeight} from '../../../constants/Size';
-import {UploadImage} from '../../../helper/UploadImage';
+import { ScreenHeight } from '../../../constants/Size';
+import { UploadImage } from '../../../helper/UploadImage';
 
 //Components
 import Header from '../../../components/publicComponents/Header';
@@ -36,7 +36,7 @@ const calculateHeight = (input) => {
   return (input / 100) * ScreenHeight;
 };
 
-const EditProfileScreen = ({navigation}) => {
+const EditProfileScreen = ({ navigation }) => {
   const userProfile = useSelector((state) => state.ProfileReducer.userProfile);
 
   const [birthDateDisplay, setBirthDateDisplay] = useState(
@@ -100,9 +100,9 @@ const EditProfileScreen = ({navigation}) => {
   }, [updateState]);
 
   const gender = [
-    {name: 'Male', value: 'Male'},
-    {name: 'Female', value: 'Female'},
-    {name: 'Non-binary', value: 'non-binary'},
+    { name: 'Male', value: 'Male' },
+    { name: 'Female', value: 'Female' },
+    { name: 'Non-binary', value: 'non-binary' },
   ];
 
   const HeaderContent = () => {
@@ -253,7 +253,7 @@ const EditProfileScreen = ({navigation}) => {
             editVoiceBio();
           }
           setIsLoading(false);
-          navigation.navigate('Me', {fromEditScreen: true});
+          navigation.navigate('Me', { fromEditScreen: true });
         }
       } else if (
         bioVoiceFile !== '' &&
@@ -279,8 +279,8 @@ const EditProfileScreen = ({navigation}) => {
             <Image
               source={
                 profileImage === ''
-                  ? {uri: userProfile.profile_photo_path}
-                  : {uri: profileImage}
+                  ? { uri: userProfile.profile_photo_path }
+                  : { uri: profileImage }
               }
               style={styles.profileImageStyle}
             />

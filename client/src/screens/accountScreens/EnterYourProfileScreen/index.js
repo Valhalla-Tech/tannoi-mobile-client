@@ -1,1 +1,1 @@
-export {default} from './EnterYourProfileScreen';
+export { default } from './EnterYourProfileScreen';

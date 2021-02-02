@@ -1,13 +1,13 @@
 import React from 'react';
-import {StyleSheet, View, Text, ScrollView} from 'react-native';
-import {bold, normal} from '../../../assets/FontSize';
+import { StyleSheet, View, Text, ScrollView } from 'react-native';
+import { bold, normal } from '../../../assets/FontSize';
 
 //Components
 import CloseButton from '../../publicComponents/CloseButton';
 import Modal from '../../publicComponents/Modal';
 
 const TermsOfServiceModal = (props) => {
-  const {openTermsOfServiceModal, closeTermsOfServiceModal} = props;
+  const { openTermsOfServiceModal, closeTermsOfServiceModal } = props;
 
   const ModalContent = () => {
     return (

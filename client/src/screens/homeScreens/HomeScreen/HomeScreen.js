@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, Text, FlatList, RefreshControl} from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View, Text, FlatList, RefreshControl } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
-import {getHome, clearHome} from '../../../store/actions/HomeAction';
-import {bold} from '../../../assets/FontSize';
-import {GlobalPadding} from '../../../constants/Size';
+import { getHome, clearHome } from '../../../store/actions/HomeAction';
+import { bold } from '../../../assets/FontSize';
+import { GlobalPadding } from '../../../constants/Size';
 
 //Components
 import SearchBar from '../../../components/publicComponents/SearchBar';
@@ -14,7 +14,7 @@ import TopUsers from '../../../components/homeComponents/homeScreenComponents/To
 import RecommendedTopics from '../../../components/homeComponents/homeScreenComponents/RecommendedTopics';
 import NoticeModal from '../../../components/publicComponents/Modal';
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({ navigation }) => {
   const user = useSelector((state) => state.HomeReducer.user);
   const discussionOfTheWeek = useSelector(
     (state) => state.HomeReducer.discussionOfTheWeek,

@@ -11,8 +11,8 @@ export const getHome = () => {
         url: `${BaseUrl}/pages/home?sort=newest&page=1`,
         method: 'get',
         headers: {
-          'token': access_token
-        }
+          token: access_token,
+        },
       });
 
       if (getHomeRequest.data) {
@@ -26,20 +26,20 @@ export const getHome = () => {
             recommendedTopic: getHomeRequest.data.recommended_topic,
             followingDiscussion: getHomeRequest.data.followingDiscussion,
             requestedDiscussion: getHomeRequest.data.requestedDiscussion,
-            topHashtag: getHomeRequest.data.topHashtag
-          }
+            topHashtag: getHomeRequest.data.topHashtag,
+          },
         });
-      };
+      }
     } catch (error) {
       console.log(error.response.data.msg);
       if (error.response.data.msg === 'You have to login first') {
         dispatch({
           type: 'LOGOUT',
           payload: {
-            loginStatus: false
-          }
-        })
-      };
+            loginStatus: false,
+          },
+        });
+      }
     }
   };
 };
@@ -47,7 +47,7 @@ export const getHome = () => {
 export const clearHome = () => {
   return (dispatch) => {
     dispatch({
-      type: 'CLEAR_HOME'
+      type: 'CLEAR_HOME',
     });
   };
 };

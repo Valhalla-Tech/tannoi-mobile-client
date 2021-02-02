@@ -1,13 +1,13 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
-import {bold, normal} from '../../assets/FontSize';
+import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { bold, normal } from '../../assets/FontSize';
 import LoadingSpinner from '../publicComponents/LoadingSpinner';
 
 //Icon
 import NoProfilePicture from '../../assets/publicAssets/noProfilePicture.png';
 
 const ProfileData = (props) => {
-  const {profile, selectMenu, selectedMenu} = props;
+  const { profile, selectMenu, selectedMenu } = props;
 
   const UserProfileData = () => {
     return (
@@ -83,7 +83,7 @@ const ProfileData = (props) => {
         style={
           profile !== ''
             ? styles.userProfileStyle
-            : {...styles.userProfileStyle, height: '15%'}
+            : { ...styles.userProfileStyle, height: '15%' }
         }>
         {profile !== '' ? (
           <View style={styles.profileInfoContainerStyle}>
@@ -92,7 +92,7 @@ const ProfileData = (props) => {
               <Image
                 source={
                   profile.profile_photo_path
-                    ? {uri: profile.profile_photo_path}
+                    ? { uri: profile.profile_photo_path }
                     : NoProfilePicture
                 }
                 style={styles.profileImageStyle}

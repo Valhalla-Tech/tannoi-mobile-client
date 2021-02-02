@@ -1,7 +1,7 @@
 import React from 'react';
-import {StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
-import {normal} from '../../../assets/FontSize';
-import {CalculateWidth} from '../../../helper/CalculateSize';
+import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
+import { normal } from '../../../assets/FontSize';
+import { CalculateWidth } from '../../../helper/CalculateSize';
 
 const RecommendedTopicsCard = (props) => {
   const {
@@ -31,7 +31,7 @@ const RecommendedTopicsCard = (props) => {
         }
         style={styles.topicCardStyle}>
         <Image
-          source={cardIcon !== '' ? {uri: cardIcon} : ''}
+          source={cardIcon !== '' ? { uri: cardIcon } : ''}
           style={styles.topicIconStyle}
         />
         <View style={styles.topicCardInfoContainerStyle}>

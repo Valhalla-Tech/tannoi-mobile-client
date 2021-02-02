@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -8,14 +8,14 @@ import {
   Keyboard,
   ScrollView,
 } from 'react-native';
-import {CalculateHeight} from '../../helper/CalculateSize';
-import {normal} from '../../assets/FontSize';
+import { CalculateHeight } from '../../helper/CalculateSize';
+import { normal } from '../../assets/FontSize';
 import axios from '../../constants/ApiServices';
 import AsyncStorage from '@react-native-community/async-storage';
 import BaseUrl from '../../constants/BaseUrl';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { clearData } from '../../store/actions/CreateCommunityAction';
-import {LinearTextGradient} from 'react-native-text-gradient';
+import { LinearTextGradient } from 'react-native-text-gradient';
 
 //Icon
 import TopicIcon from '../../assets/communitiesAssets/ic-topics.svg';
@@ -28,7 +28,7 @@ import CreateCommunityProgress from '../../components/communityComponent/CreateC
 import Button from '../../components/publicComponents/Button';
 import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
 
-const CreateCommunityTopicScreen = ({navigation}) => {
+const CreateCommunityTopicScreen = ({ navigation }) => {
   const [inputList, setInputList] = useState([
     {
       name: 'topic name',
@@ -40,11 +40,21 @@ const CreateCommunityTopicScreen = ({navigation}) => {
   const [inputHolder, setInputHolder] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const communityImage = useSelector(state => state.CreateCommunityReducer.communityImage);
-  const communityName = useSelector(state => state.CreateCommunityReducer.communityName);
-  const communityDescription = useSelector(state => state.CreateCommunityReducer.communityDescription);
-  const communityGuideline = useSelector(state => state.CreateCommunityReducer.communityGuideline);
-  const communityType = useSelector(state => state.CreateCommunityReducer.communityType);
+  const communityImage = useSelector(
+    (state) => state.CreateCommunityReducer.communityImage,
+  );
+  const communityName = useSelector(
+    (state) => state.CreateCommunityReducer.communityName,
+  );
+  const communityDescription = useSelector(
+    (state) => state.CreateCommunityReducer.communityDescription,
+  );
+  const communityGuideline = useSelector(
+    (state) => state.CreateCommunityReducer.communityGuideline,
+  );
+  const communityType = useSelector(
+    (state) => state.CreateCommunityReducer.communityType,
+  );
 
   const dispatch = useDispatch();
 
@@ -106,20 +116,21 @@ const CreateCommunityTopicScreen = ({navigation}) => {
       formData.append('guidelines', communityGuideline);
       formData.append('type', communityType);
       formData.append('topicArr', JSON.stringify(topic));
-      communityImage !== '' && formData.append('image_path', {
-        uri: communityImage,
-        name: filename,
-        type,
-      });
+      communityImage !== '' &&
+        formData.append('image_path', {
+          uri: communityImage,
+          name: filename,
+          type,
+        });
 
       let createCommunityRequest = await axios({
         method: 'post',
         url: `${BaseUrl}/communities/create`,
         headers: {
           'Content-Type': 'multipart/form-data',
-          'token': access_token
+          token: access_token,
         },
-        data: formData
+        data: formData,
       });
 
       if (createCommunityRequest.data) {
@@ -159,18 +170,22 @@ const CreateCommunityTopicScreen = ({navigation}) => {
             <View
               style={
                 item.value !== ''
-                  ? {...styles.topicIconStyle, marginTop: '5%'}
+                  ? { ...styles.topicIconStyle, marginTop: '5%' }
                   : styles.topicIconStyle
               }>
               <TopicIcon />
             </View>
             {item.value !== '' ? (
               <LinearTextGradient
-              style={{fontFamily: normal, fontSize: CalculateHeight(3), marginLeft: '7.5%'}}
-              locations={[0, 1]}
-              colors={['#5051DB', '#7E37B6']}
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 0}}>
+                style={{
+                  fontFamily: normal,
+                  fontSize: CalculateHeight(3),
+                  marginLeft: '7.5%',
+                }}
+                locations={[0, 1]}
+                colors={['#5051DB', '#7E37B6']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}>
                 <Text style={styles.topicDisplayStyle}>{item.value}</Text>
               </LinearTextGradient>
             ) : (
@@ -188,15 +203,15 @@ const CreateCommunityTopicScreen = ({navigation}) => {
           </View>
           {item.value !== '' && <>{RemoveButton(item.id)}</>}
         </View>
-        {item.value !== '' && index + 1 === inputList.length && topic.length < 25 && (
-          <>{AddTopicButton()}</>
-        )}
+        {item.value !== '' &&
+          index + 1 === inputList.length &&
+          topic.length < 25 && <>{AddTopicButton()}</>}
       </View>
     );
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <>
           <CreateCommunityHeader navigation={navigation} />
@@ -226,9 +241,7 @@ const CreateCommunityTopicScreen = ({navigation}) => {
               )}
             </View>
           </View>
-          {
-            isLoading && <LoadingSpinner />
-          }
+          {isLoading && <LoadingSpinner />}
         </>
       </TouchableWithoutFeedback>
     </View>

@@ -1,10 +1,10 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Modal from './Modal';
-import {bold, normal} from '../../assets/FontSize';
+import { bold, normal } from '../../assets/FontSize';
 
 const SortModal = (props) => {
-  const {openModal, closeModal, saveSort} = props;
+  const { openModal, closeModal, saveSort } = props;
 
   const ModalButton = (title, value) => {
     return (

@@ -1,8 +1,8 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {deleteVerificationData} from '../../../store/actions/VerificationAction';
-import {bold, normal} from '../../../assets/FontSize';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { deleteVerificationData } from '../../../store/actions/VerificationAction';
+import { bold, normal } from '../../../assets/FontSize';
 
 //Image
 import ScreenImage from '../../../assets/verificationAssets/Illustration-Tannoi-Apps-01.png';
@@ -10,7 +10,7 @@ import ScreenImage from '../../../assets/verificationAssets/Illustration-Tannoi-
 //Component
 import BigButton from '../../../components/publicComponents/Button';
 
-const StartVerificationScreen = ({navigation}) => {
+const StartVerificationScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const startButton = () => {

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -8,9 +8,9 @@ import {
   FlatList,
   RefreshControl,
 } from 'react-native';
-import {bold, normal} from '../../../assets/FontSize';
-import {CalculateHeight} from '../../../helper/CalculateSize';
-import {GlobalPadding} from '../../../constants/Size';
+import { bold, normal } from '../../../assets/FontSize';
+import { CalculateHeight } from '../../../helper/CalculateSize';
+import { GlobalPadding } from '../../../constants/Size';
 import axios from '../../../constants/ApiServices';
 import AsyncStorage from '@react-native-community/async-storage';
 import BaseUrl from '../../../constants/BaseUrl';
@@ -21,7 +21,7 @@ import Header from '../../../components/publicComponents/Header';
 import Card from '../../../components/publicComponents/Card';
 import SearchBar from '../../../components/publicComponents/SearchBar';
 
-const InboxScreen = ({navigation}) => {
+const InboxScreen = ({ navigation }) => {
   const [inbox, setInbox] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -110,7 +110,7 @@ const InboxScreen = ({navigation}) => {
           }}>
           <View style={styles.imageContainerStyle}>
             <Image
-              source={{uri: itemData.item.user.profile_photo_path}}
+              source={{ uri: itemData.item.user.profile_photo_path }}
               style={styles.profilePhotoStyle}
             />
           </View>
@@ -144,7 +144,7 @@ const InboxScreen = ({navigation}) => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
       <FlatList
         ListHeaderComponent={

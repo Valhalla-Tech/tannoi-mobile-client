@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -10,15 +10,15 @@ import {
   Image,
   Dimensions,
 } from 'react-native';
-import {Picker} from '@react-native-community/picker';
+import { Picker } from '@react-native-community/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   inputUserProfile,
   addStepCount,
 } from '../../../store/actions/VerificationAction';
-import {bold, normal} from '../../../assets/FontSize';
-import {ScreenHeight} from '../../../constants/Size';
+import { bold, normal } from '../../../assets/FontSize';
+import { ScreenHeight } from '../../../constants/Size';
 import DisplayBirthDate from '../../../helper/DisplayBirthDate';
 
 //Image
@@ -34,7 +34,7 @@ const calculateHeight = (input) => {
   return (input / 100) * ScreenHeight;
 };
 
-const UserProfileVerificationScreen = ({navigation}) => {
+const UserProfileVerificationScreen = ({ navigation }) => {
   const firstNameFromStore = useSelector(
     (state) => state.VerificationReducer.firstName,
   );
@@ -158,9 +158,9 @@ const UserProfileVerificationScreen = ({navigation}) => {
 
   const InputForm = () => {
     const gender = [
-      {name: 'Male', value: 'male'},
-      {name: 'Female', value: 'female'},
-      {name: 'Non-binary', value: 'non-binary'},
+      { name: 'Male', value: 'male' },
+      { name: 'Female', value: 'female' },
+      { name: 'Non-binary', value: 'non-binary' },
     ];
 
     return (
@@ -230,7 +230,7 @@ const UserProfileVerificationScreen = ({navigation}) => {
             <TouchableOpacity
               style={styles.dateInputStyle}
               onPress={showDatepicker}>
-              <Text style={{fontSize: 16}}>{birthDateDisplay}</Text>
+              <Text style={{ fontSize: 16 }}>{birthDateDisplay}</Text>
             </TouchableOpacity>
           )}
           <Text style={styles.inputNameStyle}>
@@ -256,7 +256,7 @@ const UserProfileVerificationScreen = ({navigation}) => {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <ScrollView style={{flex: 1}}>
+      <ScrollView style={{ flex: 1 }}>
         <View style={styles.userProfileVerificationScreenContainerStyle}>
           <View>
             <BackButton />

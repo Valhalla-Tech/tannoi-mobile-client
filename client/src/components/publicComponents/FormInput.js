@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
-import {normal} from '../../assets/FontSize';
-import {CalculateWidth} from '../../helper/CalculateSize';
+import React, { useState } from 'react';
+import { View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { normal } from '../../assets/FontSize';
+import { CalculateWidth } from '../../helper/CalculateSize';
 
 //Icon
 import EyeIcon from '../../assets/publicAssets/eyeIcon.svg';
@@ -23,10 +23,11 @@ const FormInput = (props) => {
   const [hidePassword, setHidePassword] = useState(true);
 
   return (
-    <View style={{...styles.formInputContainerStyle, ...customContainerStyle}}>
+    <View
+      style={{ ...styles.formInputContainerStyle, ...customContainerStyle }}>
       <TextInput
         value={formInputValue ? formInputValue : null}
-        style={{...styles.formInputStyle, ...formInputCustomStyle}}
+        style={{ ...styles.formInputStyle, ...formInputCustomStyle }}
         placeholder={formInputTitle}
         placeholderTextColor="#73798C"
         onChangeText={(value) => dataInput(value)}
@@ -41,7 +42,9 @@ const FormInput = (props) => {
         </TouchableOpacity>
       )}
       {Icon && (
-        <TouchableOpacity onPress={iconFunction} style={{...iconStyle.margin}}>
+        <TouchableOpacity
+          onPress={iconFunction}
+          style={{ ...iconStyle.margin }}>
           <Icon height={iconStyle.height} width={iconStyle.width} />
         </TouchableOpacity>
       )}

@@ -1,12 +1,18 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Text, TouchableOpacity, FlatList} from 'react-native';
-import {CalculateHeight} from '../../../helper/CalculateSize';
-import {bold, normal} from '../../../assets/FontSize';
+import React, { useState, useEffect } from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+} from 'react-native';
+import { CalculateHeight } from '../../../helper/CalculateSize';
+import { bold, normal } from '../../../assets/FontSize';
 import {
   getResponse,
   getSingleResponse,
 } from '../../../store/actions/ResponseAction';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 //Components
 import DiscussionScreenDiscussionCard from './DiscussionScreenDiscussionCard';
@@ -102,7 +108,7 @@ const DiscussionAndResponseList = (props) => {
   const responseForResponseCount = useSelector(
     (state) => state.ResponseReducer.responseForResponseCount,
   );
-  console.log(response)
+
   useEffect(() => {
     response;
   }, [response]);
@@ -279,7 +285,7 @@ const DiscussionAndResponseList = (props) => {
           <View
             style={
               isResponseScreen
-                ? {...styles.moreButtonContainerStyle, marginBottom: '8%'}
+                ? { ...styles.moreButtonContainerStyle, marginBottom: '8%' }
                 : styles.moreButtonContainerStyle
             }>
             <TouchableOpacity onPress={nextPage}>
@@ -287,7 +293,7 @@ const DiscussionAndResponseList = (props) => {
             </TouchableOpacity>
           </View>
         ) : (
-          <View style={{height: 100}} />
+          <View style={{ height: 100 }} />
         )
       }
     />

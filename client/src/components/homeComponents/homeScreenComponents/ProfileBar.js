@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
-import {bold} from '../../../assets/FontSize';
+import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
+import { bold } from '../../../assets/FontSize';
 
 //Icons
 import NoProfilePicture from '../../../assets/publicAssets/noProfilePicture.png';
@@ -10,7 +10,7 @@ import tickIcon from '../../../assets/publicAssets/tickIcon.png';
 import Button from '../../publicComponents/Button';
 
 const ProfileBar = (props) => {
-  const {user, navigation} = props;
+  const { user, navigation } = props;
 
   return (
     <View style={styles.profileBarContainerStyle}>
@@ -18,7 +18,7 @@ const ProfileBar = (props) => {
         <Image
           source={
             user.profile_photo_path
-              ? {uri: user.profile_photo_path}
+              ? { uri: user.profile_photo_path }
               : NoProfilePicture
           }
           style={styles.profilePictureStyle}
@@ -36,14 +36,14 @@ const ProfileBar = (props) => {
         </TouchableOpacity>
       )}
       <Button
-        buttonTitle='Communities'
+        buttonTitle="Communities"
         buttonStyle={{
           color: '#6505E1',
           borderColor: '#6505E1',
           padding: 0,
           marginBottom: 0,
           fontSize: 12.5,
-          paddingHorizontal: "2%"
+          paddingHorizontal: '2%',
         }}
         buttonFunction={() => navigation.navigate('CommunitiesScreen')}
       />

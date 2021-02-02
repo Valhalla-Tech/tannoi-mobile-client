@@ -7,8 +7,8 @@ import {
   FlatList,
   Image,
 } from 'react-native';
-import {bold, normal} from '../../../assets/FontSize';
-import {CalculateHeight, CalculateWidth} from '../../../helper/CalculateSize';
+import { bold, normal } from '../../../assets/FontSize';
+import { CalculateHeight, CalculateWidth } from '../../../helper/CalculateSize';
 
 //Icon
 import NoProfilePicture from '../../../assets/publicAssets/noProfilePicture.png';
@@ -19,7 +19,7 @@ import Card from '../../publicComponents/Card';
 import ListHeader from '../../publicComponents/ListHeader';
 
 const TopUsers = (props) => {
-  const {topUserData, navigation} = props;
+  const { topUserData, navigation } = props;
 
   const TopUserContent = () => {
     return (
@@ -43,7 +43,7 @@ const TopUsers = (props) => {
                 <Image
                   source={
                     itemData.item.profile_photo_path
-                      ? {uri: itemData.item.profile_photo_path}
+                      ? { uri: itemData.item.profile_photo_path }
                       : NoProfilePicture
                   }
                   style={styles.profilePictureStyle}

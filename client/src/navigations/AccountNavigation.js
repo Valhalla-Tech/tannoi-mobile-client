@@ -1,5 +1,5 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
 //Screens
 import WelcomeScreen from '../screens/accountScreens/WelcomeScreen';

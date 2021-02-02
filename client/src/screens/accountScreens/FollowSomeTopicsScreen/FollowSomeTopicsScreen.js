@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, Text, FlatList} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View, Text, FlatList } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import {useSelector, useDispatch} from 'react-redux';
-import {userLogin} from '../../../store/actions/LoginAction';
-import {bold, normal} from '../../../assets/FontSize';
+import { useSelector, useDispatch } from 'react-redux';
+import { userLogin } from '../../../store/actions/LoginAction';
+import { bold, normal } from '../../../assets/FontSize';
 import axios from '../../../constants/ApiServices';
-import {getTopic} from '../../../store/actions/TopicAction';
+import { getTopic } from '../../../store/actions/TopicAction';
 import BaseUrl from '../../../constants/BaseUrl';
 
 //Components
@@ -16,7 +16,7 @@ import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner'
 
 const numColumns = 3;
 
-const FollowSomeTopicsScreen = ({navigation}) => {
+const FollowSomeTopicsScreen = ({ navigation }) => {
   const topics = useSelector((state) => state.TopicReducer.topics);
   const [allTopics, setAllTopics] = useState(topics);
   const [selectedTopic, setSelectedTopic] = useState([]);
@@ -37,7 +37,10 @@ const FollowSomeTopicsScreen = ({navigation}) => {
     let totalLastRow = allTopics.length - totalRows * numColumns;
 
     while (totalLastRow !== 0 && totalLastRow !== numColumns) {
-      setAllTopics([...allTopics, {key: 'blank', value: 'blank', empty: true}]);
+      setAllTopics([
+        ...allTopics,
+        { key: 'blank', value: 'blank', empty: true },
+      ]);
       totalLastRow++;
     }
 
@@ -91,7 +94,7 @@ const FollowSomeTopicsScreen = ({navigation}) => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <View style={styles.followSomeTopicsScreenContainerStyle}>
         <View style={styles.backButtonAndTitleContainer}>
           <BackButton navigation={navigation} />
@@ -108,7 +111,7 @@ const FollowSomeTopicsScreen = ({navigation}) => {
               data={lastRow(topics, numColumns)}
               contentContainerStyle={styles.cardsContainerStyle}
               numColumns={numColumns}
-              style={{marginBottom: '80%'}}
+              style={{ marginBottom: '80%' }}
               renderItem={(itemData) => (
                 <Card
                   cardData={itemData.item.name}

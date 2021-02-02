@@ -1,7 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
-import {GlobalPadding} from '../../constants/Size';
-import {bold, normal} from '../../assets/FontSize';
+import React, { useEffect, useState } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList,
+} from 'react-native';
+import { GlobalPadding } from '../../constants/Size';
+import { bold, normal } from '../../assets/FontSize';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
@@ -14,19 +20,24 @@ import Card from '../../components/publicComponents/Card';
 import CommunityProfile from '../../components/communityComponent/CommuityProfile';
 import List from '../../components/publicComponents/List';
 import MemberList from '../../components/communityComponent/MemberList';
-import {CalculateHeight} from '../../helper/CalculateSize';
-import {useDispatch, useSelector} from 'react-redux';
-import {getAllDiscussion, clearDiscussion} from '../../store/actions/DiscussionAction';
+import { CalculateHeight } from '../../helper/CalculateSize';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  getAllDiscussion,
+  clearDiscussion,
+} from '../../store/actions/DiscussionAction';
 import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
 
-const CommunityProfileScreen = ({navigation, route}) => {
-  const {communityId} = route.params;
+const CommunityProfileScreen = ({ navigation, route }) => {
+  const { communityId } = route.params;
 
   const [communityProfile, setCommunityProfile] = useState('');
   const [selectedDisplay, setSelectedDisplay] = useState('discussions');
   const [communityMember, setCommunityMember] = useState([]);
 
-  const discussions = useSelector(state => state.DiscussionReducer.discussions);
+  const discussions = useSelector(
+    (state) => state.DiscussionReducer.discussions,
+  );
 
   const dispatch = useDispatch();
 
@@ -38,12 +49,12 @@ const CommunityProfileScreen = ({navigation, route}) => {
     getCommunityMember();
 
     return () => {
-      dispatch(clearDiscussion(false, true))
+      dispatch(clearDiscussion(false, true));
     };
   }, []);
 
   useEffect(() => {
-    dispatch(getAllDiscussion('community_id=', communityId))
+    dispatch(getAllDiscussion('community_id=', communityId));
   }, []);
 
   const changeSelectedDisplay = (value) => {
@@ -99,7 +110,7 @@ const CommunityProfileScreen = ({navigation, route}) => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <CommunityProfile
         navigation={navigation}
         profile={communityProfile}
@@ -114,7 +125,7 @@ const CommunityProfileScreen = ({navigation, route}) => {
                 navigation={navigation}
                 isHeader={false}
                 listData={discussions}
-                customStyle={{marginBottom: '100%'}}
+                customStyle={{ marginBottom: '100%' }}
               />
             }
           />
@@ -128,10 +139,14 @@ const CommunityProfileScreen = ({navigation, route}) => {
           </>
         )}
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate('NewCommunityDiscussionScreen', {
-        communityId: communityProfile.id,
-        communityTopics: communityProfile.community_topics,
-      })} style={{position: 'absolute', bottom: '5%', right: '5%'}}>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate('NewCommunityDiscussionScreen', {
+            communityId: communityProfile.id,
+            communityTopics: communityProfile.community_topics,
+          })
+        }
+        style={{ position: 'absolute', bottom: '5%', right: '5%' }}>
         <NewDiscussionButton />
       </TouchableOpacity>
     </View>

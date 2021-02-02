@@ -1,1 +1,1 @@
-export {default} from './HomeSectionDetailScreen';
+export { default } from './HomeSectionDetailScreen';

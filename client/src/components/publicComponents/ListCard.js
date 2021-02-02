@@ -1,7 +1,7 @@
 import React from 'react';
-import {StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
-import {bold, normal} from '../../assets/FontSize';
-import {CalculateWidth} from '../../helper/CalculateSize';
+import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
+import { bold, normal } from '../../assets/FontSize';
+import { CalculateWidth } from '../../helper/CalculateSize';
 
 //Icons
 import LockIcon from '../../assets/homeAssets/lockIcon.png';
@@ -47,9 +47,12 @@ const HomeListCard = (props) => {
 
   const HomeListCardData = () => {
     return (
-      <View style={isTopResponsePreview ? {maxWidth: '75%'} : ''}>
+      <View style={isTopResponsePreview ? { maxWidth: '70%' } : ''}>
         <View style={styles.profileContainerStyle}>
-          <Image source={{uri: imageUrl}} style={styles.profilePictureStyle} />
+          <Image
+            source={{ uri: imageUrl }}
+            style={styles.profilePictureStyle}
+          />
           <Text style={styles.nameTextStyle}>{name}</Text>
           {profileType === 1 && (
             <Image source={tickIcon} style={styles.tickIconStyle} />
@@ -61,7 +64,7 @@ const HomeListCard = (props) => {
         <Text
           style={
             isTopResponsePreview
-              ? {...styles.titleTextStyle, fontFamily: normal}
+              ? { ...styles.titleTextStyle, fontFamily: normal }
               : styles.titleTextStyle
           }>
           {isTopResponsePreview ? caption : title}
@@ -74,7 +77,7 @@ const HomeListCard = (props) => {
             <Text style={styles.cardInfoStyle}>
               {numberConverter(replies)} Replies
             </Text>
-            <Text style={{...styles.cardInfoStyle}}>
+            <Text style={{ ...styles.cardInfoStyle }}>
               {numberConverter(plays)} Plays
             </Text>
           </View>

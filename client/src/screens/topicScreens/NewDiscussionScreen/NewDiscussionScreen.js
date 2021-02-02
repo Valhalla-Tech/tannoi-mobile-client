@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -9,18 +9,18 @@ import {
   ScrollView,
   Switch,
 } from 'react-native';
-import {bold, normal} from '../../../assets/FontSize';
-import {Picker} from '@react-native-community/picker';
+import { bold, normal } from '../../../assets/FontSize';
+import { Picker } from '@react-native-community/picker';
 import AsyncStorage from '@react-native-community/async-storage';
-import {useSelector, useDispatch} from 'react-redux';
-import {getTopic} from '../../../store/actions/TopicAction';
-import {getHome, clearHome} from '../../../store/actions/HomeAction';
-import {userLogout} from '../../../store/actions/LoginAction';
-import {searchUser} from '../../../store/actions/PrivateDiscussionAction';
+import { useSelector, useDispatch } from 'react-redux';
+import { getTopic } from '../../../store/actions/TopicAction';
+import { getHome, clearHome } from '../../../store/actions/HomeAction';
+import { userLogout } from '../../../store/actions/LoginAction';
+import { searchUser } from '../../../store/actions/PrivateDiscussionAction';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 import Slider from '@react-native-community/slider';
-import {GenerateDeepLink} from '../../../helper/GenerateDeepLink';
+import { GenerateDeepLink } from '../../../helper/GenerateDeepLink';
 
 //Icon
 import EditButton from '../../../assets/topicAssets/edit.svg';
@@ -35,7 +35,7 @@ import PrivateDiscussionModal from '../../../components/topicComponents/PrivateD
 import NoticeModal from '../../../components/publicComponents/Modal';
 import BigButton from '../../../components/publicComponents/Button';
 
-const NewDiscussionScreen = ({navigation}) => {
+const NewDiscussionScreen = ({ navigation }) => {
   const [discussionTitle, setDiscussionTitle] = useState('');
   const [selectedTopic, setSelectedTopic] = useState('Select topic');
   const [hashtags, setHashtags] = useState([]);
@@ -190,7 +190,7 @@ const NewDiscussionScreen = ({navigation}) => {
                   userArr: JSON.stringify(selectedFollowers),
                   all_user: selectAll,
                 }
-              : {userArr: JSON.stringify(selectedFollowers)};
+              : { userArr: JSON.stringify(selectedFollowers) };
 
             GenerateDeepLink(
               'Ask For Response',
@@ -345,7 +345,7 @@ const NewDiscussionScreen = ({navigation}) => {
     );
   };
 
-  const DiscussionModalContainer = ({switchName}) => {
+  const DiscussionModalContainer = ({ switchName }) => {
     return (
       <PrivateDiscussionModal
         openModal={switchName === selectedSwitch && openModal}
@@ -364,7 +364,7 @@ const NewDiscussionScreen = ({navigation}) => {
     );
   };
 
-  const DiscussionSwitch = ({switchName}) => {
+  const DiscussionSwitch = ({ switchName }) => {
     return (
       <View style={styles.privateDiscussionSwitchContainerStyle}>
         {privateDiscussionSwitchValue && selectedSwitch === switchName ? (
@@ -388,7 +388,7 @@ const NewDiscussionScreen = ({navigation}) => {
               ? styles.privateDiscussionTextStyle
               : !privateDiscussionSwitchValue && !askToResponseSwitchValue
               ? styles.privateDiscussionTextStyle
-              : {...styles.privateDiscussionTextStyle, color: '#cccccc'}
+              : { ...styles.privateDiscussionTextStyle, color: '#cccccc' }
           }>
           {switchName}:{' '}
         </Text>
@@ -399,7 +399,7 @@ const NewDiscussionScreen = ({navigation}) => {
               : askToResponseSwitchValue
           }
           onValueChange={() => changeSwitchValue(switchName)}
-          trackColor={{true: '#6505E1', false: ''}}
+          trackColor={{ true: '#6505E1', false: '' }}
           thumbColor={
             switchName === selectedSwitch && privateDiscussionSwitchValue
               ? '#6505E1'
@@ -449,7 +449,7 @@ const NewDiscussionScreen = ({navigation}) => {
             style={
               recordingFile !== ''
                 ? styles.publishButtonTextStyle
-                : {...styles.publishButtonTextStyle, color: '#cccccc'}
+                : { ...styles.publishButtonTextStyle, color: '#cccccc' }
             }>
             Publish
           </Text>

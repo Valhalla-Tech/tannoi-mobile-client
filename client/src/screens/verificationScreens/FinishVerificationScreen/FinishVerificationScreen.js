@@ -1,8 +1,8 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {getHome, clearHome} from '../../../store/actions/HomeAction';
-import {bold, normal} from '../../../assets/FontSize';
+import { View, Text, StyleSheet } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { getHome, clearHome } from '../../../store/actions/HomeAction';
+import { bold, normal } from '../../../assets/FontSize';
 
 //Icon
 import TickIcon from '../../../assets/verificationAssets/tickIcon.svg';
@@ -10,7 +10,7 @@ import TickIcon from '../../../assets/verificationAssets/tickIcon.svg';
 //Component
 import BigButton from '../../../components/publicComponents/Button';
 
-const FinishVerificationScreen = ({navigation}) => {
+const FinishVerificationScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const nextButton = () => {

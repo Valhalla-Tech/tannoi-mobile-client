@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {bold, normal} from '../../assets/FontSize';
-import {useDispatch} from 'react-redux';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { bold, normal } from '../../assets/FontSize';
+import { useDispatch } from 'react-redux';
 import {
   getAllDiscussion,
   clearDiscussion,

@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
-import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
-import {bold, normal} from '../../../assets/FontSize';
+import React, { Component } from 'react';
+import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
+import { bold, normal } from '../../../assets/FontSize';
 import AsyncStorage from '@react-native-community/async-storage';
-import {connect} from 'react-redux';
-import {getHome, clearHome} from '../../../store/actions/HomeAction';
-import {getDiscussion} from '../../../store/actions/DiscussionAction';
+import { connect } from 'react-redux';
+import { getHome, clearHome } from '../../../store/actions/HomeAction';
+import { getDiscussion } from '../../../store/actions/DiscussionAction';
 import {
   getResponse,
   getSingleResponse,
@@ -195,7 +195,7 @@ class DiscussionScreenPlayerCard extends Component {
                 })
               }>
               <Image
-                source={{uri: this.state.profilePicture}}
+                source={{ uri: this.state.profilePicture }}
                 style={styles.profileImageStyle}
               />
             </TouchableOpacity>
@@ -264,7 +264,7 @@ class DiscussionScreenPlayerCard extends Component {
                   openAddResponse: true,
                 })
               : (this.props.navigation.navigate('VerificationNavigation'),
-                this.setState({openAddResponse: true}));
+                this.setState({ openAddResponse: true }));
           }}>
           <Text style={styles.addResponseButtonTextStyle}>Add response</Text>
         </TouchableOpacity>

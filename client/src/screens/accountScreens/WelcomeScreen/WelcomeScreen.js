@@ -1,19 +1,12 @@
 import React, { useEffect } from 'react';
-import { 
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  Image
-} from 'react-native';
-import {
-  GoogleSignin
-} from '@react-native-community/google-signin';
-import {
-  useDispatch
-} from 'react-redux';
+import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
+import { GoogleSignin } from '@react-native-community/google-signin';
+import { useDispatch } from 'react-redux';
 import { bold, normal } from '../../../assets/FontSize';
-import { GoogleSignIn, FacebookSignIn } from '../../../store/actions/LoginAction';
+import {
+  GoogleSignIn,
+  FacebookSignIn,
+} from '../../../store/actions/LoginAction';
 
 //Image
 import WelcomeScreenBackground from '../../../assets/accountAssets/WelcomeScreen/welcomeScreenBackground.png';
@@ -30,15 +23,16 @@ const WelcomeScreen = ({ navigation }) => {
   const googleSignIn = () => {
     dispatch(GoogleSignIn());
   };
-  
+
   const facebookSignIn = () => {
     dispatch(FacebookSignIn());
   };
-  
+
   useEffect(() => {
     GoogleSignin.configure({
       // scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
-      webClientId: '1036887341767-4foinu1uvd66srmivikbplncka4ind72.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
+      webClientId:
+        '1036887341767-4foinu1uvd66srmivikbplncka4ind72.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
       offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
       // hostedDomain: '', // specifies a hosted domain restriction
       // loginHint: '', // [iOS] The user's ID, or email address, to be prefilled in the authentication UI if possible. [See docs here](https://developers.google.com/identity/sign-in/ios/api/interface_g_i_d_sign_in.html#a0a68c7504c31ab0b728432565f6e33fd)
@@ -46,41 +40,50 @@ const WelcomeScreen = ({ navigation }) => {
       // accountName: '', // [Android] specifies an account name on the device that should be used
       // iosClientId: '<FROM DEVELOPER CONSOLE>', // [iOS] optional, if you want to specify the client ID of type iOS (otherwise, it is taken from GoogleService-Info.plist)
     });
-  }, [])
+  }, []);
 
   const WelcomeScreenUpperSection = () => {
     return (
       <View style={styles.welcomeScreenGreetingContainerStyle}>
-        <Image 
-          source={WelcomeScreenBackground} 
-          style={styles.welcomeScreenBackgroundStyle} 
-          resizeMode="stretch"/>
+        <Image
+          source={WelcomeScreenBackground}
+          style={styles.welcomeScreenBackgroundStyle}
+          resizeMode="stretch"
+        />
         <TannoiLogo />
         <Text style={styles.headerBoldTextStyle}>Discover Everything</Text>
-        <Text style={styles.headerNormalTextStyle}>A place for you to talk with friends {'\n'} and communities</Text>
+        <Text style={styles.headerNormalTextStyle}>
+          A place for you to talk with friends {'\n'} and communities
+        </Text>
       </View>
     );
   };
 
   const WelcomeScreenLoginButton = () => {
     return (
-      <View style={{flexDirection:"row"}}>
-        <Text style={styles.loginButtonTextStyle}>
-          Already a member?
-        </Text>
-        <TouchableOpacity 
-          style={{marginLeft: 5}}
+      <View style={{ flexDirection: 'row' }}>
+        <Text style={styles.loginButtonTextStyle}>Already a member?</Text>
+        <TouchableOpacity
+          style={{ marginLeft: 5 }}
           onPress={() => {
             navigation.navigate('LoginScreen');
-          }}
-        >
-          <Text style={{...styles.loginButtonTextStyle, fontFamily: bold}}>Login</Text>
+          }}>
+          <Text style={{ ...styles.loginButtonTextStyle, fontFamily: bold }}>
+            Login
+          </Text>
         </TouchableOpacity>
       </View>
     );
   };
 
-  const WelcomeScreenButton = (title, customStyle, page, type, buttonFuntion, iconTitle) => {
+  const WelcomeScreenButton = (
+    title,
+    customStyle,
+    page,
+    type,
+    buttonFuntion,
+    iconTitle,
+  ) => {
     return (
       <Button
         buttonTitle={title}
@@ -97,52 +100,46 @@ const WelcomeScreen = ({ navigation }) => {
   const WelcomeScreenButtonSection = () => {
     return (
       <View style={styles.welcomeScreenLoginButtonStyle}>
-        {
-          WelcomeScreenButton(
-            'Sign up with email',
-            {
-              backgroundColor: "#5152D0",
-              borderColor: "#5152D0",
-              color: "#FFFFFF",
-              width: "75%",
-              height: "18%"
-            },
-            'RegisterScreen',
-            'navigationButton'
-          )
-        }
-        {
-          WelcomeScreenButton(
-            'Continue with Facebook',
-            {
-              backgroundColor: "#3B5998",
-              borderColor: "#3B5998",
-              color: "#FFFFFF",
-              width: "75%",
-              height: "18%"
-            },
-            null,
-            'buttonFunction',
-            facebookSignIn,
-            'facebook'
-          )
-        }
-        {
-          WelcomeScreenButton(
-            'Continue with Google',
-            {
-              backgroundColor: "#FFFFFF",
-              borderColor: "#E2E2E2",
-              color: "#464D60",
-              width: "75%",
-              height: "18%"
-            },
-            null,
-            'buttonFunction',
-            googleSignIn,
-            'google'
-          )
-        }
+        {WelcomeScreenButton(
+          'Sign up with email',
+          {
+            backgroundColor: '#5152D0',
+            borderColor: '#5152D0',
+            color: '#FFFFFF',
+            width: '75%',
+            height: '18%',
+          },
+          'RegisterScreen',
+          'navigationButton',
+        )}
+        {WelcomeScreenButton(
+          'Continue with Facebook',
+          {
+            backgroundColor: '#3B5998',
+            borderColor: '#3B5998',
+            color: '#FFFFFF',
+            width: '75%',
+            height: '18%',
+          },
+          null,
+          'buttonFunction',
+          facebookSignIn,
+          'facebook',
+        )}
+        {WelcomeScreenButton(
+          'Continue with Google',
+          {
+            backgroundColor: '#FFFFFF',
+            borderColor: '#E2E2E2',
+            color: '#464D60',
+            width: '75%',
+            height: '18%',
+          },
+          null,
+          'buttonFunction',
+          googleSignIn,
+          'google',
+        )}
         <WelcomeScreenLoginButton />
       </View>
     );
@@ -153,57 +150,57 @@ const WelcomeScreen = ({ navigation }) => {
       <WelcomeScreenUpperSection />
       <WelcomeScreenButtonSection />
     </View>
-  )
+  );
 };
 
 const styles = StyleSheet.create({
   welcomeScreenContainerStyle: {
-    flex: 1
+    flex: 1,
   },
-  
+
   welcomeScreenLoginButtonStyle: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   welcomeScreenGreetingContainerStyle: {
     flex: 1.5,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingBottom: "20%",
-    marginBottom: "20%",
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingBottom: '20%',
+    marginBottom: '20%',
   },
 
   welcomeScreenBackgroundStyle: {
-    position: "absolute", 
-    height: "95%", 
-    width: "100%", 
-    top: "40%"
+    position: 'absolute',
+    height: '95%',
+    width: '100%',
+    top: '40%',
   },
 
   headerBoldTextStyle: {
     fontFamily: bold,
-    marginTop: "10%",
-    fontSize: 22
+    marginTop: '10%',
+    fontSize: 22,
   },
 
   headerNormalTextStyle: {
     fontFamily: normal,
-    textAlign: "center",
-    fontSize: 15
+    textAlign: 'center',
+    fontSize: 15,
   },
 
   loginButtonTextStyle: {
-    color: "#73798C",
-    fontFamily: normal
+    color: '#73798C',
+    fontFamily: normal,
   },
 
   welcomeImageStyle: {
-    resizeMode:"stretch", 
-    width:"80%", 
-    height:"80%"
-  }
+    resizeMode: 'stretch',
+    width: '80%',
+    height: '80%',
+  },
 });
 
 export default WelcomeScreen;

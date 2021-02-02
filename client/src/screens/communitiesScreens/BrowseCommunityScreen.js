@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {GlobalPadding} from '../../constants/Size';
-import {CalculateHeight, CalculateWidth} from '../../helper/CalculateSize';
-import {normal, bold} from '../../assets/FontSize';
+import { GlobalPadding } from '../../constants/Size';
+import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
+import { normal, bold } from '../../assets/FontSize';
 import axios from '../../constants/ApiServices';
 import AsyncStorage from '@react-native-community/async-storage';
 import BaseUrl from '../../constants/BaseUrl';
@@ -19,7 +19,7 @@ import Header from '../../components/publicComponents/Header';
 import BackButton from '../../components/publicComponents/BackButton';
 import CommunityList from '../../components/communityComponent/CommunityList';
 
-const BrowseCommunityScreen = ({navigation}) => {
+const BrowseCommunityScreen = ({ navigation }) => {
   const [communities, setCommunities] = useState('');
 
   useEffect(() => {
@@ -86,12 +86,12 @@ const styles = StyleSheet.create({
   },
 
   browseCommunityContainerStyle: {
-    paddingHorizontal: GlobalPadding
+    paddingHorizontal: GlobalPadding,
   },
 
   communityListCustomStyle: {
     marginTop: '2%',
-    borderRadius: 8
+    borderRadius: 8,
   },
 
   communityContainerStyle: {
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     borderBottomWidth: 1,
-    borderBottomColor: '#E3E6EB'
+    borderBottomColor: '#E3E6EB',
   },
 });
 

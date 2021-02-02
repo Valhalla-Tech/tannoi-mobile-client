@@ -1,19 +1,19 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {search} from '../../../store/actions/SearchAction';
+import { useSelector, useDispatch } from 'react-redux';
+import { search } from '../../../store/actions/SearchAction';
 
 //Components
 import SearchBar from '../../../components/publicComponents/SearchBar';
 import RecentSearches from '../../../components/homeComponents/searchScreenComponents/RecentSearches';
 import SearchResultBox from '../../../components/homeComponents/searchScreenComponents/SearchResultBox';
 
-const SearchScreen = ({navigation}) => {
+const SearchScreen = ({ navigation }) => {
   const [searchInput, setSearchInput] = useState('');
   const [category, setCategory] = useState('User');
 

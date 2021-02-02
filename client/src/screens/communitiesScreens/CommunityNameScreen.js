@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -8,11 +8,11 @@ import {
   Keyboard,
   Image,
 } from 'react-native';
-import {CalculateWidth, CalculateHeight} from '../../helper/CalculateSize';
-import {useDispatch, useSelector} from 'react-redux';
-import {addName} from '../../store/actions/CreateCommunityAction';
-import {LinearTextGradient} from 'react-native-text-gradient';
-import {normal} from '../../assets/FontSize';
+import { CalculateWidth, CalculateHeight } from '../../helper/CalculateSize';
+import { useDispatch, useSelector } from 'react-redux';
+import { addName } from '../../store/actions/CreateCommunityAction';
+import { LinearTextGradient } from 'react-native-text-gradient';
+import { normal } from '../../assets/FontSize';
 
 //Icon
 import NoProfileIcon from '../../assets/communitiesAssets/img-no-profile-pic.svg';
@@ -22,9 +22,9 @@ import CreateCommunityHeader from '../../components/communityComponent/CreateCom
 import CreateCommunityInput from '../../components/communityComponent/CreateCommunityInput';
 import CreateCommunityProgress from '../../components/communityComponent/CreateCommunityProgress';
 import Button from '../../components/publicComponents/Button';
-import {UploadImage} from '../../helper/UploadImage';
+import { UploadImage } from '../../helper/UploadImage';
 
-const CommunityNameScreen = ({navigation}) => {
+const CommunityNameScreen = ({ navigation }) => {
   const [communityName, setCommunityName] = useState('');
   const [communityProfileImage, setCommunityProfileImage] = useState('');
   const [textDisplay, setTextDisplay] = useState('');
@@ -43,7 +43,7 @@ const CommunityNameScreen = ({navigation}) => {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <CreateCommunityHeader
           isCancelButton={false}
           isCloseButton={true}
@@ -60,7 +60,7 @@ const CommunityNameScreen = ({navigation}) => {
               style={styles.communityProfilePictureButtonStyle}>
               {communityProfileImage !== '' ? (
                 <Image
-                  source={{uri: communityProfileImage}}
+                  source={{ uri: communityProfileImage }}
                   style={styles.communityProfileImageStyle}
                 />
               ) : (
@@ -68,13 +68,15 @@ const CommunityNameScreen = ({navigation}) => {
               )}
             </TouchableOpacity>
             {textDisplay !== '' && !editMode ? (
-              <TouchableOpacity style={styles.textDisplayButtonStyle} onPress={() => setEditMode(true)}>
+              <TouchableOpacity
+                style={styles.textDisplayButtonStyle}
+                onPress={() => setEditMode(true)}>
                 <LinearTextGradient
-                  style={{fontFamily: normal, fontSize: CalculateHeight(3.5)}}
+                  style={{ fontFamily: normal, fontSize: CalculateHeight(3.5) }}
                   locations={[0, 1]}
                   colors={['#5051DB', '#7E37B6']}
-                  start={{x: 0, y: 0}}
-                  end={{x: 1, y: 0}}>
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}>
                   <Text>{textDisplay}</Text>
                 </LinearTextGradient>
               </TouchableOpacity>
@@ -87,9 +89,7 @@ const CommunityNameScreen = ({navigation}) => {
                 autoFocus={editMode && textDisplay !== ''}
               />
             )}
-            <Text style={styles.instructionTextStyle}>
-              eg: Arsenal FC Fans
-            </Text>
+            <Text style={styles.instructionTextStyle}>eg: Arsenal FC Fans</Text>
           </View>
           <View style={styles.footerContainerStyle}>
             <CreateCommunityProgress stepNumber={1} />
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
   },
 
   textDisplayButtonStyle: {
-    marginLeft: '1%'
+    marginLeft: '1%',
   },
 
   instructionTextStyle: {

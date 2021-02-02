@@ -88,9 +88,14 @@ const reducer = (state = defaultState, action) => {
       };
     case 'ADD_RESPONSE_FOR_RESPONSE':
       let setAddResponseForResponse = state.reply.concat(action.payload.reply);
-      let setAddResponseForResponseCount = action.payload.responseForResponseCount;
+      let setAddResponseForResponseCount =
+        action.payload.responseForResponseCount;
 
-      return {...state, reply: setAddResponseForResponse, responseForResponseCount: setAddResponseForResponseCount};
+      return {
+        ...state,
+        reply: setAddResponseForResponse,
+        responseForResponseCount: setAddResponseForResponseCount,
+      };
     case 'GET_DATA_FOR_RESPONSE':
       let setLikeForResponse = action.payload.likeForResponse;
       let setIsLikeForResponse = action.payload.isLikeForResponse;

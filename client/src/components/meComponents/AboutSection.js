@@ -1,9 +1,9 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import Card from '../publicComponents/Card';
 import ListCardPlayer from '../publicComponents/ListCardPlayer';
 import DisplayBirthDate from '../../helper/DisplayBirthDate';
-import {bold, normal} from '../../assets/FontSize';
+import { bold, normal } from '../../assets/FontSize';
 import LoadingSpinner from '../publicComponents/LoadingSpinner';
 
 const AboutSection = (props) => {

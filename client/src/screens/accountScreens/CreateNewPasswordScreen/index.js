@@ -1,1 +1,1 @@
-export {default} from './CreateNewPasswordScreen';
+export { default } from './CreateNewPasswordScreen';

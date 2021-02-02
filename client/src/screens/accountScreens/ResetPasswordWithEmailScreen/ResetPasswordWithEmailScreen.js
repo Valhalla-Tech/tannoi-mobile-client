@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -7,9 +7,9 @@ import {
   Keyboard,
 } from 'react-native';
 import axios from '../../../constants/ApiServices';
-import {bold, normal} from '../../../assets/FontSize';
+import { bold, normal } from '../../../assets/FontSize';
 import BaseUrl from '../../../constants/BaseUrl';
-import {GenerateDeepLink} from '../../../helper/GenerateDeepLink';
+import { GenerateDeepLink } from '../../../helper/GenerateDeepLink';
 
 //Components
 import BackButton from '../../../components/publicComponents/BackButton';
@@ -18,7 +18,7 @@ import FormInput from '../../../components/publicComponents/FormInput';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 
-const ResetPasswordWithEmailScreen = ({navigation}) => {
+const ResetPasswordWithEmailScreen = ({ navigation }) => {
   const [resetPasswordEmail, setResetPasswordEmail] = useState('');
   const [emailCheck, setEmailCheck] = useState(false);
   const [isLoading, setIsloading] = useState(false);
@@ -83,7 +83,7 @@ const ResetPasswordWithEmailScreen = ({navigation}) => {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <View style={styles.resetPasswordWithEmailScreenContainerStyle}>
           <BackButton navigation={navigation} />
           <Text style={styles.resetPasswordWithEmailTitleStyle}>
