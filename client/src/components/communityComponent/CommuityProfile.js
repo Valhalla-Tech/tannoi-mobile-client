@@ -6,6 +6,9 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
 
+//Icon
+import OptionButton from '../../assets/publicAssets/optionButton.svg';
+
 //Components
 import Header from '../publicComponents/Header';
 import Card from '../../components/publicComponents/Card';
@@ -13,9 +16,43 @@ import BackButton from '../publicComponents/BackButton';
 import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
 import Button from '../publicComponents/Button';
 import LoadingSpinner from '../publicComponents/LoadingSpinner';
+import Modal from '../publicComponents/Modal';
 
 const CommunityProfile = (props) => {
-  const { navigation, profile, selectedDisplay, changeSelectedDisplay } = props;
+  const {
+    navigation,
+    profile,
+    selectedDisplay,
+    changeSelectedDisplay,
+    communityId,
+    getOneCommunity,
+  } = props;
+
+  const [actionModal, setActionModal] = useState(false);
+
+  const closeActionModal = () => {
+    setActionModal(false);
+  };
+
+  const joinCommunity = async () => {
+    try {
+      let access_token = await AsyncStorage.getItem('access_token');
+
+      let joinCommunityRequest = await axios({
+        method: 'get',
+        url: `${BaseUrl}/communities/join-community/${communityId}`,
+        headers: {
+          token: access_token,
+        },
+      });
+
+      if (joinCommunityRequest.data) {
+        getOneCommunity();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const HeaderContent = () => {
     return (
@@ -27,7 +64,22 @@ const CommunityProfile = (props) => {
             marginBottom: 0,
           }}
         />
+        <TouchableOpacity
+          onPress={() => setActionModal(true)}
+          style={styles.optionButtonStyle}>
+          <OptionButton />
+        </TouchableOpacity>
       </>
+    );
+  };
+
+  const ActionModal = () => {
+    return (
+      <View>
+        <TouchableOpacity>
+          <Text style={styles.actionModalButtonTextStyle}>Leave community</Text>
+        </TouchableOpacity>
+      </View>
     );
   };
 
@@ -145,6 +197,7 @@ const CommunityProfile = (props) => {
                       marginTop: '15%',
                     }}
                     buttonTitle="Join"
+                    buttonFunction={joinCommunity}
                   />
                 )}
               </View>
@@ -160,6 +213,14 @@ const CommunityProfile = (props) => {
     <View>
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
       <Card child={CommunityProfileContent} />
+      <Modal
+        customStyle={{
+          alignItems: 'flex-start'
+        }}
+        openModal={actionModal}
+        closeModal={closeActionModal}
+        child={ActionModal}
+      />
     </View>
   );
 };
@@ -168,6 +229,13 @@ const styles = StyleSheet.create({
   headerStyle: {
     paddingHorizontal: '3%',
     paddingVertical: '5%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+
+  optionButtonStyle: {
+    padding: '3%',
   },
 
   communityProfileContainerStyle: {
@@ -252,6 +320,11 @@ const styles = StyleSheet.create({
     fontFamily: bold,
     color: '#464D60',
     fontSize: CalculateHeight(2.5),
+  },
+
+  actionModalButtonTextStyle: {
+    fontFamily: normal,
+    fontSize: CalculateHeight(2),
   },
 });
 
