@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
-import {TouchableOpacity, StyleSheet} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {getOneProfile} from '../../../store/actions/ProfileAction';
+import React, { useState } from 'react';
+import { TouchableOpacity, StyleSheet } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { getOneProfile } from '../../../store/actions/ProfileAction';
 
 //Components
 import DiscussionCardMenu from '../../../assets/topicAssets/discussionCardMenu.svg';

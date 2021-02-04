@@ -6,8 +6,8 @@ export const inputUserProfile = (data) => {
         firstName: data.firstName,
         lastName: data.lastName,
         gender: data.gender,
-        birthDate: data.birthDate
-      }
+        birthDate: data.birthDate,
+      },
     });
   };
 };
@@ -20,8 +20,8 @@ export const inputUserAddress = (data) => {
         street: data.street,
         city: data.city,
         country: data.country,
-        postalCode: data.postalCode
-      }
+        postalCode: data.postalCode,
+      },
     });
   };
 };
@@ -31,8 +31,8 @@ export const addStepCount = (count) => {
     dispatch({
       type: 'ADD_STEP_COUNT',
       payload: {
-        stepCount: count
-      }
+        stepCount: count,
+      },
     });
   };
 };
@@ -40,7 +40,7 @@ export const addStepCount = (count) => {
 export const deleteVerificationData = () => {
   return (dispatch) => {
     dispatch({
-      type: 'DELETE_VERIFICATION_DATA'
+      type: 'DELETE_VERIFICATION_DATA',
     });
   };
 };

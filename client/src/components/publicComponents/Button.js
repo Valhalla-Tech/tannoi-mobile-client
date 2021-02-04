@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
-import {medium} from '../../assets/FontSize';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { medium } from '../../assets/FontSize';
 
 import FacebookLogo from '../../assets/publicAssets/facebookIcon.svg';
 import GoogleLogo from '../../assets/publicAssets/googleIcon.svg';
@@ -38,7 +38,9 @@ const WelcomePageButton = (props) => {
         style={{
           ...styles.buttonTitleStyle,
           color: buttonStyle.color,
-          fontSize: buttonStyle.fontSize ? buttonStyle.fontSize : styles.buttonTitleStyle.fontSize
+          fontSize: buttonStyle.fontSize
+            ? buttonStyle.fontSize
+            : styles.buttonTitleStyle.fontSize,
         }}>
         {buttonTitle}
       </Text>

@@ -1,12 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList,
+} from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   getAllDiscussion,
   clearDiscussion,
 } from '../../../store/actions/DiscussionAction';
-import {bold, normal} from '../../../assets/FontSize';
-import {GlobalPadding} from '../../../constants/Size';
+import { bold, normal } from '../../../assets/FontSize';
+import { GlobalPadding } from '../../../constants/Size';
 
 //Components
 import Header from '../../../components/publicComponents/Header';
@@ -14,15 +20,15 @@ import List from '../../../components/publicComponents/List';
 import SearchBar from '../../../components/publicComponents/SearchBar';
 import BackButton from '../../../components/publicComponents/BackButton';
 import NoticeModal from '../../../components/publicComponents/Modal';
-import {getSingleTopic} from '../../../store/actions/TopicAction';
+import { getSingleTopic } from '../../../store/actions/TopicAction';
 
 const TopicDetail = (props) => {
   const [noticeModal, setNoticeModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const {route, navigation} = props;
+  const { route, navigation } = props;
 
-  const {topicName, topicId} = route.params;
+  const { topicName, topicId } = route.params;
 
   const dispatch = useDispatch();
 
@@ -42,7 +48,7 @@ const TopicDetail = (props) => {
     (state) => state.DiscussionReducer.discussionCount,
   );
 
-  const {description} = useSelector((state) => state.TopicReducer.topic);
+  const { description } = useSelector((state) => state.TopicReducer.topic);
 
   const openModal = () => {
     setNoticeModal(true);

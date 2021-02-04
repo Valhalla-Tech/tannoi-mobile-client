@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -7,11 +7,11 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import {addDescription} from '../../store/actions/CreateCommunityAction';
-import {LinearTextGradient} from 'react-native-text-gradient';
-import {CalculateHeight} from '../../helper/CalculateSize';
-import {normal} from '../../assets/FontSize';
+import { useDispatch, useSelector } from 'react-redux';
+import { addDescription } from '../../store/actions/CreateCommunityAction';
+import { LinearTextGradient } from 'react-native-text-gradient';
+import { CalculateHeight } from '../../helper/CalculateSize';
+import { normal } from '../../assets/FontSize';
 
 //Components
 import CreateCommunityHeader from '../../components/communityComponent/CreateCommunityHeader';
@@ -19,7 +19,7 @@ import CreateCommunityInput from '../../components/communityComponent/CreateComm
 import CreateCommunityProgress from '../../components/communityComponent/CreateCommunityProgress';
 import Button from '../../components/publicComponents/Button';
 
-const CommunityDescriptionScreen = ({navigation}) => {
+const CommunityDescriptionScreen = ({ navigation }) => {
   const savedDescription = useSelector(
     (state) => state.CreateCommunityReducer.communityDescription,
   );
@@ -43,7 +43,7 @@ const CommunityDescriptionScreen = ({navigation}) => {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <CreateCommunityHeader navigation={navigation} />
         <View style={styles.communityDescriptionContainerStyle}>
           {textDisplay !== '' && !editMode ? (
@@ -51,11 +51,11 @@ const CommunityDescriptionScreen = ({navigation}) => {
               style={styles.textDisplayButtonStyle}
               onPress={() => setEditMode(true)}>
               <LinearTextGradient
-                style={{fontFamily: normal, fontSize: CalculateHeight(3.5)}}
+                style={{ fontFamily: normal, fontSize: CalculateHeight(3.5) }}
                 locations={[0, 1]}
                 colors={['#5051DB', '#7E37B6']}
-                start={{x: 0, y: 0}}
-                end={{x: 1, y: 0}}>
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}>
                 <Text>{textDisplay}</Text>
               </LinearTextGradient>
             </TouchableOpacity>
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
 
   textDisplayButtonStyle: {
     marginLeft: '1%',
-    marginTop: '35%'
+    marginTop: '35%',
   },
 
   footerContainerStyle: {

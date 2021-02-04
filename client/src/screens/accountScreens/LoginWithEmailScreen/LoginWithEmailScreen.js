@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -9,11 +9,11 @@ import {
   Platform,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import {useDispatch} from 'react-redux';
-import {userLogin} from '../../../store/actions/LoginAction';
-import {getHome, clearHome} from '../../../store/actions/HomeAction';
+import { useDispatch } from 'react-redux';
+import { userLogin } from '../../../store/actions/LoginAction';
+import { getHome, clearHome } from '../../../store/actions/HomeAction';
 import axios from '../../../constants/ApiServices';
-import {bold, normal} from '../../../assets/FontSize';
+import { bold, normal } from '../../../assets/FontSize';
 import BaseUrl from '../../../constants/BaseUrl';
 
 //Components
@@ -23,7 +23,7 @@ import FormInput from '../../../components/publicComponents/FormInput';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 
-const LoginWithEmailScreen = ({navigation}) => {
+const LoginWithEmailScreen = ({ navigation }) => {
   const [emailLogin, setEmailLogin] = useState('');
   const [passwordLogin, setPasswordLogin] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -108,12 +108,15 @@ const LoginWithEmailScreen = ({navigation}) => {
           Forgot your password?
         </Text>
         <TouchableOpacity
-          style={{marginLeft: 5}}
+          style={{ marginLeft: 5 }}
           onPress={() => {
             navigation.navigate('ResetPasswordWithEmailScreen');
           }}>
           <Text
-            style={{...styles.forgotPasswordButtonTextStyle, fontFamily: bold}}>
+            style={{
+              ...styles.forgotPasswordButtonTextStyle,
+              fontFamily: bold,
+            }}>
             Reset password
           </Text>
         </TouchableOpacity>
@@ -138,7 +141,7 @@ const LoginWithEmailScreen = ({navigation}) => {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <View style={styles.loginWithEmailScreenContainerStyle}>
           <BackButton navigation={navigation} />
           <Text style={styles.loginTitleStyle}>Login to tannOi</Text>

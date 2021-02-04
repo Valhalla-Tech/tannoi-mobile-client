@@ -1,1 +1,1 @@
-export {default} from './FollowSomeTopicsScreen';
+export { default } from './FollowSomeTopicsScreen';

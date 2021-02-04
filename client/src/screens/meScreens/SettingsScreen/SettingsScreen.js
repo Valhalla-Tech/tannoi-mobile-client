@@ -1,17 +1,17 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {userLogout} from '../../../store/actions/LoginAction';
-import {clearTopic} from '../../../store/actions/TopicAction';
-import {clearLogedInProfile} from '../../../store/actions/ProfileAction';
-import {bold, normal} from '../../../assets/FontSize';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { userLogout } from '../../../store/actions/LoginAction';
+import { clearTopic } from '../../../store/actions/TopicAction';
+import { clearLogedInProfile } from '../../../store/actions/ProfileAction';
+import { bold, normal } from '../../../assets/FontSize';
 
 //Components
 import Header from '../../../components/publicComponents/Header';
 import Card from '../../../components/publicComponents/Card';
 import BackButton from '../../../components/publicComponents/BackButton';
 
-const SettingsScreen = ({navigation}) => {
+const SettingsScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const HeaderContent = () => {
@@ -45,7 +45,7 @@ const SettingsScreen = ({navigation}) => {
         onPress={() => navigation.navigate(screenName)}
         style={
           lastButton
-            ? {...styles.menuButtonStyle, borderBottomWidth: 0}
+            ? { ...styles.menuButtonStyle, borderBottomWidth: 0 }
             : styles.menuButtonStyle
         }>
         <Text style={styles.menuButtonTextStyle}>{buttonTitle}</Text>
@@ -90,7 +90,7 @@ const SettingsScreen = ({navigation}) => {
         <Card child={AccountMenu} customStyle={styles.cardStyle} />
         <Card
           child={NotificationsMenu}
-          customStyle={{...styles.cardStyle, marginTop: '2%'}}
+          customStyle={{ ...styles.cardStyle, marginTop: '2%' }}
         />
       </View>
     </View>

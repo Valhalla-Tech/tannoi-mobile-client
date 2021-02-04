@@ -34,7 +34,7 @@ export const GenerateDeepLink = async (
       $desktop_url: 'https://www.tannoi.app/',
     };
 
-    let {url} = await branchUniversalObject.generateShortUrl(
+    let { url } = await branchUniversalObject.generateShortUrl(
       linkProperties,
       controlParams,
     );

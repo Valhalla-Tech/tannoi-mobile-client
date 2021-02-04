@@ -1,6 +1,6 @@
 const defaultState = {
   topics: [],
-  topic: ''
+  topic: '',
 };
 
 const reducer = (state = defaultState, action) => {
@@ -8,15 +8,15 @@ const reducer = (state = defaultState, action) => {
     case 'GET_TOPIC':
       let setTopics = action.payload.topics;
 
-      return {...state, topics: setTopics};
+      return { ...state, topics: setTopics };
     case 'GET_SINGLE_TOPIC':
       let setTopic = action.payload.topic;
 
-      return {...state, topic: setTopic};
+      return { ...state, topic: setTopic };
     case 'CLEAR_TOPIC':
-      return {...state, topics: []};
+      return { ...state, topics: [] };
     default:
-      return state
+      return state;
   }
 };
 

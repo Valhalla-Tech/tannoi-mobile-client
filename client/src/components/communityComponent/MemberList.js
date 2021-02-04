@@ -7,20 +7,23 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-import {normal} from '../../assets/FontSize';
-import {CalculateHeight, CalculateWidth} from '../../helper/CalculateSize';
+import { normal } from '../../assets/FontSize';
+import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
 
 //Component
 import Card from '../publicComponents/Card';
 
 const MemberList = (props) => {
-  const {
-    memberList,
-  } = props;
-  
+  const { memberList } = props;
+
   const MemberListData = (itemData) => {
     return (
-      <TouchableOpacity style={itemData.index + 1 !== memberList.length ? styles.memberListDataStyle : {...styles.memberListDataStyle, borderBottomWidth: 0}}>
+      <TouchableOpacity
+        style={
+          itemData.index + 1 !== memberList.length
+            ? styles.memberListDataStyle
+            : { ...styles.memberListDataStyle, borderBottomWidth: 0 }
+        }>
         <View style={styles.imageProfileAndNameStyle}>
           <Image source={{uri: itemData.item.profile_photo_path}} style={styles.profileImageStyle} />
           <View style={{ justifyContent: 'center'}}>
@@ -45,7 +48,10 @@ const MemberList = (props) => {
   };
 
   return (
-    <Card child={MemberListContent} customStyle={styles.communityMemberContainerStyle} />
+    <Card
+      child={MemberListContent}
+      customStyle={styles.communityMemberContainerStyle}
+    />
   );
 };
 
@@ -83,8 +89,8 @@ const styles = StyleSheet.create({
 
   adminStyle: {
     color: '#73798C',
-    fontSize: CalculateHeight(1.5)
-  }
+    fontSize: CalculateHeight(1.5),
+  },
 });
 
 export default MemberList;

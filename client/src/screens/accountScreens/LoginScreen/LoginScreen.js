@@ -1,14 +1,17 @@
 import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {bold} from '../../../assets/FontSize';
-import {GoogleSignIn, FacebookSignIn} from '../../../store/actions/LoginAction';
+import { StyleSheet, View, Text } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { bold } from '../../../assets/FontSize';
+import {
+  GoogleSignIn,
+  FacebookSignIn,
+} from '../../../store/actions/LoginAction';
 
 //Components
 import BackButton from '../../../components/publicComponents/BackButton';
 import Button from '../../../components/publicComponents/Button';
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const googleSignIn = () => {
@@ -90,7 +93,7 @@ const LoginScreen = ({navigation}) => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <View style={styles.loginScreenContainerStyle}>
         <BackButton navigation={navigation} />
         <Text style={styles.loginTitleStyle}>Login to tannOi</Text>

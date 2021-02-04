@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
-import {View, TouchableOpacity, StyleSheet, Text} from 'react-native';
-import {Player} from '@react-native-community/audio-toolkit';
-import {connect} from 'react-redux';
-import {getHome} from '../../store/actions/HomeAction';
-import {changeCurrentPlayerId} from '../../store/actions/PlayerAction';
+import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { Player } from '@react-native-community/audio-toolkit';
+import { connect } from 'react-redux';
+import { getHome } from '../../store/actions/HomeAction';
+import { changeCurrentPlayerId } from '../../store/actions/PlayerAction';
 import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
 import Slider from '@react-native-community/slider';
@@ -190,7 +190,7 @@ class HomeListPlayerCard extends Component {
                 this.playRecording();
               }
 
-              this.setState({progress: currentProgress});
+              this.setState({ progress: currentProgress });
             }
           }, 100);
         }

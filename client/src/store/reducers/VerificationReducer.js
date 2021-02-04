@@ -7,7 +7,7 @@ const defaultState = {
   city: '',
   country: '',
   postalCode: '',
-  stepCount: ''
+  stepCount: '',
 };
 
 const reducer = (state = defaultState, action) => {
@@ -23,7 +23,7 @@ const reducer = (state = defaultState, action) => {
         firstName: setFirstName,
         lastName: setLastName,
         gender: setGender,
-        birthDate: setBirthDate
+        birthDate: setBirthDate,
       };
     case 'INPUT_ADDRESS':
       let setStreet = action.payload.street;
@@ -36,12 +36,12 @@ const reducer = (state = defaultState, action) => {
         street: setStreet,
         city: setCity,
         country: setCountry,
-        postalCode: setPostalCode
+        postalCode: setPostalCode,
       };
     case 'ADD_STEP_COUNT':
       let setStepCount = action.payload.stepCount;
 
-      return {...state, stepCount: setStepCount};
+      return { ...state, stepCount: setStepCount };
     case 'DELETE_VERIFICATION_DATA':
       return {
         ...state,
@@ -53,11 +53,11 @@ const reducer = (state = defaultState, action) => {
         city: '',
         country: '',
         postalCode: '',
-        stepCount: ''
+        stepCount: '',
       };
     default:
       return state;
-  };
+  }
 };
 
 export default reducer;

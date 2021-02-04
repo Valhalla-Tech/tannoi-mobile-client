@@ -1,5 +1,5 @@
-import React, {useState, useEffect, Component} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import React, { useState, useEffect, Component } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Slider from '@react-native-community/slider';
 import Sound from 'react-native-sound';
 
@@ -155,7 +155,7 @@ class RecordPlayer extends Component {
 
   render() {
     return (
-      <View style={{...this.props.customStyle}}>
+      <View style={{ ...this.props.customStyle }}>
         <View style={styles.durationContainerStyle}>
           <Text>{this.state.durationPlayed}</Text>
           <Text>{this.state.durationLeft}</Text>

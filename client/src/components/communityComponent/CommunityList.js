@@ -7,8 +7,8 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-import {CalculateHeight, CalculateWidth} from '../../helper/CalculateSize';
-import {normal, bold} from '../../assets/FontSize';
+import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
+import { normal, bold } from '../../assets/FontSize';
 import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
 
 //Icon
@@ -20,18 +20,17 @@ import DiscussionIcon from '../../assets/communitiesAssets/ic-discussion.svg';
 import Card from '../../components/publicComponents/Card';
 
 const CommunityList = (props) => {
-  const {communities, navigation} = props;
+  const { communities, navigation } = props;
 
   const showCommunityTopics = (data, index) => (
-    <View style={styles.topicNameContainerStyle}>
-      <Text key={index} style={styles.topicNameStyle} numberOfLines={1}>
+    <View key={index} style={styles.topicNameContainerStyle}>
+      <Text style={styles.topicNameStyle} numberOfLines={1}>
         {data.community_topic.name}
       </Text>
     </View>
   );
 
   const RenderCommunity = (itemData) => {
-
     return (
       <TouchableOpacity
         onPress={() =>
@@ -41,11 +40,11 @@ const CommunityList = (props) => {
         }
         style={
           itemData.index + 1 === communities.length
-            ? {...styles.communityContainerStyle, borderBottomWidth: 0}
+            ? { ...styles.communityContainerStyle, borderBottomWidth: 0 }
             : styles.communityContainerStyle
         }>
         <Image
-          source={{uri: itemData.item.image_path}}
+          source={{ uri: itemData.item.image_path }}
           style={styles.communityProfileImageStyle}
         />
         <View style={styles.communityDataContainerStyle}>

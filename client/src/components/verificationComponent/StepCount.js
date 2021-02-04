@@ -1,9 +1,9 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import {useSelector} from 'react-redux';
+import { View, StyleSheet } from 'react-native';
+import { useSelector } from 'react-redux';
 
 const StepCount = (props) => {
-  const {rootCustomStyle} = props;
+  const { rootCustomStyle } = props;
 
   const currentStep = useSelector(
     (state) => state.VerificationReducer.stepCount,
@@ -20,7 +20,7 @@ const StepCount = (props) => {
                   ...rootCustomStyle,
                   backgroundColor: '#6505E1',
                 }
-              : {...styles.stepStyle, ...rootCustomStyle}
+              : { ...styles.stepStyle, ...rootCustomStyle }
           }
         />
         <View
@@ -31,10 +31,10 @@ const StepCount = (props) => {
                   ...rootCustomStyle,
                   backgroundColor: '#6505E1',
                 }
-              : {...styles.stepStyle, ...rootCustomStyle}
+              : { ...styles.stepStyle, ...rootCustomStyle }
           }
         />
-        <View style={{...styles.stepStyle, ...rootCustomStyle}} />
+        <View style={{ ...styles.stepStyle, ...rootCustomStyle }} />
       </View>
     </View>
   );

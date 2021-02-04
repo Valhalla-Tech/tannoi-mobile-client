@@ -1,7 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet, FlatList} from 'react-native';
-import {bold, normal} from '../../../assets/FontSize';
-import {useSelector, useDispatch} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  FlatList,
+} from 'react-native';
+import { bold, normal } from '../../../assets/FontSize';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   getOneProfile,
   clearUserProfile,
@@ -13,9 +19,9 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
-import {getHome, clearHome} from '../../../store/actions/HomeAction';
-import {GlobalPadding} from '../../../constants/Size';
-import {GenerateDeepLink} from '../../../helper/GenerateDeepLink';
+import { getHome, clearHome } from '../../../store/actions/HomeAction';
+import { GlobalPadding } from '../../../constants/Size';
+import { GenerateDeepLink } from '../../../helper/GenerateDeepLink';
 import AboutSection from '../../../components/meComponents/AboutSection';
 
 //Components
@@ -24,8 +30,8 @@ import ProfileData from '../../../components/meComponents/ProfileData';
 import List from '../../../components/publicComponents/List';
 import NoticeModal from '../../../components/publicComponents/Modal';
 
-const UserProfileScreen = ({route, navigation}) => {
-  const {userId, fromDeepLink} = route.params;
+const UserProfileScreen = ({ route, navigation }) => {
+  const { userId, fromDeepLink } = route.params;
 
   const [selectedMenu, setSelectedMenu] = useState('Discussions');
   const [noticeModal, setNoticeModal] = useState(false);

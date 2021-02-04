@@ -1,1 +1,1 @@
-export {default} from './HashtagDetailScreen';
+export { default } from './HashtagDetailScreen';

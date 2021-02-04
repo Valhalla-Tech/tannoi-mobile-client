@@ -1,20 +1,26 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Text, FlatList, TouchableOpacity} from 'react-native';
-import {bold} from '../../../assets/FontSize';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
+import { bold } from '../../../assets/FontSize';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   getResponse,
   getSingleResponse,
   clearResponse,
 } from '../../../store/actions/ResponseAction';
-import {CalculateHeight} from '../../../helper/CalculateSize';
+import { CalculateHeight } from '../../../helper/CalculateSize';
 
 //Components
 import BackButton from '../../../components/publicComponents/BackButton';
 import DiscussionAndResponseList from '../../../components/topicComponents/discussionScreenComponents/DiscussionAndResponseList';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 
-const ReplyScreen = ({route, navigation}) => {
+const ReplyScreen = ({ route, navigation }) => {
   const [fromNextPreviousButton, setFromNextPreviousButton] = useState(false);
   const [selectedCard, setSelectedCard] = useState('response');
 
@@ -25,7 +31,7 @@ const ReplyScreen = ({route, navigation}) => {
 
   const dispatch = useDispatch();
 
-  const {responseId, discussionId, fromInbox} = route.params;
+  const { responseId, discussionId, fromInbox } = route.params;
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {

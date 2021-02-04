@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
@@ -7,9 +7,9 @@ import {
   Platform,
   PermissionsAndroid,
 } from 'react-native';
-import {Player, Recorder} from '@react-native-community/audio-toolkit';
+import { Player, Recorder } from '@react-native-community/audio-toolkit';
 import Slider from '@react-native-community/slider';
-import {bold, normal} from '../../assets/FontSize';
+import { bold, normal } from '../../assets/FontSize';
 
 //Icon
 import RecordButton from '../../assets/topicAssets/recordButton.svg';
@@ -214,7 +214,7 @@ class NewDiscussionScreenRecorder extends Component {
               }
 
               if (this._isMounted) {
-                this.setState({progress: currentProgress});
+                this.setState({ progress: currentProgress });
               }
             }
           }, 100);
@@ -322,7 +322,7 @@ class NewDiscussionScreenRecorder extends Component {
         <Text
           style={
             this.props.recorderStyle
-              ? {...styles.timerStyle, ...this.props.recorderStyle}
+              ? { ...styles.timerStyle, ...this.props.recorderStyle }
               : styles.timerStyle
           }>
           {this.state.timer}
@@ -334,14 +334,14 @@ class NewDiscussionScreenRecorder extends Component {
               style={
                 this.state.recordingFile
                   ? styles.stopButtonStyle
-                  : {...styles.stopButtonStyle, borderColor: '#a1a5ab'}
+                  : { ...styles.stopButtonStyle, borderColor: '#a1a5ab' }
               }
               disabled={this.state.recordingFile === ''}>
               <Text
                 style={
                   this.state.recordingFile
                     ? styles.stopButtonTextStyle
-                    : {...styles.stopButtonTextStyle, color: '#a1a5ab'}
+                    : { ...styles.stopButtonTextStyle, color: '#a1a5ab' }
                 }>
                 Reset
               </Text>
@@ -356,14 +356,14 @@ class NewDiscussionScreenRecorder extends Component {
               style={
                 this.state.recordingFile
                   ? styles.playOrPauseButtonStyle
-                  : {...styles.playOrPauseButtonStyle, borderColor: '#a1a5ab'}
+                  : { ...styles.playOrPauseButtonStyle, borderColor: '#a1a5ab' }
               }
               disabled={this.state.recordingFile === ''}>
               <Text
                 style={
                   this.state.recordingFile
                     ? styles.playOrPauseButtonTextStyle
-                    : {...styles.playOrPauseButtonTextStyle, color: '#a1a5ab'}
+                    : { ...styles.playOrPauseButtonTextStyle, color: '#a1a5ab' }
                 }>
                 Play / Pause
               </Text>

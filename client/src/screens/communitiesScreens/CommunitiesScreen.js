@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {bold, normal} from '../../assets/FontSize';
-import {CalculateHeight} from '../../helper/CalculateSize';
-import {GlobalPadding} from '../../constants/Size';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { bold, normal } from '../../assets/FontSize';
+import { CalculateHeight } from '../../helper/CalculateSize';
+import { GlobalPadding } from '../../constants/Size';
 import axios from '../../constants/ApiServices';
 import AsyncStorage from '@react-native-community/async-storage';
 import BaseUrl from '../../constants/BaseUrl';
@@ -13,11 +13,15 @@ import Header from '../../components/publicComponents/Header';
 import BackButton from '../../components/publicComponents/BackButton';
 import CommunityList from '../../components/communityComponent/CommunityList';
 
+<<<<<<< HEAD
+const CommunitiesScreen = ({ navigation }) => {
+=======
 //Assets
 import RightArrowIcon from '../../assets/communitiesAssets/rightArrow.svg'
 import AddCircleIcon from '../../assets/communitiesAssets/ic-add-circle.svg'
 
 const CommunitiesScreen = ({navigation}) => {
+>>>>>>> development
   const [userCommunity, setUserCommunity] = useState('');
 
   useEffect(() => {

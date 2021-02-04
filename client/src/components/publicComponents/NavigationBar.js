@@ -1,7 +1,7 @@
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {ScreenHeight} from '../../constants/Size';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { ScreenHeight } from '../../constants/Size';
 
 //Icons
 import HomeIcon from '../../assets/homeAssets/homeIcon.svg';
@@ -29,7 +29,7 @@ const calculateHeight = (input) => {
 const Tab = createBottomTabNavigator();
 
 const NavigationBar = (props) => {
-  const {navigation} = props;
+  const { navigation } = props;
 
   const newDiscussionScreenButton = () => {
     return navigation.navigate('NewDiscussionScreen');
@@ -51,17 +51,19 @@ const NavigationBar = (props) => {
         component={HomeNavigation}
         options={{
           tabBarLabel: '',
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <>
               {focused ? (
-                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <View
+                  style={{ justifyContent: 'center', alignItems: 'center' }}>
                   <HomeIcon />
-                  <Text style={{color: '#FFA530', fontSize: 10}}>Home</Text>
+                  <Text style={{ color: '#FFA530', fontSize: 10 }}>Home</Text>
                 </View>
               ) : (
-                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <View
+                  style={{ justifyContent: 'center', alignItems: 'center' }}>
                   <HomeIconNotActive />
-                  <Text style={{color: '#FFFFFF', fontSize: 10}}>Home</Text>
+                  <Text style={{ color: '#FFFFFF', fontSize: 10 }}>Home</Text>
                 </View>
               )}
             </>
@@ -76,17 +78,19 @@ const NavigationBar = (props) => {
         component={TopicNavigation}
         options={{
           tabBarLabel: '',
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <>
               {focused ? (
-                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <View
+                  style={{ justifyContent: 'center', alignItems: 'center' }}>
                   <TopicICon />
-                  <Text style={{color: '#FFA530', fontSize: 10}}>Topics</Text>
+                  <Text style={{ color: '#FFA530', fontSize: 10 }}>Topics</Text>
                 </View>
               ) : (
-                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <View
+                  style={{ justifyContent: 'center', alignItems: 'center' }}>
                   <TopicIconNotActive />
-                  <Text style={{color: '#FFFFFF', fontSize: 10}}>Topics</Text>
+                  <Text style={{ color: '#FFFFFF', fontSize: 10 }}>Topics</Text>
                 </View>
               )}
             </>
@@ -126,17 +130,19 @@ const NavigationBar = (props) => {
         component={InboxNavigation}
         options={{
           tabBarLabel: '',
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <>
               {focused ? (
-                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <View
+                  style={{ justifyContent: 'center', alignItems: 'center' }}>
                   <InboxIcon />
-                  <Text style={{color: '#FFA530', fontSize: 10}}>Inbox</Text>
+                  <Text style={{ color: '#FFA530', fontSize: 10 }}>Inbox</Text>
                 </View>
               ) : (
-                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <View
+                  style={{ justifyContent: 'center', alignItems: 'center' }}>
                   <InboxIconNotActive />
-                  <Text style={{color: '#FFFFFF', fontSize: 10}}>Inbox</Text>
+                  <Text style={{ color: '#FFFFFF', fontSize: 10 }}>Inbox</Text>
                 </View>
               )}
             </>
@@ -151,17 +157,19 @@ const NavigationBar = (props) => {
         component={MeNavigation}
         options={{
           tabBarLabel: '',
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <>
               {focused ? (
-                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <View
+                  style={{ justifyContent: 'center', alignItems: 'center' }}>
                   <MeIcon />
-                  <Text style={{color: '#FFA530', fontSize: 10}}>Me</Text>
+                  <Text style={{ color: '#FFA530', fontSize: 10 }}>Me</Text>
                 </View>
               ) : (
-                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <View
+                  style={{ justifyContent: 'center', alignItems: 'center' }}>
                   <MeIconNotActive />
-                  <Text style={{color: '#FFFFFF', fontSize: 10}}>Me</Text>
+                  <Text style={{ color: '#FFFFFF', fontSize: 10 }}>Me</Text>
                 </View>
               )}
             </>

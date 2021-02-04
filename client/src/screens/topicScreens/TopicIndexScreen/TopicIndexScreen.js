@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -12,8 +12,8 @@ import {
   followTopic,
   unfollowTopic,
 } from '../../../store/actions/TopicAction';
-import {useSelector, useDispatch} from 'react-redux';
-import {bold, normal} from '../../../assets/FontSize';
+import { useSelector, useDispatch } from 'react-redux';
+import { bold, normal } from '../../../assets/FontSize';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 
 //Icons
@@ -25,7 +25,7 @@ import Header from '../../../components/publicComponents/Header';
 import SearchBar from '../../../components/publicComponents/SearchBar';
 import Card from '../../../components/publicComponents/Card';
 
-const TopicIndexScreen = ({navigation}) => {
+const TopicIndexScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -60,7 +60,7 @@ const TopicIndexScreen = ({navigation}) => {
         style={styles.topicStyle}>
         <View style={styles.topicDataContainerStyle}>
           <Image
-            source={{uri: itemData.item.image_path}}
+            source={{ uri: itemData.item.image_path }}
             style={styles.topicIconStyle}
           />
           <View>
@@ -96,7 +96,7 @@ const TopicIndexScreen = ({navigation}) => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
       <FlatList
         ListHeaderComponent={

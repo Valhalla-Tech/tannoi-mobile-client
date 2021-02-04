@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -10,10 +10,10 @@ import {
 import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
 import AsyncStorage from '@react-native-community/async-storage';
-import {GlobalPadding} from '../../constants/Size';
-import {CalculateHeight, CalculateWidth} from '../../helper/CalculateSize';
-import {bold, normal} from '../../assets/FontSize';
-import {Picker} from '@react-native-community/picker';
+import { GlobalPadding } from '../../constants/Size';
+import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
+import { bold, normal } from '../../assets/FontSize';
+import { Picker } from '@react-native-community/picker';
 
 //Components
 import Header from '../../components/publicComponents/Header';
@@ -25,9 +25,9 @@ import Recorder from '../../components/publicComponents/Recorder';
 import ErrorMessage from '../../components/publicComponents/ErrorMessage';
 
 const NewCommunityDiscussionScreen = (props) => {
-  const {navigation, route} = props;
+  const { navigation, route } = props;
 
-  const {communityId, communityTopics} = route.params;
+  const { communityId, communityTopics } = route.params;
 
   const [recordingFile, setRecordingFile] = useState('');
   const [discussionTitle, setDiscussionTitle] = useState('');

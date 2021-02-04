@@ -7,14 +7,14 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import {counterEvent} from 'react-native/Libraries/Performance/Systrace';
-import {normal} from '../../../assets/FontSize';
+import { counterEvent } from 'react-native/Libraries/Performance/Systrace';
+import { normal } from '../../../assets/FontSize';
 
 //Icon
 import TickIcon from '../../../assets/publicAssets/tickIcon.png';
 
 const SearchResultBox = (props) => {
-  const {searchInput, category, userResults, navigation} = props;
+  const { searchInput, category, userResults, navigation } = props;
 
   const renderUserList = (itemData) => {
     return (
@@ -26,7 +26,7 @@ const SearchResultBox = (props) => {
         }}
         style={styles.userContainerStyle}>
         <Image
-          source={{uri: itemData.item.profile_photo_path}}
+          source={{ uri: itemData.item.profile_photo_path }}
           style={styles.profileImageStyle}
         />
         <Text style={styles.userNameStyle}>{itemData.item.name}</Text>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,7 +6,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
-import {bold} from '../../../assets/FontSize';
+import { bold } from '../../../assets/FontSize';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 
@@ -17,7 +17,7 @@ import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import BackButton from '../../../components/publicComponents/BackButton';
 import Modal from '../../../components/publicComponents/Modal';
 
-const CreateNewPasswordScreen = ({route, navigation}) => {
+const CreateNewPasswordScreen = ({ route, navigation }) => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfrimPassword] = useState('');
   const [confirmPasswordValidation, setConfirmPasswordValidation] = useState(
@@ -26,7 +26,7 @@ const CreateNewPasswordScreen = ({route, navigation}) => {
   const [passwordValidation, setPasswordValidation] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
-  const {token} = route.params;
+  const { token } = route.params;
 
   const inputNewPassword = (newPasswordData) => {
     setNewPassword(newPasswordData);
@@ -105,7 +105,7 @@ const CreateNewPasswordScreen = ({route, navigation}) => {
 
   const CreateNewPasswordButton = () => {
     return (
-      <View style={{height: 50}}>
+      <View style={{ height: 50 }}>
         <Button
           buttonTitle="Change Password & Login"
           buttonStyle={

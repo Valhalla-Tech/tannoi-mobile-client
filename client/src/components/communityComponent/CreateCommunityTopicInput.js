@@ -1,14 +1,21 @@
 import React from 'react';
-import {TextInput, StyleSheet} from 'react-native';
-import {CalculateHeight} from '../../helper/CalculateSize';
+import { TextInput, StyleSheet } from 'react-native';
+import { CalculateHeight } from '../../helper/CalculateSize';
 
 const CreateCommunityTopicInput = (props) => {
-  const {placeholder, inputFunction, customStyle, onBlur, value, autoFocus} = props;
+  const {
+    placeholder,
+    inputFunction,
+    customStyle,
+    onBlur,
+    value,
+    autoFocus,
+  } = props;
 
   return (
     <TextInput
       onChangeText={(value) => inputFunction(value)}
-      style={{...styles.textInputStyle, ...customStyle}}
+      style={{ ...styles.textInputStyle, ...customStyle }}
       placeholder={placeholder}
       placeholderTextColor="#73798C"
       multiline={false}
@@ -24,7 +31,7 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     flexWrap: 'wrap',
     fontSize: CalculateHeight(3.5),
-    color: 'black'
+    color: 'black',
   },
 });
 

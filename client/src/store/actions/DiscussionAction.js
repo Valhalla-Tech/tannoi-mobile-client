@@ -2,18 +2,24 @@ import axios from '../../constants/ApiServices';
 import AsyncStorage from '@react-native-community/async-storage';
 import BaseUrl from '../../constants/BaseUrl';
 
-export const getAllDiscussion = (option, optionId, sort, page, isUserDiscussion) => {
+export const getAllDiscussion = (
+  option,
+  optionId,
+  sort,
+  page,
+  isUserDiscussion,
+) => {
   return async (dispatch) => {
     try {
       let access_token = await AsyncStorage.getItem('access_token');
       let getAllDiscussionRequest = await axios({
-        url: `${BaseUrl}/discussions/all${
-          `?sort=${sort ? sort : 'newest'}`}${option ? `&${option}` : ''}${optionId ? optionId : ''}${`&page=${page ? page : '1'}`
-        }`,
+        url: `${BaseUrl}/discussions/all${`?sort=${sort ? sort : 'newest'}`}${
+          option ? `&${option}` : ''
+        }${optionId ? optionId : ''}${`&page=${page ? page : '1'}`}`,
         method: 'get',
         headers: {
-          'token': access_token
-        }
+          token: access_token,
+        },
       });
 
       if (getAllDiscussionRequest.data) {
@@ -23,16 +29,16 @@ export const getAllDiscussion = (option, optionId, sort, page, isUserDiscussion)
               type: 'GET_USER_DISCUSSION',
               payload: {
                 discussions: getAllDiscussionRequest.data.data,
-                discussionCount: getAllDiscussionRequest.data.numOfResult
-              }
+                discussionCount: getAllDiscussionRequest.data.numOfResult,
+              },
             });
           } else {
             dispatch({
               type: 'ADD_USER_DISCUSSION_LIST',
               payload: {
                 discussions: getAllDiscussionRequest.data.data,
-                discussionCount: getAllDiscussionRequest.data.numOfResult
-              }
+                discussionCount: getAllDiscussionRequest.data.numOfResult,
+              },
             });
           }
         } else if (page && page > 1) {
@@ -40,18 +46,18 @@ export const getAllDiscussion = (option, optionId, sort, page, isUserDiscussion)
             type: 'ADD_DISCUSSION_LIST',
             payload: {
               discussions: getAllDiscussionRequest.data.data,
-              discussionCount: getAllDiscussionRequest.data.numOfResult
-            }
+              discussionCount: getAllDiscussionRequest.data.numOfResult,
+            },
           });
         } else {
           dispatch({
             type: 'GET_ALL_DISCUSSION',
             payload: {
               discussions: getAllDiscussionRequest.data.data,
-              discussionCount: getAllDiscussionRequest.data.numOfResult
-            }
+              discussionCount: getAllDiscussionRequest.data.numOfResult,
+            },
           });
-        } 
+        }
       }
     } catch (error) {
       console.log(error);
@@ -59,10 +65,10 @@ export const getAllDiscussion = (option, optionId, sort, page, isUserDiscussion)
         dispatch({
           type: 'LOGOUT',
           payload: {
-            loginStatus: false
-          }
+            loginStatus: false,
+          },
         });
-      };
+      }
     }
   };
 };
@@ -74,8 +80,8 @@ export const getDiscussion = (discussionId, isLoading) => {
         dispatch({
           type: 'SET_IS_LOADING',
           payload: {
-            isLoading: true
-          }
+            isLoading: true,
+          },
         });
       }
 
@@ -84,8 +90,8 @@ export const getDiscussion = (discussionId, isLoading) => {
         url: `${BaseUrl}/discussions/single/${discussionId}`,
         method: 'get',
         headers: {
-          'token': access_token
-        }
+          token: access_token,
+        },
       });
 
       if (getDiscussionRequest.data) {
@@ -93,7 +99,8 @@ export const getDiscussion = (discussionId, isLoading) => {
           type: 'GET_DISCUSSION',
           payload: {
             profileId: getDiscussionRequest.data.creator.id,
-            profilePicture: getDiscussionRequest.data.creator.profile_photo_path,
+            profilePicture:
+              getDiscussionRequest.data.creator.profile_photo_path,
             profileName: getDiscussionRequest.data.creator.name,
             postTime: getDiscussionRequest.data.timeSince,
             like: getDiscussionRequest.data.likes,
@@ -107,16 +114,16 @@ export const getDiscussion = (discussionId, isLoading) => {
             isLike: getDiscussionRequest.data.isLike,
             isDislike: getDiscussionRequest.data.isDislike,
             type: getDiscussionRequest.data.type,
-            userType: getDiscussionRequest.data.creator.type
-          }
+            userType: getDiscussionRequest.data.creator.type,
+          },
         });
 
         if (isLoading) {
           dispatch({
             type: 'SET_IS_LOADING',
             payload: {
-              isLoading: false
-            }
+              isLoading: false,
+            },
           });
         }
       }
@@ -126,10 +133,10 @@ export const getDiscussion = (discussionId, isLoading) => {
         dispatch({
           type: 'LOGOUT',
           payload: {
-            loginStatus: false
-          }
+            loginStatus: false,
+          },
         });
-      };
+      }
     }
   };
 };
@@ -138,16 +145,16 @@ export const clearDiscussion = (clearUserDiscussion, clearAllDiscussion) => {
   return (dispatch) => {
     if (clearUserDiscussion) {
       dispatch({
-        type: 'CLEAR_USER_DISCUSSION'
+        type: 'CLEAR_USER_DISCUSSION',
       });
     } else if (clearAllDiscussion) {
       dispatch({
-        type: 'CLEAR_ALL_DISCUSSION'
-      })
+        type: 'CLEAR_ALL_DISCUSSION',
+      });
     } else {
       dispatch({
-        type: 'CLEAR_DISCUSSION'
+        type: 'CLEAR_DISCUSSION',
       });
     }
-  }
+  };
 };

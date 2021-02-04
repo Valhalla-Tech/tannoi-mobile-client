@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -11,12 +11,12 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {bold, normal} from '../../../assets/FontSize';
+import { bold, normal } from '../../../assets/FontSize';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 import DisplayBirthDate from '../../../helper/DisplayBirthDate';
-import {UploadImage} from '../../../helper/UploadImage';
+import { UploadImage } from '../../../helper/UploadImage';
 
 //Icon
 import NoProfileIcon from '../../../assets/accountAssets/EnterYourProfileScreen/noProfileIcon.svg';
@@ -26,7 +26,7 @@ import SaveAndContinueButton from '../../../components/publicComponents/Button';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 import FormInput from '../../../components/publicComponents/FormInput';
 
-const EnterYourProfileScreen = ({navigation}) => {
+const EnterYourProfileScreen = ({ navigation }) => {
   const [profileImage, setProfileImage] = useState('');
   const [fullName, setFullName] = useState('');
   const [birthDateDisplay, setBirthDateDisplay] = useState('');
@@ -126,7 +126,7 @@ const EnterYourProfileScreen = ({navigation}) => {
       <View style={styles.uploadProfilePhotoContainerStyle}>
         {profileImage ? (
           <Image
-            source={{uri: profileImage}}
+            source={{ uri: profileImage }}
             style={styles.profileImageStyle}
           />
         ) : (
@@ -171,13 +171,13 @@ const EnterYourProfileScreen = ({navigation}) => {
     return (
       <>
         {fullNameValidation && (
-          <View style={{marginTop: '2%'}}>
+          <View style={{ marginTop: '2%' }}>
             <ErrorMessage message="Please enter your full name" />
           </View>
         )}
-        <Text style={{...styles.formInputTitleStyle}}>Full name</Text>
+        <Text style={{ ...styles.formInputTitleStyle }}>Full name</Text>
         <FormInput dataInput={nameInput} />
-        <Text style={{...styles.formInputTitleStyle}}>Date of birth</Text>
+        <Text style={{ ...styles.formInputTitleStyle }}>Date of birth</Text>
         {show ? (
           <DateTimePicker
             testID="dateTimePicker"
@@ -191,7 +191,7 @@ const EnterYourProfileScreen = ({navigation}) => {
           <TouchableOpacity
             style={styles.formInputStyle}
             onPress={showDatepicker}>
-            <Text style={{fontSize: 16}}>{birthDateDisplay}</Text>
+            <Text style={{ fontSize: 16 }}>{birthDateDisplay}</Text>
           </TouchableOpacity>
         )}
       </>
@@ -203,7 +203,7 @@ const EnterYourProfileScreen = ({navigation}) => {
       onPress={() => {
         Keyboard.dismiss();
       }}>
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <View style={styles.enterYourProfileScreenContainerStyle}>
           <Text style={styles.enterYourProfileScreenTitleStyle}>
             Enter your profile

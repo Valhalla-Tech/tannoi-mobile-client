@@ -1,7 +1,13 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Text, TouchableOpacity, FlatList} from 'react-native';
-import {bold, normal} from '../../../assets/FontSize';
-import {useSelector, useDispatch} from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+} from 'react-native';
+import { bold, normal } from '../../../assets/FontSize';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   getOneProfile,
   clearUserProfile,
@@ -10,7 +16,7 @@ import {
   clearDiscussion,
   getAllDiscussion,
 } from '../../../store/actions/DiscussionAction';
-import {GlobalPadding} from '../../../constants/Size';
+import { GlobalPadding } from '../../../constants/Size';
 import AboutSection from '../../../components/meComponents/AboutSection';
 
 //Components
@@ -19,12 +25,12 @@ import ProfileData from '../../../components/meComponents/ProfileData';
 import List from '../../../components/publicComponents/List';
 import NoticeModal from '../../../components/publicComponents/Modal';
 
-const MeScreen = ({navigation, route}) => {
+const MeScreen = ({ navigation, route }) => {
   const [selectedMenu, setSelectedMenu] = useState('Discussions');
   const [noticeModal, setNoticeModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const {fromEditScreen} = route.params !== undefined && route.params;
+  const { fromEditScreen } = route.params !== undefined && route.params;
 
   const userProfile = useSelector(
     (state) => state.ProfileReducer.loggedinUserProfile,

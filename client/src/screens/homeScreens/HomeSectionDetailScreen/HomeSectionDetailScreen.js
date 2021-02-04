@@ -1,8 +1,14 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet, FlatList} from 'react-native';
-import {bold, normal} from '../../../assets/FontSize';
-import {GlobalPadding} from '../../../constants/Size';
-import {useSelector, useDispatch} from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  FlatList,
+} from 'react-native';
+import { bold, normal } from '../../../assets/FontSize';
+import { GlobalPadding } from '../../../constants/Size';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   getAllDiscussion,
   clearDiscussion,
@@ -14,7 +20,7 @@ import List from '../../../components/publicComponents/List';
 import BackButton from '../../../components/publicComponents/BackButton';
 import ListHeader from '../../../components/publicComponents/ListHeader';
 
-const HomeSectionDetailScreen = ({navigation, route}) => {
+const HomeSectionDetailScreen = ({ navigation, route }) => {
   const discussions = useSelector(
     (state) => state.DiscussionReducer.discussions,
   );
@@ -25,7 +31,7 @@ const HomeSectionDetailScreen = ({navigation, route}) => {
   const [selectedSort, setSelectedSort] = useState('newest');
   const [currentPage, setCurrentPage] = useState(1);
 
-  const {sectionTitle, sectionType, sectionQuery, queryId} = route.params;
+  const { sectionTitle, sectionType, sectionQuery, queryId } = route.params;
 
   const dispatch = useDispatch();
 

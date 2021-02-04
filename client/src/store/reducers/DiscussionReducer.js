@@ -46,10 +46,16 @@ const reducer = (state = defaultState, action) => {
         discussionCount: setDiscussionListCount,
       };
     case 'ADD_USER_DISCUSSION_LIST':
-      let setAddUserDiscussionList = state.userDiscussion.concat(action.payload.discussions);
+      let setAddUserDiscussionList = state.userDiscussion.concat(
+        action.payload.discussions,
+      );
       let setAddUserDiscussionCount = action.payload.userDiscussionCount;
 
-      return {...state, userDiscussion: setAddUserDiscussionList, userDiscussionCount: setAddUserDiscussionCount};
+      return {
+        ...state,
+        userDiscussion: setAddUserDiscussionList,
+        userDiscussionCount: setAddUserDiscussionCount,
+      };
     case 'GET_DISCUSSION':
       let setProfileId = action.payload.profileId;
       let setProfilePicture = action.payload.profilePicture;
@@ -91,7 +97,11 @@ const reducer = (state = defaultState, action) => {
       let setUserDiscussion = action.payload.discussions;
       let setUserDiscussionCount = action.payload.discussionCount;
 
-      return {...state, userDiscussion: setUserDiscussion, userDiscussionCount: setUserDiscussionCount};
+      return {
+        ...state,
+        userDiscussion: setUserDiscussion,
+        userDiscussionCount: setUserDiscussionCount,
+      };
     case 'CLEAR_DISCUSSION':
       return {
         ...state,
@@ -110,13 +120,13 @@ const reducer = (state = defaultState, action) => {
         isDislike: '',
       };
     case 'CLEAR_ALL_DISCUSSION':
-      return {...state, discussions: ''};
+      return { ...state, discussions: '' };
     case 'CLEAR_USER_DISCUSSION':
-      return {...state, userDiscussion: ''};
+      return { ...state, userDiscussion: '' };
     case 'SET_IS_LOADING':
       let setIsLoading = action.payload.isLoading;
 
-      return {...state, isLoading: setIsLoading};
+      return { ...state, isLoading: setIsLoading };
     default:
       return state;
   }

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -8,16 +8,16 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
-import {bold} from '../../assets/FontSize';
-import {useDispatch} from 'react-redux';
-import {getHome, clearHome} from '../../store/actions/HomeAction';
-import {getDiscussion} from '../../store/actions/DiscussionAction';
+import { bold } from '../../assets/FontSize';
+import { useDispatch } from 'react-redux';
+import { getHome, clearHome } from '../../store/actions/HomeAction';
+import { getDiscussion } from '../../store/actions/DiscussionAction';
 import {
   getResponse,
   getSingleResponse,
-  getResponseData
+  getResponseData,
 } from '../../store/actions/ResponseAction';
-import {userLogout} from '../../store/actions/LoginAction';
+import { userLogout } from '../../store/actions/LoginAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
@@ -47,65 +47,60 @@ const RecorderModal = (props) => {
     forBio,
     setBioFile,
     openModalFromHeader,
-    dataForUpdate
+    dataForUpdate,
   } = props;
 
   const createResponse = async () => {
     try {
       setIsLoading(true);
 
-      if (caption === '') {
+      let access_token = await AsyncStorage.getItem('access_token');
+
+      const uri = `file://${recordingFile}`;
+
+      let audioParts = uri.split('.');
+      let fileType = audioParts[audioParts.length - 1];
+
+      let formData = new FormData();
+
+      formData.append('voice_note_path', {
+        uri,
+        name: `recording.${fileType}`,
+        type: `audio/${fileType}`,
+      });
+
+      formData.append('caption', caption.trim());
+
+      if (addResponseForResponse) {
+        formData.append('response_id', responseId);
+      }
+
+      let createResponseRequest = await axios({
+        method: 'post',
+        url: `${BaseUrl}/responses/${discussionId}`,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          token: access_token,
+        },
+        data: formData,
+      });
+
+      if (createResponseRequest.data) {
         setIsLoading(false);
-        setValidation(true);
-      } else {
-        let access_token = await AsyncStorage.getItem('access_token');
-
-        const uri = `file://${recordingFile}`;
-
-        let audioParts = uri.split('.');
-        let fileType = audioParts[audioParts.length - 1];
-
-        let formData = new FormData();
-
-        formData.append('voice_note_path', {
-          uri,
-          name: `recording.${fileType}`,
-          type: `audio/${fileType}`,
-        });
-
-        formData.append('caption', caption.trim());
-
+        setValidation(false);
         if (addResponseForResponse) {
-          formData.append('response_id', responseId);
+          // if (!addResponseForResponseInResponseScreen) {
+          //   dispatch(getSingleResponse(responseId));
+          // }
+          dispatch(getResponseData(responseId, dataForUpdate));
+          dispatch(getSingleResponse(responseScreenResponseId));
+        } else {
+          dispatch(getResponse(discussionId));
         }
-
-        let createResponseRequest = await axios({
-          method: 'post',
-          url: `${BaseUrl}/responses/${discussionId}`,
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            token: access_token,
-          },
-          data: formData,
-        });
-
-        if (createResponseRequest.data) {
-          setIsLoading(false);
-          setValidation(false);
-          if (addResponseForResponse) {
-            // if (!addResponseForResponseInResponseScreen) {
-            //   dispatch(getSingleResponse(responseId));
-            // }
-            dispatch(getResponseData(responseId, dataForUpdate));
-            dispatch(getSingleResponse(responseScreenResponseId));
-          } else {
-            dispatch(getResponse(discussionId));
-          }
-          // dispatch(getDiscussion(discussionId));
-          setRecordingFile('');
-          setCaption('');
-          closeModal(openModalFromHeader);
-        }
+        // dispatch(getDiscussion(discussionId));
+        setRecordingFile('');
+        setCaption('');
+        closeModal(openModalFromHeader);
       }
     } catch (error) {
       console.log(error);
@@ -129,7 +124,7 @@ const RecorderModal = (props) => {
     <Modal animationType="slide" visible={openModal} transparent={true}>
       <View style={styles.backgroundShadowStyle}>
         <TouchableOpacity
-          style={{flex: 1}}
+          style={{ flex: 1 }}
           onPress={() => {
             closeModal();
             setRecordingFile('');
@@ -138,7 +133,7 @@ const RecorderModal = (props) => {
           }}
         />
       </View>
-      <View style={{flex: 1}} />
+      <View style={{ flex: 1 }} />
       <TouchableWithoutFeedback
         onPress={() => {
           Keyboard.dismiss();
@@ -160,7 +155,7 @@ const RecorderModal = (props) => {
             </View>
             {!forBio && (
               <FormInput
-                formInputTitle="Add caption"
+                formInputTitle="Add caption (optional)"
                 dataInput={inputCaption}
                 capitalize={true}
               />

@@ -4,22 +4,22 @@ import BaseUrl from '../../constants/BaseUrl';
 
 export const getTopic = () => {
   return async (dispatch) => {
-    try{
+    try {
       let access_token = await AsyncStorage.getItem('access_token');
-    
+
       let getTopicRequest = await axios({
         url: `${BaseUrl}/topics`,
         method: 'get',
         headers: {
-          'token': access_token
-        }
+          token: access_token,
+        },
       });
-      
+
       dispatch({
         type: 'GET_TOPIC',
         payload: {
-          topics: getTopicRequest.data
-        }
+          topics: getTopicRequest.data,
+        },
       });
     } catch (error) {
       console.log(error);
@@ -27,10 +27,10 @@ export const getTopic = () => {
         dispatch({
           type: 'LOGOUT',
           payload: {
-            loginStatus: false
-          }
+            loginStatus: false,
+          },
         });
-      };
+      }
     }
   };
 };
@@ -43,17 +43,17 @@ export const getSingleTopic = (topicId) => {
         url: `${BaseUrl}/topics/${topicId}`,
         method: 'get',
         headers: {
-          'token': access_token
-        }
+          token: access_token,
+        },
       });
 
       if (getSingleTopicRequest.data) {
         dispatch({
           type: 'GET_SINGLE_TOPIC',
           payload: {
-            topic: getSingleTopicRequest.data
-          }
-        })
+            topic: getSingleTopicRequest.data,
+          },
+        });
       }
     } catch (error) {
       console.log(error);
@@ -61,10 +61,10 @@ export const getSingleTopic = (topicId) => {
         dispatch({
           type: 'LOGOUT',
           payload: {
-            loginStatus: false
-          }
+            loginStatus: false,
+          },
         });
-      };
+      }
     }
   };
 };
@@ -73,15 +73,15 @@ export const followTopic = (topicId) => {
   return async (dispatch) => {
     try {
       let access_token = await AsyncStorage.getItem('access_token');
-  
+
       let followTopicRequest = await axios({
         url: `${BaseUrl}/topics/preferred/${topicId}`,
         method: 'get',
         headers: {
-          'token': access_token
-        }
+          token: access_token,
+        },
       });
-  
+
       if (followTopicRequest.data) {
         dispatch(getTopic());
       }
@@ -91,10 +91,10 @@ export const followTopic = (topicId) => {
         dispatch({
           type: 'LOGOUT',
           payload: {
-            loginStatus: false
-          }
+            loginStatus: false,
+          },
         });
-      };
+      }
     }
   };
 };
@@ -108,8 +108,8 @@ export const unfollowTopic = (topicId) => {
         url: `${BaseUrl}/topics/preferred/${topicId}`,
         method: 'delete',
         headers: {
-          'token': access_token
-        }
+          token: access_token,
+        },
       });
 
       if (followTopicRequest.data) {
@@ -121,10 +121,10 @@ export const unfollowTopic = (topicId) => {
         dispatch({
           type: 'LOGOUT',
           payload: {
-            loginStatus: false
-          }
+            loginStatus: false,
+          },
         });
-      };
+      }
     }
   };
 };
@@ -132,7 +132,7 @@ export const unfollowTopic = (topicId) => {
 export const clearTopic = () => {
   return (dispatch) => {
     dispatch({
-      type: 'CLEAR_TOPIC'
+      type: 'CLEAR_TOPIC',
     });
   };
 };

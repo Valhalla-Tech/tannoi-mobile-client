@@ -1,9 +1,9 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {Spinner} from 'native-base';
+import { StyleSheet, View } from 'react-native';
+import { Spinner } from 'native-base';
 
 const LoadingSpinner = (props) => {
-  const {loadingSpinnerForComponent} = props;
+  const { loadingSpinnerForComponent } = props;
 
   return (
     <View

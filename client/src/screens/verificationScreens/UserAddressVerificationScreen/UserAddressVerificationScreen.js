@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -9,16 +9,16 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
-import {Picker} from '@react-native-community/picker';
-import {bold, normal} from '../../../assets/FontSize';
-import {useSelector, useDispatch} from 'react-redux';
+import { Picker } from '@react-native-community/picker';
+import { bold, normal } from '../../../assets/FontSize';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   inputUserAddress,
   addStepCount,
 } from '../../../store/actions/VerificationAction';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import axios from '../../../constants/ApiServices';
-import {ScreenHeight} from '../../../constants/Size';
+import { ScreenHeight } from '../../../constants/Size';
 
 //Image
 import ScreenImage from '../../../assets/verificationAssets/Illustration-Tannoi-Apps-03.png';
@@ -32,7 +32,7 @@ const calculateHeight = (input) => {
   return (input / 100) * ScreenHeight;
 };
 
-const UserAddressVerificationScreen = ({navigation}) => {
+const UserAddressVerificationScreen = ({ navigation }) => {
   const streetFromStore = useSelector(
     (state) => state.VerificationReducer.street,
   );

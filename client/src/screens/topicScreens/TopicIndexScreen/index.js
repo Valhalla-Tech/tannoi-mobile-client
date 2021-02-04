@@ -1,1 +1,1 @@
-export {default} from './TopicIndexScreen';
+export { default } from './TopicIndexScreen';

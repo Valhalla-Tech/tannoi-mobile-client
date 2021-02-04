@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 
 const Card = (props) => {
   const {
@@ -17,23 +17,23 @@ const Card = (props) => {
       <>
         {isSelected(topicKey) ? (
           <TouchableOpacity
-            style={{...styles.cardContainerStyle, backgroundColor: '#5152D0'}}
+            style={{ ...styles.cardContainerStyle, backgroundColor: '#5152D0' }}
             onPress={() => {
               deselectTopic(topicKey);
             }}>
-            <Image source={{uri: cardImage}} style={styles.cardImageStyle} />
-            <Text style={{...styles.cardTitleStyle, color: '#FFFFFF'}}>
+            <Image source={{ uri: cardImage }} style={styles.cardImageStyle} />
+            <Text style={{ ...styles.cardTitleStyle, color: '#FFFFFF' }}>
               {cardData}
             </Text>
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
-            style={{...styles.cardContainerStyle}}
+            style={{ ...styles.cardContainerStyle }}
             onPress={() => {
               selectTopic(topicKey);
             }}>
-            <Image source={{uri: cardImage}} style={styles.cardImageStyle} />
-            <Text style={{...styles.cardTitleStyle, color: '#464D60'}}>
+            <Image source={{ uri: cardImage }} style={styles.cardImageStyle} />
+            <Text style={{ ...styles.cardTitleStyle, color: '#464D60' }}>
               {cardData}
             </Text>
           </TouchableOpacity>

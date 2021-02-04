@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -8,8 +8,8 @@ import {
   Image,
   FlatList,
 } from 'react-native';
-import {bold, normal} from '../../assets/FontSize';
-import {useSelector, useDispatch} from 'react-redux';
+import { bold, normal } from '../../assets/FontSize';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   searchUser,
   getAuthorizedUsers,
@@ -106,7 +106,12 @@ const PrivateDiscussionModal = (props) => {
     isSelectAll ? setSelectedUser([]) : null;
   };
 
-  const FollowerList = ({profileImage, profileName, userId, isAuthorized}) => {
+  const FollowerList = ({
+    profileImage,
+    profileName,
+    userId,
+    isAuthorized,
+  }) => {
     return (
       <TouchableOpacity
         disabled={isSelectAll ? true : false}
@@ -125,13 +130,13 @@ const PrivateDiscussionModal = (props) => {
               : styles.followerDataStyle
           }>
           <Image
-            source={{uri: profileImage}}
+            source={{ uri: profileImage }}
             style={styles.profileImageStyle}
           />
           <Text
             style={
               isSelected(userId) || isSelectAll
-                ? {...styles.profileName, color: '#FFFFFF'}
+                ? { ...styles.profileName, color: '#FFFFFF' }
                 : styles.profileName
             }>
             {profileName}
@@ -228,7 +233,7 @@ const PrivateDiscussionModal = (props) => {
     <Modal animationType="fade" transparent={true} visible={openModal}>
       <View style={styles.optionModalBackground}>
         <TouchableOpacity
-          style={{flex: 1}}
+          style={{ flex: 1 }}
           onPress={() => {
             if (isFilled) {
               closeModal(true);

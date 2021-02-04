@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, Switch} from 'react-native';
-import {bold, normal} from '../../../assets/FontSize';
-import {GlobalPadding} from '../../../constants/Size';
-import {CalculateHeight} from '../../../helper/CalculateSize';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Switch } from 'react-native';
+import { bold, normal } from '../../../assets/FontSize';
+import { GlobalPadding } from '../../../constants/Size';
+import { CalculateHeight } from '../../../helper/CalculateSize';
 import axios from '../../../constants/ApiServices';
 import AsyncStorage from '@react-native-community/async-storage';
 import BaseUrl from '../../../constants/BaseUrl';
@@ -13,7 +13,7 @@ import Header from '../../../components/publicComponents/Header';
 import BackButton from '../../../components/publicComponents/BackButton';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 
-const NotificationSettingsScreen = ({navigation}) => {
+const NotificationSettingsScreen = ({ navigation }) => {
   const [emailNotificationStatus, setEmailNotificationStatus] = useState('');
 
   useEffect(() => {
@@ -94,7 +94,7 @@ const NotificationSettingsScreen = ({navigation}) => {
         </Text>
         <Switch
           value={emailNotificationStatus}
-          trackColor={{true: '#6505E1', false: ''}}
+          trackColor={{ true: '#6505E1', false: '' }}
           thumbColor={'#6505E1'}
           onValueChange={emailSwitch}
         />

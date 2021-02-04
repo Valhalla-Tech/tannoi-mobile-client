@@ -1,7 +1,13 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet, FlatList} from 'react-native';
-import {bold, normal} from '../../../assets/FontSize';
-import {CalculateHeight} from '../../../helper/CalculateSize';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  FlatList,
+} from 'react-native';
+import { bold, normal } from '../../../assets/FontSize';
+import { CalculateHeight } from '../../../helper/CalculateSize';
 
 //Component
 import ListCard from '../../publicComponents/ListCard';
@@ -17,6 +23,7 @@ const TopResponsePreview = (props) => {
   } = props;
 
   const TopResponseCard = (itemData) => {
+
     return (
       <ListCard
         navigation={navigation}
@@ -33,7 +40,8 @@ const TopResponsePreview = (props) => {
   };
 
   return (
-    <View style={{...styles.topResponsePreviewContainerStyle, ...customStyle}}>
+    <View
+      style={{ ...styles.topResponsePreviewContainerStyle, ...customStyle }}>
       <FlatList
         data={topResponseData}
         keyExtractor={(item, index) => index.toString()}

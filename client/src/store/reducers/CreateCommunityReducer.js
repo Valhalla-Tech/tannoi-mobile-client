@@ -12,11 +12,15 @@ const reducer = (state = defaultState, action) => {
       let setCommunityImage = action.payload.communityImage;
       let setCommunityName = action.payload.communityName;
 
-      return {...state, communityImage: setCommunityImage, communityName: setCommunityName};
+      return {
+        ...state,
+        communityImage: setCommunityImage,
+        communityName: setCommunityName,
+      };
     case 'ADD_DESCRIPTION':
       let setCommunityDescription = action.payload.communityDescription;
 
-      return {...state, communityDescription: setCommunityDescription};
+      return { ...state, communityDescription: setCommunityDescription };
     case 'ADD_GUIDELINE':
       let setCommunityGuideline = action.payload.communityGuideline;
       let setCommunityType = action.payload.communityType;
@@ -34,7 +38,7 @@ const reducer = (state = defaultState, action) => {
         communityDescription: '',
         communityGuideline: '',
         communityType: '',
-      }
+      };
     default:
       return state;
   }

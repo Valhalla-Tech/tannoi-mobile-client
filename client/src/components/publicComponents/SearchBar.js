@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -7,7 +7,7 @@ import {
   FlatList,
   TextInput,
 } from 'react-native';
-import {normal} from '../../assets/FontSize';
+import { normal } from '../../assets/FontSize';
 
 //Icons
 import SearchIcon from '../../assets/homeAssets/searchIcon.svg';
@@ -30,7 +30,7 @@ const SearchBar = (props) => {
 
   const [searchBoxIsFilled, setSearchBoxIsFilled] = useState(false);
 
-  const searchBarStyle = {...styles.searchBarStyle, ...customStyle};
+  const searchBarStyle = { ...styles.searchBarStyle, ...customStyle };
 
   const CategoryButton = (buttonName) => {
     return (
@@ -84,7 +84,7 @@ const SearchBar = (props) => {
         )}
         {!searchBarIsOpen ? (
           <TouchableOpacity
-            style={{...styles.searchBoxStyle, marginTop: -5}}
+            style={{ ...styles.searchBoxStyle, marginTop: -5 }}
             onPress={() => navigation.navigate('SearchScreen')}>
             <SearchIcon />
             <Text style={styles.searchBoxTextStyle}>Search</Text>

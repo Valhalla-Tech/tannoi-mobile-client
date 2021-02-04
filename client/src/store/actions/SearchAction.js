@@ -11,8 +11,8 @@ export const search = (keyword, page) => {
         url: `${BaseUrl}/search?query=${keyword}&page=${1}`,
         method: 'get',
         headers: {
-          'token': access_token
-        }
+          token: access_token,
+        },
       });
 
       if (searchRequest.data) {
@@ -20,8 +20,8 @@ export const search = (keyword, page) => {
           type: 'GET_SEARCH',
           payload: {
             discussions: searchRequest.data.discussions.data,
-            users: searchRequest.data.users.data
-          }
+            users: searchRequest.data.users.data,
+          },
         });
       }
     } catch (error) {
@@ -30,10 +30,10 @@ export const search = (keyword, page) => {
         dispatch({
           type: 'LOGOUT',
           payload: {
-            loginStatus: false
-          }
+            loginStatus: false,
+          },
         });
-      };
+      }
     }
   };
 };

@@ -1,1 +1,1 @@
-export {default} from './FinishVerificationScreen';
+export { default } from './FinishVerificationScreen';

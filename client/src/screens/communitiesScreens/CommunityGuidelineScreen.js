@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -7,10 +7,10 @@ import {
   Keyboard,
   StyleSheet,
 } from 'react-native';
-import {normal} from '../../assets/FontSize';
-import {CalculateHeight} from '../../helper/CalculateSize';
-import {useDispatch, useSelector} from 'react-redux';
-import {addGuideline} from '../../store/actions/CreateCommunityAction';
+import { normal } from '../../assets/FontSize';
+import { CalculateHeight } from '../../helper/CalculateSize';
+import { useDispatch, useSelector } from 'react-redux';
+import { addGuideline } from '../../store/actions/CreateCommunityAction';
 
 //Components
 import CreateCommunityHeader from '../../components/communityComponent/CreateCommunityHeader';
@@ -18,7 +18,7 @@ import CreateCommunityInput from '../../components/communityComponent/CreateComm
 import CreateCommunityProgress from '../../components/communityComponent/CreateCommunityProgress';
 import Button from '../../components/publicComponents/Button';
 
-const CommunityGuidelineScreen = ({navigation}) => {
+const CommunityGuidelineScreen = ({ navigation }) => {
   const savedGuideline = useSelector(
     (state) => state.CreateCommunityReducer.communityGuideline,
   );
@@ -46,7 +46,7 @@ const CommunityGuidelineScreen = ({navigation}) => {
           <Switch
             value={privateCommunity}
             onValueChange={() => setPrivateCommunity((prevState) => !prevState)}
-            trackColor={{true: '#6505E1', false: ''}}
+            trackColor={{ true: '#6505E1', false: '' }}
             thumbColor="#6505E1"
           />
         </View>
@@ -80,9 +80,9 @@ const CommunityGuidelineScreen = ({navigation}) => {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <CreateCommunityHeader navigation={navigation} />
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <View style={styles.communityGuidelineContainerStyle}>
             <View>
               <Text style={styles.guidelineTextStyle}>

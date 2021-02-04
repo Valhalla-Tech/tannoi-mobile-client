@@ -1,14 +1,14 @@
-import React, {useState} from 'react';
-import {StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
-import {bold, normal} from '../../../assets/FontSize';
-import {useSelector, useDispatch} from 'react-redux';
-import {getDiscussion} from '../../../store/actions/DiscussionAction';
-import {getAuthorizedUsers} from '../../../store/actions/PrivateDiscussionAction';
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
+import { bold, normal } from '../../../assets/FontSize';
+import { useSelector, useDispatch } from 'react-redux';
+import { getDiscussion } from '../../../store/actions/DiscussionAction';
+import { getAuthorizedUsers } from '../../../store/actions/PrivateDiscussionAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
-import {CalculateHeight} from '../../../helper/CalculateSize';
-import {GenerateDeepLink} from '../../../helper/GenerateDeepLink';
+import { CalculateHeight } from '../../../helper/CalculateSize';
+import { GenerateDeepLink } from '../../../helper/GenerateDeepLink';
 
 //Icons
 import Upvote from '../../../assets/topicAssets/upvote.svg';
@@ -173,7 +173,7 @@ const DiscussionScreenCard = (props) => {
               }}>
               {profilePicture ? (
                 <Image
-                  source={{uri: profilePicture}}
+                  source={{ uri: profilePicture }}
                   style={styles.profileImageStyle}
                 />
               ) : null}

@@ -1,1 +1,1 @@
-export {default} from './ResponseScreen';
+export { default } from './ResponseScreen';

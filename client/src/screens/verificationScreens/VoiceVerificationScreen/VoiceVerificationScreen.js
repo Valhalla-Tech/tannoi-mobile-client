@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
-import {useSelector} from 'react-redux';
-import {bold, normal} from '../../../assets/FontSize';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { useSelector } from 'react-redux';
+import { bold, normal } from '../../../assets/FontSize';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
-import {ScreenHeight} from '../../../constants/Size';
+import { ScreenHeight } from '../../../constants/Size';
 
 //Image
 import ScreenImage from '../../../assets/verificationAssets/Illustration-Tannoi-Apps-04.png';
@@ -21,7 +21,7 @@ const calculateHeight = (input) => {
   return (input / 100) * ScreenHeight;
 };
 
-const VoiceVerificationScreen = ({navigation}) => {
+const VoiceVerificationScreen = ({ navigation }) => {
   const [recordingFile, setRecordingFile] = useState('');
   const [recordingFileValidation, setRecordingFileValidation] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -130,7 +130,7 @@ const VoiceVerificationScreen = ({navigation}) => {
             </Text>
           </View>
           <Text style={styles.randomWordStyle}>{word}</Text>
-          <View style={{alignItems: 'center', marginTop: '1%'}}>
+          <View style={{ alignItems: 'center', marginTop: '1%' }}>
             {recordingFileValidation && (
               <ErrorMessage message="Please record your voice" />
             )}

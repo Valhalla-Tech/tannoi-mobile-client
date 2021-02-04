@@ -1,19 +1,19 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Modal} from 'react-native';
-import {normal, bold} from '../../../assets/FontSize';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
+import { normal, bold } from '../../../assets/FontSize';
 import BigButton from '../../publicComponents/Button';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   getOneProfile,
   clearUserProfile,
 } from '../../../store/actions/ProfileAction';
-import {getHome, clearHome} from '../../../store/actions/HomeAction';
-import {getResponse} from '../../../store/actions/ResponseAction';
+import { getHome, clearHome } from '../../../store/actions/HomeAction';
+import { getResponse } from '../../../store/actions/ResponseAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 import Share from 'react-native-share';
-import {GenerateDeepLink} from '../../../helper/GenerateDeepLink';
+import { GenerateDeepLink } from '../../../helper/GenerateDeepLink';
 
 const OptionModal = (props) => {
   const {
@@ -168,7 +168,7 @@ const OptionModal = (props) => {
     <Modal animationType="fade" transparent={true} visible={openOptionModal}>
       <View style={styles.optionModalBackground}>
         <TouchableOpacity
-          style={{flex: 1}}
+          style={{ flex: 1 }}
           onPress={() => {
             closeOptionModal();
             setDeleteOption(false);

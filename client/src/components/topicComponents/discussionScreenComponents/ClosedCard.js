@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
-import {StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
-import {bold, normal} from '../../../assets/FontSize';
-import {useSelector} from 'react-redux';
+import React, { useEffect } from 'react';
+import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
+import { bold, normal } from '../../../assets/FontSize';
+import { useSelector } from 'react-redux';
 
 //Icon
 import TickIcon from '../../../assets/publicAssets/tickIcon.png';
@@ -32,9 +32,7 @@ const ClosedCard = (props) => {
 
   const isLoading = useSelector((state) => state.DiscussionReducer.isLoading);
 
-  useEffect(() => {
-
-  }, [responseCount]);
+  useEffect(() => {}, [responseCount]);
 
   const numberConverter = (number) => {
     let numberToString = number.toString();
@@ -80,7 +78,7 @@ const ClosedCard = (props) => {
           <View style={styles.profileAndPostTimeContainerStyle}>
             <View style={styles.profileInfoContainerStyle}>
               <Image
-                source={{uri: profilePicture}}
+                source={{ uri: profilePicture }}
                 style={styles.profileImageStyle}
               />
               <Text style={styles.profileNameStyle}>{profileName}</Text>

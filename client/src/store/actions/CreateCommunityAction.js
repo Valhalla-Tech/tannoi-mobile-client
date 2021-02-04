@@ -36,7 +36,7 @@ export const addGuideline = (guideline, type) => {
 export const clearData = () => {
   return (dispatch) => {
     dispatch({
-      type: 'CLEAR_CREATE_COMMUNITY_DATA'
+      type: 'CLEAR_CREATE_COMMUNITY_DATA',
     });
   };
 };
