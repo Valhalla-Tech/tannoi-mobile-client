@@ -115,6 +115,8 @@ const CommunityProfileScreen = ({ navigation, route }) => {
         profile={communityProfile}
         selectedDisplay={selectedDisplay}
         changeSelectedDisplay={changeSelectedDisplay}
+        getOneCommunity={getOneCommunity}
+        communityId={communityId}
       />
       <View style={styles.communityProfileContainerStyle}>
         {selectedDisplay === 'discussions' ? (

@@ -62,10 +62,14 @@ const BrowseCommunityScreen = ({ navigation }) => {
   };
 
   return (
-    <View>
+    <View style={{flex: 1}}>
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
       <View style={styles.browseCommunityContainerStyle}>
-        <CommunityList communities={communities} navigation={navigation} />
+        <FlatList
+          ListHeaderComponent={
+            <CommunityList communities={communities} navigation={navigation} />
+          }
+        />
       </View>
     </View>
   );

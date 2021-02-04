@@ -48,6 +48,7 @@ const NewCommunityDiscussionScreen = (props) => {
 
   const createCommunityDiscussion = async () => {
     try {
+      setIsLoading(true);
       let access_token = await AsyncStorage.getItem('access_token');
 
       const uri = `file://${recordingFile}`;
@@ -84,9 +85,13 @@ const NewCommunityDiscussionScreen = (props) => {
       });
 
       if (createCommunityDiscussionRequest.data) {
-        console.log(createCommunityDiscussionRequest.data);
+        setIsLoading(false);
+        navigation.navigate('CommunityProfileScreen', {
+          communityId: communityId
+        });
       }
     } catch (error) {
+      setIsLoading(false);
       console.log(error);
     }
   };
