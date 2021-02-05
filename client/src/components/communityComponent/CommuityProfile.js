@@ -8,6 +8,9 @@ import BaseUrl from '../../constants/BaseUrl';
 
 //Icon
 import OptionButton from '../../assets/publicAssets/optionButton.svg';
+import CalendarIcon from '../../assets/communitiesAssets/ic-calendar.svg';
+import EarthIcon from '../../assets/communitiesAssets/ic-earth.svg';
+import PrivateIcon from '../../assets/communitiesAssets/ic-lock.svg';
 
 //Components
 import Header from '../publicComponents/Header';
@@ -143,21 +146,30 @@ const CommunityProfile = (props) => {
               <View style={styles.communityDataContainerStyle}>
                 <View style={styles.communityNameContainerStyle}>
                   <Text style={styles.communityNameStyle}>{profile.name}</Text>
+                  <View style={styles.privatePublicIconContainerStyle}>
+                    {profile.type == 2 ? <PrivateIcon/> : <EarthIcon/>}
+                  </View>
                 </View>
                 <Text style={styles.communityDescriptionStyle}>
                   {profile.description}
                 </Text>
                 <View style={styles.createdAndUniqueCodeContainerStyle}>
-                  <View>
+                  <View style={styles.createdContainerStyle}>
+                    <View style={styles.calendarIconContainerStyle}>
+                      <CalendarIcon/>
+                    </View>
                     <Text style={styles.createdAndUniqueCodeStyle}>
                       Created {profile.created}
                     </Text>
                   </View>
-                  <View>
+                  {/*
+                  <View style={{flexDirection: 'row'}}>
+                    <CalendarIcon/>
                     <Text style={styles.createdAndUniqueCodeStyle}>
                       Community unique code: 1356
                     </Text>
                   </View>
+                  */}
                 </View>
                 <View style={styles.countDataContainerStyle}>
                   <View style={styles.countDataStyle}>
@@ -244,11 +256,12 @@ const styles = StyleSheet.create({
   },
 
   communityDataContainerStyle: {
-    width: '60%',
+    width: '70%',
   },
 
   communityNameContainerStyle: {
     marginBottom: '1%',
+    flexDirection: 'row'
   },
 
   communityNameStyle: {
@@ -257,11 +270,17 @@ const styles = StyleSheet.create({
     color: '#464D60',
   },
 
+  privatePublicIconContainerStyle: {
+    justifyContent: 'center', 
+    marginLeft: '2%'
+  },
+
   communityDescriptionStyle: {
     fontFamily: normal,
     color: '#464D60',
     lineHeight: 20,
     marginBottom: '5%',
+    fontSize: CalculateHeight(2.3),
   },
 
   createdAndUniqueCodeContainerStyle: {
@@ -271,7 +290,16 @@ const styles = StyleSheet.create({
   createdAndUniqueCodeStyle: {
     fontFamily: normal,
     color: '#73798C',
-    fontSize: CalculateHeight(1.5),
+    fontSize: CalculateHeight(2),
+    marginLeft: '2.5%'
+  },
+
+  createdContainerStyle: {
+    flexDirection: 'row'
+  },
+
+  calendarIconContainerStyle: {
+    paddingTop: '1.3%'
   },
 
   countDataContainerStyle: {
@@ -284,12 +312,13 @@ const styles = StyleSheet.create({
 
   countDataTitleStyle: {
     fontFamily: normal,
+    fontSize: CalculateHeight(2),
     color: '#73798C',
   },
 
   countNumberStyle: {
     fontFamily: bold,
-    fontSize: CalculateHeight(2),
+    fontSize: CalculateHeight(2.3),
     color: '#464D60',
   },
 
