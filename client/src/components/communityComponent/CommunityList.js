@@ -13,6 +13,7 @@ import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
 
 //Icon
 import EarthIcon from '../../assets/communitiesAssets/ic-earth.svg';
+import PrivateIcon from '../../assets/communitiesAssets/ic-lock.svg';
 import MultipleManIcon from '../../assets/communitiesAssets/ic-multiple-man.svg';
 import DiscussionIcon from '../../assets/communitiesAssets/ic-discussion.svg';
 
@@ -50,7 +51,7 @@ const CommunityList = (props) => {
         <View style={styles.communityDataContainerStyle}>
           <View style={styles.communityNameContainerStyle}>
             <Text style={styles.communityNameStyle}>{itemData.item.name}</Text>
-            <EarthIcon/>
+            { itemData.item.type == 2 ? <PrivateIcon/> : <EarthIcon/> }
           </View>
           <View style={styles.communityDescriptionContainerStyle}>
             <Text style={styles.communityDescriptionStyle} numberOfLines={2}>

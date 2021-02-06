@@ -14,6 +14,7 @@ import BaseUrl from '../../constants/BaseUrl';
 
 //Icon
 import NewDiscussionButton from '../../assets/communitiesAssets/ic-button.svg';
+import RightArrowIcon from '../../assets/communitiesAssets/rightArrow.svg';
 
 //Components
 import Card from '../../components/publicComponents/Card';
@@ -103,7 +104,12 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   const MemberRequest = () => {
     return (
       <TouchableOpacity>
-        <Text style={styles.memberRequestStyle}>Member Request</Text>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <Text style={styles.memberRequestTextStyle}>Member Requests</Text>
+          <View style={{justifyContent: 'center', paddingRight: '2%'}}>
+            <RightArrowIcon/>
+          </View>
+        </View>
       </TouchableOpacity>
     );
   };
@@ -167,10 +173,10 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
 
-  memberRequestStyle: {
+  memberRequestTextStyle: {
     fontFamily: normal,
     color: '#464D60',
-    fontSize: CalculateHeight(2),
+    fontSize: CalculateHeight(2.3),
   },
 });
 
