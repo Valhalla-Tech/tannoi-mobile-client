@@ -40,12 +40,17 @@ class RecordPlayer extends Component {
     this.soundPlayer = null;
     this.progressInterval = null;
     this.loadPlayer();
+
+    this._blur = this.props.navigation.addListener('blur', () => {
+      this.soundPlayer.stop();
+    });
   }
 
   componentWillUnmount() {
     this._isMounted = false;
     this.soundPlayer.stop();
     this.stopUpdateProgressBar();
+    this._blur;
   }
 
   seek(percentage) {
@@ -118,7 +123,10 @@ class RecordPlayer extends Component {
         });
         this.getDuration();
 
-        if (this.props.cardIndex !== 'discussion' && this.props.cardIndex !== 'response') {
+        if (
+          this.props.cardIndex !== 'discussion' &&
+          this.props.cardIndex !== 'response'
+        ) {
           this.playRecording();
         }
         if (this.props.fromNextPreviousButton) {

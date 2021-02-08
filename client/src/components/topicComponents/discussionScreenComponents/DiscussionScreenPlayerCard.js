@@ -314,6 +314,7 @@ class DiscussionScreenPlayerCard extends Component {
             this.playCounter(this.state.responseId ? true : false)
           }
           cardIndex={this.props.cardIndex}
+          navigation={this.props.navigation}
         />
         {this.props.cardIndex !== 'discussion' &&
           this.props.cardIndex !== 'response' &&
