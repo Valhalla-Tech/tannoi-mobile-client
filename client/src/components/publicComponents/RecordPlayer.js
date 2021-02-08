@@ -118,7 +118,7 @@ class RecordPlayer extends Component {
         });
         this.getDuration();
 
-        if (this.props.cardIndex !== 'discussion') {
+        if (this.props.cardIndex !== 'discussion' && this.props.cardIndex !== 'response') {
           this.playRecording();
         }
         if (this.props.fromNextPreviousButton) {

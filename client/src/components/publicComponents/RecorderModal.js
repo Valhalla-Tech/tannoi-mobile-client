@@ -91,7 +91,7 @@ const RecorderModal = (props) => {
         setValidation(false);
         if (addResponseForResponse) {
           dispatch(getResponseData(responseId, dataForUpdate));
-          dispatch(getSingleResponse(responseScreenResponseId));
+          responseScreenResponseId && dispatch(getSingleResponse(responseScreenResponseId));
         } else {
           dispatch(getDiscussion(discussionId));
           dispatch(getResponse(discussionId));
@@ -99,7 +99,7 @@ const RecorderModal = (props) => {
         setRecordingFile('');
         setCaption('');
         closeModal(openModalFromHeader);
-        scrollDown();
+        scrollDown && scrollDown();
       }
     } catch (error) {
       console.log(error);

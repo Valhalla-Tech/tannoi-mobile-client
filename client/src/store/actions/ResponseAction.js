@@ -98,7 +98,7 @@ export const getSingleResponse = (responseId, page) => {
         }
       }
     } catch (error) {
-      console.log(error.response.data.msg);
+      console.log(error);
       if (error.response.data.msg === 'You have to login first') {
         dispatch({
           type: 'LOGOUT',

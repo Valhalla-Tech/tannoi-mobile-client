@@ -34,7 +34,7 @@ const DiscussionAndResponseList = (props) => {
     getIsLikeAndIsDislike,
     responseId,
     flatListRef,
-    scrollDown,
+    scrollDownForResponseScreen,
   } = props;
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -142,6 +142,8 @@ const DiscussionAndResponseList = (props) => {
                 profileType={responseProfileType}
                 userType={responseUserType}
                 selectedCard={selectedCard}
+                scrollDownForResponseScreen={scrollDownForResponseScreen}
+                responseScreenResponseId={responseId}
               />
             ) : (
               <ClosedCard

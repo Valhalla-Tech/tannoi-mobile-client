@@ -28,8 +28,6 @@ const DiscussionScreen = ({ route, navigation }) => {
   const [fromNextPreviousButton, setFromNextPreviousButton] = useState(false);
   const [openAddResponse, setOpenAddRespone] = useState(false);
   const [openModalFromHeader, setOpenModalFromHeader] = useState(false);
-  const [currentResponseLength, setCurrentResponseLength] = useState(0);
-  const [firstRender, setFirstRender] = useState(true);
 
   const profileId = useSelector((state) => state.DiscussionReducer.profileId);
   const response = useSelector((state) => state.ResponseReducer.response);
@@ -54,14 +52,13 @@ const DiscussionScreen = ({ route, navigation }) => {
     setOpenAddRespone(false);
     setOpenModalFromHeader(false);
     openModalFromHeader && setSelectedCard('discussion');
-    setFirstRender(false);
   };
 
   const scrollDown = () => {
     setTimeout(() => {
       flatListRef.current.scrollToEnd({animated: true});
       setSelectedCard(response.length);
-    }, 2000);
+    }, 2250);
   };
 
   const selectCard = (cardIndex) => {

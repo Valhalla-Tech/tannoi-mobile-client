@@ -343,6 +343,7 @@ class DiscussionScreenPlayerCard extends Component {
           responseScreenResponseId={this.props.responseScreenResponseId}
           openModalFromHeader={false}
           dataForUpdate={this.props.response}
+          scrollDown={this.props.scrollDownForResponseScreen}
         />
       </View>
     );
