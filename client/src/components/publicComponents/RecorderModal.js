@@ -91,7 +91,8 @@ const RecorderModal = (props) => {
         setValidation(false);
         if (addResponseForResponse) {
           dispatch(getResponseData(responseId, dataForUpdate));
-          responseScreenResponseId && dispatch(getSingleResponse(responseScreenResponseId));
+          responseScreenResponseId &&
+            dispatch(getSingleResponse(responseScreenResponseId));
         } else {
           dispatch(getDiscussion(discussionId));
           dispatch(getResponse(discussionId));
@@ -162,12 +163,10 @@ const RecorderModal = (props) => {
             {validation && (
               <ErrorMessage message="All fields must be filled in, including a voice note!" />
             )}
-            <View style={styles.recorderContainerStyle}>
-              <Recorder
-                addRecordingFile={addRecordingFile}
-                openModal={openModal}
-              />
-            </View>
+            <Recorder
+              addRecordingFile={addRecordingFile}
+              openModal={openModal}
+            />
           </View>
           {isLoading && <LoadingSpinner />}
         </View>
@@ -213,10 +212,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#0E4EF4',
     fontFamily: bold,
-  },
-
-  recorderContainerStyle: {
-    marginTop: '10%',
   },
 });
 

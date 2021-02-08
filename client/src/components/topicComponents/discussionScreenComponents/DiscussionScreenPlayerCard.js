@@ -57,7 +57,6 @@ class DiscussionScreenPlayerCard extends Component {
       isChainResponse: this.props.isChainResponse,
       getIsLikeAndIsDislike: this.props.getIsLikeAndIsDislike,
       isPaused: false,
-      caption: this.props.caption,
       openAddResponse: false,
     };
   }
@@ -226,7 +225,7 @@ class DiscussionScreenPlayerCard extends Component {
               modalType="response"
               responseId={this.state.responseId}
               discussionId={this.state.discussionId}
-              responseTitle={this.state.caption}
+              responseTitle={this.props.caption}
               changePlayer={this.props.changePlayer}
               cardIndex={this.props.cardIndex}
             />
@@ -281,8 +280,8 @@ class DiscussionScreenPlayerCard extends Component {
             : styles.responsePlayerContainerStyle
         }>
         <this.ProfileAndPostTime />
-        {this.state.caption && (
-          <Text style={styles.captionStyle}>{this.state.caption}</Text>
+        {this.props.caption !== '' && (
+          <Text style={styles.captionStyle}>{this.props.caption}</Text>
         )}
         <RecordPlayer
           customStyle={{
