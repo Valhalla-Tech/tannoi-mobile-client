@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   StyleSheet,
   View,
@@ -38,6 +38,7 @@ const DiscussionScreen = ({ route, navigation }) => {
   const { discussionId, fromNewDiscussion } = route.params;
 
   const dispatch = useDispatch();
+  const flatListRef = useRef();
 
   useEffect(() => {
     setOpenAddRespone(false);
@@ -52,6 +53,10 @@ const DiscussionScreen = ({ route, navigation }) => {
     setOpenAddRespone(false);
     setOpenModalFromHeader(false);
     openModalFromHeader && setSelectedCard('discussion');
+  };
+
+  const scrollDown = () => {
+    flatListRef.current.scrollToEnd({animated: true});
   };
 
   const selectCard = (cardIndex) => {
@@ -128,6 +133,7 @@ const DiscussionScreen = ({ route, navigation }) => {
         closeAddResponseModal={closeAddResponseModal}
         selectedCard={selectedCard}
         getIsLikeAndIsDislike={getIsLikeAndIsDislike}
+        flatListRef={flatListRef}
       />
       <AddResponse
         openModal={openAddResponseModal}
@@ -135,6 +141,7 @@ const DiscussionScreen = ({ route, navigation }) => {
         discussionId={discussionId}
         addResponseForResponse={false}
         openModalFromHeader={openModalFromHeader}
+        scrollDown={scrollDown}
       />
     </View>
   );

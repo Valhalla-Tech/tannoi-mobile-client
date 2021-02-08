@@ -53,7 +53,11 @@ const UserProfileScreen = ({ route, navigation }) => {
   useEffect(() => {
     dispatch(clearUserProfile());
     dispatch(clearDiscussion(true));
+    dispatch(getOneProfile(userId));
+    dispatch(getAllDiscussion('user_id=', userId, null, null, true));
+  }, []);
 
+  useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       dispatch(clearUserProfile());
       dispatch(clearDiscussion(true));

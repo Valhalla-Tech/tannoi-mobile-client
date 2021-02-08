@@ -123,13 +123,13 @@ const reducer = (state = defaultState, action) => {
         isLike: '',
         isDislike: '',
         caption: '',
-        responseCount: '',
         responseForResponseCount: '',
       };
     case 'CLEAR_RESPONSES':
       return {
         ...state,
         response: [],
+        responseCount: '',
       };
     case 'CLEAR_RESPONSE_DATA':
       return {
