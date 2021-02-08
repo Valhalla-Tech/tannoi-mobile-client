@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   StyleSheet,
   View,
   Text,
   TouchableOpacity,
-  FlatList,
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
 import { useDispatch, useSelector } from 'react-redux';
@@ -38,6 +37,7 @@ const DiscussionScreen = ({ route, navigation }) => {
   const { discussionId, fromNewDiscussion } = route.params;
 
   const dispatch = useDispatch();
+  const flatListRef = useRef();
 
   useEffect(() => {
     setOpenAddRespone(false);
@@ -52,6 +52,13 @@ const DiscussionScreen = ({ route, navigation }) => {
     setOpenAddRespone(false);
     setOpenModalFromHeader(false);
     openModalFromHeader && setSelectedCard('discussion');
+  };
+
+  const scrollDown = () => {
+    setTimeout(() => {
+      flatListRef.current.scrollToEnd({animated: true});
+      setSelectedCard(response.length);
+    }, 2250);
   };
 
   const selectCard = (cardIndex) => {
@@ -128,6 +135,8 @@ const DiscussionScreen = ({ route, navigation }) => {
         closeAddResponseModal={closeAddResponseModal}
         selectedCard={selectedCard}
         getIsLikeAndIsDislike={getIsLikeAndIsDislike}
+        flatListRef={flatListRef}
+        scrollDown={scrollDown}
       />
       <AddResponse
         openModal={openAddResponseModal}
@@ -135,6 +144,7 @@ const DiscussionScreen = ({ route, navigation }) => {
         discussionId={discussionId}
         addResponseForResponse={false}
         openModalFromHeader={openModalFromHeader}
+        scrollDown={scrollDown}
       />
     </View>
   );

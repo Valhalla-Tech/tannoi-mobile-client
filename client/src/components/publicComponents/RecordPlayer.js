@@ -117,6 +117,10 @@ class RecordPlayer extends Component {
           loading: false,
         });
         this.getDuration();
+
+        if (this.props.cardIndex !== 'discussion' && this.props.cardIndex !== 'response') {
+          this.playRecording();
+        }
         if (this.props.fromNextPreviousButton) {
           this.playRecording();
           this.props.updateFromNextPreviousButton(false);
@@ -149,6 +153,11 @@ class RecordPlayer extends Component {
           progress: 0,
         });
         this.stopUpdateProgressBar();
+
+        if (this.props.isNextPlayerAvailable) {
+          this.props.nextPlayerFunction();
+          this.props.updateFromNextPreviousButton(true);
+        }
       });
     }
   };

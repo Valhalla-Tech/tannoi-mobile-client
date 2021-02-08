@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   StyleSheet,
   View,
@@ -30,6 +30,7 @@ const ReplyScreen = ({ route, navigation }) => {
   const isDislike = useSelector((state) => state.ResponseReducer.isDislike);
 
   const dispatch = useDispatch();
+  const flatListRef = useRef();
 
   const { responseId, discussionId, fromInbox } = route.params;
 
@@ -67,6 +68,13 @@ const ReplyScreen = ({ route, navigation }) => {
 
   const updateFromNextPreviousButton = (fromNextPreviousButtonStatus) => {
     setFromNextPreviousButton(fromNextPreviousButtonStatus);
+  };
+
+  const scrollDown = () => {
+    setTimeout(() => {
+      flatListRef.current.scrollToEnd({animated: true});
+      setSelectedCard(reply.length);
+    }, 2250);
   };
 
   const changePlayer = (cardIndex, action) => {
@@ -125,6 +133,8 @@ const ReplyScreen = ({ route, navigation }) => {
           selectedCard={selectedCard}
           getIsLikeAndIsDislike={getIsLikeAndIsDislike}
           responseId={responseId}
+          flatListRef={flatListRef}
+          scrollDownForResponseScreen={scrollDown}
         />
       )}
     </View>

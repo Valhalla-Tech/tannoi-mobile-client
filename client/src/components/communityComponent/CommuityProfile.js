@@ -57,6 +57,27 @@ const CommunityProfile = (props) => {
     }
   };
 
+  const leaveCommunity = async () => {
+    try {
+      let access_token = await AsyncStorage.getItem('access_token');
+
+      let leaveCommunityRequest = await axios({
+        method: 'get',
+        url: `${BaseUrl}/communities/leave-community/${communityId}`,
+        headers: {
+          token: access_token,
+        },
+      });
+
+      if (leaveCommunityRequest.data) {
+        setActionModal(false);
+        getOneCommunity();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const HeaderContent = () => {
     return (
       <>
@@ -79,7 +100,7 @@ const CommunityProfile = (props) => {
   const ActionModal = () => {
     return (
       <View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => leaveCommunity()}>
           <Text style={styles.actionModalButtonTextStyle}>Leave community</Text>
         </TouchableOpacity>
       </View>

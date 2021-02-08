@@ -48,6 +48,7 @@ const RecorderModal = (props) => {
     setBioFile,
     openModalFromHeader,
     dataForUpdate,
+    scrollDown,
   } = props;
 
   const createResponse = async () => {
@@ -89,18 +90,16 @@ const RecorderModal = (props) => {
         setIsLoading(false);
         setValidation(false);
         if (addResponseForResponse) {
-          // if (!addResponseForResponseInResponseScreen) {
-          //   dispatch(getSingleResponse(responseId));
-          // }
           dispatch(getResponseData(responseId, dataForUpdate));
-          dispatch(getSingleResponse(responseScreenResponseId));
+          responseScreenResponseId && dispatch(getSingleResponse(responseScreenResponseId));
         } else {
+          dispatch(getDiscussion(discussionId));
           dispatch(getResponse(discussionId));
         }
-        // dispatch(getDiscussion(discussionId));
         setRecordingFile('');
         setCaption('');
         closeModal(openModalFromHeader);
+        scrollDown && scrollDown();
       }
     } catch (error) {
       console.log(error);

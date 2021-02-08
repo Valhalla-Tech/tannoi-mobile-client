@@ -190,7 +190,7 @@ class DiscussionScreenPlayerCard extends Component {
           <View style={styles.profileInfoContainerStyle}>
             <TouchableOpacity
               onPress={() =>
-                this.props.navigation.navigate('UserProfileScreen', {
+                this.props.navigation.push('UserProfileScreen', {
                   userId: this.props.profileId,
                 })
               }>
@@ -201,7 +201,7 @@ class DiscussionScreenPlayerCard extends Component {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() =>
-                this.props.navigation.navigate('UserProfileScreen', {
+                this.props.navigation.push('UserProfileScreen', {
                   userId: this.props.profileId,
                 })
               }>
@@ -314,10 +314,10 @@ class DiscussionScreenPlayerCard extends Component {
           playCounter={() =>
             this.playCounter(this.state.responseId ? true : false)
           }
+          cardIndex={this.props.cardIndex}
         />
         {this.props.cardIndex !== 'discussion' &&
           this.props.cardIndex !== 'response' &&
-          // this.props.topResponsePreview &&
           this.props.topResponsePreview.length > 0 && (
             <TopResponsePreview
               navigation={this.props.navigation}
@@ -343,6 +343,7 @@ class DiscussionScreenPlayerCard extends Component {
           responseScreenResponseId={this.props.responseScreenResponseId}
           openModalFromHeader={false}
           dataForUpdate={this.props.response}
+          scrollDown={this.props.scrollDownForResponseScreen}
         />
       </View>
     );

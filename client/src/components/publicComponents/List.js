@@ -17,6 +17,34 @@ import Card from './Card';
 import ListHeader from './ListHeader';
 import BigButton from './Button';
 
+class RenderList extends React.PureComponent {
+  render() {
+    const { itemData, navigation, listData, openModal } = this.props;
+    return (
+      <View style={styles.listCardContainerStyle}>
+        <HomeListCard
+          imageUrl={itemData.item.creator.profile_photo_path}
+          recordingFile={itemData.item.voice_note_path}
+          name={itemData.item.creator.name}
+          title={itemData.item.title}
+          votes={itemData.item.likes}
+          replies={itemData.item.response_count}
+          plays={itemData.item.play_count}
+          postTime={itemData.item.timeSince}
+          discussionId={itemData.item.id}
+          navigation={navigation}
+          topic={itemData.item.topic ? itemData.item.topic.name : ''}
+          isBorder={itemData.index === listData.length - 1 ? false : true}
+          discussionType={itemData.item.type}
+          openModal={openModal}
+          isAuthorized={itemData.item.isAuthorized}
+          profileType={itemData.item.creator.type}
+        />
+      </View>
+    );
+  }
+}
+
 const HomeList = (props) => {
   const {
     listTitle,
@@ -100,30 +128,7 @@ const HomeList = (props) => {
               data={listData}
               listKey={(item, index) => index.toString()}
               keyExtractor={(item, index) => index.toString()}
-              renderItem={(itemData) => (
-                <View style={styles.listCardContainerStyle}>
-                  <HomeListCard
-                    imageUrl={itemData.item.creator.profile_photo_path}
-                    recordingFile={itemData.item.voice_note_path}
-                    name={itemData.item.creator.name}
-                    title={itemData.item.title}
-                    votes={itemData.item.likes}
-                    replies={itemData.item.response_count}
-                    plays={itemData.item.play_count}
-                    postTime={itemData.item.timeSince}
-                    discussionId={itemData.item.id}
-                    navigation={navigation}
-                    topic={itemData.item.topic ? itemData.item.topic.name : ''}
-                    isBorder={
-                      itemData.index === listData.length - 1 ? false : true
-                    }
-                    discussionType={itemData.item.type}
-                    openModal={openModal}
-                    isAuthorized={itemData.item.isAuthorized}
-                    profileType={itemData.item.creator.type}
-                  />
-                </View>
-              )}
+              renderItem={(itemData) => <RenderList itemData={itemData} navigation={navigation} listData={listData} openModal={openModal} />}
               ListFooterComponent={
                 useMoreButton && (
                   <View style={styles.loadMoreButtonContainerStyle}>

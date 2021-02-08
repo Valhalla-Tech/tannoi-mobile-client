@@ -57,6 +57,8 @@ const DiscussionScreenCard = (props) => {
 
   const discussionType = useSelector((state) => state.DiscussionReducer.type);
   const isLoading = useSelector((state) => state.DiscussionReducer.isLoading);
+  const response = useSelector((state) => state.ResponseReducer.response);
+  const isResponse = useSelector((state) => state.ResponseReducer.isResponse);
 
   const dispatch = useDispatch();
 
@@ -167,7 +169,7 @@ const DiscussionScreenCard = (props) => {
           <View style={styles.profileContainerStyle}>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate('UserProfileScreen', {
+                navigation.push('UserProfileScreen', {
                   userId: profileId,
                 });
               }}>
@@ -180,7 +182,7 @@ const DiscussionScreenCard = (props) => {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate('UserProfileScreen', {
+                navigation.push('UserProfileScreen', {
                   userId: profileId,
                 });
               }}>
@@ -256,7 +258,9 @@ const DiscussionScreenCard = (props) => {
 
   return (
     <View style={styles.discussionScreenCardContainerStyle}>
-      {isLoading ? (
+      {isLoading ? isResponse && response.length === 0  ? (
+        <LoadingSpinner loadingSpinnerForComponent={true} />
+      ) : (
         <LoadingSpinner loadingSpinnerForComponent={true} />
       ) : (
         <>

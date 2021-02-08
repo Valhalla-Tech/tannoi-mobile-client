@@ -33,19 +33,11 @@ const DiscussionAndResponseList = (props) => {
     selectedCard,
     getIsLikeAndIsDislike,
     responseId,
+    flatListRef,
+    scrollDownForResponseScreen,
   } = props;
 
   const [currentPage, setCurrentPage] = useState(1);
-
-  // useEffect(() => {
-  //   setCurrentPage(1);
-
-  //   const unsubscribe = navigation.addListener('focus', () => {
-  //     setCurrentPage(1);
-  //   });
-
-  //   return unsubscribe;
-  // }, []);
 
   const dispatch = useDispatch();
 
@@ -124,6 +116,7 @@ const DiscussionAndResponseList = (props) => {
     <FlatList
       data={isResponseScreen ? responseReply : response}
       keyExtractor={(item, index) => index.toString()}
+      ref={flatListRef}
       ListHeaderComponent={
         <View style={styles.ListContainerStyle}>
           {isResponseScreen ? (
@@ -149,6 +142,8 @@ const DiscussionAndResponseList = (props) => {
                 profileType={responseProfileType}
                 userType={responseUserType}
                 selectedCard={selectedCard}
+                scrollDownForResponseScreen={scrollDownForResponseScreen}
+                responseScreenResponseId={responseId}
               />
             ) : (
               <ClosedCard

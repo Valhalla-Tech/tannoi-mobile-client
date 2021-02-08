@@ -2,9 +2,11 @@ import React, { useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
 import { useSelector } from 'react-redux';
+import { CalculateWidth } from '../../../helper/CalculateSize';
 
-//Icon
+//Icons
 import TickIcon from '../../../assets/publicAssets/tickIcon.png';
+import DownArrow from '../../../assets/topicAssets/ic-down-arrow.svg';
 
 //Components
 import LoadingSpinner from '../../publicComponents/LoadingSpinner';
@@ -97,7 +99,10 @@ const ClosedCard = (props) => {
               <Text style={styles.discussionTitleStyle}>{discussionTitle}</Text>
             )
           ) : (
-            <Text style={styles.captionTextStyle}>{caption}</Text>
+            <View style={styles.captionAndDownArrowContainerStyle}>
+              <Text style={styles.captionTextStyle}>{caption}</Text>
+              <DownArrow height={CalculateWidth(5)} width={CalculateWidth(5)} />
+            </View>
           )}
           {responseLike !== undefined && <ResponseData />}
           {topResponse && topResponse.length !== 0 && (
@@ -169,11 +174,18 @@ const styles = StyleSheet.create({
     fontFamily: bold,
   },
 
+  captionAndDownArrowContainerStyle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+
   captionTextStyle: {
     fontSize: 16,
     color: '#464D60',
     fontFamily: normal,
     marginTop: '2%',
+    width: '80%'
   },
 
   responseDataContainerStyle: {
