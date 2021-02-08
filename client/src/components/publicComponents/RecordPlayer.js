@@ -43,6 +43,16 @@ class RecordPlayer extends Component {
 
     this._blur = this.props.navigation.addListener('blur', () => {
       this.soundPlayer.stop();
+      this.stopUpdateProgressBar();
+    });
+
+    this._unsubscribe = this.props.navigation.addListener('focus', () => {
+      this.setState({
+        isPlaying: false,
+        progress: 0,
+        durationPlayed: `0:00`,
+        durationLeft: `0:00`,
+      });
     });
   }
 
@@ -51,6 +61,7 @@ class RecordPlayer extends Component {
     this.soundPlayer.stop();
     this.stopUpdateProgressBar();
     this._blur;
+    this._unsubscribe();
   }
 
   seek(percentage) {
