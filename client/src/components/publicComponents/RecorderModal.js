@@ -90,9 +90,6 @@ const RecorderModal = (props) => {
         setIsLoading(false);
         setValidation(false);
         if (addResponseForResponse) {
-          // if (!addResponseForResponseInResponseScreen) {
-          //   dispatch(getSingleResponse(responseId));
-          // }
           dispatch(getResponseData(responseId, dataForUpdate));
           dispatch(getSingleResponse(responseScreenResponseId));
         } else {

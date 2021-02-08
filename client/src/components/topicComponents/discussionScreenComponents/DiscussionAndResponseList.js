@@ -34,6 +34,7 @@ const DiscussionAndResponseList = (props) => {
     getIsLikeAndIsDislike,
     responseId,
     flatListRef,
+    scrollDown,
   } = props;
 
   const [currentPage, setCurrentPage] = useState(1);

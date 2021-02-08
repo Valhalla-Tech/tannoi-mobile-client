@@ -4,7 +4,6 @@ import {
   View,
   Text,
   TouchableOpacity,
-  FlatList,
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
 import { useDispatch, useSelector } from 'react-redux';
@@ -29,6 +28,8 @@ const DiscussionScreen = ({ route, navigation }) => {
   const [fromNextPreviousButton, setFromNextPreviousButton] = useState(false);
   const [openAddResponse, setOpenAddRespone] = useState(false);
   const [openModalFromHeader, setOpenModalFromHeader] = useState(false);
+  const [currentResponseLength, setCurrentResponseLength] = useState(0);
+  const [firstRender, setFirstRender] = useState(true);
 
   const profileId = useSelector((state) => state.DiscussionReducer.profileId);
   const response = useSelector((state) => state.ResponseReducer.response);
@@ -53,10 +54,14 @@ const DiscussionScreen = ({ route, navigation }) => {
     setOpenAddRespone(false);
     setOpenModalFromHeader(false);
     openModalFromHeader && setSelectedCard('discussion');
+    setFirstRender(false);
   };
 
   const scrollDown = () => {
-    flatListRef.current.scrollToEnd({animated: true});
+    setTimeout(() => {
+      flatListRef.current.scrollToEnd({animated: true});
+      setSelectedCard(response.length);
+    }, 2000);
   };
 
   const selectCard = (cardIndex) => {
@@ -134,6 +139,7 @@ const DiscussionScreen = ({ route, navigation }) => {
         selectedCard={selectedCard}
         getIsLikeAndIsDislike={getIsLikeAndIsDislike}
         flatListRef={flatListRef}
+        scrollDown={scrollDown}
       />
       <AddResponse
         openModal={openAddResponseModal}
