@@ -20,6 +20,8 @@ import BackButton from '../../../components/publicComponents/BackButton';
 import DiscussionAndResponseList from '../../../components/topicComponents/discussionScreenComponents/DiscussionAndResponseList';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 
+let _isMounted = false;
+
 const ReplyScreen = ({ route, navigation }) => {
   const [fromNextPreviousButton, setFromNextPreviousButton] = useState(false);
   const [selectedCard, setSelectedCard] = useState('response');
@@ -35,6 +37,7 @@ const ReplyScreen = ({ route, navigation }) => {
   const { responseId, discussionId, fromInbox } = route.params;
 
   useEffect(() => {
+    _isMounted = true;
     const unsubscribe = navigation.addListener('focus', () => {
       setSelectedCard('response');
       dispatch(clearResponse());
@@ -43,6 +46,12 @@ const ReplyScreen = ({ route, navigation }) => {
 
     return unsubscribe;
   }, [navigation]);
+
+  useEffect(() => {
+    return () => {
+      _isMounted = false;
+    }
+  }, []);
 
   const getIsLikeAndIsDislike = (input, responseIdInput) => {
     let isLikeAndIsDislike;
@@ -72,8 +81,10 @@ const ReplyScreen = ({ route, navigation }) => {
 
   const scrollDown = () => {
     setTimeout(() => {
-      flatListRef.current.scrollToEnd({animated: true});
-      setSelectedCard(reply.length);
+      if (_isMounted) {
+        flatListRef.current.scrollToEnd({animated: true});
+        setSelectedCard(reply.length);
+      }
     }, 2250);
   };
 
