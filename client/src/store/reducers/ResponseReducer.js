@@ -20,6 +20,8 @@ const defaultState = {
   responseCount: '',
   responseForResponseCount: '',
   topResponsePreview: '',
+  responseId: '',
+  discussionId: '',
 };
 
 const reducer = (state = defaultState, action) => {
@@ -68,6 +70,8 @@ const reducer = (state = defaultState, action) => {
       let setResponseCount = action.payload.responseCount;
       let setUserType = action.payload.userType;
       let setResponseForResponseCount = action.payload.responseForResponseCount;
+      let setResponseId = action.payload.responseId;
+      let setDiscussionId = action.payload.discussionId;
 
       return {
         ...state,
@@ -85,6 +89,8 @@ const reducer = (state = defaultState, action) => {
         responseCount: setResponseCount,
         userType: setUserType,
         responseForResponseCount: setResponseForResponseCount,
+        responseId: setResponseId,
+        discussionId: setDiscussionId,
       };
     case 'ADD_RESPONSE_FOR_RESPONSE':
       let setAddResponseForResponse = state.reply.concat(action.payload.reply);
@@ -124,6 +130,8 @@ const reducer = (state = defaultState, action) => {
         isDislike: '',
         caption: '',
         responseForResponseCount: '',
+        responseId: '',
+        discussionId: '',
       };
     case 'CLEAR_RESPONSES':
       return {
