@@ -6,15 +6,14 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
-import { bold } from '../../../assets/FontSize';
+import { bold, normal } from '../../../assets/FontSize';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getResponse,
   getSingleResponse,
   clearResponse,
 } from '../../../store/actions/ResponseAction';
-import { CalculateHeight } from '../../../helper/CalculateSize';
-import { normal } from '../../../assets/FontSize';
+import { CalculateHeight, CalculateWidth } from '../../../helper/CalculateSize';
 
 //Components
 import BackButton from '../../../components/publicComponents/BackButton';
@@ -37,7 +36,7 @@ const ReplyScreen = ({ route, navigation }) => {
   const parentDiscussionId = useSelector(
     (state) => state.ResponseReducer.discussionId,
   );
-  console.log(parentDiscussionId, parentResponseId)
+
   const dispatch = useDispatch();
   const flatListRef = useRef();
 
@@ -215,7 +214,7 @@ const styles = StyleSheet.create({
   goUpAThreadButtonStyle: {
     position: 'absolute',
     bottom: '2.5%',
-    left: '36%',
+    right: '10%',
     padding: '2%',
     alignItems: 'center',
     justifyContent: 'center',
