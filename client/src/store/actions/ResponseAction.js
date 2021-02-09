@@ -92,6 +92,8 @@ export const getSingleResponse = (responseId, page) => {
                 caption: getResponseRequest.data.caption,
                 userType: getResponseRequest.data.creator.type,
                 responseForResponseCount: getResponseRequest.data.numOfResult,
+                discussionId: getResponseRequest.data.discussion_id,
+                responseId: getResponseRequest.data.response_id,
               },
             });
           }

@@ -6,19 +6,21 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
-import { bold } from '../../../assets/FontSize';
+import { bold, normal } from '../../../assets/FontSize';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getResponse,
   getSingleResponse,
   clearResponse,
 } from '../../../store/actions/ResponseAction';
-import { CalculateHeight } from '../../../helper/CalculateSize';
+import { CalculateHeight, CalculateWidth } from '../../../helper/CalculateSize';
 
 //Components
 import BackButton from '../../../components/publicComponents/BackButton';
 import DiscussionAndResponseList from '../../../components/topicComponents/discussionScreenComponents/DiscussionAndResponseList';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
+
+let _isMounted = false;
 
 const ReplyScreen = ({ route, navigation }) => {
   const [fromNextPreviousButton, setFromNextPreviousButton] = useState(false);
@@ -28,6 +30,12 @@ const ReplyScreen = ({ route, navigation }) => {
   const reply = useSelector((state) => state.ResponseReducer.reply);
   const isLike = useSelector((state) => state.ResponseReducer.isLike);
   const isDislike = useSelector((state) => state.ResponseReducer.isDislike);
+  const parentResponseId = useSelector(
+    (state) => state.ResponseReducer.responseId,
+  );
+  const parentDiscussionId = useSelector(
+    (state) => state.ResponseReducer.discussionId,
+  );
 
   const dispatch = useDispatch();
   const flatListRef = useRef();
@@ -35,6 +43,7 @@ const ReplyScreen = ({ route, navigation }) => {
   const { responseId, discussionId, fromInbox } = route.params;
 
   useEffect(() => {
+    _isMounted = true;
     const unsubscribe = navigation.addListener('focus', () => {
       setSelectedCard('response');
       dispatch(clearResponse());
@@ -43,6 +52,12 @@ const ReplyScreen = ({ route, navigation }) => {
 
     return unsubscribe;
   }, [navigation]);
+
+  useEffect(() => {
+    return () => {
+      _isMounted = false;
+    };
+  }, []);
 
   const getIsLikeAndIsDislike = (input, responseIdInput) => {
     let isLikeAndIsDislike;
@@ -72,8 +87,10 @@ const ReplyScreen = ({ route, navigation }) => {
 
   const scrollDown = () => {
     setTimeout(() => {
-      flatListRef.current.scrollToEnd({animated: true});
-      setSelectedCard(reply.length);
+      if (_isMounted) {
+        flatListRef.current.scrollToEnd({ animated: true });
+        setSelectedCard(reply.length);
+      }
     }, 2250);
   };
 
@@ -137,6 +154,24 @@ const ReplyScreen = ({ route, navigation }) => {
           scrollDownForResponseScreen={scrollDown}
         />
       )}
+      {
+        parentDiscussionId !== '' && (
+          <TouchableOpacity
+            onPress={() =>
+              parentResponseId !== null
+                ? navigation.push('ResponseScreen', {
+                    responseId: parentResponseId,
+                    discussionId: parentDiscussionId,
+                  })
+                : navigation.push('DiscussionScreen', {
+                    discussionId: parentDiscussionId,
+                  })
+            }
+            style={styles.goUpAThreadButtonStyle}>
+            <Text style={styles.goUpAThreadButtonTextStyle}>Go up a thread</Text>
+          </TouchableOpacity>
+        )
+      }
     </View>
   );
 };
@@ -174,6 +209,25 @@ const styles = StyleSheet.create({
     fontFamily: bold,
     color: '#0E4EF4',
     fontSize: CalculateHeight(2),
+  },
+
+  goUpAThreadButtonStyle: {
+    position: 'absolute',
+    bottom: '2.5%',
+    right: '10%',
+    padding: '2%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    backgroundColor: '#FFFFFF',
+    borderColor: '#E3E6EB',
+    borderWidth: 1,
+  },
+
+  goUpAThreadButtonTextStyle: {
+    color: '#464D60',
+    fontFamily: normal,
+    fontSize: CalculateHeight(1.5),
   },
 });
 

@@ -22,6 +22,8 @@ import BackButton from '../../../components/publicComponents/BackButton';
 import DiscussionAndResponseList from '../../../components/topicComponents/discussionScreenComponents/DiscussionAndResponseList';
 import AddResponse from '../../../components/publicComponents/RecorderModal';
 
+let _isMounted = false;
+
 const DiscussionScreen = ({ route, navigation }) => {
   const [openAddResponseModal, setOpenAddResponseModal] = useState(false);
   const [selectedCard, setSelectedCard] = useState('discussion');
@@ -40,12 +42,19 @@ const DiscussionScreen = ({ route, navigation }) => {
   const flatListRef = useRef();
 
   useEffect(() => {
+    _isMounted = true;
     setOpenAddRespone(false);
     dispatch(clearDiscussion());
     dispatch(clearResponse(null, true));
     dispatch(getDiscussion(discussionId, true));
     dispatch(getResponse(discussionId));
   }, [navigation]);
+
+  useEffect(() => {
+    return () => {
+      _isMounted = false;
+    }
+  }, []);
 
   const closeAddResponseModal = (openModalFromHeader) => {
     setOpenAddResponseModal(false);
@@ -56,8 +65,10 @@ const DiscussionScreen = ({ route, navigation }) => {
 
   const scrollDown = () => {
     setTimeout(() => {
-      flatListRef.current.scrollToEnd({animated: true});
-      setSelectedCard(response.length);
+      if (_isMounted) {
+        flatListRef.current.scrollToEnd({animated: true});
+        setSelectedCard(response.length);
+      }
     }, 2250);
   };
 
