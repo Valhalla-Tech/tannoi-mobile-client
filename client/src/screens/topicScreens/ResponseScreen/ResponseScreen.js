@@ -50,7 +50,11 @@ const ReplyScreen = ({ route, navigation }) => {
       dispatch(getSingleResponse(responseId));
     });
 
-    return unsubscribe;
+    const _blur = navigation.addListener('blur', () => {
+      setSelectedCard('response');
+    });
+
+    return unsubscribe, _blur;
   }, [navigation]);
 
   useEffect(() => {
@@ -154,24 +158,22 @@ const ReplyScreen = ({ route, navigation }) => {
           scrollDownForResponseScreen={scrollDown}
         />
       )}
-      {
-        parentDiscussionId !== '' && (
-          <TouchableOpacity
-            onPress={() =>
-              parentResponseId !== null
-                ? navigation.push('ResponseScreen', {
-                    responseId: parentResponseId,
-                    discussionId: parentDiscussionId,
-                  })
-                : navigation.push('DiscussionScreen', {
-                    discussionId: parentDiscussionId,
-                  })
-            }
-            style={styles.goUpAThreadButtonStyle}>
-            <Text style={styles.goUpAThreadButtonTextStyle}>Go up a thread</Text>
-          </TouchableOpacity>
-        )
-      }
+      {parentDiscussionId !== '' && (
+        <TouchableOpacity
+          onPress={() =>
+            parentResponseId !== null
+              ? navigation.push('ResponseScreen', {
+                  responseId: parentResponseId,
+                  discussionId: parentDiscussionId,
+                })
+              : navigation.push('DiscussionScreen', {
+                  discussionId: parentDiscussionId,
+                })
+          }
+          style={styles.goUpAThreadButtonStyle}>
+          <Text style={styles.goUpAThreadButtonTextStyle}>Go up a thread</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
