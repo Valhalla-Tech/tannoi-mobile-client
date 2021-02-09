@@ -213,10 +213,10 @@ const styles = StyleSheet.create({
 
   goUpAThreadButtonStyle: {
     position: 'absolute',
-    bottom: '2.5%',
-    right: '10%',
+    bottom: '3%',
     padding: '2%',
     alignItems: 'center',
+    alignSelf: 'center',
     justifyContent: 'center',
     borderRadius: 10,
     backgroundColor: '#FFFFFF',
