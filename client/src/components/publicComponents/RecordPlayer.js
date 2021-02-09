@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Component } from 'react';
+import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Slider from '@react-native-community/slider';
 import Sound from 'react-native-sound';
@@ -42,6 +42,7 @@ class RecordPlayer extends Component {
     this.loadPlayer();
 
     this._blur = this.props.navigation.addListener('blur', () => {
+      this._isMounted = false;
       this.soundPlayer.stop();
       this.stopUpdateProgressBar();
     });
@@ -136,11 +137,13 @@ class RecordPlayer extends Component {
 
         if (
           this.props.cardIndex !== 'discussion' &&
-          this.props.cardIndex !== 'response'
+          this.props.cardIndex !== 'response' &&
+          this._isMounted
         ) {
+          console.log('sinii')
           this.playRecording();
         }
-        if (this.props.fromNextPreviousButton) {
+        if (this.props.fromNextPreviousButton && this._isMounted) {
           this.playRecording();
           this.props.updateFromNextPreviousButton(false);
         }

@@ -66,6 +66,7 @@ export const getSingleResponse = (responseId, page) => {
         });
 
         if (getResponseRequest.data) {
+          console.log(getResponseRequest.data)
           if (page > 1) {
             dispatch({
               type: 'ADD_RESPONSE_FOR_RESPONSE',
