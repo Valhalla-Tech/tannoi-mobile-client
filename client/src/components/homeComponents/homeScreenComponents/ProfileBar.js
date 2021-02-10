@@ -35,7 +35,7 @@ const ProfileBar = (props) => {
           <Text style={styles.verifyButtonTextStyle}>VERIFY</Text>
         </TouchableOpacity>
       )}
-      {/* <Button
+      <Button
         buttonTitle="Communities"
         buttonStyle={{
           color: '#6505E1',
@@ -46,7 +46,7 @@ const ProfileBar = (props) => {
           paddingHorizontal: '2%',
         }}
         buttonFunction={() => navigation.navigate('CommunitiesScreen')}
-      /> */}
+      />
     </View>
   );
 };

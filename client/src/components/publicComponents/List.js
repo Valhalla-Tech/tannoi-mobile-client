@@ -97,8 +97,15 @@ const HomeList = (props) => {
     return (
       <View style={styles.moreButtonContainerStyle}>
         <TouchableOpacity
-          onPress={() => console.log('pressed')}
-          style={styles.moreButton}>
+          style={styles.moreButton}
+          onPress={() =>
+            navigation.navigate('HomeSectionDetailScreen', {
+              sectionTitle: listTitle,
+              sectionType: sectionType,
+              sectionQuery: sectionQuery,
+              queryId: queryId,
+            })
+          }>
           <Text style={styles.moreButtonTextStyle}>More</Text>
         </TouchableOpacity>
       </View>
@@ -165,6 +172,7 @@ const styles = StyleSheet.create({
   homeListContainerStyle: {
     backgroundColor: '#FFFFFF',
     marginTop: '2%',
+    marginBottom: '4%',
     borderRadius: 8,
     paddingBottom: '6.5%',
   },
@@ -181,7 +189,7 @@ const styles = StyleSheet.create({
   moreButton: {
     position: 'absolute',
     borderWidth: 1.5,
-    borderColor: '#5152D0',
+    borderColor: '#7817FF',
     paddingHorizontal: 20,
     paddingVertical: 4,
     borderRadius: 25,
@@ -190,7 +198,7 @@ const styles = StyleSheet.create({
   },
 
   moreButtonTextStyle: {
-    color: '#5152D0',
+    color: '#7817FF',
     fontSize: 14,
   },
 
