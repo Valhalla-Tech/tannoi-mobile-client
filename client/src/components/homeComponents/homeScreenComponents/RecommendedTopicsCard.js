@@ -91,12 +91,12 @@ const styles = StyleSheet.create({
   topicCardStyle: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: '90%',
+    width: '100%',
     height: CalculateWidth(16),
   },
 
   topicCardInfoContainerStyle: {
-    marginLeft: 12,
+    marginLeft: '6%',
     width: '72%',
   },
 

@@ -20,6 +20,7 @@ import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
 import Button from '../publicComponents/Button';
 import LoadingSpinner from '../publicComponents/LoadingSpinner';
 import Modal from '../publicComponents/Modal';
+import { min } from 'react-native-reanimated';
 
 const CommunityProfile = (props) => {
   const {
@@ -235,7 +236,7 @@ const CommunityProfile = (props) => {
                 )}
               </View>
             </View>
-            {ProfileDisplayButton()}
+            {profile.type == 2 ? <View style={{paddingBottom: '5%'}}></View> : ProfileDisplayButton()}
           </>
         )}
       </>
