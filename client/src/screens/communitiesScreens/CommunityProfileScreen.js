@@ -114,6 +114,46 @@ const CommunityProfileScreen = ({ navigation, route }) => {
     );
   };
 
+  const RenderPrivateCommunityState = () => {
+    return (
+      <View style={styles.privateCommunityStateContainerStyle}>
+        <View style={styles.privateCommunityStateTextContainerStyle}>
+          <Text style={styles.privateCommunityHeaderTextStyle}>This is a private community.</Text>
+          <Text style={styles.privateCommunityTextStyle}>
+            Only confirmed members have access to discussions. Click the join button to send a join request.
+          </Text>
+        </View>
+      </View>
+    )
+  }
+
+  const renderDisplay = () => {
+    return (
+      <View style={styles.communityProfileContainerStyle}>
+      {selectedDisplay === 'discussions' ? (
+        <FlatList
+          ListHeaderComponent={
+            <List
+              navigation={navigation}
+              isHeader={false}
+              listData={discussions}
+              customStyle={{ marginBottom: '100%' }}
+            />
+          }
+        />
+      ) : (
+        <>
+          <Card
+            child={MemberRequest}
+            customStyle={styles.memberRequestContainerStyle}
+          />
+          <MemberList memberList={communityMember} />
+        </>
+      )}
+      </View>
+    );
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <CommunityProfile
@@ -124,28 +164,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
         getOneCommunity={getOneCommunity}
         communityId={communityId}
       />
-      <View style={styles.communityProfileContainerStyle}>
-        {selectedDisplay === 'discussions' ? (
-          <FlatList
-            ListHeaderComponent={
-              <List
-                navigation={navigation}
-                isHeader={false}
-                listData={discussions}
-                customStyle={{ marginBottom: '100%' }}
-              />
-            }
-          />
-        ) : (
-          <>
-            <Card
-              child={MemberRequest}
-              customStyle={styles.memberRequestContainerStyle}
-            />
-            <MemberList memberList={communityMember} />
-          </>
-        )}
-      </View>
+      {communityProfile.type == 1 || communityProfile.isMember ? renderDisplay() : RenderPrivateCommunityState()}
       {communityProfile.isMember && (
         <TouchableOpacity
           onPress={() =>
@@ -163,6 +182,27 @@ const CommunityProfileScreen = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
+  privateCommunityStateContainerStyle: {
+    backgroundColor: '#E5E5E5',
+    flex: 1
+  },
+
+  privateCommunityStateTextContainerStyle: {
+    paddingTop: '5%',
+    paddingHorizontal: '5%'
+  },
+
+  privateCommunityHeaderTextStyle: {
+    color: '#464D60',
+    fontSize: 16
+  },
+
+  privateCommunityTextStyle: {
+    paddingTop: '1%',
+    fontSize: 12,
+    color: '#73798C'
+  },
+
   communityProfileContainerStyle: {
     paddingHorizontal: GlobalPadding,
   },

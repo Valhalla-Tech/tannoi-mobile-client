@@ -191,7 +191,7 @@ const OptionModal = (props) => {
                 {modalType === 'discussion' ? 'Discussion' : 'Response'}
               </Text>
               {OptionModalButton('Share')}
-              {profileId === userId && OptionModalButton('Edit')}
+              {/* profileId === userId && OptionModalButton('Edit') */}
               {profileId === userId &&
                 type === 2 &&
                 modalType === 'discussion' &&
