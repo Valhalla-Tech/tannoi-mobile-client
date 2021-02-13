@@ -90,6 +90,7 @@ const HomeScreen = ({ navigation }) => {
                   sectionType="discussion"
                   sectionQuery="responseRequest"
                   queryId="=true"
+                  isUsingMoreButton={true}
                 />
               )}
               {followingDiscussion.length !== 0 && (
@@ -102,6 +103,7 @@ const HomeScreen = ({ navigation }) => {
                   sectionType="discussion"
                   sectionQuery="followingDiscussion"
                   queryId="=true"
+                  isUsingMoreButton={true}
                 />
               )}
               <List
@@ -122,6 +124,7 @@ const HomeScreen = ({ navigation }) => {
                 openModal={openModal}
                 useSeeAllButton={true}
                 sectionType="discussion"
+                isUsingMoreButton={true}
               />
               <RecommendedTopics
                 topicData={recommendedTopic}

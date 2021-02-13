@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
   },
 
   recommendedTopicsCardContainerStyle: {
-    width: CalculateWidth(40),
+    width: CalculateWidth(50),
     height: CalculateWidth(55),
     justifyContent: 'space-between',
   },
