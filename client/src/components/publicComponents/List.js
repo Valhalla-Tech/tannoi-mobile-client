@@ -159,12 +159,12 @@ const HomeList = (props) => {
       </View>
     );
   };
-
+  
   return (
-    <Card
-      child={HomeListContent}
-      customStyle={{ ...styles.homeListContainerStyle, ...customStyle }}
-    />
+      <Card
+        child={HomeListContent}
+        customStyle={{ ...styles.homeListContainerStyle, ...customStyle }}
+      />
   );
 };
 

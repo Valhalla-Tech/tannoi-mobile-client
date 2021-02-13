@@ -111,9 +111,9 @@ const ProfileData = (props) => {
 const styles = StyleSheet.create({
   userProfileStyle: {
     backgroundColor: '#FFFFFF',
-    height: '25%',
     paddingLeft: '3.5%',
     paddingRight: '5%',
+    paddingBottom: '2%'
   },
 
   headerStyle: {
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
 
   profileInfoStyle: {
     flexDirection: 'row',
-    marginTop: '15%',
+    marginTop: '5%',
   },
 
   profileDataContainerStyle: {
