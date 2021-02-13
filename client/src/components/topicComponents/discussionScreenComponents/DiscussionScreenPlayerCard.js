@@ -287,7 +287,7 @@ class DiscussionScreenPlayerCard extends Component {
         )}
         <RecordPlayer
           customStyle={{
-            marginTop: '10%',
+            marginTop: '7%',
           }}
           recordingFile={this.state.recordingFile}
           isNextPlayerAvailable={
@@ -431,7 +431,7 @@ const styles = StyleSheet.create({
   },
 
   optionButtonContainerStyle: {
-    alignItems: 'flex-end',
+    alignItems: 'flex-end'
   },
 
   responseCardMenuStyle: {
@@ -442,7 +442,6 @@ const styles = StyleSheet.create({
   },
 
   captionStyle: {
-    marginTop: '3%',
     fontSize: 15,
     fontFamily: normal,
   },
