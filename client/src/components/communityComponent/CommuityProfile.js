@@ -20,6 +20,9 @@ import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
 import Button from '../publicComponents/Button';
 import LoadingSpinner from '../publicComponents/LoadingSpinner';
 import Modal from '../publicComponents/Modal';
+import RecoderModal from '../publicComponents/RecorderModal';
+import { min } from 'react-native-reanimated';
+import RecorderModal from '../publicComponents/RecorderModal';
 
 const CommunityProfile = (props) => {
   const {
@@ -29,27 +32,49 @@ const CommunityProfile = (props) => {
     changeSelectedDisplay,
     communityId,
     getOneCommunity,
+    isMember,
+    communityType,
   } = props;
 
   const [actionModal, setActionModal] = useState(false);
+  const [recorder, setRecorder] = useState(false);
 
   const closeActionModal = () => {
     setActionModal(false);
   };
 
-  const joinCommunity = async () => {
+  const closeRecorder = () => {
+    setRecorder(false);
+  };
+
+  const joinCommunity = async (recordingFile) => {
     try {
       let access_token = await AsyncStorage.getItem('access_token');
 
+      const formData = new FormData();
+
+      const uri = `file://${recordingFile}`;
+      let audioParts = uri.split('.');
+      let fileType = audioParts[audioParts.length - 1];
+
+      formData.append('voice_note_path', {
+        uri,
+        name: `recording.${fileType}`,
+        type: `audio/${fileType}`,
+      });
+
       let joinCommunityRequest = await axios({
-        method: 'get',
+        method: 'post',
         url: `${BaseUrl}/communities/join-community/${communityId}`,
         headers: {
           token: access_token,
+          'Content-Type': 'multipart/form-data',
         },
+        data: communityType === 2 ? formData : undefined,
       });
 
       if (joinCommunityRequest.data) {
+        setRecorder(false);
         getOneCommunity();
       }
     } catch (error) {
@@ -100,9 +125,13 @@ const CommunityProfile = (props) => {
   const ActionModal = () => {
     return (
       <View>
-        <TouchableOpacity onPress={() => leaveCommunity()}>
-          <Text style={styles.actionModalButtonTextStyle}>Leave community</Text>
-        </TouchableOpacity>
+        {isMember && (
+          <TouchableOpacity onPress={() => leaveCommunity()}>
+            <Text style={styles.actionModalButtonTextStyle}>
+              Leave community
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
     );
   };
@@ -168,7 +197,7 @@ const CommunityProfile = (props) => {
                 <View style={styles.communityNameContainerStyle}>
                   <Text style={styles.communityNameStyle}>{profile.name}</Text>
                   <View style={styles.privatePublicIconContainerStyle}>
-                    {profile.type == 2 ? <PrivateIcon/> : <EarthIcon/>}
+                    {profile.type == 2 ? <PrivateIcon /> : <EarthIcon />}
                   </View>
                 </View>
                 <Text style={styles.communityDescriptionStyle}>
@@ -177,7 +206,7 @@ const CommunityProfile = (props) => {
                 <View style={styles.createdAndUniqueCodeContainerStyle}>
                   <View style={styles.createdContainerStyle}>
                     <View style={styles.calendarIconContainerStyle}>
-                      <CalendarIcon/>
+                      <CalendarIcon />
                     </View>
                     <Text style={styles.createdAndUniqueCodeStyle}>
                       Created {profile.created}
@@ -230,12 +259,18 @@ const CommunityProfile = (props) => {
                       marginTop: '15%',
                     }}
                     buttonTitle="Join"
-                    buttonFunction={joinCommunity}
+                    buttonFunction={() =>
+                      communityType === 1 ? joinCommunity() : setRecorder(true)
+                    }
                   />
                 )}
               </View>
             </View>
-            {ProfileDisplayButton()}
+            {profile.type == 2 ? (
+              <View style={{ paddingBottom: '5%' }}></View>
+            ) : (
+              ProfileDisplayButton()
+            )}
           </>
         )}
       </>
@@ -248,11 +283,17 @@ const CommunityProfile = (props) => {
       <Card child={CommunityProfileContent} />
       <Modal
         customStyle={{
-          alignItems: 'flex-start'
+          alignItems: 'flex-start',
         }}
         openModal={actionModal}
         closeModal={closeActionModal}
         child={ActionModal}
+      />
+      <RecorderModal
+        forCommunity={true}
+        openModal={recorder}
+        closeModal={closeRecorder}
+        joinCommunity={joinCommunity}
       />
     </View>
   );
@@ -282,7 +323,7 @@ const styles = StyleSheet.create({
 
   communityNameContainerStyle: {
     marginBottom: '1%',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
 
   communityNameStyle: {
@@ -292,8 +333,8 @@ const styles = StyleSheet.create({
   },
 
   privatePublicIconContainerStyle: {
-    justifyContent: 'center', 
-    marginLeft: '2%'
+    justifyContent: 'center',
+    marginLeft: '2%',
   },
 
   communityDescriptionStyle: {
@@ -312,15 +353,15 @@ const styles = StyleSheet.create({
     fontFamily: normal,
     color: '#73798C',
     fontSize: CalculateHeight(2),
-    marginLeft: '2.5%'
+    marginLeft: '2.5%',
   },
 
   createdContainerStyle: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
 
   calendarIconContainerStyle: {
-    paddingTop: '1.3%'
+    paddingTop: '1.3%',
   },
 
   countDataContainerStyle: {
