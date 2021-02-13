@@ -49,6 +49,8 @@ const RecorderModal = (props) => {
     openModalFromHeader,
     dataForUpdate,
     scrollDown,
+    forCommunity,
+    joinCommunity,
   } = props;
 
   const createResponse = async () => {
@@ -142,18 +144,18 @@ const RecorderModal = (props) => {
           <View style={styles.contentContainerStyle}>
             <View style={styles.titleAndPublishButtonContainerStyle}>
               <Text style={styles.addResponseTitleStyle}>
-                {forBio ? 'Record audio bio' : 'Add response'}
+                {forCommunity ? 'Send a follow request' : forBio ? 'Record audio bio' : 'Add response'}
               </Text>
               <TouchableOpacity
                 onPress={() =>
-                  forBio ? setBioFile(recordingFile) : createResponse()
+                  forCommunity ? joinCommunity(recordingFile) : forBio ? setBioFile(recordingFile) : createResponse()
                 }>
                 <Text style={styles.publishButtonTextStyle}>
-                  {forBio ? 'Save' : 'Publish'}
+                  {forCommunity ? 'Submit' : forBio ? 'Save' : 'Publish'}
                 </Text>
               </TouchableOpacity>
             </View>
-            {!forBio && (
+            {!forBio && !forCommunity && (
               <FormInput
                 formInputTitle="Add caption (optional)"
                 dataInput={inputCaption}

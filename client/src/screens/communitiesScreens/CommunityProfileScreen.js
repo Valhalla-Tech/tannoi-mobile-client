@@ -187,6 +187,8 @@ const CommunityProfileScreen = ({ navigation, route }) => {
         changeSelectedDisplay={changeSelectedDisplay}
         getOneCommunity={getOneCommunity}
         communityId={communityId}
+        isMember={communityProfile.isMember}
+        communityType={communityProfile.type}
       />
       {communityProfile.type == 1 || communityProfile.isMember ? renderDisplay() : RenderPrivateCommunityState()}
       {communityProfile.isMember && (

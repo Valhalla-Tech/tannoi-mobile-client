@@ -8,7 +8,7 @@ import {
   clearUserProfile,
 } from '../../../store/actions/ProfileAction';
 import { getHome, clearHome } from '../../../store/actions/HomeAction';
-import { getResponse } from '../../../store/actions/ResponseAction';
+import { getResponse, getSingleResponse, clearResponse } from '../../../store/actions/ResponseAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
@@ -29,6 +29,8 @@ const OptionModal = (props) => {
     responseTitle,
     changePlayer,
     cardIndex,
+    deleteResponseFromResponseScreen,
+    responseScreenId,
   } = props;
 
   const userId = useSelector((state) => state.ProfileReducer.userProfile.id);
@@ -152,6 +154,9 @@ const OptionModal = (props) => {
           dispatch(clearHome());
           dispatch(getHome());
           navigation.navigate('MainAppNavigation');
+        } else if (deleteResponseFromResponseScreen) {
+          dispatch(clearResponse());
+          dispatch(getSingleResponse(responseScreenId));
         } else {
           dispatch(getResponse(discussionId));
           changePlayer(cardIndex, 'previous');
