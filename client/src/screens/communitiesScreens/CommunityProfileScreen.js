@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
+  Image
 } from 'react-native';
 import { GlobalPadding } from '../../constants/Size';
 import { bold, normal } from '../../assets/FontSize';
@@ -27,6 +28,9 @@ import {
   getAllDiscussion,
   clearDiscussion,
 } from '../../store/actions/DiscussionAction';
+
+//Assets
+import DiscussionEmptyStateImage from '../../assets/communitiesAssets/empty-state-discussions.png';
 
 const CommunityProfileScreen = ({ navigation, route }) => {
   const { communityId } = route.params;
@@ -127,29 +131,49 @@ const CommunityProfileScreen = ({ navigation, route }) => {
     )
   }
 
+  const renderDiscussionsDisplay = () => {
+    if (discussions.length != 0) {
+      return (
+        <FlatList
+        ListHeaderComponent={
+          <List
+            navigation={navigation}
+            isHeader={false}
+            listData={discussions}
+            customStyle={{ marginBottom: '100%' }}
+          />
+        }
+      />
+      )
+    } else {
+        return (
+          <View style={{ flex: 1, alignItems: 'center' }}>
+            <View style={{ paddingTop: '10%', alignItems: 'center' }}>
+              <Image source={DiscussionEmptyStateImage} />
+              <Text style={{color: '#73798C', fontSize: CalculateHeight(2.3)}}>Sorry!</Text>
+              <Text style={{color: '#73798C', fontSize: CalculateHeight(2)}}>This community has no discussions yet!</Text>
+            </View>
+          </View>
+        )
+      }
+  }
+
+  const renderMembersDisplay = () => {
+    return (
+      <>
+        <Card
+          child={MemberRequest}
+          customStyle={styles.memberRequestContainerStyle}
+        />
+        <MemberList memberList={communityMember}/>
+      </>
+    )
+  }
+
   const renderDisplay = () => {
     return (
       <View style={styles.communityProfileContainerStyle}>
-      {selectedDisplay === 'discussions' ? (
-        <FlatList
-          ListHeaderComponent={
-            <List
-              navigation={navigation}
-              isHeader={false}
-              listData={discussions}
-              customStyle={{ marginBottom: '100%' }}
-            />
-          }
-        />
-      ) : (
-        <>
-          <Card
-            child={MemberRequest}
-            customStyle={styles.memberRequestContainerStyle}
-          />
-          <MemberList memberList={communityMember} />
-        </>
-      )}
+        {selectedDisplay === 'discussions' ? renderDiscussionsDisplay() : renderMembersDisplay()}
       </View>
     );
   }
@@ -183,7 +207,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   privateCommunityStateContainerStyle: {
-    backgroundColor: '#E5E5E5',
+    backgroundColor: '#F2F2F2',
     flex: 1
   },
 
