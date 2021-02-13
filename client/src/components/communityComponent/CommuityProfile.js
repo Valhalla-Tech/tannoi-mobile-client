@@ -21,6 +21,7 @@ import Button from '../publicComponents/Button';
 import LoadingSpinner from '../publicComponents/LoadingSpinner';
 import Modal from '../publicComponents/Modal';
 import { min } from 'react-native-reanimated';
+import RecorderModal from '../publicComponents/RecorderModal';
 
 const CommunityProfile = (props) => {
   const {
@@ -264,7 +265,11 @@ const CommunityProfile = (props) => {
                 )}
               </View>
             </View>
-            {profile.type == 2 ? <View style={{paddingBottom: '5%'}}></View> : ProfileDisplayButton()}
+            {profile.type == 2 ? (
+              <View style={{ paddingBottom: '5%' }}></View>
+            ) : (
+              ProfileDisplayButton()
+            )}
           </>
         )}
       </>
