@@ -20,6 +20,8 @@ const OptionButton = (props) => {
     responseTitle,
     changePlayer,
     cardIndex,
+    deleteResponseFromResponseScreen,
+    responseScreenId,
   } = props;
 
   const dispatch = useDispatch();
@@ -53,6 +55,8 @@ const OptionButton = (props) => {
         responseTitle={responseTitle}
         changePlayer={changePlayer}
         cardIndex={cardIndex}
+        deleteResponseFromResponseScreen={deleteResponseFromResponseScreen}
+        responseScreenId={responseScreenId}
       />
     </>
   );

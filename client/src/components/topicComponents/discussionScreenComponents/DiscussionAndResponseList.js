@@ -35,6 +35,7 @@ const DiscussionAndResponseList = (props) => {
     responseId,
     flatListRef,
     scrollDownForResponseScreen,
+    responseScreenId,
   } = props;
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -246,6 +247,8 @@ const DiscussionAndResponseList = (props) => {
               selectedCard={selectedCard}
               isRecorderModalOpen={isResponseScreen ? null : openAddResponse}
               responseScreenResponseId={isResponseScreen ? responseId : null}
+              deleteResponseFromResponseScreen={isResponseScreen ? true : false}
+              responseScreenId={responseScreenId}
             />
           ) : (
             <ClosedCard

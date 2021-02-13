@@ -156,6 +156,7 @@ const ReplyScreen = ({ route, navigation }) => {
           responseId={responseId}
           flatListRef={flatListRef}
           scrollDownForResponseScreen={scrollDown}
+          responseScreenId={responseId}
         />
       )}
       {parentDiscussionId !== '' && (
@@ -166,7 +167,7 @@ const ReplyScreen = ({ route, navigation }) => {
                   responseId: parentResponseId,
                   discussionId: parentDiscussionId,
                 })
-              : navigation.push('DiscussionScreen', {
+              : navigation.navigate('DiscussionScreen', {
                   discussionId: parentDiscussionId,
                 })
           }

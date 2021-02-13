@@ -48,6 +48,7 @@ class RecordPlayer extends Component {
     });
 
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
+      this._isMounted = true;
       this.setState({
         isPlaying: false,
         progress: 0,
@@ -137,10 +138,8 @@ class RecordPlayer extends Component {
 
         if (
           this.props.cardIndex !== 'discussion' &&
-          this.props.cardIndex !== 'response' &&
-          this._isMounted
+          this.props.cardIndex !== 'response'
         ) {
-          console.log('sinii')
           this.playRecording();
         }
         if (this.props.fromNextPreviousButton && this._isMounted) {

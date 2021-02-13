@@ -228,6 +228,8 @@ class DiscussionScreenPlayerCard extends Component {
               responseTitle={this.props.caption}
               changePlayer={this.props.changePlayer}
               cardIndex={this.props.cardIndex}
+              deleteResponseFromResponseScreen={this.props.deleteResponseFromResponseScreen}
+              responseScreenId={this.props.responseScreenId}
             />
           )}
         </View>
@@ -315,7 +317,6 @@ class DiscussionScreenPlayerCard extends Component {
           }
           cardIndex={this.props.cardIndex}
           navigation={this.props.navigation}
-          responseId={this.props.responseId}
         />
         {this.props.cardIndex !== 'discussion' &&
           this.props.cardIndex !== 'response' &&
