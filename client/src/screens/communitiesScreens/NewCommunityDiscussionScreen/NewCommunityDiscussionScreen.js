@@ -7,22 +7,22 @@ import {
   Keyboard,
   StyleSheet,
 } from 'react-native';
-import axios from '../../constants/ApiServices';
-import BaseUrl from '../../constants/BaseUrl';
+import axios from '../../../constants/ApiServices';
+import BaseUrl from '../../../constants/BaseUrl';
 import AsyncStorage from '@react-native-community/async-storage';
-import { GlobalPadding } from '../../constants/Size';
-import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
-import { bold, normal } from '../../assets/FontSize';
+import { GlobalPadding } from '../../../constants/Size';
+import { CalculateHeight, CalculateWidth } from '../../../helper/CalculateSize';
+import { bold, normal } from '../../../assets/FontSize';
 import { Picker } from '@react-native-community/picker';
 
 //Components
-import Header from '../../components/publicComponents/Header';
-import BackButton from '../../components/publicComponents/BackButton';
-import Card from '../../components/publicComponents/Card';
-import FormInput from '../../components/publicComponents/FormInput';
-import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
-import Recorder from '../../components/publicComponents/Recorder';
-import ErrorMessage from '../../components/publicComponents/ErrorMessage';
+import Header from '../../../components/publicComponents/Header';
+import BackButton from '../../../components/publicComponents/BackButton';
+import Card from '../../../components/publicComponents/Card';
+import FormInput from '../../../components/publicComponents/FormInput';
+import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
+import Recorder from '../../../components/publicComponents/Recorder';
+import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 
 const NewCommunityDiscussionScreen = (props) => {
   const { navigation, route } = props;

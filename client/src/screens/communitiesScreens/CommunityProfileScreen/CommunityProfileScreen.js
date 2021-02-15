@@ -7,30 +7,30 @@ import {
   FlatList,
   Image
 } from 'react-native';
-import { GlobalPadding } from '../../constants/Size';
-import { bold, normal } from '../../assets/FontSize';
+import { GlobalPadding } from '../../../constants/Size';
+import { bold, normal } from '../../../assets/FontSize';
 import AsyncStorage from '@react-native-community/async-storage';
-import axios from '../../constants/ApiServices';
-import BaseUrl from '../../constants/BaseUrl';
+import axios from '../../../constants/ApiServices';
+import BaseUrl from '../../../constants/BaseUrl';
 
 //Icon
-import NewDiscussionButton from '../../assets/communitiesAssets/ic-button.svg';
-import RightArrowIcon from '../../assets/communitiesAssets/rightArrow.svg';
+import NewDiscussionButton from '../../../assets/communitiesAssets/ic-button.svg';
+import RightArrowIcon from '../../../assets/communitiesAssets/rightArrow.svg';
 
 //Components
-import Card from '../../components/publicComponents/Card';
-import CommunityProfile from '../../components/communityComponent/CommuityProfile';
-import List from '../../components/publicComponents/List';
-import MemberList from '../../components/communityComponent/MemberList';
-import { CalculateHeight } from '../../helper/CalculateSize';
+import Card from '../../../components/publicComponents/Card';
+import CommunityProfile from '../../../components/communityComponent/CommuityProfile';
+import List from '../../../components/publicComponents/List';
+import MemberList from '../../../components/communityComponent/MemberList';
+import { CalculateHeight } from '../../../helper/CalculateSize';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getAllDiscussion,
   clearDiscussion,
-} from '../../store/actions/DiscussionAction';
+} from '../../../store/actions/DiscussionAction';
 
 //Assets
-import DiscussionEmptyStateImage from '../../assets/communitiesAssets/empty-state-discussions.png';
+import DiscussionEmptyStateImage from '../../../assets/communitiesAssets/empty-state-discussions.png';
 
 const CommunityProfileScreen = ({ navigation, route }) => {
   const { communityId } = route.params;

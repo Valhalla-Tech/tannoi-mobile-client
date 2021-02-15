@@ -8,16 +8,16 @@ import {
   Text,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { addDescription } from '../../store/actions/CreateCommunityAction';
+import { addDescription } from '../../../store/actions/CreateCommunityAction';
 import { LinearTextGradient } from 'react-native-text-gradient';
-import { CalculateHeight } from '../../helper/CalculateSize';
-import { normal } from '../../assets/FontSize';
+import { CalculateHeight } from '../../../helper/CalculateSize';
+import { normal } from '../../../assets/FontSize';
 
 //Components
-import CreateCommunityHeader from '../../components/communityComponent/CreateCommunityHeader';
-import CreateCommunityInput from '../../components/communityComponent/CreateCommunityInput';
-import CreateCommunityProgress from '../../components/communityComponent/CreateCommunityProgress';
-import Button from '../../components/publicComponents/Button';
+import CreateCommunityHeader from '../../../components/communityComponent/CreateCommunityHeader';
+import CreateCommunityInput from '../../../components/communityComponent/CreateCommunityInput';
+import CreateCommunityProgress from '../../../components/communityComponent/CreateCommunityProgress';
+import Button from '../../../components/publicComponents/Button';
 
 const CommunityDescriptionScreen = ({ navigation }) => {
   const savedDescription = useSelector(
