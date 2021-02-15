@@ -209,7 +209,7 @@ const UserAddressVerificationScreen = ({ navigation }) => {
             <View style={styles.imageContainerStyle}>
               <Image source={ScreenImage} style={styles.imageStyle} />
             </View>
-            <View>
+            <View style={{paddingHorizontal: '2%'}}>
               <Text style={styles.boldTextStyle}>
                 We ask for your address to know that you are serious
               </Text>
@@ -273,9 +273,8 @@ const styles = StyleSheet.create({
   },
 
   imageStyle: {
-    resizeMode: 'stretch',
+    resizeMode: 'contain',
     width: '65%',
-    height: '100%',
   },
 
   boldTextStyle: {
