@@ -51,6 +51,7 @@ const RecorderModal = (props) => {
     scrollDown,
     forCommunity,
     joinCommunity,
+    isCommunityDiscussion,
   } = props;
 
   const createResponse = async () => {
@@ -96,7 +97,7 @@ const RecorderModal = (props) => {
           responseScreenResponseId &&
             dispatch(getSingleResponse(responseScreenResponseId));
         } else {
-          dispatch(getDiscussion(discussionId));
+          dispatch(getDiscussion(discussionId, null, isCommunityDiscussion));
           dispatch(getResponse(discussionId));
         }
         setRecordingFile('');

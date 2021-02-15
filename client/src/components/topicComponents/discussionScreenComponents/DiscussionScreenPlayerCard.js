@@ -123,7 +123,7 @@ class DiscussionScreenPlayerCard extends Component {
         }
       }
     } catch (error) {
-      console.log(error.response);
+      console.log(error.response.data.msg);
     }
   };
 
@@ -228,7 +228,9 @@ class DiscussionScreenPlayerCard extends Component {
               responseTitle={this.props.caption}
               changePlayer={this.props.changePlayer}
               cardIndex={this.props.cardIndex}
-              deleteResponseFromResponseScreen={this.props.deleteResponseFromResponseScreen}
+              deleteResponseFromResponseScreen={
+                this.props.deleteResponseFromResponseScreen
+              }
               responseScreenId={this.props.responseScreenId}
             />
           )}
@@ -431,7 +433,7 @@ const styles = StyleSheet.create({
   },
 
   optionButtonContainerStyle: {
-    alignItems: 'flex-end'
+    alignItems: 'flex-end',
   },
 
   responseCardMenuStyle: {

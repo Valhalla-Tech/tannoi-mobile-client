@@ -164,6 +164,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
               isHeader={false}
               listData={discussions}
               customStyle={{ marginBottom: '100%' }}
+              isCommunityDiscussion={true}
             />
           }
         />

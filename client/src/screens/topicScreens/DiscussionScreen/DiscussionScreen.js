@@ -36,7 +36,7 @@ const DiscussionScreen = ({ route, navigation }) => {
   const userId = useSelector((state) => state.HomeReducer.user.id);
   const userType = useSelector((state) => state.HomeReducer.user.type);
 
-  const { discussionId, fromNewDiscussion } = route.params;
+  const { discussionId, fromNewDiscussion, isCommunityDiscussion } = route.params;
 
   const dispatch = useDispatch();
   const flatListRef = useRef();
@@ -46,7 +46,7 @@ const DiscussionScreen = ({ route, navigation }) => {
     setOpenAddRespone(false);
     dispatch(clearDiscussion());
     dispatch(clearResponse(null, true));
-    dispatch(getDiscussion(discussionId, true));
+    dispatch(getDiscussion(discussionId, true, isCommunityDiscussion));
     dispatch(getResponse(discussionId));
   }, [navigation]);
 
@@ -156,6 +156,7 @@ const DiscussionScreen = ({ route, navigation }) => {
         addResponseForResponse={false}
         openModalFromHeader={openModalFromHeader}
         scrollDown={scrollDown}
+        isCommunityDiscussion={isCommunityDiscussion}
       />
     </View>
   );

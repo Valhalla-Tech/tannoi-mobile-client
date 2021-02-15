@@ -73,7 +73,7 @@ export const getAllDiscussion = (
   };
 };
 
-export const getDiscussion = (discussionId, isLoading) => {
+export const getDiscussion = (discussionId, isLoading, isCommunityDiscussion) => {
   return async (dispatch) => {
     try {
       if (isLoading) {
@@ -95,28 +95,51 @@ export const getDiscussion = (discussionId, isLoading) => {
       });
 
       if (getDiscussionRequest.data) {
-        dispatch({
-          type: 'GET_DISCUSSION',
-          payload: {
-            profileId: getDiscussionRequest.data.creator.id,
-            profilePicture:
-              getDiscussionRequest.data.creator.profile_photo_path,
-            profileName: getDiscussionRequest.data.creator.name,
-            postTime: getDiscussionRequest.data.timeSince,
-            like: getDiscussionRequest.data.likes,
-            topic: getDiscussionRequest.data.topic.name,
-            topicId: getDiscussionRequest.data.topic.id,
-            discussionTitle: getDiscussionRequest.data.title,
-            hashtags: getDiscussionRequest.data.hashtags,
-            replies: getDiscussionRequest.data.response_count,
-            plays: getDiscussionRequest.data.play_count,
-            recordingFile: getDiscussionRequest.data.voice_note_path,
-            isLike: getDiscussionRequest.data.isLike,
-            isDislike: getDiscussionRequest.data.isDislike,
-            type: getDiscussionRequest.data.type,
-            userType: getDiscussionRequest.data.creator.type,
-          },
-        });
+        if (isCommunityDiscussion) {
+          dispatch({
+            type: 'GET_DISCUSSION',
+            payload: {
+              profileId: getDiscussionRequest.data.creator.id,
+              profilePicture:
+                getDiscussionRequest.data.creator.profile_photo_path,
+              profileName: getDiscussionRequest.data.creator.name,
+              postTime: getDiscussionRequest.data.timeSince,
+              like: getDiscussionRequest.data.likes,
+              discussionTitle: getDiscussionRequest.data.title,
+              hashtags: getDiscussionRequest.data.hashtags,
+              replies: getDiscussionRequest.data.response_count,
+              plays: getDiscussionRequest.data.play_count,
+              recordingFile: getDiscussionRequest.data.voice_note_path,
+              isLike: getDiscussionRequest.data.isLike,
+              isDislike: getDiscussionRequest.data.isDislike,
+              type: getDiscussionRequest.data.type,
+              userType: getDiscussionRequest.data.creator.type,
+            }
+          })
+        } else {
+          dispatch({
+            type: 'GET_DISCUSSION',
+            payload: {
+              profileId: getDiscussionRequest.data.creator.id,
+              profilePicture:
+                getDiscussionRequest.data.creator.profile_photo_path,
+              profileName: getDiscussionRequest.data.creator.name,
+              postTime: getDiscussionRequest.data.timeSince,
+              like: getDiscussionRequest.data.likes,
+              topic: getDiscussionRequest.data.topic.name,
+              topicId: getDiscussionRequest.data.topic.id,
+              discussionTitle: getDiscussionRequest.data.title,
+              hashtags: getDiscussionRequest.data.hashtags,
+              replies: getDiscussionRequest.data.response_count,
+              plays: getDiscussionRequest.data.play_count,
+              recordingFile: getDiscussionRequest.data.voice_note_path,
+              isLike: getDiscussionRequest.data.isLike,
+              isDislike: getDiscussionRequest.data.isDislike,
+              type: getDiscussionRequest.data.type,
+              userType: getDiscussionRequest.data.creator.type,
+            },
+          });
+        }
 
         if (isLoading) {
           dispatch({
@@ -128,7 +151,7 @@ export const getDiscussion = (discussionId, isLoading) => {
         }
       }
     } catch (error) {
-      console.log(error.response.data.msg);
+      console.log(error);
       if (error.response.data.msg === 'You have to login first') {
         dispatch({
           type: 'LOGOUT',

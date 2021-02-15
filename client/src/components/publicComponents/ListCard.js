@@ -31,6 +31,7 @@ const HomeListCard = (props) => {
     isTopResponsePreview,
     responseId,
     caption,
+    isCommunityDiscussion,
   } = props;
 
   const numberConverter = (number) => {
@@ -126,6 +127,7 @@ const HomeListCard = (props) => {
         } else {
           navigation.push('DiscussionScreen', {
             discussionId: discussionId,
+            isCommunityDiscussion: isCommunityDiscussion
           });
         }
       }}>
