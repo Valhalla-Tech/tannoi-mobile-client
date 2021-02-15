@@ -135,7 +135,14 @@ const HomeList = (props) => {
               data={listData}
               listKey={(item, index) => index.toString()}
               keyExtractor={(item, index) => index.toString()}
-              renderItem={(itemData) => <RenderList itemData={itemData} navigation={navigation} listData={listData} openModal={openModal} />}
+              renderItem={(itemData) => (
+                <RenderList
+                  itemData={itemData}
+                  navigation={navigation}
+                  listData={listData}
+                  openModal={openModal}
+                />
+              )}
               ListFooterComponent={
                 useMoreButton && (
                   <View style={styles.loadMoreButtonContainerStyle}>
@@ -153,18 +160,18 @@ const HomeList = (props) => {
                 )
               }
             />
+            {isUsingMoreButton && <MoreButton />}
           </>
         )}
-        {isUsingMoreButton && <MoreButton />}
       </View>
     );
   };
-  
+
   return (
-      <Card
-        child={HomeListContent}
-        customStyle={{ ...styles.homeListContainerStyle, ...customStyle }}
-      />
+    <Card
+      child={HomeListContent}
+      customStyle={{ ...styles.homeListContainerStyle, ...customStyle }}
+    />
   );
 };
 

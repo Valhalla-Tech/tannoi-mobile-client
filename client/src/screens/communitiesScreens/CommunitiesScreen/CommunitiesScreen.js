@@ -49,7 +49,7 @@ const CommunitiesScreen = ({ navigation }) => {
       console.log(error);
     }
   };
-
+  console.log(userCommunity)
   const HeaderContent = () => {
     return (
       <>

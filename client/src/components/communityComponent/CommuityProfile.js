@@ -33,6 +33,8 @@ const CommunityProfile = (props) => {
     getOneCommunity,
     isMember,
     communityType,
+    inputNoticeModalMessage,
+    openNoticeModal,
   } = props;
 
   const [actionModal, setActionModal] = useState(false);
@@ -75,6 +77,8 @@ const CommunityProfile = (props) => {
       if (joinCommunityRequest.data) {
         setRecorder(false);
         getOneCommunity();
+        inputNoticeModalMessage('You are now a member of this community');
+        openNoticeModal(true);
       }
     } catch (error) {
       console.log(error);
@@ -96,6 +100,8 @@ const CommunityProfile = (props) => {
       if (leaveCommunityRequest.data) {
         setActionModal(false);
         getOneCommunity();
+        inputNoticeModalMessage('You have left this community');
+        openNoticeModal(true);
       }
     } catch (error) {
       console.log(error);
@@ -265,7 +271,7 @@ const CommunityProfile = (props) => {
                 )}
               </View>
             </View>
-            {profile.type == 2 ? (
+            {profile.type == 2 && !isMember ? (
               <View style={{ paddingBottom: '5%' }}></View>
             ) : (
               ProfileDisplayButton()

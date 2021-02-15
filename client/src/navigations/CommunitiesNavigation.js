@@ -2,11 +2,12 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 //Screens
-import CommunityScreen from '../screens/communitiesScreens/CommunityScreen';
+import CommunitiesScreen from '../screens/communitiesScreens/CommunitiesScreen';
 import BrowseCommunityScreen from '../screens/communitiesScreens/BrowseCommunityScreen';
 import CommunityProfileScreen from '../screens/communitiesScreens/CommunityProfileScreen';
 import NewCommunityDiscussionScreen from '../screens/communitiesScreens/NewCommunityDiscussionScreen';
 import CreateCommunityNavigation from './CreateCommunityNavigation';
+import MemberRequestScreen from '../screens/communitiesScreens/MemberRequestScreen'
 
 const Stack = createStackNavigator();
 
@@ -17,8 +18,8 @@ const CommunitiesNavigation = () => {
         headerShown: false,
       }}>
       <Stack.Screen
-        name="CommunityScreen"
-        component={CommunityScreen}
+        name="CommunitiesScreen"
+        component={CommunitiesScreen}
       />
       <Stack.Screen
         name="CreateCommunityNavigation"
@@ -35,6 +36,10 @@ const CommunitiesNavigation = () => {
       <Stack.Screen
         name="NewCommunityDiscussionScreen"
         component={NewCommunityDiscussionScreen}
+      />
+      <Stack.Screen
+        name="MemberRequestScreen"
+        component={MemberRequestScreen}
       />
     </Stack.Navigator>
   );

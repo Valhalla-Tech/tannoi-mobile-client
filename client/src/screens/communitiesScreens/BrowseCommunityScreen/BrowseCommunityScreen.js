@@ -66,6 +66,7 @@ const BrowseCommunityScreen = ({ navigation }) => {
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
       <View style={styles.browseCommunityContainerStyle}>
         <FlatList
+          ListHeaderComponentStyle={{marginBottom: '25%'}}
           ListHeaderComponent={
             <CommunityList communities={communities} navigation={navigation} />
           }

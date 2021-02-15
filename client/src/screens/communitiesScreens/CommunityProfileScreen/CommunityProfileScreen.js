@@ -5,7 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
-  Image
+  Image,
 } from 'react-native';
 import { GlobalPadding } from '../../../constants/Size';
 import { bold, normal } from '../../../assets/FontSize';
@@ -28,6 +28,7 @@ import {
   getAllDiscussion,
   clearDiscussion,
 } from '../../../store/actions/DiscussionAction';
+import Modal from '../../../components/publicComponents/Modal';
 
 //Assets
 import DiscussionEmptyStateImage from '../../../assets/communitiesAssets/empty-state-discussions.png';
@@ -38,6 +39,8 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   const [communityProfile, setCommunityProfile] = useState('');
   const [selectedDisplay, setSelectedDisplay] = useState('discussions');
   const [communityMember, setCommunityMember] = useState([]);
+  const [noticeModal, setNoticeModal] = useState(false);
+  const [noticeModalMessage, setNoticeModalMessage] = useState('');
 
   const discussions = useSelector(
     (state) => state.DiscussionReducer.discussions,
@@ -105,13 +108,30 @@ const CommunityProfileScreen = ({ navigation, route }) => {
     }
   };
 
+  const openNoticeModal = () => {
+    setNoticeModal(true);
+  };
+
+  const closeNoticeModal = () => {
+    setNoticeModal(false);
+  };
+
+  const inputNoticeModalMessage = (input) => {
+    setNoticeModalMessage(input);
+  };
+
   const MemberRequest = () => {
     return (
-      <TouchableOpacity>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('MemberRequestScreen', {
+            communityId: communityId,
+          });
+        }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Text style={styles.memberRequestTextStyle}>Member Requests</Text>
-          <View style={{justifyContent: 'center', paddingRight: '2%'}}>
-            <RightArrowIcon/>
+          <View style={{ justifyContent: 'center', paddingRight: '2%' }}>
+            <RightArrowIcon />
           </View>
         </View>
       </TouchableOpacity>
@@ -122,41 +142,48 @@ const CommunityProfileScreen = ({ navigation, route }) => {
     return (
       <View style={styles.privateCommunityStateContainerStyle}>
         <View style={styles.privateCommunityStateTextContainerStyle}>
-          <Text style={styles.privateCommunityHeaderTextStyle}>This is a private community.</Text>
+          <Text style={styles.privateCommunityHeaderTextStyle}>
+            This is a private community.
+          </Text>
           <Text style={styles.privateCommunityTextStyle}>
-            Only confirmed members have access to discussions. Click the join button to send a join request.
+            Only confirmed members have access to discussions. Click the join
+            button to send a join request.
           </Text>
         </View>
       </View>
-    )
-  }
+    );
+  };
 
   const renderDiscussionsDisplay = () => {
     if (discussions.length != 0) {
       return (
         <FlatList
-        ListHeaderComponent={
-          <List
-            navigation={navigation}
-            isHeader={false}
-            listData={discussions}
-            customStyle={{ marginBottom: '100%' }}
-          />
-        }
-      />
-      )
+          ListHeaderComponent={
+            <List
+              navigation={navigation}
+              isHeader={false}
+              listData={discussions}
+              customStyle={{ marginBottom: '100%' }}
+            />
+          }
+        />
+      );
     } else {
-        return (
-          <View style={{ flex: 1, alignItems: 'center' }}>
-            <View style={{ paddingTop: '10%', alignItems: 'center' }}>
-              <Image source={DiscussionEmptyStateImage} />
-              <Text style={{color: '#73798C', fontSize: CalculateHeight(2.3)}}>Sorry!</Text>
-              <Text style={{color: '#73798C', fontSize: CalculateHeight(2)}}>This community has no discussions yet!</Text>
-            </View>
+      return (
+        <View style={{ flex: 1, alignItems: 'center' }}>
+          <View style={{ paddingTop: '10%', alignItems: 'center' }}>
+            <Image source={DiscussionEmptyStateImage} />
+            <Text style={{ color: '#73798C', fontSize: CalculateHeight(2.3) }}>
+              Sorry!
+            </Text>
+            <Text style={{ color: '#73798C', fontSize: CalculateHeight(2) }}>
+              This community has no discussions yet!
+            </Text>
           </View>
-        )
-      }
-  }
+        </View>
+      );
+    }
+  };
 
   const renderMembersDisplay = () => {
     return (
@@ -165,18 +192,26 @@ const CommunityProfileScreen = ({ navigation, route }) => {
           child={MemberRequest}
           customStyle={styles.memberRequestContainerStyle}
         />
-        <MemberList memberList={communityMember}/>
+        <MemberList memberList={communityMember} />
       </>
-    )
-  }
+    );
+  };
 
   const renderDisplay = () => {
     return (
       <View style={styles.communityProfileContainerStyle}>
-        {selectedDisplay === 'discussions' ? renderDiscussionsDisplay() : renderMembersDisplay()}
+        {selectedDisplay === 'discussions'
+          ? renderDiscussionsDisplay()
+          : renderMembersDisplay()}
       </View>
     );
-  }
+  };
+
+  const NoticeModal = () => (
+    <View>
+      <Text style={styles.noticeModalTextStyle}>{noticeModalMessage}</Text>
+    </View>
+  );
 
   return (
     <View style={{ flex: 1 }}>
@@ -189,8 +224,12 @@ const CommunityProfileScreen = ({ navigation, route }) => {
         communityId={communityId}
         isMember={communityProfile.isMember}
         communityType={communityProfile.type}
+        inputNoticeModalMessage={inputNoticeModalMessage}
+        openNoticeModal={openNoticeModal}
       />
-      {communityProfile.type == 1 || communityProfile.isMember ? renderDisplay() : RenderPrivateCommunityState()}
+      {communityProfile.type == 1 || communityProfile.isMember
+        ? renderDisplay()
+        : RenderPrivateCommunityState()}
       {communityProfile.isMember && (
         <TouchableOpacity
           onPress={() =>
@@ -203,6 +242,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
           <NewDiscussionButton />
         </TouchableOpacity>
       )}
+      <Modal child={NoticeModal} openModal={noticeModal} closeModal={closeNoticeModal} />
     </View>
   );
 };
@@ -210,23 +250,23 @@ const CommunityProfileScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   privateCommunityStateContainerStyle: {
     backgroundColor: '#F2F2F2',
-    flex: 1
+    flex: 1,
   },
 
   privateCommunityStateTextContainerStyle: {
     paddingTop: '5%',
-    paddingHorizontal: '5%'
+    paddingHorizontal: '5%',
   },
 
   privateCommunityHeaderTextStyle: {
     color: '#464D60',
-    fontSize: 16
+    fontSize: 16,
   },
 
   privateCommunityTextStyle: {
     paddingTop: '1%',
     fontSize: 12,
-    color: '#73798C'
+    color: '#73798C',
   },
 
   communityProfileContainerStyle: {
@@ -243,6 +283,11 @@ const styles = StyleSheet.create({
     fontFamily: normal,
     color: '#464D60',
     fontSize: CalculateHeight(2.3),
+  },
+
+  noticeModalTextStyle: {
+    fontFamily: bold,
+    color: '#6505E1',
   },
 });
 
