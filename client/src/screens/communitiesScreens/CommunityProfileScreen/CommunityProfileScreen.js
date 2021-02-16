@@ -47,7 +47,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   );
 
   const dispatch = useDispatch();
-
+  
   useEffect(() => {
     getOneCommunity();
   }, []);
@@ -227,6 +227,8 @@ const CommunityProfileScreen = ({ navigation, route }) => {
         communityType={communityProfile.type}
         inputNoticeModalMessage={inputNoticeModalMessage}
         openNoticeModal={openNoticeModal}
+        guidelines={communityProfile.guidelines}
+        isAdmin={communityProfile !== '' && communityProfile.community_members[0].type === 'Admin' ? true : false}
       />
       {communityProfile.type == 1 || communityProfile.isMember
         ? renderDisplay()

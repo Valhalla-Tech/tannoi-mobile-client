@@ -7,7 +7,8 @@ import BrowseCommunityScreen from '../screens/communitiesScreens/BrowseCommunity
 import CommunityProfileScreen from '../screens/communitiesScreens/CommunityProfileScreen';
 import NewCommunityDiscussionScreen from '../screens/communitiesScreens/NewCommunityDiscussionScreen';
 import CreateCommunityNavigation from './CreateCommunityNavigation';
-import MemberRequestScreen from '../screens/communitiesScreens/MemberRequestScreen'
+import MemberRequestScreen from '../screens/communitiesScreens/MemberRequestScreen';
+import GuidelinesScreen from '../screens/communitiesScreens/GuidelinesScreen';
 
 const Stack = createStackNavigator();
 
@@ -40,6 +41,10 @@ const CommunitiesNavigation = () => {
       <Stack.Screen
         name="MemberRequestScreen"
         component={MemberRequestScreen}
+      />
+      <Stack.Screen
+        name="GuidelinesScreen"
+        component={GuidelinesScreen}
       />
     </Stack.Navigator>
   );
