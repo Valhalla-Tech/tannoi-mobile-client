@@ -186,15 +186,22 @@ const CommunityProfileScreen = ({ navigation, route }) => {
     }
   };
 
+  const renderMemberRequestsCard = () => {
+    if (communityProfile.isMember && communityProfile.community_members[0].type === "Admin") {
+      return (
+        <Card child={MemberRequest} customStyle={styles.memberRequestContainerStyle} />
+      )
+    } else {
+      return null
+    }
+  }
+
   const renderMembersDisplay = () => {
     return (
-      <>
-        <Card
-          child={MemberRequest}
-          customStyle={styles.memberRequestContainerStyle}
-        />
+      <View>
+        {renderMemberRequestsCard()}
         <MemberList memberList={communityMember} />
-      </>
+      </View>
     );
   };
 

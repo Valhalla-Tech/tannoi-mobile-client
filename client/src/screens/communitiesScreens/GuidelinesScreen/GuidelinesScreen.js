@@ -65,7 +65,7 @@ const GuidelinesScreen = ({ navigation, route }) => {
         }}
         navigation={navigation}
       />
-      <Text style={styles.headerTextStyle}>Community's guideline</Text>
+      <Text style={styles.headerTextStyle}>Community guidelines</Text>
     </>
   );
 
