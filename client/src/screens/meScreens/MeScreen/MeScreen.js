@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   FlatList,
+  Image
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
 import { useSelector, useDispatch } from 'react-redux';
@@ -24,6 +25,10 @@ import Header from '../../../components/publicComponents/Header';
 import ProfileData from '../../../components/meComponents/ProfileData';
 import List from '../../../components/publicComponents/List';
 import NoticeModal from '../../../components/publicComponents/Modal';
+import { CalculateHeight } from '../../../helper/CalculateSize';
+
+//Assets
+import DiscussionEmptyStateImage from '../../../assets/communitiesAssets/empty-state-discussions.png';
 
 const MeScreen = ({ navigation, route }) => {
   const [selectedMenu, setSelectedMenu] = useState('Discussions');
@@ -96,6 +101,58 @@ const MeScreen = ({ navigation, route }) => {
     );
   };
 
+  const renderDiscussionsDisplay = () => {
+    if (discussions.length > 0) {
+      return (
+        <List
+          sectionType="discussion"
+          sectionQuery="user_id="
+          queryId={userId}
+          isHeader={false}
+          navigation={navigation}
+          isUsingMoreButton={false}
+          listData={discussions}
+          useMoreButton={
+            discussionCount > 20 &&
+            discussions.length < discussionCount &&
+            true
+          }
+          openModal={openModal}
+          customStyle={{
+            marginBottom: '5%',
+          }}
+          currentPage={currentPage}
+          changeCurrentPage={changeCurrentPage}
+          isUserDiscussion={true}
+        />
+      )
+    } else if (discussions.length === 0) {
+        return (
+          <View style={{ flex: 1, alignItems: 'center' }}>
+            <View style={{ paddingTop: '10%', alignItems: 'center' }}>
+              <Image source={DiscussionEmptyStateImage} />
+              <Text style={{color: '#73798C', fontSize: CalculateHeight(2.3)}}>Sorry!</Text>
+              <Text style={{color: '#73798C', fontSize: CalculateHeight(2)}}>You don't have any discussions yet!</Text>
+            </View>
+          </View>
+        )
+    }
+  }
+
+  const renderAboutDisplay = () => {
+    return (
+      <AboutSection
+        customStyle={styles.cardStyle}
+        bio={userProfile.bio}
+        gender={userProfile.gender}
+        birthDate={userProfile ? userProfile.birth_date : null}
+        bioVoiceFile={userProfile.bio_voice_path}
+        isLoading={userProfile ? false : true}
+        navigation={navigation}
+      />
+    )
+  }
+
   return (
     <View style={styles.meScreenContainerStyle}>
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
@@ -107,39 +164,7 @@ const MeScreen = ({ navigation, route }) => {
       <FlatList
         ListHeaderComponent={
           <View style={styles.cardContainerStyle}>
-            {selectedMenu === 'Discussions' ? (
-              <List
-                sectionType="discussion"
-                sectionQuery="user_id="
-                queryId={userId}
-                isHeader={false}
-                navigation={navigation}
-                isUsingMoreButton={false}
-                listData={discussions}
-                useMoreButton={
-                  discussionCount > 20 &&
-                  discussions.length < discussionCount &&
-                  true
-                }
-                openModal={openModal}
-                customStyle={{
-                  marginBottom: '5%',
-                }}
-                currentPage={currentPage}
-                changeCurrentPage={changeCurrentPage}
-                isUserDiscussion={true}
-              />
-            ) : selectedMenu === 'About' ? (
-              <AboutSection
-                customStyle={styles.cardStyle}
-                bio={userProfile.bio}
-                gender={userProfile.gender}
-                birthDate={userProfile ? userProfile.birth_date : null}
-                bioVoiceFile={userProfile.bio_voice_path}
-                isLoading={userProfile ? false : true}
-                navigation={navigation}
-              />
-            ) : null}
+            {selectedMenu === 'Discussions' ? renderDiscussionsDisplay() : selectedMenu === 'About' ? renderAboutDisplay() : null}
           </View>
         }
       />

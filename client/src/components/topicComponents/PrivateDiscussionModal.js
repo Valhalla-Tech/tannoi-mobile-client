@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Modal,
   Image,
-  FlatList,
+  FlatList
 } from 'react-native';
 import { bold, normal } from '../../assets/FontSize';
 import { useSelector, useDispatch } from 'react-redux';
@@ -250,7 +250,7 @@ const PrivateDiscussionModal = (props) => {
             formInputCustomStyle={{
               paddingVertical: 0,
               height: 35,
-              marginBottom: '5%',
+              marginBottom: '2%',
             }}
             formInputValue={searchKeyword}
             dataInput={searchUserName}
@@ -329,8 +329,8 @@ const styles = StyleSheet.create({
 
   privateDiscussionModalStyle: {
     width: '95%',
-    height: 500,
-    maxHeight: 800,
+    height: '85%',
+    maxHeight: '85%',
     borderRadius: 20,
     padding: '3.5%',
     backgroundColor: '#FFFFFF',
