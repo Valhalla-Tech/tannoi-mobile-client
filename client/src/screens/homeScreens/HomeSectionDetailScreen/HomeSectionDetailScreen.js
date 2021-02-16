@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
 import { GlobalPadding } from '../../../constants/Size';
+import { CalculateHeight } from '../../../helper/CalculateSize';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   getAllDiscussion,
@@ -140,7 +141,7 @@ const styles = StyleSheet.create({
   headerTitleStyle: {
     marginLeft: '5%',
     fontFamily: bold,
-    fontSize: 20,
+    fontSize: CalculateHeight(2.5),
     color: '#464D60',
   },
 

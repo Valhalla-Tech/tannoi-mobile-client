@@ -10,6 +10,7 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../../constants/ApiServices';
 import { bold, normal } from '../../../assets/FontSize';
+import { CalculateHeight } from '../../../helper/CalculateSize';
 import BaseUrl from '../../../constants/BaseUrl';
 
 //Components
@@ -216,20 +217,19 @@ const RegisterPage = ({ navigation }) => {
 const styles = StyleSheet.create({
   registerPageContainerStyle: {
     flex: 1,
-    paddingLeft: 24,
-    paddingRight: 24,
+    paddingHorizontal: '5.5%',
   },
 
   registerTitleStyle: {
     fontFamily: bold,
     color: '#464D60',
-    fontSize: 28,
+    fontSize: CalculateHeight(3.5),
     marginBottom: '15%',
   },
 
   signupButtonContainerStyle: {
     alignItems: 'center',
-    height: 55,
+    height: '7.5%',
   },
 
   termsOfServiceContainerStyle: {
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
 
   signupTermsAndPrivacyStyle: {
     fontFamily: normal,
-    fontSize: 12,
+    fontSize: CalculateHeight(1.5),
     textAlign: 'center',
     color: '#73798C',
   },

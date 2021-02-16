@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
-import { bold, normal } from '../../../assets/FontSize';
 import { CalculateWidth } from '../../../helper/CalculateSize';
 
 //Components
@@ -179,17 +178,9 @@ const RecommendedTopics = (props) => {
 const styles = StyleSheet.create({
   recommendedTopicsContainerStyle: {
     marginTop: '2%',
-    marginBottom: 70,
+    marginBottom: '20%',
     backgroundColor: '#FFFFFF',
     borderRadius: 8,
-  },
-
-  recommendedTopicsTitleStyle: {
-    fontSize: 18,
-    fontFamily: bold,
-    color: '#FFFFFF',
-    marginVertical: '4%',
-    marginLeft: '5%',
   },
 
   topicCardContainerStyle: {

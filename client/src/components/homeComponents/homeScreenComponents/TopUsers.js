@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
 
   topUsersNameStyle: {
     color: '#464D60',
-    fontSize: 12,
+    fontSize: CalculateHeight(1.5),
     fontFamily: normal,
   },
 });

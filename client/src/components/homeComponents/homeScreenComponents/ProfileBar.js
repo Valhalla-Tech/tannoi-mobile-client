@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { bold } from '../../../assets/FontSize';
+import { CalculateHeight, CalculateWidth } from '../../../helper/CalculateSize';
 
 //Icons
 import NoProfilePicture from '../../../assets/publicAssets/noProfilePicture.png';
@@ -80,20 +81,20 @@ const styles = StyleSheet.create({
 
   profilePictureStyle: {
     borderRadius: 50,
-    width: 25,
-    height: 25,
+    width: CalculateWidth(6.5),
+    height: CalculateWidth(6.5),
   },
 
   profileBarTextStyle: {
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
     color: '#464D60',
     marginLeft: '5%',
     fontFamily: bold,
   },
 
   tickIconStyle: {
-    height: 15,
-    width: 15,
+    height: CalculateWidth(3.5),
+    width: CalculateWidth(3.5),
     marginLeft: '2%',
   },
 });
