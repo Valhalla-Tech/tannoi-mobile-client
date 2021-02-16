@@ -145,7 +145,7 @@ const RecorderModal = (props) => {
           <View style={styles.contentContainerStyle}>
             <View style={styles.titleAndPublishButtonContainerStyle}>
               <Text style={styles.addResponseTitleStyle}>
-                {forCommunity ? 'Send a follow request' : forBio ? 'Record audio bio' : 'Add response'}
+                {forCommunity ? 'Send a community join request' : forBio ? 'Record audio bio' : 'Add response'}
               </Text>
               <TouchableOpacity
                 onPress={() =>

@@ -5,6 +5,7 @@ import { bold, normal } from '../../assets/FontSize';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
+import { LinearTextGradient } from 'react-native-text-gradient';
 
 //Icon
 import OptionButton from '../../assets/publicAssets/optionButton.svg';
@@ -144,7 +145,7 @@ const CommunityProfile = (props) => {
           <>{ActionModalButton('Leave community', leaveCommunity)}</>
         )}
         {ActionModalButton(
-          "Community's guideline",
+          "Community guidelines",
           () => (navigation.navigate('GuidelinesScreen', { guidelines: guidelines, isAdmin: isAdmin, communityId: communityId }), setActionModal(false)),
           { marginBottom: 0 },
         )}
@@ -211,7 +212,13 @@ const CommunityProfile = (props) => {
             <View style={styles.communityProfileContainerStyle}>
               <View style={styles.communityDataContainerStyle}>
                 <View style={styles.communityNameContainerStyle}>
-                  <Text style={styles.communityNameStyle}>{profile.name}</Text>
+                  <LinearTextGradient 
+                    locations={[0, 1]}
+                    colors={['#5051DB', '#7E37B6']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}>
+                    <Text style={styles.communityNameStyle}>{profile.name}</Text>
+                  </LinearTextGradient>
                   <View style={styles.privatePublicIconContainerStyle}>
                     {profile.type == 2 ? <PrivateIcon /> : <EarthIcon />}
                   </View>
@@ -331,7 +338,7 @@ const styles = StyleSheet.create({
   },
 
   communityProfileContainerStyle: {
-    paddingHorizontal: '3%',
+    paddingHorizontal: '3.5%',
     flexDirection: 'row',
   },
 
@@ -345,7 +352,7 @@ const styles = StyleSheet.create({
   },
 
   communityNameStyle: {
-    fontSize: CalculateHeight(2.5),
+    fontSize: CalculateHeight(2.7),
     fontFamily: bold,
     color: '#464D60',
   },
@@ -360,7 +367,7 @@ const styles = StyleSheet.create({
     color: '#464D60',
     lineHeight: 20,
     marginBottom: '5%',
-    fontSize: CalculateHeight(2.3),
+    fontSize: CalculateHeight(2),
   },
 
   createdAndUniqueCodeContainerStyle: {
