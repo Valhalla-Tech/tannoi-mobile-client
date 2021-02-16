@@ -50,6 +50,7 @@ const DiscussionScreenCard = (props) => {
     profileType,
     userId,
     isRecorderModalOpen,
+    isCommunityDiscussion,
   } = props;
 
   const [optionModal, setOptionModal] = useState(false);
@@ -86,7 +87,7 @@ const DiscussionScreenCard = (props) => {
               });
 
               if (upvoteRequest.data) {
-                dispatch(getDiscussion(discussionId));
+                dispatch(getDiscussion(discussionId, false, isCommunityDiscussion));
               }
             } catch (error) {
               console.log(error);
@@ -115,7 +116,7 @@ const DiscussionScreenCard = (props) => {
         });
 
         if (downvoteRequest.data) {
-          dispatch(getDiscussion(discussionId));
+          dispatch(getDiscussion(discussionId, false, isCommunityDiscussion));
         }
       } else {
         navigation.navigate('VerificationNavigation');

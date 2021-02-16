@@ -86,8 +86,9 @@ const NewCommunityDiscussionScreen = (props) => {
 
       if (createCommunityDiscussionRequest.data) {
         setIsLoading(false);
-        navigation.navigate('CommunityProfileScreen', {
-          communityId: communityId
+        navigation.navigate('DiscussionScreen', {
+          discussionId: createCommunityDiscussionRequest.data.id,
+          isCommunityDiscussion: true,
         });
       }
     } catch (error) {
@@ -152,15 +153,15 @@ const NewCommunityDiscussionScreen = (props) => {
   };
 
   return (
-    <View>
+    <View style={{flex: 1}}>
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
-      <View style={styles.newCommunityDiscussionContainerStyle}>
+      <View style={isLoading ? {...styles.newCommunityDiscussionContainerStyle, paddingHorizontal: 0} : styles.newCommunityDiscussionContainerStyle}>
         <Card
           child={NewCommunityDiscussionForm}
           customStyle={styles.newCommunityDiscussionFormStyle}
         />
+        {isLoading && <LoadingSpinner />}
       </View>
-      {isLoading && <LoadingSpinner />}
     </View>
   );
 };
@@ -191,11 +192,12 @@ const styles = StyleSheet.create({
   },
 
   newCommunityDiscussionContainerStyle: {
-    marginHorizontal: GlobalPadding,
+    paddingHorizontal: GlobalPadding,
+    paddingVertical: GlobalPadding,
+    flex: 1,
   },
 
   newCommunityDiscussionFormStyle: {
-    marginTop: '2%',
     borderRadius: 8,
     padding: '5%',
   },

@@ -148,6 +148,7 @@ const DiscussionScreen = ({ route, navigation }) => {
         getIsLikeAndIsDislike={getIsLikeAndIsDislike}
         flatListRef={flatListRef}
         scrollDown={scrollDown}
+        isCommunityDiscussion={isCommunityDiscussion}
       />
       <AddResponse
         openModal={openAddResponseModal}
