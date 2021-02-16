@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   },
 
   communityContainerStyle: {
-    padding: '5%',
+    padding: '3.5%',
     flexDirection: 'row',
     alignItems: 'flex-start',
     borderBottomWidth: 1,

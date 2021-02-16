@@ -31,7 +31,7 @@ const MemberList = (props) => {
           </View>
         </View>
         <View style={{paddingRight: '2%'}}>
-          <Text style={styles.adminStyle}>Admin</Text>
+          <Text style={styles.adminStyle}>{itemData.item.members[0].community_member.type}</Text>
         </View>
       </TouchableOpacity>
     );
