@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
+import { CalculateHeight, CalculateWidth } from '../../../helper/CalculateSize';
 import AsyncStorage from '@react-native-community/async-storage';
 import { connect } from 'react-redux';
 import { getHome, clearHome } from '../../../store/actions/HomeAction';
@@ -376,8 +377,7 @@ const styles = StyleSheet.create({
 
   responsePlayerContainerStyle: {
     backgroundColor: '#FFFFFF',
-    padding: '4%',
-    marginHorizontal: '2%',
+    padding: '3.5%',
     marginBottom: '2%',
     borderRadius: 8,
   },
@@ -395,26 +395,26 @@ const styles = StyleSheet.create({
 
   profileImageStyle: {
     borderRadius: 50,
-    height: 24,
-    width: 24,
-    marginRight: 12,
+    height: CalculateWidth(6),
+    width: CalculateWidth(6),
+    marginRight: '6.5%',
   },
 
   profileNameStyle: {
-    fontSize: 14,
+    fontSize: CalculateHeight(1.8),
     color: '#464D60',
     fontFamily: bold,
   },
 
   tickIconStyle: {
-    height: 15,
-    width: 15,
+    height: CalculateWidth(3.5),
+    width: CalculateWidth(3.5),
     marginLeft: '2%',
   },
 
   postTimeStyle: {
     color: '#73798C',
-    fontSize: 12,
+    fontSize: CalculateHeight(1.5),
     fontFamily: normal,
   },
 
@@ -425,12 +425,12 @@ const styles = StyleSheet.create({
   responseCardMenuStyle: {
     marginTop: '2%',
     alignItems: 'flex-end',
-    height: 15,
+    height: CalculateHeight(2.5),
     width: '10%',
   },
 
   captionStyle: {
-    fontSize: 15,
+    fontSize: CalculateHeight(2),
     fontFamily: normal,
   },
 
@@ -445,10 +445,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 24,
+    marginTop: '10%',
     borderTopWidth: 1,
     borderTopColor: '#F5F7F9',
-    paddingTop: 12,
+    paddingTop: '2.5%',
   },
 
   voteContainerStyle: {
@@ -459,34 +459,20 @@ const styles = StyleSheet.create({
   },
 
   voteNumberStyle: {
-    marginVertical: 6,
+    marginVertical: '10%',
     fontFamily: normal,
-    fontSize: 14,
+    fontSize: CalculateHeight(1.8),
     color: '#73798C',
   },
 
   addResponseButtonStyle: {
     color: '#0E4EF4',
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
   },
 
   addResponseButtonTextStyle: {
     color: '#0E4EF4',
-    fontSize: 16,
-    fontFamily: bold,
-  },
-
-  showReplyButtonContainerStyle: {
-    alignItems: 'center',
-    marginTop: '5%',
-    borderTopWidth: 1,
-    borderTopColor: '#F5F7F9',
-    paddingTop: '5%',
-  },
-
-  showReplyButtonTextStyle: {
-    fontSize: 15,
-    color: '#0E4EF4',
+    fontSize: CalculateHeight(2),
     fontFamily: bold,
   },
 });

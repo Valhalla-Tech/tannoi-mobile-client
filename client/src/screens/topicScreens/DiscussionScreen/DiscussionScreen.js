@@ -16,6 +16,7 @@ import {
   clearResponse,
 } from '../../../store/actions/ResponseAction';
 import { CalculateHeight } from '../../../helper/CalculateSize';
+import { GlobalPadding } from '../../../constants/Size';
 
 //Components
 import BackButton from '../../../components/publicComponents/BackButton';
@@ -134,22 +135,24 @@ const DiscussionScreen = ({ route, navigation }) => {
           <Text style={styles.addResponseButtonTextStyle}>Add response</Text>
         </TouchableOpacity>
       </View>
-      <DiscussionAndResponseList
-        changePlayer={changePlayer}
-        discussionId={discussionId}
-        fromNextPreviousButton={fromNextPreviousButton}
-        updateFromNextPreviousButton={updateFromNextPreviousButton}
-        navigation={navigation}
-        openAddResponse={openAddResponse}
-        selectCard={selectCard}
-        openAddResponseModal={openAddResponseModal}
-        closeAddResponseModal={closeAddResponseModal}
-        selectedCard={selectedCard}
-        getIsLikeAndIsDislike={getIsLikeAndIsDislike}
-        flatListRef={flatListRef}
-        scrollDown={scrollDown}
-        isCommunityDiscussion={isCommunityDiscussion}
-      />
+      <View style={styles.discussionContainerStyle}>
+        <DiscussionAndResponseList
+          changePlayer={changePlayer}
+          discussionId={discussionId}
+          fromNextPreviousButton={fromNextPreviousButton}
+          updateFromNextPreviousButton={updateFromNextPreviousButton}
+          navigation={navigation}
+          openAddResponse={openAddResponse}
+          selectCard={selectCard}
+          openAddResponseModal={openAddResponseModal}
+          closeAddResponseModal={closeAddResponseModal}
+          selectedCard={selectedCard}
+          getIsLikeAndIsDislike={getIsLikeAndIsDislike}
+          flatListRef={flatListRef}
+          scrollDown={scrollDown}
+          isCommunityDiscussion={isCommunityDiscussion}
+        />
+      </View>
       <AddResponse
         openModal={openAddResponseModal}
         closeModal={closeAddResponseModal}
@@ -179,13 +182,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
+  discussionContainerStyle: {
+    paddingHorizontal: GlobalPadding,
+  },
+
   addResponseButtonStyle: {
     marginTop: '.6%',
   },
 
   addResponseButtonTextStyle: {
     color: '#0E4EF4',
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
     fontFamily: bold,
   },
 

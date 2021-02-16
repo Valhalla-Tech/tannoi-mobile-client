@@ -7,7 +7,7 @@ import { getAuthorizedUsers } from '../../../store/actions/PrivateDiscussionActi
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
-import { CalculateHeight } from '../../../helper/CalculateSize';
+import { CalculateHeight, CalculateWidth } from '../../../helper/CalculateSize';
 import { GenerateDeepLink } from '../../../helper/GenerateDeepLink';
 
 //Icons
@@ -282,8 +282,7 @@ const DiscussionScreenCard = (props) => {
 const styles = StyleSheet.create({
   discussionScreenCardContainerStyle: {
     backgroundColor: '#FFFFFF',
-    marginHorizontal: 8,
-    marginBottom: 8,
+    marginBottom: '2%',
     borderRadius: 8,
   },
 
@@ -305,9 +304,9 @@ const styles = StyleSheet.create({
 
   profileImageStyle: {
     borderRadius: 50,
-    height: 24,
-    width: 24,
-    marginRight: 12,
+    height: CalculateWidth(6.5),
+    width: CalculateWidth(6.5),
+    marginRight: '5.1%',
   },
 
   profileNameStyle: {
@@ -316,21 +315,21 @@ const styles = StyleSheet.create({
   },
 
   tickIconStyle: {
-    height: 15,
-    width: 15,
+    height: CalculateWidth(3.5),
+    width: CalculateWidth(3.5),
     marginLeft: '2%',
   },
 
   postTimeStyle: {
-    marginLeft: 36,
+    marginLeft: '19%',
     fontFamily: normal,
     color: '#73798C',
-    fontSize: 12,
+    fontSize: CalculateHeight(1.5),
     marginTop: '-5%',
   },
 
   discussionCardMenuStyle: {
-    marginTop: 12,
+    marginTop: '3.5%',
     height: '30%',
     width: '10%',
     alignItems: 'center',
@@ -346,9 +345,9 @@ const styles = StyleSheet.create({
   },
 
   voteNumberStyle: {
-    marginVertical: 6,
+    marginVertical: '15%',
     fontFamily: normal,
-    fontSize: 14,
+    fontSize: CalculateHeight(1.8),
     color: '#73798C',
   },
 
@@ -369,19 +368,19 @@ const styles = StyleSheet.create({
 
   discussionHashtag: {
     fontFamily: normal,
-    fontSize: 14,
+    fontSize: CalculateHeight(1.8),
     lineHeight: 25,
     color: '#73798C',
   },
 
   repliesAndPlaysNumberContainerStyle: {
     flexDirection: 'row',
-    marginTop: 16,
+    marginTop: '5.5%',
   },
 
   repliesAndPlaysNumberStyle: {
-    fontSize: 12,
-    marginRight: 16,
+    fontSize: CalculateHeight(1.5),
+    marginRight: '5.5%',
     color: '#73798C',
     fontFamily: normal,
   },
