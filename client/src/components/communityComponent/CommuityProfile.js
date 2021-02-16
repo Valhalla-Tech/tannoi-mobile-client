@@ -270,7 +270,7 @@ const CommunityProfile = (props) => {
                       backgroundColor: '#5152D0',
                       borderWidth: 0,
                       padding: 0,
-                      paddingHorizontal: '16%',
+                      paddingHorizontal: '20%',
                       paddingVertical: '2.5%',
                       marginTop: '15%',
                     }}

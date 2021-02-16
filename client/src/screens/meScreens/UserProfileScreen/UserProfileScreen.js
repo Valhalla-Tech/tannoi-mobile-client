@@ -5,6 +5,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   FlatList,
+  Image,
+  ActivityIndicator,
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
 import { useSelector, useDispatch } from 'react-redux';
@@ -29,6 +31,10 @@ import BackButton from '../../../components/publicComponents/BackButton';
 import ProfileData from '../../../components/meComponents/ProfileData';
 import List from '../../../components/publicComponents/List';
 import NoticeModal from '../../../components/publicComponents/Modal';
+import { CalculateHeight } from '../../../helper/CalculateSize';
+
+//Assets
+import DiscussionEmptyStateImage from '../../../assets/communitiesAssets/empty-state-discussions.png';
 
 const UserProfileScreen = ({ route, navigation }) => {
   const { userId, fromDeepLink } = route.params;
@@ -143,6 +149,58 @@ const UserProfileScreen = ({ route, navigation }) => {
     );
   };
 
+  const renderDiscussionsDisplay = () => {
+    console.log(discussions)
+    if (discussions.length > 0) {
+      return (
+          <List
+            sectionQuery="user_id="
+            queryId={userId}
+            isHeader={false}
+            navigation={navigation}
+            isUsingMoreButton={false}
+            listData={discussions}
+            useMoreButton={
+              discussionCount > 20 &&
+              discussions.length < discussionCount &&
+              true
+            }
+            openModal={openModal}
+            customStyle={{
+              marginBottom: '5%',
+            }}
+            currentPage={currentPage}
+            changeCurrentPage={changeCurrentPage}
+            isUserDiscussion={true}
+          />
+        )
+      } else if (discussions.length === 0) {
+          return (
+            <View style={{ flex: 1, alignItems: 'center' }}>
+              <View style={{ paddingTop: '10%', alignItems: 'center' }}>
+                <Image source={DiscussionEmptyStateImage} />
+                <Text style={{color: '#73798C', fontSize: CalculateHeight(2.3)}}>Sorry!</Text>
+                <Text style={{color: '#73798C', fontSize: CalculateHeight(2)}}>This user has no discussions yet!</Text>
+              </View>
+            </View>
+          )
+        }
+  }
+
+  const renderAboutDisplay = () => {
+    return (
+      <AboutSection
+        customStyle={styles.cardStyle}
+        bio={profile.bio}
+        gender={profile.gender}
+        birthDate={profile ? profile.birth_date : null}
+        bioVoiceFile={profile.bio_voice_path}
+        isLoading={profile ? false : true}
+        navigation={navigation}
+      />
+    )
+  }
+
   return (
     <View style={styles.userProfileScreenContainerStyle}>
       <View style={styles.headerStyle}>
@@ -169,38 +227,7 @@ const UserProfileScreen = ({ route, navigation }) => {
       <FlatList
         ListHeaderComponent={
           <View style={styles.cardContainerStyle}>
-            {selectedMenu === 'Discussions' ? (
-              <List
-                sectionQuery="user_id="
-                queryId={userId}
-                isHeader={false}
-                navigation={navigation}
-                isUsingMoreButton={false}
-                listData={discussions}
-                useMoreButton={
-                  discussionCount > 20 &&
-                  discussions.length < discussionCount &&
-                  true
-                }
-                openModal={openModal}
-                customStyle={{
-                  marginBottom: '5%',
-                }}
-                currentPage={currentPage}
-                changeCurrentPage={changeCurrentPage}
-                isUserDiscussion={true}
-              />
-            ) : selectedMenu === 'About' ? (
-              <AboutSection
-                customStyle={styles.cardStyle}
-                bio={profile.bio}
-                gender={profile.gender}
-                birthDate={profile ? profile.birth_date : null}
-                bioVoiceFile={profile.bio_voice_path}
-                isLoading={profile ? false : true}
-                navigation={navigation}
-              />
-            ) : null}
+            {selectedMenu === 'Discussions' ? renderDiscussionsDisplay() : selectedMenu === 'About' ? renderAboutDisplay() : null}
           </View>
         }
       />
