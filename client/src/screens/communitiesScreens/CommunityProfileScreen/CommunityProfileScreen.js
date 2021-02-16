@@ -47,7 +47,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   );
 
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     getOneCommunity();
   }, []);
@@ -228,7 +228,13 @@ const CommunityProfileScreen = ({ navigation, route }) => {
         inputNoticeModalMessage={inputNoticeModalMessage}
         openNoticeModal={openNoticeModal}
         guidelines={communityProfile.guidelines}
-        isAdmin={communityProfile !== '' && communityProfile.community_members[0].type === 'Admin' ? true : false}
+        isAdmin={
+          communityProfile !== '' &&
+          communityProfile.community_members.length !== 0 &&
+          communityProfile.community_members[0].type === 'Admin'
+            ? true
+            : false
+        }
       />
       {communityProfile.type == 1 || communityProfile.isMember
         ? renderDisplay()
@@ -245,7 +251,11 @@ const CommunityProfileScreen = ({ navigation, route }) => {
           <NewDiscussionButton />
         </TouchableOpacity>
       )}
-      <Modal child={NoticeModal} openModal={noticeModal} closeModal={closeNoticeModal} />
+      <Modal
+        child={NoticeModal}
+        openModal={noticeModal}
+        closeModal={closeNoticeModal}
+      />
     </View>
   );
 };

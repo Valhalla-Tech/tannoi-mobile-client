@@ -87,7 +87,6 @@ const HomeScreen = ({ navigation }) => {
                   navigation={navigation}
                   openModal={openModal}
                   useSeeAllButton={true}
-                  sectionType="discussion"
                   sectionQuery="responseRequest"
                   queryId="=true"
                   isUsingMoreButton={true}
@@ -100,7 +99,6 @@ const HomeScreen = ({ navigation }) => {
                   navigation={navigation}
                   openModal={openModal}
                   useSeeAllButton={true}
-                  sectionType="discussion"
                   sectionQuery="followingDiscussion"
                   queryId="=true"
                   isUsingMoreButton={true}
@@ -112,7 +110,6 @@ const HomeScreen = ({ navigation }) => {
                 navigation={navigation}
                 openModal={openModal}
                 useSeeAllButton={true}
-                sectionType="discussion"
                 sectionQuery="discussionOfTheWeek"
                 queryId="=true"
               />
@@ -123,7 +120,6 @@ const HomeScreen = ({ navigation }) => {
                 navigation={navigation}
                 openModal={openModal}
                 useSeeAllButton={true}
-                sectionType="discussion"
                 isUsingMoreButton={true}
               />
               <RecommendedTopics

@@ -171,7 +171,6 @@ const UserProfileScreen = ({ route, navigation }) => {
           <View style={styles.cardContainerStyle}>
             {selectedMenu === 'Discussions' ? (
               <List
-                sectionType="discussion"
                 sectionQuery="user_id="
                 queryId={userId}
                 isHeader={false}

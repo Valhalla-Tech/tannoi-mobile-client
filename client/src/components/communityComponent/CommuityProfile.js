@@ -38,7 +38,7 @@ const CommunityProfile = (props) => {
     guidelines,
     isAdmin,
   } = props;
-
+  
   const [actionModal, setActionModal] = useState(false);
   const [recorder, setRecorder] = useState(false);
 
@@ -145,7 +145,7 @@ const CommunityProfile = (props) => {
         )}
         {ActionModalButton(
           "Community's guideline",
-          () => (navigation.navigate('GuidelinesScreen', { guidelines: guidelines, isAdmin: isAdmin }), setActionModal(false)),
+          () => (navigation.navigate('GuidelinesScreen', { guidelines: guidelines, isAdmin: isAdmin, communityId: communityId }), setActionModal(false)),
           { marginBottom: 0 },
         )}
       </>

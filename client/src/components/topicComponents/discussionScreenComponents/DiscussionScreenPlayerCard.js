@@ -81,20 +81,6 @@ class DiscussionScreenPlayerCard extends Component {
     this._unsubscribe();
   }
 
-  numberConverter = (number) => {
-    let numberToString = number.toString();
-
-    if (numberToString.length > 3 && numberToString.length <= 6) {
-      return `${numberToString.substring(0, numberToString.length - 3)}k`;
-    } else if (numberToString.length > 6 && numberToString.length <= 9) {
-      return `${numberToString.substring(0, numberToString.length - 6)}m`;
-    } else if (numberToString.length > 9) {
-      return `${numberToString.substring(0, numberToString.length - 9)}b`;
-    } else {
-      return numberToString;
-    }
-  };
-
   playCounter = async (playResponse) => {
     try {
       const access_token = await AsyncStorage.getItem('access_token');
@@ -247,7 +233,7 @@ class DiscussionScreenPlayerCard extends Component {
             {this.props.isLikeForResponse ? <ActiveUpvote /> : <Upvote />}
           </TouchableOpacity>
           <Text style={styles.voteNumberStyle}>
-            {this.numberConverter(this.props.likeForResponse)}
+            {this.props.likeForResponse}
           </Text>
           <TouchableOpacity onPress={() => this.downvote()}>
             {this.props.isDislikeForResponse ? (

@@ -10,16 +10,51 @@ import {
 import { bold, normal } from '../../../assets/FontSize';
 import { CalculateHeight } from '../../../helper/CalculateSize';
 import { GlobalPadding } from '../../../constants/Size';
+import AsyncStorage from '@react-native-community/async-storage';
+import axios from '../../../constants/ApiServices';
+import BaseUrl from '../../../constants/BaseUrl';
 
 import Header from '../../../components/publicComponents/Header';
 import BackButton from '../../../components/publicComponents/BackButton';
 import Card from '../../../components/publicComponents/Card';
 import CreateCommunityInput from '../../../components/communityComponent/CreateCommunityInput';
+import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
+import Button from '../../../components/publicComponents/Button';
 
 const GuidelinesScreen = ({ navigation, route }) => {
-  const { guidelines, isAdmin } = route.params;
+  const { guidelines, isAdmin, communityId } = route.params;
 
   const [editedGuidelines, setEditedGuidelines] = useState(guidelines);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const editGuidelines = async () => {
+    try {
+      setIsLoading(true);
+
+      let access_token = await AsyncStorage.getItem('access_token');
+
+      const formData = new FormData();
+
+      formData.append('guidelines', editedGuidelines)
+
+      let editGuidelinesRequest = await axios({
+        method: 'put',
+        url: `${BaseUrl}/communities/edit/${communityId}`,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          token: access_token,
+        },
+        data: formData,
+      });
+
+      if (editGuidelinesRequest.data) {
+        setIsLoading(false);
+      }
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
+    }
+  };
 
   const HeaderContent = () => (
     <>
@@ -37,13 +72,35 @@ const GuidelinesScreen = ({ navigation, route }) => {
   const GuidelinesCard = () => (
     <>
       {isAdmin ? (
-        <CreateCommunityInput
-          customStyle={{
-            fontSize: CalculateHeight(2),
-          }}
-          value={editedGuidelines}
-          inputFunction={(value) => setEditedGuidelines(value)}
-        />
+        <>
+          <CreateCommunityInput
+            customStyle={{
+              fontSize: CalculateHeight(2),
+            }}
+            value={editedGuidelines}
+            inputFunction={(value) => setEditedGuidelines(value)}
+            placeholder="Write your guideline"
+          />
+          <View style={styles.saveButtonContainerStyle}>
+            {editedGuidelines !== guidelines && !isLoading && (
+              <Button
+                buttonStyle={{
+                  backgroundColor: '#6505E1',
+                  color: '#FFFFFF',
+                  borderWidth: 0,
+                  width: '20%',
+                  height: CalculateHeight(6),
+                  marginTop: '10%',
+                }}
+                buttonTitle="Save"
+                buttonFunction={editGuidelines}
+              />
+            )}
+            {
+              isLoading && <LoadingSpinner loadingSpinnerForComponent={true} />
+            }
+          </View>
+        </>
       ) : (
         <Text style={styles.guidelinesTextStyle}>{guidelines}</Text>
       )}
@@ -53,7 +110,7 @@ const GuidelinesScreen = ({ navigation, route }) => {
   return (
     <View style={{ flex: 1 }}>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <Header child={HeaderContent} customStyle={styles.headerStyle} />
           <View style={styles.guidelinesConainerStyle}>
             <ScrollView>
@@ -87,6 +144,7 @@ const styles = StyleSheet.create({
   guidelinesConainerStyle: {
     paddingVertical: GlobalPadding,
     paddingHorizontal: GlobalPadding,
+    flex: 1,
   },
 
   guidelinesStyle: {
@@ -97,6 +155,10 @@ const styles = StyleSheet.create({
   guidelinesTextStyle: {
     fontFamily: normal,
     fontSize: CalculateHeight(2),
+  },
+
+  saveButtonContainerStyle: {
+    alignItems: 'flex-end',
   },
 });
 

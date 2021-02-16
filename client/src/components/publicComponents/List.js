@@ -46,7 +46,7 @@ class RenderList extends React.PureComponent {
   }
 }
 
-const HomeList = (props) => {
+const List = (props) => {
   const {
     listTitle,
     listData,
@@ -57,7 +57,6 @@ const HomeList = (props) => {
     isHeader = true,
     customStyle,
     useSeeAllButton,
-    sectionType,
     sectionQuery,
     queryId,
     useMoreButton,
@@ -103,7 +102,6 @@ const HomeList = (props) => {
           onPress={() =>
             navigation.navigate('HomeSectionDetailScreen', {
               sectionTitle: listTitle,
-              sectionType: sectionType,
               sectionQuery: sectionQuery,
               queryId: queryId,
             })
@@ -124,7 +122,6 @@ const HomeList = (props) => {
             istTitle={listTitle}
             useSeeAllButton={useSeeAllButton}
             navigation={navigation}
-            sectionType={sectionType}
             sectionQuery={sectionQuery}
             queryId={queryId}
           />
@@ -219,4 +216,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeList;
+export default List;

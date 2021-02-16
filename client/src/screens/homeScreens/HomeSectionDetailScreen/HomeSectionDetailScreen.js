@@ -31,21 +31,19 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
   const [selectedSort, setSelectedSort] = useState('newest');
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { sectionTitle, sectionType, sectionQuery, queryId } = route.params;
+  const { sectionTitle, sectionQuery, queryId } = route.params;
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (sectionType === 'discussion') {
-      dispatch(
-        getAllDiscussion(
-          sectionQuery ? sectionQuery : null,
-          queryId ? queryId : null,
-          null,
-          null,
-        ),
-      );
-    }
+    dispatch(
+      getAllDiscussion(
+        sectionQuery ? sectionQuery : null,
+        queryId ? queryId : null,
+        null,
+        null,
+      ),
+    );
   }, [navigation]);
 
   const clearListDiscussion = () => {
@@ -86,7 +84,6 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
           }}
           isFilter={true}
           isSort={true}
-          sectionType={sectionType}
           sectionQuery={sectionQuery}
           queryId={queryId}
           changeCurrentPage={changeCurrentPage}

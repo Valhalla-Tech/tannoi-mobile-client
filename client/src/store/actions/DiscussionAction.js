@@ -3,8 +3,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import BaseUrl from '../../constants/BaseUrl';
 
 export const getAllDiscussion = (
-  option,
-  optionId,
+  query,
+  queryId,
   sort,
   page,
   isUserDiscussion,
@@ -14,8 +14,8 @@ export const getAllDiscussion = (
       let access_token = await AsyncStorage.getItem('access_token');
       let getAllDiscussionRequest = await axios({
         url: `${BaseUrl}/discussions/all${`?sort=${sort ? sort : 'newest'}`}${
-          option ? `&${option}` : ''
-        }${optionId ? optionId : ''}${`&page=${page ? page : '1'}`}`,
+          query ? `&${query}` : ''
+        }${queryId ? queryId : ''}${`&page=${page ? page : '1'}`}`,
         method: 'get',
         headers: {
           token: access_token,

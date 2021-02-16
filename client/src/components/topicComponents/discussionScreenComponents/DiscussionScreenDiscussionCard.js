@@ -62,20 +62,6 @@ const DiscussionScreenCard = (props) => {
 
   const dispatch = useDispatch();
 
-  const numberConverter = (number) => {
-    let numberToString = number.toString();
-
-    if (numberToString.length > 3 && numberToString.length <= 6) {
-      return `${numberToString.substring(0, numberToString.length - 3)}k`;
-    } else if (numberToString.length > 6 && numberToString.length <= 9) {
-      return `${numberToString.substring(0, numberToString.length - 6)}m`;
-    } else if (numberToString.length > 9) {
-      return `${numberToString.substring(0, numberToString.length - 9)}b`;
-    } else {
-      return numberToString;
-    }
-  };
-
   const upvote = async () => {
     try {
       if (userType !== 0 || profileId === userId) {
@@ -223,7 +209,7 @@ const DiscussionScreenCard = (props) => {
           <TouchableOpacity onPress={() => upvote()}>
             {isLike ? <ActiveUpvote /> : <Upvote />}
           </TouchableOpacity>
-          <Text style={styles.voteNumberStyle}>{numberConverter(like)}</Text>
+          <Text style={styles.voteNumberStyle}>{like}</Text>
           <TouchableOpacity onPress={() => downvote()}>
             {isDislike ? <ActiveDownvote /> : <Downvote />}
           </TouchableOpacity>
@@ -245,10 +231,10 @@ const DiscussionScreenCard = (props) => {
           </Text>
           <View style={styles.repliesAndPlaysNumberContainerStyle}>
             <Text style={styles.repliesAndPlaysNumberStyle}>
-              {numberConverter(replies)} Replies
+              {replies} Replies
             </Text>
             <Text style={styles.repliesAndPlaysNumberStyle}>
-              {numberConverter(plays)} Plays
+              {plays} Plays
             </Text>
           </View>
         </View>
