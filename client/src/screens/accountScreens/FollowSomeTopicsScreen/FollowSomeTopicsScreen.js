@@ -158,12 +158,11 @@ const styles = StyleSheet.create({
   backButtonAndTitleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginVertical: '10%'
   },
 
   followSomeTopicsScreenTitleStyle: {
     color: '#464D60',
-    marginTop: '15.5%',
-    marginBottom: '12%',
     marginLeft: '4.5%',
     fontSize: CalculateHeight(2.5),
     fontFamily: bold,

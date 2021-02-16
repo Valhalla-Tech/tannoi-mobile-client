@@ -144,7 +144,12 @@ const LoginWithEmailScreen = ({ navigation }) => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={{ flex: 1 }}>
         <View style={styles.loginWithEmailScreenContainerStyle}>
-          <BackButton navigation={navigation} />
+          <BackButton
+            styleOption={{
+              marginVertical: '10%',
+            }}
+            navigation={navigation}
+          />
           <Text style={styles.loginTitleStyle}>Login to tannOi</Text>
           {LoginForm()}
           <LoginWithEmailButton />

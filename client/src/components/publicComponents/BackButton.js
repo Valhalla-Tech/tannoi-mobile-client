@@ -37,8 +37,8 @@ const BackButton = (props) => {
 
 const styles = StyleSheet.create({
   backButtonStyle: {
-    marginTop: 56,
-    marginBottom: 44,
+    // marginTop: 56,
+    // marginBottom: 44,
   },
 });
 

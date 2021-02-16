@@ -46,7 +46,12 @@ const ResetPasswordWithEmailVerificationScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.resetPasswordWithEmailVerificationScreenContainerStyle}>
-      <BackButton navigation={navigation} />
+      <BackButton
+        styleOption={{
+          marginVertical: '10%',
+        }}
+        navigation={navigation}
+      />
       <Text style={styles.resetPasswordWithEmailVerificationTitleStyle}>
         Email has been sent
       </Text>

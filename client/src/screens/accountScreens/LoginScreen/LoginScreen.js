@@ -96,7 +96,12 @@ const LoginScreen = ({ navigation }) => {
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.loginScreenContainerStyle}>
-        <BackButton navigation={navigation} />
+        <BackButton
+          styleOption={{
+            marginVertical: '10%',
+          }}
+          navigation={navigation}
+        />
         <Text style={styles.loginTitleStyle}>Login to tannOi</Text>
         <LoginButton />
       </View>
@@ -106,7 +111,7 @@ const LoginScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   loginScreenContainerStyle: {
-    paddingHorizontal: '5.5%'
+    paddingHorizontal: '5.5%',
   },
 
   loginTitleStyle: {

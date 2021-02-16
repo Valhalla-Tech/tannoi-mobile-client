@@ -191,7 +191,12 @@ const RegisterPage = ({ navigation }) => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={{ flex: 1 }}>
         <View style={styles.registerPageContainerStyle}>
-          <BackButton navigation={navigation} />
+          <BackButton
+            styleOption={{
+              marginVertical: '10%',
+            }}
+            navigation={navigation}
+          />
           <Text style={styles.registerTitleStyle}>Sign up to TannOi</Text>
           {RegisterForm()}
           <SignUpButton />

@@ -168,7 +168,13 @@ const CreateNewPasswordScreen = ({ route, navigation }) => {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.createNewPasswordScreenContainerStyle}>
-        <BackButton navigation={navigation} screen="WelcomeScreen" />
+        <BackButton
+          styleOption={{
+            marginVertical: '10%',
+          }}
+          navigation={navigation}
+          screen="WelcomeScreen"
+        />
         <Text style={styles.createNewPasswordTitleStyle}>
           Create new password
         </Text>

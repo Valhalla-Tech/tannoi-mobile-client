@@ -86,7 +86,12 @@ const ResetPasswordWithEmailScreen = ({ navigation }) => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={{ flex: 1 }}>
         <View style={styles.resetPasswordWithEmailScreenContainerStyle}>
-          <BackButton navigation={navigation} />
+          <BackButton
+            styleOption={{
+              marginVertical: '10%',
+            }}
+            navigation={navigation}
+          />
           <Text style={styles.resetPasswordWithEmailTitleStyle}>
             Reset password
           </Text>
