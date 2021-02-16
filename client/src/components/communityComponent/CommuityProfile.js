@@ -33,8 +33,12 @@ const CommunityProfile = (props) => {
     getOneCommunity,
     isMember,
     communityType,
+    inputNoticeModalMessage,
+    openNoticeModal,
+    guidelines,
+    isAdmin,
   } = props;
-
+  
   const [actionModal, setActionModal] = useState(false);
   const [recorder, setRecorder] = useState(false);
 
@@ -75,6 +79,8 @@ const CommunityProfile = (props) => {
       if (joinCommunityRequest.data) {
         setRecorder(false);
         getOneCommunity();
+        inputNoticeModalMessage('You are now a member of this community');
+        openNoticeModal(true);
       }
     } catch (error) {
       console.log(error);
@@ -96,6 +102,8 @@ const CommunityProfile = (props) => {
       if (leaveCommunityRequest.data) {
         setActionModal(false);
         getOneCommunity();
+        inputNoticeModalMessage('You have left this community');
+        openNoticeModal(true);
       }
     } catch (error) {
       console.log(error);
@@ -121,17 +129,26 @@ const CommunityProfile = (props) => {
     );
   };
 
+  const ActionModalButton = (title, action, customStyle) => (
+    <TouchableOpacity
+      onPress={() => action()}
+      style={{ ...styles.actionModalButtonStyle, ...customStyle }}>
+      <Text style={styles.actionModalButtonTextStyle}>{title}</Text>
+    </TouchableOpacity>
+  );
+
   const ActionModal = () => {
     return (
-      <View>
+      <>
         {isMember && (
-          <TouchableOpacity onPress={() => leaveCommunity()}>
-            <Text style={styles.actionModalButtonTextStyle}>
-              Leave community
-            </Text>
-          </TouchableOpacity>
+          <>{ActionModalButton('Leave community', leaveCommunity)}</>
         )}
-      </View>
+        {ActionModalButton(
+          "Community's guideline",
+          () => (navigation.navigate('GuidelinesScreen', { guidelines: guidelines, isAdmin: isAdmin, communityId: communityId }), setActionModal(false)),
+          { marginBottom: 0 },
+        )}
+      </>
     );
   };
 
@@ -265,7 +282,7 @@ const CommunityProfile = (props) => {
                 )}
               </View>
             </View>
-            {profile.type == 2 ? (
+            {profile.type == 2 && !isMember ? (
               <View style={{ paddingBottom: '5%' }}></View>
             ) : (
               ProfileDisplayButton()
@@ -283,6 +300,8 @@ const CommunityProfile = (props) => {
       <Modal
         customStyle={{
           alignItems: 'flex-start',
+          height: null,
+          justifyContent: 'flex-start',
         }}
         openModal={actionModal}
         closeModal={closeActionModal}
@@ -410,6 +429,10 @@ const styles = StyleSheet.create({
     fontFamily: bold,
     color: '#464D60',
     fontSize: CalculateHeight(2.5),
+  },
+
+  actionModalButtonStyle: {
+    marginBottom: '3%',
   },
 
   actionModalButtonTextStyle: {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 
-const NoticeModal = (props) => {
+const MainModal = (props) => {
   const {
     openModal,
     closeModal,
@@ -56,4 +56,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NoticeModal;
+export default MainModal;

@@ -105,7 +105,6 @@ const MeScreen = ({ navigation, route }) => {
     if (discussions.length > 0) {
       return (
         <List
-          sectionType="discussion"
           sectionQuery="user_id="
           queryId={userId}
           isHeader={false}

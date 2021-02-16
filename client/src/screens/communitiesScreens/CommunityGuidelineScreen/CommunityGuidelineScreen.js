@@ -7,16 +7,16 @@ import {
   Keyboard,
   StyleSheet,
 } from 'react-native';
-import { normal } from '../../assets/FontSize';
-import { CalculateHeight } from '../../helper/CalculateSize';
+import { normal } from '../../../assets/FontSize';
+import { CalculateHeight } from '../../../helper/CalculateSize';
 import { useDispatch, useSelector } from 'react-redux';
-import { addGuideline } from '../../store/actions/CreateCommunityAction';
+import { addGuideline } from '../../../store/actions/CreateCommunityAction';
 
 //Components
-import CreateCommunityHeader from '../../components/communityComponent/CreateCommunityHeader';
-import CreateCommunityInput from '../../components/communityComponent/CreateCommunityInput';
-import CreateCommunityProgress from '../../components/communityComponent/CreateCommunityProgress';
-import Button from '../../components/publicComponents/Button';
+import CreateCommunityHeader from '../../../components/communityComponent/CreateCommunityHeader';
+import CreateCommunityInput from '../../../components/communityComponent/CreateCommunityInput';
+import CreateCommunityProgress from '../../../components/communityComponent/CreateCommunityProgress';
+import Button from '../../../components/publicComponents/Button';
 
 const CommunityGuidelineScreen = ({ navigation }) => {
   const savedGuideline = useSelector(

@@ -8,21 +8,21 @@ import {
   Keyboard,
   Image,
 } from 'react-native';
-import { CalculateWidth, CalculateHeight } from '../../helper/CalculateSize';
+import { CalculateWidth, CalculateHeight } from '../../../helper/CalculateSize';
 import { useDispatch, useSelector } from 'react-redux';
-import { addName } from '../../store/actions/CreateCommunityAction';
+import { addName } from '../../../store/actions/CreateCommunityAction';
 import { LinearTextGradient } from 'react-native-text-gradient';
-import { normal } from '../../assets/FontSize';
+import { normal } from '../../../assets/FontSize';
 
 //Icon
-import NoProfileIcon from '../../assets/communitiesAssets/img-no-profile-pic.svg';
+import NoProfileIcon from '../../../assets/communitiesAssets/img-no-profile-pic.svg';
 
 //Components
-import CreateCommunityHeader from '../../components/communityComponent/CreateCommunityHeader';
-import CreateCommunityInput from '../../components/communityComponent/CreateCommunityInput';
-import CreateCommunityProgress from '../../components/communityComponent/CreateCommunityProgress';
-import Button from '../../components/publicComponents/Button';
-import { UploadImage } from '../../helper/UploadImage';
+import CreateCommunityHeader from '../../../components/communityComponent/CreateCommunityHeader';
+import CreateCommunityInput from '../../../components/communityComponent/CreateCommunityInput';
+import CreateCommunityProgress from '../../../components/communityComponent/CreateCommunityProgress';
+import Button from '../../../components/publicComponents/Button';
+import { UploadImage } from '../../../helper/UploadImage';
 
 const CommunityNameScreen = ({ navigation }) => {
   const [communityName, setCommunityName] = useState('');

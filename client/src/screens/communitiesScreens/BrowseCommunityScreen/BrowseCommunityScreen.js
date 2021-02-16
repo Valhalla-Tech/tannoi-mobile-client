@@ -7,17 +7,17 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import { GlobalPadding } from '../../constants/Size';
-import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
-import { normal, bold } from '../../assets/FontSize';
-import axios from '../../constants/ApiServices';
+import { GlobalPadding } from '../../../constants/Size';
+import { CalculateHeight, CalculateWidth } from '../../../helper/CalculateSize';
+import { normal, bold } from '../../../assets/FontSize';
+import axios from '../../../constants/ApiServices';
 import AsyncStorage from '@react-native-community/async-storage';
-import BaseUrl from '../../constants/BaseUrl';
+import BaseUrl from '../../../constants/BaseUrl';
 
 //Components
-import Header from '../../components/publicComponents/Header';
-import BackButton from '../../components/publicComponents/BackButton';
-import CommunityList from '../../components/communityComponent/CommunityList';
+import Header from '../../../components/publicComponents/Header';
+import BackButton from '../../../components/publicComponents/BackButton';
+import CommunityList from '../../../components/communityComponent/CommunityList';
 
 const BrowseCommunityScreen = ({ navigation }) => {
   const [communities, setCommunities] = useState('');
@@ -66,6 +66,7 @@ const BrowseCommunityScreen = ({ navigation }) => {
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
       <View style={styles.browseCommunityContainerStyle}>
         <FlatList
+          ListHeaderComponentStyle={{marginBottom: '25%'}}
           ListHeaderComponent={
             <CommunityList communities={communities} navigation={navigation} />
           }

@@ -8,25 +8,25 @@ import {
   Keyboard,
   ScrollView,
 } from 'react-native';
-import { CalculateHeight } from '../../helper/CalculateSize';
-import { normal } from '../../assets/FontSize';
-import axios from '../../constants/ApiServices';
+import { CalculateHeight } from '../../../helper/CalculateSize';
+import { normal } from '../../../assets/FontSize';
+import axios from '../../../constants/ApiServices';
 import AsyncStorage from '@react-native-community/async-storage';
-import BaseUrl from '../../constants/BaseUrl';
+import BaseUrl from '../../../constants/BaseUrl';
 import { useSelector, useDispatch } from 'react-redux';
-import { clearData } from '../../store/actions/CreateCommunityAction';
+import { clearData } from '../../../store/actions/CreateCommunityAction';
 import { LinearTextGradient } from 'react-native-text-gradient';
 
 //Icon
-import TopicIcon from '../../assets/communitiesAssets/ic-topics.svg';
+import TopicIcon from '../../../assets/communitiesAssets/ic-topics.svg';
 
 //Components
-import CreateCommunityHeader from '../../components/communityComponent/CreateCommunityHeader';
-import CreateCommunityInput from '../../components/communityComponent/CreateCommunityInput';
-import CreateCommunityTopicInput from '../../components/communityComponent/CreateCommunityTopicInput';
-import CreateCommunityProgress from '../../components/communityComponent/CreateCommunityProgress';
-import Button from '../../components/publicComponents/Button';
-import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
+import CreateCommunityHeader from '../../../components/communityComponent/CreateCommunityHeader';
+import CreateCommunityInput from '../../../components/communityComponent/CreateCommunityInput';
+import CreateCommunityTopicInput from '../../../components/communityComponent/CreateCommunityTopicInput';
+import CreateCommunityProgress from '../../../components/communityComponent/CreateCommunityProgress';
+import Button from '../../../components/publicComponents/Button';
+import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 
 const CreateCommunityTopicScreen = ({ navigation }) => {
   const [inputList, setInputList] = useState([

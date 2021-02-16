@@ -7,22 +7,22 @@ import {
   Keyboard,
   StyleSheet,
 } from 'react-native';
-import axios from '../../constants/ApiServices';
-import BaseUrl from '../../constants/BaseUrl';
+import axios from '../../../constants/ApiServices';
+import BaseUrl from '../../../constants/BaseUrl';
 import AsyncStorage from '@react-native-community/async-storage';
-import { GlobalPadding } from '../../constants/Size';
-import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
-import { bold, normal } from '../../assets/FontSize';
+import { GlobalPadding } from '../../../constants/Size';
+import { CalculateHeight, CalculateWidth } from '../../../helper/CalculateSize';
+import { bold, normal } from '../../../assets/FontSize';
 import { Picker } from '@react-native-community/picker';
 
 //Components
-import Header from '../../components/publicComponents/Header';
-import BackButton from '../../components/publicComponents/BackButton';
-import Card from '../../components/publicComponents/Card';
-import FormInput from '../../components/publicComponents/FormInput';
-import LoadingSpinner from '../../components/publicComponents/LoadingSpinner';
-import Recorder from '../../components/publicComponents/Recorder';
-import ErrorMessage from '../../components/publicComponents/ErrorMessage';
+import Header from '../../../components/publicComponents/Header';
+import BackButton from '../../../components/publicComponents/BackButton';
+import Card from '../../../components/publicComponents/Card';
+import FormInput from '../../../components/publicComponents/FormInput';
+import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
+import Recorder from '../../../components/publicComponents/Recorder';
+import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 
 const NewCommunityDiscussionScreen = (props) => {
   const { navigation, route } = props;
@@ -86,8 +86,9 @@ const NewCommunityDiscussionScreen = (props) => {
 
       if (createCommunityDiscussionRequest.data) {
         setIsLoading(false);
-        navigation.navigate('CommunityProfileScreen', {
-          communityId: communityId
+        navigation.navigate('DiscussionScreen', {
+          discussionId: createCommunityDiscussionRequest.data.id,
+          isCommunityDiscussion: true,
         });
       }
     } catch (error) {
@@ -152,15 +153,15 @@ const NewCommunityDiscussionScreen = (props) => {
   };
 
   return (
-    <View>
+    <View style={{flex: 1}}>
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
-      <View style={styles.newCommunityDiscussionContainerStyle}>
+      <View style={isLoading ? {...styles.newCommunityDiscussionContainerStyle, paddingHorizontal: 0} : styles.newCommunityDiscussionContainerStyle}>
         <Card
           child={NewCommunityDiscussionForm}
           customStyle={styles.newCommunityDiscussionFormStyle}
         />
+        {isLoading && <LoadingSpinner />}
       </View>
-      {isLoading && <LoadingSpinner />}
     </View>
   );
 };
@@ -191,11 +192,12 @@ const styles = StyleSheet.create({
   },
 
   newCommunityDiscussionContainerStyle: {
-    marginHorizontal: GlobalPadding,
+    paddingHorizontal: GlobalPadding,
+    paddingVertical: GlobalPadding,
+    flex: 1,
   },
 
   newCommunityDiscussionFormStyle: {
-    marginTop: '2%',
     borderRadius: 8,
     padding: '5%',
   },

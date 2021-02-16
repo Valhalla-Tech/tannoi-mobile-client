@@ -50,6 +50,7 @@ const DiscussionScreenCard = (props) => {
     profileType,
     userId,
     isRecorderModalOpen,
+    isCommunityDiscussion,
   } = props;
 
   const [optionModal, setOptionModal] = useState(false);
@@ -61,20 +62,6 @@ const DiscussionScreenCard = (props) => {
   const isResponse = useSelector((state) => state.ResponseReducer.isResponse);
 
   const dispatch = useDispatch();
-
-  const numberConverter = (number) => {
-    let numberToString = number.toString();
-
-    if (numberToString.length > 3 && numberToString.length <= 6) {
-      return `${numberToString.substring(0, numberToString.length - 3)}k`;
-    } else if (numberToString.length > 6 && numberToString.length <= 9) {
-      return `${numberToString.substring(0, numberToString.length - 6)}m`;
-    } else if (numberToString.length > 9) {
-      return `${numberToString.substring(0, numberToString.length - 9)}b`;
-    } else {
-      return numberToString;
-    }
-  };
 
   const upvote = async () => {
     try {
@@ -100,7 +87,7 @@ const DiscussionScreenCard = (props) => {
               });
 
               if (upvoteRequest.data) {
-                dispatch(getDiscussion(discussionId));
+                dispatch(getDiscussion(discussionId, false, isCommunityDiscussion));
               }
             } catch (error) {
               console.log(error);
@@ -129,7 +116,7 @@ const DiscussionScreenCard = (props) => {
         });
 
         if (downvoteRequest.data) {
-          dispatch(getDiscussion(discussionId));
+          dispatch(getDiscussion(discussionId, false, isCommunityDiscussion));
         }
       } else {
         navigation.navigate('VerificationNavigation');
@@ -223,7 +210,7 @@ const DiscussionScreenCard = (props) => {
           <TouchableOpacity onPress={() => upvote()}>
             {isLike ? <ActiveUpvote /> : <Upvote />}
           </TouchableOpacity>
-          <Text style={styles.voteNumberStyle}>{numberConverter(like)}</Text>
+          <Text style={styles.voteNumberStyle}>{like}</Text>
           <TouchableOpacity onPress={() => downvote()}>
             {isDislike ? <ActiveDownvote /> : <Downvote />}
           </TouchableOpacity>
@@ -245,10 +232,10 @@ const DiscussionScreenCard = (props) => {
           </Text>
           <View style={styles.repliesAndPlaysNumberContainerStyle}>
             <Text style={styles.repliesAndPlaysNumberStyle}>
-              {numberConverter(replies)} Replies
+              {replies} Replies
             </Text>
             <Text style={styles.repliesAndPlaysNumberStyle}>
-              {numberConverter(plays)} Plays
+              {plays} Plays
             </Text>
           </View>
         </View>

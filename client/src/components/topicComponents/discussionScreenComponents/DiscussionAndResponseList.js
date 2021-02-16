@@ -36,6 +36,7 @@ const DiscussionAndResponseList = (props) => {
     flatListRef,
     scrollDownForResponseScreen,
     responseScreenId,
+    isCommunityDiscussion,
   } = props;
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -188,6 +189,7 @@ const DiscussionAndResponseList = (props) => {
                 userType={userType}
                 userId={userId}
                 isRecorderModalOpen={openAddResponse}
+                isCommunityDiscussion={isCommunityDiscussion}
               />
               {response.length === 0 && isResponse && (
                 <LoadingSpinner loadingSpinnerForComponent={true} />

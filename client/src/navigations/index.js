@@ -15,7 +15,7 @@ import branch from 'react-native-branch';
 import AccountNavigation from './AccountNavigation';
 import MainAppNavigation from './MainAppNavigation';
 import VerificationNavigation from './VerificationNavigation';
-import CreateCommunityNavigation from './CreateCommunityNavigation';
+import CommunitiesNavigation from './CommunitiesNavigation';
 
 //Screens
 import NewDiscussionScreen from '../screens/topicScreens/NewDiscussionScreen';
@@ -29,10 +29,6 @@ import EditProfileScreen from '../screens/meScreens/EditProfileScreen';
 import HomeSectionDetailScreen from '../screens/homeScreens/HomeSectionDetailScreen';
 import HashtagDetailScreen from '../screens/homeScreens/HashtagDetailScreen';
 import NotificationSettingsScreen from '../screens/meScreens/NotificationSettingsScreen';
-import CommunitiesScreen from '../screens/communitiesScreens/CommunitiesScreen';
-import BrowseCommunityScreen from '../screens/communitiesScreens/BrowseCommunityScreen';
-import CommunityProfileScreen from '../screens/communitiesScreens/CommunityProfileScreen';
-import NewCommunityDiscussionScreen from '../screens/communitiesScreens/NewCommunityDiscussionScreen';
 
 const Stack = createStackNavigator();
 
@@ -218,24 +214,8 @@ const NavigationIndex = () => {
             component={NotificationSettingsScreen}
           />
           <Stack.Screen
-            name="CommunitiesScreen"
-            component={CommunitiesScreen}
-          />
-          <Stack.Screen
-            name="CreateCommunityNavigation"
-            component={CreateCommunityNavigation}
-          />
-          <Stack.Screen
-            name="BrowseCommunityScreen"
-            component={BrowseCommunityScreen}
-          />
-          <Stack.Screen
-            name="CommunityProfileScreen"
-            component={CommunityProfileScreen}
-          />
-          <Stack.Screen
-            name="NewCommunityDiscussionScreen"
-            component={NewCommunityDiscussionScreen}
+            name="CommunitiesNavigation"
+            component={CommunitiesNavigation}
           />
         </>
       ) : (

@@ -19,7 +19,7 @@ import BigButton from './Button';
 
 class RenderList extends React.PureComponent {
   render() {
-    const { itemData, navigation, listData, openModal } = this.props;
+    const { itemData, navigation, listData, openModal, isCommunityDiscussion } = this.props;
     return (
       <View style={styles.listCardContainerStyle}>
         <HomeListCard
@@ -39,13 +39,14 @@ class RenderList extends React.PureComponent {
           openModal={openModal}
           isAuthorized={itemData.item.isAuthorized}
           profileType={itemData.item.creator.type}
+          isCommunityDiscussion={isCommunityDiscussion}
         />
       </View>
     );
   }
 }
 
-const HomeList = (props) => {
+const List = (props) => {
   const {
     listTitle,
     listData,
@@ -56,7 +57,6 @@ const HomeList = (props) => {
     isHeader = true,
     customStyle,
     useSeeAllButton,
-    sectionType,
     sectionQuery,
     queryId,
     useMoreButton,
@@ -64,6 +64,7 @@ const HomeList = (props) => {
     currentPage,
     changeCurrentPage,
     isUserDiscussion,
+    isCommunityDiscussion,
   } = props;
 
   const dispatch = useDispatch();
@@ -101,7 +102,6 @@ const HomeList = (props) => {
           onPress={() =>
             navigation.navigate('HomeSectionDetailScreen', {
               sectionTitle: listTitle,
-              sectionType: sectionType,
               sectionQuery: sectionQuery,
               queryId: queryId,
             })
@@ -122,7 +122,6 @@ const HomeList = (props) => {
             istTitle={listTitle}
             useSeeAllButton={useSeeAllButton}
             navigation={navigation}
-            sectionType={sectionType}
             sectionQuery={sectionQuery}
             queryId={queryId}
           />
@@ -135,7 +134,15 @@ const HomeList = (props) => {
               data={listData}
               listKey={(item, index) => index.toString()}
               keyExtractor={(item, index) => index.toString()}
-              renderItem={(itemData) => <RenderList itemData={itemData} navigation={navigation} listData={listData} openModal={openModal} />}
+              renderItem={(itemData) => (
+                <RenderList
+                  itemData={itemData}
+                  navigation={navigation}
+                  listData={listData}
+                  openModal={openModal}
+                  isCommunityDiscussion={isCommunityDiscussion}
+                />
+              )}
               ListFooterComponent={
                 useMoreButton && (
                   <View style={styles.loadMoreButtonContainerStyle}>
@@ -153,18 +160,18 @@ const HomeList = (props) => {
                 )
               }
             />
+            {isUsingMoreButton && <MoreButton />}
           </>
         )}
-        {isUsingMoreButton && <MoreButton />}
       </View>
     );
   };
-  
+
   return (
-      <Card
-        child={HomeListContent}
-        customStyle={{ ...styles.homeListContainerStyle, ...customStyle }}
-      />
+    <Card
+      child={HomeListContent}
+      customStyle={{ ...styles.homeListContainerStyle, ...customStyle }}
+    />
   );
 };
 
@@ -209,4 +216,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeList;
+export default List;

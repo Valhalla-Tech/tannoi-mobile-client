@@ -45,7 +45,7 @@ const ProfileBar = (props) => {
           fontSize: 12.5,
           paddingHorizontal: '2%',
         }}
-        buttonFunction={() => navigation.navigate('CommunitiesScreen')}
+        buttonFunction={() => navigation.navigate('CommunitiesNavigation')}
       />
     </View>
   );

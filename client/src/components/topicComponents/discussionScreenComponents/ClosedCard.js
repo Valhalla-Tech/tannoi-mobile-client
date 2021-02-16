@@ -36,31 +36,17 @@ const ClosedCard = (props) => {
 
   useEffect(() => {}, [responseCount]);
 
-  const numberConverter = (number) => {
-    let numberToString = number.toString();
-
-    if (numberToString.length > 3 && numberToString.length <= 6) {
-      return `${numberToString.substring(0, numberToString.length - 3)}k`;
-    } else if (numberToString.length > 6 && numberToString.length <= 9) {
-      return `${numberToString.substring(0, numberToString.length - 6)}m`;
-    } else if (numberToString.length > 9) {
-      return `${numberToString.substring(0, numberToString.length - 9)}b`;
-    } else {
-      return numberToString;
-    }
-  };
-
   const ResponseData = () => {
     return (
       <View style={styles.responseDataContainerStyle}>
         <Text style={styles.responseDataTextStyle}>
-          {numberConverter(responseLike)} Votes
+          {responseLike} Votes
         </Text>
         <Text style={styles.responseDataTextStyle}>
-          {numberConverter(responseReply)} Replies
+          {responseReply} Replies
         </Text>
         <Text style={styles.responseDataTextStyle}>
-          {numberConverter(responsePlay)} Plays
+          {responsePlay} Plays
         </Text>
       </View>
     );

@@ -22,7 +22,6 @@ const ListHeader = (props) => {
     customStyle,
     useSeeAllButton,
     navigation,
-    sectionType,
     sectionQuery,
     queryId,
     changeSelectedSort,
@@ -71,7 +70,6 @@ const ListHeader = (props) => {
         onPress={() =>
           navigation.navigate('HomeSectionDetailScreen', {
             sectionTitle: listTitle,
-            sectionType: sectionType,
             sectionQuery: sectionQuery,
             queryId: queryId,
           })
