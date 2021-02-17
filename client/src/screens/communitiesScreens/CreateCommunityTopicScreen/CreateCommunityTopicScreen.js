@@ -14,7 +14,11 @@ import axios from '../../../constants/ApiServices';
 import AsyncStorage from '@react-native-community/async-storage';
 import BaseUrl from '../../../constants/BaseUrl';
 import { useSelector, useDispatch } from 'react-redux';
-import { clearData } from '../../../store/actions/CreateCommunityAction';
+import {
+  clearData,
+  createdCommunityMessage,
+} from '../../../store/actions/CreateCommunityAction';
+import { getUserCommunity } from '../../../store/actions/CommuitiesAction';
 import { LinearTextGradient } from 'react-native-text-gradient';
 
 //Icon
@@ -22,7 +26,6 @@ import TopicIcon from '../../../assets/communitiesAssets/ic-topics.svg';
 
 //Components
 import CreateCommunityHeader from '../../../components/communityComponent/CreateCommunityHeader';
-import CreateCommunityInput from '../../../components/communityComponent/CreateCommunityInput';
 import CreateCommunityTopicInput from '../../../components/communityComponent/CreateCommunityTopicInput';
 import CreateCommunityProgress from '../../../components/communityComponent/CreateCommunityProgress';
 import Button from '../../../components/publicComponents/Button';
@@ -136,6 +139,8 @@ const CreateCommunityTopicScreen = ({ navigation }) => {
       if (createCommunityRequest.data) {
         setIsLoading(false);
         dispatch(clearData());
+        dispatch(createdCommunityMessage(true));
+        dispatch(getUserCommunity());
         navigation.navigate('CommunitiesScreen');
       }
     } catch (error) {
