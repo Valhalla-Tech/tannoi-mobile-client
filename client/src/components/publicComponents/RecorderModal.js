@@ -123,6 +123,10 @@ const RecorderModal = (props) => {
     setCaption(captionInput);
   };
 
+  const removeRecordingFile = () => {
+    setRecordingFile('');
+  };
+
   return (
     <Modal animationType="slide" visible={openModal} transparent={true}>
       <View style={styles.backgroundShadowStyle}>
@@ -145,13 +149,27 @@ const RecorderModal = (props) => {
           <View style={styles.contentContainerStyle}>
             <View style={styles.titleAndPublishButtonContainerStyle}>
               <Text style={styles.addResponseTitleStyle}>
-                {forCommunity ? 'Send a community join request' : forBio ? 'Record audio bio' : 'Add response'}
+                {forCommunity
+                  ? 'Send a community join request'
+                  : forBio
+                  ? 'Record audio bio'
+                  : 'Add response'}
               </Text>
               <TouchableOpacity
+                disabled={recordingFile !== '' ? false : true}
                 onPress={() =>
-                  forCommunity ? joinCommunity(recordingFile) : forBio ? setBioFile(recordingFile) : createResponse()
+                  forCommunity
+                    ? joinCommunity(recordingFile)
+                    : forBio
+                    ? setBioFile(recordingFile)
+                    : createResponse()
                 }>
-                <Text style={styles.publishButtonTextStyle}>
+                <Text
+                  style={
+                    recordingFile !== ''
+                      ? styles.publishButtonTextStyle
+                      : { ...styles.publishButtonTextStyle, color: '#cccccc' }
+                  }>
                   {forCommunity ? 'Submit' : forBio ? 'Save' : 'Publish'}
                 </Text>
               </TouchableOpacity>
@@ -168,7 +186,7 @@ const RecorderModal = (props) => {
             )}
             <Recorder
               addRecordingFile={addRecordingFile}
-              openModal={openModal}
+              removeRecordingFile={removeRecordingFile}
             />
           </View>
           {isLoading && <LoadingSpinner />}
@@ -209,6 +227,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: bold,
     color: '#464D60',
+    width: '80%',
   },
 
   publishButtonTextStyle: {

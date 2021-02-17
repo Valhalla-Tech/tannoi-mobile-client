@@ -111,10 +111,15 @@ const NewCommunityDiscussionScreen = (props) => {
           />
           <Text style={styles.headerTextStyle}>New community discussion</Text>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={createCommunityDiscussion}
+          disabled={recordingFile !== '' ? false : true}>
           <Text
-            onPress={createCommunityDiscussion}
-            style={styles.publishButtonTextStyle}>
+            style={
+              recordingFile !== ''
+                ? styles.publishButtonTextStyle
+                : { ...styles.publishButtonTextStyle, color: '#cccccc' }
+            }>
             Publish
           </Text>
         </TouchableOpacity>
@@ -153,9 +158,17 @@ const NewCommunityDiscussionScreen = (props) => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
-      <View style={isLoading ? {...styles.newCommunityDiscussionContainerStyle, paddingHorizontal: 0} : styles.newCommunityDiscussionContainerStyle}>
+      <View
+        style={
+          isLoading
+            ? {
+                ...styles.newCommunityDiscussionContainerStyle,
+                paddingHorizontal: 0,
+              }
+            : styles.newCommunityDiscussionContainerStyle
+        }>
         <Card
           child={NewCommunityDiscussionForm}
           customStyle={styles.newCommunityDiscussionFormStyle}

@@ -92,8 +92,11 @@ const CommunityProfile = (props) => {
         setRecorder(false);
         getOneCommunity();
         dispatch(getUserCommunity());
-        inputNoticeModalMessage('You are now a member of this community');
-        openNoticeModal();
+
+        if (recordingFile === undefined) {
+          inputNoticeModalMessage('You are now a member of this community');
+          openNoticeModal();
+        }
       }
     } catch (error) {
       console.log(error);
