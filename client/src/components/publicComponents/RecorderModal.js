@@ -21,6 +21,7 @@ import { userLogout } from '../../store/actions/LoginAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
+import { CalculateHeight } from '../../helper/CalculateSize';
 
 //Components
 import FormInput from './FormInput';
@@ -213,8 +214,8 @@ const styles = StyleSheet.create({
   },
 
   contentContainerStyle: {
-    padding: 20,
-    paddingBottom: 55,
+    padding: '5%',
+    paddingBottom: '20%',
   },
 
   titleAndPublishButtonContainerStyle: {
@@ -224,14 +225,14 @@ const styles = StyleSheet.create({
   },
 
   addResponseTitleStyle: {
-    fontSize: 20,
+    fontSize: CalculateHeight(2.5),
     fontFamily: bold,
     color: '#464D60',
     width: '80%',
   },
 
   publishButtonTextStyle: {
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
     color: '#0E4EF4',
     fontFamily: bold,
   },

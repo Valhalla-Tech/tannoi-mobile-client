@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { normal } from '../../assets/FontSize';
+import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
 
 const SearchBarCard = (props) => {
   const { cardTitle, hashtagId, navigation } = props;
@@ -22,10 +23,10 @@ const SearchBarCard = (props) => {
 
 const styles = StyleSheet.create({
   searchBarCardStyle: {
-    marginRight: 9,
+    marginRight: CalculateWidth(2),
     borderWidth: 1,
-    paddingVertical: 4,
-    paddingHorizontal: 12,
+    paddingVertical: CalculateWidth(1),
+    paddingHorizontal: CalculateWidth(2),
     borderRadius: 5,
     borderColor: '#E3E6EB',
     justifyContent: 'center',
@@ -34,8 +35,7 @@ const styles = StyleSheet.create({
 
   searchBarCardTextStyle: {
     color: '#73798C',
-    fontSize: 14,
-    letterSpacing: -0.4,
+    fontSize: CalculateHeight(1.8),
     fontFamily: normal,
   },
 });

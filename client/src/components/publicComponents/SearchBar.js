@@ -74,7 +74,12 @@ const SearchBar = (props) => {
   };
 
   return (
-    <View style={!searchBoxIsFilled ? styles.searchBarContainerStyle : { ...styles.searchBarCardContainerStyle, paddingBottom: 0 }}>
+    <View
+      style={
+        !searchBoxIsFilled
+          ? styles.searchBarContainerStyle
+          : { ...styles.searchBarCardContainerStyle, paddingBottom: 0 }
+      }>
       <View style={searchBarStyle}>
         {searchBarIsOpen && (
           <TouchableOpacity
@@ -107,22 +112,24 @@ const SearchBar = (props) => {
           />
         )}
       </View>
-      {!searchBarIsOpen && showCard && (
-        <FlatList
-          data={topHashtag}
-          horizontal={true}
-          contentContainerStyle={styles.searchBarCardContainerStyle}
-          keyExtractor={(item, index) => index.toString()}
-          showsHorizontalScrollIndicator={false}
-          renderItem={(itemData) => (
-            <SearchBarCard
-              cardTitle={itemData.item.name}
-              navigation={navigation}
-              hashtagId={itemData.item.id}
-            />
-          )}
-        />
-      )}
+      <View>
+        {!searchBarIsOpen && showCard && (
+          <FlatList
+            data={topHashtag}
+            horizontal={true}
+            contentContainerStyle={styles.searchBarCardContainerStyle}
+            keyExtractor={(item, index) => index.toString()}
+            showsHorizontalScrollIndicator={false}
+            renderItem={(itemData) => (
+              <SearchBarCard
+                cardTitle={itemData.item.name}
+                navigation={navigation}
+                hashtagId={itemData.item.id}
+              />
+            )}
+          />
+        )}
+      </View>
       {searchBoxIsFilled && (
         <View style={styles.searchResultCategoryContainerStyle}>
           {CategoryButton('User')}
