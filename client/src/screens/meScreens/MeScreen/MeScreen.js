@@ -29,6 +29,7 @@ import { CalculateHeight } from '../../../helper/CalculateSize';
 
 //Assets
 import DiscussionEmptyStateImage from '../../../assets/communitiesAssets/empty-state-discussions.png';
+import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 
 const MeScreen = ({ navigation, route }) => {
   const [selectedMenu, setSelectedMenu] = useState('Discussions');
@@ -102,29 +103,33 @@ const MeScreen = ({ navigation, route }) => {
   };
 
   const renderDiscussionsDisplay = () => {
-    if (discussions.length > 0) {
+    if (!discussions) {
       return (
-        <List
-          sectionQuery="user_id="
-          queryId={userId}
-          isHeader={false}
-          navigation={navigation}
-          isUsingMoreButton={false}
-          listData={discussions}
-          useMoreButton={
-            discussionCount > 20 &&
-            discussions.length < discussionCount &&
-            true
-          }
-          openModal={openModal}
-          customStyle={{
-            marginBottom: '5%',
-          }}
-          currentPage={currentPage}
-          changeCurrentPage={changeCurrentPage}
-          isUserDiscussion={true}
-        />
+        <LoadingSpinner loadingSpinnerForComponent={true} />
       )
+    } else if (discussions.length > 0) {
+        return (
+          <List
+            sectionQuery="user_id="
+            queryId={userId}
+            isHeader={false}
+            navigation={navigation}
+            isUsingMoreButton={false}
+            listData={discussions}
+            useMoreButton={
+              discussionCount > 20 &&
+              discussions.length < discussionCount &&
+              true
+            }
+            openModal={openModal}
+            customStyle={{
+              marginBottom: '5%',
+            }}
+            currentPage={currentPage}
+            changeCurrentPage={changeCurrentPage}
+            isUserDiscussion={true}
+          />
+        )
     } else if (discussions.length === 0) {
         return (
           <View style={{ flex: 1, alignItems: 'center' }}>

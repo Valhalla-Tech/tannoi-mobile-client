@@ -21,6 +21,7 @@ import RightArrowIcon from '../../../assets/communitiesAssets/rightArrow.svg';
 import Card from '../../../components/publicComponents/Card';
 import CommunityProfile from '../../../components/communityComponent/CommuityProfile';
 import List from '../../../components/publicComponents/List';
+import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 import MemberList from '../../../components/communityComponent/MemberList';
 import { CalculateHeight } from '../../../helper/CalculateSize';
 import { useDispatch, useSelector } from 'react-redux';
@@ -155,21 +156,25 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   };
 
   const renderDiscussionsDisplay = () => {
-    if (discussions.length != 0) {
+    if (!discussions) {
       return (
-        <FlatList
-          ListHeaderComponent={
-            <List
-              navigation={navigation}
-              isHeader={false}
-              listData={discussions}
-              customStyle={{ marginBottom: '100%' }}
-              isCommunityDiscussion={true}
-            />
-          }
-        />
-      );
-    } else {
+        <LoadingSpinner loadingSpinnerForComponent={true} />
+      )
+    } else if (discussions.length > 0) {
+        return (
+          <FlatList
+            ListHeaderComponent={
+              <List
+                navigation={navigation}
+                isHeader={false}
+                listData={discussions}
+                customStyle={{ marginBottom: '100%' }}
+                isCommunityDiscussion={true}
+              />
+            }
+          />
+        );
+    } else if (discussions.length === 0) {
       return (
         <View style={{ flex: 1, alignItems: 'center' }}>
           <View style={{ paddingTop: '10%', alignItems: 'center' }}>
@@ -187,7 +192,10 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   };
 
   const renderMemberRequestsCard = () => {
-    if (communityProfile.isMember && communityProfile.community_members[0].type === "Admin") {
+    if (
+        communityProfile.type === 2 && 
+        communityProfile.isMember && 
+        communityProfile.community_members[0].type === "Admin") {
       return (
         <Card child={MemberRequest} customStyle={styles.memberRequestContainerStyle} />
       )
@@ -243,7 +251,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
             : false
         }
       />
-      {communityProfile.type == 1 || communityProfile.isMember
+      {!communityProfile || communityProfile.type == 1 || communityProfile.isMember
         ? renderDisplay()
         : RenderPrivateCommunityState()}
       {communityProfile.isMember && (
