@@ -1,10 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -37,7 +32,13 @@ const DiscussionScreen = ({ route, navigation }) => {
   const userId = useSelector((state) => state.HomeReducer.user.id);
   const userType = useSelector((state) => state.HomeReducer.user.type);
 
-  const { discussionId, fromNewDiscussion, isCommunityDiscussion } = route.params;
+  const {
+    discussionId,
+    fromNewDiscussion,
+    isCommunityDiscussion,
+    fromNewCommunityDiscussion,
+    communityId,
+  } = route.params;
 
   const dispatch = useDispatch();
   const flatListRef = useRef();
@@ -54,7 +55,7 @@ const DiscussionScreen = ({ route, navigation }) => {
   useEffect(() => {
     return () => {
       _isMounted = false;
-    }
+    };
   }, []);
 
   const closeAddResponseModal = (openModalFromHeader) => {
@@ -67,7 +68,7 @@ const DiscussionScreen = ({ route, navigation }) => {
   const scrollDown = () => {
     setTimeout(() => {
       if (_isMounted) {
-        flatListRef.current.scrollToEnd({animated: true});
+        flatListRef.current.scrollToEnd({ animated: true });
         setSelectedCard(response.length);
       }
     }, 2250);
@@ -116,7 +117,14 @@ const DiscussionScreen = ({ route, navigation }) => {
       <View style={styles.discussionUpperBarStyle}>
         <BackButton
           navigation={navigation}
-          screen={fromNewDiscussion && 'MainAppNavigation'}
+          screen={
+            fromNewDiscussion
+              ? 'MainAppNavigation'
+              : fromNewCommunityDiscussion
+              ? 'CommunityProfileScreen'
+              : null
+          }
+          screenOption={{ communityId: communityId }}
           styleOption={{
             marginTop: 0,
             marginBottom: 0,

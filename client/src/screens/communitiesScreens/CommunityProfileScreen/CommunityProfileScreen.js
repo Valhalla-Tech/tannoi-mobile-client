@@ -18,8 +18,9 @@ import {
   getAllDiscussion,
   clearDiscussion,
 } from '../../../store/actions/DiscussionAction';
+import { getOneCommunity } from '../../../store/actions/CommuitiesAction';
 
-//Icon
+//Icons
 import NewDiscussionButton from '../../../assets/communitiesAssets/ic-button.svg';
 import RightArrowIcon from '../../../assets/communitiesAssets/rightArrow.svg';
 
@@ -36,7 +37,7 @@ import DiscussionEmptyStateImage from '../../../assets/communitiesAssets/empty-s
 const CommunityProfileScreen = ({ navigation, route }) => {
   const { communityId } = route.params;
 
-  const [communityProfile, setCommunityProfile] = useState('');
+  // const [communityProfile, setCommunityProfile] = useState('');
   const [selectedDisplay, setSelectedDisplay] = useState('discussions');
   const [communityMember, setCommunityMember] = useState([]);
   const [noticeModal, setNoticeModal] = useState(false);
@@ -46,10 +47,12 @@ const CommunityProfileScreen = ({ navigation, route }) => {
     (state) => state.DiscussionReducer.discussions,
   );
 
+  const communityProfile = useSelector(state => state.CommunitiesReducer.communityProfile);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getOneCommunity();
+    dispatch(getOneCommunity(communityId));
   }, []);
 
   useEffect(() => {
@@ -68,25 +71,25 @@ const CommunityProfileScreen = ({ navigation, route }) => {
     setSelectedDisplay(value);
   };
 
-  const getOneCommunity = async () => {
-    try {
-      let access_token = await AsyncStorage.getItem('access_token');
+  // const getOneCommunity = async () => {
+  //   try {
+  //     let access_token = await AsyncStorage.getItem('access_token');
 
-      let getOneCommunityRequest = await axios({
-        method: 'get',
-        url: `${BaseUrl}/communities/single/${communityId}`,
-        headers: {
-          token: access_token,
-        },
-      });
+  //     let getOneCommunityRequest = await axios({
+  //       method: 'get',
+  //       url: `${BaseUrl}/communities/single/${communityId}`,
+  //       headers: {
+  //         token: access_token,
+  //       },
+  //     });
 
-      if (getOneCommunityRequest.data) {
-        setCommunityProfile(getOneCommunityRequest.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     if (getOneCommunityRequest.data) {
+  //       setCommunityProfile(getOneCommunityRequest.data);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const getCommunityMember = async () => {
     try {
@@ -165,6 +168,19 @@ const CommunityProfileScreen = ({ navigation, route }) => {
               listData={discussions}
               customStyle={{ marginBottom: '100%' }}
               isCommunityDiscussion={true}
+              isMember={
+                communityProfile.community_members.length !== 0
+                  ? communityProfile.community_members[0].type === 'Admin' ||
+                    communityProfile.community_members[0].type === 'Member' ||
+                    communityProfile.community_members[0].type === 'Moderator'
+                    ? true
+                    : false
+                  : false
+              }
+              openCommunityDiscussionNoticeModal={openNoticeModal}
+              inputCommunityDiscussionNoticeModalMessage={
+                inputNoticeModalMessage
+              }
             />
           }
         />

@@ -32,6 +32,9 @@ const HomeListCard = (props) => {
     responseId,
     caption,
     isCommunityDiscussion,
+    isMember,
+    openCommunityDiscussionNoticeModal,
+    inputCommunityDiscussionNoticeModalMessage,
   } = props;
 
   const HomeListCardData = () => {
@@ -112,6 +115,9 @@ const HomeListCard = (props) => {
             responseId: responseId,
             discussionId: discussionId,
           });
+        } else if (isMember !== undefined && !isMember) {
+          openCommunityDiscussionNoticeModal()
+          inputCommunityDiscussionNoticeModalMessage('You are not a member of this community')
         } else {
           navigation.push('DiscussionScreen', {
             discussionId: discussionId,

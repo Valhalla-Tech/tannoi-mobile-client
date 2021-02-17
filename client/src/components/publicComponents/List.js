@@ -20,7 +20,16 @@ import BigButton from './Button';
 
 class RenderList extends React.PureComponent {
   render() {
-    const { itemData, navigation, listData, openModal, isCommunityDiscussion } = this.props;
+    const {
+      itemData,
+      navigation,
+      listData,
+      openModal,
+      isCommunityDiscussion,
+      isMember,
+      openCommunityDiscussionNoticeModal,
+      inputCommunityDiscussionNoticeModalMessage,
+    } = this.props;
     return (
       <View style={styles.listCardContainerStyle}>
         <ListCard
@@ -41,6 +50,9 @@ class RenderList extends React.PureComponent {
           isAuthorized={itemData.item.isAuthorized}
           profileType={itemData.item.creator.type}
           isCommunityDiscussion={isCommunityDiscussion}
+          isMember={isMember}
+          openCommunityDiscussionNoticeModal={openCommunityDiscussionNoticeModal}
+          inputCommunityDiscussionNoticeModalMessage={inputCommunityDiscussionNoticeModalMessage}
         />
       </View>
     );
@@ -66,6 +78,9 @@ const List = (props) => {
     changeCurrentPage,
     isUserDiscussion,
     isCommunityDiscussion,
+    isMember,
+    openCommunityDiscussionNoticeModal,
+    inputCommunityDiscussionNoticeModalMessage,
   } = props;
 
   const dispatch = useDispatch();
@@ -142,6 +157,9 @@ const List = (props) => {
                   listData={listData}
                   openModal={openModal}
                   isCommunityDiscussion={isCommunityDiscussion}
+                  isMember={isMember}
+                  openCommunityDiscussionNoticeModal={openCommunityDiscussionNoticeModal}
+                  inputCommunityDiscussionNoticeModalMessage={inputCommunityDiscussionNoticeModalMessage}
                 />
               )}
               ListFooterComponent={
