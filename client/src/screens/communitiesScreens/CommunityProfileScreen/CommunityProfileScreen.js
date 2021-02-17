@@ -156,7 +156,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
       </View>
     );
   };
-
+  console.log(discussions)
   const renderDiscussionsDisplay = () => {
     if (discussions.length != 0) {
       return (
