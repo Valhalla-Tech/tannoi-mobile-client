@@ -9,9 +9,15 @@ import {
 } from 'react-native';
 import { GlobalPadding } from '../../../constants/Size';
 import { bold, normal } from '../../../assets/FontSize';
+import { CalculateHeight } from '../../../helper/CalculateSize';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  getAllDiscussion,
+  clearDiscussion,
+} from '../../../store/actions/DiscussionAction';
 
 //Icon
 import NewDiscussionButton from '../../../assets/communitiesAssets/ic-button.svg';
@@ -22,12 +28,6 @@ import Card from '../../../components/publicComponents/Card';
 import CommunityProfile from '../../../components/communityComponent/CommuityProfile';
 import List from '../../../components/publicComponents/List';
 import MemberList from '../../../components/communityComponent/MemberList';
-import { CalculateHeight } from '../../../helper/CalculateSize';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  getAllDiscussion,
-  clearDiscussion,
-} from '../../../store/actions/DiscussionAction';
 import Modal from '../../../components/publicComponents/Modal';
 
 //Assets
@@ -187,14 +187,20 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   };
 
   const renderMemberRequestsCard = () => {
-    if (communityProfile.isMember && communityProfile.community_members[0].type === "Admin") {
+    if (
+      communityProfile.isMember &&
+      communityProfile.community_members[0].type === 'Admin'
+    ) {
       return (
-        <Card child={MemberRequest} customStyle={styles.memberRequestContainerStyle} />
-      )
+        <Card
+          child={MemberRequest}
+          customStyle={styles.memberRequestContainerStyle}
+        />
+      );
     } else {
-      return null
+      return null;
     }
-  }
+  };
 
   const renderMembersDisplay = () => {
     return (
@@ -280,7 +286,7 @@ const styles = StyleSheet.create({
 
   privateCommunityHeaderTextStyle: {
     color: '#464D60',
-    fontSize: 16,
+    fontSize: CalculateHeight(1.8),
   },
 
   privateCommunityTextStyle: {

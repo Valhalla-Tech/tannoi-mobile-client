@@ -39,7 +39,7 @@ const CommunityProfile = (props) => {
     guidelines,
     isAdmin,
   } = props;
-  
+
   const [actionModal, setActionModal] = useState(false);
   const [recorder, setRecorder] = useState(false);
 
@@ -144,11 +144,19 @@ const CommunityProfile = (props) => {
         {isMember && (
           <>{ActionModalButton('Leave community', leaveCommunity)}</>
         )}
-        {ActionModalButton(
-          "Community guidelines",
-          () => (navigation.navigate('GuidelinesScreen', { guidelines: guidelines, isAdmin: isAdmin, communityId: communityId }), setActionModal(false)),
-          { marginBottom: 0 },
-        )}
+        {isMember &&
+          ActionModalButton(
+            'Community guidelines',
+            () => (
+              navigation.navigate('GuidelinesScreen', {
+                guidelines: guidelines,
+                isAdmin: isAdmin,
+                communityId: communityId,
+              }),
+              setActionModal(false)
+            ),
+            { marginBottom: 0 },
+          )}
       </>
     );
   };
@@ -212,12 +220,14 @@ const CommunityProfile = (props) => {
             <View style={styles.communityProfileContainerStyle}>
               <View style={styles.communityDataContainerStyle}>
                 <View style={styles.communityNameContainerStyle}>
-                  <LinearTextGradient 
+                  <LinearTextGradient
                     locations={[0, 1]}
                     colors={['#5051DB', '#7E37B6']}
                     start={{ x: 0, y: 0 }}
                     end={{ x: 1, y: 0 }}>
-                    <Text style={styles.communityNameStyle}>{profile.name}</Text>
+                    <Text style={styles.communityNameStyle}>
+                      {profile.name}
+                    </Text>
                   </LinearTextGradient>
                   <View style={styles.privatePublicIconContainerStyle}>
                     {profile.type == 2 ? <PrivateIcon /> : <EarthIcon />}
