@@ -240,6 +240,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
         communityType={communityProfile.type}
         inputNoticeModalMessage={inputNoticeModalMessage}
         openNoticeModal={openNoticeModal}
+        closeNoticeModal={closeNoticeModal}
         guidelines={communityProfile.guidelines}
         isAdmin={
           communityProfile !== '' &&

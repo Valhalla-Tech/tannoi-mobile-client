@@ -9,46 +9,30 @@ import {
 import { bold, normal } from '../../../assets/FontSize';
 import { CalculateHeight } from '../../../helper/CalculateSize';
 import { GlobalPadding } from '../../../constants/Size';
-import axios from '../../../constants/ApiServices';
-import AsyncStorage from '@react-native-community/async-storage';
-import BaseUrl from '../../../constants/BaseUrl';
+import { useSelector, useDispatch } from 'react-redux';
+import { getUserCommunity } from '../../../store/actions/CommuitiesAction';
 
 //Components
 import Card from '../../../components/publicComponents/Card';
 import Header from '../../../components/publicComponents/Header';
 import BackButton from '../../../components/publicComponents/BackButton';
 import CommunityList from '../../../components/communityComponent/CommunityList';
+import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 
 //Assets
 import RightArrowIcon from '../../../assets/communitiesAssets/rightArrow.svg';
 import AddCircleIcon from '../../../assets/communitiesAssets/ic-add-circle.svg';
 
 const CommunitiesScreen = ({ navigation }) => {
-  const [userCommunity, setUserCommunity] = useState('');
+  const userCommunity = useSelector(
+    (state) => state.CommunitiesReducer.userCommunity,
+  );
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getUserCommunity();
+    dispatch(getUserCommunity());
   }, []);
-
-  const getUserCommunity = async () => {
-    try {
-      let access_token = await AsyncStorage.getItem('access_token');
-
-      let getUserCommunityRequest = await axios({
-        method: 'get',
-        url: `${BaseUrl}/communities/all?communityMember=true`,
-        headers: {
-          token: access_token,
-        },
-      });
-
-      if (getUserCommunityRequest.data) {
-        setUserCommunity(getUserCommunityRequest.data.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const HeaderContent = () => {
     return (

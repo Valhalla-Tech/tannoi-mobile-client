@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { GlobalPadding } from '../../constants/Size';
 import { bold, normal } from '../../assets/FontSize';
@@ -6,6 +6,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
 import { LinearTextGradient } from 'react-native-text-gradient';
+import { useDispatch } from 'react-redux';
+import { getUserCommunity } from '../../store/actions/CommuitiesAction';
 
 //Icon
 import OptionButton from '../../assets/publicAssets/optionButton.svg';
@@ -36,6 +38,7 @@ const CommunityProfile = (props) => {
     communityType,
     inputNoticeModalMessage,
     openNoticeModal,
+    closeNoticeModal,
     guidelines,
     isAdmin,
   } = props;
@@ -50,6 +53,14 @@ const CommunityProfile = (props) => {
   const closeRecorder = () => {
     setRecorder(false);
   };
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      closeNoticeModal();
+    };
+  }, []);
 
   const joinCommunity = async (recordingFile) => {
     try {
@@ -80,8 +91,9 @@ const CommunityProfile = (props) => {
       if (joinCommunityRequest.data) {
         setRecorder(false);
         getOneCommunity();
+        dispatch(getUserCommunity());
         inputNoticeModalMessage('You are now a member of this community');
-        openNoticeModal(true);
+        openNoticeModal();
       }
     } catch (error) {
       console.log(error);
@@ -102,9 +114,10 @@ const CommunityProfile = (props) => {
 
       if (leaveCommunityRequest.data) {
         setActionModal(false);
-        getOneCommunity();
+        dispatch(getUserCommunity());
         inputNoticeModalMessage('You have left this community');
-        openNoticeModal(true);
+        openNoticeModal();
+        navigation.navigate('CommunitiesScreen');
       }
     } catch (error) {
       console.log(error);
