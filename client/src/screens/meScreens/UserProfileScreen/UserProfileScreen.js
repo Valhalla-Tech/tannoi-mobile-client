@@ -200,8 +200,8 @@ const UserProfileScreen = ({ route, navigation }) => {
         isLoading={profile ? false : true}
         navigation={navigation}
       />
-    )
-  }
+    );
+  };
 
   return (
     <View style={styles.userProfileScreenContainerStyle}>
