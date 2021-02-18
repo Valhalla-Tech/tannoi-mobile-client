@@ -35,6 +35,7 @@ import { CalculateHeight } from '../../../helper/CalculateSize';
 
 //Assets
 import DiscussionEmptyStateImage from '../../../assets/communitiesAssets/empty-state-discussions.png';
+import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 
 const UserProfileScreen = ({ route, navigation }) => {
   const { userId, fromDeepLink } = route.params;
@@ -150,30 +151,33 @@ const UserProfileScreen = ({ route, navigation }) => {
   };
 
   const renderDiscussionsDisplay = () => {
-    console.log(discussions)
-    if (discussions.length > 0) {
+    if (!discussions) {
       return (
-          <List
-            sectionQuery="user_id="
-            queryId={userId}
-            isHeader={false}
-            navigation={navigation}
-            isUsingMoreButton={false}
-            listData={discussions}
-            useMoreButton={
-              discussionCount > 20 &&
-              discussions.length < discussionCount &&
-              true
-            }
-            openModal={openModal}
-            customStyle={{
-              marginBottom: '5%',
-            }}
-            currentPage={currentPage}
-            changeCurrentPage={changeCurrentPage}
-            isUserDiscussion={true}
-          />
-        )
+        <LoadingSpinner loadingSpinnerForComponent={true} />
+      )
+    } else if (discussions.length > 0) {
+        return (
+            <List
+              sectionQuery="user_id="
+              queryId={userId}
+              isHeader={false}
+              navigation={navigation}
+              isUsingMoreButton={false}
+              listData={discussions}
+              useMoreButton={
+                discussionCount > 20 &&
+                discussions.length < discussionCount &&
+                true
+              }
+              openModal={openModal}
+              customStyle={{
+                marginBottom: '5%',
+              }}
+              currentPage={currentPage}
+              changeCurrentPage={changeCurrentPage}
+              isUserDiscussion={true}
+            />
+          )
       } else if (discussions.length === 0) {
           return (
             <View style={{ flex: 1, alignItems: 'center' }}>

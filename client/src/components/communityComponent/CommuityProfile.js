@@ -249,7 +249,10 @@ const CommunityProfile = (props) => {
                     {profile.type == 2 ? <PrivateIcon /> : <EarthIcon />}
                   </View>
                 </View>
-                <Text style={styles.communityDescriptionStyle}>
+                <Text 
+                  style={styles.communityDescriptionStyle}
+                  numberOfLines={2}
+                >
                   {profile.description}
                 </Text>
                 <View style={styles.createdAndUniqueCodeContainerStyle}>
@@ -316,7 +319,7 @@ const CommunityProfile = (props) => {
               </View>
             </View>
             {profile.type == 2 && !isMember ? (
-              <View style={{ paddingBottom: '5%' }}></View>
+              <View style={{ paddingBottom: '3%' }}></View>
             ) : (
               ProfileDisplayButton()
             )}
@@ -392,12 +395,12 @@ const styles = StyleSheet.create({
     fontFamily: normal,
     color: '#464D60',
     lineHeight: 20,
-    marginBottom: '5%',
+    marginBottom: '2%',
     fontSize: CalculateHeight(2),
   },
 
   createdAndUniqueCodeContainerStyle: {
-    marginBottom: '5%',
+    marginBottom: '2%',
   },
 
   createdAndUniqueCodeStyle: {

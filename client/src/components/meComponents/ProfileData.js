@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { bold, normal } from '../../assets/FontSize';
+import LoadingSpinner from '../publicComponents/LoadingSpinner';
+import { LinearTextGradient } from 'react-native-text-gradient';]
 import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
 
 //Icon
@@ -15,7 +17,13 @@ const ProfileData = (props) => {
   const UserProfileData = () => {
     return (
       <View>
-        <Text style={styles.profileNameStyle}>{profile.name}</Text>
+        <LinearTextGradient 
+          locations={[0, 1]}
+          colors={['#5051DB', '#7E37B6']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}>
+          <Text style={styles.profileNameStyle}>{profile.name}</Text>
+        </LinearTextGradient>
         <Text style={styles.locationStyle}>{profile.location}</Text>
         <View style={styles.profileInfoStyle}>
           <View style={styles.profileDataContainerStyle}>
