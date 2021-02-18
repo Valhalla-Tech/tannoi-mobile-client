@@ -14,7 +14,7 @@ import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
 import Card from '../publicComponents/Card';
 
 const MemberList = (props) => {
-  const { memberList } = props;
+  const { memberList, navigation } = props;
 
   const MemberListData = (itemData) => {
     return (
@@ -42,6 +42,11 @@ const MemberList = (props) => {
       <FlatList
         data={memberList}
         keyExtractor={(item, index) => index.toString()}
+        ListHeaderComponent={
+          <TouchableOpacity onPress={() => navigation.navigate('InviteScreen')} style={styles.memberListDataStyle}>
+            <Text style={styles.inviteToCommunityButtonTextStyle}>Invite to community</Text>
+          </TouchableOpacity>
+        }
         renderItem={MemberListData}
       />
     );
@@ -68,6 +73,12 @@ const styles = StyleSheet.create({
     padding: '3.5%',
     borderBottomWidth: 1,
     borderBottomColor: '#E3E6EB',
+  },
+
+  inviteToCommunityButtonTextStyle: {
+    fontFamily: normal,
+    fontSize: CalculateHeight(2.3),
+    color: '#464D60',
   },
 
   imageProfileAndNameStyle: {

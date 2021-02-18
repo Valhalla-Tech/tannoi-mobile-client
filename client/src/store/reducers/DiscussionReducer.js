@@ -21,6 +21,7 @@ const defaultState = {
   userDiscussion: '',
   userDiscussionCount: '',
   isLoading: false,
+  moreLoader: false,
 };
 
 const reducer = (state = defaultState, action) => {
@@ -127,6 +128,10 @@ const reducer = (state = defaultState, action) => {
       let setIsLoading = action.payload.isLoading;
 
       return { ...state, isLoading: setIsLoading };
+    case 'MORE_LOADER':
+      let setMoreLoader = action.payload.moreLoader;
+
+      return { ...state, moreLoader: setMoreLoader };
     default:
       return state;
   }

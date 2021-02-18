@@ -9,6 +9,7 @@ import NewCommunityDiscussionScreen from '../screens/communitiesScreens/NewCommu
 import CreateCommunityNavigation from './CreateCommunityNavigation';
 import MemberRequestScreen from '../screens/communitiesScreens/MemberRequestScreen';
 import GuidelinesScreen from '../screens/communitiesScreens/GuidelinesScreen';
+import InviteScreen from '../screens/communitiesScreens/InviteScreen';
 
 const Stack = createStackNavigator();
 
@@ -45,6 +46,10 @@ const CommunitiesNavigation = () => {
       <Stack.Screen
         name="GuidelinesScreen"
         component={GuidelinesScreen}
+      />
+      <Stack.Screen
+        name="InviteScreen"
+        component={InviteScreen}
       />
     </Stack.Navigator>
   );
