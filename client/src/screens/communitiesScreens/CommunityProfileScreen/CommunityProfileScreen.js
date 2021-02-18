@@ -38,7 +38,6 @@ import DiscussionEmptyStateImage from '../../../assets/communitiesAssets/empty-s
 const CommunityProfileScreen = ({ navigation, route }) => {
   const { communityId } = route.params;
 
-  // const [communityProfile, setCommunityProfile] = useState('');
   const [selectedDisplay, setSelectedDisplay] = useState('discussions');
   const [communityMember, setCommunityMember] = useState([]);
   const [noticeModal, setNoticeModal] = useState(false);
@@ -73,26 +72,6 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   const changeSelectedDisplay = (value) => {
     setSelectedDisplay(value);
   };
-
-  // const getOneCommunity = async () => {
-  //   try {
-  //     let access_token = await AsyncStorage.getItem('access_token');
-
-  //     let getOneCommunityRequest = await axios({
-  //       method: 'get',
-  //       url: `${BaseUrl}/communities/single/${communityId}`,
-  //       headers: {
-  //         token: access_token,
-  //       },
-  //     });
-
-  //     if (getOneCommunityRequest.data) {
-  //       setCommunityProfile(getOneCommunityRequest.data);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const getCommunityMember = async () => {
     try {
