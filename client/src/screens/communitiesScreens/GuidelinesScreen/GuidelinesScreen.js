@@ -36,7 +36,7 @@ const GuidelinesScreen = ({ navigation, route }) => {
 
       const formData = new FormData();
 
-      formData.append('guidelines', editedGuidelines)
+      formData.append('guidelines', editedGuidelines);
 
       let editGuidelinesRequest = await axios({
         method: 'put',
@@ -83,14 +83,13 @@ const GuidelinesScreen = ({ navigation, route }) => {
             customStyle={{
               fontSize: CalculateHeight(2),
             }}
+            autoFocus={true}
             value={editedGuidelines}
             inputFunction={(value) => setEditedGuidelines(value)}
             placeholder="Write your guideline"
           />
           <View style={styles.saveButtonContainerStyle}>
-            {
-              isLoading && <LoadingSpinner loadingSpinnerForComponent={true} />
-            }
+            {isLoading && <LoadingSpinner loadingSpinnerForComponent={true} />}
           </View>
         </>
       ) : (
@@ -102,17 +101,17 @@ const GuidelinesScreen = ({ navigation, route }) => {
   return (
     <View style={{ flex: 1 }}>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <View style={{ flex: 1 }}>
+        <>
           <Header child={HeaderContent} customStyle={styles.headerStyle} />
-          <View style={styles.guidelinesConainerStyle}>
-            <ScrollView>
+          <ScrollView>
+            <View style={styles.guidelinesConainerStyle}>
               <Card
                 child={GuidelinesCard}
                 customStyle={styles.guidelinesStyle}
               />
-            </ScrollView>
-          </View>
-        </View>
+            </View>
+          </ScrollView>
+        </>
       </TouchableWithoutFeedback>
     </View>
   );
