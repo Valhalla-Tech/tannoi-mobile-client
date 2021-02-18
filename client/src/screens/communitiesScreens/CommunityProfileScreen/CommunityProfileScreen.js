@@ -202,7 +202,6 @@ const CommunityProfileScreen = ({ navigation, route }) => {
             />
           }
         />
-      );
     } else {
       return (
         <View style={{ flex: 1, alignItems: 'center' }}>
