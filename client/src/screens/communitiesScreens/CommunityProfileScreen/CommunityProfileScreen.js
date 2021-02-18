@@ -160,24 +160,23 @@ const CommunityProfileScreen = ({ navigation, route }) => {
 
   const renderDiscussionsDisplay = () => {
     if (!discussions) {
-      return (
-        <LoadingSpinner loadingSpinnerForComponent={true} />
-      )
+      return <LoadingSpinner loadingSpinnerForComponent={true} />;
     } else if (discussions.length > 0) {
-        return (
-          <FlatList
-            ListHeaderComponent={
-              <List
-                navigation={navigation}
-                isHeader={false}
-                listData={discussions}
-                customStyle={{ marginBottom: '100%' }}
-                isCommunityDiscussion={true}
-              />
-            }
-          />
-        );
+      return (
+        <FlatList
+          ListHeaderComponent={
+            <List
+              navigation={navigation}
+              isHeader={false}
+              listData={discussions}
+              customStyle={{ marginBottom: '100%' }}
+              isCommunityDiscussion={true}
+            />
+          }
+        />
+      );
     } else if (discussions.length === 0) {
+      return (
         <FlatList
           ListHeaderComponent={
             <List
@@ -222,9 +221,9 @@ const CommunityProfileScreen = ({ navigation, route }) => {
 
   const renderMemberRequestsCard = () => {
     if (
-        communityProfile.type === 2 && 
-        communityProfile.isMember && 
-        communityProfile.community_members[0].type === "Admin"
+      communityProfile.type === 2 && 
+      communityProfile.isMember && 
+      communityProfile.community_members[0].type === "Admin"
     ) {
       return (
         <Card
