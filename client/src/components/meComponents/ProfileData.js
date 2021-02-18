@@ -1,12 +1,14 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { bold, normal } from '../../assets/FontSize';
-import LoadingSpinner from '../publicComponents/LoadingSpinner';
 import { LinearTextGradient } from 'react-native-text-gradient';
 import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
 
 //Icon
 import NoProfilePicture from '../../assets/publicAssets/noProfilePicture.png';
+
+//Component
+import LoadingSpinner from '../publicComponents/LoadingSpinner';
 
 const ProfileData = (props) => {
   const { profile, selectMenu, selectedMenu } = props;

@@ -38,7 +38,6 @@ import DiscussionEmptyStateImage from '../../../assets/communitiesAssets/empty-s
 const CommunityProfileScreen = ({ navigation, route }) => {
   const { communityId } = route.params;
 
-  // const [communityProfile, setCommunityProfile] = useState('');
   const [selectedDisplay, setSelectedDisplay] = useState('discussions');
   const [communityMember, setCommunityMember] = useState([]);
   const [noticeModal, setNoticeModal] = useState(false);
@@ -48,7 +47,9 @@ const CommunityProfileScreen = ({ navigation, route }) => {
     (state) => state.DiscussionReducer.discussions,
   );
 
-  const communityProfile = useSelector(state => state.CommunitiesReducer.communityProfile);
+  const communityProfile = useSelector(
+    (state) => state.CommunitiesReducer.communityProfile,
+  );
 
   const dispatch = useDispatch();
 
@@ -71,26 +72,6 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   const changeSelectedDisplay = (value) => {
     setSelectedDisplay(value);
   };
-
-  // const getOneCommunity = async () => {
-  //   try {
-  //     let access_token = await AsyncStorage.getItem('access_token');
-
-  //     let getOneCommunityRequest = await axios({
-  //       method: 'get',
-  //       url: `${BaseUrl}/communities/single/${communityId}`,
-  //       headers: {
-  //         token: access_token,
-  //       },
-  //     });
-
-  //     if (getOneCommunityRequest.data) {
-  //       setCommunityProfile(getOneCommunityRequest.data);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const getCommunityMember = async () => {
     try {
@@ -171,20 +152,6 @@ const CommunityProfileScreen = ({ navigation, route }) => {
               listData={discussions}
               customStyle={{ marginBottom: '100%' }}
               isCommunityDiscussion={true}
-            />
-          }
-        />
-      );
-    } else if (discussions.length > 0) {
-      return (
-        <FlatList
-          ListHeaderComponent={
-            <List
-              navigation={navigation}
-              isHeader={false}
-              listData={discussions}
-              customStyle={{ marginBottom: '100%' }}
-              isCommunityDiscussion={true}
               isMember={
                 communityProfile.community_members.length !== 0
                   ? communityProfile.community_members[0].type === 'Admin' ||
@@ -202,7 +169,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
           }
         />
       );
-    } else {
+    } else if (discussions.length === 0) {
       return (
         <View style={{ flex: 1, alignItems: 'center' }}>
           <View style={{ paddingTop: '10%', alignItems: 'center' }}>
@@ -221,9 +188,9 @@ const CommunityProfileScreen = ({ navigation, route }) => {
 
   const renderMemberRequestsCard = () => {
     if (
-      communityProfile.type === 2 && 
-      communityProfile.isMember && 
-      communityProfile.community_members[0].type === "Admin"
+      communityProfile.type === 2 &&
+      communityProfile.isMember &&
+      communityProfile.community_members[0].type === 'Admin'
     ) {
       return (
         <Card
@@ -284,7 +251,9 @@ const CommunityProfileScreen = ({ navigation, route }) => {
             : false
         }
       />
-      {!communityProfile || communityProfile.type == 1 || communityProfile.isMember
+      {!communityProfile ||
+      communityProfile.type == 1 ||
+      communityProfile.isMember
         ? renderDisplay()
         : RenderPrivateCommunityState()}
       {communityProfile.isMember && (
