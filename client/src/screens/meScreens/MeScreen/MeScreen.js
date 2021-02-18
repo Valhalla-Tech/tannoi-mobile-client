@@ -5,7 +5,7 @@ import {
   Text,
   TouchableOpacity,
   FlatList,
-  Image
+  Image,
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
 import { useSelector, useDispatch } from 'react-redux';
@@ -104,44 +104,38 @@ const MeScreen = ({ navigation, route }) => {
 
   const renderDiscussionsDisplay = () => {
     if (!discussions) {
-      return (
-        <LoadingSpinner loadingSpinnerForComponent={true} />
-      )
+      return <LoadingSpinner loadingSpinnerForComponent={true} />;
     } else if (discussions.length > 0) {
-        return (
-          <List
-            sectionQuery="user_id="
-            queryId={userId}
-            isHeader={false}
-            navigation={navigation}
-            isUsingMoreButton={false}
-            listData={discussions}
-            useMoreButton={
-              discussionCount > 20 &&
-              discussions.length < discussionCount &&
-              true
-            }
-            openModal={openModal}
-            customStyle={{
-              marginBottom: '5%',
-            }}
-            currentPage={currentPage}
-            changeCurrentPage={changeCurrentPage}
-            isUserDiscussion={true}
-          />
-        )
+      return (
+        <List
+          sectionQuery="user_id="
+          queryId={userId}
+          isHeader={false}
+          navigation={navigation}
+          isUsingMoreButton={false}
+          listData={discussions}
+          useMoreButton={
+            discussionCount > 20 && discussions.length < discussionCount && true
+          }
+          openModal={openModal}
+          customStyle={{ marginBottom: '5%' }}
+          currentPage={currentPage}
+          changeCurrentPage={changeCurrentPage}
+          isUserDiscussion={true}
+        />
+      );
     } else if (discussions.length === 0) {
-        return (
-          <View style={{ flex: 1, alignItems: 'center' }}>
-            <View style={{ paddingTop: '10%', alignItems: 'center' }}>
-              <Image source={DiscussionEmptyStateImage} />
-              <Text style={{color: '#73798C', fontSize: CalculateHeight(2.3)}}>Sorry!</Text>
-              <Text style={{color: '#73798C', fontSize: CalculateHeight(2)}}>You don't have any discussions yet!</Text>
-            </View>
+      return (
+        <View style={{ flex: 1, alignItems: 'center' }}>
+          <View style={{ paddingTop: '10%', alignItems: 'center' }}>
+            <Image source={DiscussionEmptyStateImage} />
+            <Text style={{color: '#73798C', fontSize: CalculateHeight(2.3)}}>Sorry!</Text>
+            <Text style={{color: '#73798C', fontSize: CalculateHeight(2)}}>You don't have any discussions yet!</Text>
           </View>
-        )
+        </View>
+      );
     }
-  }
+  };
 
   const renderAboutDisplay = () => {
     return (
@@ -154,8 +148,8 @@ const MeScreen = ({ navigation, route }) => {
         isLoading={userProfile ? false : true}
         navigation={navigation}
       />
-    )
-  }
+    );
+  };
 
   return (
     <View style={styles.meScreenContainerStyle}>
