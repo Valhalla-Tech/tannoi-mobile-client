@@ -8,9 +8,19 @@ export const getAllDiscussion = (
   sort,
   page,
   isUserDiscussion,
+  moreLoader,
 ) => {
   return async (dispatch) => {
     try {
+      if (moreLoader) {
+        dispatch({
+          type: 'MORE_LOADER',
+          payload: {
+            moreLoader: true,
+          },
+        });
+      }
+
       let access_token = await AsyncStorage.getItem('access_token');
       let getAllDiscussionRequest = await axios({
         url: `${BaseUrl}/discussions/all${`?sort=${sort ? sort : 'newest'}`}${
@@ -58,6 +68,15 @@ export const getAllDiscussion = (
             },
           });
         }
+
+        if (moreLoader) {
+          dispatch({
+            type: 'MORE_LOADER',
+            payload: {
+              moreLoader: false,
+            },
+          });
+        }
       }
     } catch (error) {
       console.log(error);
@@ -73,7 +92,11 @@ export const getAllDiscussion = (
   };
 };
 
-export const getDiscussion = (discussionId, isLoading, isCommunityDiscussion) => {
+export const getDiscussion = (
+  discussionId,
+  isLoading,
+  isCommunityDiscussion,
+) => {
   return async (dispatch) => {
     try {
       if (isLoading) {
@@ -114,8 +137,8 @@ export const getDiscussion = (discussionId, isLoading, isCommunityDiscussion) =>
               isDislike: getDiscussionRequest.data.isDislike,
               type: getDiscussionRequest.data.type,
               userType: getDiscussionRequest.data.creator.type,
-            }
-          })
+            },
+          });
         } else {
           dispatch({
             type: 'GET_DISCUSSION',

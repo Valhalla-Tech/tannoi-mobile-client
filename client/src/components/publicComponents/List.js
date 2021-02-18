@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { clearCurrentPlayerId } from '../../store/actions/PlayerAction';
 import { getAllDiscussion } from '../../store/actions/DiscussionAction';
 import { CalculateHeight } from '../../helper/CalculateSize';
@@ -51,8 +51,12 @@ class RenderList extends React.PureComponent {
           profileType={itemData.item.creator.type}
           isCommunityDiscussion={isCommunityDiscussion}
           isMember={isMember}
-          openCommunityDiscussionNoticeModal={openCommunityDiscussionNoticeModal}
-          inputCommunityDiscussionNoticeModalMessage={inputCommunityDiscussionNoticeModalMessage}
+          openCommunityDiscussionNoticeModal={
+            openCommunityDiscussionNoticeModal
+          }
+          inputCommunityDiscussionNoticeModalMessage={
+            inputCommunityDiscussionNoticeModalMessage
+          }
         />
       </View>
     );
@@ -85,6 +89,8 @@ const List = (props) => {
 
   const dispatch = useDispatch();
 
+  const moreLoader = useSelector((state) => state.DiscussionReducer.moreLoader);
+
   useEffect(() => {
     const blur = navigation.addListener('blur', () => {
       dispatch(clearCurrentPlayerId());
@@ -99,6 +105,7 @@ const List = (props) => {
 
   const nextPage = () => {
     changeCurrentPage(currentPage + 1);
+
     dispatch(
       getAllDiscussion(
         sectionQuery ? sectionQuery : null,
@@ -106,6 +113,7 @@ const List = (props) => {
         selectedSort,
         currentPage + 1,
         isUserDiscussion,
+        true,
       ),
     );
   };
@@ -158,12 +166,18 @@ const List = (props) => {
                   openModal={openModal}
                   isCommunityDiscussion={isCommunityDiscussion}
                   isMember={isMember}
-                  openCommunityDiscussionNoticeModal={openCommunityDiscussionNoticeModal}
-                  inputCommunityDiscussionNoticeModalMessage={inputCommunityDiscussionNoticeModalMessage}
+                  openCommunityDiscussionNoticeModal={
+                    openCommunityDiscussionNoticeModal
+                  }
+                  inputCommunityDiscussionNoticeModalMessage={
+                    inputCommunityDiscussionNoticeModalMessage
+                  }
                 />
               )}
               ListFooterComponent={
-                useMoreButton && (
+                useMoreButton && moreLoader ? (
+                  <LoadingSpinner loadingSpinnerForComponent={true} />
+                ) : (
                   <View style={styles.loadMoreButtonContainerStyle}>
                     <BigButton
                       buttonStyle={{
