@@ -8,6 +8,7 @@ import {
   TextInput,
 } from 'react-native';
 import { normal } from '../../assets/FontSize';
+import { CalculateHeight } from '../../helper/CalculateSize';
 
 //Icons
 import SearchIcon from '../../assets/homeAssets/searchIcon.svg';
@@ -73,7 +74,12 @@ const SearchBar = (props) => {
   };
 
   return (
-    <View style={styles.searchBarContainerStyle}>
+    <View
+      style={
+        !searchBoxIsFilled
+          ? styles.searchBarContainerStyle
+          : { ...styles.searchBarCardContainerStyle, paddingBottom: 0 }
+      }>
       <View style={searchBarStyle}>
         {searchBarIsOpen && (
           <TouchableOpacity
@@ -106,22 +112,24 @@ const SearchBar = (props) => {
           />
         )}
       </View>
-      {!searchBarIsOpen && showCard && (
-        <FlatList
-          data={topHashtag}
-          horizontal={true}
-          contentContainerStyle={styles.searchBarCardContainerStyle}
-          keyExtractor={(item, index) => index.toString()}
-          showsHorizontalScrollIndicator={false}
-          renderItem={(itemData) => (
-            <SearchBarCard
-              cardTitle={itemData.item.name}
-              navigation={navigation}
-              hashtagId={itemData.item.id}
-            />
-          )}
-        />
-      )}
+      <View>
+        {!searchBarIsOpen && showCard && (
+          <FlatList
+            data={topHashtag}
+            horizontal={true}
+            contentContainerStyle={styles.searchBarCardContainerStyle}
+            keyExtractor={(item, index) => index.toString()}
+            showsHorizontalScrollIndicator={false}
+            renderItem={(itemData) => (
+              <SearchBarCard
+                cardTitle={itemData.item.name}
+                navigation={navigation}
+                hashtagId={itemData.item.id}
+              />
+            )}
+          />
+        )}
+      </View>
       {searchBoxIsFilled && (
         <View style={styles.searchResultCategoryContainerStyle}>
           {CategoryButton('User')}
@@ -134,19 +142,21 @@ const SearchBar = (props) => {
 
 const styles = StyleSheet.create({
   backButtonStyle: {
-    marginRight: 22,
+    marginRight: '5%',
+  },
+
+  searchBarContainerStyle: {
+    paddingVertical: '3%',
   },
 
   searchBarStyle: {
-    marginTop: 8,
-    marginBottom: 8,
     flexDirection: 'row',
     alignItems: 'center',
   },
 
   searchBoxStyle: {
     backgroundColor: '#F7F7F7',
-    padding: 6,
+    padding: '2%',
     borderRadius: 10,
     flexDirection: 'row',
     alignItems: 'center',
@@ -155,8 +165,8 @@ const styles = StyleSheet.create({
 
   searchBoxTextStyle: {
     color: '#73798C',
-    fontSize: 16,
-    marginLeft: 10,
+    fontSize: CalculateHeight(2),
+    marginLeft: '3%',
     fontFamily: normal,
   },
 
@@ -169,8 +179,8 @@ const styles = StyleSheet.create({
   },
 
   searchCategoryStyle: {
-    paddingHorizontal: 48,
-    paddingVertical: 12,
+    paddingHorizontal: '5%',
+    paddingVertical: '3%',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -178,7 +188,7 @@ const styles = StyleSheet.create({
   },
 
   searchCategoryTitleStyle: {
-    fontSize: 15,
+    fontSize: CalculateHeight(2),
     fontWeight: 'bold',
   },
 });

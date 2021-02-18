@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Modal from './Modal';
 import { bold, normal } from '../../assets/FontSize';
+import { CalculateHeight } from '../../helper/CalculateSize';
 
 const SortModal = (props) => {
   const { openModal, closeModal, saveSort } = props;
@@ -71,7 +72,7 @@ const styles = StyleSheet.create({
   modalHeaderTextStyle: {
     fontFamily: bold,
     color: '#6505E1',
-    fontSize: 20,
+    fontSize: CalculateHeight(2.5),
   },
 
   modalButtonContainerStyle: {
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
 
   modalButtonTextStyle: {
     fontFamily: bold,
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
     color: '#464D60',
   },
 });

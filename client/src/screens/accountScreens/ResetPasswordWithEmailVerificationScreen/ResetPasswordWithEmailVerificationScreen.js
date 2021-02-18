@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
+import { CalculateHeight } from '../../../helper/CalculateSize';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 
@@ -45,7 +46,12 @@ const ResetPasswordWithEmailVerificationScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.resetPasswordWithEmailVerificationScreenContainerStyle}>
-      <BackButton navigation={navigation} />
+      <BackButton
+        styleOption={{
+          marginVertical: '10%',
+        }}
+        navigation={navigation}
+      />
       <Text style={styles.resetPasswordWithEmailVerificationTitleStyle}>
         Email has been sent
       </Text>
@@ -81,18 +87,18 @@ const ResetPasswordWithEmailVerificationScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   resetPasswordWithEmailVerificationScreenContainerStyle: {
     flex: 1,
-    paddingHorizontal: 24,
+    paddingHorizontal: '5.5%',
   },
 
   resetPasswordWithEmailVerificationTitleStyle: {
     color: '#464D60',
-    fontSize: 28,
+    fontSize: CalculateHeight(3.5),
     fontFamily: bold,
   },
 
   resetPasswordWithEmailVerificationScreenInstructionStyle: {
     marginTop: '5%',
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
     fontFamily: normal,
     lineHeight: 24,
     color: '#73798C',
@@ -105,19 +111,19 @@ const styles = StyleSheet.create({
 
   sendAgainEmailButtonTitleStyle: {
     color: '#73798C',
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
     fontFamily: normal,
   },
 
   sendAgainEmailButtonStyle: {
     color: '#2f3dfa',
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
     fontFamily: normal,
   },
 
   counterTextStyle: {
     color: '#2f3dfa',
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
     fontFamily: bold,
   },
 });

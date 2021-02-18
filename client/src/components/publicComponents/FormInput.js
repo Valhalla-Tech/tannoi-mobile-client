@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { normal } from '../../assets/FontSize';
-import { CalculateWidth } from '../../helper/CalculateSize';
+import { CalculateWidth, CalculateHeight } from '../../helper/CalculateSize';
 
 //Icon
 import EyeIcon from '../../assets/publicAssets/eyeIcon.svg';
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderBottomWidth: 1,
     borderBottomColor: '#E3E6EB',
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
     fontFamily: normal,
   },
 

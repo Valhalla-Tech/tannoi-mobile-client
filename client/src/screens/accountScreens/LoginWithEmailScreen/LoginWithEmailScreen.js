@@ -14,6 +14,7 @@ import { userLogin } from '../../../store/actions/LoginAction';
 import { getHome, clearHome } from '../../../store/actions/HomeAction';
 import axios from '../../../constants/ApiServices';
 import { bold, normal } from '../../../assets/FontSize';
+import { CalculateHeight } from '../../../helper/CalculateSize';
 import BaseUrl from '../../../constants/BaseUrl';
 
 //Components
@@ -143,7 +144,12 @@ const LoginWithEmailScreen = ({ navigation }) => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={{ flex: 1 }}>
         <View style={styles.loginWithEmailScreenContainerStyle}>
-          <BackButton navigation={navigation} />
+          <BackButton
+            styleOption={{
+              marginVertical: '10%',
+            }}
+            navigation={navigation}
+          />
           <Text style={styles.loginTitleStyle}>Login to tannOi</Text>
           {LoginForm()}
           <LoginWithEmailButton />
@@ -158,19 +164,18 @@ const LoginWithEmailScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   loginWithEmailScreenContainerStyle: {
     flex: 1,
-    paddingLeft: 24,
-    paddingRight: 24,
+    paddingHorizontal: '5%',
   },
 
   loginTitleStyle: {
     color: '#464D60',
-    fontSize: 28,
+    fontSize: CalculateHeight(3.5),
     marginBottom: '10%',
     fontFamily: bold,
   },
 
   loginWithEmailButtonContainerStyle: {
-    height: 55,
+    height: '8%',
   },
 
   forgotPasswordButtonContainer: {

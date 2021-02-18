@@ -6,12 +6,13 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { clearCurrentPlayerId } from '../../store/actions/PlayerAction';
 import { getAllDiscussion } from '../../store/actions/DiscussionAction';
+import { CalculateHeight } from '../../helper/CalculateSize';
 
 //Components
-import HomeListCard from './ListCard';
+import ListCard from './ListCard';
 import LoadingSpinner from './LoadingSpinner';
 import Card from './Card';
 import ListHeader from './ListHeader';
@@ -19,10 +20,19 @@ import BigButton from './Button';
 
 class RenderList extends React.PureComponent {
   render() {
-    const { itemData, navigation, listData, openModal, isCommunityDiscussion } = this.props;
+    const {
+      itemData,
+      navigation,
+      listData,
+      openModal,
+      isCommunityDiscussion,
+      isMember,
+      openCommunityDiscussionNoticeModal,
+      inputCommunityDiscussionNoticeModalMessage,
+    } = this.props;
     return (
       <View style={styles.listCardContainerStyle}>
-        <HomeListCard
+        <ListCard
           imageUrl={itemData.item.creator.profile_photo_path}
           recordingFile={itemData.item.voice_note_path}
           name={itemData.item.creator.name}
@@ -40,6 +50,13 @@ class RenderList extends React.PureComponent {
           isAuthorized={itemData.item.isAuthorized}
           profileType={itemData.item.creator.type}
           isCommunityDiscussion={isCommunityDiscussion}
+          isMember={isMember}
+          openCommunityDiscussionNoticeModal={
+            openCommunityDiscussionNoticeModal
+          }
+          inputCommunityDiscussionNoticeModalMessage={
+            inputCommunityDiscussionNoticeModalMessage
+          }
         />
       </View>
     );
@@ -65,9 +82,14 @@ const List = (props) => {
     changeCurrentPage,
     isUserDiscussion,
     isCommunityDiscussion,
+    isMember,
+    openCommunityDiscussionNoticeModal,
+    inputCommunityDiscussionNoticeModalMessage,
   } = props;
 
   const dispatch = useDispatch();
+
+  const moreLoader = useSelector((state) => state.DiscussionReducer.moreLoader);
 
   useEffect(() => {
     const blur = navigation.addListener('blur', () => {
@@ -83,6 +105,7 @@ const List = (props) => {
 
   const nextPage = () => {
     changeCurrentPage(currentPage + 1);
+
     dispatch(
       getAllDiscussion(
         sectionQuery ? sectionQuery : null,
@@ -90,6 +113,7 @@ const List = (props) => {
         selectedSort,
         currentPage + 1,
         isUserDiscussion,
+        true,
       ),
     );
   };
@@ -141,23 +165,34 @@ const List = (props) => {
                   listData={listData}
                   openModal={openModal}
                   isCommunityDiscussion={isCommunityDiscussion}
+                  isMember={isMember}
+                  openCommunityDiscussionNoticeModal={
+                    openCommunityDiscussionNoticeModal
+                  }
+                  inputCommunityDiscussionNoticeModalMessage={
+                    inputCommunityDiscussionNoticeModalMessage
+                  }
                 />
               )}
               ListFooterComponent={
-                useMoreButton && (
-                  <View style={styles.loadMoreButtonContainerStyle}>
-                    <BigButton
-                      buttonStyle={{
-                        color: '#6505E1',
-                        borderColor: '#6505E1',
-                        paddingVertical: '.5%',
-                        paddingHorizontal: '5%',
-                      }}
-                      buttonTitle="More"
-                      buttonFunction={nextPage}
-                    />
-                  </View>
-                )
+                useMoreButton ? (
+                  moreLoader ? (
+                    <LoadingSpinner loadingSpinnerForComponent={true} />
+                  ) : (
+                    <View style={styles.loadMoreButtonContainerStyle}>
+                      <BigButton
+                        buttonStyle={{
+                          color: '#6505E1',
+                          borderColor: '#6505E1',
+                          paddingVertical: '.5%',
+                          paddingHorizontal: '5%',
+                        }}
+                        buttonTitle="More"
+                        buttonFunction={nextPage}
+                      />
+                    </View>
+                  )
+                ) : null
               }
             />
             {isUsingMoreButton && <MoreButton />}
@@ -184,10 +219,6 @@ const styles = StyleSheet.create({
     paddingBottom: '6.5%',
   },
 
-  listCardContainerStyle: {
-    // paddingHorizontal: "5%"
-  },
-
   moreButtonContainerStyle: {
     flex: 1,
     alignItems: 'center',
@@ -197,16 +228,18 @@ const styles = StyleSheet.create({
     position: 'absolute',
     borderWidth: 1.5,
     borderColor: '#7817FF',
-    paddingHorizontal: 20,
-    paddingVertical: 4,
+    paddingHorizontal: '5%',
+    paddingVertical: '1%',
     borderRadius: 25,
-    top: 10,
+    top: CalculateHeight(1),
     backgroundColor: '#FFFFFF',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   moreButtonTextStyle: {
     color: '#7817FF',
-    fontSize: 14,
+    fontSize: CalculateHeight(1.8),
   },
 
   loadMoreButtonContainerStyle: {

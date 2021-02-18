@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableWithoutFeedback,
   Keyboard,
+  TouchableOpacity,
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
 import { CalculateHeight } from '../../../helper/CalculateSize';
@@ -35,7 +36,7 @@ const GuidelinesScreen = ({ navigation, route }) => {
 
       const formData = new FormData();
 
-      formData.append('guidelines', editedGuidelines)
+      formData.append('guidelines', editedGuidelines);
 
       let editGuidelinesRequest = await axios({
         method: 'put',
@@ -58,14 +59,19 @@ const GuidelinesScreen = ({ navigation, route }) => {
 
   const HeaderContent = () => (
     <>
-      <BackButton
-        styleOption={{
-          marginTop: 0,
-          marginBottom: 0,
-        }}
-        navigation={navigation}
-      />
-      <Text style={styles.headerTextStyle}>Community guidelines</Text>
+      <View style={styles.headerButtonAndTitleContainerStyle}>
+        <BackButton
+          styleOption={{
+            marginTop: 0,
+            marginBottom: 0,
+          }}
+          navigation={navigation}
+        />
+        <Text style={styles.headerTextStyle}>Community guidelines</Text>
+      </View>
+      <TouchableOpacity onPress={() => editGuidelines()}>
+        <Text style={styles.saveButtonStyle}>Save</Text>
+      </TouchableOpacity>
     </>
   );
 
@@ -77,28 +83,13 @@ const GuidelinesScreen = ({ navigation, route }) => {
             customStyle={{
               fontSize: CalculateHeight(2),
             }}
+            autoFocus={true}
             value={editedGuidelines}
             inputFunction={(value) => setEditedGuidelines(value)}
             placeholder="Write your guideline"
           />
           <View style={styles.saveButtonContainerStyle}>
-            {editedGuidelines !== guidelines && !isLoading && (
-              <Button
-                buttonStyle={{
-                  backgroundColor: '#6505E1',
-                  color: '#FFFFFF',
-                  borderWidth: 0,
-                  width: '20%',
-                  height: CalculateHeight(6),
-                  marginTop: '10%',
-                }}
-                buttonTitle="Save"
-                buttonFunction={editGuidelines}
-              />
-            )}
-            {
-              isLoading && <LoadingSpinner loadingSpinnerForComponent={true} />
-            }
+            {isLoading && <LoadingSpinner loadingSpinnerForComponent={true} />}
           </View>
         </>
       ) : (
@@ -110,17 +101,17 @@ const GuidelinesScreen = ({ navigation, route }) => {
   return (
     <View style={{ flex: 1 }}>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <View style={{ flex: 1 }}>
+        <>
           <Header child={HeaderContent} customStyle={styles.headerStyle} />
-          <View style={styles.guidelinesConainerStyle}>
-            <ScrollView>
+          <ScrollView>
+            <View style={styles.guidelinesConainerStyle}>
               <Card
                 child={GuidelinesCard}
                 customStyle={styles.guidelinesStyle}
               />
-            </ScrollView>
-          </View>
-        </View>
+            </View>
+          </ScrollView>
+        </>
       </TouchableWithoutFeedback>
     </View>
   );
@@ -132,6 +123,12 @@ const styles = StyleSheet.create({
     paddingVertical: '3%',
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+
+  headerButtonAndTitleContainerStyle: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 
   headerTextStyle: {
@@ -139,6 +136,12 @@ const styles = StyleSheet.create({
     marginLeft: '3%',
     fontSize: CalculateHeight(2.5),
     color: '#464D60',
+  },
+
+  saveButtonStyle: {
+    fontFamily: bold,
+    color: '#0E4EF4',
+    fontSize: CalculateHeight(2),
   },
 
   guidelinesConainerStyle: {

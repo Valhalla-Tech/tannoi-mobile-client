@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { GlobalPadding } from '../../constants/Size';
 import { bold, normal } from '../../assets/FontSize';
@@ -6,6 +6,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
 import { LinearTextGradient } from 'react-native-text-gradient';
+import { useDispatch } from 'react-redux';
+import { getUserCommunity } from '../../store/actions/CommuitiesAction';
 
 //Icon
 import OptionButton from '../../assets/publicAssets/optionButton.svg';
@@ -36,10 +38,11 @@ const CommunityProfile = (props) => {
     communityType,
     inputNoticeModalMessage,
     openNoticeModal,
+    closeNoticeModal,
     guidelines,
     isAdmin,
   } = props;
-  
+
   const [actionModal, setActionModal] = useState(false);
   const [recorder, setRecorder] = useState(false);
 
@@ -50,6 +53,14 @@ const CommunityProfile = (props) => {
   const closeRecorder = () => {
     setRecorder(false);
   };
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      closeNoticeModal();
+    };
+  }, []);
 
   const joinCommunity = async (recordingFile) => {
     try {
@@ -80,8 +91,12 @@ const CommunityProfile = (props) => {
       if (joinCommunityRequest.data) {
         setRecorder(false);
         getOneCommunity();
-        inputNoticeModalMessage('You are now a member of this community');
-        openNoticeModal(true);
+        dispatch(getUserCommunity());
+
+        if (recordingFile === undefined) {
+          inputNoticeModalMessage('You are now a member of this community');
+          openNoticeModal();
+        }
       }
     } catch (error) {
       console.log(error);
@@ -102,9 +117,10 @@ const CommunityProfile = (props) => {
 
       if (leaveCommunityRequest.data) {
         setActionModal(false);
-        getOneCommunity();
+        dispatch(getUserCommunity());
         inputNoticeModalMessage('You have left this community');
-        openNoticeModal(true);
+        openNoticeModal();
+        navigation.navigate('CommunitiesScreen');
       }
     } catch (error) {
       console.log(error);
@@ -144,11 +160,19 @@ const CommunityProfile = (props) => {
         {isMember && (
           <>{ActionModalButton('Leave community', leaveCommunity)}</>
         )}
-        {ActionModalButton(
-          "Community guidelines",
-          () => (navigation.navigate('GuidelinesScreen', { guidelines: guidelines, isAdmin: isAdmin, communityId: communityId }), setActionModal(false)),
-          { marginBottom: 0 },
-        )}
+        {isMember &&
+          ActionModalButton(
+            'Community guidelines',
+            () => (
+              navigation.navigate('GuidelinesScreen', {
+                guidelines: guidelines,
+                isAdmin: isAdmin,
+                communityId: communityId,
+              }),
+              setActionModal(false)
+            ),
+            { marginBottom: 0 },
+          )}
       </>
     );
   };
@@ -212,7 +236,7 @@ const CommunityProfile = (props) => {
             <View style={styles.communityProfileContainerStyle}>
               <View style={styles.communityDataContainerStyle}>
                 <View style={styles.communityNameContainerStyle}>
-                  <LinearTextGradient 
+                  <LinearTextGradient
                     locations={[0, 1]}
                     colors={['#5051DB', '#7E37B6']}
                     start={{ x: 0, y: 0 }}

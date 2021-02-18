@@ -10,6 +10,7 @@ import {
 import { Player, Recorder } from '@react-native-community/audio-toolkit';
 import Slider from '@react-native-community/slider';
 import { bold, normal } from '../../assets/FontSize';
+import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
 
 //Icon
 import RecordButton from '../../assets/topicAssets/recordButton.svg';
@@ -394,7 +395,7 @@ const styles = StyleSheet.create({
     marginTop: '5%',
     textAlign: 'center',
     color: '#5152D0',
-    fontSize: 20,
+    fontSize: CalculateHeight(2.5),
     fontFamily: bold,
   },
 
@@ -412,8 +413,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 10,
     borderColor: '#de181f',
-    height: 40,
-    width: 100,
+    paddingVertical: '1%',
+    width: '30%',
   },
 
   stopButtonTextStyle: {
@@ -427,8 +428,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 10,
     borderColor: '#5152D0',
-    height: 40,
-    width: 100,
+    paddingVertical: '1%',
+    width: '30%',
   },
 
   playOrPauseButtonTextStyle: {

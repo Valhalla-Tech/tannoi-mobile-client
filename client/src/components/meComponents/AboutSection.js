@@ -4,6 +4,9 @@ import Card from '../publicComponents/Card';
 import ListCardPlayer from '../publicComponents/ListCardPlayer';
 import DisplayBirthDate from '../../helper/DisplayBirthDate';
 import { bold, normal } from '../../assets/FontSize';
+import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
+
+//Component
 import LoadingSpinner from '../publicComponents/LoadingSpinner';
 
 const AboutSection = (props) => {
@@ -72,8 +75,8 @@ const styles = StyleSheet.create({
   },
 
   aboutDataIconStyle: {
-    width: 50,
-    height: 50,
+    width: CalculateWidth(15),
+    height: CalculateWidth(15),
     borderRadius: 50,
     backgroundColor: '#F5F7F9',
   },
@@ -86,13 +89,13 @@ const styles = StyleSheet.create({
   dataTextStyle: {
     fontFamily: normal,
     color: '#464D60',
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
     maxWidth: '90%',
   },
 
   dataTitleStyle: {
     fontFamily: normal,
-    fontSize: 12,
+    fontSize: CalculateHeight(1.5),
     color: '#73798C',
   },
 });

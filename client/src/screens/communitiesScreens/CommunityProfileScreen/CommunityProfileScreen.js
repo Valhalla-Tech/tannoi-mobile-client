@@ -9,11 +9,18 @@ import {
 } from 'react-native';
 import { GlobalPadding } from '../../../constants/Size';
 import { bold, normal } from '../../../assets/FontSize';
+import { CalculateHeight } from '../../../helper/CalculateSize';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  getAllDiscussion,
+  clearDiscussion,
+} from '../../../store/actions/DiscussionAction';
+import { getOneCommunity } from '../../../store/actions/CommuitiesAction';
 
-//Icon
+//Icons
 import NewDiscussionButton from '../../../assets/communitiesAssets/ic-button.svg';
 import RightArrowIcon from '../../../assets/communitiesAssets/rightArrow.svg';
 
@@ -23,12 +30,6 @@ import CommunityProfile from '../../../components/communityComponent/CommuityPro
 import List from '../../../components/publicComponents/List';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 import MemberList from '../../../components/communityComponent/MemberList';
-import { CalculateHeight } from '../../../helper/CalculateSize';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  getAllDiscussion,
-  clearDiscussion,
-} from '../../../store/actions/DiscussionAction';
 import Modal from '../../../components/publicComponents/Modal';
 
 //Assets
@@ -37,7 +38,7 @@ import DiscussionEmptyStateImage from '../../../assets/communitiesAssets/empty-s
 const CommunityProfileScreen = ({ navigation, route }) => {
   const { communityId } = route.params;
 
-  const [communityProfile, setCommunityProfile] = useState('');
+  // const [communityProfile, setCommunityProfile] = useState('');
   const [selectedDisplay, setSelectedDisplay] = useState('discussions');
   const [communityMember, setCommunityMember] = useState([]);
   const [noticeModal, setNoticeModal] = useState(false);
@@ -47,10 +48,12 @@ const CommunityProfileScreen = ({ navigation, route }) => {
     (state) => state.DiscussionReducer.discussions,
   );
 
+  const communityProfile = useSelector(state => state.CommunitiesReducer.communityProfile);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getOneCommunity();
+    dispatch(getOneCommunity(communityId));
   }, []);
 
   useEffect(() => {
@@ -69,25 +72,25 @@ const CommunityProfileScreen = ({ navigation, route }) => {
     setSelectedDisplay(value);
   };
 
-  const getOneCommunity = async () => {
-    try {
-      let access_token = await AsyncStorage.getItem('access_token');
+  // const getOneCommunity = async () => {
+  //   try {
+  //     let access_token = await AsyncStorage.getItem('access_token');
 
-      let getOneCommunityRequest = await axios({
-        method: 'get',
-        url: `${BaseUrl}/communities/single/${communityId}`,
-        headers: {
-          token: access_token,
-        },
-      });
+  //     let getOneCommunityRequest = await axios({
+  //       method: 'get',
+  //       url: `${BaseUrl}/communities/single/${communityId}`,
+  //       headers: {
+  //         token: access_token,
+  //       },
+  //     });
 
-      if (getOneCommunityRequest.data) {
-        setCommunityProfile(getOneCommunityRequest.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     if (getOneCommunityRequest.data) {
+  //       setCommunityProfile(getOneCommunityRequest.data);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const getCommunityMember = async () => {
     try {
@@ -175,6 +178,32 @@ const CommunityProfileScreen = ({ navigation, route }) => {
           />
         );
     } else if (discussions.length === 0) {
+        <FlatList
+          ListHeaderComponent={
+            <List
+              navigation={navigation}
+              isHeader={false}
+              listData={discussions}
+              customStyle={{ marginBottom: '100%' }}
+              isCommunityDiscussion={true}
+              isMember={
+                communityProfile.community_members.length !== 0
+                  ? communityProfile.community_members[0].type === 'Admin' ||
+                    communityProfile.community_members[0].type === 'Member' ||
+                    communityProfile.community_members[0].type === 'Moderator'
+                    ? true
+                    : false
+                  : false
+              }
+              openCommunityDiscussionNoticeModal={openNoticeModal}
+              inputCommunityDiscussionNoticeModalMessage={
+                inputNoticeModalMessage
+              }
+            />
+          }
+        />
+      );
+    } else {
       return (
         <View style={{ flex: 1, alignItems: 'center' }}>
           <View style={{ paddingTop: '10%', alignItems: 'center' }}>
@@ -195,20 +224,24 @@ const CommunityProfileScreen = ({ navigation, route }) => {
     if (
         communityProfile.type === 2 && 
         communityProfile.isMember && 
-        communityProfile.community_members[0].type === "Admin") {
+        communityProfile.community_members[0].type === "Admin"
+    ) {
       return (
-        <Card child={MemberRequest} customStyle={styles.memberRequestContainerStyle} />
-      )
+        <Card
+          child={MemberRequest}
+          customStyle={styles.memberRequestContainerStyle}
+        />
+      );
     } else {
-      return null
+      return null;
     }
-  }
+  };
 
   const renderMembersDisplay = () => {
     return (
       <View>
         {renderMemberRequestsCard()}
-        <MemberList memberList={communityMember} />
+        <MemberList navigation={navigation} memberList={communityMember} />
       </View>
     );
   };
@@ -242,6 +275,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
         communityType={communityProfile.type}
         inputNoticeModalMessage={inputNoticeModalMessage}
         openNoticeModal={openNoticeModal}
+        closeNoticeModal={closeNoticeModal}
         guidelines={communityProfile.guidelines}
         isAdmin={
           communityProfile !== '' &&
@@ -288,7 +322,7 @@ const styles = StyleSheet.create({
 
   privateCommunityHeaderTextStyle: {
     color: '#464D60',
-    fontSize: 16,
+    fontSize: CalculateHeight(1.8),
   },
 
   privateCommunityTextStyle: {

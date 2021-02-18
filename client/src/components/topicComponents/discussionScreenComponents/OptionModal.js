@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { normal, bold } from '../../../assets/FontSize';
 import BigButton from '../../publicComponents/Button';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,12 +8,20 @@ import {
   clearUserProfile,
 } from '../../../store/actions/ProfileAction';
 import { getHome, clearHome } from '../../../store/actions/HomeAction';
-import { getResponse, getSingleResponse, clearResponse } from '../../../store/actions/ResponseAction';
+import {
+  getResponse,
+  getSingleResponse,
+  clearResponse,
+} from '../../../store/actions/ResponseAction';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 import Share from 'react-native-share';
 import { GenerateDeepLink } from '../../../helper/GenerateDeepLink';
+import { CalculateHeight } from '../../../helper/CalculateSize';
+
+//Component
+import Modal from '../../publicComponents/Modal';
 
 const OptionModal = (props) => {
   const {
@@ -45,17 +53,9 @@ const OptionModal = (props) => {
 
   const [deleteOption, setDeleteOption] = useState(false);
 
-  const OptionModalButton = (buttonTitle) => {
-    return (
-      <TouchableOpacity
-        onPress={() => {
-          buttonTitle === 'Delete' && setDeleteOption(true);
-          buttonTitle === 'Edit participant list' && openPrivateModal();
-          buttonTitle === 'Share' && shareOption();
-        }}>
-        <Text style={styles.optionModalButtonTextStyle}>{buttonTitle}</Text>
-      </TouchableOpacity>
-    );
+  const closeModal = () => {
+    closeOptionModal();
+    setDeleteOption(false);
   };
 
   const shareOption = async () => {
@@ -93,6 +93,54 @@ const OptionModal = (props) => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const DeleteDiscussionOrResponse = async () => {
+    try {
+      let access_token = await AsyncStorage.getItem('access_token');
+
+      let deleteDiscussionOrResponseRequest = await axios({
+        method: 'delete',
+        url:
+          modalType === 'discussion'
+            ? `${BaseUrl}/discussions/delete/${discussionId}`
+            : `${BaseUrl}/responses/${responseId}`,
+        headers: {
+          token: access_token,
+        },
+      });
+
+      if (deleteDiscussionOrResponseRequest.data) {
+        if (modalType === 'discussion') {
+          dispatch(clearHome());
+          dispatch(getHome());
+          navigation.navigate('MainAppNavigation');
+        } else if (deleteResponseFromResponseScreen) {
+          dispatch(clearResponse());
+          dispatch(getSingleResponse(responseScreenId));
+        } else {
+          dispatch(getResponse(discussionId));
+          changePlayer(cardIndex, 'previous');
+        }
+      }
+    } catch (error) {
+      if (error.response.data.msg === 'You have to login first') {
+        dispatch(userLogout());
+      }
+    }
+  };
+
+  const OptionModalButton = (buttonTitle) => {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          buttonTitle === 'Delete' && setDeleteOption(true);
+          buttonTitle === 'Edit participant list' && openPrivateModal();
+          buttonTitle === 'Share' && shareOption();
+        }}>
+        <Text style={styles.optionModalButtonTextStyle}>{buttonTitle}</Text>
+      </TouchableOpacity>
+    );
   };
 
   const DeleteOption = () => {
@@ -134,81 +182,42 @@ const OptionModal = (props) => {
     );
   };
 
-  const DeleteDiscussionOrResponse = async () => {
-    try {
-      let access_token = await AsyncStorage.getItem('access_token');
-
-      let deleteDiscussionOrResponseRequest = await axios({
-        method: 'delete',
-        url:
-          modalType === 'discussion'
-            ? `${BaseUrl}/discussions/delete/${discussionId}`
-            : `${BaseUrl}/responses/${responseId}`,
-        headers: {
-          token: access_token,
-        },
-      });
-
-      if (deleteDiscussionOrResponseRequest.data) {
-        if (modalType === 'discussion') {
-          dispatch(clearHome());
-          dispatch(getHome());
-          navigation.navigate('MainAppNavigation');
-        } else if (deleteResponseFromResponseScreen) {
-          dispatch(clearResponse());
-          dispatch(getSingleResponse(responseScreenId));
-        } else {
-          dispatch(getResponse(discussionId));
-          changePlayer(cardIndex, 'previous');
-        }
-      }
-    } catch (error) {
-      if (error.response.data.msg === 'You have to login first') {
-        dispatch(userLogout());
-      }
-    }
-  };
+  const ModalContent = () => (
+    <>
+      {!deleteOption ? (
+        <>
+          <Text style={styles.headerTextStyle}>
+            {modalType === 'discussion' ? 'Discussion' : 'Response'}
+          </Text>
+          {OptionModalButton('Share')}
+          {/* profileId === userId && OptionModalButton('Edit') */}
+          {profileId === userId &&
+            type === 2 &&
+            modalType === 'discussion' &&
+            OptionModalButton('Edit participant list')}
+          {profileId === userId && OptionModalButton('Delete')}
+        </>
+      ) : (
+        <DeleteOption />
+      )}
+    </>
+  );
 
   return (
-    <Modal animationType="fade" transparent={true} visible={openOptionModal}>
-      <View style={styles.optionModalBackground}>
-        <TouchableOpacity
-          style={{ flex: 1 }}
-          onPress={() => {
-            closeOptionModal();
-            setDeleteOption(false);
-          }}></TouchableOpacity>
-      </View>
-      <View style={styles.optionModalContainerStyle}>
-        <View
-          style={
-            deleteOption
-              ? {
-                  ...styles.modalOptionStyle,
-                  width: '75%',
-                  height: modalType === 'response' ? '25%' : '28.5%',
-                }
-              : styles.modalOptionStyle
-          }>
-          {!deleteOption ? (
-            <>
-              <Text style={styles.headerTextStyle}>
-                {modalType === 'discussion' ? 'Discussion' : 'Response'}
-              </Text>
-              {OptionModalButton('Share')}
-              {/* profileId === userId && OptionModalButton('Edit') */}
-              {profileId === userId &&
-                type === 2 &&
-                modalType === 'discussion' &&
-                OptionModalButton('Edit participant list')}
-              {profileId === userId && OptionModalButton('Delete')}
-            </>
-          ) : (
-            <DeleteOption />
-          )}
-        </View>
-      </View>
-    </Modal>
+    <Modal
+      child={ModalContent}
+      openModal={openOptionModal}
+      closeModal={closeModal}
+      customStyle={
+        deleteOption
+          ? {
+              ...styles.modalOptionStyle,
+              width: '75%',
+              height: modalType === 'response' ? '25%' : '28.5%',
+            }
+          : styles.modalOptionStyle
+      }
+    />
   );
 };
 
@@ -229,6 +238,7 @@ const styles = StyleSheet.create({
   modalOptionStyle: {
     width: '60%',
     minHeight: '10%',
+    height: undefined,
     borderRadius: 20,
     padding: '5%',
     paddingBottom: '7%',
@@ -238,7 +248,7 @@ const styles = StyleSheet.create({
 
   optionModalButtonTextStyle: {
     fontFamily: normal,
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
     color: '#464D60',
   },
 
@@ -253,7 +263,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: bold,
     color: '#6505E1',
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
     paddingTop: '2%',
   },
 

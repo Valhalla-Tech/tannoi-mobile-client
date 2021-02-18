@@ -40,3 +40,14 @@ export const clearData = () => {
     });
   };
 };
+
+export const createdCommunityMessage = (changeState) => {
+  return (dispatch) => {
+    dispatch({
+      type: 'CREATED_COMMUNITY_MESSAGE',
+      payload: {
+        messageStatus: changeState,
+      },
+    });
+  };
+};

@@ -12,6 +12,7 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { bold, normal } from '../../../assets/FontSize';
+import { CalculateHeight, CalculateWidth } from '../../../helper/CalculateSize';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
@@ -221,20 +222,20 @@ const EnterYourProfileScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   enterYourProfileScreenContainerStyle: {
     flex: 1,
-    paddingTop: 70,
-    paddingHorizontal: 25,
+    paddingTop: '15%',
+    paddingHorizontal: '5.5%',
   },
 
   enterYourProfileScreenTitleStyle: {
     marginLeft: '7.5%',
-    fontSize: 20,
+    fontSize: CalculateHeight(2.5),
     fontFamily: bold,
     color: '#464D60',
   },
 
   profileImageStyle: {
-    width: 100,
-    height: 100,
+    width: CalculateWidth(25),
+    height: CalculateWidth(25),
     borderRadius: 50,
   },
 
@@ -253,7 +254,7 @@ const styles = StyleSheet.create({
   },
 
   uploadProfilePhotoButtonTextStyle: {
-    fontSize: 16,
+    fontSize: CalculateHeight(1.8),
     fontFamily: normal,
     color: '#5152D0',
   },
@@ -261,7 +262,7 @@ const styles = StyleSheet.create({
   uploadProfilePhotoInformationTextStyle: {
     marginTop: '8%',
     textAlign: 'center',
-    fontSize: 14,
+    fontSize: CalculateHeight(1.8),
     fontFamily: normal,
     lineHeight: 20,
     color: '#73798C',
@@ -273,17 +274,17 @@ const styles = StyleSheet.create({
   },
 
   formInputStyle: {
-    height: 45,
+    height: '8%',
     borderBottomColor: 'grey',
     borderBottomWidth: 1,
     borderBottomColor: '#E3E6EB',
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
     fontFamily: normal,
     justifyContent: 'center',
   },
 
   enterYourProfileScreenButtonContainerStyle: {
-    height: 55,
+    height: '8%',
   },
 });
 

@@ -14,6 +14,8 @@ import { GlobalPadding } from '../../../constants/Size';
 import { CalculateHeight, CalculateWidth } from '../../../helper/CalculateSize';
 import { bold, normal } from '../../../assets/FontSize';
 import { Picker } from '@react-native-community/picker';
+import { useDispatch } from 'react-redux';
+import { getOneCommunity } from '../../../store/actions/CommuitiesAction';
 
 //Components
 import Header from '../../../components/publicComponents/Header';
@@ -33,6 +35,8 @@ const NewCommunityDiscussionScreen = (props) => {
   const [discussionTitle, setDiscussionTitle] = useState('');
   const [selectedTopic, setSelectedTopic] = useState('Select topic');
   const [isLoading, setIsLoading] = useState(false);
+
+  const dispatch = useDispatch();
 
   const addRecordingFile = (recordingFileInput) => {
     setRecordingFile(recordingFileInput);
@@ -86,9 +90,12 @@ const NewCommunityDiscussionScreen = (props) => {
 
       if (createCommunityDiscussionRequest.data) {
         setIsLoading(false);
+        dispatch(getOneCommunity(communityId));
         navigation.navigate('DiscussionScreen', {
           discussionId: createCommunityDiscussionRequest.data.id,
           isCommunityDiscussion: true,
+          communityId: communityId,
+          fromNewCommunityDiscussion: true,
         });
       }
     } catch (error) {
@@ -111,10 +118,15 @@ const NewCommunityDiscussionScreen = (props) => {
           />
           <Text style={styles.headerTextStyle}>New community discussion</Text>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={createCommunityDiscussion}
+          disabled={recordingFile !== '' ? false : true}>
           <Text
-            onPress={createCommunityDiscussion}
-            style={styles.publishButtonTextStyle}>
+            style={
+              recordingFile !== ''
+                ? styles.publishButtonTextStyle
+                : { ...styles.publishButtonTextStyle, color: '#cccccc' }
+            }>
             Publish
           </Text>
         </TouchableOpacity>
@@ -153,9 +165,17 @@ const NewCommunityDiscussionScreen = (props) => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
-      <View style={isLoading ? {...styles.newCommunityDiscussionContainerStyle, paddingHorizontal: 0} : styles.newCommunityDiscussionContainerStyle}>
+      <View
+        style={
+          isLoading
+            ? {
+                ...styles.newCommunityDiscussionContainerStyle,
+                paddingHorizontal: 0,
+              }
+            : styles.newCommunityDiscussionContainerStyle
+        }>
         <Card
           child={NewCommunityDiscussionForm}
           customStyle={styles.newCommunityDiscussionFormStyle}

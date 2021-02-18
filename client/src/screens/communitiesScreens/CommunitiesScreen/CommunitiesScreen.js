@@ -9,46 +9,54 @@ import {
 import { bold, normal } from '../../../assets/FontSize';
 import { CalculateHeight } from '../../../helper/CalculateSize';
 import { GlobalPadding } from '../../../constants/Size';
-import axios from '../../../constants/ApiServices';
-import AsyncStorage from '@react-native-community/async-storage';
-import BaseUrl from '../../../constants/BaseUrl';
+import { useSelector, useDispatch } from 'react-redux';
+import { getUserCommunity } from '../../../store/actions/CommuitiesAction';
+import { createdCommunityMessage } from '../../../store/actions/CreateCommunityAction';
 
 //Components
 import Card from '../../../components/publicComponents/Card';
 import Header from '../../../components/publicComponents/Header';
 import BackButton from '../../../components/publicComponents/BackButton';
 import CommunityList from '../../../components/communityComponent/CommunityList';
+import Modal from '../../../components/publicComponents/Modal';
 
 //Assets
 import RightArrowIcon from '../../../assets/communitiesAssets/rightArrow.svg';
 import AddCircleIcon from '../../../assets/communitiesAssets/ic-add-circle.svg';
 
 const CommunitiesScreen = ({ navigation }) => {
-  const [userCommunity, setUserCommunity] = useState('');
+
+  const userCommunity = useSelector(
+    (state) => state.CommunitiesReducer.userCommunity,
+  );
+
+  const messageStatus = useSelector(
+    (state) => state.CreateCommunityReducer.messageStatus,
+  );
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getUserCommunity();
+    dispatch(getUserCommunity());
   }, []);
 
-  const getUserCommunity = async () => {
-    try {
-      let access_token = await AsyncStorage.getItem('access_token');
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {});
 
-      let getUserCommunityRequest = await axios({
-        method: 'get',
-        url: `${BaseUrl}/communities/all?communityMember=true`,
-        headers: {
-          token: access_token,
-        },
-      });
+    return unsubscribe;
+  }, []);
 
-      if (getUserCommunityRequest.data) {
-        setUserCommunity(getUserCommunityRequest.data.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  const closeNoticeModal = () => {
+    dispatch(createdCommunityMessage(false));
   };
+
+  const NoticeModal = () => (
+    <>
+      <Text style={styles.noticeModalTextStyle}>
+        Your community has been created
+      </Text>
+    </>
+  );
 
   const HeaderContent = () => {
     return (
@@ -102,6 +110,7 @@ const CommunitiesScreen = ({ navigation }) => {
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
       <View style={styles.communitiesScreeContainerStyle}>
         <FlatList
+          ListHeaderComponentStyle={{ marginBottom: '5%' }}
           ListHeaderComponent={
             <>
               <Card
@@ -114,6 +123,11 @@ const CommunitiesScreen = ({ navigation }) => {
               />
             </>
           }
+        />
+        <Modal
+          child={NoticeModal}
+          openModal={messageStatus}
+          closeModal={closeNoticeModal}
         />
       </View>
     </View>
@@ -138,6 +152,7 @@ const styles = StyleSheet.create({
 
   communitiesScreeContainerStyle: {
     paddingHorizontal: GlobalPadding,
+    flex: 1,
   },
 
   headerTextStyle: {
@@ -168,6 +183,11 @@ const styles = StyleSheet.create({
     color: '#464D60',
     fontSize: CalculateHeight(2.2),
     paddingLeft: '2%',
+  },
+
+  noticeModalTextStyle: {
+    fontFamily: bold,
+    color: '#6505E1',
   },
 });
 

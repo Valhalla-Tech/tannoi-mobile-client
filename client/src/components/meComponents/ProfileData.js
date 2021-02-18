@@ -2,10 +2,14 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { bold, normal } from '../../assets/FontSize';
 import LoadingSpinner from '../publicComponents/LoadingSpinner';
-import { LinearTextGradient } from 'react-native-text-gradient';
+import { LinearTextGradient } from 'react-native-text-gradient';]
+import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
 
 //Icon
 import NoProfilePicture from '../../assets/publicAssets/noProfilePicture.png';
+
+//Component
+import LoadingSpinner from '../publicComponents/LoadingSpinner';
 
 const ProfileData = (props) => {
   const { profile, selectMenu, selectedMenu } = props;
@@ -132,7 +136,7 @@ const styles = StyleSheet.create({
 
   followButtonTextStyle: {
     color: '#0E4EF4',
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
     fontFamily: bold,
   },
 
@@ -141,13 +145,13 @@ const styles = StyleSheet.create({
   },
 
   profileNameStyle: {
-    fontSize: 20,
+    fontSize: CalculateHeight(2.5),
     fontFamily: bold,
   },
 
   locationStyle: {
     fontFamily: normal,
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
   },
 
   profileInfoStyle: {
@@ -161,15 +165,15 @@ const styles = StyleSheet.create({
 
   profileDataStyle: {
     color: '#73798C',
-    fontSize: 12,
+    fontSize: CalculateHeight(1.5),
     fontFamily: normal,
-    marginBottom: -10,
+    marginBottom: CalculateHeight(-1),
   },
 
   profileDataNumberStyle: {
     color: '#464D60',
     fontFamily: bold,
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
   },
 
   profileImageContainerStyle: {
@@ -180,8 +184,8 @@ const styles = StyleSheet.create({
 
   profileImageStyle: {
     borderRadius: 50,
-    height: 80,
-    width: 80,
+    height: CalculateWidth(20),
+    width: CalculateWidth(20),
   },
 
   profileInfoMenuContainerStyle: {
@@ -201,7 +205,7 @@ const styles = StyleSheet.create({
   profileInfoMenutButtonTextStyle: {
     color: '#464D60',
     fontFamily: normal,
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
   },
 });
 

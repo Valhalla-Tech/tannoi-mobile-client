@@ -84,12 +84,23 @@ const MemberRequestScreen = ({ navigation, route }) => {
 
   const CardContent = (itemData) => (
     <>
-      <View style={styles.profileContainerStyle}>
-        <Image
-          source={{ uri: itemData.item.profile_photo_path }}
-          style={styles.profileImageStyle}
-        />
-        <Text style={styles.profileNameStyle}>{itemData.item.name}</Text>
+      <View style={styles.profileAndPostTimeContainerStyle}>
+        <View style={styles.profileContainerStyle}>
+          <Image
+            source={{ uri: itemData.item.profile_photo_path }}
+            style={styles.profileImageStyle}
+          />
+          <Text
+            style={styles.profileNameStyle}
+            onPress={() =>
+              navigation.navigate('UserProfileScreen', {
+                userId: itemData.item.id,
+              })
+            }>
+            {itemData.item.name}
+          </Text>
+        </View>
+        <Text style={styles.postTimeStyle}>{itemData.item.timeSince}</Text>
       </View>
       <ListCardPlayer
         fromBio={true}
@@ -174,10 +185,16 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
 
+  profileAndPostTimeContainerStyle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: '5%',
+  },
+
   profileContainerStyle: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: '5%',
   },
 
   profileImageStyle: {
@@ -188,6 +205,14 @@ const styles = StyleSheet.create({
 
   profileNameStyle: {
     marginLeft: '3%',
+    fontFamily: bold,
+    fontSize: CalculateHeight(1.8),
+    color: '#464D60',
+  },
+
+  postTimeStyle: {
+    fontFamily: normal,
+    fontSize: CalculateHeight(1.5),
   },
 
   cardButtonContainerStyle: {

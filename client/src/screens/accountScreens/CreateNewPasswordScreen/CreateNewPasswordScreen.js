@@ -7,6 +7,7 @@ import {
   Keyboard,
 } from 'react-native';
 import { bold } from '../../../assets/FontSize';
+import { CalculateHeight } from '../../../helper/CalculateSize';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 
@@ -167,7 +168,13 @@ const CreateNewPasswordScreen = ({ route, navigation }) => {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.createNewPasswordScreenContainerStyle}>
-        <BackButton navigation={navigation} screen="WelcomeScreen" />
+        <BackButton
+          styleOption={{
+            marginVertical: '10%',
+          }}
+          navigation={navigation}
+          screen="WelcomeScreen"
+        />
         <Text style={styles.createNewPasswordTitleStyle}>
           Create new password
         </Text>
@@ -190,12 +197,12 @@ const CreateNewPasswordScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   createNewPasswordScreenContainerStyle: {
     flex: 1,
-    paddingHorizontal: 24,
+    paddingHorizontal: '5.5%',
   },
 
   createNewPasswordTitleStyle: {
     color: '#464D60',
-    fontSize: 28,
+    fontSize: CalculateHeight(3.5),
     fontFamily: bold,
     marginBottom: '6%',
   },
@@ -203,7 +210,7 @@ const styles = StyleSheet.create({
   noticeModalMessageStyle: {
     fontFamily: bold,
     color: '#6505E1',
-    fontSize: 18,
+    fontSize: CalculateHeight(2),
   },
 
   noticeModalButtonContainerStyle: {

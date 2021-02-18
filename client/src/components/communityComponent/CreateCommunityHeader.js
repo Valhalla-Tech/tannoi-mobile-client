@@ -37,8 +37,8 @@ const CreateCommunityHeader = (props) => {
         {isCancelButton && (
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('CommunitiesScreen');
               dispatch(clearData());
+              navigation.navigate('CommunitiesScreen');
             }}>
             <Text style={styles.cancelButtonTextStyle}>Cancel</Text>
           </TouchableOpacity>
