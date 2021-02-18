@@ -20,27 +20,44 @@ import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner'
 import Header from '../../../components/publicComponents/Header';
 import Card from '../../../components/publicComponents/Card';
 import SearchBar from '../../../components/publicComponents/SearchBar';
+import Button from '../../../components/publicComponents/Button';
 
 const InboxScreen = ({ navigation }) => {
   const [inbox, setInbox] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [moreLoader, setMoreLoader] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
 
-  const getInbox = async () => {
+  useEffect(() => {
+    setIsLoading(true);
+    getInbox();
+  }, []);
+
+  const getInbox = async (page) => {
     try {
       let access_token = await AsyncStorage.getItem('access_token');
 
       let getInboxRequest = await axios({
         method: 'get',
-        url: `${BaseUrl}/users/notifications`,
+        url: `${BaseUrl}/users/notifications-all?page=${page ? page : 1}`,
         headers: {
           token: access_token,
         },
       });
 
       if (getInboxRequest.data) {
-        setIsLoading(false);
-        setInbox(getInboxRequest.data);
+        if (page) {
+          setMoreLoader(false);
+          let addNewData = inbox.concat(getInboxRequest.data.data);
+
+          setInbox(addNewData);
+        } else {
+          setIsLoading(false);
+          setInbox(getInboxRequest.data.data);
+          setTotalPage(getInboxRequest.data.pages);
+        }
       }
     } catch (error) {
       console.log(error.response.data.msg);
@@ -49,14 +66,16 @@ const InboxScreen = ({ navigation }) => {
 
   const onRefresh = () => {
     setIsLoading(true);
-    setInbox('');
+    setInbox([]);
+    setCurrentPage(1);
     getInbox();
   };
 
-  useEffect(() => {
-    setIsLoading(true);
-    getInbox();
-  }, []);
+  const nextPage = () => {
+    setMoreLoader(true);
+    getInbox(currentPage + 1);
+    setCurrentPage((prevState) => prevState + 1);
+  };
 
   const HeaderContent = () => {
     return (
@@ -73,10 +92,18 @@ const InboxScreen = ({ navigation }) => {
   };
 
   const inboxCard = (itemData) => {
+    if (itemData.item === null) {
+      console.log(itemData.index);
+    }
+
     if (itemData.item !== null) {
       return (
         <TouchableOpacity
-          style={styles.inboxCardStyle}
+          style={
+            itemData.index + 1 !== inbox.length
+              ? styles.inboxCardStyle
+              : { ...styles.inboxCardStyle, borderBottomWidth: 0 }
+          }
           onPress={() => {
             if (itemData.item.type === 'Followers') {
               navigation.navigate('UserProfileScreen', {
@@ -122,8 +149,6 @@ const InboxScreen = ({ navigation }) => {
           </View>
         </TouchableOpacity>
       );
-    } else {
-      return null;
     }
   };
 
@@ -135,6 +160,26 @@ const InboxScreen = ({ navigation }) => {
             data={inbox}
             keyExtractor={(item, index) => index.toString()}
             renderItem={inboxCard}
+            ListFooterComponent={
+              currentPage < totalPage ? (
+                moreLoader ? (
+                  <LoadingSpinner loadingSpinnerForComponent={true} />
+                ) : (
+                  <View style={styles.loadMoreButtonContainerStyle}>
+                    <Button
+                      buttonStyle={{
+                        color: '#6505E1',
+                        borderColor: '#6505E1',
+                        paddingVertical: '.5%',
+                        paddingHorizontal: '5%',
+                      }}
+                      buttonTitle="More"
+                      buttonFunction={nextPage}
+                    />
+                  </View>
+                )
+              ) : null
+            }
           />
         ) : (
           <LoadingSpinner loadingSpinnerForComponent={true} />
@@ -228,6 +273,12 @@ const styles = StyleSheet.create({
     color: '#73798C',
     fontFamily: normal,
     fontSize: CalculateHeight(1.5),
+  },
+
+  loadMoreButtonContainerStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '5%',
   },
 });
 

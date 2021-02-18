@@ -175,22 +175,24 @@ const List = (props) => {
                 />
               )}
               ListFooterComponent={
-                useMoreButton && moreLoader ? (
-                  <LoadingSpinner loadingSpinnerForComponent={true} />
-                ) : (
-                  <View style={styles.loadMoreButtonContainerStyle}>
-                    <BigButton
-                      buttonStyle={{
-                        color: '#6505E1',
-                        borderColor: '#6505E1',
-                        paddingVertical: '.5%',
-                        paddingHorizontal: '5%',
-                      }}
-                      buttonTitle="More"
-                      buttonFunction={nextPage}
-                    />
-                  </View>
-                )
+                useMoreButton ? (
+                  moreLoader ? (
+                    <LoadingSpinner loadingSpinnerForComponent={true} />
+                  ) : (
+                    <View style={styles.loadMoreButtonContainerStyle}>
+                      <BigButton
+                        buttonStyle={{
+                          color: '#6505E1',
+                          borderColor: '#6505E1',
+                          paddingVertical: '.5%',
+                          paddingHorizontal: '5%',
+                        }}
+                        buttonTitle="More"
+                        buttonFunction={nextPage}
+                      />
+                    </View>
+                  )
+                ) : null
               }
             />
             {isUsingMoreButton && <MoreButton />}
