@@ -92,10 +92,6 @@ const InboxScreen = ({ navigation }) => {
   };
 
   const inboxCard = (itemData) => {
-    if (itemData.item === null) {
-      console.log(itemData.index);
-    }
-
     if (itemData.item !== null) {
       return (
         <TouchableOpacity

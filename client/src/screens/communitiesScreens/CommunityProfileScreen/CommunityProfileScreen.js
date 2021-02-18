@@ -156,7 +156,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
       </View>
     );
   };
-  console.log(discussions)
+
   const renderDiscussionsDisplay = () => {
     if (discussions.length != 0) {
       return (
@@ -222,7 +222,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
     return (
       <View>
         {renderMemberRequestsCard()}
-        <MemberList memberList={communityMember} />
+        <MemberList navigation={navigation} memberList={communityMember} />
       </View>
     );
   };
