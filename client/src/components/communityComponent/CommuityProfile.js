@@ -7,9 +7,9 @@ import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
 import { LinearTextGradient } from 'react-native-text-gradient';
 import { useDispatch } from 'react-redux';
-import { getUserCommunity } from '../../store/actions/CommuitiesAction';
+import { getUserCommunity, getOneCommunity } from '../../store/actions/CommuitiesAction';
 
-//Icon
+//Icons
 import OptionButton from '../../assets/publicAssets/optionButton.svg';
 import CalendarIcon from '../../assets/communitiesAssets/ic-calendar.svg';
 import EarthIcon from '../../assets/communitiesAssets/ic-earth.svg';
@@ -33,7 +33,6 @@ const CommunityProfile = (props) => {
     selectedDisplay,
     changeSelectedDisplay,
     communityId,
-    getOneCommunity,
     isMember,
     communityType,
     inputNoticeModalMessage,
@@ -90,11 +89,14 @@ const CommunityProfile = (props) => {
 
       if (joinCommunityRequest.data) {
         setRecorder(false);
-        getOneCommunity();
+        dispatch(getOneCommunity(communityId));
         dispatch(getUserCommunity());
 
         if (recordingFile === undefined) {
           inputNoticeModalMessage('You are now a member of this community');
+          openNoticeModal();
+        } else if (recordingFile) {
+          inputNoticeModalMessage('Request sent to the community admin');
           openNoticeModal();
         }
       }

@@ -14,7 +14,10 @@ import { GlobalPadding } from '../../../constants/Size';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
+import { useDispatch } from 'react-redux';
+import { getOneCommunity } from '../../../store/actions/CommuitiesAction';
 
+//Components
 import Header from '../../../components/publicComponents/Header';
 import BackButton from '../../../components/publicComponents/BackButton';
 import Card from '../../../components/publicComponents/Card';
@@ -27,6 +30,8 @@ const GuidelinesScreen = ({ navigation, route }) => {
 
   const [editedGuidelines, setEditedGuidelines] = useState(guidelines);
   const [isLoading, setIsLoading] = useState(false);
+
+  const dispatch = useDispatch();
 
   const editGuidelines = async () => {
     try {
@@ -50,6 +55,10 @@ const GuidelinesScreen = ({ navigation, route }) => {
 
       if (editGuidelinesRequest.data) {
         setIsLoading(false);
+        dispatch(getOneCommunity(communityId));
+        navigation.navigate('CommunityProfileScreen', {
+          communityId: communityId,
+        });
       }
     } catch (error) {
       setIsLoading(false);
