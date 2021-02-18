@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import { GoogleSignin } from '@react-native-community/google-signin';
 import { useDispatch } from 'react-redux';
 import { bold, normal } from '../../../assets/FontSize';
+import { CalculateHeight } from '../../../helper/CalculateSize';
 import {
   GoogleSignIn,
   FacebookSignIn,
@@ -182,13 +183,13 @@ const styles = StyleSheet.create({
   headerBoldTextStyle: {
     fontFamily: bold,
     marginTop: '10%',
-    fontSize: 22,
+    fontSize: CalculateHeight(3),
   },
 
   headerNormalTextStyle: {
     fontFamily: normal,
     textAlign: 'center',
-    fontSize: 15,
+    fontSize: CalculateHeight(2),
   },
 
   loginButtonTextStyle: {

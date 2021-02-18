@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
 import { useSelector } from 'react-redux';
-import { CalculateWidth } from '../../../helper/CalculateSize';
+import { CalculateWidth, CalculateHeight } from '../../../helper/CalculateSize';
 
 //Icons
 import TickIcon from '../../../assets/publicAssets/tickIcon.png';
@@ -112,10 +112,9 @@ const ClosedCard = (props) => {
 const styles = StyleSheet.create({
   closedCardContainerStyle: {
     backgroundColor: '#FFFFFF',
-    marginHorizontal: 8,
-    marginBottom: 8,
+    marginBottom: '2%',
     borderRadius: 8,
-    padding: 16,
+    padding: '3.5%',
   },
 
   profileAndPostTimeContainerStyle: {
@@ -131,32 +130,32 @@ const styles = StyleSheet.create({
 
   profileImageStyle: {
     borderRadius: 50,
-    height: 24,
-    width: 24,
-    marginRight: 12,
+    height: CalculateWidth(6),
+    width: CalculateWidth(6),
+    marginRight: '5.1%',
   },
 
   profileNameStyle: {
-    fontSize: 14,
+    fontSize: CalculateHeight(1.8),
     color: '#464D60',
     fontFamily: bold,
   },
 
   tickIconStyle: {
-    height: 15,
-    width: 15,
+    height: CalculateWidth(3.5),
+    width: CalculateWidth(3.5),
     marginLeft: '2%',
   },
 
   postTimeStyle: {
     color: '#73798C',
-    fontSize: 12,
+    fontSize: CalculateHeight(1.5),
     fontFamily: normal,
   },
 
   discussionTitleStyle: {
     marginVertical: '2%',
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
     fontFamily: bold,
   },
 
@@ -167,7 +166,7 @@ const styles = StyleSheet.create({
   },
 
   captionTextStyle: {
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
     color: '#464D60',
     fontFamily: normal,
     marginTop: '2%',
@@ -182,7 +181,7 @@ const styles = StyleSheet.create({
   },
 
   responseDataTextStyle: {
-    fontSize: 12,
+    fontSize: CalculateHeight(1.5),
     color: '#73798C',
     fontFamily: normal,
   },

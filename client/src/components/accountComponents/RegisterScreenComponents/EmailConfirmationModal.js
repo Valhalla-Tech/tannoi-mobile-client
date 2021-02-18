@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { bold, normal } from '../../../assets/FontSize';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
+import { CalculateHeight, CalculateWidth } from '../../../helper/CalculateSize';
 
 //Components
 import LoadingSpinner from '../../publicComponents/LoadingSpinner';
@@ -204,15 +205,14 @@ const styles = StyleSheet.create({
   confirmationEmailModalTitleStyle: {
     marginTop: '10%',
     color: '#464D60',
-    fontSize: 28,
+    fontSize: CalculateHeight(3.5),
     fontFamily: bold,
   },
 
   confirmationEmailModalInstructionStyle: {
     marginTop: '5%',
     marginBottom: '2%',
-    fontSize: 16,
-    lineHeight: 24,
+    fontSize: CalculateHeight(2),
     color: '#73798C',
   },
 
@@ -224,10 +224,10 @@ const styles = StyleSheet.create({
   codeInputStyle: {
     borderWidth: 1,
     width: '18%',
-    height: 56,
+    height: CalculateWidth(15),
     textAlign: 'center',
     justifyContent: 'center',
-    fontSize: 30,
+    fontSize: CalculateHeight(3),
     borderRadius: 5,
     borderColor: '#E3E6EB',
     marginRight: '5%',
@@ -239,13 +239,13 @@ const styles = StyleSheet.create({
   },
 
   sendAgainEmailTextStyle: {
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
     fontFamily: normal,
   },
 
   sendAgainEmailButtonTextStyle: {
     color: '#2f3dfa',
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
     fontFamily: normal,
   },
 });

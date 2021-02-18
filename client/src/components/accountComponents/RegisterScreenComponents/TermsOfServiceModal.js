@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
+import { CalculateHeight } from '../../../helper/CalculateSize';
 
 //Components
 import CloseButton from '../../publicComponents/CloseButton';
@@ -71,20 +72,20 @@ const styles = StyleSheet.create({
   termsOfServiceTitleStyle: {
     marginTop: '10%',
     marginBottom: '5%',
-    fontSize: 28,
+    fontSize: CalculateHeight(3),
     fontFamily: bold,
     color: '#464D60',
   },
 
   termsOfServiceArticleTitleStyle: {
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
     marginBottom: '2%',
     fontFamily: normal,
     color: '#5152D0',
   },
 
   termsOfServiceArticleStyle: {
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
     fontFamily: normal,
     marginBottom: '8%',
     color: '#464D60',

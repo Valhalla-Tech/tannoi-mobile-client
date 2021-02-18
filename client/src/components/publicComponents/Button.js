@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { medium } from '../../assets/FontSize';
+import { CalculateHeight } from '../../helper/CalculateSize';
 
 import FacebookLogo from '../../assets/publicAssets/facebookIcon.svg';
 import GoogleLogo from '../../assets/publicAssets/googleIcon.svg';
@@ -50,9 +51,9 @@ const WelcomePageButton = (props) => {
 
 const styles = StyleSheet.create({
   loginButtonContainerStyle: {
-    padding: 10,
+    padding: '3%',
     borderRadius: 10,
-    marginBottom: 10,
+    marginBottom: '3%',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
@@ -60,13 +61,13 @@ const styles = StyleSheet.create({
   },
 
   buttonTitleStyle: {
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
     fontFamily: medium,
   },
 
   buttonIconStyle: {
     position: 'absolute',
-    left: 15,
+    left: '5%',
   },
 });
 

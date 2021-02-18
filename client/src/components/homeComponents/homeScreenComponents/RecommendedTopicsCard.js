@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import { normal } from '../../../assets/FontSize';
-import { CalculateWidth } from '../../../helper/CalculateSize';
+import { CalculateWidth, CalculateHeight } from '../../../helper/CalculateSize';
 
 const RecommendedTopicsCard = (props) => {
   const {
@@ -101,21 +101,21 @@ const styles = StyleSheet.create({
   },
 
   topicIconStyle: {
-    height: 40,
-    width: 40,
+    height: CalculateWidth(10),
+    width: CalculateWidth(10),
     borderRadius: 50,
   },
 
   topicNameStyle: {
     color: '#464D60',
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
     fontFamily: normal,
     marginBottom: -5,
   },
 
   topicDiscussionStyle: {
     color: '#73798C',
-    fontSize: 12,
+    fontSize: CalculateHeight(1.5),
     fontFamily: normal,
   },
 });

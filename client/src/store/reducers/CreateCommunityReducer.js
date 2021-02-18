@@ -4,6 +4,7 @@ const defaultState = {
   communityDescription: '',
   communityGuideline: '',
   communityType: '',
+  messageStatus: false,
 };
 
 const reducer = (state = defaultState, action) => {
@@ -39,6 +40,10 @@ const reducer = (state = defaultState, action) => {
         communityGuideline: '',
         communityType: '',
       };
+    case 'CREATED_COMMUNITY_MESSAGE':
+      let setMessageStatus = action.payload.messageStatus;
+
+      return { ...state, messageStatus: setMessageStatus };
     default:
       return state;
   }

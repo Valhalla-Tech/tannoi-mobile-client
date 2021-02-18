@@ -160,10 +160,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: '4.2%',
     backgroundColor: '#FFFFFF',
   },
-
-  sectionStyle: {
-    marginBottom: -14,
-  },
 });
 
 export default HomeScreen;

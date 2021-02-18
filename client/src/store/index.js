@@ -13,6 +13,7 @@ import PrivateDiscussionReducer from './reducers/PrivateDiscussionReducer';
 import SearchReducer from './reducers/SearchReducer';
 import PlayerReducer from './reducers/PlayerReducer';
 import CreateCommunityReducer from './reducers/CreateCommunityReducer';
+import CommunitiesReducer from './reducers/CommunitiesReducer';
 
 const reducer = combineReducers({
   LoginReducer,
@@ -26,6 +27,7 @@ const reducer = combineReducers({
   SearchReducer,
   PlayerReducer,
   CreateCommunityReducer,
+  CommunitiesReducer,
 });
 
 const store = createStore(reducer, applyMiddleware(thunk));

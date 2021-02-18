@@ -1,26 +1,24 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { ScreenHeight } from '../../constants/Size';
+import { ScreenHeight } from '../constants/Size';
 
 //Icons
-import HomeIcon from '../../assets/homeAssets/homeIcon.svg';
-import HomeIconNotActive from '../../assets/homeAssets/homeIconNotActive.svg';
-import TopicICon from '../../assets/topicAssets/topicIcon.svg';
-import TopicIconNotActive from '../../assets/topicAssets/topicIconNotActive.svg';
-import InboxIcon from '../../assets/inboxAssets/inboxIcon.svg';
-import InboxIconNotActive from '../../assets/inboxAssets/inboxIconNotActive.svg';
-import MeIcon from '../../assets/meAssets/meIcon.svg';
-import MeIconNotActive from '../../assets/meAssets/meIconNotActive.svg';
-
-//Navigations
-import HomeNavigation from '../../navigations/HomeNavigation';
-import TopicNavigation from '../../navigations/TopicNavigation';
-import InboxNavigation from '../../navigations/InboxNavigation';
-import MeNavigation from '../../navigations/MeNavigation';
+import HomeIcon from '../assets/homeAssets/homeIcon.svg';
+import HomeIconNotActive from '../assets/homeAssets/homeIconNotActive.svg';
+import TopicICon from '../assets/topicAssets/topicIcon.svg';
+import TopicIconNotActive from '../assets/topicAssets/topicIconNotActive.svg';
+import InboxIcon from '../assets/inboxAssets/inboxIcon.svg';
+import InboxIconNotActive from '../assets/inboxAssets/inboxIconNotActive.svg';
+import MeIcon from '../assets/meAssets/meIcon.svg';
+import MeIconNotActive from '../assets/meAssets/meIconNotActive.svg';
 
 //Screen
-import NewDiscussionScreen from '../../screens/topicScreens/NewDiscussionScreen';
+import HomeScreen from '../screens/homeScreens/HomeScreen';
+import TopicIndexScreen from '../screens/topicScreens/TopicIndexScreen';
+import InboxScreen from '../screens/inboxScreen/InboxScreen';
+import MeScreen from '../screens/meScreens/MeScreen';
+import NewDiscussionScreen from '../screens/topicScreens/NewDiscussionScreen';
 
 const calculateHeight = (input) => {
   return (input / 100) * ScreenHeight;
@@ -48,7 +46,7 @@ const NavigationBar = (props) => {
       }}>
       <Tab.Screen
         name="Home"
-        component={HomeNavigation}
+        component={HomeScreen}
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ focused }) => (
@@ -75,7 +73,7 @@ const NavigationBar = (props) => {
       />
       <Tab.Screen
         name="Topics"
-        component={TopicNavigation}
+        component={TopicIndexScreen}
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ focused }) => (
@@ -127,7 +125,7 @@ const NavigationBar = (props) => {
       />
       <Tab.Screen
         name="Inbox"
-        component={InboxNavigation}
+        component={InboxScreen}
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ focused }) => (
@@ -154,7 +152,7 @@ const NavigationBar = (props) => {
       />
       <Tab.Screen
         name="Me"
-        component={MeNavigation}
+        component={MeScreen}
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ focused }) => (

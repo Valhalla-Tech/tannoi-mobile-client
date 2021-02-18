@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import { bold, normal } from '../../assets/FontSize';
-import { CalculateWidth } from '../../helper/CalculateSize';
+import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
 
 //Icons
 import LockIcon from '../../assets/homeAssets/lockIcon.png';
@@ -32,6 +32,9 @@ const HomeListCard = (props) => {
     responseId,
     caption,
     isCommunityDiscussion,
+    isMember,
+    openCommunityDiscussionNoticeModal,
+    inputCommunityDiscussionNoticeModalMessage,
   } = props;
 
   const HomeListCardData = () => {
@@ -112,6 +115,9 @@ const HomeListCard = (props) => {
             responseId: responseId,
             discussionId: discussionId,
           });
+        } else if (isMember !== undefined && !isMember) {
+          openCommunityDiscussionNoticeModal()
+          inputCommunityDiscussionNoticeModalMessage('You are not a member of this community')
         } else {
           navigation.push('DiscussionScreen', {
             discussionId: discussionId,
@@ -159,15 +165,15 @@ const styles = StyleSheet.create({
   },
 
   nameTextStyle: {
-    fontSize: 14,
+    fontSize: CalculateHeight(1.8),
     color: '#464D60',
     marginLeft: '3%',
     fontFamily: normal,
   },
 
   tickIconStyle: {
-    height: 15,
-    width: 15,
+    height: CalculateWidth(3.5),
+    width: CalculateWidth(3.5),
     marginLeft: '2%',
   },
 
@@ -177,7 +183,7 @@ const styles = StyleSheet.create({
   },
 
   titleTextStyle: {
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
     color: '#464D60',
     fontFamily: bold,
     width: 267,
@@ -190,7 +196,7 @@ const styles = StyleSheet.create({
 
   cardInfoStyle: {
     marginRight: '6%',
-    fontSize: 12,
+    fontSize: CalculateHeight(1.5),
     color: '#73798C',
     fontFamily: normal,
   },
@@ -201,7 +207,7 @@ const styles = StyleSheet.create({
 
   postTimeStyle: {
     marginBottom: '6%',
-    fontSize: 12,
+    fontSize: CalculateHeight(1.5),
     color: '#73798C',
     fontFamily: normal,
   },

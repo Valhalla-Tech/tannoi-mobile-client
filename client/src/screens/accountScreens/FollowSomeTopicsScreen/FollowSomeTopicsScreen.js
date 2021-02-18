@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { useSelector, useDispatch } from 'react-redux';
 import { userLogin } from '../../../store/actions/LoginAction';
 import { bold, normal } from '../../../assets/FontSize';
+import { CalculateHeight } from '../../../helper/CalculateSize';
 import axios from '../../../constants/ApiServices';
 import { getTopic } from '../../../store/actions/TopicAction';
 import BaseUrl from '../../../constants/BaseUrl';
@@ -151,35 +152,34 @@ const FollowSomeTopicsScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   followSomeTopicsScreenContainerStyle: {
     flex: 1,
-    paddingHorizontal: 24,
+    paddingHorizontal: '5.5%',
   },
 
   backButtonAndTitleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginVertical: '10%'
   },
 
   followSomeTopicsScreenTitleStyle: {
     color: '#464D60',
-    marginTop: '15.5%',
-    marginBottom: '12%',
     marginLeft: '4.5%',
-    fontSize: 20,
+    fontSize: CalculateHeight(2.5),
     fontFamily: bold,
   },
 
   FollowSomeTopicsScreenInstructionStyle: {
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
     color: '#464D60',
     lineHeight: 24,
-    marginBottom: 10,
+    marginBottom: '5%',
     fontFamily: normal,
   },
 
   cardsContainerStyle: {
-    marginTop: 25,
-    paddingBottom: 100,
+    marginTop: '10%',
+    paddingBottom: '30%',
   },
 });
 

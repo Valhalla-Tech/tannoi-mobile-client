@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { bold } from '../../../assets/FontSize';
+import { CalculateHeight } from '../../../helper/CalculateSize';
 import {
   GoogleSignIn,
   FacebookSignIn,
@@ -95,7 +96,12 @@ const LoginScreen = ({ navigation }) => {
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.loginScreenContainerStyle}>
-        <BackButton navigation={navigation} />
+        <BackButton
+          styleOption={{
+            marginVertical: '10%',
+          }}
+          navigation={navigation}
+        />
         <Text style={styles.loginTitleStyle}>Login to tannOi</Text>
         <LoginButton />
       </View>
@@ -105,13 +111,12 @@ const LoginScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   loginScreenContainerStyle: {
-    paddingLeft: 24,
-    paddingRight: 24,
+    paddingHorizontal: '5.5%',
   },
 
   loginTitleStyle: {
     color: '#464D60',
-    fontSize: 28,
+    fontSize: CalculateHeight(3.5),
     fontFamily: bold,
     marginBottom: '10%',
   },
