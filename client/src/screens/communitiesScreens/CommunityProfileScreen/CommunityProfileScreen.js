@@ -48,7 +48,9 @@ const CommunityProfileScreen = ({ navigation, route }) => {
     (state) => state.DiscussionReducer.discussions,
   );
 
-  const communityProfile = useSelector(state => state.CommunitiesReducer.communityProfile);
+  const communityProfile = useSelector(
+    (state) => state.CommunitiesReducer.communityProfile,
+  );
 
   const dispatch = useDispatch();
 
@@ -160,24 +162,9 @@ const CommunityProfileScreen = ({ navigation, route }) => {
 
   const renderDiscussionsDisplay = () => {
     if (!discussions) {
-      return (
-        <LoadingSpinner loadingSpinnerForComponent={true} />
-      )
+      return <LoadingSpinner loadingSpinnerForComponent={true} />;
     } else if (discussions.length > 0) {
-        return (
-          <FlatList
-            ListHeaderComponent={
-              <List
-                navigation={navigation}
-                isHeader={false}
-                listData={discussions}
-                customStyle={{ marginBottom: '100%' }}
-                isCommunityDiscussion={true}
-              />
-            }
-          />
-        );
-    } else if (discussions.length === 0) {
+      return (
         <FlatList
           ListHeaderComponent={
             <List
@@ -202,7 +189,8 @@ const CommunityProfileScreen = ({ navigation, route }) => {
             />
           }
         />
-    } else {
+      );
+    } else if (discussions.length === 0) {
       return (
         <View style={{ flex: 1, alignItems: 'center' }}>
           <View style={{ paddingTop: '10%', alignItems: 'center' }}>
@@ -221,9 +209,9 @@ const CommunityProfileScreen = ({ navigation, route }) => {
 
   const renderMemberRequestsCard = () => {
     if (
-        communityProfile.type === 2 && 
-        communityProfile.isMember && 
-        communityProfile.community_members[0].type === "Admin"
+      communityProfile.type === 2 &&
+      communityProfile.isMember &&
+      communityProfile.community_members[0].type === 'Admin'
     ) {
       return (
         <Card
@@ -284,7 +272,9 @@ const CommunityProfileScreen = ({ navigation, route }) => {
             : false
         }
       />
-      {!communityProfile || communityProfile.type == 1 || communityProfile.isMember
+      {!communityProfile ||
+      communityProfile.type == 1 ||
+      communityProfile.isMember
         ? renderDisplay()
         : RenderPrivateCommunityState()}
       {communityProfile.isMember && (
