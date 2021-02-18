@@ -175,7 +175,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
           }
         />
       );
-    } else if (discussions.length === 0) {
+    } else if (discussions.length > 0) {
       return (
         <FlatList
           ListHeaderComponent={
