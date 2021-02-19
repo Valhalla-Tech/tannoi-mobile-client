@@ -29,25 +29,32 @@ const ProfileBar = (props) => {
           <Image source={tickIcon} style={styles.tickIconStyle} />
         )}
       </View>
-      {user !== '' && user.type !== 1 && (
-        <TouchableOpacity
-          onPress={() => navigation.navigate('VerificationNavigation')}
-          style={styles.verifyButtonStyle}>
-          <Text style={styles.verifyButtonTextStyle}>VERIFY</Text>
-        </TouchableOpacity>
-      )}
-      <Button
-        buttonTitle="Communities"
-        buttonStyle={{
-          color: '#6505E1',
-          borderColor: '#6505E1',
-          padding: 0,
-          marginBottom: 0,
-          fontSize: 12.5,
-          paddingHorizontal: '2%',
-        }}
-        buttonFunction={() => navigation.navigate('CommunitiesNavigation')}
-      />
+      <View style={styles.profileBarButtonContainerStyle}>
+        {user !== '' && user.type !== 1 && (
+          // <TouchableOpacity
+          //   onPress={() => navigation.navigate('VerificationNavigation')}
+          //   style={styles.verifyButtonStyle}>
+          //   <Text style={styles.verifyButtonTextStyle}>VERIFY</Text>
+          // </TouchableOpacity>
+          <Button
+            buttonTitle="Verify"
+            buttonStyle={styles.verifyButtonStyle}
+            buttonFunction={() => navigation.navigate('VerificationNavigation')}
+          />
+        )}
+        <Button
+          buttonTitle="Communities"
+          buttonStyle={{
+            color: '#6505E1',
+            borderColor: '#6505E1',
+            padding: 0,
+            marginBottom: 0,
+            fontSize: CalculateHeight(1.5),
+            paddingHorizontal: '2%',
+          }}
+          buttonFunction={() => navigation.navigate('CommunitiesNavigation')}
+        />
+      </View>
     </View>
   );
 };
@@ -63,15 +70,13 @@ const styles = StyleSheet.create({
   },
 
   verifyButtonStyle: {
-    borderWidth: 1,
-    paddingHorizontal: '1%',
-    borderRadius: 10,
-    borderColor: '#56c930',
-  },
-
-  verifyButtonTextStyle: {
-    fontFamily: bold,
     color: '#56c930',
+    borderColor: '#56c930',
+    padding: 0,
+    marginBottom: 0,
+    fontSize: CalculateHeight(1.5),
+    paddingHorizontal: '2%',
+    marginRight: '5%'
   },
 
   profileInfoContainerStyle: {
@@ -96,6 +101,11 @@ const styles = StyleSheet.create({
     height: CalculateWidth(3.5),
     width: CalculateWidth(3.5),
     marginLeft: '2%',
+  },
+
+  profileBarButtonContainerStyle: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
 });
 

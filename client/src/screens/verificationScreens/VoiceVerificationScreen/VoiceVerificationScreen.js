@@ -5,7 +5,7 @@ import { bold, normal } from '../../../assets/FontSize';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
-import { ScreenHeight } from '../../../constants/Size';
+import { CalculateHeight } from '../../../helper/CalculateSize';
 
 //Image
 import ScreenImage from '../../../assets/verificationAssets/Illustration-Tannoi-Apps-04.png';
@@ -16,10 +16,6 @@ import Recorder from '../../../components/publicComponents/Recorder';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 import StepCount from '../../../components/verificationComponent/StepCount';
-
-const calculateHeight = (input) => {
-  return (input / 100) * ScreenHeight;
-};
 
 const VoiceVerificationScreen = ({ navigation }) => {
   const [recordingFile, setRecordingFile] = useState('');
@@ -145,6 +141,7 @@ const VoiceVerificationScreen = ({ navigation }) => {
                   color: '#FFFFFF',
                   backgroundColor: '#a1a5ab',
                   borderWidth: 0,
+                  marginTop: '5%',
                 }
               : {
                   color: '#FFFFFF',
@@ -170,14 +167,14 @@ const styles = StyleSheet.create({
   backButtonTextStyle: {
     color: '#6505E1',
     fontFamily: bold,
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
   },
 
   imageContainerStyle: {
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: '30%',
-    maxHeight: calculateHeight(35),
+    maxHeight: CalculateHeight(35),
   },
 
   imageStyle: {
@@ -188,21 +185,21 @@ const styles = StyleSheet.create({
   boldTextStyle: {
     textAlign: 'center',
     fontFamily: bold,
-    fontSize: 24,
+    fontSize: CalculateHeight(3),
     paddingBottom: -1.5,
   },
 
   normalTextStyle: {
     textAlign: 'center',
     fontFamily: normal,
-    fontSize: 16
+    fontSize: CalculateHeight(2),
   },
 
   randomWordStyle: {
     textAlign: 'center',
     fontFamily: bold,
-    fontSize: 36,
-    marginBottom: -40,
+    fontSize: CalculateHeight(4.5),
+    marginBottom: CalculateHeight(-3),
   },
 });
 

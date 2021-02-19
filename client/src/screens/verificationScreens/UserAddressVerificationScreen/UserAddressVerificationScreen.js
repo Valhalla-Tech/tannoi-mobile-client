@@ -18,7 +18,7 @@ import {
 } from '../../../store/actions/VerificationAction';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import axios from '../../../constants/ApiServices';
-import { ScreenHeight } from '../../../constants/Size';
+import { CalculateHeight, CalculateWidth } from '../../../helper/CalculateSize';
 
 //Image
 import ScreenImage from '../../../assets/verificationAssets/Illustration-Tannoi-Apps-03.png';
@@ -27,10 +27,6 @@ import ScreenImage from '../../../assets/verificationAssets/Illustration-Tannoi-
 import BigButton from '../../../components/publicComponents/Button';
 import FormInput from '../../../components/publicComponents/FormInput';
 import StepCount from '../../../components/verificationComponent/StepCount';
-
-const calculateHeight = (input) => {
-  return (input / 100) * ScreenHeight;
-};
 
 const UserAddressVerificationScreen = ({ navigation }) => {
   const streetFromStore = useSelector(
@@ -209,7 +205,7 @@ const UserAddressVerificationScreen = ({ navigation }) => {
             <View style={styles.imageContainerStyle}>
               <Image source={ScreenImage} style={styles.imageStyle} />
             </View>
-            <View style={{paddingHorizontal: '2%'}}>
+            <View style={{ paddingHorizontal: '2%' }}>
               <Text style={styles.boldTextStyle}>
                 We ask for your address to know that you are serious
               </Text>
@@ -261,14 +257,14 @@ const styles = StyleSheet.create({
   backButtonTextStyle: {
     color: '#6505E1',
     fontFamily: bold,
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
   },
 
   imageContainerStyle: {
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: '35%',
-    maxHeight: calculateHeight(35),
+    maxHeight: CalculateHeight(35),
     marginTop: '5%',
   },
 
@@ -280,19 +276,19 @@ const styles = StyleSheet.create({
   boldTextStyle: {
     textAlign: 'center',
     fontFamily: bold,
-    fontSize: 24,
+    fontSize: CalculateHeight(3),
     marginBottom: '2%',
   },
 
   normalTextStyle: {
     textAlign: 'center',
     fontFamily: normal,
-    fontSize: 16
+    fontSize: CalculateHeight(2),
   },
 
   formContainerStyle: {
     justifyContent: 'space-between',
-    height: calculateHeight(39),
+    height: CalculateHeight(39),
     marginTop: '10%',
     marginBottom: '12.5%',
   },
@@ -303,22 +299,21 @@ const styles = StyleSheet.create({
 
   formInputCustomStyle: {
     marginBottom: '.5%',
-    height: 30,
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
     paddingVertical: 0,
   },
 
   pickerStyle: {
     borderBottomColor: '#E3E6EB',
-    fontSize: 16,
-    marginLeft: -8,
-    marginBottom: -10,
+    fontSize: CalculateHeight(2),
+    marginLeft: CalculateWidth(-2),
+    marginBottom: CalculateHeight(-1),
     fontFamily: normal,
     color: '#73798C',
   },
 
   inputNameStyle: {
-    fontSize: 14,
+    fontSize: CalculateHeight(1.8),
     fontFamily: normal,
   },
 });
