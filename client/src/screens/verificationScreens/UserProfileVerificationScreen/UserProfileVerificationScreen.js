@@ -18,8 +18,8 @@ import {
   addStepCount,
 } from '../../../store/actions/VerificationAction';
 import { bold, normal } from '../../../assets/FontSize';
-import { ScreenHeight } from '../../../constants/Size';
 import DisplayBirthDate from '../../../helper/DisplayBirthDate';
+import { CalculateHeight, CalculateWidth } from '../../../helper/CalculateSize';
 
 //Image
 import ScreenImage from '../../../assets/verificationAssets/Illustration-Tannoi-Apps-02.png';
@@ -29,10 +29,6 @@ import BigButton from '../../../components/publicComponents/Button';
 import FormInput from '../../../components/publicComponents/FormInput';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import StepCount from '../../../components/verificationComponent/StepCount';
-
-const calculateHeight = (input) => {
-  return (input / 100) * ScreenHeight;
-};
 
 const UserProfileVerificationScreen = ({ navigation }) => {
   const firstNameFromStore = useSelector(
@@ -173,7 +169,7 @@ const UserProfileVerificationScreen = ({ navigation }) => {
             formInputValue={firstName}
             capitalize={true}
           />
-          <Text style={styles.inputNameStyle}>
+          <Text style={styles.inputTextStyle}>
             First name{' '}
             {firstNameValidation && (
               <ErrorMessage message="Please input your first name" />
@@ -188,7 +184,7 @@ const UserProfileVerificationScreen = ({ navigation }) => {
             formInputValue={lastName}
             capitalize={true}
           />
-          <Text style={styles.inputNameStyle}>
+          <Text style={styles.inputTextStyle}>
             Last Name{' '}
             {lastNameValidation && (
               <ErrorMessage message="Please input your last name" />
@@ -233,7 +229,7 @@ const UserProfileVerificationScreen = ({ navigation }) => {
               <Text style={{ fontSize: 16 }}>{birthDateDisplay}</Text>
             </TouchableOpacity>
           )}
-          <Text style={styles.inputNameStyle}>
+          <Text style={styles.inputTextStyle}>
             Date of Birth{' '}
             {birthDateValidation && (
               <ErrorMessage message="Please input your birth date" />
@@ -317,14 +313,14 @@ const styles = StyleSheet.create({
   backButtonTextStyle: {
     color: '#6505E1',
     fontFamily: bold,
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
   },
 
   imageContainerStyle: {
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: '35%',
-    maxHeight: calculateHeight(35),
+    maxHeight: CalculateHeight(38),
   },
 
   imageStyle: {
@@ -335,19 +331,19 @@ const styles = StyleSheet.create({
   boldTextStyle: {
     textAlign: 'center',
     fontFamily: bold,
-    fontSize: 24,
+    fontSize: CalculateHeight(3),
     marginBottom: '2%',
   },
 
   normalTextStyle: {
     textAlign: 'center',
     fontFamily: normal,
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
   },
 
   formContainerStyle: {
     justifyContent: 'space-between',
-    height: calculateHeight(45),
+    height: CalculateHeight(45),
     paddingTop: '10%',
     marginBottom: '12.5%',
   },
@@ -358,24 +354,21 @@ const styles = StyleSheet.create({
 
   formInputCustomStyle: {
     marginBottom: 0,
-    height: 30,
-    fontSize: 16,
     paddingVertical: 0,
   },
 
-  inputNameStyle: {
-    fontSize: 14,
+  inputTextStyle: {
+    fontSize: CalculateHeight(1.8),
     fontFamily: normal,
   },
 
   pickerStyle: {
-    height: 47,
     borderBottomColor: '#E3E6EB',
-    fontSize: 16,
-    marginBottom: -10,
+    fontSize: CalculateHeight(2),
+    marginBottom: CalculateHeight(-1),
     fontFamily: normal,
     color: '#73798C',
-    marginLeft: -8,
+    marginLeft: CalculateWidth(-2),
   },
 
   dateInputStyle: {
