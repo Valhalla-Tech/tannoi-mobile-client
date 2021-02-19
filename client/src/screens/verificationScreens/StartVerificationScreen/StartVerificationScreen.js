@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { deleteVerificationData } from '../../../store/actions/VerificationAction';
 import { bold, normal } from '../../../assets/FontSize';
+import { CalculateHeight } from '../../../helper/CalculateSize';
 
 //Image
 import ScreenImage from '../../../assets/verificationAssets/Illustration-Tannoi-Apps-01.png';
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
   cancelButtonTextStyle: {
     color: '#6505E1',
     fontFamily: bold,
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
   },
 
   imageContainerStyle: {
@@ -82,13 +83,13 @@ const styles = StyleSheet.create({
   boldTextStyle: {
     textAlign: 'center',
     fontFamily: bold,
-    fontSize: 26,
+    fontSize: CalculateHeight(3),
   },
 
   normalTextStyle: {
     textAlign: 'center',
     fontFamily: normal,
-    fontSize: 16,
+    fontSize: CalculateHeight(2),
   },
 });
 

@@ -7,9 +7,12 @@ import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
 import { LinearTextGradient } from 'react-native-text-gradient';
 import { useDispatch } from 'react-redux';
-import { getUserCommunity } from '../../store/actions/CommuitiesAction';
+import {
+  getUserCommunity,
+  getOneCommunity,
+} from '../../store/actions/CommuitiesAction';
 
-//Icon
+//Icons
 import OptionButton from '../../assets/publicAssets/optionButton.svg';
 import CalendarIcon from '../../assets/communitiesAssets/ic-calendar.svg';
 import EarthIcon from '../../assets/communitiesAssets/ic-earth.svg';
@@ -23,8 +26,8 @@ import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
 import Button from '../publicComponents/Button';
 import LoadingSpinner from '../publicComponents/LoadingSpinner';
 import Modal from '../publicComponents/Modal';
-import { min } from 'react-native-reanimated';
 import RecorderModal from '../publicComponents/RecorderModal';
+import FormInput from '../../components/publicComponents/FormInput';
 
 const CommunityProfile = (props) => {
   const {
@@ -33,7 +36,6 @@ const CommunityProfile = (props) => {
     selectedDisplay,
     changeSelectedDisplay,
     communityId,
-    getOneCommunity,
     isMember,
     communityType,
     inputNoticeModalMessage,
@@ -45,8 +47,13 @@ const CommunityProfile = (props) => {
 
   const [actionModal, setActionModal] = useState(false);
   const [recorder, setRecorder] = useState(false);
+  const [isDeletingCommunity, setIsDeletingCommunity] = useState(false);
+  const [isLoadingToDelete, setIsLoadingToDelete] = useState(false);
+  const [deleteConfirmationText, setDeleteConfirmationText] = useState('');
 
   const closeActionModal = () => {
+    setIsDeletingCommunity(false);
+    setDeleteConfirmationText('');
     setActionModal(false);
   };
 
@@ -90,11 +97,14 @@ const CommunityProfile = (props) => {
 
       if (joinCommunityRequest.data) {
         setRecorder(false);
-        getOneCommunity();
+        dispatch(getOneCommunity(communityId));
         dispatch(getUserCommunity());
 
         if (recordingFile === undefined) {
           inputNoticeModalMessage('You are now a member of this community');
+          openNoticeModal();
+        } else if (recordingFile) {
+          inputNoticeModalMessage('Request sent to the community admin');
           openNoticeModal();
         }
       }
@@ -127,6 +137,31 @@ const CommunityProfile = (props) => {
     }
   };
 
+  const deleteCommunity = async () => {
+    try {
+      setIsLoadingToDelete(true);
+
+      let access_token = await AsyncStorage.getItem('access_token');
+
+      let deleteCommunityRequest = await axios({
+        method: 'delete',
+        url: `${BaseUrl}/communities/delete/${communityId}`,
+        headers: {
+          token: access_token,
+        },
+      });
+
+      if (deleteCommunityRequest.data) {
+        setIsLoadingToDelete(false);
+        dispatch(getUserCommunity());
+        navigation.navigate('CommunitiesScreen');
+      }
+    } catch (error) {
+      setIsLoadingToDelete(false);
+      console.log(error);
+    }
+  };
+
   const HeaderContent = () => {
     return (
       <>
@@ -146,6 +181,52 @@ const CommunityProfile = (props) => {
     );
   };
 
+  const DeleteCommunityConfirmation = () => (
+    <>
+      <Text style={styles.deleteCommunityTextStyle}>
+        Write the text below to delete this community
+      </Text>
+      <FormInput
+        dataInput={(input) => setDeleteConfirmationText(input)}
+        formInputTitle="DELETE COMMUNITY"
+        capitalizeAll={true}
+      />
+      <View style={styles.deleteButtonContainerStyle}>
+        <Button
+          buttonStyle={{
+            color: '#FFFFFF',
+            backgroundColor: '#6505E1',
+            padding: '2%',
+            borderWidth: 0,
+            marginRight: '3%',
+          }}
+          buttonTitle="Cancel"
+          buttonFunction={() => setIsDeletingCommunity(false)}
+        />
+        {isLoadingToDelete ? (
+          <LoadingSpinner loadingSpinnerForComponent={true} />
+        ) : (
+          <Button
+            buttonStyle={
+              deleteConfirmationText !== 'DELETE COMMUNITY'
+                ? {
+                    ...styles.deleteButtonStyle,
+                    color: '#cccccc',
+                    borderColor: '#cccccc',
+                  }
+                : styles.deleteButtonStyle
+            }
+            buttonTitle="Delete"
+            buttonFunction={deleteCommunity}
+            disableButton={
+              deleteConfirmationText !== 'DELETE COMMUNITY' ? true : false
+            }
+          />
+        )}
+      </View>
+    </>
+  );
+
   const ActionModalButton = (title, action, customStyle) => (
     <TouchableOpacity
       onPress={() => action()}
@@ -157,22 +238,33 @@ const CommunityProfile = (props) => {
   const ActionModal = () => {
     return (
       <>
-        {isMember && (
-          <>{ActionModalButton('Leave community', leaveCommunity)}</>
+        {isDeletingCommunity ? (
+          DeleteCommunityConfirmation()
+        ) : (
+          <>
+            {isMember && (
+              <>{ActionModalButton('Leave community', leaveCommunity)}</>
+            )}
+            {isMember &&
+              ActionModalButton(
+                'Community guidelines',
+                () => (
+                  navigation.navigate('GuidelinesScreen', {
+                    guidelines: guidelines,
+                    isAdmin: isAdmin,
+                    communityId: communityId,
+                  }),
+                  setActionModal(false)
+                ),
+              )}
+            {isAdmin &&
+              ActionModalButton(
+                'Delete community',
+                () => setIsDeletingCommunity(true),
+                { marginBottom: 0 },
+              )}
+          </>
         )}
-        {isMember &&
-          ActionModalButton(
-            'Community guidelines',
-            () => (
-              navigation.navigate('GuidelinesScreen', {
-                guidelines: guidelines,
-                isAdmin: isAdmin,
-                communityId: communityId,
-              }),
-              setActionModal(false)
-            ),
-            { marginBottom: 0 },
-          )}
       </>
     );
   };
@@ -249,10 +341,9 @@ const CommunityProfile = (props) => {
                     {profile.type == 2 ? <PrivateIcon /> : <EarthIcon />}
                   </View>
                 </View>
-                <Text 
+                <Text
                   style={styles.communityDescriptionStyle}
-                  numberOfLines={2}
-                >
+                  numberOfLines={2}>
                   {profile.description}
                 </Text>
                 <View style={styles.createdAndUniqueCodeContainerStyle}>
@@ -474,6 +565,26 @@ const styles = StyleSheet.create({
   actionModalButtonTextStyle: {
     fontFamily: normal,
     fontSize: CalculateHeight(2),
+  },
+
+  deleteCommunityTextStyle: {
+    fontFamily: bold,
+    color: '#6505E1',
+    fontSize: CalculateHeight(1.8),
+    marginBottom: '3%',
+  },
+
+  deleteButtonContainerStyle: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+
+  deleteButtonStyle: {
+    color: '#6505E1',
+    borderColor: '#6505E1',
+    padding: '2%',
   },
 });
 

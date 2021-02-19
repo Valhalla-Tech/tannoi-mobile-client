@@ -128,6 +128,7 @@ export const getDiscussion = (
               profileName: getDiscussionRequest.data.creator.name,
               postTime: getDiscussionRequest.data.timeSince,
               like: getDiscussionRequest.data.likes,
+              topic: getDiscussionRequest.data.community_topic.name,
               discussionTitle: getDiscussionRequest.data.title,
               hashtags: getDiscussionRequest.data.hashtags,
               replies: getDiscussionRequest.data.response_count,
