@@ -119,6 +119,7 @@ const DiscussionAndResponseList = (props) => {
       data={isResponseScreen ? responseReply : response}
       keyExtractor={(item, index) => index.toString()}
       ref={flatListRef}
+      style={{marginBottom: '20%'}}
       ListHeaderComponent={
         <View style={styles.ListContainerStyle}>
           {isResponseScreen ? (
