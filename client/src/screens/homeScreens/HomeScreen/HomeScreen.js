@@ -76,7 +76,6 @@ const HomeScreen = ({ navigation }) => {
                 navigation={navigation}
                 showCard={true}
                 topHashtag={topHashtag}
-                navigation={navigation}
               />
             </View>
             <View style={styles.homeScreenCardContainerStyle}>
