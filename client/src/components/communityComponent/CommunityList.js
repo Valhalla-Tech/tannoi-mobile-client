@@ -50,16 +50,19 @@ const CommunityList = (props) => {
         />
         <View style={styles.communityDataContainerStyle}>
           <View style={styles.communityNameContainerStyle}>
-            <Text style={styles.communityNameStyle}>{itemData.item.name}</Text>
-            { itemData.item.type == 2 ? <PrivateIcon/> : <EarthIcon/> }
+            <Text style={styles.communityNameStyle}>{itemData.item.name} {itemData.item.type == 2 ? <PrivateIcon /> : <EarthIcon />}</Text>
+            
           </View>
           <View style={styles.communityDescriptionContainerStyle}>
             <Text style={styles.communityDescriptionStyle} numberOfLines={2}>
               {itemData.item.description}
             </Text>
           </View>
-          <View style={{flexDirection: 'row', flex: 1}}>
-              {itemData.item.community_topic_conjunctions && itemData.item.community_topic_conjunctions.map(showCommunityTopics)}
+          <View style={{ flexDirection: 'row', flex: 1 }}>
+            {itemData.item.community_topic_conjunctions &&
+              itemData.item.community_topic_conjunctions.map(
+                showCommunityTopics,
+              )}
           </View>
           <View style={styles.communityMemberAndDiscussionContainerStyle}>
             <View
@@ -155,7 +158,7 @@ const styles = StyleSheet.create({
   },
 
   communityDescriptionContainerStyle: {
-    marginTop: '-1.5%'
+    marginTop: '-1.5%',
   },
 
   communityDescriptionStyle: {
