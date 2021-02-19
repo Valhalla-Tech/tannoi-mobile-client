@@ -13,6 +13,7 @@ const FormInput = (props) => {
     formInputCustomStyle,
     formInputValue,
     capitalize,
+    capitalizeAll,
     Icon,
     iconStyle,
     iconFunction,
@@ -32,7 +33,9 @@ const FormInput = (props) => {
         placeholderTextColor="#73798C"
         onChangeText={(value) => dataInput(value)}
         secureTextEntry={hidePassword && isEyeIcon ? true : false}
-        autoCapitalize={capitalize ? 'sentences' : 'none'}
+        autoCapitalize={
+          capitalizeAll ? 'characters' : capitalize ? 'sentences' : 'none'
+        }
       />
       {isEyeIcon && (
         <TouchableOpacity
