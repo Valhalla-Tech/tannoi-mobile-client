@@ -150,7 +150,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
               navigation={navigation}
               isHeader={false}
               listData={discussions}
-              customStyle={{ marginBottom: '100%' }}
+              customStyle={{ marginBottom: '90%' }}
               isCommunityDiscussion={true}
               isMember={
                 communityProfile.community_members.length !== 0

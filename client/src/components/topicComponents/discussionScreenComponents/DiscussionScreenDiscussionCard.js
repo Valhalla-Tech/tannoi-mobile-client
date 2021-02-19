@@ -321,7 +321,7 @@ const styles = StyleSheet.create({
   },
 
   postTimeStyle: {
-    marginLeft: '19%',
+    marginLeft: '22.5%',
     fontFamily: normal,
     color: '#73798C',
     fontSize: CalculateHeight(1.5),
