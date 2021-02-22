@@ -18,7 +18,7 @@ import {
   getAllDiscussion,
   clearDiscussion,
 } from '../../../store/actions/DiscussionAction';
-import { getOneCommunity } from '../../../store/actions/CommuitiesAction';
+import { getOneCommunity, clearCommunityProfile } from '../../../store/actions/CommuitiesAction';
 
 //Icons
 import NewDiscussionButton from '../../../assets/communitiesAssets/ic-button.svg';
@@ -62,6 +62,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
 
     return () => {
       dispatch(clearDiscussion(false, true));
+      dispatch(clearCommunityProfile());
     };
   }, []);
 

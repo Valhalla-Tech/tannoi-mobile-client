@@ -13,6 +13,10 @@ const reducer = (state = defaultState, action) => {
       let setCommunityProfile = action.payload.communityProfile;
 
       return { ...state, communityProfile: setCommunityProfile };
+    case 'CLEAR_COMMUNITY_PROFILE':
+      return { ...state, communityProfile: '' };
+    case 'CLEAR_USER_COMMUNITY':
+      return { ...state, userCommunity: '' };
     default:
       return state;
   }
