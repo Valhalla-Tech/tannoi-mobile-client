@@ -207,7 +207,18 @@ const CommunityProfileScreen = ({ navigation, route }) => {
     return (
       <View>
         {renderMemberRequestsCard()}
-        <MemberList navigation={navigation} memberList={communityMember} />
+        <MemberList
+          communityId={communityId}
+          navigation={navigation}
+          memberList={communityMember}
+          isAdmin={
+            communityProfile !== '' &&
+            communityProfile.community_members.length !== 0 &&
+            communityProfile.community_members[0].type === 'Admin'
+              ? true
+              : false
+          }
+        />
       </View>
     );
   };
