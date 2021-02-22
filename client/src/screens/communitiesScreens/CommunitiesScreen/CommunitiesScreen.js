@@ -10,7 +10,7 @@ import { bold, normal } from '../../../assets/FontSize';
 import { CalculateHeight } from '../../../helper/CalculateSize';
 import { GlobalPadding } from '../../../constants/Size';
 import { useSelector, useDispatch } from 'react-redux';
-import { getUserCommunity } from '../../../store/actions/CommuitiesAction';
+import { getUserCommunity, clearUserComunity } from '../../../store/actions/CommuitiesAction';
 import { createdCommunityMessage } from '../../../store/actions/CreateCommunityAction';
 
 //Components
@@ -44,6 +44,12 @@ const CommunitiesScreen = ({ navigation }) => {
     const unsubscribe = navigation.addListener('focus', () => {});
 
     return unsubscribe;
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearUserComunity());
+    }
   }, []);
 
   const closeNoticeModal = () => {

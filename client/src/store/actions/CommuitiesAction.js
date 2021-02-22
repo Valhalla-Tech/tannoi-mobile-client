@@ -55,3 +55,19 @@ export const getOneCommunity = (communityId) => {
     }
   };
 };
+
+export const clearCommunityProfile = () => {
+  return (dispatch) => {
+    dispatch({
+      type: 'CLEAR_COMMUNITY_PROFILE',
+    });
+  };
+};
+
+export const clearUserComunity = () => {
+  return (dispatch) => {
+    dispatch({
+      type: 'CLEAR_USER_COMMUNITY',
+    });
+  };
+};
