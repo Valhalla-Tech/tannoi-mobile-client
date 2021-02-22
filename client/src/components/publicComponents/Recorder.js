@@ -125,7 +125,7 @@ class NewDiscussionScreenRecorder extends Component {
   recordingTimer = () => {
     this.countdown = setTimeout(() => {
       this.voiceRecord(true);
-    }, 30000);
+    }, 60000);
   };
 
   clearTimer = () => {
@@ -163,7 +163,7 @@ class NewDiscussionScreenRecorder extends Component {
           this.props.removeRecordingFile && this.props.removeRecordingFile();
           if (this._isMounted) {
             this.setState({
-              timer: 30,
+              timer: 60,
             });
           }
 
