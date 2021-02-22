@@ -143,24 +143,22 @@ const DiscussionScreen = ({ route, navigation }) => {
           <Text style={styles.addResponseButtonTextStyle}>Add response</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.discussionContainerStyle}>
-        <DiscussionAndResponseList
-          changePlayer={changePlayer}
-          discussionId={discussionId}
-          fromNextPreviousButton={fromNextPreviousButton}
-          updateFromNextPreviousButton={updateFromNextPreviousButton}
-          navigation={navigation}
-          openAddResponse={openAddResponse}
-          selectCard={selectCard}
-          openAddResponseModal={openAddResponseModal}
-          closeAddResponseModal={closeAddResponseModal}
-          selectedCard={selectedCard}
-          getIsLikeAndIsDislike={getIsLikeAndIsDislike}
-          flatListRef={flatListRef}
-          scrollDown={scrollDown}
-          isCommunityDiscussion={isCommunityDiscussion}
-        />
-      </View>
+      <DiscussionAndResponseList
+        changePlayer={changePlayer}
+        discussionId={discussionId}
+        fromNextPreviousButton={fromNextPreviousButton}
+        updateFromNextPreviousButton={updateFromNextPreviousButton}
+        navigation={navigation}
+        openAddResponse={openAddResponse}
+        selectCard={selectCard}
+        openAddResponseModal={openAddResponseModal}
+        closeAddResponseModal={closeAddResponseModal}
+        selectedCard={selectedCard}
+        getIsLikeAndIsDislike={getIsLikeAndIsDislike}
+        flatListRef={flatListRef}
+        scrollDown={scrollDown}
+        isCommunityDiscussion={isCommunityDiscussion}
+      />
       <AddResponse
         openModal={openAddResponseModal}
         closeModal={closeAddResponseModal}
@@ -188,10 +186,6 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     justifyContent: 'space-between',
     alignItems: 'center',
-  },
-
-  discussionContainerStyle: {
-    paddingHorizontal: GlobalPadding,
   },
 
   addResponseButtonStyle: {

@@ -119,7 +119,6 @@ const DiscussionAndResponseList = (props) => {
       data={isResponseScreen ? responseReply : response}
       keyExtractor={(item, index) => index.toString()}
       ref={flatListRef}
-      style={{marginBottom: '20%'}}
       ListHeaderComponent={
         <View style={styles.ListContainerStyle}>
           {isResponseScreen ? (
@@ -210,7 +209,7 @@ const DiscussionAndResponseList = (props) => {
         </View>
       }
       renderItem={(itemData) => (
-        <>
+        <View style={{paddingHorizontal: '2%'}}>
           {selectedCard === itemData.index ? (
             <DiscussionScreenPlayerCard
               navigation={navigation}
@@ -274,7 +273,7 @@ const DiscussionAndResponseList = (props) => {
               responseId={itemData.item.id}
             />
           )}
-        </>
+        </View>
       )}
       ListFooterComponent={
         (responseCount !== '' &&
@@ -303,6 +302,7 @@ const DiscussionAndResponseList = (props) => {
 const styles = StyleSheet.create({
   ListContainerStyle: {
     flex: 1,
+    paddingHorizontal: '2%',
   },
 
   moreButtonContainerStyle: {
