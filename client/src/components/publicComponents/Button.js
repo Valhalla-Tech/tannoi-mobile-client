@@ -38,7 +38,7 @@ const WelcomePageButton = (props) => {
       <Text
         style={{
           ...styles.buttonTitleStyle,
-          color: buttonStyle.color,
+          color: buttonStyle.color !== undefined ? buttonStyle.color : 'black',
           fontSize: buttonStyle.fontSize
             ? buttonStyle.fontSize
             : styles.buttonTitleStyle.fontSize,

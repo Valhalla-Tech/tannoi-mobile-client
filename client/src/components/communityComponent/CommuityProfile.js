@@ -503,6 +503,7 @@ const styles = StyleSheet.create({
 
   createdContainerStyle: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
 
   calendarIconContainerStyle: {
@@ -511,6 +512,7 @@ const styles = StyleSheet.create({
 
   countDataContainerStyle: {
     flexDirection: 'row',
+    marginTop: '15%',
   },
 
   countDataStyle: {

@@ -14,7 +14,7 @@ import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
 import Card from '../publicComponents/Card';
 
 const MemberList = (props) => {
-  const { memberList, navigation } = props;
+  const { memberList, navigation, communityId } = props;
 
   const MemberListData = (itemData) => {
     return (
@@ -43,7 +43,7 @@ const MemberList = (props) => {
         data={memberList}
         keyExtractor={(item, index) => index.toString()}
         ListHeaderComponent={
-          <TouchableOpacity onPress={() => navigation.navigate('InviteScreen')} style={styles.memberListDataStyle}>
+          <TouchableOpacity onPress={() => navigation.navigate('InviteScreen', { communityId: communityId })} style={styles.memberListDataStyle}>
             <Text style={styles.inviteToCommunityButtonTextStyle}>Invite to community</Text>
           </TouchableOpacity>
         }

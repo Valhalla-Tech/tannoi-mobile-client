@@ -207,7 +207,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
     return (
       <View>
         {renderMemberRequestsCard()}
-        <MemberList navigation={navigation} memberList={communityMember} />
+        <MemberList communityId={communityId} navigation={navigation} memberList={communityMember} />
       </View>
     );
   };

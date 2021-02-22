@@ -15,6 +15,7 @@ import axios from '../../../constants/ApiServices';
 import AsyncStorage from '@react-native-community/async-storage';
 import BaseUrl from '../../../constants/BaseUrl';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
+import { NavigationAction } from '@react-navigation/native';
 
 //Components
 import Header from '../../../components/publicComponents/Header';
@@ -77,6 +78,14 @@ const InboxScreen = ({ navigation }) => {
     setCurrentPage((prevState) => prevState + 1);
   };
 
+  const userInviteAction = async () => {
+    try {
+      let access_token = await AsyncStorage.getItem('access_token');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const HeaderContent = () => {
     return (
       <>
@@ -125,6 +134,22 @@ const InboxScreen = ({ navigation }) => {
                 responseId: itemData.item.response.id,
                 discussionId: itemData.item.response.discussion_id,
               });
+            } else if (itemData.item.community !== null) {
+              if (itemData.item.type === 'Community Discussion Create') {
+                navigation.push('DiscussionScreen', {
+                  discussionId: itemData.item.discussion_id,
+                  isCommunityDiscussion: true,
+                });
+              } else if (itemData.item.type === 'Community Invite') {
+                navigation.navigate('CommunitiesNavigation', {
+                  screen: 'CommunityProfileScreen',
+                  params: {
+                    communityId: itemData.item.community.id,
+                  },
+                });
+              } else {
+                navigation.navigate('CommunitiesNavigation');
+              }
             } else {
               navigation.navigate('DiscussionScreen', {
                 discussionId: itemData.item.discussion_id,
@@ -133,7 +158,12 @@ const InboxScreen = ({ navigation }) => {
           }}>
           <View style={styles.imageContainerStyle}>
             <Image
-              source={{ uri: itemData.item.user.profile_photo_path }}
+              source={{
+                uri:
+                  itemData.item.community !== null
+                    ? itemData.item.community.image_path
+                    : itemData.item.user.profile_photo_path,
+              }}
               style={styles.profilePhotoStyle}
             />
           </View>
@@ -141,6 +171,42 @@ const InboxScreen = ({ navigation }) => {
             <Text style={styles.inboxMessageStyle}>
               {itemData.item.message}
             </Text>
+            {itemData.item.type === 'Community Invite' && (
+              <View style={styles.inviteButtonContainerStyle}>
+                <Button
+                  buttonStyle={{
+                    backgroundColor: '#6505E1',
+                    color: '#FFFFFF',
+                    fontSize: CalculateHeight(1.8),
+                    marginBottom: 0,
+                    padding: 0,
+                    paddingHorizontal: '2%',
+                    borderWidth: 0,
+                    marginRight: '2%',
+                  }}
+                  buttonTitle="View"
+                  buttonFunction={() =>
+                    navigation.navigate('CommunitiesNavigation', {
+                      screen: 'CommunityProfileScreen',
+                      params: {
+                        communityId: itemData.item.community.id,
+                      },
+                    })
+                  }
+                />
+                <Button
+                  buttonStyle={{
+                    color: '#6505E1',
+                    fontSize: CalculateHeight(1.8),
+                    marginBottom: 0,
+                    padding: 0,
+                    paddingHorizontal: '2%',
+                    borderColor: '#6505E1',
+                  }}
+                  buttonTitle="Decline"
+                />
+              </View>
+            )}
             <Text style={styles.postTimeStyle}>{itemData.item.timeSince}</Text>
           </View>
         </TouchableOpacity>
@@ -263,6 +329,12 @@ const styles = StyleSheet.create({
     maxWidth: '90%',
     fontFamily: normal,
     fontSize: CalculateHeight(1.8),
+  },
+
+  inviteButtonContainerStyle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
 
   postTimeStyle: {
