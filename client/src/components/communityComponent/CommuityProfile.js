@@ -398,9 +398,10 @@ const CommunityProfile = (props) => {
                       backgroundColor: '#5152D0',
                       borderWidth: 0,
                       padding: 0,
-                      paddingHorizontal: '20%',
+                      paddingHorizontal: '15%',
                       paddingVertical: '2.5%',
                       marginTop: '15%',
+                      fontSize: CalculateHeight(1.8)
                     }}
                     buttonTitle="Join"
                     buttonFunction={() =>
@@ -513,7 +514,6 @@ const styles = StyleSheet.create({
 
   countDataContainerStyle: {
     flexDirection: 'row',
-    marginTop: '15%',
   },
 
   countDataStyle: {
