@@ -39,7 +39,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   const { communityId } = route.params;
 
   const [selectedDisplay, setSelectedDisplay] = useState('discussions');
-  const [communityMember, setCommunityMember] = useState([]);
+  const [communityMember, setCommunityMember] = useState('');
   const [noticeModal, setNoticeModal] = useState(false);
   const [noticeModalMessage, setNoticeModalMessage] = useState('');
 
@@ -139,7 +139,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
       </View>
     );
   };
-
+  // console.log(communityProfile.community_members)
   const renderDiscussionsDisplay = () => {
     if (!discussions) {
       return <LoadingSpinner loadingSpinnerForComponent={true} />;
@@ -154,6 +154,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
               customStyle={{ marginBottom: '90%' }}
               isCommunityDiscussion={true}
               isMember={
+                communityProfile.community_members !== undefined &&
                 communityProfile.community_members.length !== 0
                   ? communityProfile.community_members[0].type === 'Admin' ||
                     communityProfile.community_members[0].type === 'Member' ||
@@ -214,6 +215,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
           memberList={communityMember}
           isAdmin={
             communityProfile !== '' &&
+            communityProfile.community_members !== undefined &&
             communityProfile.community_members.length !== 0 &&
             communityProfile.community_members[0].type === 'Admin'
               ? true
@@ -256,11 +258,14 @@ const CommunityProfileScreen = ({ navigation, route }) => {
         guidelines={communityProfile.guidelines}
         isAdmin={
           communityProfile !== '' &&
+          communityProfile.community_members !== undefined &&
           communityProfile.community_members.length !== 0 &&
           communityProfile.community_members[0].type === 'Admin'
             ? true
             : false
         }
+        memberIsStillLoading={communityMember === '' ? true : false}
+        isRequested={communityProfile.isRequested}
       />
       {!communityProfile ||
       communityProfile.type == 1 ||

@@ -87,7 +87,9 @@ const DiscussionScreenCard = (props) => {
               });
 
               if (upvoteRequest.data) {
-                dispatch(getDiscussion(discussionId, false, isCommunityDiscussion));
+                dispatch(
+                  getDiscussion(discussionId, false, isCommunityDiscussion),
+                );
               }
             } catch (error) {
               console.log(error);
@@ -152,34 +154,36 @@ const DiscussionScreenCard = (props) => {
   const ProfileAndMenu = () => {
     return (
       <View style={styles.profileAndMenuContainerStyle}>
-        <View>
-          <View style={styles.profileContainerStyle}>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.push('UserProfileScreen', {
-                  userId: profileId,
-                });
-              }}>
-              {profilePicture ? (
-                <Image
-                  source={{ uri: profilePicture }}
-                  style={styles.profileImageStyle}
-                />
-              ) : null}
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.push('UserProfileScreen', {
-                  userId: profileId,
-                });
-              }}>
-              <Text style={styles.profileNameStyle}>{profileName}</Text>
-            </TouchableOpacity>
-            {profileType === 1 && (
-              <Image source={TickIcon} style={styles.tickIconStyle} />
-            )}
+        <View style={styles.profileDataContainerStyle}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.push('UserProfileScreen', {
+                userId: profileId,
+              });
+            }}>
+            {profilePicture ? (
+              <Image
+                source={{ uri: profilePicture }}
+                style={styles.profileImageStyle}
+              />
+            ) : null}
+          </TouchableOpacity>
+          <View>
+            <View style={styles.profileContainerStyle}>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.push('UserProfileScreen', {
+                    userId: profileId,
+                  });
+                }}>
+                <Text style={styles.profileNameStyle}>{profileName}</Text>
+              </TouchableOpacity>
+              {profileType === 1 && (
+                <Image source={TickIcon} style={styles.tickIconStyle} />
+              )}
+            </View>
+            <Text style={styles.postTimeStyle}>{postTime ? postTime : ''}</Text>
           </View>
-          <Text style={styles.postTimeStyle}>{postTime ? postTime : ''}</Text>
         </View>
         <OptionButton
           customStyle={styles.discussionCardMenuStyle}
@@ -234,9 +238,7 @@ const DiscussionScreenCard = (props) => {
             <Text style={styles.repliesAndPlaysNumberStyle}>
               {replies} Replies
             </Text>
-            <Text style={styles.repliesAndPlaysNumberStyle}>
-              {plays} Plays
-            </Text>
+            <Text style={styles.repliesAndPlaysNumberStyle}>{plays} Plays</Text>
           </View>
         </View>
       </View>
@@ -245,10 +247,12 @@ const DiscussionScreenCard = (props) => {
 
   return (
     <View style={styles.discussionScreenCardContainerStyle}>
-      {isLoading ? isResponse && response.length === 0  ? (
-        <LoadingSpinner loadingSpinnerForComponent={true} />
-      ) : (
-        <LoadingSpinner loadingSpinnerForComponent={true} />
+      {isLoading ? (
+        isResponse && response.length === 0 ? (
+          <LoadingSpinner loadingSpinnerForComponent={true} />
+        ) : (
+          <LoadingSpinner loadingSpinnerForComponent={true} />
+        )
       ) : (
         <>
           <View style={styles.discussionInfoSectionStyle}>
@@ -297,6 +301,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
 
+  profileDataContainerStyle: {
+    flexDirection: 'row',
+  },
+
   profileContainerStyle: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -321,7 +329,6 @@ const styles = StyleSheet.create({
   },
 
   postTimeStyle: {
-    marginLeft: '22.5%',
     fontFamily: normal,
     color: '#73798C',
     fontSize: CalculateHeight(1.5),

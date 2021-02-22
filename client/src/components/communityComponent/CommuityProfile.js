@@ -43,6 +43,8 @@ const CommunityProfile = (props) => {
     closeNoticeModal,
     guidelines,
     isAdmin,
+    memberIsStillLoading,
+    isRequested,
   } = props;
 
   const [actionModal, setActionModal] = useState(false);
@@ -321,7 +323,7 @@ const CommunityProfile = (props) => {
   const CommunityProfileContent = () => {
     return (
       <>
-        {profile === '' ? (
+        {profile === '' && memberIsStillLoading ? (
           <LoadingSpinner loadingSpinnerForComponent={true} />
         ) : (
           <>
@@ -394,17 +396,19 @@ const CommunityProfile = (props) => {
                   <Button
                     buttonStyle={{
                       color: '#FFFFFF',
-                      backgroundColor: '#5152D0',
+                      backgroundColor: isRequested ? '#a1a5ab' : '#5152D0',
                       borderWidth: 0,
                       padding: 0,
-                      paddingHorizontal: '20%',
+                      paddingHorizontal: '15%',
                       paddingVertical: '2.5%',
                       marginTop: '15%',
+                      fontSize: CalculateHeight(1.8)
                     }}
-                    buttonTitle="Join"
+                    buttonTitle={isRequested ? "Pending" : "Join"}
                     buttonFunction={() =>
                       communityType === 1 ? joinCommunity() : setRecorder(true)
                     }
+                    disableButton={isRequested ? true : false}
                   />
                 )}
               </View>
@@ -512,7 +516,6 @@ const styles = StyleSheet.create({
 
   countDataContainerStyle: {
     flexDirection: 'row',
-    marginTop: '15%',
   },
 
   countDataStyle: {
@@ -521,7 +524,7 @@ const styles = StyleSheet.create({
 
   countDataTitleStyle: {
     fontFamily: normal,
-    fontSize: CalculateHeight(2),
+    fontSize: CalculateHeight(1.6),
     color: '#73798C',
   },
 
