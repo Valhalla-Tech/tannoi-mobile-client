@@ -14,7 +14,7 @@ import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
 import Card from '../publicComponents/Card';
 
 const MemberList = (props) => {
-  const { memberList, navigation, communityId } = props;
+  const { memberList, navigation, communityId, isAdmin } = props;
 
   const MemberListData = (itemData) => {
     return (
@@ -25,13 +25,18 @@ const MemberList = (props) => {
             : { ...styles.memberListDataStyle, borderBottomWidth: 0 }
         }>
         <View style={styles.imageProfileAndNameStyle}>
-          <Image source={{uri: itemData.item.profile_photo_path}} style={styles.profileImageStyle} />
-          <View style={{ justifyContent: 'center'}}>
+          <Image
+            source={{ uri: itemData.item.profile_photo_path }}
+            style={styles.profileImageStyle}
+          />
+          <View style={{ justifyContent: 'center' }}>
             <Text style={styles.memberNameStyle}>{itemData.item.name}</Text>
           </View>
         </View>
-        <View style={{paddingRight: '2%'}}>
-          <Text style={styles.adminStyle}>{itemData.item.members[0].community_member.type}</Text>
+        <View style={{ paddingRight: '2%' }}>
+          <Text style={styles.adminStyle}>
+            {itemData.item.members[0].community_member.type}
+          </Text>
         </View>
       </TouchableOpacity>
     );
@@ -43,9 +48,21 @@ const MemberList = (props) => {
         data={memberList}
         keyExtractor={(item, index) => index.toString()}
         ListHeaderComponent={
-          <TouchableOpacity onPress={() => navigation.navigate('InviteScreen', { communityId: communityId })} style={styles.memberListDataStyle}>
-            <Text style={styles.inviteToCommunityButtonTextStyle}>Invite to community</Text>
-          </TouchableOpacity>
+          <>
+            {isAdmin && (
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('InviteScreen', {
+                    communityId: communityId,
+                  })
+                }
+                style={styles.memberListDataStyle}>
+                <Text style={styles.inviteToCommunityButtonTextStyle}>
+                  Invite to community
+                </Text>
+              </TouchableOpacity>
+            )}
+          </>
         }
         renderItem={MemberListData}
       />

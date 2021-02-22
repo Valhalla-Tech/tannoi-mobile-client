@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
   TextInput,
   FlatList,
   Image,
@@ -56,7 +55,6 @@ const InviteScreen = ({ navigation, route }) => {
       });
 
       if (getUserListRequest.data) {
-        // console.log(getUserListRequest.data, '<<');
         if (page) {
           setMoreLoader(false);
           let addNewData = userList.concat(getUserListRequest.data.data);
@@ -90,7 +88,7 @@ const InviteScreen = ({ navigation, route }) => {
       });
 
       if (inviteUserRequest.data) {
-        console.log(inviteUserRequest.data);
+        getUserList();
       }
     } catch (error) {
       console.log(error);
