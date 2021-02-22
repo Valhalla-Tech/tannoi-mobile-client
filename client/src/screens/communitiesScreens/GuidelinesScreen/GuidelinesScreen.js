@@ -78,9 +78,11 @@ const GuidelinesScreen = ({ navigation, route }) => {
         />
         <Text style={styles.headerTextStyle}>Community guidelines</Text>
       </View>
-      <TouchableOpacity onPress={() => editGuidelines()}>
-        <Text style={styles.saveButtonStyle}>Save</Text>
-      </TouchableOpacity>
+      {isAdmin && (
+        <TouchableOpacity onPress={() => editGuidelines()}>
+          <Text style={styles.saveButtonStyle}>Save</Text>
+        </TouchableOpacity>
+      )}
     </>
   );
 
