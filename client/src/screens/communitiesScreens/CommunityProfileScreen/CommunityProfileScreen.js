@@ -39,7 +39,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   const { communityId } = route.params;
 
   const [selectedDisplay, setSelectedDisplay] = useState('discussions');
-  const [communityMember, setCommunityMember] = useState([]);
+  const [communityMember, setCommunityMember] = useState('');
   const [noticeModal, setNoticeModal] = useState(false);
   const [noticeModalMessage, setNoticeModalMessage] = useState('');
 
@@ -261,6 +261,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
             ? true
             : false
         }
+        memberIsStillLoading={communityMember === '' ? true : false}
       />
       {!communityProfile ||
       communityProfile.type == 1 ||

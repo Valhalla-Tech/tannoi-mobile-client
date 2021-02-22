@@ -43,6 +43,7 @@ const CommunityProfile = (props) => {
     closeNoticeModal,
     guidelines,
     isAdmin,
+    memberIsStillLoading,
   } = props;
 
   const [actionModal, setActionModal] = useState(false);
@@ -321,7 +322,7 @@ const CommunityProfile = (props) => {
   const CommunityProfileContent = () => {
     return (
       <>
-        {profile === '' ? (
+        {profile === '' && memberIsStillLoading ? (
           <LoadingSpinner loadingSpinnerForComponent={true} />
         ) : (
           <>
