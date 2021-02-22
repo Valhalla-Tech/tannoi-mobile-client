@@ -15,7 +15,6 @@ import axios from '../../../constants/ApiServices';
 import AsyncStorage from '@react-native-community/async-storage';
 import BaseUrl from '../../../constants/BaseUrl';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
-import { NavigationAction } from '@react-navigation/native';
 
 //Components
 import Header from '../../../components/publicComponents/Header';
@@ -78,9 +77,26 @@ const InboxScreen = ({ navigation }) => {
     setCurrentPage((prevState) => prevState + 1);
   };
 
-  const userInviteAction = async () => {
+  const userInviteAction = async (communityId) => {
     try {
       let access_token = await AsyncStorage.getItem('access_token');
+
+      let userInviteActionRequest = await axios({
+        method: 'post',
+        url: `${BaseUrl}/communities/edit-invite`,
+        headers: {
+          token: access_token,
+        },
+        data: {
+          community_id: communityId,
+          type: 'Decline',
+        },
+      });
+
+      if (userInviteActionRequest.data) {
+        setMoreLoader(true);
+        getInbox();
+      }
     } catch (error) {
       console.log(error);
     }
@@ -204,6 +220,7 @@ const InboxScreen = ({ navigation }) => {
                     borderColor: '#6505E1',
                   }}
                   buttonTitle="Decline"
+                  buttonFunction={() => userInviteAction(itemData.item.community.id)}
                 />
               </View>
             )}
