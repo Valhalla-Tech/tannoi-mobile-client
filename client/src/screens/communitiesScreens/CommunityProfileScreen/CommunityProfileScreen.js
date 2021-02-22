@@ -139,7 +139,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
       </View>
     );
   };
-  // console.log(communityProfile.community_members)
+
   const renderDiscussionsDisplay = () => {
     if (!discussions) {
       return <LoadingSpinner loadingSpinnerForComponent={true} />;
