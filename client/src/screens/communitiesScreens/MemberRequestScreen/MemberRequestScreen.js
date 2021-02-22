@@ -15,6 +15,9 @@ import Button from '../../../components/publicComponents/Button';
 import ListCardPlayer from '../../../components/publicComponents/ListCardPlayer';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 
+//Assets
+import MemberRequestEmptyStateImage from '../../../assets/communitiesAssets/empty-state-discussions.png';
+
 const MemberRequestScreen = ({ navigation, route }) => {
   const [requestList, setRequestList] = useState('');
 
@@ -142,20 +145,35 @@ const MemberRequestScreen = ({ navigation, route }) => {
     <Card child={() => CardContent(itemData)} customStyle={styles.cardStyle} />
   );
 
+  const RenderEmptyState = () => {
+    return (
+      <View style={{ alignItems: 'center', paddingTop: '10%' }}>
+        <Image source={MemberRequestEmptyStateImage} />
+        <Text>There are no member requests yet</Text>
+      </View>
+    );
+  };
+
+  const RenderContent = () => {
+    if (requestList === '') {
+      return <LoadingSpinner loadingSpinnerForComponent={true} />;
+    } else if (requestList.length === 0) {
+      return RenderEmptyState();
+    } else if (requestList.length > 0) {
+      return (
+        <FlatList
+          data={requestList}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={RenderCard}
+        />
+      );
+    }
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
-      <View style={styles.memberRequestContainerStyle}>
-        {requestList !== '' ? (
-          <FlatList
-            data={requestList}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={RenderCard}
-          />
-        ) : (
-          <LoadingSpinner loadingSpinnerForComponent={true} />
-        )}
-      </View>
+      <View style={styles.memberRequestContainerStyle}>{RenderContent()}</View>
     </View>
   );
 };
