@@ -44,6 +44,7 @@ const CommunityProfile = (props) => {
     guidelines,
     isAdmin,
     memberIsStillLoading,
+    isRequested,
   } = props;
 
   const [actionModal, setActionModal] = useState(false);
@@ -395,7 +396,7 @@ const CommunityProfile = (props) => {
                   <Button
                     buttonStyle={{
                       color: '#FFFFFF',
-                      backgroundColor: '#5152D0',
+                      backgroundColor: isRequested ? '#a1a5ab' : '#5152D0',
                       borderWidth: 0,
                       padding: 0,
                       paddingHorizontal: '15%',
@@ -403,10 +404,11 @@ const CommunityProfile = (props) => {
                       marginTop: '15%',
                       fontSize: CalculateHeight(1.8)
                     }}
-                    buttonTitle="Join"
+                    buttonTitle={isRequested ? "Pending" : "Join"}
                     buttonFunction={() =>
                       communityType === 1 ? joinCommunity() : setRecorder(true)
                     }
+                    disableButton={isRequested ? true : false}
                   />
                 )}
               </View>
@@ -522,7 +524,7 @@ const styles = StyleSheet.create({
 
   countDataTitleStyle: {
     fontFamily: normal,
-    fontSize: CalculateHeight(2),
+    fontSize: CalculateHeight(1.6),
     color: '#73798C',
   },
 
