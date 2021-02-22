@@ -88,7 +88,7 @@ const InviteScreen = ({ navigation, route }) => {
       });
 
       if (inviteUserRequest.data) {
-        getUserList();
+        setUserList(userList.filter((item) => item.id !== userId));
       }
     } catch (error) {
       console.log(error);
