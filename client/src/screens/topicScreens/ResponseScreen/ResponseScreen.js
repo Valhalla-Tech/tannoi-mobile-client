@@ -140,25 +140,27 @@ const ReplyScreen = ({ route, navigation }) => {
           <Text style={styles.discussionButton}>Discussion</Text>
         </TouchableOpacity>
       </View>
-      {!profileName ? (
-        <LoadingSpinner loadingSpinnerForComponent={true} />
-      ) : (
-        <DiscussionAndResponseList
-          isResponseScreen={true}
-          changePlayer={changePlayer}
-          discussionId={discussionId}
-          fromNextPreviousButton={fromNextPreviousButton}
-          updateFromNextPreviousButton={updateFromNextPreviousButton}
-          navigation={navigation}
-          selectCard={selectCard}
-          selectedCard={selectedCard}
-          getIsLikeAndIsDislike={getIsLikeAndIsDislike}
-          responseId={responseId}
-          flatListRef={flatListRef}
-          scrollDownForResponseScreen={scrollDown}
-          responseScreenId={responseId}
-        />
-      )}
+      <View style={{ flex: 1 }}>
+        {!profileName ? (
+          <LoadingSpinner loadingSpinnerForComponent={true} />
+        ) : (
+          <DiscussionAndResponseList
+            isResponseScreen={true}
+            changePlayer={changePlayer}
+            discussionId={discussionId}
+            fromNextPreviousButton={fromNextPreviousButton}
+            updateFromNextPreviousButton={updateFromNextPreviousButton}
+            navigation={navigation}
+            selectCard={selectCard}
+            selectedCard={selectedCard}
+            getIsLikeAndIsDislike={getIsLikeAndIsDislike}
+            responseId={responseId}
+            flatListRef={flatListRef}
+            scrollDownForResponseScreen={scrollDown}
+            responseScreenId={responseId}
+          />
+        )}
+      </View>
       {parentDiscussionId !== '' && (
         <TouchableOpacity
           onPress={() =>
