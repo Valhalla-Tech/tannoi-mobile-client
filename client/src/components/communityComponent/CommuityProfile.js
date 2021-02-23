@@ -238,7 +238,7 @@ const CommunityProfile = (props) => {
   const LeaveCommunityConfirmation = () => (
     <>
       <Text style={styles.confirmationTextStyle}>
-        Do you want to leave from this community?
+        Do you really want to leave this community?
       </Text>
       <View style={styles.confirmationButtonContainerStyle}>
         <Button
