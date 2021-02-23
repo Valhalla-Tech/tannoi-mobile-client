@@ -51,7 +51,6 @@ const CommunityList = (props) => {
         <View style={styles.communityDataContainerStyle}>
           <View style={styles.communityNameContainerStyle}>
             <Text style={styles.communityNameStyle}>{itemData.item.name} {itemData.item.type == 2 ? <PrivateIcon /> : <EarthIcon />}</Text>
-            
           </View>
           <View style={styles.communityDescriptionContainerStyle}>
             <Text style={styles.communityDescriptionStyle} numberOfLines={2}>
@@ -152,7 +151,7 @@ const styles = StyleSheet.create({
 
   communityNameStyle: {
     fontFamily: bold,
-    fontSize: CalculateHeight(2.5),
+    fontSize: CalculateHeight(2.1),
     marginRight: CalculateWidth(1.5),
     color: '#464D60',
   },
@@ -164,7 +163,7 @@ const styles = StyleSheet.create({
   communityDescriptionStyle: {
     fontFamily: normal,
     color: '#73798C',
-    fontSize: CalculateHeight(2),
+    fontSize: CalculateHeight(1.8),
   },
 
   communityMemberAndDiscussionContainerStyle: {
@@ -175,6 +174,7 @@ const styles = StyleSheet.create({
   communityMemberAndDiscussionStyle: {
     fontFamily: normal,
     color: '#73798C',
+    fontSize: CalculateHeight(1.8),
   },
 
   topicNameContainerStyle: {
@@ -187,6 +187,7 @@ const styles = StyleSheet.create({
     color: '#5152D0',
     fontFamily: normal,
     lineHeight: 20,
+    fontSize: CalculateHeight(1.8),
   },
 });
 
