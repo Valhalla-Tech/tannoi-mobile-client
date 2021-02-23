@@ -521,7 +521,7 @@ const styles = StyleSheet.create({
   },
 
   communityNameStyle: {
-    fontSize: CalculateHeight(2.7),
+    fontSize: CalculateHeight(2.3),
     fontFamily: bold,
     color: '#464D60',
   },
@@ -529,14 +529,15 @@ const styles = StyleSheet.create({
   privatePublicIconContainerStyle: {
     justifyContent: 'center',
     marginLeft: '2%',
+    marginBottom: '1%',
   },
 
   communityDescriptionStyle: {
     fontFamily: normal,
-    color: '#464D60',
+    color: 'black',
     lineHeight: 20,
     marginBottom: '2%',
-    fontSize: CalculateHeight(2),
+    fontSize: CalculateHeight(1.8),
   },
 
   createdAndUniqueCodeContainerStyle: {
@@ -546,17 +547,13 @@ const styles = StyleSheet.create({
   createdAndUniqueCodeStyle: {
     fontFamily: normal,
     color: '#73798C',
-    fontSize: CalculateHeight(2),
+    fontSize: CalculateHeight(1.8),
     marginLeft: '2.5%',
   },
 
   createdContainerStyle: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-
-  calendarIconContainerStyle: {
-    paddingTop: '1.3%',
   },
 
   countDataContainerStyle: {
@@ -569,13 +566,13 @@ const styles = StyleSheet.create({
 
   countDataTitleStyle: {
     fontFamily: normal,
-    fontSize: CalculateHeight(1.6),
+    fontSize: CalculateHeight(1.8),
     color: '#73798C',
   },
 
   countNumberStyle: {
     fontFamily: bold,
-    fontSize: CalculateHeight(2.3),
+    fontSize: CalculateHeight(2),
     color: '#464D60',
   },
 
@@ -605,7 +602,7 @@ const styles = StyleSheet.create({
   displayButtonTextStyle: {
     fontFamily: bold,
     color: '#464D60',
-    fontSize: CalculateHeight(2.5),
+    fontSize: CalculateHeight(2),
   },
 
   actionModalHeaderStyle: {

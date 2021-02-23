@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
   memberRequestTextStyle: {
     fontFamily: normal,
     color: '#464D60',
-    fontSize: CalculateHeight(2.3),
+    fontSize: CalculateHeight(2),
   },
 
   noticeModalTextStyle: {
