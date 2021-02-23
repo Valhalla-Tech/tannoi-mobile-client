@@ -52,11 +52,15 @@ const CommunityProfile = (props) => {
   const [isDeletingCommunity, setIsDeletingCommunity] = useState(false);
   const [isLoadingToDelete, setIsLoadingToDelete] = useState(false);
   const [deleteConfirmationText, setDeleteConfirmationText] = useState('');
+  const [leaveCommunityConfirmation, setLeaveCommunityConfirmation] = useState(
+    false,
+  );
 
   const closeActionModal = () => {
     setIsDeletingCommunity(false);
     setDeleteConfirmationText('');
     setActionModal(false);
+    setLeaveCommunityConfirmation(false);
   };
 
   const closeRecorder = () => {
@@ -174,18 +178,20 @@ const CommunityProfile = (props) => {
             marginBottom: 0,
           }}
         />
-        <TouchableOpacity
-          onPress={() => setActionModal(true)}
-          style={styles.optionButtonStyle}>
-          <OptionButton />
-        </TouchableOpacity>
+        {isMember || isAdmin ? (
+          <TouchableOpacity
+            onPress={() => setActionModal(true)}
+            style={styles.optionButtonStyle}>
+            <OptionButton />
+          </TouchableOpacity>
+        ) : null}
       </>
     );
   };
 
   const DeleteCommunityConfirmation = () => (
     <>
-      <Text style={styles.deleteCommunityTextStyle}>
+      <Text style={styles.confirmationTextStyle}>
         Write the text below to delete this community
       </Text>
       <FormInput
@@ -193,7 +199,7 @@ const CommunityProfile = (props) => {
         formInputTitle="DELETE COMMUNITY"
         capitalizeAll={true}
       />
-      <View style={styles.deleteButtonContainerStyle}>
+      <View style={styles.confirmationButtonContainerStyle}>
         <Button
           buttonStyle={{
             color: '#FFFFFF',
@@ -212,17 +218,47 @@ const CommunityProfile = (props) => {
             buttonStyle={
               deleteConfirmationText !== 'DELETE COMMUNITY'
                 ? {
-                    ...styles.deleteButtonStyle,
+                    ...styles.confirmationButtonStyle,
                     color: '#cccccc',
                     borderColor: '#cccccc',
                   }
-                : styles.deleteButtonStyle
+                : styles.confirmationButtonStyle
             }
             buttonTitle="Delete"
             buttonFunction={deleteCommunity}
             disableButton={
               deleteConfirmationText !== 'DELETE COMMUNITY' ? true : false
             }
+          />
+        )}
+      </View>
+    </>
+  );
+
+  const LeaveCommunityConfirmation = () => (
+    <>
+      <Text style={styles.confirmationTextStyle}>
+        Do you want to leave from this community?
+      </Text>
+      <View style={styles.confirmationButtonContainerStyle}>
+        <Button
+          buttonStyle={{
+            color: '#FFFFFF',
+            backgroundColor: '#6505E1',
+            padding: '2%',
+            borderWidth: 0,
+            marginRight: '3%',
+          }}
+          buttonTitle="Cancel"
+          buttonFunction={() => setLeaveCommunityConfirmation(false)}
+        />
+        {isLoadingToDelete ? (
+          <LoadingSpinner loadingSpinnerForComponent={true} />
+        ) : (
+          <Button
+            buttonStyle={styles.confirmationButtonStyle}
+            buttonTitle="Leave"
+            buttonFunction={leaveCommunity}
           />
         )}
       </View>
@@ -240,13 +276,15 @@ const CommunityProfile = (props) => {
   const ActionModal = () => {
     return (
       <>
-        {isDeletingCommunity ? (
-          DeleteCommunityConfirmation()
-        ) : (
+        {isDeletingCommunity &&
+          !leaveCommunityConfirmation &&
+          DeleteCommunityConfirmation()}
+        {!isDeletingCommunity &&
+          leaveCommunityConfirmation &&
+          LeaveCommunityConfirmation()}
+        {!isDeletingCommunity && !leaveCommunityConfirmation && (
           <>
-            {isMember && (
-              <>{ActionModalButton('Leave community', leaveCommunity)}</>
-            )}
+            <Text style={styles.actionModalHeaderStyle}>Community</Text>
             {isMember &&
               ActionModalButton(
                 'Community guidelines',
@@ -259,6 +297,13 @@ const CommunityProfile = (props) => {
                   setActionModal(false)
                 ),
               )}
+            {isMember && (
+              <>
+                {ActionModalButton('Leave community', () =>
+                  setLeaveCommunityConfirmation(true),
+                )}
+              </>
+            )}
             {isAdmin &&
               ActionModalButton(
                 'Delete community',
@@ -402,9 +447,9 @@ const CommunityProfile = (props) => {
                       paddingHorizontal: '15%',
                       paddingVertical: '2.5%',
                       marginTop: '15%',
-                      fontSize: CalculateHeight(1.8)
+                      fontSize: CalculateHeight(1.8),
                     }}
-                    buttonTitle={isRequested ? "Pending" : "Join"}
+                    buttonTitle={isRequested ? 'Pending' : 'Join'}
                     buttonFunction={() =>
                       communityType === 1 ? joinCommunity() : setRecorder(true)
                     }
@@ -563,6 +608,13 @@ const styles = StyleSheet.create({
     fontSize: CalculateHeight(2.5),
   },
 
+  actionModalHeaderStyle: {
+    marginBottom: '3%',
+    fontFamily: bold,
+    fontSize: CalculateHeight(2),
+    color: '#6505E1',
+  },
+
   actionModalButtonStyle: {
     marginBottom: '3%',
   },
@@ -572,21 +624,21 @@ const styles = StyleSheet.create({
     fontSize: CalculateHeight(2),
   },
 
-  deleteCommunityTextStyle: {
+  confirmationTextStyle: {
     fontFamily: bold,
     color: '#6505E1',
     fontSize: CalculateHeight(1.8),
     marginBottom: '3%',
   },
 
-  deleteButtonContainerStyle: {
+  confirmationButtonContainerStyle: {
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
 
-  deleteButtonStyle: {
+  confirmationButtonStyle: {
     color: '#6505E1',
     borderColor: '#6505E1',
     padding: '2%',
