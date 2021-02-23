@@ -444,6 +444,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
           onPress ={async () => {
 
             await dispatch(deleteCommunityMember(item.members[0].community_member.user_id, communityId))
+            await getCommunityMember()
             setMemberModalMode(false)
             
           }}
