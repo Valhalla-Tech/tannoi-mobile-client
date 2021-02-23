@@ -37,6 +37,7 @@ const DiscussionAndResponseList = (props) => {
     scrollDownForResponseScreen,
     responseScreenId,
     isCommunityDiscussion,
+    role,
   } = props;
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -190,6 +191,7 @@ const DiscussionAndResponseList = (props) => {
                 userId={userId}
                 isRecorderModalOpen={openAddResponse}
                 isCommunityDiscussion={isCommunityDiscussion}
+                role={role}
               />
               {response.length === 0 && isResponse && (
                 <LoadingSpinner loadingSpinnerForComponent={true} />

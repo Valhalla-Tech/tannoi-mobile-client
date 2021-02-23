@@ -41,8 +41,9 @@ export const getOneCommunity = (communityId) => {
           token: access_token,
         },
       });
-
+      
       if (getOneCommunityRequest.data) {
+        console.log(getOneCommunityRequest.data)
         dispatch({
           type: 'GET_ONE_COMMUNITY',
           payload: {
@@ -69,5 +70,66 @@ export const clearUserComunity = () => {
     dispatch({
       type: 'CLEAR_USER_COMMUNITY',
     });
+  };
+};
+
+export const deleteCommunityMember = (user_id, community_id) => {
+  return async dispatch => {
+    try {
+      let access_token = await AsyncStorage.getItem('access_token');
+      let deleteCommunityMemberRequest = await axios({
+        method: 'DELETE',
+        url: `${BaseUrl}/communities/remove-member`,
+        headers: {
+          token: access_token,
+        },
+        data: {
+          user_id,
+          community_id,
+        },
+      });
+
+      if (deleteCommunityMemberRequest.msg === 'Sucess') {
+        dispatch({
+          type: 'DELETE_COMMUNITY_MEMBER',
+          payload: {
+            msg: 'member has been deleted!',
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const updateMemberPrivilege = (user_id, community_id, type) => {
+  return async dispatch => {
+    try {
+      let access_token = await AsyncStorage.getItem('access_token');
+      let updateMemberPrivilegeRequest = await axios({
+        method: 'PUT',
+        url: `${BaseUrl}/communities/edit-members`,
+        headers: {
+          token: access_token,
+        },
+        data: {
+          user_id,
+          community_id,
+          type,
+        },
+      });
+      if (updateMemberPrivilegeRequest.data === 200) {
+        dispatch({
+          type: 'EDIT_COMMUNITY_MEMBER',
+          payload: {
+            status: 200,
+            msg: 'member has been updated!',
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 };

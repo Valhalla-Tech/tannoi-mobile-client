@@ -23,6 +23,9 @@ import { CalculateHeight } from '../../../helper/CalculateSize';
 //Component
 import Modal from '../../publicComponents/Modal';
 
+const ROLE_ALLOWED = 1
+const ROLE_UNALLOWED = 0
+
 const OptionModal = (props) => {
   const {
     openOptionModal,
@@ -39,6 +42,7 @@ const OptionModal = (props) => {
     cardIndex,
     deleteResponseFromResponseScreen,
     responseScreenId,
+    role,
   } = props;
 
   const userId = useSelector((state) => state.ProfileReducer.userProfile.id);
@@ -124,6 +128,7 @@ const OptionModal = (props) => {
         }
       }
     } catch (error) {
+      console.log('here?', error)
       if (error.response.data.msg === 'You have to login first') {
         dispatch(userLogout());
       }
@@ -195,7 +200,7 @@ const OptionModal = (props) => {
             type === 2 &&
             modalType === 'discussion' &&
             OptionModalButton('Edit participant list')}
-          {profileId === userId && OptionModalButton('Delete')}
+          {(profileId === userId || role === ROLE_ALLOWED) && OptionModalButton('Delete')}
         </>
       ) : (
         <DeleteOption />

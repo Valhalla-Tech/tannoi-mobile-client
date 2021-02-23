@@ -6,6 +6,7 @@ const MainModal = (props) => {
     openModal,
     closeModal,
     child,
+    children,
     modalButton,
     customStyle,
     customContainerStyle,
@@ -23,7 +24,7 @@ const MainModal = (props) => {
       </View>
       <View style={{ ...styles.modalContainerStyle, ...customContainerStyle }}>
         <View style={{ ...styles.noticeModalStyle, ...customStyle }}>
-          {child && child()}
+          {children || (child && child())}
           {modalButton && modalButton()}
         </View>
       </View>

@@ -51,6 +51,7 @@ const DiscussionScreenCard = (props) => {
     userId,
     isRecorderModalOpen,
     isCommunityDiscussion,
+    role,
   } = props;
 
   const [optionModal, setOptionModal] = useState(false);
@@ -193,6 +194,7 @@ const DiscussionScreenCard = (props) => {
           openPrivateModal={openPrivateModal}
           modalType="discussion"
           discussionTitle={discussionTitle}
+          role={role}
         />
         {discussionType === 2 && userId === profileId && (
           <PrivateDiscussionModal

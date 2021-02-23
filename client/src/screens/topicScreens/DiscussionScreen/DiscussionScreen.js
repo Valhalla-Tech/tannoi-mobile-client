@@ -38,6 +38,7 @@ const DiscussionScreen = ({ route, navigation }) => {
     isCommunityDiscussion,
     fromNewCommunityDiscussion,
     communityId,
+    role,
   } = route.params;
 
   const dispatch = useDispatch();
@@ -158,6 +159,7 @@ const DiscussionScreen = ({ route, navigation }) => {
         flatListRef={flatListRef}
         scrollDown={scrollDown}
         isCommunityDiscussion={isCommunityDiscussion}
+        role={role}
       />
       <AddResponse
         openModal={openAddResponseModal}

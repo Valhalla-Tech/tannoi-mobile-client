@@ -29,6 +29,7 @@ class RenderList extends React.PureComponent {
       isMember,
       openCommunityDiscussionNoticeModal,
       inputCommunityDiscussionNoticeModalMessage,
+      role,
     } = this.props;
     return (
       <View style={styles.listCardContainerStyle}>
@@ -57,6 +58,7 @@ class RenderList extends React.PureComponent {
           inputCommunityDiscussionNoticeModalMessage={
             inputCommunityDiscussionNoticeModalMessage
           }
+          role={role}
         />
       </View>
     );
@@ -85,6 +87,7 @@ const List = (props) => {
     isMember,
     openCommunityDiscussionNoticeModal,
     inputCommunityDiscussionNoticeModalMessage,
+    role,
   } = props;
 
   const dispatch = useDispatch();
@@ -172,6 +175,7 @@ const List = (props) => {
                   inputCommunityDiscussionNoticeModalMessage={
                     inputCommunityDiscussionNoticeModalMessage
                   }
+                  role={role}
                 />
               )}
               ListFooterComponent={
