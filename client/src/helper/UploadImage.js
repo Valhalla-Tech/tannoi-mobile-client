@@ -9,15 +9,15 @@ export const UploadImage = (setImageFile) => {
   })
     .then((image) => {
       let divider = 1;
-      if (image.size > 300000) {
-        divider = image.size / 300000;
+      if (image.size > 100000) {
+        divider = image.size / 100000;
       }
       ImageResizer.createResizedImage(
         image.path,
         image.width / divider,
         image.height / divider,
         'JPEG',
-        100,
+        80,
         0,
         null,
       ).then((resp) => {
