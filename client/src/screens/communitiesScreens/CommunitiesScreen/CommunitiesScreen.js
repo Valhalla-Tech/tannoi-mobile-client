@@ -77,7 +77,7 @@ const CommunitiesScreen = ({ navigation }) => {
                 marginRight: '5%',
               }}
             />
-            <Text style={styles.headerTextStyle}>Communities</Text>
+            <Text style={styles.headerTextStyle}>My Communities</Text>
           </View>
           <TouchableOpacity
             onPress={() => navigation.navigate('BrowseCommunityScreen')}>
@@ -99,7 +99,7 @@ const CommunitiesScreen = ({ navigation }) => {
                 <AddCircleIcon />
               </View>
               <Text style={styles.createCommunityButtonTextStyle}>
-                Create a community
+                Create a new community
               </Text>
             </View>
             <View style={{ justifyContent: 'center' }}>

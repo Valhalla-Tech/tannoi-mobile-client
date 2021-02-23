@@ -10,6 +10,9 @@ import {
 import { normal } from '../../assets/FontSize';
 import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
 
+//Icon
+import RightArrowIcon from '../../assets/communitiesAssets/rightArrow.svg';
+
 //Component
 import Card from '../publicComponents/Card';
 
@@ -19,7 +22,13 @@ const MemberList = (props) => {
   const MemberListData = (itemData) => {
     return (
       <TouchableOpacity
-        onPress={() => onPress(itemData)}
+        onPress={() =>{
+            if(onPress) {
+              return onPress(itemData)
+            }
+            // navigation.navigate('UserProfileScreen', { userId: itemData.item.id })
+          }
+        }
         style={
           itemData.index + 1 !== memberList.length
             ? styles.memberListDataStyle
@@ -59,8 +68,11 @@ const MemberList = (props) => {
                 }
                 style={styles.memberListDataStyle}>
                 <Text style={styles.inviteToCommunityButtonTextStyle}>
-                  Invite to community
+                  Invite users to community
                 </Text>
+                <View style={{ justifyContent: 'center', paddingRight: '2%' }}>
+                  <RightArrowIcon />
+                </View>
               </TouchableOpacity>
             )}
           </>
@@ -94,7 +106,7 @@ const styles = StyleSheet.create({
 
   inviteToCommunityButtonTextStyle: {
     fontFamily: normal,
-    fontSize: CalculateHeight(2.3),
+    fontSize: CalculateHeight(2),
     color: '#464D60',
   },
 
@@ -112,12 +124,12 @@ const styles = StyleSheet.create({
   memberNameStyle: {
     fontFamily: normal,
     color: '#464D60',
-    fontSize: CalculateHeight(2.3),
+    fontSize: CalculateHeight(2.1),
   },
 
   adminStyle: {
     color: '#73798C',
-    fontSize: CalculateHeight(1.5),
+    fontSize: CalculateHeight(1.8),
   },
 });
 
