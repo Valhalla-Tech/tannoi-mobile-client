@@ -19,6 +19,9 @@ const MemberList = (props) => {
   const MemberListData = (itemData) => {
     return (
       <TouchableOpacity
+        onPress={() =>
+          navigation.navigate('UserProfileScreen', { userId: itemData.item.id })
+        }
         style={
           itemData.index + 1 !== memberList.length
             ? styles.memberListDataStyle

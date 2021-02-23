@@ -174,11 +174,13 @@ const CommunityProfile = (props) => {
             marginBottom: 0,
           }}
         />
-        <TouchableOpacity
-          onPress={() => setActionModal(true)}
-          style={styles.optionButtonStyle}>
-          <OptionButton />
-        </TouchableOpacity>
+        {isMember || isAdmin ? (
+          <TouchableOpacity
+            onPress={() => setActionModal(true)}
+            style={styles.optionButtonStyle}>
+            <OptionButton />
+          </TouchableOpacity>
+        ) : null}
       </>
     );
   };
@@ -402,9 +404,9 @@ const CommunityProfile = (props) => {
                       paddingHorizontal: '15%',
                       paddingVertical: '2.5%',
                       marginTop: '15%',
-                      fontSize: CalculateHeight(1.8)
+                      fontSize: CalculateHeight(1.8),
                     }}
-                    buttonTitle={isRequested ? "Pending" : "Join"}
+                    buttonTitle={isRequested ? 'Pending' : 'Join'}
                     buttonFunction={() =>
                       communityType === 1 ? joinCommunity() : setRecorder(true)
                     }
