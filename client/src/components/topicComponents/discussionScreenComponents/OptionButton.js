@@ -23,6 +23,7 @@ const OptionButton = (props) => {
     deleteResponseFromResponseScreen,
     responseScreenId,
     role,
+    cardOnDelete,
   } = props;
 
   const dispatch = useDispatch();
@@ -59,6 +60,7 @@ const OptionButton = (props) => {
         deleteResponseFromResponseScreen={deleteResponseFromResponseScreen}
         responseScreenId={responseScreenId}
         role={role}
+        cardOnDelete={cardOnDelete}
       />
     </>
   );

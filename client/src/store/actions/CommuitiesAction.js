@@ -119,7 +119,8 @@ export const updateMemberPrivilege = (user_id, community_id, type) => {
           type,
         },
       });
-      if (updateMemberPrivilegeRequest.data === 200) {
+      console.log(updateMemberPrivilegeRequest)
+      if (updateMemberPrivilegeRequest.status === 200) {
         dispatch({
           type: 'EDIT_COMMUNITY_MEMBER',
           payload: {

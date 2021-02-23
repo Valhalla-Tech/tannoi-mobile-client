@@ -43,6 +43,7 @@ const OptionModal = (props) => {
     deleteResponseFromResponseScreen,
     responseScreenId,
     role,
+    cardOnDelete,
   } = props;
 
   const userId = useSelector((state) => state.ProfileReducer.userProfile.id);
@@ -100,6 +101,13 @@ const OptionModal = (props) => {
   };
 
   const DeleteDiscussionOrResponse = async () => {
+    if (cardOnDelete) {
+      console.log('here', {discussionId, responseId})
+      if(modalType == 'discussion')
+        return cardOnDelete(discussionId, 'discussion');
+      else if (modalType == 'response')
+        return cardOnDelete(responseId, 'response')
+    }
     try {
       let access_token = await AsyncStorage.getItem('access_token');
 
@@ -128,7 +136,7 @@ const OptionModal = (props) => {
         }
       }
     } catch (error) {
-      console.log('here?', error)
+      console.log(error)
       if (error.response.data.msg === 'You have to login first') {
         dispatch(userLogout());
       }
@@ -141,7 +149,7 @@ const OptionModal = (props) => {
         onPress={() => {
           buttonTitle === 'Delete' && setDeleteOption(true);
           buttonTitle === 'Edit participant list' && openPrivateModal();
-          buttonTitle === 'Share' && shareOption();
+          buttonTitle === 'Share' && shareOption();          
         }}>
         <Text style={styles.optionModalButtonTextStyle}>{buttonTitle}</Text>
       </TouchableOpacity>

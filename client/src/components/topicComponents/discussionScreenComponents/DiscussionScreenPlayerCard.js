@@ -219,6 +219,8 @@ class DiscussionScreenPlayerCard extends Component {
                 this.props.deleteResponseFromResponseScreen
               }
               responseScreenId={this.props.responseScreenId}
+              role={this.props.role}
+              cardOnDelete={this.props.cardOnDelete}
             />
           )}
         </View>

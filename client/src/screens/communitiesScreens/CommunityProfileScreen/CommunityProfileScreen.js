@@ -19,7 +19,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   getAllDiscussion,
   clearDiscussion,
+  deleteCommunityDiscussion,
 } from '../../../store/actions/DiscussionAction';
+import { deleteCommunityResponse } from '../../../store/actions/ResponseAction';
 import { getOneCommunity, clearCommunityProfile, updateMemberPrivilege, deleteCommunityMember } from '../../../store/actions/CommuitiesAction';
 import { getOneProfile } from '../../../store/actions/ProfileAction';
 
@@ -45,6 +47,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   const [communityMember, setCommunityMember] = useState('');
   const [noticeModal, setNoticeModal] = useState(false);
   const [noticeModalMessage, setNoticeModalMessage] = useState('');
+  const [gotPermission, setGotPermission] = useState(0)
 
   const discussions = useSelector(
     (state) => state.DiscussionReducer.discussions,
@@ -106,6 +109,11 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   useEffect(() => {
     dispatch(getAllDiscussion('community_id=', communityId));
   }, []);
+
+  useEffect(() => {
+    if(communityProfile.community_members)
+      setGotPermission((communityProfile.community_members[0].type == 'Admin' || communityProfile.community_members[0].type == 'Moderator' ? 1 : 0))
+  }, [communityProfile])
 
   const changeSelectedDisplay = (value) => {
     setSelectedDisplay(value);
@@ -200,11 +208,29 @@ const CommunityProfileScreen = ({ navigation, route }) => {
                     : false
                   : false
               }
-              role = {communityProfile.community_members[0].type == 'Admin' || communityProfile.community_members[0].type == 'Moderator' ? 1 : 0}
+              role = {gotPermission}
               openCommunityDiscussionNoticeModal={openNoticeModal}
               inputCommunityDiscussionNoticeModalMessage={
                 inputNoticeModalMessage
               }
+              cardOnDelete = {async (id, type) => {
+                if(type == 'discussion') {
+
+                  await dispatch(deleteCommunityDiscussion(communityId, id))
+                  
+                }
+                else if (type == 'response'){
+
+                  await dispatch(deleteCommunityResponse(communityId, id))
+
+                }
+                
+                await dispatch(getAllDiscussion('community_id=', communityId))
+
+                navigation.navigate('CommunityProfileScreen', {
+                  communityId: communityId,
+                })
+              }}
             />
           }
         />

@@ -39,6 +39,7 @@ const DiscussionScreen = ({ route, navigation }) => {
     fromNewCommunityDiscussion,
     communityId,
     role,
+    cardOnDelete,
   } = route.params;
 
   const dispatch = useDispatch();
@@ -160,6 +161,7 @@ const DiscussionScreen = ({ route, navigation }) => {
         scrollDown={scrollDown}
         isCommunityDiscussion={isCommunityDiscussion}
         role={role}
+        cardOnDelete={cardOnDelete}
       />
       <AddResponse
         openModal={openAddResponseModal}
