@@ -22,7 +22,12 @@ import {
   deleteCommunityDiscussion,
 } from '../../../store/actions/DiscussionAction';
 import { deleteCommunityResponse } from '../../../store/actions/ResponseAction';
-import { getOneCommunity, clearCommunityProfile, updateMemberPrivilege, deleteCommunityMember } from '../../../store/actions/CommuitiesAction';
+import {
+  getOneCommunity,
+  clearCommunityProfile,
+  updateMemberPrivilege,
+  deleteCommunityMember,
+} from '../../../store/actions/CommuitiesAction';
 import { getOneProfile } from '../../../store/actions/ProfileAction';
 
 //Icons
@@ -59,7 +64,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   );
 
   const userProfile = useSelector(
-    state => state.ProfileReducer.loggedinUserProfile
+    (state) => state.ProfileReducer.loggedinUserProfile,
   );
 
   const dispatch = useDispatch();
@@ -120,7 +125,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
         setIsAMember(true);
       }
     }
-  }, [communityProfile])
+  }, [communityProfile]);
 
   const changeSelectedDisplay = (value) => {
     setSelectedDisplay(value);
@@ -215,7 +220,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
                     : false
                   : false
               }
-              role = {gotPermission}
+              role={gotPermission}
               openCommunityDiscussionNoticeModal={openNoticeModal}
               inputCommunityDiscussionNoticeModalMessage={
                 inputNoticeModalMessage
@@ -420,8 +425,8 @@ const CommunityProfileScreen = ({ navigation, route }) => {
           </View>
         : null}
       </Modal>
-    )
-}
+    );
+  };
 
   return (
     <View style={{ flex: 1 }}>
