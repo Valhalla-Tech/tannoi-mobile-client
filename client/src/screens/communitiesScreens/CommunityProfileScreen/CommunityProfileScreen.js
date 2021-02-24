@@ -118,13 +118,10 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   }, []);
 
   useEffect(() => {
-    if (communityProfile.community_members)
-      setGotPermission(
-        communityProfile.community_members[0].type == 'Admin' ||
-          communityProfile.community_members[0].type == 'Moderator'
-          ? 1
-          : 0,
-      );
+    if(communityProfile.community_members){
+      if(communityProfile.community_members.length)
+        setGotPermission((communityProfile.community_members[0].type == 'Admin' || communityProfile.community_members[0].type == 'Moderator' ? 1 : 0))
+    }
   }, [communityProfile]);
 
   const changeSelectedDisplay = (value) => {
