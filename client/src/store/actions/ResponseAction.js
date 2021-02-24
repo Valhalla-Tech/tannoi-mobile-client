@@ -214,3 +214,34 @@ export const clearResponse = (clearResponseData, clearResponses) => {
     }
   };
 };
+
+export const deleteCommunityResponse = (community_id, response_id) => {
+  return async (dispatch) => {
+    try {
+      let access_token = await AsyncStorage.getItem('access_token');
+
+      let deleteCommunityResponseRequest = await axios({
+        method: 'DELETE',
+        url: `${BaseUrl}/communities/delete-content/${community_id}`,
+        headers: {
+          token: access_token,
+        },
+        data: {
+          response_id
+        }
+      });
+
+      if(deleteCommunityResponseRequest.status === 200) {
+        dispatch({
+          type: 'DELETE_COMMUNITY_DISCUSSION',
+          payload: {
+            status: 200,
+            msg: 'community response has been deleted!',
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}

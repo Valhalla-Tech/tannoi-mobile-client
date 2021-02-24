@@ -37,6 +37,8 @@ const DiscussionAndResponseList = (props) => {
     scrollDownForResponseScreen,
     responseScreenId,
     isCommunityDiscussion,
+    role,
+    cardOnDelete,
   } = props;
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -146,6 +148,8 @@ const DiscussionAndResponseList = (props) => {
                 selectedCard={selectedCard}
                 scrollDownForResponseScreen={scrollDownForResponseScreen}
                 responseScreenResponseId={responseId}
+                role={role}
+                cardOnDelete={cardOnDelete}
               />
             ) : (
               <ClosedCard
@@ -190,6 +194,8 @@ const DiscussionAndResponseList = (props) => {
                 userId={userId}
                 isRecorderModalOpen={openAddResponse}
                 isCommunityDiscussion={isCommunityDiscussion}
+                role={role}
+                cardOnDelete={cardOnDelete}
               />
               {response.length === 0 && isResponse && (
                 <LoadingSpinner loadingSpinnerForComponent={true} />
@@ -251,6 +257,8 @@ const DiscussionAndResponseList = (props) => {
               responseScreenResponseId={isResponseScreen ? responseId : null}
               deleteResponseFromResponseScreen={isResponseScreen ? true : false}
               responseScreenId={responseScreenId}
+              role={role}
+              cardOnDelete={cardOnDelete}
             />
           ) : (
             <ClosedCard

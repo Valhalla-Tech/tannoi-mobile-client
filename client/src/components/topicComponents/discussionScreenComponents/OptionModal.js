@@ -23,6 +23,9 @@ import { CalculateHeight } from '../../../helper/CalculateSize';
 //Component
 import Modal from '../../publicComponents/Modal';
 
+const ROLE_ALLOWED = 1
+const ROLE_UNALLOWED = 0
+
 const OptionModal = (props) => {
   const {
     openOptionModal,
@@ -39,6 +42,8 @@ const OptionModal = (props) => {
     cardIndex,
     deleteResponseFromResponseScreen,
     responseScreenId,
+    role,
+    cardOnDelete,
   } = props;
 
   const userId = useSelector((state) => state.ProfileReducer.userProfile.id);
@@ -96,6 +101,13 @@ const OptionModal = (props) => {
   };
 
   const DeleteDiscussionOrResponse = async () => {
+    if (cardOnDelete) {
+      console.log('here', {discussionId, responseId})
+      if(modalType == 'discussion')
+        return cardOnDelete(discussionId, 'discussion');
+      else if (modalType == 'response')
+        return cardOnDelete(responseId, 'response')
+    }
     try {
       let access_token = await AsyncStorage.getItem('access_token');
 
@@ -124,6 +136,7 @@ const OptionModal = (props) => {
         }
       }
     } catch (error) {
+      console.log(error)
       if (error.response.data.msg === 'You have to login first') {
         dispatch(userLogout());
       }
@@ -136,7 +149,7 @@ const OptionModal = (props) => {
         onPress={() => {
           buttonTitle === 'Delete' && setDeleteOption(true);
           buttonTitle === 'Edit participant list' && openPrivateModal();
-          buttonTitle === 'Share' && shareOption();
+          buttonTitle === 'Share' && shareOption();          
         }}>
         <Text style={styles.optionModalButtonTextStyle}>{buttonTitle}</Text>
       </TouchableOpacity>
@@ -195,7 +208,7 @@ const OptionModal = (props) => {
             type === 2 &&
             modalType === 'discussion' &&
             OptionModalButton('Edit participant list')}
-          {profileId === userId && OptionModalButton('Delete')}
+          {(profileId === userId || role === ROLE_ALLOWED) && OptionModalButton('Delete')}
         </>
       ) : (
         <DeleteOption />

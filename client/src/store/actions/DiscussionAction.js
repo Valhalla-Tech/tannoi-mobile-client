@@ -205,3 +205,34 @@ export const clearDiscussion = (clearUserDiscussion, clearAllDiscussion) => {
     }
   };
 };
+
+export const deleteCommunityDiscussion = (community_id, discussion_id) => {
+  return async (dispatch) => {
+    try {
+      let access_token = await AsyncStorage.getItem('access_token');
+
+      let deleteCommunityDiscussionRequest = await axios({
+        method: 'DELETE',
+        url: `${BaseUrl}/communities/delete-content/${community_id}`,
+        headers: {
+          token: access_token,
+        },
+        data: {
+          discussion_id
+        }
+      });
+
+      if(deleteCommunityDiscussionRequest.status === 200) {
+        dispatch({
+          type: 'DELETE_COMMUNITY_DISCUSSION',
+          payload: {
+            status: 200,
+            msg: 'community discussion has been deleted!',
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}

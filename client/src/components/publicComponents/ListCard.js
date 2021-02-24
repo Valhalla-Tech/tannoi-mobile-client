@@ -35,6 +35,8 @@ const HomeListCard = (props) => {
     isMember,
     openCommunityDiscussionNoticeModal,
     inputCommunityDiscussionNoticeModalMessage,
+    role,
+    cardOnDelete,
   } = props;
 
   const HomeListCardData = () => {
@@ -121,7 +123,9 @@ const HomeListCard = (props) => {
         } else {
           navigation.push('DiscussionScreen', {
             discussionId: discussionId,
-            isCommunityDiscussion: isCommunityDiscussion
+            isCommunityDiscussion: isCommunityDiscussion,
+            role,
+            cardOnDelete,
           });
         }
       }}>

@@ -17,13 +17,17 @@ import RightArrowIcon from '../../assets/communitiesAssets/rightArrow.svg';
 import Card from '../publicComponents/Card';
 
 const MemberList = (props) => {
-  const { memberList, navigation, communityId, isAdmin } = props;
+  const { memberList, navigation, onPress, communityId, isAdmin } = props;
 
   const MemberListData = (itemData) => {
     return (
       <TouchableOpacity
-        onPress={() =>
-          navigation.navigate('UserProfileScreen', { userId: itemData.item.id })
+        onPress={() =>{
+            if(onPress) {
+              return onPress(itemData)
+            }
+            // navigation.navigate('UserProfileScreen', { userId: itemData.item.id })
+          }
         }
         style={
           itemData.index + 1 !== memberList.length
@@ -81,8 +85,7 @@ const MemberList = (props) => {
   return (
     <Card
       child={MemberListContent}
-      customStyle={styles.communityMemberContainerStyle}
-    />
+      customStyle={styles.communityMemberContainerStyle}/>
   );
 };
 
