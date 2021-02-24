@@ -48,6 +48,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   const [noticeModal, setNoticeModal] = useState(false);
   const [noticeModalMessage, setNoticeModalMessage] = useState('');
   const [gotPermission, setGotPermission] = useState(0)
+  const [isAMember, setIsAMember] = useState(false)
 
   const discussions = useSelector(
     (state) => state.DiscussionReducer.discussions,
@@ -112,8 +113,14 @@ const CommunityProfileScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     if(communityProfile.community_members){
-      if(communityProfile.community_members.length)
-        setGotPermission((communityProfile.community_members[0].type == 'Admin' || communityProfile.community_members[0].type == 'Moderator' ? 1 : 0))
+      if(communityProfile.community_members.length){
+        setGotPermission((
+          communityProfile.community_members[0].type == 'Admin' 
+          || communityProfile.community_members[0].type == 'Moderator' 
+          ? 1 : 0
+        ))
+        setIsAMember(true)
+      }
     }
   }, [communityProfile])
 
@@ -277,9 +284,10 @@ const CommunityProfileScreen = ({ navigation, route }) => {
         {renderMemberRequestsCard()}
         <MemberList
           onPress={(itemData) => {
-            setMemberModalMode(true)
-            setMemberItemModal(itemData)
-            console.log('test', memberItemModal)
+            if (isAMember) {
+              setMemberModalMode(true)
+              setMemberItemModal(itemData)
+            }
           }} 
           communityId={communityId}
           navigation={navigation}
@@ -314,7 +322,6 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   );
 
   const checkEligibility = (type) => {
-    console.log('hoiii', memberItemModal.item.members);
     
     if (type === 'userPermissions') return communityProfile.community_members[0].type === 'Admin' && userProfile.id !== memberItemModal.item.members[0].community_member.user_id;
   }
