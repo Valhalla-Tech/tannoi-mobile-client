@@ -1,5 +1,5 @@
 module.exports = {
-  bold: 'SF Pro Display Bold',
-  medium: 'SF Pro Text Medium',
-  normal: 'SF Pro Text Regular',
+  bold: 'SFProDisplay-Bold',
+  medium: 'SFProText-Medium',
+  normal: 'SFProText-Regular',
 };
