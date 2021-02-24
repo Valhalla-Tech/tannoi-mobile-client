@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
 
   headerTextStyle: {
     fontFamily: bold,
-    fontSize: CalculateHeight(2.5),
+    fontSize: CalculateHeight(2),
     color: '#464D60',
   },
 
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
   headerButtonTextStyle: {
     fontFamily: bold,
     color: '#0E4EF4',
-    fontSize: CalculateHeight(2),
+    fontSize: CalculateHeight(1.8),
   },
 
   createCommunityCardStyle: {
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
   createCommunityButtonTextStyle: {
     fontFamily: normal,
     color: '#464D60',
-    fontSize: CalculateHeight(2.2),
+    fontSize: CalculateHeight(1.8),
     paddingLeft: '2%',
   },
 

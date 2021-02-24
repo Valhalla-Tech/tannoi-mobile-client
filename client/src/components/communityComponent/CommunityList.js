@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
 
   communityNameStyle: {
     fontFamily: bold,
-    fontSize: CalculateHeight(2.1),
+    fontSize: CalculateHeight(1.8),
     marginRight: CalculateWidth(1.5),
     color: '#464D60',
   },
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
   communityDescriptionStyle: {
     fontFamily: normal,
     color: '#73798C',
-    fontSize: CalculateHeight(1.8),
+    fontSize: CalculateHeight(1.6),
   },
 
   communityMemberAndDiscussionContainerStyle: {
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
   communityMemberAndDiscussionStyle: {
     fontFamily: normal,
     color: '#73798C',
-    fontSize: CalculateHeight(1.8),
+    fontSize: CalculateHeight(1.6),
   },
 
   topicNameContainerStyle: {
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     color: '#5152D0',
     fontFamily: normal,
     lineHeight: 20,
-    fontSize: CalculateHeight(1.8),
+    fontSize: CalculateHeight(1.6),
   },
 });
 

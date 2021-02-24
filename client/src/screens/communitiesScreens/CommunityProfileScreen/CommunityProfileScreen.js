@@ -574,7 +574,7 @@ const styles = StyleSheet.create({
 
   communityProfileMemberModalMemberRoleTitleMenuStyle: {
     fontFamily: bold,
-    fontSize: 14,
+    fontSize: 16,
     borderBottomColor: '#5152D0',
     color: '#5152D0',
     padding: 5,
@@ -583,7 +583,7 @@ const styles = StyleSheet.create({
   communityProfileMemberModalRoleStyle: {
     fontFamily: normal,
     width: '100%',
-    fontSize: 14,
+    fontSize: 16,
     color: '#464D60',
     textAlign: 'center',
   },
@@ -600,13 +600,13 @@ const styles = StyleSheet.create({
 
   communityProfileMemberModalRemoveMemberTitleStyle: {
     height: 30,
-    marginTop: '5%',
+    marginTop: '10%',
     width: '100%',
   },
 
   communityProfileMemberModalRemoveMemberTextStyle: {
     fontFamily: bold,
-    fontSize: 14,
+    fontSize: 16,
     color: 'red',
   },
 
@@ -619,7 +619,7 @@ const styles = StyleSheet.create({
   memberRequestTextStyle: {
     fontFamily: normal,
     color: '#464D60',
-    fontSize: CalculateHeight(2),
+    fontSize: CalculateHeight(1.8),
   },
 
   noticeModalTextStyle: {
