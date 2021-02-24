@@ -72,10 +72,6 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   // const memberFadeAnim = useRef(new Animated.Value(0)).current;
   const [memberModalMode, setMemberModalMode] = useState(false);
   const [memberItemModal, setMemberItemModal] = useState(null);
-  const [selectRoleMode, setSelectRoleMode] = useState(false);
-  const [initialSelectedRoleValue, setInitialSelectedRoleValue] = useState(
-    null,
-  );
   const [selectedRoleValue, setSelectedRoleValue] = useState(null);
 
   // const memberFadeIn = () => {
@@ -119,14 +115,14 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   }, []);
 
   useEffect(() => {
-    if(communityProfile.community_members){
-      if(communityProfile.community_members.length){
+    if (communityProfile.community_members){
+      if (communityProfile.community_members.length){
         setGotPermission((
-          communityProfile.community_members[0].type == 'Admin' 
-          || communityProfile.community_members[0].type == 'Moderator' 
+          communityProfile.community_members[0].type === 'Admin'
+          || communityProfile.community_members[0].type === 'Moderator'
           ? 1 : 0
-        ))
-        setIsAMember(true)
+        ));
+        setIsAMember(true);
       }
     }
   }, [communityProfile]);
@@ -229,19 +225,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
               inputCommunityDiscussionNoticeModalMessage={
                 inputNoticeModalMessage
               }
-              cardOnDelete={async (id, type) => {
-                if (type == 'discussion') {
-                  await dispatch(deleteCommunityDiscussion(communityId, id));
-                } else if (type == 'response') {
-                  await dispatch(deleteCommunityResponse(communityId, id));
-                }
-
-                await dispatch(getAllDiscussion('community_id=', communityId));
-
-                navigation.navigate('CommunityProfileScreen', {
-                  communityId: communityId,
-                });
-              }}
+              cardOnDelete = {(id, type) => deleteCommunityDiscussionOrResponse(id, type)}
             />
           }
         />
@@ -262,6 +246,19 @@ const CommunityProfileScreen = ({ navigation, route }) => {
       );
     }
   };
+
+  const deleteCommunityDiscussionOrResponse = async (id, type) => {
+    if (type === 'discussion') {
+      await dispatch(deleteCommunityDiscussion(communityId, id));
+    }
+    else if (type === 'response'){
+      await dispatch(deleteCommunityResponse(communityId, id));
+    }
+    await dispatch(getAllDiscussion('community_id=', communityId));
+    navigation.navigate('CommunityProfileScreen', {
+      communityId: communityId,
+    });
+  }
 
   const renderMemberRequestsCard = () => {
     if (
@@ -287,10 +284,11 @@ const CommunityProfileScreen = ({ navigation, route }) => {
         <MemberList
           onPress={(itemData) => {
             if (isAMember) {
-              setMemberModalMode(true)
-              setMemberItemModal(itemData)
+              setMemberModalMode(true);
+              setMemberItemModal(itemData);
+              setSelectedRoleValue(itemData.item.members[0].community_member.type);
             }
-          }} 
+          }}
           communityId={communityId}
           navigation={navigation}
           memberList={communityMember}
@@ -324,10 +322,28 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   );
 
   const checkEligibility = (type) => {
-    if (type === 'userPermissions') return communityProfile.community_members[0].type === 'Admin' && userProfile.id !== memberItemModal.item.members[0].community_member.user_id;
+    if (type === 'userPermissions') {
+        return communityProfile.community_members[0].type === 'Admin'
+        && userProfile.id !== memberItemModal.item.members[0].community_member.user_id;
+    }
+  };
+
+  const changeRoleStatus = async (user_id, role) => {
+    await dispatch(updateMemberPrivilege(user_id, communityId, role));
+    await getCommunityMember();
+    setSelectedRoleValue(role);
+    setMemberModalMode(false);
+  };
+
+  const removeMemberFromCommunity = async (user_id) => {
+    await dispatch(deleteCommunityMember(user_id, communityId));
+    await getCommunityMember();
+    setMemberModalMode(false);
   }
 
   const memberDetailModal = () => {
+    /* The one I commented here is for future reference, cause I want to see if I can make my own modal animation for this app */
+
     // return (
     //   <Animated.View style={{
     //     width: "100%",
@@ -347,182 +363,67 @@ const CommunityProfileScreen = ({ navigation, route }) => {
     //     }}><Text>Test</Text></TouchableOpacity>
     //   </Animated.View>
     // )
-
-    // console.log(userProfile)
-    // console.log(communityMember)
-    // console.log('hi')
-    const { item } = memberItemModal;
+    const {item} = memberItemModal;
     return (
       <Modal
-        customContainerStyle={{
-          justifyContent: 'flex-end',
-        }}
-        customStyle={{
-          borderRadius: 0,
-          width: '100%',
-          height: checkEligibility('userPermissions') ? '33%' : '25%',
-          borderTopLeftRadius: 30,
-          borderTopRightRadius: 30,
-          justifyContent: 'flex-start',
-          alignItems: 'flex-start',
-        }}
+        customContainerStyle={styles.communityProfileMemberModalContainerStyle}
+        customStyle={
+          checkEligibility('userPermissions')
+          ? styles.communityProfileMemberModalEligibleStyle
+          : styles.communityProfileMemberModalNotEligibleStyle
+        }
         animation="slide"
         closeModal={() => {
-          setSelectRoleMode(false);
           setMemberModalMode(false);
         }}>
         <View
-          style={{
-            width: '100%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
+          style={styles.communityProfileMemberModalProfilePictureContainerStyle}>
           <View
-            style={{
-              width: CalculateWidth(22),
-              height: CalculateWidth(22),
-              borderRadius: 50,
-              backgroundColor: '#5152D0',
-              position: 'absolute',
-            }}></View>
-          <Image
-            source={{ uri: item.profile_photo_path }}
-            style={{
-              width: CalculateWidth(20),
-              height: CalculateWidth(20),
-              borderRadius: 50,
-            }}
+            style={styles.communityProfileMemberModalProfilePictureFrameStyle}
           />
+          <Image source={{uri:item.profile_photo_path}} style={styles.communityProfileMemberModalProfilePictureStyle} />
         </View>
-        <Text
-          style={{
-            width: '100%',
-            fontSize: 20,
-            fontWeight: 'bold',
-            textAlign: 'center',
-            marginTop: 10,
-            color: '#5152D0',
-          }}>
-          {item.name}
+        <Text style = {styles.communityProfileMemberModalUsernameStyle}>
+        {item.name}
         </Text>
-        {!selectRoleMode ? (
-          <Text
-            style={{
-              width: '100%',
-              fontSize: 14,
-              color: '#5152D0',
-              textAlign: 'center',
-            }}>
-            {item.members[0].community_member.type}
-          </Text>
-        ) : null}
-
-        {selectRoleMode ? (
-          <View style={{ width: '100%', alignItems: 'center' }}>
-            <Picker
-              selectedValue={selectedRoleValue}
-              style={{
-                height: 25,
-                width: 150,
-                fontSize: 14,
-                borderBottomColor: '#5152D0',
-                borderWidth: 1,
-                fontFamily: normal,
-                color: '#5152D0',
-              }}
-              onValueChange={(itemValue, itemIndex) =>
-                setSelectedRoleValue(itemValue)
-              }>
-              <Picker.Item label="Admin" value="Admin" />
-              <Picker.Item label="Moderator" value="Moderator" />
-              <Picker.Item label="Member" value="Member" />
-            </Picker>
-            <TouchableOpacity
-              style={{
-                width: CalculateWidth(23),
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: 20,
-                backgroundColor: '#5152D0',
-                padding: 5,
-                borderRadius: 3.2,
-              }}
-              onPress={async () => {
-                if (selectedRoleValue == initialSelectedRoleValue) {
-                  setSelectRoleMode(false);
-                  return;
-                }
-                await dispatch(
-                  updateMemberPrivilege(
-                    item.members[0].community_member.user_id,
-                    item.members[0].community_member.community_id,
-                    selectedRoleValue,
-                  ),
-                );
-                await getCommunityMember();
-                setMemberModalMode(false);
-                setSelectRoleMode(false);
-              }}>
-              <Text style={{ color: 'white' }}>Save</Text>
-            </TouchableOpacity>
-          </View>
-        ) : null}
-
-        {checkEligibility('userPermissions') && !selectRoleMode ? (
-          <View
-            style={{
-              width: '100%',
-              flexDirection: 'row',
-            }}>
-            <TouchableOpacity
-              onPress={() => {
-                setInitialSelectedRoleValue(
-                  item.members[0].community_member.type,
-                );
-                setSelectedRoleValue(item.members[0].community_member.type);
-                setSelectRoleMode(true);
-              }}
-              style={{
-                width: '50%',
-                height: 30,
-                justifyContent: 'center',
-                marginTop: 25,
-              }}>
-              <Text
-                style={{
-                  textAlign: 'center',
-                  fontSize: 16,
-                }}>
-                Change Role
+        <Text style={styles.communityProfileMemberModalRoleStyle}>{item.members[0].community_member.type}</Text>
+        {checkEligibility('userPermissions') ?
+          <View style={{width: '100%'}}>
+            <View>
+              <Text style={styles.communityProfileMemberModalMemberRoleTitleMenuStyle}>
+                Member Role
               </Text>
-            </TouchableOpacity>
+              <TouchableOpacity onPress={() => changeRoleStatus(item.members[0].community_member.user_id, 'Admin')} style={styles.communityProfileMemberModalRoleOptionStyle}>
+                <Text style={selectedRoleValue === 'Admin'
+                ? styles.communityProfileMemberModalRoleSelectedTextStyle
+                : null}>
+                  Admin
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => changeRoleStatus(item.members[0].community_member.user_id, 'Moderator')} style={styles.communityProfileMemberModalRoleOptionStyle}>
+                <Text style={selectedRoleValue === 'Moderator'
+                ? styles.communityProfileMemberModalRoleSelectedTextStyle
+                : null}>
+                  Moderator
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => changeRoleStatus(item.members[0].community_member.user_id, 'Member')} style={styles.communityProfileMemberModalRoleOptionStyle}>
+                <Text style={selectedRoleValue === 'Member'
+                ? styles.communityProfileMemberModalRoleSelectedTextStyle
+                : null}>
+                  Member
+                </Text>
+              </TouchableOpacity>
+            </View>
             <TouchableOpacity
-              onPress={async () => {
-                await dispatch(
-                  deleteCommunityMember(
-                    item.members[0].community_member.user_id,
-                    communityId,
-                  ),
-                );
-                await getCommunityMember();
-                setMemberModalMode(false);
-              }}
-              style={{
-                width: '50%',
-                height: 30,
-                justifyContent: 'center',
-                marginTop: 25,
-              }}>
-              <Text
-                style={{
-                  textAlign: 'center',
-                  fontSize: 16,
-                }}>
-                Remove
+            onPress={() => removeMemberFromCommunity(item.members[0].community_member.user_id)}
+            style={styles.communityProfileMemberModalRemoveMemberTitleStyle}>
+              <Text style={styles.communityProfileMemberModalRemoveMemberTextStyle}>
+                Remove Member
               </Text>
             </TouchableOpacity>
           </View>
-        ) : null}
+        : null}
       </Modal>
     );
   };
@@ -603,6 +504,94 @@ const styles = StyleSheet.create({
 
   communityProfileContainerStyle: {
     paddingHorizontal: GlobalPadding,
+  },
+
+  communityProfileMemberModalContainerStyle:{
+    justifyContent: 'flex-end',
+  },
+
+  communityProfileMemberModalEligibleStyle: {
+    borderRadius: 0,
+    width: '100%',
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    height: CalculateHeight(70),
+  },
+
+  communityProfileMemberModalNotEligibleStyle: {
+    borderRadius: 0,
+    width: '100%',
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    height: '25%',
+  },
+
+  communityProfileMemberModalProfilePictureContainerStyle: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  communityProfileMemberModalProfilePictureFrameStyle: {
+    width: CalculateWidth(22),
+    height: CalculateWidth(22),
+    borderRadius: 50,
+    backgroundColor: '#5152D0',
+    position: 'absolute',
+  },
+
+  communityProfileMemberModalProfilePictureStyle: {
+    width: CalculateWidth(20),
+    height: CalculateWidth(20),
+    borderRadius: 50,
+  },
+
+  communityProfileMemberModalUsernameStyle: {
+    width: '100%',
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 10,
+    color: '#5152D0',
+  },
+
+  communityProfileMemberModalMemberRoleTitleMenuStyle: {
+    fontSize: 16,
+    borderBottomColor: '#5152D0',
+    borderBottomWidth: 1,
+    padding: 5,
+  },
+
+  communityProfileMemberModalRoleStyle: {
+    width: '100%',
+    fontSize: 14,
+    color: '#5152D0',
+    textAlign: 'center',
+  },
+
+  communityProfileMemberModalRoleOptionStyle: {
+    padding: 10,
+    paddingLeft: 20,
+  },
+
+  communityProfileMemberModalRoleSelectedTextStyle: {
+    color: '#5152D0',
+  },
+
+  communityProfileMemberModalRemoveMemberTitleStyle: {
+    height: 30,
+    marginTop: 25,
+    padding: 10,
+    width: '100%',
+  },
+
+  communityProfileMemberModalRemoveMemberTextStyle: {
+    fontSize: 16,
+    color: 'grey',
   },
 
   memberRequestContainerStyle: {
