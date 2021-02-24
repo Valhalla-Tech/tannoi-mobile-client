@@ -29,6 +29,7 @@ import {
   deleteCommunityMember,
 } from '../../../store/actions/CommuitiesAction';
 import { getOneProfile } from '../../../store/actions/ProfileAction';
+import { LinearTextGradient } from 'react-native-text-gradient';
 
 //Icons
 import NewDiscussionButton from '../../../assets/communitiesAssets/ic-button.svg';
@@ -172,7 +173,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
           });
         }}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Text style={styles.memberRequestTextStyle}>Member Requests</Text>
+          <Text style={styles.memberRequestTextStyle}>Member requests</Text>
           <View style={{ justifyContent: 'center', paddingRight: '2%' }}>
             <RightArrowIcon />
           </View>
@@ -322,7 +323,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   );
 
   const checkEligibility = (type) => {
-    if (type === 'userPermissions') {
+    if (type === 'userPermissions' && communityProfile.community_members !== undefined) {
         return communityProfile.community_members[0].type === 'Admin'
         && userProfile.id !== memberItemModal.item.members[0].community_member.user_id;
     }
@@ -382,16 +383,23 @@ const CommunityProfileScreen = ({ navigation, route }) => {
             style={styles.communityProfileMemberModalProfilePictureFrameStyle}
           />
           <Image source={{uri:item.profile_photo_path}} style={styles.communityProfileMemberModalProfilePictureStyle} />
+          <LinearTextGradient
+                      style={{paddingTop: '2%'}}
+                      locations={[0, 1]}
+                      colors={['#5051DB', '#7E37B6']}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 0 }}>
+            <Text style = {styles.communityProfileMemberModalUsernameStyle}>
+              {item.name}
+            </Text>
+          </LinearTextGradient>
         </View>
-        <Text style = {styles.communityProfileMemberModalUsernameStyle}>
-        {item.name}
-        </Text>
         <Text style={styles.communityProfileMemberModalRoleStyle}>{item.members[0].community_member.type}</Text>
         {checkEligibility('userPermissions') ?
-          <View style={{width: '100%'}}>
+          <View style={{width: '100%', paddingTop: '5%'}}>
             <View>
               <Text style={styles.communityProfileMemberModalMemberRoleTitleMenuStyle}>
-                Member Role
+                Change membership
               </Text>
               <TouchableOpacity onPress={() => changeRoleStatus(item.members[0].community_member.user_id, 'Admin')} style={styles.communityProfileMemberModalRoleOptionStyle}>
                 <Text style={selectedRoleValue === 'Admin'
@@ -419,7 +427,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
             onPress={() => removeMemberFromCommunity(item.members[0].community_member.user_id)}
             style={styles.communityProfileMemberModalRemoveMemberTitleStyle}>
               <Text style={styles.communityProfileMemberModalRemoveMemberTextStyle}>
-                Remove Member
+                Remove member from community
               </Text>
             </TouchableOpacity>
           </View>
@@ -527,18 +535,19 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    height: '25%',
+    height: '35%',
   },
 
   communityProfileMemberModalProfilePictureContainerStyle: {
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: '5%',
   },
 
   communityProfileMemberModalProfilePictureFrameStyle: {
-    width: CalculateWidth(22),
-    height: CalculateWidth(22),
+    width: CalculateWidth(10),
+    height: CalculateWidth(10),
     borderRadius: 50,
     backgroundColor: '#5152D0',
     position: 'absolute',
@@ -551,25 +560,27 @@ const styles = StyleSheet.create({
   },
 
   communityProfileMemberModalUsernameStyle: {
+    fontFamily: bold,
     width: '100%',
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 18,
     textAlign: 'center',
     marginTop: 10,
     color: '#5152D0',
   },
 
   communityProfileMemberModalMemberRoleTitleMenuStyle: {
-    fontSize: 16,
+    fontFamily: bold,
+    fontSize: 14,
     borderBottomColor: '#5152D0',
-    borderBottomWidth: 1,
+    color: '#5152D0',
     padding: 5,
   },
 
   communityProfileMemberModalRoleStyle: {
+    fontFamily: normal,
     width: '100%',
     fontSize: 14,
-    color: '#5152D0',
+    color: '#464D60',
     textAlign: 'center',
   },
 
@@ -580,18 +591,19 @@ const styles = StyleSheet.create({
 
   communityProfileMemberModalRoleSelectedTextStyle: {
     color: '#5152D0',
+    fontFamily: bold,
   },
 
   communityProfileMemberModalRemoveMemberTitleStyle: {
     height: 30,
-    marginTop: 25,
-    padding: 10,
+    marginTop: '5%',
     width: '100%',
   },
 
   communityProfileMemberModalRemoveMemberTextStyle: {
-    fontSize: 16,
-    color: 'grey',
+    fontFamily: bold,
+    fontSize: 14,
+    color: 'red',
   },
 
   memberRequestContainerStyle: {
