@@ -22,7 +22,12 @@ import {
   deleteCommunityDiscussion,
 } from '../../../store/actions/DiscussionAction';
 import { deleteCommunityResponse } from '../../../store/actions/ResponseAction';
-import { getOneCommunity, clearCommunityProfile, updateMemberPrivilege, deleteCommunityMember } from '../../../store/actions/CommuitiesAction';
+import {
+  getOneCommunity,
+  clearCommunityProfile,
+  updateMemberPrivilege,
+  deleteCommunityMember,
+} from '../../../store/actions/CommuitiesAction';
 import { getOneProfile } from '../../../store/actions/ProfileAction';
 
 //Icons
@@ -47,7 +52,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   const [communityMember, setCommunityMember] = useState('');
   const [noticeModal, setNoticeModal] = useState(false);
   const [noticeModalMessage, setNoticeModalMessage] = useState('');
-  const [gotPermission, setGotPermission] = useState(0)
+  const [gotPermission, setGotPermission] = useState(0);
 
   const discussions = useSelector(
     (state) => state.DiscussionReducer.discussions,
@@ -58,7 +63,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   );
 
   const userProfile = useSelector(
-    state => state.ProfileReducer.loggedinUserProfile
+    (state) => state.ProfileReducer.loggedinUserProfile,
   );
 
   const dispatch = useDispatch();
@@ -67,7 +72,9 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   const [memberModalMode, setMemberModalMode] = useState(false);
   const [memberItemModal, setMemberItemModal] = useState(null);
   const [selectRoleMode, setSelectRoleMode] = useState(false);
-  const [initialSelectedRoleValue, setInitialSelectedRoleValue] = useState(null);
+  const [initialSelectedRoleValue, setInitialSelectedRoleValue] = useState(
+    null,
+  );
   const [selectedRoleValue, setSelectedRoleValue] = useState(null);
 
   // const memberFadeIn = () => {
@@ -111,9 +118,14 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   }, []);
 
   useEffect(() => {
-    if(communityProfile.community_members)
-      setGotPermission((communityProfile.community_members[0].type == 'Admin' || communityProfile.community_members[0].type == 'Moderator' ? 1 : 0))
-  }, [communityProfile])
+    if (communityProfile.community_members)
+      setGotPermission(
+        communityProfile.community_members[0].type == 'Admin' ||
+          communityProfile.community_members[0].type == 'Moderator'
+          ? 1
+          : 0,
+      );
+  }, [communityProfile]);
 
   const changeSelectedDisplay = (value) => {
     setSelectedDisplay(value);
@@ -208,28 +220,23 @@ const CommunityProfileScreen = ({ navigation, route }) => {
                     : false
                   : false
               }
-              role = {gotPermission}
+              role={gotPermission}
               openCommunityDiscussionNoticeModal={openNoticeModal}
               inputCommunityDiscussionNoticeModalMessage={
                 inputNoticeModalMessage
               }
-              cardOnDelete = {async (id, type) => {
-                if(type == 'discussion') {
-
-                  await dispatch(deleteCommunityDiscussion(communityId, id))
-                  
+              cardOnDelete={async (id, type) => {
+                if (type == 'discussion') {
+                  await dispatch(deleteCommunityDiscussion(communityId, id));
+                } else if (type == 'response') {
+                  await dispatch(deleteCommunityResponse(communityId, id));
                 }
-                else if (type == 'response'){
 
-                  await dispatch(deleteCommunityResponse(communityId, id))
-
-                }
-                
-                await dispatch(getAllDiscussion('community_id=', communityId))
+                await dispatch(getAllDiscussion('community_id=', communityId));
 
                 navigation.navigate('CommunityProfileScreen', {
                   communityId: communityId,
-                })
+                });
               }}
             />
           }
@@ -275,10 +282,10 @@ const CommunityProfileScreen = ({ navigation, route }) => {
         {renderMemberRequestsCard()}
         <MemberList
           onPress={(itemData) => {
-            setMemberModalMode(true)
-            setMemberItemModal(itemData)
-            console.log('test', memberItemModal)
-          }} 
+            setMemberModalMode(true);
+            setMemberItemModal(itemData);
+            console.log('test', memberItemModal);
+          }}
           communityId={communityId}
           navigation={navigation}
           memberList={communityMember}
@@ -313,9 +320,14 @@ const CommunityProfileScreen = ({ navigation, route }) => {
 
   const checkEligibility = (type) => {
     console.log('hoiii', memberItemModal.item.members);
-    
-    if (type === 'userPermissions') return communityProfile.community_members[0].type === 'Admin' && userProfile.id !== memberItemModal.item.members[0].community_member.user_id;
-  }
+
+    if (type === 'userPermissions')
+      return (
+        communityProfile.community_members[0].type === 'Admin' &&
+        userProfile.id !==
+          memberItemModal.item.members[0].community_member.user_id
+      );
+  };
 
   const memberDetailModal = () => {
     // return (
@@ -337,160 +349,185 @@ const CommunityProfileScreen = ({ navigation, route }) => {
     //     }}><Text>Test</Text></TouchableOpacity>
     //   </Animated.View>
     // )
-    
 
     // console.log(userProfile)
     // console.log(communityMember)
     // console.log('hi')
-    const {item} = memberItemModal
+    const { item } = memberItemModal;
     return (
       <Modal
-      customContainerStyle={{
-        justifyContent: 'flex-end',
-      }}
-      customStyle={{
-        borderRadius: 0,
-        width: '100%',
-        height: checkEligibility('userPermissions') ? '33%' : '25%',
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-      }} 
-      animation="slide" 
-      closeModal={() => {
-        setSelectRoleMode(false)
-        setMemberModalMode(false)
-        }}>
-        <View 
-        style={{
-          width: '100%',
-          justifyContent: 'center',
-          alignItems: 'center'
-          }}>
-          <View
-          style={{
-            width: CalculateWidth(22),
-            height: CalculateWidth(22),
-            borderRadius: 50,
-            backgroundColor: '#5152D0',
-            position: 'absolute'
-          }}
-          >
-
-          </View>
-          <Image source={{uri:item.profile_photo_path}} style={{
-            width: CalculateWidth(20),
-            height: CalculateWidth(20),
-            borderRadius: 50,
-          }} />
-        </View>
-        <Text
-        style = {{
-          width: '100%',
-          fontSize: 20,
-          fontWeight: "bold",
-          textAlign: 'center',
-          marginTop: 10,
-          color: '#5152D0'
-          
+        customContainerStyle={{
+          justifyContent: 'flex-end',
         }}
-        >
-        {item.name}
-        </Text>
-        {!selectRoleMode ? <Text style={{width: '100%', fontSize: 14, color: '#5152D0', textAlign: 'center'}}>{item.members[0].community_member.type}</Text> : null}
-
-        {selectRoleMode ? 
-        <View style={{width: '100%', alignItems: 'center'}}>
-          <Picker
-            selectedValue={selectedRoleValue}
-            style={{
-              height: 25,
-              width: 150,
-              fontSize: 14,
-              borderBottomColor: '#5152D0',
-              borderWidth: 1,
-              fontFamily: normal,
-              color: '#5152D0',
-            }}
-            onValueChange={(itemValue, itemIndex) => setSelectedRoleValue(itemValue)}
-          >
-            <Picker.Item label="Admin" value="Admin" />
-            <Picker.Item label="Moderator" value="Moderator" />
-            <Picker.Item label="Member" value="Member" />
-          </Picker>
-          <TouchableOpacity 
+        customStyle={{
+          borderRadius: 0,
+          width: '100%',
+          height: checkEligibility('userPermissions') ? '33%' : '25%',
+          borderTopLeftRadius: 30,
+          borderTopRightRadius: 30,
+          justifyContent: 'flex-start',
+          alignItems: 'flex-start',
+        }}
+        animation="slide"
+        closeModal={() => {
+          setSelectRoleMode(false);
+          setMemberModalMode(false);
+        }}>
+        <View
           style={{
-            width: CalculateWidth(23),
+            width: '100%',
             justifyContent: 'center',
             alignItems: 'center',
-            marginTop: 20,
-            backgroundColor: '#5152D0',
-            padding: 5,
-            borderRadius: 3.2
-          }}
-          onPress={async () => {
-            if (selectedRoleValue == initialSelectedRoleValue) {
-              setSelectRoleMode(false)
-              return 
-            }
-            await dispatch(updateMemberPrivilege(item.members[0].community_member.user_id, item.members[0].community_member.community_id, selectedRoleValue))
-            await getCommunityMember()
-            setMemberModalMode(false)
-            setSelectRoleMode(false)
-          }}
-          ><Text style={{color: 'white'}}>Save</Text></TouchableOpacity>
+          }}>
+          <View
+            style={{
+              width: CalculateWidth(22),
+              height: CalculateWidth(22),
+              borderRadius: 50,
+              backgroundColor: '#5152D0',
+              position: 'absolute',
+            }}></View>
+          <Image
+            source={{ uri: item.profile_photo_path }}
+            style={{
+              width: CalculateWidth(20),
+              height: CalculateWidth(20),
+              borderRadius: 50,
+            }}
+          />
         </View>
-        : null}
-        
-        {checkEligibility('userPermissions') && !selectRoleMode ? <View style={{
-          width: '100%',
-          flexDirection: 'row'
-        }}>
-          <TouchableOpacity onPress={() => {
-
-            setInitialSelectedRoleValue(item.members[0].community_member.type)
-            setSelectedRoleValue(item.members[0].community_member.type)
-            setSelectRoleMode(true)
-
-          }} style={{
-            width: '50%',
-            height: 30,
-            justifyContent: 'center',
-            marginTop: 25
-          }}>
-            <Text style={{
-              textAlign: 'center',
-              fontSize: 16
-            }}>
-              Change Role
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity 
-          onPress ={async () => {
-
-            await dispatch(deleteCommunityMember(item.members[0].community_member.user_id, communityId))
-            await getCommunityMember()
-            setMemberModalMode(false)
-            
-          }}
+        <Text
           style={{
-            width: '50%',
-            height: 30,
-            justifyContent: 'center',
-            marginTop: 25
+            width: '100%',
+            fontSize: 20,
+            fontWeight: 'bold',
+            textAlign: 'center',
+            marginTop: 10,
+            color: '#5152D0',
           }}>
-            <Text style={{
+          {item.name}
+        </Text>
+        {!selectRoleMode ? (
+          <Text
+            style={{
+              width: '100%',
+              fontSize: 14,
+              color: '#5152D0',
               textAlign: 'center',
-              fontSize: 16
             }}>
-              Remove
-            </Text>
-          </TouchableOpacity>
-        </View> : null}
+            {item.members[0].community_member.type}
+          </Text>
+        ) : null}
+
+        {selectRoleMode ? (
+          <View style={{ width: '100%', alignItems: 'center' }}>
+            <Picker
+              selectedValue={selectedRoleValue}
+              style={{
+                height: 25,
+                width: 150,
+                fontSize: 14,
+                borderBottomColor: '#5152D0',
+                borderWidth: 1,
+                fontFamily: normal,
+                color: '#5152D0',
+              }}
+              onValueChange={(itemValue, itemIndex) =>
+                setSelectedRoleValue(itemValue)
+              }>
+              <Picker.Item label="Admin" value="Admin" />
+              <Picker.Item label="Moderator" value="Moderator" />
+              <Picker.Item label="Member" value="Member" />
+            </Picker>
+            <TouchableOpacity
+              style={{
+                width: CalculateWidth(23),
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 20,
+                backgroundColor: '#5152D0',
+                padding: 5,
+                borderRadius: 3.2,
+              }}
+              onPress={async () => {
+                if (selectedRoleValue == initialSelectedRoleValue) {
+                  setSelectRoleMode(false);
+                  return;
+                }
+                await dispatch(
+                  updateMemberPrivilege(
+                    item.members[0].community_member.user_id,
+                    item.members[0].community_member.community_id,
+                    selectedRoleValue,
+                  ),
+                );
+                await getCommunityMember();
+                setMemberModalMode(false);
+                setSelectRoleMode(false);
+              }}>
+              <Text style={{ color: 'white' }}>Save</Text>
+            </TouchableOpacity>
+          </View>
+        ) : null}
+
+        {checkEligibility('userPermissions') && !selectRoleMode ? (
+          <View
+            style={{
+              width: '100%',
+              flexDirection: 'row',
+            }}>
+            <TouchableOpacity
+              onPress={() => {
+                setInitialSelectedRoleValue(
+                  item.members[0].community_member.type,
+                );
+                setSelectedRoleValue(item.members[0].community_member.type);
+                setSelectRoleMode(true);
+              }}
+              style={{
+                width: '50%',
+                height: 30,
+                justifyContent: 'center',
+                marginTop: 25,
+              }}>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: 16,
+                }}>
+                Change Role
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={async () => {
+                await dispatch(
+                  deleteCommunityMember(
+                    item.members[0].community_member.user_id,
+                    communityId,
+                  ),
+                );
+                await getCommunityMember();
+                setMemberModalMode(false);
+              }}
+              style={{
+                width: '50%',
+                height: 30,
+                justifyContent: 'center',
+                marginTop: 25,
+              }}>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: 16,
+                }}>
+                Remove
+              </Text>
+            </TouchableOpacity>
+          </View>
+        ) : null}
       </Modal>
-    )
-}
+    );
+  };
 
   return (
     <View style={{ flex: 1 }}>
