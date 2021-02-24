@@ -377,12 +377,16 @@ const CommunityProfileScreen = ({ navigation, route }) => {
         closeModal={() => {
           setMemberModalMode(false);
         }}>
-        <View
-          style={styles.communityProfileMemberModalProfilePictureContainerStyle}>
-          <View
-            style={styles.communityProfileMemberModalProfilePictureFrameStyle}
-          />
-          <Image source={{uri:item.profile_photo_path}} style={styles.communityProfileMemberModalProfilePictureStyle} />
+        <View style={styles.communityProfileMemberModalProfilePictureContainerStyle}>
+          <View style={styles.communityProfileMemberModalProfilePictureFrameStyle}/>
+          <TouchableOpacity onPress={() => {
+            setMemberModalMode(false);
+            navigation.navigate('UserProfileScreen', { userId: item.id });
+          }}>
+            <Image
+              source={{uri:item.profile_photo_path}} 
+              style={styles.communityProfileMemberModalProfilePictureStyle} />
+          </TouchableOpacity>
           <LinearTextGradient
                       style={{paddingTop: '2%'}}
                       locations={[0, 1]}

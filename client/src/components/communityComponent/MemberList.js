@@ -23,8 +23,8 @@ const MemberList = (props) => {
     return (
       <TouchableOpacity
         onPress={() =>{
-            if(onPress) {
-              return onPress(itemData)
+            if (onPress) {
+              return onPress(itemData);
             }
             // navigation.navigate('UserProfileScreen', { userId: itemData.item.id })
           }
