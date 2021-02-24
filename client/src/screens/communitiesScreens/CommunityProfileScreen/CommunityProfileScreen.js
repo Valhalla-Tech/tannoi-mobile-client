@@ -388,11 +388,11 @@ const CommunityProfileScreen = ({ navigation, route }) => {
               style={styles.communityProfileMemberModalProfilePictureStyle} />
           </TouchableOpacity>
           <LinearTextGradient
-                      style={{paddingTop: '2%'}}
-                      locations={[0, 1]}
-                      colors={['#5051DB', '#7E37B6']}
-                      start={{ x: 0, y: 0 }}
-                      end={{ x: 1, y: 0 }}>
+            style={{paddingTop: '2%'}}
+            locations={[0, 1]}
+            colors={['#5051DB', '#7E37B6']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}>
             <Text style = {styles.communityProfileMemberModalUsernameStyle}>
               {item.name}
             </Text>
