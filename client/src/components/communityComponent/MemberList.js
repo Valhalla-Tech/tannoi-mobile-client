@@ -23,8 +23,8 @@ const MemberList = (props) => {
     return (
       <TouchableOpacity
         onPress={() =>{
-            if(onPress) {
-              return onPress(itemData)
+            if (onPress) {
+              return onPress(itemData);
             }
             // navigation.navigate('UserProfileScreen', { userId: itemData.item.id })
           }
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
 
   inviteToCommunityButtonTextStyle: {
     fontFamily: normal,
-    fontSize: CalculateHeight(2),
+    fontSize: CalculateHeight(1.8),
     color: '#464D60',
   },
 
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   memberNameStyle: {
     fontFamily: normal,
     color: '#464D60',
-    fontSize: CalculateHeight(2.1),
+    fontSize: CalculateHeight(1.8),
   },
 
   adminStyle: {
