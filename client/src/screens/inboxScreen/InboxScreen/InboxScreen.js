@@ -126,6 +126,7 @@ const InboxScreen = ({ navigation }) => {
               : { ...styles.inboxCardStyle, borderBottomWidth: 0 }
           }
           onPress={() => {
+            console.log(itemData)
             if (itemData.item.type === 'Followers') {
               navigation.navigate('UserProfileScreen', {
                 userId: itemData.item.user.id,
@@ -161,6 +162,13 @@ const InboxScreen = ({ navigation }) => {
                   screen: 'CommunityProfileScreen',
                   params: {
                     communityId: itemData.item.community.id,
+                  },
+                });
+              } else if (itemData.item.type === 'Community Join Approve') {
+                navigation.navigate('CommunitiesNavigation', {
+                  screen: 'CommunityProfileScreen',
+                  params: {
+                    communityId: itemData.item.community_id,
                   },
                 });
               } else {
