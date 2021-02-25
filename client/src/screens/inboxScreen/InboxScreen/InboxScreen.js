@@ -126,7 +126,6 @@ const InboxScreen = ({ navigation }) => {
               : { ...styles.inboxCardStyle, borderBottomWidth: 0 }
           }
           onPress={() => {
-            console.log(itemData)
             if (itemData.item.type === 'Followers') {
               navigation.navigate('UserProfileScreen', {
                 userId: itemData.item.user.id,
