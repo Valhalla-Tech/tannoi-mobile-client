@@ -6,6 +6,8 @@ import { GlobalPadding } from '../../../constants/Size';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
+import { getCommunityMember } from '../../../store/actions/CommuitiesAction';
+import { useDispatch } from 'react-redux';
 
 //Component
 import Header from '../../../components/publicComponents/Header';
@@ -20,6 +22,8 @@ import MemberRequestEmptyStateImage from '../../../assets/communitiesAssets/empt
 
 const MemberRequestScreen = ({ navigation, route }) => {
   const [requestList, setRequestList] = useState('');
+
+  const dispatch = useDispatch();
 
   const { communityId } = route.params;
 
@@ -41,6 +45,7 @@ const MemberRequestScreen = ({ navigation, route }) => {
 
       if (MemberRequestListRequest.data) {
         setRequestList(MemberRequestListRequest.data.data);
+        dispatch(getCommunityMember(communityId));
       }
     } catch (error) {
       console.log(error);

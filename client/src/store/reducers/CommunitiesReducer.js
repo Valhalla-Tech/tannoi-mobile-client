@@ -1,6 +1,7 @@
 const defaultState = {
   userCommunity: '',
   communityProfile: '',
+  communityMembers: [],
 };
 
 const reducer = (state = defaultState, action) => {
@@ -17,6 +18,8 @@ const reducer = (state = defaultState, action) => {
       return { ...state, communityProfile: '' };
     case 'CLEAR_USER_COMMUNITY':
       return { ...state, userCommunity: '' };
+    case 'GET_ALL_COMMUNITY_MEMBERS':
+      return { ...state, communityMembers: action.payload.data };
     default:
       return state;
   }

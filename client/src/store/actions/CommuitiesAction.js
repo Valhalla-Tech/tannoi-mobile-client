@@ -65,6 +65,34 @@ export const clearCommunityProfile = () => {
   };
 };
 
+
+export const getCommunityMember = (id) => {
+  return async dispatch => {
+    try {
+      let access_token = await AsyncStorage.getItem('access_token');
+
+      let getCommunityMemberRequest = await axios({
+        method: 'get',
+        url: `${BaseUrl}/communities/list-members/${id}`,
+        headers: {
+          token: access_token,
+        },
+      });
+
+      if (getCommunityMemberRequest.data) {
+        dispatch({
+          type: 'GET_ALL_COMMUNITY_MEMBERS',
+          payload: {
+            data: getCommunityMemberRequest.data.data,
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+};
+
 export const clearUserComunity = () => {
   return (dispatch) => {
     dispatch({
