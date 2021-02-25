@@ -16,6 +16,7 @@ import { bold, normal } from '../../../assets/FontSize';
 import { Picker } from '@react-native-community/picker';
 import { useDispatch } from 'react-redux';
 import { getOneCommunity } from '../../../store/actions/CommuitiesAction';
+import { getAllDiscussion } from '../../../store/actions/DiscussionAction';
 
 //Components
 import Header from '../../../components/publicComponents/Header';
@@ -91,6 +92,7 @@ const NewCommunityDiscussionScreen = (props) => {
       if (createCommunityDiscussionRequest.data) {
         setIsLoading(false);
         dispatch(getOneCommunity(communityId));
+        dispatch(getAllDiscussion('community_id=', communityId));
         navigation.navigate('DiscussionScreen', {
           discussionId: createCommunityDiscussionRequest.data.id,
           isCommunityDiscussion: true,
