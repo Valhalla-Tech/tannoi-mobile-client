@@ -75,6 +75,10 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   const [memberItemModal, setMemberItemModal] = useState(null);
   const [selectedRoleValue, setSelectedRoleValue] = useState(null);
 
+  const [removeMemberIdTarget, setRemoveMemberIdTarget] = useState(null);
+  const [promptRemoveMemberMode, setPromptRemoveMemberMode] = useState(false);
+  const [removingMemberMode, setRemovingMemberMode] = useState(false);
+
   // const memberFadeIn = () => {
   //   // Will change fadeAnim value to 1 in 5 seconds
   //   Animated.timing(memberFadeAnim, {
@@ -336,11 +340,37 @@ const CommunityProfileScreen = ({ navigation, route }) => {
     setMemberModalMode(false);
   };
 
+  const promptRemoveMemberFromCommunity = (id) => {
+    setMemberModalMode(false);
+    setPromptRemoveMemberMode(true);
+    setRemoveMemberIdTarget(id);
+  };
+
   const removeMemberFromCommunity = async (user_id) => {
     await dispatch(deleteCommunityMember(user_id, communityId));
     await getCommunityMember();
     setMemberModalMode(false);
-  }
+    setRemoveMemberIdTarget(null);
+    setPromptRemoveMemberMode(false);
+    setRemovingMemberMode(false);
+  };
+
+  const closePromptModal = () => {
+    setMemberItemModal(null);
+    setPromptRemoveMemberMode(false);
+    setRemoveMemberIdTarget(null);
+  };
+
+  const cancelRemoveMemberOptionModal = () => {
+    setPromptRemoveMemberMode(false);
+    setMemberModalMode(true);
+    setRemoveMemberIdTarget(null);
+  };
+
+  const removeMemberOptionModal = () => {
+    setRemovingMemberMode(true);
+    removeMemberFromCommunity(removeMemberIdTarget);
+  };
 
   const memberDetailModal = () => {
     /* The one I commented here is for future reference, cause I want to see if I can make my own modal animation for this app */
@@ -428,7 +458,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
               </TouchableOpacity>
             </View>
             <TouchableOpacity
-            onPress={() => removeMemberFromCommunity(item.members[0].community_member.user_id)}
+            onPress={() => promptRemoveMemberFromCommunity(item.members[0].community_member.user_id)}
             style={styles.communityProfileMemberModalRemoveMemberTitleStyle}>
               <Text style={styles.communityProfileMemberModalRemoveMemberTextStyle}>
                 Remove member from community
@@ -440,9 +470,42 @@ const CommunityProfileScreen = ({ navigation, route }) => {
     );
   };
 
+  const promptRemoveMemberModal = () => {
+    return (
+      <Modal
+        closeModal={() => closePromptModal()}
+        customStyle={styles.communityProfileRemoveMemberPromptModalContainerStyle}
+      >
+        <Text style={styles.communityProfileRemoveMemberPromptModalPromptTitleTextStyle}>
+          Are you sure you want to remove this member from this community?
+        </Text>
+        <View style={styles.communityProfileRemoveMemberPromptModalButtonsContainerStyle}>
+          {removingMemberMode ?
+            <View style={styles.communityProfileRemoveMemberPromptModalSpinnerContainerStyle}>
+              <LoadingSpinner loadingSpinnerForComponent={true} />
+            </View>
+            :
+            <>
+              <TouchableOpacity onPress={() => cancelRemoveMemberOptionModal()}
+              style={styles.communityProfileRemoveMemberPromptModalCancelButtonStyle}>
+                <Text style={styles.communityProfileRemoveMemberPromptModalCancelButtonTextStyle}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.communityProfileRemoveMemberPromptModalRemoveButtonStyle}
+                onPress={() => removeMemberOptionModal()}>
+                <Text style={styles.communityProfileRemoveMemberPromptModalRemoveButtonTextStyle}>Remove</Text>
+              </TouchableOpacity>
+            </>
+          }
+        </View>
+      </Modal>
+    );
+  };
+
   return (
     <View style={{ flex: 1 }}>
       {memberModalMode ? memberDetailModal() : null}
+      {promptRemoveMemberMode ? promptRemoveMemberModal() : null}
       <CommunityProfile
         navigation={navigation}
         profile={communityProfile}
@@ -608,6 +671,60 @@ const styles = StyleSheet.create({
     fontFamily: bold,
     fontSize: 16,
     color: 'red',
+  },
+
+  communityProfileRemoveMemberPromptModalContainerStyle: {
+    padding: 30,
+    height: 120,
+  },
+
+  communityProfileRemoveMemberPromptModalPromptTitleTextStyle: {
+    color: '#6505E1',
+    fontWeight: 'bold',
+  },
+
+  communityProfileRemoveMemberPromptModalButtonsContainerStyle: {
+    width: '100%',
+    marginTop: 20,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
+  },
+
+  communityProfileRemoveMemberPromptModalCancelButtonStyle: {
+    marginRight: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#6505E1',
+    width: 80,
+    height: 40,
+    borderRadius: 15,
+  },
+
+  communityProfileRemoveMemberPromptModalCancelButtonTextStyle: {
+    color: 'white',
+    fontSize: CalculateHeight(2),
+  },
+
+  communityProfileRemoveMemberPromptModalRemoveButtonStyle: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderColor: '#6505E1',
+    width: 80,
+    height: 40,
+    borderRadius: 15,
+    borderWidth: 1,
+  },
+
+  communityProfileRemoveMemberPromptModalRemoveButtonTextStyle: {
+    color: '#6505E1',
+    fontSize: CalculateHeight(2),
+  },
+
+  communityProfileRemoveMemberPromptModalSpinnerContainerStyle: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   memberRequestContainerStyle: {
