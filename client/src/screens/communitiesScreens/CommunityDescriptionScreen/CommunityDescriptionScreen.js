@@ -12,6 +12,7 @@ import { addDescription } from '../../../store/actions/CreateCommunityAction';
 import { LinearTextGradient } from 'react-native-text-gradient';
 import { CalculateHeight } from '../../../helper/CalculateSize';
 import { normal } from '../../../assets/FontSize';
+import { Mixpanel } from 'mixpanel-react-native';
 
 //Components
 import CreateCommunityHeader from '../../../components/communityComponent/CreateCommunityHeader';
@@ -24,6 +25,7 @@ const CommunityDescriptionScreen = ({ navigation }) => {
     (state) => state.CreateCommunityReducer.communityDescription,
   );
 
+  const userId = useSelector((state) => state.HomeReducer.user.id);
   const [description, setDescription] = useState(
     savedDescription !== '' ? savedDescription : '',
   );
@@ -86,9 +88,14 @@ const CommunityDescriptionScreen = ({ navigation }) => {
                   paddingVertical: '1%',
                 }}
                 buttonTitle="OK"
-                buttonFunction={() => {
+                buttonFunction={async() => {
                   dispatch(addDescription(description));
                   navigation.navigate('CommunityGuidelineScreen');
+                  const mixpanel = await Mixpanel.init("ed9818be4179a2486e41556180a65495");
+                  mixpanel.track('User Create Community - Community Description Progress', {
+                    distinct_id: userId,
+                    "Community Description": description,
+                  });
                 }}
               />
             )}

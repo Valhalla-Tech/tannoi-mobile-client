@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addName } from '../../../store/actions/CreateCommunityAction';
 import { LinearTextGradient } from 'react-native-text-gradient';
 import { normal } from '../../../assets/FontSize';
+import { Mixpanel } from 'mixpanel-react-native';
 
 //Icon
 import NoProfileIcon from '../../../assets/communitiesAssets/img-no-profile-pic.svg';
@@ -29,6 +30,7 @@ const CommunityNameScreen = ({ navigation }) => {
   const [communityProfileImage, setCommunityProfileImage] = useState('');
   const [textDisplay, setTextDisplay] = useState('');
   const [editMode, setEditMode] = useState(true);
+  const userId = useSelector((state) => state.HomeReducer.user.id);
 
   const dispatch = useDispatch();
 
@@ -106,9 +108,14 @@ const CommunityNameScreen = ({ navigation }) => {
                   paddingVertical: '1%',
                 }}
                 buttonTitle="OK"
-                buttonFunction={() => {
+                buttonFunction={async() => {
                   dispatch(addName(communityName, communityProfileImage));
                   navigation.navigate('CommunityDescriptionScreen');
+                  const mixpanel = await Mixpanel.init("ed9818be4179a2486e41556180a65495");
+                  mixpanel.track('User Create Community - Community Name Progress', {
+                    distinct_id: userId,
+                    "Community Name": communityName,
+                  });
                 }}
               />
             )}

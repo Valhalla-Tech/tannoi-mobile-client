@@ -20,6 +20,7 @@ import {
 } from '../../../store/actions/CreateCommunityAction';
 import { getUserCommunity } from '../../../store/actions/CommuitiesAction';
 import { LinearTextGradient } from 'react-native-text-gradient';
+import { Mixpanel } from 'mixpanel-react-native';
 
 //Icon
 import TopicIcon from '../../../assets/communitiesAssets/ic-topics.svg';
@@ -32,6 +33,7 @@ import Button from '../../../components/publicComponents/Button';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 
 const CreateCommunityTopicScreen = ({ navigation }) => {
+  const userId = useSelector((state) => state.HomeReducer.user.id);
   const [inputList, setInputList] = useState([
     {
       name: 'topic name',
@@ -142,6 +144,16 @@ const CreateCommunityTopicScreen = ({ navigation }) => {
         dispatch(createdCommunityMessage(true));
         dispatch(getUserCommunity());
         navigation.navigate('CommunitiesScreen');
+        
+        const mixpanel = await Mixpanel.init("ed9818be4179a2486e41556180a65495");
+        mixpanel.track('User Create Community - Community Create Progress Done', {
+          distinct_id: userId,
+          "Community Guideline": communityType,
+          "Community Type": communityType === 1 ? "Public" : "Private",
+          "Community Description": communityDescription,
+          "Community Name": communityName,
+          "Community Topic": topic
+        });
       }
     } catch (error) {
       setIsLoading(false);
