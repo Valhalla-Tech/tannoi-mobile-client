@@ -19,13 +19,25 @@ import CreateCommunityInput from '../../../components/communityComponent/CreateC
 import CreateCommunityProgress from '../../../components/communityComponent/CreateCommunityProgress';
 import Button from '../../../components/publicComponents/Button';
 
-const CommunityDescriptionScreen = ({ navigation }) => {
+const CommunityDescriptionScreen = ({ navigation, route }) => {
+  const {
+    communityId,
+    communityGuidelinesEdit,
+    communityTopicsEdit,
+    communityDescriptionEdit,
+    communityTypeEdit,
+  } = route.params;
+
   const savedDescription = useSelector(
     (state) => state.CreateCommunityReducer.communityDescription,
   );
 
   const [description, setDescription] = useState(
-    savedDescription !== '' ? savedDescription : '',
+    communityDescriptionEdit ?
+    communityDescriptionEdit :
+    savedDescription !== '' ?
+    savedDescription :
+    '',
   );
   const [textDisplay, setTextDisplay] = useState('');
   const [editMode, setEditMode] = useState(true);
@@ -88,7 +100,12 @@ const CommunityDescriptionScreen = ({ navigation }) => {
                 buttonTitle="OK"
                 buttonFunction={() => {
                   dispatch(addDescription(description));
-                  navigation.navigate('CommunityGuidelineScreen');
+                  navigation.navigate('CommunityGuidelineScreen', {
+                    communityId,
+                    communityGuidelinesEdit,
+                    communityTopicsEdit,
+                    communityTypeEdit,
+                  });
                 }}
               />
             )}

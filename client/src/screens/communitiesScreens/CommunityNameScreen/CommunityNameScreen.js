@@ -24,9 +24,22 @@ import CreateCommunityProgress from '../../../components/communityComponent/Crea
 import Button from '../../../components/publicComponents/Button';
 import { UploadImage } from '../../../helper/UploadImage';
 
-const CommunityNameScreen = ({ navigation }) => {
-  const [communityName, setCommunityName] = useState('');
-  const [communityProfileImage, setCommunityProfileImage] = useState('');
+const CommunityNameScreen = ({ navigation, route }) => {
+  if (!route.params) {
+    route.params = {};
+  }
+  const {
+    communityId,
+    communityNameEdit,
+    communityGuidelinesEdit,
+    communityTopicsEdit,
+    communityDescriptionEdit,
+    communityImagePathEdit,
+    communityTypeEdit,
+  } = route.params;
+
+  const [communityName, setCommunityName] = useState(communityNameEdit || '');
+  const [communityProfileImage, setCommunityProfileImage] = useState(communityImagePathEdit || '');
   const [textDisplay, setTextDisplay] = useState('');
   const [editMode, setEditMode] = useState(true);
 
@@ -108,7 +121,13 @@ const CommunityNameScreen = ({ navigation }) => {
                 buttonTitle="OK"
                 buttonFunction={() => {
                   dispatch(addName(communityName, communityProfileImage));
-                  navigation.navigate('CommunityDescriptionScreen');
+                  navigation.navigate('CommunityDescriptionScreen', {
+                    communityId,
+                    communityGuidelinesEdit,
+                    communityTopicsEdit,
+                    communityDescriptionEdit,
+                    communityTypeEdit,
+                  });
                 }}
               />
             )}
