@@ -320,6 +320,9 @@ const CommunityProfile = (props) => {
                   setActionModal(false)
                 ),
               )}
+            {
+              isAdmin && ActionModalButton('Edit community', () => editCommunity())
+            }
             {isMember && (
               <>
                 {ActionModalButton('Leave community', () =>
@@ -327,9 +330,6 @@ const CommunityProfile = (props) => {
                 )}
               </>
             )}
-            {
-              isAdmin && ActionModalButton('Edit Community', () => editCommunity())
-            }
             {isAdmin &&
               ActionModalButton(
                 'Delete community',

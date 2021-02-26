@@ -107,9 +107,6 @@ const InboxScreen = ({ navigation }) => {
       <>
         <View style={styles.headerTitleAndButtonContainerStyle}>
           <Text style={styles.headerTitleStyle}>Inbox</Text>
-          <TouchableOpacity>
-            <Text style={styles.headerButtonStyle}>Edit</Text>
-          </TouchableOpacity>
         </View>
         <SearchBar searchBarIsOpen={false} navigation={navigation} />
       </>
@@ -117,6 +114,7 @@ const InboxScreen = ({ navigation }) => {
   };
 
   const inboxCard = (itemData) => {
+    console.log(itemData);
     if (itemData.item !== null) {
       return (
         <TouchableOpacity
@@ -166,6 +164,13 @@ const InboxScreen = ({ navigation }) => {
               } else if (itemData.item.type === 'Community Join Approve') {
                 navigation.navigate('CommunitiesNavigation', {
                   screen: 'CommunityProfileScreen',
+                  params: {
+                    communityId: itemData.item.community_id,
+                  },
+                });
+              } else if (itemData.item.type === 'Community New Request') {
+                navigation.navigate('CommunitiesNavigation', {
+                  screen: 'MemberRequestScreen',
                   params: {
                     communityId: itemData.item.community_id,
                   },
