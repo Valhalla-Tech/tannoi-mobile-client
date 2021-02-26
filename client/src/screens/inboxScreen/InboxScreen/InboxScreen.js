@@ -117,6 +117,7 @@ const InboxScreen = ({ navigation }) => {
   };
 
   const inboxCard = (itemData) => {
+    console.log(itemData);
     if (itemData.item !== null) {
       return (
         <TouchableOpacity
@@ -166,6 +167,13 @@ const InboxScreen = ({ navigation }) => {
               } else if (itemData.item.type === 'Community Join Approve') {
                 navigation.navigate('CommunitiesNavigation', {
                   screen: 'CommunityProfileScreen',
+                  params: {
+                    communityId: itemData.item.community_id,
+                  },
+                });
+              } else if (itemData.item.type === 'Community New Request') {
+                navigation.navigate('CommunitiesNavigation', {
+                  screen: 'MemberRequestScreen',
                   params: {
                     communityId: itemData.item.community_id,
                   },
