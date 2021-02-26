@@ -120,7 +120,7 @@ const CommunityNameScreen = ({ navigation, route }) => {
                 }}
                 buttonTitle="OK"
                 buttonFunction={() => {
-                  dispatch(addName(communityName, communityProfileImage));
+                  dispatch(addName(communityName.trim(), communityProfileImage));
                   navigation.navigate('CommunityDescriptionScreen', {
                     communityId,
                     communityGuidelinesEdit,
