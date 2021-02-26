@@ -107,9 +107,6 @@ const InboxScreen = ({ navigation }) => {
       <>
         <View style={styles.headerTitleAndButtonContainerStyle}>
           <Text style={styles.headerTitleStyle}>Inbox</Text>
-          <TouchableOpacity>
-            <Text style={styles.headerButtonStyle}>Edit</Text>
-          </TouchableOpacity>
         </View>
         <SearchBar searchBarIsOpen={false} navigation={navigation} />
       </>
