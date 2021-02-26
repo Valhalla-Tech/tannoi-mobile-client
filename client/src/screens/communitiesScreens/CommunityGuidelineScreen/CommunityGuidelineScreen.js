@@ -18,7 +18,14 @@ import CreateCommunityInput from '../../../components/communityComponent/CreateC
 import CreateCommunityProgress from '../../../components/communityComponent/CreateCommunityProgress';
 import Button from '../../../components/publicComponents/Button';
 
-const CommunityGuidelineScreen = ({ navigation }) => {
+const CommunityGuidelineScreen = ({ navigation, route }) => {
+  const {
+    communityId,
+    communityGuidelinesEdit,
+    communityTopicsEdit,
+    communityTypeEdit,
+  } = route.params;
+
   const savedGuideline = useSelector(
     (state) => state.CreateCommunityReducer.communityGuideline,
   );
@@ -26,10 +33,18 @@ const CommunityGuidelineScreen = ({ navigation }) => {
     (state) => state.CreateCommunityReducer.communityType,
   );
   const [guideline, setGuideline] = useState(
-    savedGuideline !== '' ? savedGuideline : '',
+    communityGuidelinesEdit ?
+    communityGuidelinesEdit :
+    savedGuideline !== '' ?
+    savedGuideline :
+    '',
   );
   const [privateCommunity, setPrivateCommunity] = useState(
-    savedType !== '' ? (savedType === 1 ? false : true) : false,
+    communityTypeEdit ?
+    !(communityTypeEdit === 1) :
+    savedType !== '' ?
+    (savedType === 1 ? false : true) :
+    false,
   );
 
   const dispatch = useDispatch();
@@ -70,7 +85,10 @@ const CommunityGuidelineScreen = ({ navigation }) => {
             buttonTitle="OK"
             buttonFunction={() => {
               dispatch(addGuideline(guideline, privateCommunity ? 2 : 1));
-              navigation.navigate('CreateCommunityTopicScreen');
+              navigation.navigate('CreateCommunityTopicScreen', {
+                communityId,
+                communityTopicsEdit,
+              });
             }}
           />
         </View>

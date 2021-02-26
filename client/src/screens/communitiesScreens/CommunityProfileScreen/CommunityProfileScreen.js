@@ -24,6 +24,7 @@ import {
 import { deleteCommunityResponse } from '../../../store/actions/ResponseAction';
 import {
   getOneCommunity,
+  getCommunityMember,
   clearCommunityProfile,
   updateMemberPrivilege,
   deleteCommunityMember,
@@ -50,7 +51,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   const { communityId } = route.params;
 
   const [selectedDisplay, setSelectedDisplay] = useState('discussions');
-  const [communityMember, setCommunityMember] = useState('');
+  // const [communityMember, setCommunityMember] = useState('');
   const [noticeModal, setNoticeModal] = useState(false);
   const [noticeModalMessage, setNoticeModalMessage] = useState('');
   const [gotPermission, setGotPermission] = useState(0)
@@ -66,6 +67,10 @@ const CommunityProfileScreen = ({ navigation, route }) => {
 
   const userProfile = useSelector(
     (state) => state.ProfileReducer.loggedinUserProfile,
+  );
+
+  const communityMembers = useSelector(
+    state => state.CommunitiesReducer.communityMembers,
   );
 
   const dispatch = useDispatch();
@@ -107,7 +112,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   }, []);
 
   useEffect(() => {
-    getCommunityMember();
+    dispatch(getCommunityMember(communityId));
 
     return () => {
       dispatch(clearDiscussion(false, true));
@@ -134,26 +139,6 @@ const CommunityProfileScreen = ({ navigation, route }) => {
 
   const changeSelectedDisplay = (value) => {
     setSelectedDisplay(value);
-  };
-
-  const getCommunityMember = async () => {
-    try {
-      let access_token = await AsyncStorage.getItem('access_token');
-
-      let getCommunityMemberRequest = await axios({
-        method: 'get',
-        url: `${BaseUrl}/communities/list-members/${communityId}`,
-        headers: {
-          token: access_token,
-        },
-      });
-
-      if (getCommunityMemberRequest.data) {
-        setCommunityMember(getCommunityMemberRequest.data.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   const openNoticeModal = () => {
@@ -296,7 +281,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
           }}
           communityId={communityId}
           navigation={navigation}
-          memberList={communityMember}
+          memberList={communityMembers}
           isAdmin={
             communityProfile !== '' &&
             communityProfile.community_members !== undefined &&
@@ -335,7 +320,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
 
   const changeRoleStatus = async (user_id, role) => {
     await dispatch(updateMemberPrivilege(user_id, communityId, role));
-    await getCommunityMember();
+    await dispatch(getCommunityMember(communityId));
     setSelectedRoleValue(role);
     setMemberModalMode(false);
   };
@@ -348,7 +333,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
 
   const removeMemberFromCommunity = async (user_id) => {
     await dispatch(deleteCommunityMember(user_id, communityId));
-    await getCommunityMember();
+    await dispatch(getCommunityMember(communityId));
     setMemberModalMode(false);
     setRemoveMemberIdTarget(null);
     setPromptRemoveMemberMode(false);
@@ -526,7 +511,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
             ? true
             : false
         }
-        memberIsStillLoading={communityMember === '' ? true : false}
+        memberIsStillLoading={!communityMembers.length ? true : false}
         isRequested={communityProfile.isRequested}
       />
       {!communityProfile ||

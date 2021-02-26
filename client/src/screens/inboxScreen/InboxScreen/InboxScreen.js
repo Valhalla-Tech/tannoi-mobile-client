@@ -163,6 +163,13 @@ const InboxScreen = ({ navigation }) => {
                     communityId: itemData.item.community.id,
                   },
                 });
+              } else if (itemData.item.type === 'Community Join Approve') {
+                navigation.navigate('CommunitiesNavigation', {
+                  screen: 'CommunityProfileScreen',
+                  params: {
+                    communityId: itemData.item.community_id,
+                  },
+                });
               } else {
                 navigation.navigate('CommunitiesNavigation');
               }
