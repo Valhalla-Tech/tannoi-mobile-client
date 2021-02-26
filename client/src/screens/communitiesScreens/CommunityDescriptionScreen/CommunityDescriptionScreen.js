@@ -101,7 +101,7 @@ const CommunityDescriptionScreen = ({ navigation, route }) => {
                 }}
                 buttonTitle="OK"
                 buttonFunction={async() => {
-                  dispatch(addDescription(description));
+                  dispatch(addDescription(description.trim()));
                   navigation.navigate('CommunityGuidelineScreen', {
                     communityId,
                     communityGuidelinesEdit,
