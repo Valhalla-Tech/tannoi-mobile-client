@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
+  Image,
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
 import { CalculateHeight } from '../../../helper/CalculateSize';
@@ -23,6 +24,8 @@ import Modal from '../../../components/publicComponents/Modal';
 //Assets
 import RightArrowIcon from '../../../assets/communitiesAssets/rightArrow.svg';
 import AddCircleIcon from '../../../assets/communitiesAssets/ic-add-circle.svg';
+import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
+import CommunitiesEmptyStateImage from '../../../assets/communitiesAssets/empty-state-discussions.png';
 
 const CommunitiesScreen = ({ navigation }) => {
 
@@ -111,10 +114,31 @@ const CommunitiesScreen = ({ navigation }) => {
     );
   };
 
+  const RenderUserCommunityList = () => {
+    if (userCommunity === '') {
+      return <LoadingSpinner loadingSpinnerForComponent={true} />
+    } else if (userCommunity.length === 0) {
+      return (
+        <View style={styles.emptyStateContainerStyle}>
+          <Image source={CommunitiesEmptyStateImage} />
+          <Text style={styles.emptyStateTextStyle}>You are not a member of any communities yet</Text>
+          <Text style={styles.emptyStateTextStyle}>Join or create a community first!</Text>
+        </View>
+      )
+    } else if (userCommunity.length > 0) {
+      return (
+        <CommunityList
+          communities={userCommunity}
+          navigation={navigation}
+        />
+      )
+    }
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
-      <View style={styles.communitiesScreeContainerStyle}>
+      <View style={styles.communitiesScreenContainerStyle}>
         <FlatList
           ListHeaderComponentStyle={{ marginBottom: '5%' }}
           ListHeaderComponent={
@@ -123,10 +147,7 @@ const CommunitiesScreen = ({ navigation }) => {
                 child={CreateCommunityButton}
                 customStyle={styles.createCommunityCardStyle}
               />
-              <CommunityList
-                communities={userCommunity}
-                navigation={navigation}
-              />
+              {RenderUserCommunityList()}
             </>
           }
         />
@@ -156,9 +177,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  communitiesScreeContainerStyle: {
+  communitiesScreenContainerStyle: {
     paddingHorizontal: GlobalPadding,
     flex: 1,
+  },
+
+  emptyStateContainerStyle: {
+    alignItems: 'center',
+    paddingTop: '20%'
+  },
+
+  emptyStateTextStyle: {
+    color: '#73798C'
   },
 
   headerTextStyle: {
