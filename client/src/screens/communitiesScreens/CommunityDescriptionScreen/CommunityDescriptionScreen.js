@@ -41,8 +41,8 @@ const CommunityDescriptionScreen = ({ navigation, route }) => {
     savedDescription :
     '',
   );
-  const [textDisplay, setTextDisplay] = useState('');
-  const [editMode, setEditMode] = useState(true);
+  const [textDisplay, setTextDisplay] = useState(communityDescriptionEdit || '');
+  const [editMode, setEditMode] = useState(communityDescriptionEdit ? false : true);
 
   const dispatch = useDispatch();
 
