@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -18,7 +18,7 @@ import {
   clearData,
   createdCommunityMessage,
 } from '../../../store/actions/CreateCommunityAction';
-import { getUserCommunity } from '../../../store/actions/CommuitiesAction';
+import { getUserCommunity, getOneCommunity } from '../../../store/actions/CommuitiesAction';
 import { LinearTextGradient } from 'react-native-text-gradient';
 import { Mixpanel } from 'mixpanel-react-native';
 
@@ -32,16 +32,19 @@ import CreateCommunityProgress from '../../../components/communityComponent/Crea
 import Button from '../../../components/publicComponents/Button';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 
-const CreateCommunityTopicScreen = ({ navigation }) => {
+const CreateCommunityTopicScreen = ({ navigation, route }) => {
   const userId = useSelector((state) => state.HomeReducer.user.id);
-  const [inputList, setInputList] = useState([
-    {
-      name: 'topic name',
-      value: '',
-      id: 1,
-    },
-  ]);
-  const [topic, setTopic] = useState([]);
+  const {
+    communityId,
+    communityTopicsEdit,
+  } = route.params;
+
+  let topicValues = communityTopicsEdit ? communityTopicsEdit.map(el => ({name: el.name, value: el.name, id: el.id}))
+  : [{ name: 'topic name', value: '', id: 1 }];
+
+  const [inputList, setInputList] = useState(topicValues);
+
+  const [topic, setTopic] = useState(communityTopicsEdit ? communityTopicsEdit.map(el => el.name) : []);
   const [inputHolder, setInputHolder] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -127,20 +130,29 @@ const CreateCommunityTopicScreen = ({ navigation }) => {
           name: filename,
           type,
         });
-
+      let linkSend = `${BaseUrl}/communities/${communityId ? 'edit/' + communityId : 'create'}`;
+      let methodSend = communityId ? 'PUT' : 'POST';
       let createCommunityRequest = await axios({
-        method: 'post',
-        url: `${BaseUrl}/communities/create`,
+        method: methodSend,
+        url: linkSend,
         headers: {
           'Content-Type': 'multipart/form-data',
           token: access_token,
         },
         data: formData,
       });
-
       if (createCommunityRequest.data) {
         setIsLoading(false);
         dispatch(clearData());
+        if (communityId) {
+          await dispatch(getOneCommunity(communityId));
+          return navigation.navigate('CommunitiesNavigation', {
+            screen: 'CommunityProfileScreen',
+            params: {
+              communityId,
+            },
+          });
+        }
         dispatch(createdCommunityMessage(true));
         dispatch(getUserCommunity());
         navigation.navigate('CommunitiesScreen');

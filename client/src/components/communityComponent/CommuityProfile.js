@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
 import { LinearTextGradient } from 'react-native-text-gradient';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   getUserCommunity,
   getOneCommunity,
@@ -54,6 +54,10 @@ const CommunityProfile = (props) => {
   const [deleteConfirmationText, setDeleteConfirmationText] = useState('');
   const [leaveCommunityConfirmation, setLeaveCommunityConfirmation] = useState(
     false,
+  );
+
+  const communityProfile = useSelector(
+    state => state.CommunitiesReducer.communityProfile,
   );
 
   const closeActionModal = () => {
@@ -265,6 +269,25 @@ const CommunityProfile = (props) => {
     </>
   );
 
+  const editCommunity = async () => {
+    await dispatch(getOneCommunity(communityId));
+    const { image_path, name, guidelines, community_topics, description, type } = communityProfile;
+
+    setActionModal(false);
+    navigation.navigate('CreateCommunityNavigation', {
+      screen: 'CommunityNameScreen',
+      params: {
+        communityId,
+        communityNameEdit: name,
+        communityGuidelinesEdit: guidelines,
+        communityTopicsEdit: community_topics,
+        communityDescriptionEdit: description,
+        communityImagePathEdit: image_path,
+        communityTypeEdit: type,
+      },
+    });
+  };
+
   const ActionModalButton = (title, action, customStyle) => (
     <TouchableOpacity
       onPress={() => action()}
@@ -304,6 +327,9 @@ const CommunityProfile = (props) => {
                 )}
               </>
             )}
+            {
+              isAdmin && ActionModalButton('Edit Community', () => editCommunity())
+            }
             {isAdmin &&
               ActionModalButton(
                 'Delete community',

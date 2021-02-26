@@ -20,14 +20,26 @@ import CreateCommunityInput from '../../../components/communityComponent/CreateC
 import CreateCommunityProgress from '../../../components/communityComponent/CreateCommunityProgress';
 import Button from '../../../components/publicComponents/Button';
 
-const CommunityDescriptionScreen = ({ navigation }) => {
+const CommunityDescriptionScreen = ({ navigation, route }) => {
+  const {
+    communityId,
+    communityGuidelinesEdit,
+    communityTopicsEdit,
+    communityDescriptionEdit,
+    communityTypeEdit,
+  } = route.params;
+
   const savedDescription = useSelector(
     (state) => state.CreateCommunityReducer.communityDescription,
   );
 
   const userId = useSelector((state) => state.HomeReducer.user.id);
   const [description, setDescription] = useState(
-    savedDescription !== '' ? savedDescription : '',
+    communityDescriptionEdit ?
+    communityDescriptionEdit :
+    savedDescription !== '' ?
+    savedDescription :
+    '',
   );
   const [textDisplay, setTextDisplay] = useState('');
   const [editMode, setEditMode] = useState(true);
@@ -90,7 +102,12 @@ const CommunityDescriptionScreen = ({ navigation }) => {
                 buttonTitle="OK"
                 buttonFunction={async() => {
                   dispatch(addDescription(description));
-                  navigation.navigate('CommunityGuidelineScreen');
+                  navigation.navigate('CommunityGuidelineScreen', {
+                    communityId,
+                    communityGuidelinesEdit,
+                    communityTopicsEdit,
+                    communityTypeEdit,
+                  });
                   const mixpanel = await Mixpanel.init("ed9818be4179a2486e41556180a65495");
                   mixpanel.track('User Create Community - Community Description Progress', {
                     distinct_id: userId,
