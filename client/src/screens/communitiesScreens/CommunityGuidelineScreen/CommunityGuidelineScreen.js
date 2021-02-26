@@ -84,7 +84,7 @@ const CommunityGuidelineScreen = ({ navigation, route }) => {
             }}
             buttonTitle="OK"
             buttonFunction={() => {
-              dispatch(addGuideline(guideline, privateCommunity ? 2 : 1));
+              dispatch(addGuideline(guideline.trim(), privateCommunity ? 2 : 1));
               navigation.navigate('CreateCommunityTopicScreen', {
                 communityId,
                 communityTopicsEdit,
