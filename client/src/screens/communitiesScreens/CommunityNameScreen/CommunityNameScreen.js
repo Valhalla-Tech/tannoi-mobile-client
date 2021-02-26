@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addName } from '../../../store/actions/CreateCommunityAction';
 import { LinearTextGradient } from 'react-native-text-gradient';
 import { normal } from '../../../assets/FontSize';
+import { Mixpanel } from 'mixpanel-react-native';
 
 //Icon
 import NoProfileIcon from '../../../assets/communitiesAssets/img-no-profile-pic.svg';
@@ -42,6 +43,7 @@ const CommunityNameScreen = ({ navigation, route }) => {
   const [communityProfileImage, setCommunityProfileImage] = useState(communityImagePathEdit || '');
   const [textDisplay, setTextDisplay] = useState('');
   const [editMode, setEditMode] = useState(true);
+  const userId = useSelector((state) => state.HomeReducer.user.id);
 
   const dispatch = useDispatch();
 
@@ -119,14 +121,19 @@ const CommunityNameScreen = ({ navigation, route }) => {
                   paddingVertical: '1%',
                 }}
                 buttonTitle="OK"
-                buttonFunction={() => {
-                  dispatch(addName(communityName.trim(), communityProfileImage));
+                buttonFunction={async() => {
+                  dispatch(addName(communityName, communityProfileImage));
                   navigation.navigate('CommunityDescriptionScreen', {
                     communityId,
                     communityGuidelinesEdit,
                     communityTopicsEdit,
                     communityDescriptionEdit,
                     communityTypeEdit,
+                  });
+                  const mixpanel = await Mixpanel.init("ed9818be4179a2486e41556180a65495");
+                  mixpanel.track('User Create Community - Community Name Progress', {
+                    distinct_id: userId,
+                    "Community Name": communityName,
                   });
                 }}
               />

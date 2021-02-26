@@ -11,6 +11,7 @@ import { normal } from '../../../assets/FontSize';
 import { CalculateHeight } from '../../../helper/CalculateSize';
 import { useDispatch, useSelector } from 'react-redux';
 import { addGuideline } from '../../../store/actions/CreateCommunityAction';
+import { Mixpanel } from 'mixpanel-react-native';
 
 //Components
 import CreateCommunityHeader from '../../../components/communityComponent/CreateCommunityHeader';
@@ -19,6 +20,7 @@ import CreateCommunityProgress from '../../../components/communityComponent/Crea
 import Button from '../../../components/publicComponents/Button';
 
 const CommunityGuidelineScreen = ({ navigation, route }) => {
+  const userId = useSelector((state) => state.HomeReducer.user.id);
   const {
     communityId,
     communityGuidelinesEdit,
@@ -83,11 +85,17 @@ const CommunityGuidelineScreen = ({ navigation, route }) => {
               paddingVertical: '1%',
             }}
             buttonTitle="OK"
-            buttonFunction={() => {
+            buttonFunction={async() => {
               dispatch(addGuideline(guideline.trim(), privateCommunity ? 2 : 1));
               navigation.navigate('CreateCommunityTopicScreen', {
                 communityId,
                 communityTopicsEdit,
+              });
+              const mixpanel = await Mixpanel.init("ed9818be4179a2486e41556180a65495");
+              mixpanel.track('User Create Community - Community Guideline Progress', {
+                distinct_id: userId,
+                "Community Guideline": guideline,
+                "Community Type": privateCommunity === 1 ? "Public" : "Private"
               });
             }}
           />
