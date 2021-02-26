@@ -41,8 +41,8 @@ const CommunityNameScreen = ({ navigation, route }) => {
 
   const [communityName, setCommunityName] = useState(communityNameEdit || '');
   const [communityProfileImage, setCommunityProfileImage] = useState(communityImagePathEdit || '');
-  const [textDisplay, setTextDisplay] = useState('');
-  const [editMode, setEditMode] = useState(true);
+  const [textDisplay, setTextDisplay] = useState(communityNameEdit || '');
+  const [editMode, setEditMode] = useState(communityNameEdit ? false : true);
   const userId = useSelector((state) => state.HomeReducer.user.id);
 
   const dispatch = useDispatch();
