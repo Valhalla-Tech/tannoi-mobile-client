@@ -563,7 +563,6 @@ const styles = StyleSheet.create({
   },
 
   communityProfileContainerStyle: {
-    height: CalculateHeight(57),
     paddingHorizontal: GlobalPadding,
   },
 
