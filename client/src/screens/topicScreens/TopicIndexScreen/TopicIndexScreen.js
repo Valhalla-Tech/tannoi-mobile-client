@@ -21,6 +21,7 @@ import StarIcon from '../../../assets/topicAssets/starIcon.svg';
 import InactiveStarIcon from '../../../assets/topicAssets/inactiveStarIcon.svg';
 
 //Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import Header from '../../../components/publicComponents/Header';
 import SearchBar from '../../../components/publicComponents/SearchBar';
 import Card from '../../../components/publicComponents/Card';
@@ -96,7 +97,7 @@ const TopicIndexScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <ScreenContainer>
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
       <FlatList
         ListHeaderComponent={
@@ -106,7 +107,7 @@ const TopicIndexScreen = ({ navigation }) => {
           />
         }
       />
-    </View>
+    </ScreenContainer>
   );
 };
 
