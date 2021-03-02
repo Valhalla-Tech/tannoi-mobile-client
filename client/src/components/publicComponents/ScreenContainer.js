@@ -2,10 +2,10 @@ import React from 'react';
 import { SafeAreaView, View, StyleSheet } from 'react-native';
 
 const ScreenContainer = (props) => {
-  const { children } = props;
+  const { children, isHeader = true } = props;
 
   return (
-    <SafeAreaView style={styles.rootStyle}>
+    <SafeAreaView style={isHeader ? styles.rootStyle : { ...styles.rootStyle, backgroundColor: "#f2f2f2" }}>
       <View style={styles.containerStyle}>
         {children}
       </View>
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   },
 
   containerStyle: {
-    backgroundColor: "#F5F7F9",
+    backgroundColor: "#f2f2f2",
     flex: 1,
   }
 });

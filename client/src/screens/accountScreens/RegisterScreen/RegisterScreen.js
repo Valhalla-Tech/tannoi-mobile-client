@@ -14,6 +14,7 @@ import { CalculateHeight } from '../../../helper/CalculateSize';
 import BaseUrl from '../../../constants/BaseUrl';
 
 //Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import FormInput from '../../../components/publicComponents/FormInput';
 import SaveAndContinueButton from '../../../components/publicComponents/Button';
 import EmailConfirmationModal from '../../../components/accountComponents/RegisterScreenComponents/EmailConfirmationModal';
@@ -103,12 +104,11 @@ const RegisterPage = ({ navigation }) => {
         <Text style={styles.signupTermsAndPrivacyStyle}>
           By signing up, you agree to our{' '}
         </Text>
-        <TouchableOpacity onPress={() => setTermsOfServiceModalIsOpen(true)}>
-          <Text
-            style={{ ...styles.signupTermsAndPrivacyStyle, color: '#2f3dfa' }}>
-            Terms of Service, Privacy Policies
-          </Text>
-        </TouchableOpacity>
+        <Text
+          onPress={() => setTermsOfServiceModalIsOpen(true)}
+          style={{ ...styles.signupTermsAndPrivacyStyle, color: '#2f3dfa' }}>
+          Terms of Service, Privacy Policies
+        </Text>
         <Text style={styles.signupTermsAndPrivacyStyle}>
           and to receive notice on events and services.
         </Text>
@@ -188,8 +188,8 @@ const RegisterPage = ({ navigation }) => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={{ flex: 1 }}>
+    <ScreenContainer isHeader={false}>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View style={styles.registerPageContainerStyle}>
           <BackButton
             styleOption={{
@@ -213,9 +213,9 @@ const RegisterPage = ({ navigation }) => {
             closeTermsOfServiceModal={closeTermsOfServiceModal}
           />
         </View>
-        {isLoading && <LoadingSpinner />}
-      </View>
-    </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>
+      {isLoading && <LoadingSpinner />}
+    </ScreenContainer>
   );
 };
 
@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
 
   signupButtonContainerStyle: {
     alignItems: 'center',
-    height: '7.5%',
+    height: CalculateHeight(6),
   },
 
   termsOfServiceContainerStyle: {
@@ -248,6 +248,7 @@ const styles = StyleSheet.create({
     fontSize: CalculateHeight(1.5),
     textAlign: 'center',
     color: '#73798C',
+    marginBottom: '2%',
   },
 });
 

@@ -5,7 +5,8 @@ import { CalculateHeight } from '../../../helper/CalculateSize';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 
-//Component
+//Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import BackButton from '../../../components/publicComponents/BackButton';
 
 const ResetPasswordWithEmailVerificationScreen = ({ route, navigation }) => {
@@ -45,42 +46,47 @@ const ResetPasswordWithEmailVerificationScreen = ({ route, navigation }) => {
   };
 
   return (
-    <View style={styles.resetPasswordWithEmailVerificationScreenContainerStyle}>
-      <BackButton
-        styleOption={{
-          marginVertical: '10%',
-        }}
-        navigation={navigation}
-      />
-      <Text style={styles.resetPasswordWithEmailVerificationTitleStyle}>
-        Email has been sent
-      </Text>
-      <Text
-        style={styles.resetPasswordWithEmailVerificationScreenInstructionStyle}>
-        Please check your inbox and click in the received link to reset your
-        password.
-      </Text>
-      <View style={styles.sendAgainEmailContainerStyle}>
-        <Text style={styles.sendAgainEmailButtonTitleStyle}>
-          Didn’t receive the link?{' '}
+    <ScreenContainer isHeader={false}>
+      <View
+        style={styles.resetPasswordWithEmailVerificationScreenContainerStyle}>
+        <BackButton
+          styleOption={{
+            marginVertical: '10%',
+          }}
+          navigation={navigation}
+        />
+        <Text style={styles.resetPasswordWithEmailVerificationTitleStyle}>
+          Email has been sent
         </Text>
-        <TouchableOpacity
-          onPress={resendEmail}
-          disabled={countNumber !== 60 && countNumber !== 0 ? true : false}>
-          <Text
-            style={
-              countNumber !== 60 && countNumber !== 0
-                ? { ...styles.sendAgainEmailButtonStyle, color: '#a1a5ab' }
-                : styles.sendAgainEmailButtonStyle
-            }>
-            Send again
+        <Text
+          style={
+            styles.resetPasswordWithEmailVerificationScreenInstructionStyle
+          }>
+          Please check your inbox and click in the received link to reset your
+          password.
+        </Text>
+        <View style={styles.sendAgainEmailContainerStyle}>
+          <Text style={styles.sendAgainEmailButtonTitleStyle}>
+            Didn’t receive the link?{' '}
           </Text>
-        </TouchableOpacity>
-        <Text style={styles.counterTextStyle}>
-          {countNumber !== 60 && countNumber !== 0 && ` (${countNumber})`}
-        </Text>
+          <TouchableOpacity
+            onPress={resendEmail}
+            disabled={countNumber !== 60 && countNumber !== 0 ? true : false}>
+            <Text
+              style={
+                countNumber !== 60 && countNumber !== 0
+                  ? { ...styles.sendAgainEmailButtonStyle, color: '#a1a5ab' }
+                  : styles.sendAgainEmailButtonStyle
+              }>
+              Send again
+            </Text>
+          </TouchableOpacity>
+          <Text style={styles.counterTextStyle}>
+            {countNumber !== 60 && countNumber !== 0 && ` (${countNumber})`}
+          </Text>
+        </View>
       </View>
-    </View>
+    </ScreenContainer>
   );
 };
 
