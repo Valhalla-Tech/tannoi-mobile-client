@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { ScreenHeight } from '../constants/Size';
+import { CalculateHeight, CalculateWidth } from '../helper/CalculateSize';
 
 //Icons
 import HomeIcon from '../assets/homeAssets/homeIcon.svg';
@@ -20,10 +20,6 @@ import InboxScreen from '../screens/inboxScreen/InboxScreen';
 import MeScreen from '../screens/meScreens/MeScreen';
 import NewDiscussionScreen from '../screens/topicScreens/NewDiscussionScreen';
 
-const calculateHeight = (input) => {
-  return (input / 100) * ScreenHeight;
-};
-
 const Tab = createBottomTabNavigator();
 
 const NavigationBar = (props) => {
@@ -38,9 +34,7 @@ const NavigationBar = (props) => {
       tabBarOptions={{
         style: {
           backgroundColor: '#2B085C',
-          height: '7%',
-          padding: '5%',
-          paddingTop: '3.5%',
+          paddingVertical: '3%',
         },
         keyboardHidesTabBar: true,
       }}>
@@ -50,21 +44,21 @@ const NavigationBar = (props) => {
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ focused }) => (
-            <>
+            <View>
               {focused ? (
                 <View
                   style={{ justifyContent: 'center', alignItems: 'center' }}>
                   <HomeIcon />
-                  <Text style={{ color: '#FFA530', fontSize: 10 }}>Home</Text>
+                  <Text style={{ color: '#FFA530', fontSize: CalculateHeight(1.1) }}>Home</Text>
                 </View>
               ) : (
                 <View
                   style={{ justifyContent: 'center', alignItems: 'center' }}>
                   <HomeIconNotActive />
-                  <Text style={{ color: '#FFFFFF', fontSize: 10 }}>Home</Text>
+                  <Text style={{ color: '#FFFFFF', fontSize: CalculateHeight(1.1) }}>Home</Text>
                 </View>
               )}
-            </>
+            </View>
           ),
           style: {
             color: '#FFFFFF',
@@ -77,21 +71,21 @@ const NavigationBar = (props) => {
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ focused }) => (
-            <>
+            <View>
               {focused ? (
                 <View
                   style={{ justifyContent: 'center', alignItems: 'center' }}>
                   <TopicICon />
-                  <Text style={{ color: '#FFA530', fontSize: 10 }}>Topics</Text>
+                  <Text style={{ color: '#FFA530', fontSize: CalculateHeight(1.1) }}>Topics</Text>
                 </View>
               ) : (
                 <View
                   style={{ justifyContent: 'center', alignItems: 'center' }}>
                   <TopicIconNotActive />
-                  <Text style={{ color: '#FFFFFF', fontSize: 10 }}>Topics</Text>
+                  <Text style={{ color: '#FFFFFF', fontSize: CalculateHeight(1.1) }}>Topics</Text>
                 </View>
               )}
-            </>
+            </View>
           ),
           style: {
             color: '#FFFFFF',
@@ -106,12 +100,10 @@ const NavigationBar = (props) => {
           tabBarIcon: () => (
             <TouchableOpacity
               style={{
-                justifyContent: 'center',
-                alignItems: 'center',
                 marginBottom: '35%',
                 borderWidth: 10,
-                height: calculateHeight(8.5),
-                width: '60%',
+                height: CalculateWidth(16),
+                width: CalculateWidth(12),
                 borderRadius: 30,
                 backgroundColor: '#2B085C',
                 borderColor: '#7817FF',
@@ -129,21 +121,21 @@ const NavigationBar = (props) => {
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ focused }) => (
-            <>
+            <View>
               {focused ? (
                 <View
                   style={{ justifyContent: 'center', alignItems: 'center' }}>
                   <InboxIcon />
-                  <Text style={{ color: '#FFA530', fontSize: 10 }}>Inbox</Text>
+                  <Text style={{ color: '#FFA530', fontSize: CalculateHeight(1.1) }}>Inbox</Text>
                 </View>
               ) : (
                 <View
                   style={{ justifyContent: 'center', alignItems: 'center' }}>
                   <InboxIconNotActive />
-                  <Text style={{ color: '#FFFFFF', fontSize: 10 }}>Inbox</Text>
+                  <Text style={{ color: '#FFFFFF', fontSize: CalculateHeight(1.1) }}>Inbox</Text>
                 </View>
               )}
-            </>
+            </View>
           ),
           style: {
             color: '#FFFFFF',
@@ -156,21 +148,21 @@ const NavigationBar = (props) => {
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ focused }) => (
-            <>
+            <View>
               {focused ? (
                 <View
                   style={{ justifyContent: 'center', alignItems: 'center' }}>
                   <MeIcon />
-                  <Text style={{ color: '#FFA530', fontSize: 10 }}>Me</Text>
+                  <Text style={{ color: '#FFA530', fontSize: CalculateHeight(1.1) }}>Me</Text>
                 </View>
               ) : (
                 <View
                   style={{ justifyContent: 'center', alignItems: 'center' }}>
                   <MeIconNotActive />
-                  <Text style={{ color: '#FFFFFF', fontSize: 10 }}>Me</Text>
+                  <Text style={{ color: '#FFFFFF', fontSize: CalculateHeight(1.1) }}>Me</Text>
                 </View>
               )}
-            </>
+            </View>
           ),
           style: {
             color: '#FFFFFF',
