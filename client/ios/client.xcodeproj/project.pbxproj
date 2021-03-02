@@ -36,6 +36,7 @@
 		B5B41DE4A4124C37A95CB80E /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ADCB3FB19D6F4686A52DA382 /* MaterialIcons.ttf */; };
 		C3EA9E71101845D280A97767 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 262BED8B75034FB9A6B5CCE6 /* Zocial.ttf */; };
 		D1BB1D41ECC94D08A6800473 /* rubicon-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D5367DD5A379432495D5BA04 /* rubicon-icon-font.ttf */; };
+		D63A7BD325E88CAD001BAF7F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D63A7BD225E88CAD001BAF7F /* GoogleService-Info.plist */; };
 		DC478DA163B28FA6DD7A5540 /* libPods-client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C3FA24B60B1CAE6A769B29A8 /* libPods-client.a */; };
 		DC541A145E904A58B3148B96 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7F92C69FBF9D4C4199A39074 /* EvilIcons.ttf */; };
 		EC1049BF8A95DDF0C0A5D57E /* libPods-client-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DA65EF2601F21F5C3134618 /* libPods-client-tvOSTests.a */; };
@@ -108,6 +109,7 @@
 		C3FA24B60B1CAE6A769B29A8 /* libPods-client.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-client.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D46BA24F41FF72EABBAC9C67 /* Pods-client-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-client-tvOS.release.xcconfig"; path = "Target Support Files/Pods-client-tvOS/Pods-client-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		D5367DD5A379432495D5BA04 /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; };
+		D63A7BD225E88CAD001BAF7F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		FFBF52987DEE4F7DBFF10FBE /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/native-base/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				D63A7BD225E88CAD001BAF7F /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* client */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* clientTests */,
@@ -368,6 +371,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = 973FSUWXQR;
 						LastSwiftMigration = 1120;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -416,6 +420,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				D63A7BD325E88CAD001BAF7F /* GoogleService-Info.plist in Resources */,
 				75C59E5617ED4C65B05A789B /* AntDesign.ttf in Resources */,
 				1E2D55950FA046C2A921FFAB /* Entypo.ttf in Resources */,
 				DC541A145E904A58B3148B96 /* EvilIcons.ttf in Resources */,
@@ -506,6 +511,11 @@
 				"${PODS_ROOT}/Target Support Files/Pods-client-clientTests/Pods-client-clientTests-resources.sh",
 				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
 				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+				"${PODS_ROOT}/Mixpanel-swift/Sources/MiniNotificationViewController.xib",
+				"${PODS_ROOT}/Mixpanel-swift/Sources/placeholder-image.png",
+				"${PODS_ROOT}/Mixpanel-swift/Sources/TakeoverNotificationViewController~ipad.xib",
+				"${PODS_ROOT}/Mixpanel-swift/Sources/TakeoverNotificationViewController~iphonelandscape.xib",
+				"${PODS_ROOT}/Mixpanel-swift/Sources/TakeoverNotificationViewController~iphoneportrait.xib",
 				"${PODS_CONFIGURATION_BUILD_DIR}/RNImageCropPicker/QBImagePicker.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/TOCropViewController/TOCropViewControllerBundle.bundle",
@@ -514,6 +524,11 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MiniNotificationViewController.nib",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/placeholder-image.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TakeoverNotificationViewController~ipad.nib",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TakeoverNotificationViewController~iphonelandscape.nib",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TakeoverNotificationViewController~iphoneportrait.nib",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/QBImagePicker.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TOCropViewControllerBundle.bundle",
@@ -576,6 +591,11 @@
 				"${PODS_ROOT}/Target Support Files/Pods-client/Pods-client-resources.sh",
 				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
 				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+				"${PODS_ROOT}/Mixpanel-swift/Sources/MiniNotificationViewController.xib",
+				"${PODS_ROOT}/Mixpanel-swift/Sources/placeholder-image.png",
+				"${PODS_ROOT}/Mixpanel-swift/Sources/TakeoverNotificationViewController~ipad.xib",
+				"${PODS_ROOT}/Mixpanel-swift/Sources/TakeoverNotificationViewController~iphonelandscape.xib",
+				"${PODS_ROOT}/Mixpanel-swift/Sources/TakeoverNotificationViewController~iphoneportrait.xib",
 				"${PODS_CONFIGURATION_BUILD_DIR}/RNImageCropPicker/QBImagePicker.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/TOCropViewController/TOCropViewControllerBundle.bundle",
@@ -584,6 +604,11 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MiniNotificationViewController.nib",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/placeholder-image.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TakeoverNotificationViewController~ipad.nib",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TakeoverNotificationViewController~iphonelandscape.nib",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TakeoverNotificationViewController~iphoneportrait.nib",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/QBImagePicker.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TOCropViewControllerBundle.bundle",
@@ -778,6 +803,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 973FSUWXQR;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = client/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -801,6 +827,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 973FSUWXQR;
 				INFOPLIST_FILE = client/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (

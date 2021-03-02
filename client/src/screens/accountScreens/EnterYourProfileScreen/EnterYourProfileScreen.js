@@ -23,6 +23,7 @@ import { UploadImage } from '../../../helper/UploadImage';
 import NoProfileIcon from '../../../assets/accountAssets/EnterYourProfileScreen/noProfileIcon.svg';
 
 //Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import SaveAndContinueButton from '../../../components/publicComponents/Button';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 import FormInput from '../../../components/publicComponents/FormInput';
@@ -178,7 +179,9 @@ const EnterYourProfileScreen = ({ navigation }) => {
         )}
         <Text style={{ ...styles.formInputTitleStyle }}>Full name</Text>
         <FormInput dataInput={nameInput} />
-        <Text style={{ ...styles.formInputTitleStyle }}>Date of birth</Text>
+        <Text style={{ ...styles.formInputTitleStyle, marginBottom: '8%' }}>
+          Date of birth
+        </Text>
         {show ? (
           <DateTimePicker
             testID="dateTimePicker"
@@ -200,11 +203,11 @@ const EnterYourProfileScreen = ({ navigation }) => {
   };
 
   return (
-    <TouchableWithoutFeedback
-      onPress={() => {
-        Keyboard.dismiss();
-      }}>
-      <View style={{ flex: 1 }}>
+    <ScreenContainer isHeader={false}>
+      <TouchableWithoutFeedback
+        onPress={() => {
+          Keyboard.dismiss();
+        }}>
         <View style={styles.enterYourProfileScreenContainerStyle}>
           <Text style={styles.enterYourProfileScreenTitleStyle}>
             Enter your profile
@@ -213,9 +216,9 @@ const EnterYourProfileScreen = ({ navigation }) => {
           {ProfileForm()}
           <EnterYourProfileScreenButton />
         </View>
-        {isLoading && <LoadingSpinner />}
-      </View>
-    </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>
+      {isLoading && <LoadingSpinner />}
+    </ScreenContainer>
   );
 };
 
@@ -271,10 +274,11 @@ const styles = StyleSheet.create({
   formInputTitleStyle: {
     color: '#73798C',
     marginTop: '8%',
+    // marginBottom: '5%',
   },
 
   formInputStyle: {
-    height: '8%',
+    // height: '8%',
     borderBottomColor: 'grey',
     borderBottomWidth: 1,
     borderBottomColor: '#E3E6EB',
@@ -284,7 +288,7 @@ const styles = StyleSheet.create({
   },
 
   enterYourProfileScreenButtonContainerStyle: {
-    height: '8%',
+    height: CalculateHeight(6),
   },
 });
 

@@ -7,6 +7,7 @@ import { clearLogedInProfile } from '../../../store/actions/ProfileAction';
 import { bold, normal } from '../../../assets/FontSize';
 
 //Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import Header from '../../../components/publicComponents/Header';
 import Card from '../../../components/publicComponents/Card';
 import BackButton from '../../../components/publicComponents/BackButton';
@@ -84,7 +85,8 @@ const SettingsScreen = ({ navigation }) => {
   };
 
   return (
-    <View>
+    // <View>
+    <ScreenContainer>
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
       <View style={styles.settingsScreenContainerStyle}>
         <Card child={AccountMenu} customStyle={styles.cardStyle} />
@@ -93,7 +95,8 @@ const SettingsScreen = ({ navigation }) => {
           customStyle={{ ...styles.cardStyle, marginTop: '2%' }}
         />
       </View>
-    </View>
+    </ScreenContainer>
+    // </View>
   );
 };
 

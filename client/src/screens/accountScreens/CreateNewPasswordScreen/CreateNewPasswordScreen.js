@@ -12,6 +12,7 @@ import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 
 //Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import FormInput from '../../../components/publicComponents/FormInput';
 import Button from '../../../components/publicComponents/Button';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
@@ -106,7 +107,7 @@ const CreateNewPasswordScreen = ({ route, navigation }) => {
 
   const CreateNewPasswordButton = () => {
     return (
-      <View style={{ height: 50 }}>
+      <View style={{ height: "6.5%" }}>
         <Button
           buttonTitle="Change Password & Login"
           buttonStyle={
@@ -167,29 +168,31 @@ const CreateNewPasswordScreen = ({ route, navigation }) => {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={styles.createNewPasswordScreenContainerStyle}>
-        <BackButton
-          styleOption={{
-            marginVertical: '10%',
-          }}
-          navigation={navigation}
-          screen="WelcomeScreen"
-        />
-        <Text style={styles.createNewPasswordTitleStyle}>
-          Create new password
-        </Text>
-        {NewPasswordForm()}
-        <CreateNewPasswordButton />
-        <Modal
-          openModal={openModal}
-          closeModal={closeModal}
-          child={noticeModalChild}
-          modalButton={modalButton}
-          customStyle={{
-            height: '20%',
-          }}
-        />
-      </View>
+      <ScreenContainer isHeader={false}>
+        <View style={styles.createNewPasswordScreenContainerStyle}>
+          <BackButton
+            styleOption={{
+              marginVertical: '10%',
+            }}
+            navigation={navigation}
+            screen="WelcomeScreen"
+          />
+          <Text style={styles.createNewPasswordTitleStyle}>
+            Create new password
+          </Text>
+          {NewPasswordForm()}
+          <CreateNewPasswordButton />
+          <Modal
+            openModal={openModal}
+            closeModal={closeModal}
+            child={noticeModalChild}
+            modalButton={modalButton}
+            customStyle={{
+              height: '20%',
+            }}
+          />
+        </View>
+      </ScreenContainer>
     </TouchableWithoutFeedback>
   );
 };

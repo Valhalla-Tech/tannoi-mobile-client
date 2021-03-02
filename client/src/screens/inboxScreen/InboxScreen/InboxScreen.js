@@ -17,6 +17,7 @@ import BaseUrl from '../../../constants/BaseUrl';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 
 //Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import Header from '../../../components/publicComponents/Header';
 import Card from '../../../components/publicComponents/Card';
 import SearchBar from '../../../components/publicComponents/SearchBar';
@@ -114,7 +115,6 @@ const InboxScreen = ({ navigation }) => {
   };
 
   const inboxCard = (itemData) => {
-    console.log(itemData);
     if (itemData.item !== null) {
       return (
         <TouchableOpacity
@@ -232,7 +232,9 @@ const InboxScreen = ({ navigation }) => {
                     borderColor: '#6505E1',
                   }}
                   buttonTitle="Decline"
-                  buttonFunction={() => userInviteAction(itemData.item.community.id)}
+                  buttonFunction={() =>
+                    userInviteAction(itemData.item.community.id)
+                  }
                 />
               </View>
             )}
@@ -280,7 +282,7 @@ const InboxScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <ScreenContainer>
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
       <FlatList
         ListHeaderComponent={
@@ -292,7 +294,7 @@ const InboxScreen = ({ navigation }) => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       />
-    </View>
+    </ScreenContainer>
   );
 };
 
