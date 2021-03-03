@@ -40,11 +40,7 @@ const TopicIndexScreen = ({ navigation }) => {
       <View>
         <View style={styles.headerTitleAndButtonContainerStyle}>
           <Text style={styles.headerTextStyle}>Topics</Text>
-          <TouchableOpacity>
-            <Text style={styles.editButtonStyle}>Edit</Text>
-          </TouchableOpacity>
         </View>
-        <SearchBar searchBarIsOpen={false} navigation={navigation} />
       </View>
     );
   };
