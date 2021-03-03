@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { search } from '../../../store/actions/SearchAction';
 
 //Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import SearchBar from '../../../components/publicComponents/SearchBar';
 import RecentSearches from '../../../components/homeComponents/searchScreenComponents/RecentSearches';
 import SearchResultBox from '../../../components/homeComponents/searchScreenComponents/SearchResultBox';
@@ -32,32 +33,36 @@ const SearchScreen = ({ navigation }) => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={styles.searchScreenContainerStyle}>
-        <View style={styles.searchBarContainerStyle}>
-          <SearchBar
-            category={category}
-            navigation={navigation}
-            searchBarIsOpen={true}
-            searchBoxInput={searchBoxInput}
-            customStyle={{
-              marginHorizontal: '4.2%',
-            }}
-            setSearchCategory={setSearchCategory}
-          />
-        </View>
-        {!searchInput && <RecentSearches />}
-        {searchInput !== '' && (
-          <SearchResultBox
-            searchInput={searchInput}
-            category={category}
-            discussionResults={discussions}
-            userResults={users}
-            navigation={navigation}
-          />
-        )}
-      </View>
-    </TouchableWithoutFeedback>
+    <ScreenContainer>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <>
+          <View style={styles.searchScreenContainerStyle}>
+            <View style={styles.searchBarContainerStyle}>
+              <SearchBar
+                category={category}
+                navigation={navigation}
+                searchBarIsOpen={true}
+                searchBoxInput={searchBoxInput}
+                customStyle={{
+                  marginHorizontal: '4.2%',
+                }}
+                setSearchCategory={setSearchCategory}
+              />
+            </View>
+            {!searchInput && <RecentSearches />}
+            {searchInput !== '' && (
+              <SearchResultBox
+                searchInput={searchInput}
+                category={category}
+                discussionResults={discussions}
+                userResults={users}
+                navigation={navigation}
+              />
+            )}
+          </View>
+        </>
+      </TouchableWithoutFeedback>
+    </ScreenContainer>
   );
 };
 
