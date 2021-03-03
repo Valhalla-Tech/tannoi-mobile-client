@@ -170,7 +170,7 @@ const UserProfileVerificationScreen = ({ navigation }) => {
             capitalize={true}
           />
           <Text style={styles.inputTextStyle}>
-            First name{' '}
+            First Name{' '}
             {firstNameValidation && (
               <ErrorMessage message="Please input your first name" />
             )}
