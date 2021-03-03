@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   },
 
   searchBarContainerStyle: {
-    paddingVertical: '3%',
+    paddingTop: '3%',
   },
 
   searchBarStyle: {
