@@ -188,12 +188,12 @@ const CommunityProfileScreen = ({ navigation, route }) => {
     } else if (discussions.length > 0) {
       return (
         <FlatList
+          style={{height: CalculateHeight(57)}}
           ListHeaderComponent={
             <List
               navigation={navigation}
               isHeader={false}
               listData={discussions}
-              customStyle={{ marginBottom: '90%' }}
               isCommunityDiscussion={true}
               isMember={
                 communityProfile.community_members !== undefined &&
