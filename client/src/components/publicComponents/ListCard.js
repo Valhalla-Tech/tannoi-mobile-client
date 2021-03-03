@@ -163,8 +163,8 @@ const styles = StyleSheet.create({
   },
 
   profilePictureStyle: {
-    height: '75%',
-    width: '8%',
+    height: CalculateWidth(5),
+    width: CalculateWidth(5),
     borderRadius: 50,
   },
 
@@ -219,7 +219,6 @@ const styles = StyleSheet.create({
   lockIconStyle: {
     width: CalculateWidth(6.5),
     height: CalculateWidth(8.15),
-    borderWidth: 1,
     marginRight: '10%',
   },
 });

@@ -166,7 +166,6 @@ const styles = StyleSheet.create({
     color: '#73798C',
     fontSize: CalculateHeight(1.5),
     fontFamily: normal,
-    marginBottom: CalculateHeight(-1),
   },
 
   profileDataNumberStyle: {

@@ -11,10 +11,14 @@ import { bold, normal } from '../../../assets/FontSize';
 import { CalculateHeight } from '../../../helper/CalculateSize';
 import { GlobalPadding } from '../../../constants/Size';
 import { useSelector, useDispatch } from 'react-redux';
-import { getUserCommunity, clearUserComunity } from '../../../store/actions/CommuitiesAction';
+import {
+  getUserCommunity,
+  clearUserComunity,
+} from '../../../store/actions/CommuitiesAction';
 import { createdCommunityMessage } from '../../../store/actions/CreateCommunityAction';
 
 //Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import Card from '../../../components/publicComponents/Card';
 import Header from '../../../components/publicComponents/Header';
 import BackButton from '../../../components/publicComponents/BackButton';
@@ -28,7 +32,6 @@ import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner'
 import CommunitiesEmptyStateImage from '../../../assets/communitiesAssets/empty-state-discussions.png';
 
 const CommunitiesScreen = ({ navigation }) => {
-
   const userCommunity = useSelector(
     (state) => state.CommunitiesReducer.userCommunity,
   );
@@ -52,7 +55,7 @@ const CommunitiesScreen = ({ navigation }) => {
   useEffect(() => {
     return () => {
       dispatch(clearUserComunity());
-    }
+    };
   }, []);
 
   const closeNoticeModal = () => {
@@ -116,27 +119,28 @@ const CommunitiesScreen = ({ navigation }) => {
 
   const RenderUserCommunityList = () => {
     if (userCommunity === '') {
-      return <LoadingSpinner loadingSpinnerForComponent={true} />
+      return <LoadingSpinner loadingSpinnerForComponent={true} />;
     } else if (userCommunity.length === 0) {
       return (
         <View style={styles.emptyStateContainerStyle}>
           <Image source={CommunitiesEmptyStateImage} />
-          <Text style={styles.emptyStateTextStyle}>You are not a member of any communities yet</Text>
-          <Text style={styles.emptyStateTextStyle}>Join or create a community first!</Text>
+          <Text style={styles.emptyStateTextStyle}>
+            You are not a member of any communities yet
+          </Text>
+          <Text style={styles.emptyStateTextStyle}>
+            Join or create a community first!
+          </Text>
         </View>
-      )
+      );
     } else if (userCommunity.length > 0) {
       return (
-        <CommunityList
-          communities={userCommunity}
-          navigation={navigation}
-        />
-      )
+        <CommunityList communities={userCommunity} navigation={navigation} />
+      );
     }
-  }
+  };
 
   return (
-    <View style={{ flex: 1 }}>
+    <ScreenContainer>
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
       <View style={styles.communitiesScreenContainerStyle}>
         <FlatList
@@ -157,7 +161,7 @@ const CommunitiesScreen = ({ navigation }) => {
           closeModal={closeNoticeModal}
         />
       </View>
-    </View>
+    </ScreenContainer>
   );
 };
 
@@ -184,11 +188,11 @@ const styles = StyleSheet.create({
 
   emptyStateContainerStyle: {
     alignItems: 'center',
-    paddingTop: '20%'
+    paddingTop: '20%',
   },
 
   emptyStateTextStyle: {
-    color: '#73798C'
+    color: '#73798C',
   },
 
   headerTextStyle: {

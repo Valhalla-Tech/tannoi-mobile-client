@@ -149,6 +149,12 @@ PODS:
   - GTMSessionFetcher/Core (1.5.0)
   - GTMSessionFetcher/Full (1.5.0):
     - GTMSessionFetcher/Core (= 1.5.0)
+  - Mixpanel-swift (2.8.2):
+    - Mixpanel-swift/Complete (= 2.8.2)
+  - Mixpanel-swift/Complete (2.8.2)
+  - MixpanelReactNative (1.0.2):
+    - Mixpanel-swift (= 2.8.2)
+    - React
   - nanopb (2.30907.0):
     - nanopb/decode (= 2.30907.0)
     - nanopb/encode (= 2.30907.0)
@@ -485,6 +491,7 @@ DEPENDENCIES:
   - FlipperKit/SKIOSNetworkPlugin (~> 0.41.1)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - MixpanelReactNative (from `../node_modules/mixpanel-react-native`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
   - React (from `../node_modules/react-native/`)
@@ -559,6 +566,7 @@ SPEC REPOS:
     - GoogleUtilities
     - GTMAppAuth
     - GTMSessionFetcher
+    - Mixpanel-swift
     - nanopb
     - OpenSSL-Universal
     - PromisesObjC
@@ -576,6 +584,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/Folly.podspec"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
+  MixpanelReactNative:
+    :path: "../node_modules/mixpanel-react-native"
   RCTRequired:
     :path: "../node_modules/react-native/Libraries/RCTRequired"
   RCTTypeSafety:
@@ -695,6 +705,8 @@ SPEC CHECKSUMS:
   GoogleUtilities: 31c5b01f978a70c6cff2afc6272b3f1921614b43
   GTMAppAuth: 197a8dabfea5d665224aa00d17f164fc2248dab9
   GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
+  Mixpanel-swift: ef37387899c8967fa95d492887f4bcc980041aa0
+  MixpanelReactNative: 8dbc4c2b1c8a5208ddabc3c51448c8912b6785b4
   nanopb: 59221d7f958fb711001e6a449489542d92ae113e
   OpenSSL-Universal: 8b48cc0d10c1b2923617dfe5c178aa9ed2689355
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97

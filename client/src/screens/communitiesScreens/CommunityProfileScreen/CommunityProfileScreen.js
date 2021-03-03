@@ -37,6 +37,7 @@ import NewDiscussionButton from '../../../assets/communitiesAssets/ic-button.svg
 import RightArrowIcon from '../../../assets/communitiesAssets/rightArrow.svg';
 
 //Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import Card from '../../../components/publicComponents/Card';
 import CommunityProfile from '../../../components/communityComponent/CommuityProfile';
 import List from '../../../components/publicComponents/List';
@@ -488,7 +489,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <ScreenContainer>
       {memberModalMode ? memberDetailModal() : null}
       {promptRemoveMemberMode ? promptRemoveMemberModal() : null}
       <CommunityProfile
@@ -536,7 +537,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
         openModal={noticeModal}
         closeModal={closeNoticeModal}
       />
-    </View>
+    </ScreenContainer>
   );
 };
 

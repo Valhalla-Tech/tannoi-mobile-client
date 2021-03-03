@@ -16,6 +16,7 @@ import {
 import { CalculateHeight, CalculateWidth } from '../../../helper/CalculateSize';
 
 //Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import BackButton from '../../../components/publicComponents/BackButton';
 import DiscussionAndResponseList from '../../../components/topicComponents/discussionScreenComponents/DiscussionAndResponseList';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
@@ -117,7 +118,8 @@ const ReplyScreen = ({ route, navigation }) => {
   };
 
   return (
-    <View style={styles.replyScreenContainerStyle}>
+    // <View style={styles.replyScreenContainerStyle}>
+    <ScreenContainer>
       <View style={styles.upperBarStyle}>
         <View style={styles.backButtonAndTitleContainerStyle}>
           <BackButton
@@ -177,7 +179,8 @@ const ReplyScreen = ({ route, navigation }) => {
           <Text style={styles.goUpAThreadButtonTextStyle}>Go up a thread</Text>
         </TouchableOpacity>
       )}
-    </View>
+    </ScreenContainer>
+    // </View>
   );
 };
 

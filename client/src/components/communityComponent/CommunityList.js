@@ -31,6 +31,14 @@ const CommunityList = (props) => {
     </View>
   );
 
+  const RenderOfficialBadge = () => {
+    return (
+      <View style={styles.officialBadgeContainerStyle}>
+        <Text style={styles.officialBadgeTextStyle}>OFFICIAL</Text>
+      </View>
+    )
+  }
+
   const RenderCommunity = (itemData) => {
     return (
       <TouchableOpacity
@@ -44,10 +52,13 @@ const CommunityList = (props) => {
             ? { ...styles.communityContainerStyle, borderBottomWidth: 0 }
             : styles.communityContainerStyle
         }>
-        <Image
-          source={{ uri: itemData.item.image_path }}
-          style={styles.communityProfileImageStyle}
-        />
+        <View style={styles.communityProfileImageContainerStyle}>
+          <Image
+            source={{ uri: itemData.item.image_path }}
+            style={styles.communityProfileImageStyle}
+          />
+          {itemData.item.official_badge ? RenderOfficialBadge() : null}
+        </View>
         <View style={styles.communityDataContainerStyle}>
           <View style={styles.communityNameContainerStyle}>
             <Text style={styles.communityNameStyle}>{itemData.item.name} {itemData.item.type == 2 ? <PrivateIcon /> : <EarthIcon />}</Text>
@@ -131,8 +142,16 @@ const styles = StyleSheet.create({
     borderBottomColor: '#E3E6EB',
   },
 
+  communityProfileImageContainerStyle: {
+    width: CalculateWidth(14.5),
+    height: CalculateWidth(14.5),
+    borderRadius: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: '2%'
+  },
+
   communityProfileImageStyle: {
-    marginTop: '2%',
     width: CalculateWidth(14),
     height: CalculateWidth(14),
     borderRadius: 50,
@@ -188,6 +207,20 @@ const styles = StyleSheet.create({
     fontFamily: normal,
     lineHeight: 20,
     fontSize: CalculateHeight(1.6),
+  },
+
+  officialBadgeContainerStyle: {
+    position: 'absolute', 
+    backgroundColor: '#3AD48A', 
+    bottom: -10, 
+    paddingHorizontal: 4,
+    paddingVertical: 2, 
+  },
+
+  officialBadgeTextStyle: {
+    color: 'white', 
+    fontSize: CalculateHeight(1.2), 
+    fontFamily: 'normal',
   },
 });
 

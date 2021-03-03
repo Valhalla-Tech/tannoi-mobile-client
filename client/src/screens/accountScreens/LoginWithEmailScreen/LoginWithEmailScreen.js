@@ -18,6 +18,7 @@ import { CalculateHeight } from '../../../helper/CalculateSize';
 import BaseUrl from '../../../constants/BaseUrl';
 
 //Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import BackButton from '../../../components/publicComponents/BackButton';
 import LoginButton from '../../../components/publicComponents/Button';
 import FormInput from '../../../components/publicComponents/FormInput';
@@ -141,8 +142,8 @@ const LoginWithEmailScreen = ({ navigation }) => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={{ flex: 1 }}>
+    <ScreenContainer isHeader={false}>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View style={styles.loginWithEmailScreenContainerStyle}>
           <BackButton
             styleOption={{
@@ -155,9 +156,9 @@ const LoginWithEmailScreen = ({ navigation }) => {
           <LoginWithEmailButton />
           <ForgotPasswordButton />
         </View>
-        {isLoading && <LoadingSpinner />}
-      </View>
-    </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>
+      {isLoading && <LoadingSpinner />}
+    </ScreenContainer>
   );
 };
 
@@ -175,7 +176,7 @@ const styles = StyleSheet.create({
   },
 
   loginWithEmailButtonContainerStyle: {
-    height: '8%',
+    height: CalculateHeight(6),
   },
 
   forgotPasswordButtonContainer: {
