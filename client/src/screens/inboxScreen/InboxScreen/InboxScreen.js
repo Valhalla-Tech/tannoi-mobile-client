@@ -109,7 +109,6 @@ const InboxScreen = ({ navigation }) => {
         <View style={styles.headerTitleAndButtonContainerStyle}>
           <Text style={styles.headerTitleStyle}>Inbox</Text>
         </View>
-        <SearchBar searchBarIsOpen={false} navigation={navigation} />
       </>
     );
   };
@@ -301,7 +300,8 @@ const InboxScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   headerStyle: {
     paddingHorizontal: '5%',
-    paddingTop: '3%',
+    paddingTop: '3.5%',
+    paddingBottom: '1%',
   },
 
   headerTitleAndButtonContainerStyle: {

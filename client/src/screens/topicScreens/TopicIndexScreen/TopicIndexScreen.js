@@ -15,6 +15,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { bold, normal } from '../../../assets/FontSize';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
+import { CalculateHeight } from '../../../helper/CalculateSize';
 
 //Icons
 import StarIcon from '../../../assets/topicAssets/starIcon.svg';
@@ -40,11 +41,7 @@ const TopicIndexScreen = ({ navigation }) => {
       <View>
         <View style={styles.headerTitleAndButtonContainerStyle}>
           <Text style={styles.headerTextStyle}>Topics</Text>
-          <TouchableOpacity>
-            <Text style={styles.editButtonStyle}>Edit</Text>
-          </TouchableOpacity>
         </View>
-        <SearchBar searchBarIsOpen={false} navigation={navigation} />
       </View>
     );
   };
@@ -120,7 +117,7 @@ const styles = StyleSheet.create({
 
   headerTextStyle: {
     fontFamily: bold,
-    fontSize: 20,
+    fontSize: CalculateHeight(2.5),
     color: '#464D60',
   },
 
