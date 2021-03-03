@@ -15,9 +15,8 @@ import { GlobalPadding } from '../../../constants/Size';
 
 //Components
 import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
-import BackButton from '../../../components/publicComponents/BackButton';
 import DiscussionAndResponseList from '../../../components/topicComponents/discussionScreenComponents/DiscussionAndResponseList';
-import AddResponse from '../../../components/publicComponents/RecorderModal';
+import { RecorderModal as AddResponse, BackButton } from '../../../components/publicComponents';
 
 let _isMounted = false;
 
