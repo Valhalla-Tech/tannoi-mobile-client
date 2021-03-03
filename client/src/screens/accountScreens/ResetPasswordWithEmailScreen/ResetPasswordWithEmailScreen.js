@@ -13,6 +13,7 @@ import BaseUrl from '../../../constants/BaseUrl';
 import { GenerateDeepLink } from '../../../helper/GenerateDeepLink';
 
 //Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import BackButton from '../../../components/publicComponents/BackButton';
 import SendResetPasswordButton from '../../../components/publicComponents/Button';
 import FormInput from '../../../components/publicComponents/FormInput';
@@ -83,8 +84,8 @@ const ResetPasswordWithEmailScreen = ({ navigation }) => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={{ flex: 1 }}>
+    <ScreenContainer isHeader={false}>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View style={styles.resetPasswordWithEmailScreenContainerStyle}>
           <BackButton
             styleOption={{
@@ -130,9 +131,9 @@ const ResetPasswordWithEmailScreen = ({ navigation }) => {
             />
           </View>
         </View>
-        {isLoading && <LoadingSpinner />}
-      </View>
-    </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>
+      {isLoading && <LoadingSpinner />}
+    </ScreenContainer>
   );
 };
 
@@ -150,7 +151,7 @@ const styles = StyleSheet.create({
   },
 
   resetPasswordWithEmailbuttonContainerStyle: {
-    height: '8%',
+    height: CalculateHeight(6),
   },
 
   resetPasswordWithEmailScreenInstructionStyle: {

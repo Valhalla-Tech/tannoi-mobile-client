@@ -9,6 +9,7 @@ import {
 } from '../../../store/actions/LoginAction';
 
 //Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import BackButton from '../../../components/publicComponents/BackButton';
 import Button from '../../../components/publicComponents/Button';
 
@@ -94,7 +95,8 @@ const LoginScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    // <View style={{ flex: 1 }}>
+    <ScreenContainer isHeader={false}>
       <View style={styles.loginScreenContainerStyle}>
         <BackButton
           styleOption={{
@@ -105,7 +107,8 @@ const LoginScreen = ({ navigation }) => {
         <Text style={styles.loginTitleStyle}>Login to tannOi</Text>
         <LoginButton />
       </View>
-    </View>
+    </ScreenContainer>
+    // </View>
   );
 };
 

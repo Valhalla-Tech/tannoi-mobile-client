@@ -15,12 +15,14 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { bold, normal } from '../../../assets/FontSize';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
+import { CalculateHeight } from '../../../helper/CalculateSize';
 
 //Icons
 import StarIcon from '../../../assets/topicAssets/starIcon.svg';
 import InactiveStarIcon from '../../../assets/topicAssets/inactiveStarIcon.svg';
 
 //Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import Header from '../../../components/publicComponents/Header';
 import SearchBar from '../../../components/publicComponents/SearchBar';
 import Card from '../../../components/publicComponents/Card';
@@ -39,11 +41,7 @@ const TopicIndexScreen = ({ navigation }) => {
       <View>
         <View style={styles.headerTitleAndButtonContainerStyle}>
           <Text style={styles.headerTextStyle}>Topics</Text>
-          <TouchableOpacity>
-            <Text style={styles.editButtonStyle}>Edit</Text>
-          </TouchableOpacity>
         </View>
-        <SearchBar searchBarIsOpen={false} navigation={navigation} />
       </View>
     );
   };
@@ -96,7 +94,7 @@ const TopicIndexScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <ScreenContainer>
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
       <FlatList
         ListHeaderComponent={
@@ -106,7 +104,7 @@ const TopicIndexScreen = ({ navigation }) => {
           />
         }
       />
-    </View>
+    </ScreenContainer>
   );
 };
 
@@ -119,7 +117,7 @@ const styles = StyleSheet.create({
 
   headerTextStyle: {
     fontFamily: bold,
-    fontSize: 20,
+    fontSize: CalculateHeight(2.5),
     color: '#464D60',
   },
 

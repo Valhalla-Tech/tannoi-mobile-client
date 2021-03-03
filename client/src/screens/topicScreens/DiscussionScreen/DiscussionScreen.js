@@ -14,9 +14,9 @@ import { CalculateHeight } from '../../../helper/CalculateSize';
 import { GlobalPadding } from '../../../constants/Size';
 
 //Components
-import BackButton from '../../../components/publicComponents/BackButton';
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import DiscussionAndResponseList from '../../../components/topicComponents/discussionScreenComponents/DiscussionAndResponseList';
-import AddResponse from '../../../components/publicComponents/RecorderModal';
+import { RecorderModal as AddResponse, BackButton } from '../../../components/publicComponents';
 
 let _isMounted = false;
 
@@ -115,7 +115,7 @@ const DiscussionScreen = ({ route, navigation }) => {
   };
 
   return (
-    <View>
+    <ScreenContainer>
       <View style={styles.discussionUpperBarStyle}>
         <BackButton
           navigation={navigation}
@@ -172,7 +172,7 @@ const DiscussionScreen = ({ route, navigation }) => {
         scrollDown={scrollDown}
         isCommunityDiscussion={isCommunityDiscussion}
       />
-    </View>
+    </ScreenContainer>
   );
 };
 

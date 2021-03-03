@@ -10,6 +10,7 @@ import { getTopic } from '../../../store/actions/TopicAction';
 import BaseUrl from '../../../constants/BaseUrl';
 
 //Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import BackButton from '../../../components/publicComponents/BackButton';
 import Card from '../../../components/accountComponents/FollowSomeTopicsScreenComponents/Card';
 import DoneButton from '../../../components/publicComponents/Button';
@@ -95,7 +96,7 @@ const FollowSomeTopicsScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <ScreenContainer isHeader={false}>
       <View style={styles.followSomeTopicsScreenContainerStyle}>
         <View style={styles.backButtonAndTitleContainer}>
           <BackButton navigation={navigation} />
@@ -137,7 +138,7 @@ const FollowSomeTopicsScreen = ({ navigation }) => {
             borderColor: '#5152D0',
             color: '#FFFFFF',
             width: '100%',
-            height: '7%',
+            height: CalculateHeight(6),
             marginTop: 24,
           }}
           buttonType="functionButton"
@@ -145,7 +146,7 @@ const FollowSomeTopicsScreen = ({ navigation }) => {
         />
       </View>
       {isLoading && <LoadingSpinner />}
-    </View>
+    </ScreenContainer>
   );
 };
 
@@ -158,7 +159,7 @@ const styles = StyleSheet.create({
   backButtonAndTitleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: '10%'
+    marginVertical: '10%',
   },
 
   followSomeTopicsScreenTitleStyle: {

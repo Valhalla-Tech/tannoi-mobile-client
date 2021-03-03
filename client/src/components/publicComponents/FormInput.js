@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignItems: 'flex-end',
     marginBottom: '6%',
+    minHeight: '5%',
   },
 
   eyeIconStyle: {

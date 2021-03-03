@@ -7,6 +7,7 @@ import { bold } from '../../../assets/FontSize';
 import { GlobalPadding } from '../../../constants/Size';
 
 //Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import SearchBar from '../../../components/publicComponents/SearchBar';
 import ProfileBar from '../../../components/homeComponents/homeScreenComponents/ProfileBar';
 import List from '../../../components/publicComponents/List';
@@ -65,7 +66,7 @@ const HomeScreen = ({ navigation }) => {
   };
 
   return (
-    <View>
+    <ScreenContainer>
       <ProfileBar user={user} navigation={navigation} />
       <FlatList
         ListHeaderComponent={
@@ -137,7 +138,7 @@ const HomeScreen = ({ navigation }) => {
         closeModal={closeModal}
         child={noticeModalChild}
       />
-    </View>
+    </ScreenContainer>
   );
 };
 
