@@ -21,15 +21,17 @@ import EarthIcon from '../../assets/communitiesAssets/ic-earth.svg';
 import PrivateIcon from '../../assets/communitiesAssets/ic-lock.svg';
 
 //Components
-import Header from '../publicComponents/Header';
-import Card from '../../components/publicComponents/Card';
-import BackButton from '../publicComponents/BackButton';
+import {
+  Header,
+  Card,
+  LoadingSpinner,
+  Modal,
+  RecorderModal,
+  FormInput,
+  Button,
+  BackButton,
+} from '../../components/publicComponents';
 import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
-import Button from '../publicComponents/Button';
-import LoadingSpinner from '../publicComponents/LoadingSpinner';
-import Modal from '../publicComponents/Modal';
-import RecorderModal from '../publicComponents/RecorderModal';
-import FormInput from '../../components/publicComponents/FormInput';
 
 const CommunityProfile = (props) => {
   const {
