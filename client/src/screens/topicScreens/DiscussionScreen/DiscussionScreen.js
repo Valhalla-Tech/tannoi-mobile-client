@@ -1,23 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, FlatList, Image } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getDiscussion,
   clearDiscussion,
+  clearUsersInvolvedInDiscussion,
+  getUsersInvovedInDiscussion,
 } from '../../../store/actions/DiscussionAction';
 import {
   getResponse,
   clearResponse,
 } from '../../../store/actions/ResponseAction';
-import { CalculateHeight } from '../../../helper/CalculateSize';
+import { CalculateHeight, CalculateWidth } from '../../../helper/CalculateSize';
 import { GlobalPadding } from '../../../constants/Size';
 
 //Components
-import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
-import BackButton from '../../../components/publicComponents/BackButton';
 import DiscussionAndResponseList from '../../../components/topicComponents/discussionScreenComponents/DiscussionAndResponseList';
-import AddResponse from '../../../components/publicComponents/RecorderModal';
+import { TabView, RecorderModal as AddResponse, BackButton, LoadingSpinner, ScreenContainer } from '../../../components/publicComponents';
 
 let _isMounted = false;
 
@@ -27,11 +27,24 @@ const DiscussionScreen = ({ route, navigation }) => {
   const [fromNextPreviousButton, setFromNextPreviousButton] = useState(false);
   const [openAddResponse, setOpenAddRespone] = useState(false);
   const [openModalFromHeader, setOpenModalFromHeader] = useState(false);
+  const [activeTab, setActiveTab] = useState('GET_DISCUSSIONS');
+  const [getUsersInvolvedLoading, setGetUsersInvolvedLoading] = useState(false);
+  const tabViewMenus = [
+    {
+      id: 'GET_DISCUSSIONS',
+      name: 'Discussions',
+    },
+    {
+      id: 'GET_USERS_INVOLVED',
+      name: 'People',
+    },
+  ];
 
   const profileId = useSelector((state) => state.DiscussionReducer.profileId);
   const response = useSelector((state) => state.ResponseReducer.response);
   const userId = useSelector((state) => state.HomeReducer.user.id);
   const userType = useSelector((state) => state.HomeReducer.user.type);
+  const usersInvolved = useSelector(state => state.DiscussionReducer.userInvolvedInDiscussion);
 
   const {
     discussionId,
@@ -115,6 +128,43 @@ const DiscussionScreen = ({ route, navigation }) => {
     return isLikeAndIsDislike;
   };
 
+  const handleTabViewEvent = async (data) => {
+    setActiveTab(data.id);
+    if (data.id === 'GET_DISCUSSIONS') {
+      await dispatch(clearUsersInvolvedInDiscussion());
+      await dispatch(getDiscussion(discussionId, true, isCommunityDiscussion));
+      await dispatch(getResponse(discussionId));
+    } else if (data.id === 'GET_USERS_INVOLVED') {
+      setGetUsersInvolvedLoading(true);
+      await dispatch(clearDiscussion());
+      await dispatch(clearResponse(null, true));
+      await dispatch(getUsersInvovedInDiscussion(discussionId));
+      setGetUsersInvolvedLoading(false);
+    }
+  };
+
+  const renderUsersInvolved = data => {
+    let maxBioChara = 26;
+    return (
+      <TouchableOpacity
+        onPress={() => navigation.navigate('UserProfileScreen', { userId: data.item.id })}
+        style={styles.memberListDataStyle}>
+        <View style={styles.imageProfileAndNameStyle}>
+          <Image
+            source={{ uri: data.item.profile_photo_path }}
+            style={styles.profileImageStyle}
+          />
+          <View style={styles.profileBodyStyle}>
+            <Text style={styles.userInvolvedNameStyle}>{data.item.name}</Text>
+            <Text style={styles.userInvolvedBioStyle}>
+              {data.item.bio.length > maxBioChara ? data.item.bio.substring(0, maxBioChara - 3) + '...' : ''}
+            </Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <ScreenContainer>
       <View style={styles.discussionUpperBarStyle}>
@@ -146,33 +196,50 @@ const DiscussionScreen = ({ route, navigation }) => {
           <Text style={styles.addResponseButtonTextStyle}>Add response</Text>
         </TouchableOpacity>
       </View>
-      <DiscussionAndResponseList
-        changePlayer={changePlayer}
-        discussionId={discussionId}
-        fromNextPreviousButton={fromNextPreviousButton}
-        updateFromNextPreviousButton={updateFromNextPreviousButton}
-        navigation={navigation}
-        openAddResponse={openAddResponse}
-        selectCard={selectCard}
-        openAddResponseModal={openAddResponseModal}
-        closeAddResponseModal={closeAddResponseModal}
-        selectedCard={selectedCard}
-        getIsLikeAndIsDislike={getIsLikeAndIsDislike}
-        flatListRef={flatListRef}
-        scrollDown={scrollDown}
-        isCommunityDiscussion={isCommunityDiscussion}
-        role={role}
-        cardOnDelete={cardOnDelete}
+      <TabView
+        tabMenus={tabViewMenus}
+        onPress={data => handleTabViewEvent(data)}
       />
-      <AddResponse
-        openModal={openAddResponseModal}
-        closeModal={closeAddResponseModal}
-        discussionId={discussionId}
-        addResponseForResponse={false}
-        openModalFromHeader={openModalFromHeader}
-        scrollDown={scrollDown}
-        isCommunityDiscussion={isCommunityDiscussion}
-      />
+      {
+        activeTab === 'GET_DISCUSSIONS' ?
+        <>
+          <DiscussionAndResponseList
+            changePlayer={changePlayer}
+            discussionId={discussionId}
+            fromNextPreviousButton={fromNextPreviousButton}
+            updateFromNextPreviousButton={updateFromNextPreviousButton}
+            navigation={navigation}
+            openAddResponse={openAddResponse}
+            selectCard={selectCard}
+            openAddResponseModal={openAddResponseModal}
+            closeAddResponseModal={closeAddResponseModal}
+            selectedCard={selectedCard}
+            getIsLikeAndIsDislike={getIsLikeAndIsDislike}
+            flatListRef={flatListRef}
+            scrollDown={scrollDown}
+            isCommunityDiscussion={isCommunityDiscussion}
+            role={role}
+            cardOnDelete={cardOnDelete}
+          />
+          <AddResponse
+            openModal={openAddResponseModal}
+            closeModal={closeAddResponseModal}
+            discussionId={discussionId}
+            addResponseForResponse={false}
+            openModalFromHeader={openModalFromHeader}
+            scrollDown={scrollDown}
+            isCommunityDiscussion={isCommunityDiscussion}
+          />
+        </> :
+        getUsersInvolvedLoading ?
+        <View style={{padding: 50}}><LoadingSpinner loadingSpinnerForComponent/></View> :
+        <FlatList
+          style={{marginTop: 10, height: CalculateHeight(90) }}
+          keyExtractor={(item, index) => index.toString()}
+          data={usersInvolved}
+          renderItem={renderUsersInvolved}
+        />
+      }
     </ScreenContainer>
   );
 };
@@ -214,6 +281,44 @@ const styles = StyleSheet.create({
     fontFamily: normal,
     color: '#5152D0',
     fontSize: CalculateHeight(2),
+  },
+
+  imageProfileAndNameStyle: {
+    flexDirection: 'row',
+    width: CalculateWidth(100),
+  },
+
+  profileImageStyle: {
+    width: CalculateWidth(9),
+    height: CalculateWidth(9),
+    borderRadius: 50,
+    marginRight: CalculateWidth(3),
+  },
+
+  profileBodyStyle: { justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    flexWrap: 'wrap',
+  },
+
+  memberListDataStyle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '3.5%',
+    borderBottomWidth: 1,
+    borderBottomColor: '#E3E6EB',
+  },
+
+  userInvolvedNameStyle: {
+    fontFamily: normal,
+    color: '#464D60',
+    fontSize: CalculateHeight(1.8),
+  },
+
+  userInvolvedBioStyle: {
+    color: '#73798C',
+    fontSize: CalculateHeight(1.8),
   },
 });
 
