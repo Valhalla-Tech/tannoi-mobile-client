@@ -16,6 +16,7 @@ import {
 import { GlobalPadding } from '../../../constants/Size';
 
 //Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import Header from '../../../components/publicComponents/Header';
 import List from '../../../components/publicComponents/List';
 import BackButton from '../../../components/publicComponents/BackButton';
@@ -69,7 +70,7 @@ const HashtagDetailScreen = ({ route, navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <ScreenContainer>
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
       <View style={styles.hashtagDetailContainerStyle}>
         <ListHeader
@@ -110,7 +111,7 @@ const HashtagDetailScreen = ({ route, navigation }) => {
           }
         />
       </View>
-    </View>
+    </ScreenContainer>
   );
 };
 

@@ -16,6 +16,7 @@ import {
 } from '../../../store/actions/DiscussionAction';
 
 //Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import Header from '../../../components/publicComponents/Header';
 import List from '../../../components/publicComponents/List';
 import BackButton from '../../../components/publicComponents/BackButton';
@@ -76,7 +77,7 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
   };
 
   return (
-    <View>
+    <ScreenContainer>
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
       <View style={styles.listHeaderContainerStyle}>
         <ListHeader
@@ -120,7 +121,7 @@ const HomeSectionDetailScreen = ({ navigation, route }) => {
           </View>
         }
       />
-    </View>
+    </ScreenContainer>
   );
 };
 

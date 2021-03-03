@@ -27,6 +27,7 @@ import { GenerateDeepLink } from '../../../helper/GenerateDeepLink';
 import AboutSection from '../../../components/meComponents/AboutSection';
 
 //Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import BackButton from '../../../components/publicComponents/BackButton';
 import ProfileData from '../../../components/meComponents/ProfileData';
 import List from '../../../components/publicComponents/List';
@@ -204,7 +205,7 @@ const UserProfileScreen = ({ route, navigation }) => {
   };
 
   return (
-    <View style={styles.userProfileScreenContainerStyle}>
+    <ScreenContainer>
       <View style={styles.headerStyle}>
         <BackButton
           navigation={navigation}
@@ -242,15 +243,11 @@ const UserProfileScreen = ({ route, navigation }) => {
         closeModal={closeModal}
         child={noticeModalChild}
       />
-    </View>
+    </ScreenContainer>
   );
 };
 
 const styles = StyleSheet.create({
-  userProfileScreenContainerStyle: {
-    flex: 1,
-  },
-
   userProfileStyle: {
     backgroundColor: '#FFFFFF',
     height: '25%',
