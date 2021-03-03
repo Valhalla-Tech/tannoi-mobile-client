@@ -15,6 +15,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { bold, normal } from '../../../assets/FontSize';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
+import { CalculateHeight } from '../../../helper/CalculateSize';
 
 //Icons
 import StarIcon from '../../../assets/topicAssets/starIcon.svg';
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
 
   headerTextStyle: {
     fontFamily: bold,
-    fontSize: 20,
+    fontSize: CalculateHeight(2.5),
     color: '#464D60',
   },
 
