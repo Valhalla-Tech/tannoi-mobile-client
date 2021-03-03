@@ -33,6 +33,10 @@ public class MainActivity extends ReactActivity {
   @Override
   public void onNewIntent(Intent intent) {
     super.onNewIntent(intent);
+    private Branch.BranchUniversalReferralInitListener branchReferralInitListener = new Branch.BranchUniversalReferralInitListener() {
+    @Override public void onInitFinished(@Nullable BranchUniversalObject branchUniversalObject, @Nullable LinkProperties linkProperties, @Nullable BranchError error) {
+        // do something with branchUniversalObject/linkProperties..
+    }
     setIntent(intent);
   }
 }
