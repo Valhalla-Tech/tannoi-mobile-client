@@ -565,7 +565,7 @@ const NewDiscussionScreen = ({ navigation }) => {
               closeModal={closeNoticeModal}
               message="Are you sure you want to go back? Your progress will not be saved"
               customStyle={{
-                paddingVertical: '10%',
+                paddingVertical: '5%',
               }}
               child={NoticeModalChild}
             />
