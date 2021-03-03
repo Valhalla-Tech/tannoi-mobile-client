@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import BaseUrl from '../../../constants/BaseUrl';
 
 //Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import Header from '../../../components/publicComponents/Header';
 import BackButton from '../../../components/publicComponents/BackButton';
 import CommunityList from '../../../components/communityComponent/CommunityList';
@@ -62,17 +63,17 @@ const BrowseCommunityScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <ScreenContainer>
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
       <View style={styles.browseCommunityContainerStyle}>
         <FlatList
-          ListHeaderComponentStyle={{marginBottom: '25%'}}
+          ListHeaderComponentStyle={{ marginBottom: '25%' }}
           ListHeaderComponent={
             <CommunityList communities={communities} navigation={navigation} />
           }
         />
       </View>
-    </View>
+    </ScreenContainer>
   );
 };
 

@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
 
   noticeModalStyle: {
     width: '85%',
-    height: '10%',
+    // height: '10%',
     borderRadius: 20,
     padding: '5%',
     backgroundColor: '#FFFFFF',

@@ -8,6 +8,7 @@ import {
   Keyboard,
   ScrollView,
   Switch,
+  Platform,
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
 import { Picker } from '@react-native-community/picker';
@@ -21,11 +22,13 @@ import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 import Slider from '@react-native-community/slider';
 import { GenerateDeepLink } from '../../../helper/GenerateDeepLink';
+import { CalculateHeight } from '../../../helper/CalculateSize';
 
 //Icon
 import EditButton from '../../../assets/topicAssets/edit.svg';
 
 //Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import BackButton from '../../../components/publicComponents/BackButton';
 import FormInput from '../../../components/publicComponents/FormInput';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
@@ -34,6 +37,7 @@ import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import PrivateDiscussionModal from '../../../components/topicComponents/PrivateDiscussionModal';
 import NoticeModal from '../../../components/publicComponents/Modal';
 import BigButton from '../../../components/publicComponents/Button';
+import IosPicker from '../../../components/publicComponents/IosPicker';
 
 const NewDiscussionScreen = ({ navigation }) => {
   const [discussionTitle, setDiscussionTitle] = useState('');
@@ -309,8 +313,8 @@ const NewDiscussionScreen = ({ navigation }) => {
             color: '#5152D0',
             borderColor: '#5152D0',
             marginRight: '2%',
-            width: '35%',
-            height: '80%',
+            // width: '35%',
+            // height: '80%',
             marginBottom: 0,
           }}
           buttonFunction={closeNoticeModal}
@@ -321,8 +325,8 @@ const NewDiscussionScreen = ({ navigation }) => {
             color: '#FFFFFF',
             borderWidth: 0,
             backgroundColor: '#6505E1',
-            width: '35%',
-            height: '80%',
+            // width: '35%',
+            // height: '80%',
             marginBottom: 0,
           }}
           buttonFunction={() => {
@@ -341,6 +345,31 @@ const NewDiscussionScreen = ({ navigation }) => {
         <Text style={styles.noticeModalMessageStyle}>
           Are you sure you want to go back? Your progress will not be saved
         </Text>
+        <View style={styles.noticeModalButtonContainerStyle}>
+        <BigButton
+          buttonTitle="Cancel"
+          buttonStyle={{
+            color: '#5152D0',
+            borderColor: '#5152D0',
+            marginRight: '2%',
+            marginBottom: 0,
+          }}
+          buttonFunction={closeNoticeModal}
+        />
+        <BigButton
+          buttonTitle="Go back"
+          buttonStyle={{
+            color: '#FFFFFF',
+            borderWidth: 0,
+            backgroundColor: '#6505E1',
+            marginBottom: 0,
+          }}
+          buttonFunction={() => {
+            closeNoticeModal();
+            navigation.goBack();
+          }}
+        />
+      </View>
       </>
     );
   };
@@ -467,16 +496,22 @@ const NewDiscussionScreen = ({ navigation }) => {
           capitalize={true}
         />
         <Text style={styles.formInputTitleStyle}>Topic</Text>
-        <Picker
-          selectedValue={selectedTopic}
-          style={styles.topicPickerStyle}
-          selectedValue={selectedTopic}
-          onValueChange={(itemValue, itemIndex) => setSelectedTopic(itemValue)}>
-          <Picker.Item label="Select topic" value="Select topic" />
-          {topics.map((topic, index) => (
-            <Picker.Item key={index} label={topic.name} value={topic.id} />
-          ))}
-        </Picker>
+        {Platform.OS === 'android' ? (
+          <Picker
+            selectedValue={selectedTopic}
+            style={styles.topicPickerStyle}
+            selectedValue={selectedTopic}
+            onValueChange={(itemValue, itemIndex) =>
+              setSelectedTopic(itemValue)
+            }>
+            <Picker.Item label="Select topic" value="Select topic" />
+            {topics.map((topic, index) => (
+              <Picker.Item key={index} label={topic.name} value={topic.id} />
+            ))}
+          </Picker>
+        ) : (
+          <IosPicker placeholder="Select topic" data={topics} onChangeValue={(value) => setSelectedTopic(value)} customStyle={styles.iosPickerStyle} />
+        )}
         <FormInput formInputTitle="Add hashtags" dataInput={hashtagsInput} />
         <View>
           <Text
@@ -506,37 +541,38 @@ const NewDiscussionScreen = ({ navigation }) => {
   };
 
   return (
-    <ScrollView>
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <View style={styles.newDiscussionContainerStyle}>
-          <NewDiscussionHeader />
-          <View style={styles.newDiscussionFormContainerStyle}>
-            <View style={styles.contentContainerStyle}>
-              <DiscussionSwitch switchName="Private discussion" />
-              <DiscussionSwitch switchName="Ask for a response" />
-              <View style={styles.recorderContainerStyle}>
-                <Recorder
-                  addRecordingFile={addRecordingFile}
-                  removeRecordingFile={removeRecordingFile}
-                />
+    <ScreenContainer>
+      <ScrollView>
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+          <View style={styles.newDiscussionContainerStyle}>
+            <NewDiscussionHeader />
+            <View style={styles.newDiscussionFormContainerStyle}>
+              <View style={styles.contentContainerStyle}>
+                <DiscussionSwitch switchName="Private discussion" />
+                <DiscussionSwitch switchName="Ask for a response" />
+                <View style={styles.recorderContainerStyle}>
+                  <Recorder
+                    addRecordingFile={addRecordingFile}
+                    removeRecordingFile={removeRecordingFile}
+                  />
+                </View>
+                {NewDiscussionForm()}
               </View>
-              {NewDiscussionForm()}
+              {isLoading && <LoadingSpinner />}
             </View>
-            {isLoading && <LoadingSpinner />}
+            <NoticeModal
+              openModal={noticeModal}
+              closeModal={closeNoticeModal}
+              message="Are you sure you want to go back? Your progress will not be saved"
+              customStyle={{
+                paddingVertical: '5%',
+              }}
+              child={NoticeModalChild}
+            />
           </View>
-          <NoticeModal
-            openModal={noticeModal}
-            closeModal={closeNoticeModal}
-            message="Are you sure you want to go back? Your progress will not be saved"
-            modalButton={noticeModalButton}
-            customStyle={{
-              height: '25%',
-            }}
-            child={NoticeModalChild}
-          />
-        </View>
-      </TouchableWithoutFeedback>
-    </ScrollView>
+        </TouchableWithoutFeedback>
+      </ScrollView>
+    </ScreenContainer>
   );
 };
 
@@ -548,8 +584,7 @@ const styles = StyleSheet.create({
   newDiscussionUpperBarStyle: {
     backgroundColor: '#FFFFFF',
     flexDirection: 'row',
-    paddingLeft: 22,
-    paddingRight: 16,
+    paddingHorizontal: '5%',
     paddingVertical: '3%',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -580,23 +615,23 @@ const styles = StyleSheet.create({
     fontFamily: bold,
     fontSize: 20,
     color: '#464D60',
-    marginLeft: 14,
+    marginLeft: '5%',
   },
 
   publishButtonTextStyle: {
     color: '#0E4EF4',
-    fontSize: 16,
+    fontSize: CalculateHeight(1.8),
     fontFamily: bold,
   },
 
   newDiscussionFormContainerStyle: {
     backgroundColor: '#FFFFFF',
-    margin: 8,
+    margin: '2%',
     borderRadius: 8,
   },
 
   contentContainerStyle: {
-    paddingHorizontal: 16,
+    paddingHorizontal: '5%',
     paddingTop: '5%',
     paddingBottom: '5%',
   },
@@ -604,16 +639,26 @@ const styles = StyleSheet.create({
   formInputTitleStyle: {
     color: '#73798C',
     fontFamily: normal,
-    fontSize: 14,
-    marginBottom: 12,
+    fontSize: CalculateHeight(1.5),
+    marginBottom: '2%',
   },
 
   topicPickerStyle: {
-    height: 47,
+    // height: 47,
     borderBottomColor: '#E3E6EB',
-    fontSize: 16,
-    marginBottom: 24,
+    fontSize: CalculateHeight(1.8),
+    marginBottom: '8%',
     fontFamily: normal,
+    color: '#73798C',
+  },
+
+  iosPickerStyle: {
+    marginBottom: '8%',
+  },
+
+  iosPickerTextStyle: {
+    fontFamily: normal,
+    fontSize: CalculateHeight(2),
     color: '#73798C',
   },
 
@@ -627,20 +672,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: '5%',
     width: '100%',
-    marginBottom: '2.5%',
+    // marginBottom: '2.5%',
   },
 
   noticeModalHeaderStyle: {
     fontFamily: bold,
     color: '#6505E1',
-    fontSize: 18,
+    fontSize: CalculateHeight(2),
+    marginBottom: '2%'
   },
 
   noticeModalMessageStyle: {
     color: '#464D60',
     fontFamily: normal,
     lineHeight: 25,
-    fontSize: 16,
+    fontSize: CalculateHeight(1.8),
   },
 });
 

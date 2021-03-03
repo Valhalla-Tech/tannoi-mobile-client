@@ -21,6 +21,7 @@ import { GlobalPadding } from '../../../constants/Size';
 import AboutSection from '../../../components/meComponents/AboutSection';
 
 //Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import Header from '../../../components/publicComponents/Header';
 import ProfileData from '../../../components/meComponents/ProfileData';
 import List from '../../../components/publicComponents/List';
@@ -129,8 +130,12 @@ const MeScreen = ({ navigation, route }) => {
         <View style={{ flex: 1, alignItems: 'center' }}>
           <View style={{ paddingTop: '10%', alignItems: 'center' }}>
             <Image source={DiscussionEmptyStateImage} />
-            <Text style={{color: '#73798C', fontSize: CalculateHeight(2.3)}}>Sorry!</Text>
-            <Text style={{color: '#73798C', fontSize: CalculateHeight(2)}}>You don't have any discussions yet!</Text>
+            <Text style={{ color: '#73798C', fontSize: CalculateHeight(2.3) }}>
+              Sorry!
+            </Text>
+            <Text style={{ color: '#73798C', fontSize: CalculateHeight(2) }}>
+              You don't have any discussions yet!
+            </Text>
           </View>
         </View>
       );
@@ -152,26 +157,32 @@ const MeScreen = ({ navigation, route }) => {
   };
 
   return (
-    <View style={styles.meScreenContainerStyle}>
+    <ScreenContainer>
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
       <ProfileData
         profile={userProfile}
         selectMenu={selectMenu}
         selectedMenu={selectedMenu}
       />
-      <FlatList
-        ListHeaderComponent={
-          <View style={styles.cardContainerStyle}>
-            {selectedMenu === 'Discussions' ? renderDiscussionsDisplay() : selectedMenu === 'About' ? renderAboutDisplay() : null}
-          </View>
-        }
-      />
+      <View style={{ height: '100%' }}>
+        <FlatList
+          ListHeaderComponent={
+            <View style={styles.cardContainerStyle}>
+              {selectedMenu === 'Discussions'
+                ? renderDiscussionsDisplay()
+                : selectedMenu === 'About'
+                ? renderAboutDisplay()
+                : null}
+            </View>
+          }
+        />
+      </View>
       <NoticeModal
         openModal={noticeModal}
         closeModal={closeModal}
         child={noticeModalChild}
       />
-    </View>
+    </ScreenContainer>
   );
 };
 
