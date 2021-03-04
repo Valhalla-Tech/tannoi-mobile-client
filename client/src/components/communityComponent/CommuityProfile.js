@@ -355,21 +355,21 @@ const CommunityProfile = (props) => {
                 ),
               )}
             {
-              isAdmin && ActionModalButton('Edit community', () => editCommunity())
+              isAdmin && ActionModalButton('Edit', () => editCommunity())
             }
             {
               ActionModalButton('Share', () => shareOption())
             }
             {isMember && (
               <>
-                {ActionModalButton('Leave community', () =>
+                {ActionModalButton('Leave', () =>
                   setLeaveCommunityConfirmation(true),
                 )}
               </>
             )}
             {isAdmin &&
               ActionModalButton(
-                'Delete community',
+                'Delete',
                 () => setIsDeletingCommunity(true),
                 { marginBottom: 0 },
               )}
