@@ -41,9 +41,7 @@ export const getOneCommunity = (communityId) => {
           token: access_token,
         },
       });
-      
       if (getOneCommunityRequest.data) {
-        console.log(getOneCommunityRequest.data)
         dispatch({
           type: 'GET_ONE_COMMUNITY',
           payload: {

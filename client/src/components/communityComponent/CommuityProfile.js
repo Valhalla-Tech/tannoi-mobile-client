@@ -11,6 +11,8 @@ import {
   getUserCommunity,
   getOneCommunity,
 } from '../../store/actions/CommuitiesAction';
+import { GenerateDeepLink } from '../../helper/GenerateDeepLink';
+import Share from 'react-native-share';
 
 //Icons
 import OptionButton from '../../assets/publicAssets/optionButton.svg';
@@ -19,15 +21,17 @@ import EarthIcon from '../../assets/communitiesAssets/ic-earth.svg';
 import PrivateIcon from '../../assets/communitiesAssets/ic-lock.svg';
 
 //Components
-import Header from '../publicComponents/Header';
-import Card from '../../components/publicComponents/Card';
-import BackButton from '../publicComponents/BackButton';
+import {
+  Header,
+  Card,
+  LoadingSpinner,
+  Modal,
+  RecorderModal,
+  FormInput,
+  Button,
+  BackButton,
+} from '../../components/publicComponents';
 import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
-import Button from '../publicComponents/Button';
-import LoadingSpinner from '../publicComponents/LoadingSpinner';
-import Modal from '../publicComponents/Modal';
-import RecorderModal from '../publicComponents/RecorderModal';
-import FormInput from '../../components/publicComponents/FormInput';
 
 const CommunityProfile = (props) => {
   const {
@@ -288,6 +292,36 @@ const CommunityProfile = (props) => {
     });
   };
 
+  const shareOption = async () => {
+    try {
+      GenerateDeepLink(
+        communityProfile.name,
+        'Check out this community on the tannOi app!',
+        'CommunitiesNavigation',
+        {
+          screen: 'CommunityProfileScreen',
+          params: {
+            communityId,
+          },
+        },
+        'share a community',
+        async (url) => {
+          try {
+            const options = {
+              title: communityProfile.name,
+              message: url,
+            };
+            await Share.open(options);
+          } catch (error) {
+            console.log(error);
+          }
+        },
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const ActionModalButton = (title, action, customStyle) => (
     <TouchableOpacity
       onPress={() => action()}
@@ -322,6 +356,9 @@ const CommunityProfile = (props) => {
               )}
             {
               isAdmin && ActionModalButton('Edit community', () => editCommunity())
+            }
+            {
+              ActionModalButton('Share', () => shareOption())
             }
             {isMember && (
               <>

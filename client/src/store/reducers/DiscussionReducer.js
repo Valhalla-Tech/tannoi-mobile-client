@@ -20,6 +20,7 @@ const defaultState = {
   discussionCount: '',
   userDiscussion: '',
   userDiscussionCount: '',
+  userInvolvedInDiscussion: [],
   isLoading: false,
   moreLoader: false,
 };
@@ -102,6 +103,16 @@ const reducer = (state = defaultState, action) => {
         ...state,
         userDiscussion: setUserDiscussion,
         userDiscussionCount: setUserDiscussionCount,
+      };
+    case 'GET_USERS_INVOLVED_IN_DISCUSSION':
+      return {
+        ...state,
+        userInvolvedInDiscussion: action.payload.data.data,
+      };
+    case 'CLEAR_USERS_INVOLVED_IN_DISCUSSION':
+      return {
+        ...state,
+        userInvolvedInDiscussion: [],
       };
     case 'CLEAR_DISCUSSION':
       return {

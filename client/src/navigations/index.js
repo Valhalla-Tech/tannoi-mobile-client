@@ -31,6 +31,7 @@ import HashtagDetailScreen from '../screens/homeScreens/HashtagDetailScreen';
 import NotificationSettingsScreen from '../screens/meScreens/NotificationSettingsScreen';
 
 const Stack = createStackNavigator();
+let subscribeInit = false;
 
 const NavigationIndex = () => {
   const navigation = useNavigation();
@@ -146,14 +147,19 @@ const NavigationIndex = () => {
     let getToken = await AsyncStorage.getItem('access_token');
     if (getToken) {
       dispatch(userLogin());
-      onNotificationOpenedApp();
-      getInitialNotification();
+      // onNotificationOpenedApp();
+      // getInitialNotification();
       getDeviceToken();
+      if (!subscribeInit) {
+        subscribeInit = true;
+        branchSubscribe();
+        onNotificationOpenedApp();
+        getInitialNotification();
+      }
     } else if (!getToken) {
       dispatch(userLogout());
       SplashScreen.hide();
     }
-    branchSubscribe();
   };
 
   useEffect(() => {
