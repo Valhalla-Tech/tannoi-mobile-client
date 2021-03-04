@@ -248,7 +248,6 @@ const DiscussionAndResponseList = (props) => {
               isDislike={itemData.item.isDislike}
               getIsLikeAndIsDislike={getIsLikeAndIsDislike}
               caption={itemData.item.caption}
-              navigation={navigation}
               profileId={itemData.item.creator.id}
               profileType={itemData.item.creator.type}
               userType={isResponseScreen ? responseUserType : userType}
@@ -301,7 +300,7 @@ const DiscussionAndResponseList = (props) => {
             </TouchableOpacity>
           </View>
         ) : (
-          <View style={{ height: 100 }} />
+          <View style={{ height: CalculateHeight(5) }} />
         )
       }
     />

@@ -42,7 +42,6 @@ class DiscussionScreenPlayerCard extends Component {
       profilePicture: this.props.profilePicture,
       cardType: this.props.cardType,
       recordingFile: this.props.recordingFile,
-      profilePicture: this.props.profilePicture,
       profileName: this.props.profileName,
       postTime: this.props.postTime,
       responseId: this.props.responseId,
