@@ -5,14 +5,17 @@ const ScreenContainer = (props) => {
   const { children, isHeader = true } = props;
 
   return (
-    <SafeAreaView
-      style={
-        isHeader
-          ? styles.rootStyle
-          : { ...styles.rootStyle, backgroundColor: '#f2f2f2' }
-      }>
-      <View style={styles.containerStyle}>{children}</View>
-    </SafeAreaView>
+    <>
+      <SafeAreaView
+        style={
+          isHeader
+            ? styles.rootStyle
+            : { ...styles.rootStyle, backgroundColor: '#f2f2f2' }
+        }>
+        <View style={styles.containerStyle}>{children}</View>
+      </SafeAreaView>
+      <SafeAreaView style={{ backgroundColor: '#f2f2f2' }} />
+    </>
   );
 };
 

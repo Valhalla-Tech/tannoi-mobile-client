@@ -17,6 +17,7 @@ import BaseUrl from '../../../constants/BaseUrl';
 import { GlobalPadding } from '../../../constants/Size';
 
 //Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import Header from '../../../components/publicComponents/Header';
 import Card from '../../../components/publicComponents/Card';
 import BackButton from '../../../components/publicComponents/BackButton';
@@ -181,7 +182,8 @@ const InviteScreen = ({ navigation, route }) => {
   );
 
   return (
-    <View style={{ flex: 1 }}>
+    // <View style={{ flex: 1 }}>
+    <ScreenContainer>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <>
           <Header child={HeaderContent} customStyle={styles.headerStyle} />
@@ -204,7 +206,8 @@ const InviteScreen = ({ navigation, route }) => {
           </View>
         </>
       </TouchableWithoutFeedback>
-    </View>
+    </ScreenContainer>
+    // </View>
   );
 };
 
