@@ -175,7 +175,7 @@ export const getDiscussion = (
         }
       }
     } catch (error) {
-      console.log(error);
+      console.log({error})
       if (error.response.data.msg === 'You have to login first') {
         dispatch({
           type: 'LOGOUT',
@@ -206,6 +206,42 @@ export const clearDiscussion = (clearUserDiscussion, clearAllDiscussion) => {
   };
 };
 
+export const clearUsersInvolvedInDiscussion = () => {
+  return dispatch => {
+    dispatch({
+      type: 'CLEAR_USERS_INVOLVED_IN_DISCUSSION',
+    });
+  };
+};
+
+export const getUsersInvovedInDiscussion = discussion_id => {
+  return async dispatch => {
+    try {
+      let access_token = await AsyncStorage.getItem('access_token');
+
+      let getUsersInvolvedInDiscussionRequest = await axios({
+        method: 'GET',
+        url: `${BaseUrl}/discussions/users-list/${discussion_id}`,
+        headers: {
+          token: access_token,
+        },
+      });
+
+      if (getUsersInvolvedInDiscussionRequest.status === 200) {
+        dispatch({
+          type: 'GET_USERS_INVOLVED_IN_DISCUSSION',
+          payload: {
+            status: 200,
+            data: getUsersInvolvedInDiscussionRequest.data,
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 export const deleteCommunityDiscussion = (community_id, discussion_id) => {
   return async (dispatch) => {
     try {
@@ -219,10 +255,10 @@ export const deleteCommunityDiscussion = (community_id, discussion_id) => {
         },
         data: {
           discussion_id
-        }
+        },
       });
 
-      if(deleteCommunityDiscussionRequest.status === 200) {
+      if (deleteCommunityDiscussionRequest.status === 200) {
         dispatch({
           type: 'DELETE_COMMUNITY_DISCUSSION',
           payload: {

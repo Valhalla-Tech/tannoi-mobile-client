@@ -12,9 +12,6 @@ import {
 import { GlobalPadding } from '../../../constants/Size';
 import { bold, normal } from '../../../assets/FontSize';
 import { CalculateHeight, CalculateWidth } from '../../../helper/CalculateSize';
-import AsyncStorage from '@react-native-community/async-storage';
-import axios from '../../../constants/ApiServices';
-import BaseUrl from '../../../constants/BaseUrl';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getAllDiscussion,
@@ -38,12 +35,9 @@ import RightArrowIcon from '../../../assets/communitiesAssets/rightArrow.svg';
 
 //Components
 import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
-import Card from '../../../components/publicComponents/Card';
+import { Card, List, LoadingSpinner, Modal } from '../../../components/publicComponents';
 import CommunityProfile from '../../../components/communityComponent/CommuityProfile';
-import List from '../../../components/publicComponents/List';
-import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 import MemberList from '../../../components/communityComponent/MemberList';
-import Modal from '../../../components/publicComponents/Modal';
 
 //Assets
 import DiscussionEmptyStateImage from '../../../assets/communitiesAssets/empty-state-discussions.png';
@@ -194,12 +188,12 @@ const CommunityProfileScreen = ({ navigation, route }) => {
     } else if (discussions.length > 0) {
       return (
         <FlatList
+          style={{height: CalculateHeight(57)}}
           ListHeaderComponent={
             <List
               navigation={navigation}
               isHeader={false}
               listData={discussions}
-              customStyle={{ marginBottom: '90%' }}
               isCommunityDiscussion={true}
               isMember={
                 communityProfile.community_members !== undefined &&
@@ -564,7 +558,6 @@ const styles = StyleSheet.create({
   },
 
   communityProfileContainerStyle: {
-    height: CalculateHeight(57),
     paddingHorizontal: GlobalPadding,
   },
 
