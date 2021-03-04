@@ -4,9 +4,9 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Modal,
+  // Modal,
   Image,
-  FlatList
+  FlatList,
 } from 'react-native';
 import { bold, normal } from '../../assets/FontSize';
 import { useSelector, useDispatch } from 'react-redux';
@@ -24,6 +24,7 @@ import XMark from '../../assets/topicAssets/x-mark.svg';
 //Components
 import FormInput from '../publicComponents/FormInput';
 import BigButton from '../publicComponents/Button';
+import Modal from '../publicComponents/Modal';
 
 const PrivateDiscussionModal = (props) => {
   const {
@@ -200,6 +201,14 @@ const PrivateDiscussionModal = (props) => {
     }
   };
 
+  const onClose = () => {
+    if (isFilled) {
+      closeModal(true);
+    } else {
+      closeModal();
+    }
+  };
+
   const Buttons = () => {
     return (
       <View style={styles.buttonContainerStyle}>
@@ -230,109 +239,94 @@ const PrivateDiscussionModal = (props) => {
   };
 
   return (
-    <Modal animationType="fade" transparent={true} visible={openModal}>
-      <View style={styles.optionModalBackground}>
-        <TouchableOpacity
-          style={{ flex: 1 }}
-          onPress={() => {
-            if (isFilled) {
-              closeModal(true);
-            } else {
-              closeModal();
+    <Modal
+      customStyle={{
+        padding: 0,
+        width: '90%',
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+        padding: '5%',
+        maxHeight: '85%',
+      }}
+      openModal={openModal}
+      closeModal={() => onClose()}>
+      <View style={styles.privateDiscussionModalStyle}>
+        <Text style={styles.privateDiscussionTextStyle}>{modalTitle}</Text>
+        <FormInput
+          formInputTitle="Search"
+          formInputCustomStyle={{
+            paddingVertical: 0,
+            height: 35,
+            marginBottom: '2%',
+          }}
+          formInputValue={searchKeyword}
+          dataInput={searchUserName}
+          Icon={searchKeyword !== '' && XMark}
+          iconStyle={{
+            height: 18,
+            width: 18,
+            margin: {
+              marginBottom: '5%',
+            },
+          }}
+          iconFunction={() => searchUserName('', true)}
+        />
+        {selectedUser.length !== 0 && !isSelectAll && (
+          <Text style={styles.counterTextStyle}>
+            You have selected {selectedUser.length} follower
+            {selectedUser.length > 1 && 's'}
+          </Text>
+        )}
+        {isSelectAll && (
+          <Text style={styles.counterTextStyle}>
+            You have selected all of your followers
+          </Text>
+        )}
+        {noFollowers ? (
+          <Text style={styles.noFollowersTextStyle}>
+            You have no followers yet!
+          </Text>
+        ) : (
+          <FlatList
+            data={fromDiscussionScreen ? authorized : followers}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={renderFollowerList}
+            ListFooterComponent={
+              (fromDiscussionScreen &&
+                authorized.length < userCount &&
+                userCount > 20) ||
+              (followers.length < userCount &&
+                userCount > 20 &&
+                !fromDiscussionScreen) ? (
+                <View style={styles.moreButtonContainerStyle}>
+                  <BigButton
+                    buttonStyle={{
+                      color: '#6505E1',
+                      borderColor: '#6505E1',
+                      paddingVertical: '.5%',
+                      paddingHorizontal: '5%',
+                    }}
+                    buttonTitle="More"
+                    buttonFunction={nextPage}
+                  />
+                </View>
+              ) : null
             }
-          }}></TouchableOpacity>
-      </View>
-      <View style={styles.modalContainerStyle}>
-        <View style={styles.privateDiscussionModalStyle}>
-          <Text style={styles.privateDiscussionTextStyle}>{modalTitle}</Text>
-          <FormInput
-            formInputTitle="Search"
-            formInputCustomStyle={{
-              paddingVertical: 0,
-              height: 35,
-              marginBottom: '2%',
-            }}
-            formInputValue={searchKeyword}
-            dataInput={searchUserName}
-            Icon={searchKeyword !== '' && XMark}
-            iconStyle={{
-              height: 18,
-              width: 18,
-              margin: {
-                marginBottom: '5%',
-              },
-            }}
-            iconFunction={() => searchUserName('', true)}
           />
-          {selectedUser.length !== 0 && !isSelectAll && (
-            <Text style={styles.counterTextStyle}>
-              You have selected {selectedUser.length} follower
-              {selectedUser.length > 1 && 's'}
-            </Text>
-          )}
-          {isSelectAll && (
-            <Text style={styles.counterTextStyle}>
-              You have selected all of your followers
-            </Text>
-          )}
-          {noFollowers ? (
-            <Text style={styles.noFollowersTextStyle}>
-              You have no followers yet!
-            </Text>
-          ) : (
-            <FlatList
-              data={fromDiscussionScreen ? authorized : followers}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={renderFollowerList}
-              ListFooterComponent={
-                (fromDiscussionScreen &&
-                  authorized.length < userCount &&
-                  userCount > 20) ||
-                (followers.length < userCount &&
-                  userCount > 20 &&
-                  !fromDiscussionScreen) ? (
-                  <View style={styles.moreButtonContainerStyle}>
-                    <BigButton
-                      buttonStyle={{
-                        color: '#6505E1',
-                        borderColor: '#6505E1',
-                        paddingVertical: '.5%',
-                        paddingHorizontal: '5%',
-                      }}
-                      buttonTitle="More"
-                      buttonFunction={nextPage}
-                    />
-                  </View>
-                ) : null
-              }
-            />
-          )}
-          <Buttons />
-        </View>
+        )}
+        <Buttons />
       </View>
+      {/* </View> */}
     </Modal>
   );
 };
 const styles = StyleSheet.create({
-  optionModalBackground: {
-    position: 'absolute',
-    backgroundColor: 'rgba(0,0,0,0.8)',
-    height: '100%',
-    width: '100%',
-  },
-
-  modalContainerStyle: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
   privateDiscussionModalStyle: {
-    width: '95%',
-    height: '85%',
-    maxHeight: '85%',
+    // width: '95%',
+    // height: '85%',
+    // maxHeight: '85%',
     borderRadius: 20,
-    padding: '3.5%',
+    // padding: '3.5%',
     backgroundColor: '#FFFFFF',
   },
 
@@ -388,16 +382,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     width: '100%',
     marginTop: '5%',
-  },
-
-  modalOptionTextStyle: {
-    fontFamily: normal,
-    fontSize: 16,
-  },
-
-  modalOptionButtonContainerStyle: {
-    height: 80,
-    justifyContent: 'space-between',
   },
 
   moreButtonContainerStyle: {

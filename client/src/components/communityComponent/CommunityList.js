@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
   officialBadgeTextStyle: {
     color: 'white', 
     fontSize: CalculateHeight(1.2), 
-    fontFamily: 'normal',
+    fontFamily: normal,
   },
 });
 

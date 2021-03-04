@@ -32,7 +32,7 @@ const IosPicker = (props) => {
         options: name,
         // destructiveButtonIndex: 2,
         // cancelButtonIndex: 0,
-        userInterfaceStyle: 'dark',
+        userInterfaceStyle: 'light',
       },
       (buttonIndex) => {
         setSelectedName(name[buttonIndex]);

@@ -15,19 +15,19 @@ const MainModal = (props) => {
 
   return (
     <Modal animationType={animation} transparent={true} visible={openModal}>
-      <View style={styles.modalBackground}>
-        <TouchableOpacity
-          style={{ flex: 1 }}
-          onPress={() => {
-            closeModal();
-          }}></TouchableOpacity>
-      </View>
-      <View style={{ ...styles.modalContainerStyle, ...customContainerStyle }}>
-        <View style={{ ...styles.noticeModalStyle, ...customStyle }}>
-          {children || (child && child())}
-          {modalButton && modalButton()}
+      <TouchableOpacity
+        style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.8)', }}
+        onPress={() => {
+          closeModal();
+        }}>
+        <View
+          style={{ ...styles.modalContainerStyle, ...customContainerStyle }}>
+          <View style={{ ...styles.modalStyle, ...customStyle }}>
+            {children || (child && child())}
+            {modalButton && modalButton()}
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     </Modal>
   );
 };
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  noticeModalStyle: {
+  modalStyle: {
     width: '85%',
     // height: '10%',
     borderRadius: 20,

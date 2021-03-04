@@ -3,7 +3,7 @@ import {
   StyleSheet,
   View,
   Text,
-  Modal,
+  // Modal,
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
@@ -24,6 +24,7 @@ import BaseUrl from '../../constants/BaseUrl';
 import { CalculateHeight } from '../../helper/CalculateSize';
 
 //Components
+import Modal from '../../components/publicComponents/Modal';
 import FormInput from './FormInput';
 import Recorder from './Recorder';
 import LoadingSpinner from './LoadingSpinner';
@@ -128,71 +129,72 @@ const RecorderModal = (props) => {
     setRecordingFile('');
   };
 
+  const onClose = () => {
+    closeModal();
+    setRecordingFile('');
+    setCaption('');
+    setValidation(false);
+  };
+
   return (
-    <Modal animationType="slide" visible={openModal} transparent={true}>
-      <View style={styles.backgroundShadowStyle}>
-        <TouchableOpacity
-          style={{ flex: 1 }}
-          onPress={() => {
-            closeModal();
-            setRecordingFile('');
-            setCaption('');
-            setValidation(false);
-          }}
-        />
-      </View>
-      <View style={{ flex: 1 }} />
-      <TouchableWithoutFeedback
-        onPress={() => {
-          Keyboard.dismiss();
-        }}>
-        <View style={styles.addResponseModalStyle}>
-          <View style={styles.contentContainerStyle}>
-            <View style={styles.titleAndPublishButtonContainerStyle}>
-              <Text style={styles.addResponseTitleStyle}>
-                {forCommunity
-                  ? 'Send a community join request'
+    <Modal
+      animation="slide"
+      customContainerStyle={{ justifyContent: 'flex-end' }}
+      customStyle={{
+        width: '100%',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        padding: 0,
+      }}
+      openModal={openModal}
+      closeModal={() => onClose()}>
+      <View style={styles.addResponseModalStyle}>
+        <View style={styles.contentContainerStyle}>
+          <View style={styles.titleAndPublishButtonContainerStyle}>
+            <Text style={styles.addResponseTitleStyle}>
+              {forCommunity
+                ? 'Send a community join request'
+                : forBio
+                ? 'Record audio bio'
+                : 'Add response'}
+            </Text>
+            <TouchableOpacity
+              disabled={recordingFile !== '' ? false : true}
+              onPress={() =>
+                forCommunity
+                  ? joinCommunity(recordingFile)
                   : forBio
-                  ? 'Record audio bio'
-                  : 'Add response'}
-              </Text>
-              <TouchableOpacity
-                disabled={recordingFile !== '' ? false : true}
-                onPress={() =>
-                  forCommunity
-                    ? joinCommunity(recordingFile)
-                    : forBio
-                    ? setBioFile(recordingFile)
-                    : createResponse()
+                  ? setBioFile(recordingFile)
+                  : createResponse()
+              }>
+              <Text
+                style={
+                  recordingFile !== ''
+                    ? styles.publishButtonTextStyle
+                    : { ...styles.publishButtonTextStyle, color: '#cccccc' }
                 }>
-                <Text
-                  style={
-                    recordingFile !== ''
-                      ? styles.publishButtonTextStyle
-                      : { ...styles.publishButtonTextStyle, color: '#cccccc' }
-                  }>
-                  {forCommunity ? 'Submit' : forBio ? 'Save' : 'Publish'}
-                </Text>
-              </TouchableOpacity>
-            </View>
-            {!forBio && !forCommunity && (
-              <FormInput
-                formInputTitle="Add caption (optional)"
-                dataInput={inputCaption}
-                capitalize={true}
-              />
-            )}
-            {validation && (
-              <ErrorMessage message="All fields must be filled in, including a voice note!" />
-            )}
-            <Recorder
-              addRecordingFile={addRecordingFile}
-              removeRecordingFile={removeRecordingFile}
-            />
+                {forCommunity ? 'Submit' : forBio ? 'Save' : 'Publish'}
+              </Text>
+            </TouchableOpacity>
           </View>
-          {isLoading && <LoadingSpinner />}
+          {!forBio && !forCommunity && (
+            <FormInput
+              formInputTitle="Add caption (optional)"
+              dataInput={inputCaption}
+              capitalize={true}
+            />
+          )}
+          {validation && (
+            <ErrorMessage message="All fields must be filled in, including a voice note!" />
+          )}
+          <Recorder
+            addRecordingFile={addRecordingFile}
+            removeRecordingFile={removeRecordingFile}
+          />
         </View>
-      </TouchableWithoutFeedback>
+        {isLoading && <LoadingSpinner />}
+      </View>
+      {/* </TouchableWithoutFeedback> */}
     </Modal>
   );
 };
@@ -222,6 +224,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: '10%',
   },
 
   addResponseTitleStyle: {
