@@ -177,12 +177,10 @@ const MemberRequestScreen = ({ navigation, route }) => {
   };
 
   return (
-    // <View style={{ flex: 1 }}>
     <ScreenContainer>
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
       <View style={styles.memberRequestContainerStyle}>{RenderContent()}</View>
     </ScreenContainer>
-    // </View>
   );
 };
 

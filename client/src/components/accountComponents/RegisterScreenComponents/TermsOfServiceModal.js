@@ -54,10 +54,12 @@ const TermsOfServiceModal = (props) => {
         height: '85%',
         borderBottomLeftRadius: 0,
         borderBottomRightRadius: 0,
+        position: 'absolute'
       }}
       customContainerStyle={{
         justifyContent: 'flex-end',
       }}
+      disableButton={true}
     />
   );
 };

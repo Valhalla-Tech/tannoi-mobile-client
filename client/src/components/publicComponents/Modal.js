@@ -11,15 +11,17 @@ const MainModal = (props) => {
     customStyle,
     customContainerStyle,
     animation = 'fade',
+    disableButton,
   } = props;
 
   return (
     <Modal animationType={animation} transparent={true} visible={openModal}>
       <TouchableOpacity
-        style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.8)', }}
+        style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.8)' }}
         onPress={() => {
           closeModal();
-        }}>
+        }}
+        disabled={disableButton}>
         <View
           style={{ ...styles.modalContainerStyle, ...customContainerStyle }}>
           <View style={{ ...styles.modalStyle, ...customStyle }}>
