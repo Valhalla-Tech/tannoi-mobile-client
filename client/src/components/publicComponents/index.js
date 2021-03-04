@@ -19,6 +19,7 @@ import SearchBarCard from './SearchBarCard';
 import SortModal from './SortModal';
 import TabView from './TabView';
 import ScreenContainer from './ScreenContainer';
+import IosPicker from './IosPicker';
 
 export {
     BackButton,
@@ -42,4 +43,5 @@ export {
     SortModal,
     TabView,
     ScreenContainer,
+    IosPicker,
 };
