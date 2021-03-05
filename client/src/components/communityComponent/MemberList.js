@@ -9,15 +9,18 @@ import {
 } from 'react-native';
 import { normal } from '../../assets/FontSize';
 import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
+import Share from 'react-native-share';
+import { GenerateDeepLink } from '../../helper/GenerateDeepLink';
 
 //Icon
 import RightArrowIcon from '../../assets/communitiesAssets/rightArrow.svg';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 //Component
 import Card from '../publicComponents/Card';
 
 const MemberList = (props) => {
-  const { memberList, navigation, onPress, communityId, isAdmin } = props;
+  const { memberList, navigation, onPress, communityId, isAdmin, communityName } = props;
 
   const MemberListData = (itemData) => {
     return (
@@ -52,14 +55,48 @@ const MemberList = (props) => {
     );
   };
 
+  const shareOption = async () => {
+    try {
+      GenerateDeepLink(
+        communityName,
+        'Check out this community on the tannOi app!',
+        'CommunitiesNavigation',
+        {
+          screen: 'CommunityProfileScreen',
+          params: {
+            communityId,
+          },
+        },
+        'share a community',
+        async (url) => {
+          try {
+            const options = {
+              title: communityName,
+              message: url,
+            };
+            await Share.open(options);
+          } catch (error) {
+            console.log(error);
+          }
+        },
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const MemberListContent = () => {
     return (
       <FlatList
-        style={{height: CalculateHeight(55)}}
+        style={{minHeight: CalculateHeight(27), maxHeight: CalculateHeight(42)}}
         data={memberList}
         keyExtractor={(item, index) => index.toString()}
         ListHeaderComponent={
           <>
+            <TouchableOpacity onPress={() => shareOption()} style={styles.inviteCommunityLinkContainerStyle}>
+              <Icon name="link" style={{...styles.inviteToCommunityButtonTextStyle, marginRight: '1.5%'}}/>
+              <Text style={styles.inviteToCommunityButtonTextStyle}>Invite to community via link</Text>
+            </TouchableOpacity>
             {isAdmin && (
               <TouchableOpacity
                 onPress={() =>
@@ -109,6 +146,15 @@ const styles = StyleSheet.create({
     fontFamily: normal,
     fontSize: CalculateHeight(1.8),
     color: '#464D60',
+  },
+
+  inviteCommunityLinkContainerStyle: {
+    marginTop: '2%',
+    paddingLeft: '3.5%',
+    padding: '.3%',
+    borderRadius: 8,
+    alignItems: 'center',
+    flexDirection: 'row',
   },
 
   imageProfileAndNameStyle: {
