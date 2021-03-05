@@ -94,7 +94,9 @@ const MemberList = (props) => {
         ListHeaderComponent={
           <>
             <TouchableOpacity onPress={() => shareOption()} style={styles.inviteCommunityLinkContainerStyle}>
-              <Icon name="link" style={{...styles.inviteToCommunityButtonTextStyle, marginRight: '1.5%'}}/>
+              <View style={{...styles.profileImageStyle, backgroundColor: '#e5e5e5', justifyContent: 'center', alignItems: 'center'}}>
+                <Icon name="link" style={{color: '#808080', fontSize: CalculateHeight(3)}}/>
+              </View>
               <Text style={styles.inviteToCommunityButtonTextStyle}>Invite to community via link</Text>
             </TouchableOpacity>
             {isAdmin && (
