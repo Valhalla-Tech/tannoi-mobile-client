@@ -149,12 +149,12 @@ const styles = StyleSheet.create({
   },
 
   inviteCommunityLinkContainerStyle: {
-    marginTop: '2%',
     paddingLeft: '3.5%',
-    padding: '.3%',
-    borderRadius: 8,
-    alignItems: 'center',
+    padding: '3%',
+    alignItems:'center',
     flexDirection: 'row',
+    borderBottomColor: '#f2f2f2',
+    borderBottomWidth: 1,
   },
 
   imageProfileAndNameStyle: {
