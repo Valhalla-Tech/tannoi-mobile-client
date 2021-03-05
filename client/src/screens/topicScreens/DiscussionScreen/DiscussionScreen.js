@@ -58,6 +58,7 @@ const DiscussionScreen = ({ route, navigation }) => {
 
   const dispatch = useDispatch();
   const flatListRef = useRef();
+  const tabViewRef = useRef();
 
   useEffect(() => {
     _isMounted = true;
@@ -189,9 +190,13 @@ const DiscussionScreen = ({ route, navigation }) => {
           style={styles.addResponseButtonStyle}
           onPress={() => {
             userType !== 0 || userId === profileId
-              ? (setOpenAddResponseModal(true),
+              ? (
+                activeTab === 'GET_DISCUSSIONS' ? null : tabViewRef.current.changeActiveTab('GET_DISCUSSIONS'),
+                activeTab === 'GET_DISCUSSIONS' ? null : handleTabViewEvent({id: 'GET_DISCUSSIONS'}),
+                setOpenAddResponseModal(true),
                 setOpenAddRespone(true),
-                setOpenModalFromHeader(true))
+                setOpenModalFromHeader(true)
+                )
               : (navigation.navigate('VerificationNavigation'),
                 setOpenAddRespone(true));
           }}>
@@ -202,6 +207,7 @@ const DiscussionScreen = ({ route, navigation }) => {
         tabViewContainerStyle = {{ marginBottom: '2%', }}
         customButtonStyle = {{ paddingTop: '2%' }}
         tabMenus={tabViewMenus}
+        ref={tabViewRef}
         onPress={data => handleTabViewEvent(data)}
       />
       {
