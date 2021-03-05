@@ -28,8 +28,6 @@ import {
 } from '../../../store/actions/CommuitiesAction';
 import { getOneProfile } from '../../../store/actions/ProfileAction';
 import { LinearTextGradient } from 'react-native-text-gradient';
-import Share from 'react-native-share';
-import { GenerateDeepLink } from '../../../helper/GenerateDeepLink';
 
 //Icons
 import NewDiscussionButton from '../../../assets/communitiesAssets/ic-button.svg';
@@ -268,10 +266,8 @@ const CommunityProfileScreen = ({ navigation, route }) => {
     return (
       <View>
         {renderMemberRequestsCard()}
-        <TouchableOpacity onPress={() => shareOption()} style={styles.inviteCommunityLinkContainerStyle}>
-          <Text style={styles.memberRequestTextStyle}>Invite to community via link</Text>
-        </TouchableOpacity>
         <MemberList
+          communityName={communityProfile.name}
           onPress={(itemData) => {
             if (isAMember) {
               setMemberModalMode(true);
@@ -485,36 +481,6 @@ const CommunityProfileScreen = ({ navigation, route }) => {
         </View>
       </Modal>
     );
-  };
-
-  const shareOption = async () => {
-    try {
-      GenerateDeepLink(
-        communityProfile.name,
-        'Check out this community on the tannOi app!',
-        'CommunitiesNavigation',
-        {
-          screen: 'CommunityProfileScreen',
-          params: {
-            communityId,
-          },
-        },
-        'share a community',
-        async (url) => {
-          try {
-            const options = {
-              title: communityProfile.name,
-              message: url,
-            };
-            await Share.open(options);
-          } catch (error) {
-            console.log(error);
-          }
-        },
-      );
-    } catch (err) {
-      console.log(err);
-    }
   };
 
   return (
@@ -745,13 +711,6 @@ const styles = StyleSheet.create({
   memberRequestContainerStyle: {
     marginTop: '2%',
     padding: '3.5%',
-    borderRadius: 8,
-  },
-
-  inviteCommunityLinkContainerStyle: {
-    marginTop: '2%',
-    paddingLeft: '3.5%',
-    padding: '.3%',
     borderRadius: 8,
   },
 
