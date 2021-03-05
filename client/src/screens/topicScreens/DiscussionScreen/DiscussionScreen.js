@@ -155,9 +155,11 @@ const DiscussionScreen = ({ route, navigation }) => {
             style={styles.profileImageStyle}
           />
           <View style={styles.profileBodyStyle}>
-            <Text style={styles.userInvolvedNameStyle}>{data.item.name}</Text>
-            <Text style={styles.userInvolvedBioStyle}>
-              {data.item.bio.length > maxBioChara ? data.item.bio.substring(0, maxBioChara - 3) + '...' : ''}
+            <Text 
+              style={styles.userInvolvedNameStyle}
+              numberOfLines={1}
+            >
+              {data.item.name} {data.item.bio ? '- ' + data.item.bio : null}
             </Text>
           </View>
         </View>
@@ -197,8 +199,8 @@ const DiscussionScreen = ({ route, navigation }) => {
         </TouchableOpacity>
       </View>
       <TabView
-        tabViewContainerStyle = {{ marginBottom: 20, }}
-        customButtonStyle = {{ paddingTop: 0 }}
+        tabViewContainerStyle = {{ marginBottom: '2%', }}
+        customButtonStyle = {{ paddingTop: '2%' }}
         tabMenus={tabViewMenus}
         onPress={data => handleTabViewEvent(data)}
       />
@@ -234,9 +236,11 @@ const DiscussionScreen = ({ route, navigation }) => {
           />
         </> :
         getUsersInvolvedLoading ?
-        <View style={{padding: 50}}><LoadingSpinner loadingSpinnerForComponent/></View> :
+        <View style={{padding: 50}}>
+          <LoadingSpinner loadingSpinnerForComponent/>
+        </View> :
         <FlatList
-          style={{ height: CalculateHeight(90), backgroundColor: 'white', }}
+          style={{ height: CalculateHeight(90), backgroundColor: 'white', marginHorizontal: '2%', borderRadius: 10 }}
           keyExtractor={(item, index) => index.toString()}
           data={usersInvolved}
           renderItem={renderUsersInvolved}
@@ -257,7 +261,6 @@ const styles = StyleSheet.create({
     paddingLeft: '5%',
     paddingRight: '3.5%',
     paddingVertical: '3%',
-    marginBottom: 8,
     justifyContent: 'space-between',
     alignItems: 'center',
   },
@@ -287,7 +290,7 @@ const styles = StyleSheet.create({
 
   imageProfileAndNameStyle: {
     flexDirection: 'row',
-    width: CalculateWidth(100),
+    flex: 1,
   },
 
   profileImageStyle: {
@@ -297,10 +300,10 @@ const styles = StyleSheet.create({
     marginRight: CalculateWidth(3),
   },
 
-  profileBodyStyle: { justifyContent: 'center',
+  profileBodyStyle: { 
+    justifyContent: 'center',
     flexDirection: 'column',
-    alignItems: 'flex-start',
-    flexWrap: 'wrap',
+    flex: 1
   },
 
   memberListDataStyle: {
@@ -315,11 +318,6 @@ const styles = StyleSheet.create({
   userInvolvedNameStyle: {
     fontFamily: normal,
     color: '#464D60',
-    fontSize: CalculateHeight(1.8),
-  },
-
-  userInvolvedBioStyle: {
-    color: '#73798C',
     fontSize: CalculateHeight(1.8),
   },
 });
