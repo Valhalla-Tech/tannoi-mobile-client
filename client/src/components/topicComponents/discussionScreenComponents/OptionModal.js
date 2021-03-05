@@ -44,6 +44,7 @@ const OptionModal = (props) => {
     responseScreenId,
     role,
     cardOnDelete,
+    isDeleting,
   } = props;
 
   const userId = useSelector((state) => state.ProfileReducer.userProfile.id);
@@ -101,12 +102,12 @@ const OptionModal = (props) => {
   };
 
   const DeleteDiscussionOrResponse = async () => {
+    isDeleting()
     if (cardOnDelete) {
-      console.log('here', {discussionId, responseId})
-      if(modalType == 'discussion')
+      if (modalType === 'discussion')
         return cardOnDelete(discussionId, 'discussion');
-      else if (modalType == 'response')
-        return cardOnDelete(responseId, 'response')
+      else if (modalType === 'response')
+        return cardOnDelete(responseId, 'response');
     }
     try {
       let access_token = await AsyncStorage.getItem('access_token');
