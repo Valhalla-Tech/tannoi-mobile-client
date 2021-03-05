@@ -230,7 +230,7 @@ const EditProfileScreen = ({ navigation }) => {
             type,
           });
         birthDate !== '' && formData.append('birth_date', `${birthDate}`);
-        fullName !== '' && formData.append('name', fullName.trim());
+        fullName !== '' && fullName.length < 27 && formData.append('name', fullName.trim());
         selectedGender !== '' && formData.append('gender', selectedGender);
         shortBio !== '' && formData.append('bio', shortBio.trim());
         location !== '' && formData.append('location', location.trim());

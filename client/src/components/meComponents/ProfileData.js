@@ -16,7 +16,8 @@ const ProfileData = (props) => {
   const UserProfileData = () => {
     return (
       <View>
-        <LinearTextGradient 
+        <LinearTextGradient
+          style={{ maxWidth: CalculateWidth(60) }}
           locations={[0, 1]}
           colors={['#5051DB', '#7E37B6']}
           start={{ x: 0, y: 0 }}
