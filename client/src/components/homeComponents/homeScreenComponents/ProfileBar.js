@@ -24,7 +24,7 @@ const ProfileBar = (props) => {
           }
           style={styles.profilePictureStyle}
         />
-        <Text style={styles.profileBarTextStyle}>{user.name}</Text>
+        <Text numberOfLines={2} style={styles.profileBarTextStyle}>{user.name}</Text>
         {user.type === 1 && (
           <Image source={tickIcon} style={styles.tickIconStyle} />
         )}
@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
   },
 
   profileInfoContainerStyle: {
+    maxWidth: CalculateWidth(40),
     flexDirection: 'row',
     alignItems: 'center',
   },
