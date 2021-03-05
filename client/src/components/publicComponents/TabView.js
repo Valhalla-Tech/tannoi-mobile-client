@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useImperativeHandle, forwardRef } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { bold } from '../../assets/FontSize';
 import { CalculateHeight } from '../../helper/CalculateSize';
 
-const TabView = ({tabMenus, onPress, tabViewContainerStyle, customButtonStyle}) => {
-
+const TabView = (props, ref) => {
+    const {tabMenus, onPress, tabViewContainerStyle, customButtonStyle} = props;
     const [canRender, setCanRender] = useState(false);
     const [errorList, setErrorList] = useState([]);
     const [usedTabMenus, setUsedTabMenus] = useState(null);
@@ -121,6 +121,12 @@ const TabView = ({tabMenus, onPress, tabViewContainerStyle, customButtonStyle}) 
         );
     };
 
+    useImperativeHandle (ref, () => ({
+        changeActiveTab(data) {
+            setSelectedValue(data);
+        },
+    }));
+
     return (
         <>
             {canRender ? renderTabs() : renderErrors()}
@@ -150,4 +156,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default TabView;
+export default forwardRef(TabView);
