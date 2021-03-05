@@ -32,7 +32,13 @@ class RecordPlayer extends Component {
     };
   }
 
+  stopPlaying = () => {
+    this.soundPlayer.stop();
+  };
+
   componentDidMount() {
+
+    this.props.onRef(this);
     this._isMounted = true;
     this.setState({
       loading: true,
@@ -40,7 +46,6 @@ class RecordPlayer extends Component {
     this.soundPlayer = null;
     this.progressInterval = null;
     this.loadPlayer();
-
     this._blur = this.props.navigation.addListener('blur', () => {
       this._isMounted = false;
       this.soundPlayer.stop();
@@ -59,6 +64,7 @@ class RecordPlayer extends Component {
   }
 
   componentWillUnmount() {
+    this.props.onRef(undefined);
     this._isMounted = false;
     this.soundPlayer.stop();
     this.stopUpdateProgressBar();
