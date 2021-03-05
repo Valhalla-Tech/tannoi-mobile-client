@@ -144,7 +144,7 @@ const DiscussionScreen = ({ route, navigation }) => {
   };
 
   const renderUsersInvolved = data => {
-    let maxBioChara = 26;
+    let maxBioChara = 50;
     return (
       <TouchableOpacity
         onPress={() => navigation.navigate('UserProfileScreen', { userId: data.item.id })}
@@ -197,6 +197,8 @@ const DiscussionScreen = ({ route, navigation }) => {
         </TouchableOpacity>
       </View>
       <TabView
+        tabViewContainerStyle = {{ marginBottom: 20, }}
+        customButtonStyle = {{ paddingTop: 0 }}
         tabMenus={tabViewMenus}
         onPress={data => handleTabViewEvent(data)}
       />
@@ -234,7 +236,7 @@ const DiscussionScreen = ({ route, navigation }) => {
         getUsersInvolvedLoading ?
         <View style={{padding: 50}}><LoadingSpinner loadingSpinnerForComponent/></View> :
         <FlatList
-          style={{marginTop: 10, height: CalculateHeight(90) }}
+          style={{ height: CalculateHeight(90), backgroundColor: 'white', }}
           keyExtractor={(item, index) => index.toString()}
           data={usersInvolved}
           renderItem={renderUsersInvolved}

@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { bold } from '../../assets/FontSize';
 import { CalculateHeight } from '../../helper/CalculateSize';
 
-const TabView = ({tabMenus, onPress, tabViewContainerStyle}) => {
+const TabView = ({tabMenus, onPress, tabViewContainerStyle, customButtonStyle}) => {
 
     const [canRender, setCanRender] = useState(false);
     const [errorList, setErrorList] = useState([]);
@@ -72,7 +72,10 @@ const TabView = ({tabMenus, onPress, tabViewContainerStyle}) => {
 
     const renderTabs = () => {
         return (
-        <View style={styles.profileDisplayButtonContainerStyle}>
+        <View style={{
+            ...styles.profileDisplayButtonContainerStyle,
+            ...tabViewContainerStyle,
+            }}>
             {usedTabMenus.map(data => {
                 return (
                     <TouchableOpacity key={data.id}
@@ -80,10 +83,11 @@ const TabView = ({tabMenus, onPress, tabViewContainerStyle}) => {
                         selectedValue === data.id
                         ? {
                             ...styles.displayButtonStyle,
+                            ...customButtonStyle,
                             borderBottomWidth: 1,
                             borderBottomColor: '#5152D0',
                         }
-                        : styles.displayButtonStyle
+                        : {...styles.displayButtonStyle, ...customButtonStyle}
                     }
                     onPress={() => {
                         setSelectedValue(data.id);
@@ -126,20 +130,23 @@ const TabView = ({tabMenus, onPress, tabViewContainerStyle}) => {
 
 const styles = StyleSheet.create({
     displayButtonStyle: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '2.5%',
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '2.5%',
+        backgroundColor: 'white',
     },
 
     displayButtonTextStyle: {
-      fontFamily: bold,
-      color: '#464D60',
-      fontSize: CalculateHeight(2),
+        fontFamily: bold,
+        color: '#464D60',
+        backgroundColor: 'white',
+        fontSize: CalculateHeight(2),
     },
 
     profileDisplayButtonContainerStyle: {
         flexDirection: 'row',
+        backgroundColor: 'white',
     },
 });
 
