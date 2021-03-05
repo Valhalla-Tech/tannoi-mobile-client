@@ -191,6 +191,7 @@ const EmailConfirmationModal = (props) => {
       customContainerStyle={{
         justifyContent: 'flex-end',
       }}
+      disableButton={true}
     />
   );
 };

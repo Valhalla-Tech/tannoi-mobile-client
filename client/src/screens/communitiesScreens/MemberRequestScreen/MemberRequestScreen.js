@@ -10,6 +10,7 @@ import { getCommunityMember } from '../../../store/actions/CommuitiesAction';
 import { useDispatch } from 'react-redux';
 
 //Component
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import Header from '../../../components/publicComponents/Header';
 import Card from '../../../components/publicComponents/Card';
 import BackButton from '../../../components/publicComponents/BackButton';
@@ -176,10 +177,10 @@ const MemberRequestScreen = ({ navigation, route }) => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <ScreenContainer>
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
       <View style={styles.memberRequestContainerStyle}>{RenderContent()}</View>
-    </View>
+    </ScreenContainer>
   );
 };
 
