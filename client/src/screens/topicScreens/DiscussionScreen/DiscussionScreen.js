@@ -32,7 +32,7 @@ const DiscussionScreen = ({ route, navigation }) => {
   const tabViewMenus = [
     {
       id: 'GET_DISCUSSIONS',
-      name: 'Discussions',
+      name: 'Discussion',
     },
     {
       id: 'GET_USERS_INVOLVED',
