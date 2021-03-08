@@ -142,75 +142,77 @@ const RecorderModal = (props) => {
       customContainerStyle={{ justifyContent: 'flex-end' }}
       customStyle={{
         width: '100%',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
         padding: 0,
+        alignItems: 'flex-start',
+        padding: '5%',
+        paddingBottom: '20%',
+        backgroundColor: '#FFFFFF',
+        width: '100%',
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
       }}
       openModal={openModal}
       closeModal={() => onClose()}>
-      <View style={styles.addResponseModalStyle}>
-        <View style={styles.contentContainerStyle}>
-          <View style={styles.titleAndPublishButtonContainerStyle}>
-            <Text style={styles.addResponseTitleStyle}>
-              {forCommunity
-                ? 'Send a community join request'
-                : forBio
-                ? 'Record audio bio'
-                : 'Add response'}
-            </Text>
-            <TouchableOpacity
-              disabled={recordingFile !== '' ? false : true}
-              onPress={() =>
-                forCommunity
-                  ? joinCommunity(recordingFile)
+        {/* <TouchableWithoutFeedback
+          onPress={() => {
+            Keyboard.dismiss()}}
+          >
+          <> */}
+            <View style={styles.titleAndPublishButtonContainerStyle}>
+              <Text style={styles.addResponseTitleStyle}>
+                {forCommunity
+                  ? 'Send a community join request'
                   : forBio
-                  ? setBioFile(recordingFile)
-                  : createResponse()
-              }>
-              <Text
-                style={
-                  recordingFile !== ''
-                    ? styles.publishButtonTextStyle
-                    : { ...styles.publishButtonTextStyle, color: '#cccccc' }
-                }>
-                {forCommunity ? 'Submit' : forBio ? 'Save' : 'Publish'}
+                  ? 'Record audio bio'
+                  : 'Add response'}
               </Text>
-            </TouchableOpacity>
-          </View>
-          {!forBio && !forCommunity && (
-            <FormInput
-              formInputTitle="Add caption (optional)"
-              dataInput={inputCaption}
-              capitalize={true}
-            />
-          )}
-          {validation && (
-            <ErrorMessage message="All fields must be filled in, including a voice note!" />
-          )}
-          <Recorder
-            addRecordingFile={addRecordingFile}
-            removeRecordingFile={removeRecordingFile}
-          />
-        </View>
-        {isLoading && <LoadingSpinner />}
-      </View>
-      {/* </TouchableWithoutFeedback> */}
+              <TouchableOpacity
+                disabled={recordingFile !== '' ? false : true}
+                onPress={() =>
+                  forCommunity
+                    ? joinCommunity(recordingFile)
+                    : forBio
+                    ? setBioFile(recordingFile)
+                    : createResponse()
+                }>
+                <Text
+                  style={
+                    recordingFile !== ''
+                      ? styles.publishButtonTextStyle
+                      : { ...styles.publishButtonTextStyle, color: '#cccccc' }
+                  }>
+                  {forCommunity ? 'Submit' : forBio ? 'Save' : 'Publish'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            {!forBio && !forCommunity && (
+              <FormInput
+                formInputTitle="Add caption (optional)"
+                dataInput={inputCaption}
+                capitalize={true}
+              />
+            )}
+            {validation && (
+              <ErrorMessage message="All fields must be filled in, including a voice note!" />
+            )}
+            <View style={styles.recorderContainerStyle}>
+              <Recorder
+                addRecordingFile={addRecordingFile}
+                removeRecordingFile={removeRecordingFile}
+              />
+            </View>
+            {isLoading && <LoadingSpinner />}
+          {/* </>
+        </TouchableWithoutFeedback> */}
     </Modal>
   );
 };
 
 const styles = StyleSheet.create({
-  backgroundShadowStyle: {
-    position: 'absolute',
-    backgroundColor: 'rgba(0,0,0,0.8)',
-    height: '100%',
-    width: '100%',
-  },
-
   addResponseModalStyle: {
     backgroundColor: '#FFFFFF',
     width: '100%',
-    height: '50%',
+    // height: '50%',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
@@ -218,12 +220,19 @@ const styles = StyleSheet.create({
   contentContainerStyle: {
     padding: '5%',
     paddingBottom: '20%',
+    backgroundColor: '#FFFFFF',
+    width: '100%',
+    // height: '50%',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    flex: 1,
   },
 
   titleAndPublishButtonContainerStyle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    width: '100%',
     // marginBottom: '10%',
   },
 
@@ -238,6 +247,10 @@ const styles = StyleSheet.create({
     fontSize: CalculateHeight(2),
     color: '#0E4EF4',
     fontFamily: bold,
+  },
+
+  recorderContainerStyle: {
+    width: '100%',
   },
 });
 
