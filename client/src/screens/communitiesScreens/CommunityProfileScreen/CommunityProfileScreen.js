@@ -188,30 +188,31 @@ const CommunityProfileScreen = ({ navigation, route }) => {
     } else if (discussions.length > 0) {
       return (
         <FlatList
-          style={{height: CalculateHeight(57)}}
+          style={{height: CalculateHeight(60)}}
           ListHeaderComponent={
-            <List
-              navigation={navigation}
-              isHeader={false}
-              listData={discussions}
-              isCommunityDiscussion={true}
-              isMember={
-                communityProfile.community_members !== undefined &&
-                communityProfile.community_members.length !== 0
-                  ? communityProfile.community_members[0].type === 'Admin' ||
-                    communityProfile.community_members[0].type === 'Member' ||
-                    communityProfile.community_members[0].type === 'Moderator'
-                    ? true
+              <List
+                navigation={navigation}
+                isHeader={false}
+                listData={discussions}
+                isCommunityDiscussion={true}
+                isMember={
+                  communityProfile.community_members !== undefined &&
+                  communityProfile.community_members.length !== 0
+                    ? communityProfile.community_members[0].type === 'Admin' ||
+                      communityProfile.community_members[0].type === 'Member' ||
+                      communityProfile.community_members[0].type === 'Moderator'
+                      ? true
+                      : false
                     : false
-                  : false
-              }
-              role={gotPermission}
-              openCommunityDiscussionNoticeModal={openNoticeModal}
-              inputCommunityDiscussionNoticeModalMessage={
-                inputNoticeModalMessage
-              }
-              cardOnDelete = {(id, type) => deleteCommunityDiscussionOrResponse(id, type)}
-            />
+                }
+                customStyle={{marginBottom: 20}}
+                role={gotPermission}
+                openCommunityDiscussionNoticeModal={openNoticeModal}
+                inputCommunityDiscussionNoticeModalMessage={
+                  inputNoticeModalMessage
+                }
+                cardOnDelete = {(id, type) => deleteCommunityDiscussionOrResponse(id, type)}
+              />
           }
         />
       );
