@@ -3,7 +3,7 @@ import {
   StyleSheet,
   View,
   Text,
-  // Modal,
+  Modal,
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
@@ -24,7 +24,7 @@ import BaseUrl from '../../constants/BaseUrl';
 import { CalculateHeight } from '../../helper/CalculateSize';
 
 //Components
-import Modal from '../../components/publicComponents/Modal';
+// import Modal from '../../components/publicComponents/Modal';
 import FormInput from './FormInput';
 import Recorder from './Recorder';
 import LoadingSpinner from './LoadingSpinner';
@@ -137,27 +137,25 @@ const RecorderModal = (props) => {
   };
 
   return (
-    <Modal
-      animation="slide"
-      customContainerStyle={{ justifyContent: 'flex-end' }}
-      customStyle={{
-        width: '100%',
-        padding: 0,
-        alignItems: 'flex-start',
-        padding: '5%',
-        paddingBottom: '20%',
-        backgroundColor: '#FFFFFF',
-        width: '100%',
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-      }}
-      openModal={openModal}
-      closeModal={() => onClose()}>
-        {/* <TouchableWithoutFeedback
+    <Modal animationType="slide" visible={openModal} transparent={true}>
+      <View style={styles.backgroundShadowStyle}>
+        <TouchableOpacity
+          style={{ flex: 1 }}
           onPress={() => {
-            Keyboard.dismiss()}}
-          >
-          <> */}
+            closeModal();
+            setRecordingFile('');
+            setCaption('');
+            setValidation(false);
+          }}
+        />
+      </View>
+      <View style={{ flex: 1 }} />
+      <TouchableWithoutFeedback
+        onPress={() => {
+          Keyboard.dismiss();
+        }}>
+        <View style={styles.addResponseModalStyle}>
+          <View style={styles.contentContainerStyle}>
             <View style={styles.titleAndPublishButtonContainerStyle}>
               <Text style={styles.addResponseTitleStyle}>
                 {forCommunity
@@ -195,24 +193,30 @@ const RecorderModal = (props) => {
             {validation && (
               <ErrorMessage message="All fields must be filled in, including a voice note!" />
             )}
-            <View style={styles.recorderContainerStyle}>
-              <Recorder
-                addRecordingFile={addRecordingFile}
-                removeRecordingFile={removeRecordingFile}
-              />
-            </View>
-            {isLoading && <LoadingSpinner />}
-          {/* </>
-        </TouchableWithoutFeedback> */}
+            <Recorder
+              addRecordingFile={addRecordingFile}
+              removeRecordingFile={removeRecordingFile}
+            />
+          </View>
+          {isLoading && <LoadingSpinner />}
+        </View>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 };
 
 const styles = StyleSheet.create({
+  backgroundShadowStyle: {
+    position: 'absolute',
+    backgroundColor: 'rgba(0,0,0,0.8)',
+    height: '100%',
+    width: '100%',
+  },
+
   addResponseModalStyle: {
     backgroundColor: '#FFFFFF',
     width: '100%',
-    // height: '50%',
+    height: '50%',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
@@ -220,20 +224,12 @@ const styles = StyleSheet.create({
   contentContainerStyle: {
     padding: '5%',
     paddingBottom: '20%',
-    backgroundColor: '#FFFFFF',
-    width: '100%',
-    // height: '50%',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    flex: 1,
   },
 
   titleAndPublishButtonContainerStyle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '100%',
-    // marginBottom: '10%',
   },
 
   addResponseTitleStyle: {
@@ -247,10 +243,6 @@ const styles = StyleSheet.create({
     fontSize: CalculateHeight(2),
     color: '#0E4EF4',
     fontFamily: bold,
-  },
-
-  recorderContainerStyle: {
-    width: '100%',
   },
 });
 
