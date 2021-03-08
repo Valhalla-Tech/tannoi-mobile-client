@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
   TouchableWithoutFeedback,
+  TouchableOpacity,
   Modal,
   Animated,
 } from 'react-native';
@@ -38,39 +39,39 @@ const MainModal = (props) => {
 
   return (
     <Modal animationType={animation} transparent={true} visible={openModal}>
-      <TouchableWithoutFeedback
-        style={{ flex: 1, borderWidth: 10 }}
+      <TouchableOpacity
+        style={{ height: '100%', width: '100%', position: 'absolute' }}
         onPress={() => {
           closeModal();
           setResetOpacity(true);
         }}
         disabled={disableButton}>
-        <View style={{ flex: 1 }}>
           <Animated.View
             style={{
               ...styles.modalBackgroundStyle,
               opacity: resetOpacity ? 0 : fadeAnim,
             }}
           />
-          <View
-            style={{ ...styles.modalContainerStyle, ...customContainerStyle }}>
-            <View style={{ ...styles.modalStyle, ...customStyle }}>
-              {children || (child && child())}
-              {modalButton && modalButton()}
-            </View>
+      </TouchableOpacity>
+        {/* <View> */}
+        <View
+          style={{ ...styles.modalContainerStyle, ...customContainerStyle }}>
+          <View style={{ ...styles.modalStyle, ...customStyle }}>
+            {children || (child && child())}
+            {modalButton && modalButton()}
           </View>
         </View>
-      </TouchableWithoutFeedback>
+        {/* </View> */}
     </Modal>
   );
 };
 
 const styles = StyleSheet.create({
   modalBackground: {
-    position: 'absolute',
+    // position: 'absolute',
     backgroundColor: 'rgba(0,0,0,0.8)',
-    height: '100%',
-    width: '100%',
+    // height: '100%',
+    // width: '100%',
   },
 
   modalBackgroundStyle: {
