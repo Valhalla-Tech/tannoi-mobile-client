@@ -461,6 +461,8 @@ PODS:
     - React
   - RNTextGradientView (0.1.7):
     - React
+  - RNVectorIcons (7.0.0):
+    - React
   - TOCropViewController (2.5.4)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
@@ -536,6 +538,7 @@ DEPENDENCIES:
   - RNSound (from `../node_modules/react-native-sound`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNTextGradientView (from `../node_modules/react-native-text-gradient`)
+  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -670,6 +673,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-svg"
   RNTextGradientView:
     :path: "../node_modules/react-native-text-gradient"
+  RNVectorIcons:
+    :path: "../node_modules/react-native-vector-icons"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -752,6 +757,7 @@ SPEC CHECKSUMS:
   RNSound: c980916b596cc15c8dcd2f6ecd3b13c4881dbe20
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   RNTextGradientView: 3eb4744303f801546fad35ac47a53cc82257cb25
+  RNVectorIcons: da6fe858f5a65d7bbc3379540a889b0b12aa5976
   TOCropViewController: 2a1ae1242600b1f2d996fd91a5268b2309a33b5c
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
