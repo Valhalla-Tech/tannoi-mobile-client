@@ -180,9 +180,11 @@ class NewDiscussionScreenRecorder extends Component {
         recordingFile: '/data/user/0/tannoi.client/files/discussionRecord.mp4',
       });
     }
+
     this.props.addRecordingFile(
-      '/data/user/0/tannoi.client/files/discussionRecord.mp4',
+      Platform.OS === 'ios' ? this.recorder._fsPath : '/data/user/0/tannoi.client/files/discussionRecord.mp4',
     );
+    
     this.clearTimer();
 
     if (this._isMounted || (!this._isMounted && this.player.isPlaying)) {

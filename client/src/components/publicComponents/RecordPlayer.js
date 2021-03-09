@@ -131,7 +131,7 @@ class RecordPlayer extends Component {
   }
 
   loadPlayer() {
-    this.soundPlayer = new Sound(this.props.recordingFile, null, (error) => {
+    this.soundPlayer = new Sound(this.props.recordingFile, '', (error) => {
       if (error) {
         console.log(error);
       }
@@ -175,6 +175,7 @@ class RecordPlayer extends Component {
       });
       this.updateProgressBar();
       this.soundPlayer.play((success) => {
+        console.log(success)
         this.setState({
           isPlaying: false,
           progress: 0,
