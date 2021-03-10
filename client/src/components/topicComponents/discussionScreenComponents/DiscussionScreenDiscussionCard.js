@@ -336,7 +336,6 @@ const styles = StyleSheet.create({
     fontFamily: normal,
     color: '#73798C',
     fontSize: CalculateHeight(1.5),
-    marginTop: '-5%',
   },
 
   discussionCardMenuStyle: {

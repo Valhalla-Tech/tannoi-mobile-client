@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import Slider from '@react-native-community/slider';
 import Sound from 'react-native-sound';
 
@@ -37,7 +37,6 @@ class RecordPlayer extends Component {
   };
 
   componentDidMount() {
-
     this.props.onRef(this);
     this._isMounted = true;
     this.setState({
@@ -79,6 +78,7 @@ class RecordPlayer extends Component {
       progress: percentage,
     });
     this.soundPlayer.setCurrentTime(position);
+    Platform.OS === 'ios' && this.playRecording(false, true);
   }
 
   forwardTenSecond() {
@@ -112,8 +112,21 @@ class RecordPlayer extends Component {
     this.progressInterval = setInterval(() => {
       this.soundPlayer.getCurrentTime((seconds) => {
         if (this.props.isRecorderModalOpen || this.props.openAddResponse) {
-          this.playRecording(this.state.isPlaying);
+          this.playRecording(true);
         }
+
+        if (Math.floor(seconds) === Math.floor(this.soundPlayer.getDuration())) {
+          this.stopUpdateProgressBar();
+          this.setState({
+            isPlaying: false,
+            progress: 0,
+          });
+          if (this.props.isNextPlayerAvailable) {
+            this.props.nextPlayerFunction();
+            this.props.updateFromNextPreviousButton(true);
+          }
+        }
+
         this.getDuration();
         let currentProgress =
           Math.max(0, seconds) / this.soundPlayer.getDuration();
@@ -156,7 +169,7 @@ class RecordPlayer extends Component {
     });
   }
 
-  playRecording = async (isPlaying) => {
+  playRecording = async (isPlaying, fromSeek) => {
     if (isPlaying) {
       this.soundPlayer.pause(() => {
         this.setState({
@@ -175,17 +188,19 @@ class RecordPlayer extends Component {
       });
       this.updateProgressBar();
       this.soundPlayer.play((success) => {
-        console.log(success)
-        this.setState({
-          isPlaying: false,
-          progress: 0,
-        });
-        this.stopUpdateProgressBar();
+        // if (!fromSeek) {
+        //   this.setState({
+        //     isPlaying: false,
+        //     progress: 0,
+        //   });
 
-        if (this.props.isNextPlayerAvailable) {
-          this.props.nextPlayerFunction();
-          this.props.updateFromNextPreviousButton(true);
-        }
+        //   this.stopUpdateProgressBar();
+
+        //   if (this.props.isNextPlayerAvailable) {
+        //     this.props.nextPlayerFunction();
+        //     this.props.updateFromNextPreviousButton(true);
+        //   }
+        // }
       });
     }
   };
