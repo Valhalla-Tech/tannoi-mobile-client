@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import BaseUrl from '../../../constants/BaseUrl';
 
 //Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import Card from '../../../components/publicComponents/Card';
 import Header from '../../../components/publicComponents/Header';
 import BackButton from '../../../components/publicComponents/BackButton';
@@ -120,7 +121,7 @@ const NotificationSettingsScreen = ({ navigation }) => {
   };
 
   return (
-    <View>
+    <ScreenContainer>
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
       <View style={styles.notificationSettingsScreenContainerStyle}>
         <Card
@@ -128,7 +129,7 @@ const NotificationSettingsScreen = ({ navigation }) => {
           customStyle={styles.cardStyle}
         />
       </View>
-    </View>
+    </ScreenContainer>
   );
 };
 
