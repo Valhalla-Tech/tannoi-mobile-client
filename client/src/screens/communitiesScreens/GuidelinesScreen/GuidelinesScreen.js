@@ -18,6 +18,7 @@ import { useDispatch } from 'react-redux';
 import { getOneCommunity } from '../../../store/actions/CommuitiesAction';
 
 //Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import Header from '../../../components/publicComponents/Header';
 import BackButton from '../../../components/publicComponents/BackButton';
 import Card from '../../../components/publicComponents/Card';
@@ -110,7 +111,7 @@ const GuidelinesScreen = ({ navigation, route }) => {
   );
 
   return (
-    <View style={{ flex: 1 }}>
+    <ScreenContainer>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <>
           <Header child={HeaderContent} customStyle={styles.headerStyle} />
@@ -124,7 +125,7 @@ const GuidelinesScreen = ({ navigation, route }) => {
           </ScrollView>
         </>
       </TouchableWithoutFeedback>
-    </View>
+    </ScreenContainer>
   );
 };
 
