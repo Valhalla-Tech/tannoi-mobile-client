@@ -31,11 +31,6 @@ const ProfileBar = (props) => {
       </View>
       <View style={styles.profileBarButtonContainerStyle}>
         {user !== '' && user.type !== 1 && (
-          // <TouchableOpacity
-          //   onPress={() => navigation.navigate('VerificationNavigation')}
-          //   style={styles.verifyButtonStyle}>
-          //   <Text style={styles.verifyButtonTextStyle}>VERIFY</Text>
-          // </TouchableOpacity>
           <Button
             buttonTitle="Verify"
             buttonStyle={styles.verifyButtonStyle}

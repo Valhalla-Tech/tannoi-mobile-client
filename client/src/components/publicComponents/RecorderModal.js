@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
+  ScrollView,
 } from 'react-native';
 import { bold } from '../../assets/FontSize';
 import { useDispatch } from 'react-redux';
@@ -146,7 +147,7 @@ const RecorderModal = (props) => {
         alignItems: 'center',
         borderBottomLeftRadius: 0,
         borderBottomRightRadius: 0,
-        maxHeight: '50%',
+        height: '50%',
       }}
       openModal={openModal}
       closeModal={() => onClose()}>

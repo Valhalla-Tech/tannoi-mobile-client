@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Modal,
   Animated,
+  ScrollView,
 } from 'react-native';
 
 const MainModal = (props) => {
