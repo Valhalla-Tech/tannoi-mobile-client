@@ -8,7 +8,7 @@ import {
   Keyboard,
   ScrollView,
   Image,
-  Dimensions,
+  Platform,
 } from 'react-native';
 import { Picker } from '@react-native-community/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -25,10 +25,13 @@ import { CalculateHeight, CalculateWidth } from '../../../helper/CalculateSize';
 import ScreenImage from '../../../assets/verificationAssets/Illustration-Tannoi-Apps-02.png';
 
 //Components
+import DatePicker from '../../../components/publicComponents/DatePicker';
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import BigButton from '../../../components/publicComponents/Button';
 import FormInput from '../../../components/publicComponents/FormInput';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
 import StepCount from '../../../components/verificationComponent/StepCount';
+import IosPicker from '../../../components/publicComponents/IosPicker';
 
 const UserProfileVerificationScreen = ({ navigation }) => {
   const firstNameFromStore = useSelector(
@@ -192,28 +195,46 @@ const UserProfileVerificationScreen = ({ navigation }) => {
           </Text>
         </View>
         <View>
-          <Picker
-            selectedValue={selectedGender}
-            style={styles.pickerStyle}
-            selectedValue={selectedGender}
-            onValueChange={(itemValue, itemIndex) =>
-              setSelectedGender(itemValue)
-            }>
-            <Picker.Item label="Select Gender" value="" />
-            {gender.map((gender, index) => (
-              <Picker.Item
-                key={index}
-                label={gender.name}
-                value={gender.value}
-              />
-            ))}
-          </Picker>
+          {Platform.OS === 'android' ? (
+            <Picker
+              selectedValue={selectedGender}
+              style={styles.pickerStyle}
+              selectedValue={selectedGender}
+              onValueChange={(itemValue, itemIndex) =>
+                setSelectedGender(itemValue)
+              }>
+              <Picker.Item label="Select Gender" value="" />
+              {gender.map((gender, index) => (
+                <Picker.Item
+                  key={index}
+                  label={gender.name}
+                  value={gender.value}
+                />
+              ))}
+            </Picker>
+          ) : (
+            <IosPicker
+              data={gender}
+              onChangeValue={(value) => setSelectedGender(value)}
+              placeholder="Select Gender"
+            />
+          )}
           {genderValidation && (
             <ErrorMessage message="Please input your gender" />
           )}
         </View>
         <View>
-          {show ? (
+          <DatePicker
+            value={currentDate}
+            mode={mode}
+            onChange={dateInput}
+            dateDisplay={birthDateDisplay}
+            show={show}
+            showDatepicker={showDatepicker}
+            setShow={setShow}
+            
+          />
+          {/* {show ? (
             <DateTimePicker
               testID="dateTimePicker"
               value={currentDate}
@@ -228,7 +249,7 @@ const UserProfileVerificationScreen = ({ navigation }) => {
               onPress={showDatepicker}>
               <Text style={{ fontSize: 16 }}>{birthDateDisplay}</Text>
             </TouchableOpacity>
-          )}
+          )} */}
           <Text style={styles.inputTextStyle}>
             Date of Birth{' '}
             {birthDateValidation && (
@@ -251,55 +272,57 @@ const UserProfileVerificationScreen = ({ navigation }) => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <ScrollView style={{ flex: 1 }}>
-        <View style={styles.userProfileVerificationScreenContainerStyle}>
-          <View>
-            <BackButton />
-            <StepCount />
-            <View style={styles.imageContainerStyle}>
-              <Image source={ScreenImage} style={styles.imageStyle} />
+    <ScreenContainer isHeader={false}>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <ScrollView style={{ flex: 1 }}>
+          <View style={styles.userProfileVerificationScreenContainerStyle}>
+            <View>
+              <BackButton />
+              <StepCount />
+              <View style={styles.imageContainerStyle}>
+                <Image source={ScreenImage} style={styles.imageStyle} />
+              </View>
+              <View style={{ paddingHorizontal: '2%' }}>
+                <Text style={styles.boldTextStyle}>
+                  Can we get to know you a little better?
+                </Text>
+                <Text style={styles.normalTextStyle}>
+                  We hate trolls. We want to build a safe place for people to
+                  express their ideas
+                </Text>
+              </View>
+              {InputForm()}
             </View>
-            <View style={{paddingHorizontal: '2%'}}>
-              <Text style={styles.boldTextStyle}>
-                Can we get to know you a little better?
-              </Text>
-              <Text style={styles.normalTextStyle}>
-                We hate trolls. We want to build a safe place for people to
-                express their ideas
-              </Text>
-            </View>
-            {InputForm()}
+            <BigButton
+              buttonTitle="Next"
+              buttonStyle={
+                firstName === '' ||
+                lastName === '' ||
+                selectedGender === '' ||
+                birthDate === ''
+                  ? {
+                      color: '#FFFFFF',
+                      backgroundColor: '#a1a5ab',
+                      borderWidth: 0,
+                    }
+                  : {
+                      color: '#FFFFFF',
+                      backgroundColor: '#6505E1',
+                      borderWidth: 0,
+                    }
+              }
+              disableButton={
+                firstName === '' ||
+                lastName === '' ||
+                selectedGender === '' ||
+                (birthDate === '' && false)
+              }
+              buttonFunction={nextButton}
+            />
           </View>
-          <BigButton
-            buttonTitle="Next"
-            buttonStyle={
-              firstName === '' ||
-              lastName === '' ||
-              selectedGender === '' ||
-              birthDate === ''
-                ? {
-                    color: '#FFFFFF',
-                    backgroundColor: '#a1a5ab',
-                    borderWidth: 0,
-                  }
-                : {
-                    color: '#FFFFFF',
-                    backgroundColor: '#6505E1',
-                    borderWidth: 0,
-                  }
-            }
-            disableButton={
-              firstName === '' ||
-              lastName === '' ||
-              selectedGender === '' ||
-              (birthDate === '' && false)
-            }
-            buttonFunction={nextButton}
-          />
-        </View>
-      </ScrollView>
-    </TouchableWithoutFeedback>
+        </ScrollView>
+      </TouchableWithoutFeedback>
+    </ScreenContainer>
   );
 };
 

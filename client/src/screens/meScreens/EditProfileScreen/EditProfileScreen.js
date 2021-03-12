@@ -34,6 +34,7 @@ import RecorderModal from '../../../components/publicComponents/RecorderModal';
 import BigButton from '../../../components/publicComponents/Button';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 import IosPicker from '../../../components/publicComponents/IosPicker';
+import DatePicker from '../../../components/publicComponents/DatePicker';
 
 const EditProfileScreen = ({ navigation }) => {
   const userProfile = useSelector((state) => state.ProfileReducer.userProfile);
@@ -348,35 +349,24 @@ const EditProfileScreen = ({ navigation }) => {
         )}
         {isBirthDate && (
           <>
-            {show ? (
-              <>
-                <DateTimePicker
-                  testID="dateTimePicker"
-                  value={
-                    birthDate === '' && userProfile.birth_date !== null
-                      ? new Date(userProfile.birth_date)
-                      : currentDate
-                  }
-                  mode={mode}
-                  is24Hour={true}
-                  display="spinner"
-                  onChange={dateInput}
-                />
-                {Platform.OS === 'ios' && (
-                  <Text onPress={() => setShow(false)} style={styles.selectDateButtonStyle}>Select</Text>
-                )}
-              </>
-            ) : (
-              <TouchableOpacity
-                style={styles.formInputStyle}
-                onPress={showDatepicker}>
-                <Text style={styles.inputTextStyle}>
-                  {birthDate === '' && userProfile.birth_date !== null
-                    ? DisplayBirthDate(new Date(userProfile.birth_date))
-                    : birthDateDisplay}
-                </Text>
-              </TouchableOpacity>
-            )}
+            <DatePicker
+              value={
+                birthDate === '' && userProfile.birth_date !== null
+                  ? new Date(userProfile.birth_date)
+                  : currentDate
+              }
+              mode={mode}
+              onChange={dateInput}
+              dateDisplay={
+                birthDate === '' && userProfile.birth_date !== null
+                  ? DisplayBirthDate(new Date(userProfile.birth_date))
+                  : birthDateDisplay
+              }
+              show={show}
+              showDatepicker={showDatepicker}
+              setShow={setShow}
+              customFormInputStyle={styles.formInputStyle}
+            />
           </>
         )}
         {isPicker &&
@@ -563,13 +553,6 @@ const styles = StyleSheet.create({
   },
 
   formInputStyle: {
-    // height: 45,
-    borderBottomColor: 'grey',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E3E6EB',
-    fontSize: CalculateHeight(1.8),
-    fontFamily: normal,
-    justifyContent: 'center',
     marginBottom: '5%',
   },
 
