@@ -88,7 +88,7 @@ const MemberList = (props) => {
   const MemberListContent = () => {
     return (
       <FlatList
-        style={{maxHeight: CalculateHeight(57)}}
+        style={{height: CalculateHeight(57)}}
         data={memberList}
         keyExtractor={(item, index) => index.toString()}
         ListFooterComponent={
