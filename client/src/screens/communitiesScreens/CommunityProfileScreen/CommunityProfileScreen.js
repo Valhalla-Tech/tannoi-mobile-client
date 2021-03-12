@@ -188,7 +188,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
     } else if (discussions.length > 0) {
       return (
         <FlatList
-          style={{height: CalculateHeight(60)}}
+          style={{height: CalculateHeight(65)}}
           ListHeaderComponent={
               <List
                 navigation={navigation}
@@ -205,7 +205,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
                       : false
                     : false
                 }
-                customStyle={{marginBottom: 20}}
+                customStyle={{marginBottom: CalculateHeight(5)}}
                 role={gotPermission}
                 openCommunityDiscussionNoticeModal={openNoticeModal}
                 inputCommunityDiscussionNoticeModalMessage={

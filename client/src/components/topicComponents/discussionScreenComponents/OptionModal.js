@@ -133,7 +133,7 @@ const OptionModal = (props) => {
           dispatch(getSingleResponse(responseScreenId));
         } else {
           dispatch(getResponse(discussionId));
-          changePlayer(cardIndex, 'previous');
+          changePlayer(0, 'previous');
         }
       }
     } catch (error) {
