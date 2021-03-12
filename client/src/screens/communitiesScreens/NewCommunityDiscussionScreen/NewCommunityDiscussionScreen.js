@@ -6,6 +6,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   StyleSheet,
+  Platform,
 } from 'react-native';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
@@ -19,6 +20,7 @@ import { getOneCommunity } from '../../../store/actions/CommuitiesAction';
 import { getAllDiscussion } from '../../../store/actions/DiscussionAction';
 
 //Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import Header from '../../../components/publicComponents/Header';
 import BackButton from '../../../components/publicComponents/BackButton';
 import Card from '../../../components/publicComponents/Card';
@@ -26,6 +28,7 @@ import FormInput from '../../../components/publicComponents/FormInput';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 import Recorder from '../../../components/publicComponents/Recorder';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
+import IosPicker from '../../../components/publicComponents/IosPicker';
 
 const NewCommunityDiscussionScreen = (props) => {
   const { navigation, route } = props;
@@ -149,25 +152,29 @@ const NewCommunityDiscussionScreen = (props) => {
             dataInput={discussionTitleInput}
             capitalize={true}
           />
-          <Picker
-            selectedValue={selectedTopic}
-            style={styles.topicPickerStyle}
-            selectedValue={selectedTopic}
-            onValueChange={(itemValue, itemIndex) =>
-              setSelectedTopic(itemValue)
-            }>
-            <Picker.Item label="Select topic" value="Select topic" />
-            {communityTopics.map((topic, index) => (
-              <Picker.Item key={index} label={topic.name} value={topic.id} />
-            ))}
-          </Picker>
+          {Platform.OS === 'android' ? (
+            <Picker
+              selectedValue={selectedTopic}
+              style={styles.topicPickerStyle}
+              selectedValue={selectedTopic}
+              onValueChange={(itemValue, itemIndex) =>
+                setSelectedTopic(itemValue)
+              }>
+              <Picker.Item label="Select topic" value="Select topic" />
+              {communityTopics.map((topic, index) => (
+                <Picker.Item key={index} label={topic.name} value={topic.id} />
+              ))}
+            </Picker>
+          ) : (
+            <IosPicker data={communityTopics} onChangeValue={(value) => setSelectedTopic(value)} placeholder="Select Topic" />
+          )}
         </View>
       </>
     );
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <ScreenContainer>
       <Header child={HeaderContent} customStyle={styles.headerStyle} />
       <View
         style={
@@ -184,7 +191,7 @@ const NewCommunityDiscussionScreen = (props) => {
         />
         {isLoading && <LoadingSpinner />}
       </View>
-    </View>
+    </ScreenContainer>
   );
 };
 
