@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import Slider from '@react-native-community/slider';
 import Sound from 'react-native-sound';
-import { Player } from '@react-native-community/audio-toolkit';
+// import { Player } from '@react-native-community/audio-toolkit';
 
 //Icons
 import PlayerSpeed from '../../assets/topicAssets/playerSpeed.svg';
@@ -39,71 +39,71 @@ class RecordPlayer extends Component {
     };
   }
 
-  componentDidMount() {
-    this.player = null;
-    this._isMounted = true;
-    this.lastSeek = 0;
+  // componentDidMount() {
+  //   this.player = null;
+  //   this._isMounted = true;
+  //   this.lastSeek = 0;
 
-    // this.setState()
+  //   // this.setState()
 
-    this.loadPlayer();
-  }
+  //   this.loadPlayer();
+  // }
 
-  updateState = () => {
-    if (this._isMounted) {
-      this.setState({
-        isPlaying: this.player.isPlaying ? true : false,
-        loading: this.player && this.player.canPlay,
-      });
-    }
-  };
+  // updateState = () => {
+  //   if (this._isMounted) {
+  //     this.setState({
+  //       isPlaying: this.player.isPlaying ? true : false,
+  //       loading: this.player && this.player.canPlay,
+  //     });
+  //   }
+  // };
 
-  loadPlayer = () => {
-    if (this.player) {
-      this.player.destroy();
-    }
+  // loadPlayer = () => {
+  //   if (this.player) {
+  //     this.player.destroy();
+  //   }
 
-    this.player = new Player(this.props.recordingFile, {
-      autoDestroy: false,
-    });
+  //   this.player = new Player(this.props.recordingFile, {
+  //     autoDestroy: false,
+  //   });
 
-    this.player.speed = 0.0;
+  //   this.player.speed = 0.0;
 
-    this.player.prepare((error) => {
-      if (error) {
-        console.log(error, '<<<<');
-      } else {
-        this.updateState();
+  //   this.player.prepare((error) => {
+  //     if (error) {
+  //       console.log(error, '<<<<');
+  //     } else {
+  //       this.updateState();
 
-        this.playRecording();
-      }
-    });
+  //       this.playRecording();
+  //     }
+  //   });
 
-    this.player.on('ended', () => {
-      this.updateState();
-    });
+  //   this.player.on('ended', () => {
+  //     this.updateState();
+  //   });
 
-    this.player.on('pause', () => {
-      this.updateState();
-    });
-  };
+  //   this.player.on('pause', () => {
+  //     this.updateState();
+  //   });
+  // };
 
-  playRecording = () => {
-    console.log('sini');
-    this.player.playPause((error) => {
-      if (error) {
-        console.log(error);
-      }
+  // playRecording = () => {
+  //   console.log('sini');
+  //   this.player.playPause((error) => {
+  //     if (error) {
+  //       console.log(error);
+  //     }
 
-      this.updateState();
-    });
-  };
+  //     this.updateState();
+  //   });
+  // };
 
-  seek = (percentage) => {};
+  // seek = (percentage) => {};
 
-  stopPlaying = () => {
-    this.soundPlayer.stop();
-  };
+  // stopPlaying = () => {
+  //   this.soundPlayer.stop();
+  // };
 
   componentDidMount() {
     this.props.onRef(this);
@@ -309,7 +309,7 @@ class RecordPlayer extends Component {
           ) : (
             <TouchableOpacity
               onPress={() => {
-                this.playRecording();
+                this.playRecording(this.state.isPlaying);
               }}>
               {!this.state.isPlaying ? <ActivePlayButton /> : <PauseButton />}
             </TouchableOpacity>

@@ -35,7 +35,7 @@ const TermsOfServiceModal = (props) => {
           closeFunction={closeTermsOfServiceModal}
         />
         <ScrollView>
-          {/* <Text style={styles.termsOfServiceTitleStyle}>Terms of service</Text> */}
+          <Text style={styles.termsOfServiceTitleStyle}>Terms of service</Text>
           {/* <Text style={styles.termsOfServiceArticleTitleStyle}>AGREEMENT</Text> */}
           <Text style={styles.termsOfServiceArticleStyle}>
             {termsAndPolicies}
@@ -103,7 +103,6 @@ const styles = StyleSheet.create({
   },
 
   termsOfServiceTitleStyle: {
-    marginTop: '10%',
     marginBottom: '5%',
     fontSize: CalculateHeight(3),
     fontFamily: bold,
