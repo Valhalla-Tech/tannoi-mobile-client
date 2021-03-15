@@ -5,10 +5,10 @@ import { TouchableOpacity } from 'react-native';
 import CloseIcon from '../../assets/accountAssets/ModalComponent/closeIcon.svg';
 
 const CloseButton = (props) => {
-  const { closeFunction } = props;
+  const { closeFunction, customStyle } = props;
 
   return (
-    <TouchableOpacity onPress={closeFunction}>
+    <TouchableOpacity style={{ ...customStyle }} onPress={closeFunction}>
       <CloseIcon />
     </TouchableOpacity>
   );

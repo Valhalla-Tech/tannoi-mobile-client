@@ -123,7 +123,23 @@ export const FacebookSignIn = () => {
         },
       );
     } catch (error) {
-      console.log('masuk sini');
+      console.log(error);
+    }
+  };
+};
+
+export const getTermsAndPolicies = () => {
+  return async () => {
+    try {
+      let getTermsAndConditionRequest = await axios({
+        method: 'get',
+        url: `${BaseUrl}/terms-of-service`
+      });
+
+      if (getTermsAndConditionRequest.data) {
+        await AsyncStorage.setItem('termsAndPolicies', getTermsAndConditionRequest.data.content)
+      }
+    } catch (error) {
       console.log(error);
     }
   };

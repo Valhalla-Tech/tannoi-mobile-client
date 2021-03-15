@@ -55,6 +55,8 @@ const RegisterPage = ({ navigation }) => {
 
   const emailConfirmation = async () => {
     try {
+      setTermsOfServiceModalIsOpen(false);
+
       if (
         passwordRegister.length >= 5 &&
         passwordRegister.length <= 20 &&
@@ -139,7 +141,7 @@ const RegisterPage = ({ navigation }) => {
                 }
           }
           buttonType="funtionButton"
-          buttonFunction={emailConfirmation}
+          buttonFunction={() => setTermsOfServiceModalIsOpen(true)}
           disableButton={
             emailRegister && passwordRegister.length >= 5 ? false : true
           }
@@ -211,6 +213,7 @@ const RegisterPage = ({ navigation }) => {
           <TermsOfServiceModal
             openTermsOfServiceModal={termsOfServiceModalIsOpen}
             closeTermsOfServiceModal={closeTermsOfServiceModal}
+            emailConfirmation={emailConfirmation}
           />
         </View>
       </TouchableWithoutFeedback>

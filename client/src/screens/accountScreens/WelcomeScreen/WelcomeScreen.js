@@ -7,6 +7,7 @@ import { CalculateHeight } from '../../../helper/CalculateSize';
 import {
   GoogleSignIn,
   FacebookSignIn,
+  getTermsAndPolicies,
 } from '../../../store/actions/LoginAction';
 
 //Image
@@ -30,6 +31,7 @@ const WelcomeScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
+    dispatch(getTermsAndPolicies());
     GoogleSignin.configure({
       // scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
       webClientId:
