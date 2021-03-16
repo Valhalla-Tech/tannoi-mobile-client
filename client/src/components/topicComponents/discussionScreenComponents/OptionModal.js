@@ -45,6 +45,7 @@ const OptionModal = (props) => {
     role,
     cardOnDelete,
     isDeleting,
+    isFlagged,
   } = props;
 
   const userId = useSelector((state) => state.ProfileReducer.userProfile.id);
@@ -144,8 +145,27 @@ const OptionModal = (props) => {
     }
   };
 
-  const flag = () => {
+  const flag = async () => {
+    try {
+      const access_token = await AsyncStorage.getItem('access_token');
 
+      let flagRequest = await axios({
+        method: 'get',
+        url:
+          modalType === 'discussion'
+            ? `${BaseUrl}/discussions/flag/${discussionId}`
+            : `${BaseUrl}/responses/flag/${responseId}`,
+        headers: {
+          token: access_token,
+        },
+      });
+
+      if (flagRequest) {
+        closeOptionModal();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const OptionModalButton = (buttonTitle, customStyle) => {
@@ -155,7 +175,8 @@ const OptionModal = (props) => {
           buttonTitle === 'Delete' && setDeleteOption(true);
           buttonTitle === 'Edit participant list' && openPrivateModal();
           buttonTitle === 'Share' && shareOption();
-          buttonTitle === 'Flag this discussion' || buttonTitle === 'Flag this response' && flag();
+          buttonTitle === 'Flag this discussion' && flag();
+          buttonTitle === 'Flag this response' && flag();
         }}>
         <Text style={{ ...styles.optionModalButtonTextStyle, ...customStyle }}>
           {buttonTitle}
@@ -218,7 +239,8 @@ const OptionModal = (props) => {
             OptionModalButton('Edit participant list')}
           {(profileId === userId || role === ROLE_ALLOWED) &&
             OptionModalButton('Delete')}
-          {OptionModalButton(`Flag this ${modalType}`, { marginBottom: 0 })}
+          {!isFlagged &&
+            OptionModalButton(`Flag this ${modalType}`, { marginBottom: 0 })}
         </>
       ) : (
         <DeleteOption />

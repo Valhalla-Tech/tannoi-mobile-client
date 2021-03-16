@@ -76,6 +76,8 @@ const DiscussionAndResponseList = (props) => {
   const responseCount = useSelector(
     (state) => state.ResponseReducer.responseCount,
   );
+  const discussionIsFlagged = useSelector((state) => state.DiscussionReducer.isFlagged);
+  const discussionIsObjectionable = useSelector((state) => state.DiscussionReducer.objectionable);
 
   //Response store
   const responseProfileId = useSelector(
@@ -196,6 +198,8 @@ const DiscussionAndResponseList = (props) => {
                 isCommunityDiscussion={isCommunityDiscussion}
                 role={role}
                 cardOnDelete={cardOnDelete}
+                isFlagged={discussionIsFlagged}
+                objectionable={discussionIsObjectionable}
               />
               {response.length === 0 && isResponse && (
                 <LoadingSpinner loadingSpinnerForComponent={true} />
@@ -258,6 +262,7 @@ const DiscussionAndResponseList = (props) => {
               responseScreenId={responseScreenId}
               role={role}
               cardOnDelete={cardOnDelete}
+              objectionable={itemData.item.objectionable}
             />
           ) : (
             <ClosedCard

@@ -14,6 +14,7 @@ const TermsOfServiceModal = (props) => {
     openTermsOfServiceModal,
     closeTermsOfServiceModal,
     emailConfirmation,
+    fromRegister,
   } = props;
 
   const [termsAndPolicies, setTermsAndPolicies] = useState('');
@@ -59,16 +60,18 @@ const TermsOfServiceModal = (props) => {
             Policy. Forums.net encourages You to frequently check the Privacy
             Policy for changes.
           </Text> */}
-          <Button
-            buttonTitle="I Agree"
-            buttonStyle={{
-              color: '#FFFFFF',
-              borderWidth: 0,
-              backgroundColor: '#6505E1',
-              marginBottom: '5%',
-            }}
-            buttonFunction={emailConfirmation}
-          />
+          {fromRegister && (
+            <Button
+              buttonTitle="I Agree"
+              buttonStyle={{
+                color: '#FFFFFF',
+                borderWidth: 0,
+                backgroundColor: '#6505E1',
+                marginBottom: '5%',
+              }}
+              buttonFunction={emailConfirmation}
+            />
+          )}
         </ScrollView>
       </View>
     );

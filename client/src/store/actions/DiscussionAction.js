@@ -138,6 +138,8 @@ export const getDiscussion = (
               isDislike: getDiscussionRequest.data.isDislike,
               type: getDiscussionRequest.data.type,
               userType: getDiscussionRequest.data.creator.type,
+              isFlagged: getDiscussionRequest.data.isFlagged,
+              objectionable: getDiscussionRequest.data.objectionable,
             },
           });
         } else {
@@ -161,6 +163,8 @@ export const getDiscussion = (
               isDislike: getDiscussionRequest.data.isDislike,
               type: getDiscussionRequest.data.type,
               userType: getDiscussionRequest.data.creator.type,
+              isFlagged: getDiscussionRequest.data.isFlagged,
+              objectionable: getDiscussionRequest.data.objectionable,
             },
           });
         }
@@ -175,7 +179,7 @@ export const getDiscussion = (
         }
       }
     } catch (error) {
-      console.log({error})
+      console.log({ error });
       if (error.response.data.msg === 'You have to login first') {
         dispatch({
           type: 'LOGOUT',
@@ -207,15 +211,15 @@ export const clearDiscussion = (clearUserDiscussion, clearAllDiscussion) => {
 };
 
 export const clearUsersInvolvedInDiscussion = () => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: 'CLEAR_USERS_INVOLVED_IN_DISCUSSION',
     });
   };
 };
 
-export const getUsersInvovedInDiscussion = discussion_id => {
-  return async dispatch => {
+export const getUsersInvovedInDiscussion = (discussion_id) => {
+  return async (dispatch) => {
     try {
       let access_token = await AsyncStorage.getItem('access_token');
 
@@ -254,7 +258,7 @@ export const deleteCommunityDiscussion = (community_id, discussion_id) => {
           token: access_token,
         },
         data: {
-          discussion_id
+          discussion_id,
         },
       });
 
@@ -268,7 +272,7 @@ export const deleteCommunityDiscussion = (community_id, discussion_id) => {
         });
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-}
+  };
+};

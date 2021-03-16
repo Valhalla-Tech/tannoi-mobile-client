@@ -36,6 +36,7 @@ const RegisterPage = ({ navigation }) => {
     false,
   );
   const [reEnterPassword, setReEnterPassword] = useState('');
+  const [fromRegister, setFromRegister] = useState(false);
 
   useEffect(() => {
     clearStorage();
@@ -98,6 +99,7 @@ const RegisterPage = ({ navigation }) => {
 
   const closeTermsOfServiceModal = () => {
     setTermsOfServiceModalIsOpen(false);
+    setFromRegister(false);
   };
 
   const TermsAndService = () => {
@@ -141,7 +143,10 @@ const RegisterPage = ({ navigation }) => {
                 }
           }
           buttonType="funtionButton"
-          buttonFunction={() => setTermsOfServiceModalIsOpen(true)}
+          buttonFunction={() => {
+            setTermsOfServiceModalIsOpen(true);
+            setFromRegister(true);
+          }}
           disableButton={
             emailRegister && passwordRegister.length >= 5 ? false : true
           }
@@ -214,6 +219,7 @@ const RegisterPage = ({ navigation }) => {
             openTermsOfServiceModal={termsOfServiceModalIsOpen}
             closeTermsOfServiceModal={closeTermsOfServiceModal}
             emailConfirmation={emailConfirmation}
+            fromRegister={fromRegister}
           />
         </View>
       </TouchableWithoutFeedback>

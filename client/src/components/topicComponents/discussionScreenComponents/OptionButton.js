@@ -25,6 +25,7 @@ const OptionButton = (props) => {
     role,
     cardOnDelete,
     isDeleting,
+    isFlagged,
   } = props;
 
   const dispatch = useDispatch();
@@ -63,6 +64,7 @@ const OptionButton = (props) => {
         role={role}
         cardOnDelete={cardOnDelete}
         isDeleting={isDeleting}
+        isFlagged={isFlagged}
       />
     </>
   );
