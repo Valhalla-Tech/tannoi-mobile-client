@@ -222,6 +222,7 @@ class DiscussionScreenPlayerCard extends Component {
               role={this.props.role}
               cardOnDelete={this.props.cardOnDelete}
               isDeleting={() => this.state.soundPlayer.stopPlaying()}
+              isFlagged={this.props.isFlagged}
             />
           )}
         </View>
@@ -391,7 +392,7 @@ const styles = StyleSheet.create({
 
   objectioableWarningStyle: {
     fontFamily: bold,
-    color: '#f77d5c',
+    color: '#ffcc00',
   },
 
   profileAndPostTimeContainerStyle: {

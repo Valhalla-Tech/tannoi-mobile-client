@@ -372,7 +372,7 @@ const styles = StyleSheet.create({
 
   objectioableWarningStyle: {
     fontFamily: bold,
-    color: '#f77d5c'
+    color: '#ffcc00'
   },
 
   discussionTitleStyle: {

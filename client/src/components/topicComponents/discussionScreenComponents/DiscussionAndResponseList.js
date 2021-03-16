@@ -76,8 +76,12 @@ const DiscussionAndResponseList = (props) => {
   const responseCount = useSelector(
     (state) => state.ResponseReducer.responseCount,
   );
-  const discussionIsFlagged = useSelector((state) => state.DiscussionReducer.isFlagged);
-  const discussionIsObjectionable = useSelector((state) => state.DiscussionReducer.objectionable);
+  const discussionIsFlagged = useSelector(
+    (state) => state.DiscussionReducer.isFlagged,
+  );
+  const discussionIsObjectionable = useSelector(
+    (state) => state.DiscussionReducer.objectionable,
+  );
 
   //Response store
   const responseProfileId = useSelector(
@@ -105,6 +109,12 @@ const DiscussionAndResponseList = (props) => {
   const responseUserType = useSelector((state) => state.HomeReducer.user.type);
   const responseForResponseCount = useSelector(
     (state) => state.ResponseReducer.responseForResponseCount,
+  );
+  const responseIsFlagged = useSelector(
+    (state) => state.ResponseReducer.isFlagged,
+  );
+  const responseIsObjectionable = useSelector(
+    (state) => state.ResponseReducer.objectionable,
   );
 
   useEffect(() => {
@@ -152,6 +162,8 @@ const DiscussionAndResponseList = (props) => {
                 responseScreenResponseId={responseId}
                 role={role}
                 cardOnDelete={cardOnDelete}
+                isFlagged={responseIsFlagged}
+                objectionable={responseIsObjectionable}
               />
             ) : (
               <ClosedCard
@@ -219,7 +231,7 @@ const DiscussionAndResponseList = (props) => {
         </View>
       }
       renderItem={(itemData) => (
-        <View style={{paddingHorizontal: '2%'}}>
+        <View style={{ paddingHorizontal: '2%' }}>
           {selectedCard === itemData.index ? (
             <DiscussionScreenPlayerCard
               navigation={navigation}
@@ -263,6 +275,7 @@ const DiscussionAndResponseList = (props) => {
               role={role}
               cardOnDelete={cardOnDelete}
               objectionable={itemData.item.objectionable}
+              isFlagged={itemData.item.isFlagged}
             />
           ) : (
             <ClosedCard

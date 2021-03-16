@@ -22,6 +22,8 @@ const defaultState = {
   topResponsePreview: '',
   responseId: '',
   discussionId: '',
+  isFlagged: false,
+  objectionable: false,
 };
 
 const reducer = (state = defaultState, action) => {
@@ -72,6 +74,8 @@ const reducer = (state = defaultState, action) => {
       let setResponseForResponseCount = action.payload.responseForResponseCount;
       let setResponseId = action.payload.responseId;
       let setDiscussionId = action.payload.discussionId;
+      let setIsFlagged = action.payload.isFlagged;
+      let setObjectionable = action.payload.objectionable;
 
       return {
         ...state,
@@ -91,6 +95,8 @@ const reducer = (state = defaultState, action) => {
         responseForResponseCount: setResponseForResponseCount,
         responseId: setResponseId,
         discussionId: setDiscussionId,
+        isFlagged: setIsFlagged,
+        objectionable: setObjectionable,
       };
     case 'ADD_RESPONSE_FOR_RESPONSE':
       let setAddResponseForResponse = state.reply.concat(action.payload.reply);
