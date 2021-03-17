@@ -7,11 +7,19 @@ import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
 //Icon
 import NoProfilePicture from '../../assets/publicAssets/noProfilePicture.png';
 
-//Component
+//Components
 import LoadingSpinner from '../publicComponents/LoadingSpinner';
+import Button from '../publicComponents/Button';
 
 const ProfileData = (props) => {
-  const { profile, selectMenu, selectedMenu } = props;
+  const {
+    profile,
+    selectMenu,
+    selectedMenu,
+    followAccount,
+    isFollowing,
+    isUserProfileScreen,
+  } = props;
 
   const UserProfileData = () => {
     return (
@@ -108,6 +116,19 @@ const ProfileData = (props) => {
                 }
                 style={styles.profileImageStyle}
               />
+              {isUserProfileScreen && (
+                <Button
+                  buttonStyle={{
+                    color: '#FFFFFF',
+                    backgroundColor: '#5152D0',
+                    borderWidth: 0,
+                    marginTop: '15%',
+                    paddingHorizontal: '5%',
+                  }}
+                  buttonTitle={isFollowing ? 'Unfollow' : 'Follow'}
+                  buttonFunction={followAccount}
+                />
+              )}
             </View>
           </View>
         ) : (
@@ -124,7 +145,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     paddingLeft: '3.5%',
     paddingRight: '5%',
-    paddingBottom: '2%'
+    paddingBottom: '2%',
   },
 
   headerStyle: {
@@ -142,6 +163,10 @@ const styles = StyleSheet.create({
 
   profileInfoContainerStyle: {
     flexDirection: 'row',
+  },
+
+  optionButtonContainerStyle: {
+    borderWidth: 1,
   },
 
   profileNameStyle: {

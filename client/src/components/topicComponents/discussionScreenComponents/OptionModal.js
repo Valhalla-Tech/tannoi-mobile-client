@@ -240,6 +240,7 @@ const OptionModal = (props) => {
           {(profileId === userId || role === ROLE_ALLOWED) &&
             OptionModalButton('Delete')}
           {!isFlagged &&
+            profileId !== userId &&
             OptionModalButton(`Flag this ${modalType}`, { marginBottom: 0 })}
         </>
       ) : (
