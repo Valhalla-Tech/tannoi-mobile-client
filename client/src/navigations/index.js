@@ -29,6 +29,7 @@ import EditProfileScreen from '../screens/meScreens/EditProfileScreen';
 import HomeSectionDetailScreen from '../screens/homeScreens/HomeSectionDetailScreen';
 import HashtagDetailScreen from '../screens/homeScreens/HashtagDetailScreen';
 import NotificationSettingsScreen from '../screens/meScreens/NotificationSettingsScreen';
+import BlockedUserScreen from '../screens/meScreens/BlockedUserScreen';
 
 const Stack = createStackNavigator();
 let subscribeInit = false;
@@ -222,6 +223,10 @@ const NavigationIndex = () => {
           <Stack.Screen
             name="CommunitiesNavigation"
             component={CommunitiesNavigation}
+          />
+          <Stack.Screen
+            name="BlockedUserScreen"
+            component={BlockedUserScreen}
           />
         </>
       ) : (

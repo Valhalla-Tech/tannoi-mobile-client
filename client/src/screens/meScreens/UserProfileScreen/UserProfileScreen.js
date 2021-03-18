@@ -163,8 +163,9 @@ const UserProfileScreen = ({ route, navigation }) => {
       });
 
       if (blockUserRequest.data) {
-        navigation.push('MainAppNavigation');
         openModal(true);
+        setActionModal(false);
+        navigation.push('MainAppNavigation');
       }
     } catch (error) {
       console.log(error);

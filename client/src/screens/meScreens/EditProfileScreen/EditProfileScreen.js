@@ -502,7 +502,7 @@ const styles = StyleSheet.create({
     marginLeft: '3%',
     fontFamily: bold,
     color: '#464D60',
-    fontSize: CalculateHeight(2),
+    fontSize: CalculateHeight(2.5),
   },
 
   cardStyle: {
