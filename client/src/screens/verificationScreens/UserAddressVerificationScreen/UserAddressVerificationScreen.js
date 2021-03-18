@@ -8,6 +8,7 @@ import {
   Keyboard,
   ScrollView,
   Image,
+  Platform,
 } from 'react-native';
 import { Picker } from '@react-native-community/picker';
 import { bold, normal } from '../../../assets/FontSize';
@@ -24,9 +25,11 @@ import { CalculateHeight, CalculateWidth } from '../../../helper/CalculateSize';
 import ScreenImage from '../../../assets/verificationAssets/Illustration-Tannoi-Apps-03.png';
 
 //Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import BigButton from '../../../components/publicComponents/Button';
 import FormInput from '../../../components/publicComponents/FormInput';
 import StepCount from '../../../components/verificationComponent/StepCount';
+import IosPicker from '../../../components/publicComponents/IosPicker';
 
 const UserAddressVerificationScreen = ({ navigation }) => {
   const streetFromStore = useSelector(
@@ -153,22 +156,30 @@ const UserAddressVerificationScreen = ({ navigation }) => {
           </Text>
         </View>
         <View>
-          <Picker
-            selectedValue={selectedCountry}
-            style={styles.pickerStyle}
-            selectedValue={selectedCountry}
-            onValueChange={(itemValue, itemIndex) =>
-              setSelectedCountry(itemValue)
-            }>
-            <Picker.Item label="Country" value="" />
-            {countryList.map((countryList, index) => (
-              <Picker.Item
-                key={index}
-                label={countryList.name}
-                value={countryList.name}
-              />
-            ))}
-          </Picker>
+          {Platform.OS === 'android' ? (
+            <Picker
+              selectedValue={selectedCountry}
+              style={styles.pickerStyle}
+              selectedValue={selectedCountry}
+              onValueChange={(itemValue, itemIndex) =>
+                setSelectedCountry(itemValue)
+              }>
+              <Picker.Item label="Country" value="" />
+              {countryList.map((countryList, index) => (
+                <Picker.Item
+                  key={index}
+                  label={countryList.name}
+                  value={countryList.name}
+                />
+              ))}
+            </Picker>
+          ) : (
+            <IosPicker
+              data={countryList}
+              placeholder="Country"
+              onChangeValue={(value) => setSelectedCountry(value)}
+            />
+          )}
           {countryValidation && (
             <ErrorMessage message="Please input your country" />
           )}
@@ -192,58 +203,61 @@ const UserAddressVerificationScreen = ({ navigation }) => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <ScrollView>
-        <View style={styles.userAddressVerificationScreenContainerStyle}>
-          <View>
+    <ScreenContainer isHeader={false}>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <ScrollView>
+          <View style={styles.userAddressVerificationScreenContainerStyle}>
             <View>
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Text style={styles.backButtonTextStyle}>Back</Text>
-              </TouchableOpacity>
+              <View>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <Text style={styles.backButtonTextStyle}>Back</Text>
+                </TouchableOpacity>
+              </View>
+              <StepCount />
+              <View style={styles.imageContainerStyle}>
+                <Image source={ScreenImage} style={styles.imageStyle} />
+              </View>
+              <View style={{ paddingHorizontal: '2%' }}>
+                <Text style={styles.boldTextStyle}>
+                  We ask for your address to know that you are serious
+                </Text>
+                <Text style={styles.normalTextStyle}>
+                  Your personal details will NEVER be shared with any 3rd
+                  parties
+                </Text>
+              </View>
+              {InputForm()}
             </View>
-            <StepCount />
-            <View style={styles.imageContainerStyle}>
-              <Image source={ScreenImage} style={styles.imageStyle} />
-            </View>
-            <View style={{ paddingHorizontal: '2%' }}>
-              <Text style={styles.boldTextStyle}>
-                We ask for your address to know that you are serious
-              </Text>
-              <Text style={styles.normalTextStyle}>
-                Your personal details will NEVER be shared with any 3rd parties
-              </Text>
-            </View>
-            {InputForm()}
+            <BigButton
+              buttonTitle="Next"
+              buttonStyle={
+                selectedCountry === '' ||
+                street === '' ||
+                city === '' ||
+                postCode === ''
+                  ? {
+                      color: '#FFFFFF',
+                      backgroundColor: '#a1a5ab',
+                      borderWidth: 0,
+                    }
+                  : {
+                      color: '#FFFFFF',
+                      backgroundColor: '#6505E1',
+                      borderWidth: 0,
+                    }
+              }
+              disableButton={
+                selectedCountry === '' ||
+                street === '' ||
+                city === '' ||
+                (postCode === '' && true)
+              }
+              buttonFunction={nextScreen}
+            />
           </View>
-          <BigButton
-            buttonTitle="Next"
-            buttonStyle={
-              selectedCountry === '' ||
-              street === '' ||
-              city === '' ||
-              postCode === ''
-                ? {
-                    color: '#FFFFFF',
-                    backgroundColor: '#a1a5ab',
-                    borderWidth: 0,
-                  }
-                : {
-                    color: '#FFFFFF',
-                    backgroundColor: '#6505E1',
-                    borderWidth: 0,
-                  }
-            }
-            disableButton={
-              selectedCountry === '' ||
-              street === '' ||
-              city === '' ||
-              (postCode === '' && true)
-            }
-            buttonFunction={nextScreen}
-          />
-        </View>
-      </ScrollView>
-    </TouchableWithoutFeedback>
+        </ScrollView>
+      </TouchableWithoutFeedback>
+    </ScreenContainer>
   );
 };
 

@@ -61,6 +61,7 @@ const SettingsScreen = ({ navigation }) => {
           <Text style={styles.menuHeaderTextStyle}>Account</Text>
         </View>
         {MenuButton('Edit profile', null, 'EditProfileScreen')}
+        {MenuButton('Blocked user', null, 'BlockedUserScreen', true)}
         {/*
         {MenuButton('Change password')}
         {MenuButton('Log in options', null, null, true)}

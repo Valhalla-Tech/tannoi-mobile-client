@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Modal,
   Animated,
+  ScrollView,
 } from 'react-native';
 
 const MainModal = (props) => {
@@ -34,44 +35,38 @@ const MainModal = (props) => {
         duration: 500,
         useNativeDriver: true,
       }).start();
-    } 
+    }
   }, [openModal]);
 
   return (
     <Modal animationType={animation} transparent={true} visible={openModal}>
-      <TouchableOpacity
-        style={{ height: '100%', width: '100%', position: 'absolute' }}
-        onPress={() => {
-          closeModal();
-          setResetOpacity(true);
-        }}
-        disabled={disableButton}>
+      <View style={{ ...styles.modalContainerStyle, ...customContainerStyle }}>
+        <TouchableOpacity
+          style={{ height: '100%', width: '100%', position: 'absolute' }}
+          onPress={() => {
+            closeModal();
+            setResetOpacity(true);
+          }}
+          disabled={disableButton}>
           <Animated.View
             style={{
               ...styles.modalBackgroundStyle,
               opacity: resetOpacity ? 0 : fadeAnim,
             }}
           />
-      </TouchableOpacity>
-        {/* <View> */}
-        <View
-          style={{ ...styles.modalContainerStyle, ...customContainerStyle }}>
-          <View style={{ ...styles.modalStyle, ...customStyle }}>
-            {children || (child && child())}
-            {modalButton && modalButton()}
-          </View>
+        </TouchableOpacity>
+        <View style={{ ...styles.modalStyle, ...customStyle }}>
+          {children || (child && child())}
+          {modalButton && modalButton()}
         </View>
-        {/* </View> */}
+      </View>
     </Modal>
   );
 };
 
 const styles = StyleSheet.create({
   modalBackground: {
-    // position: 'absolute',
     backgroundColor: 'rgba(0,0,0,0.8)',
-    // height: '100%',
-    // width: '100%',
   },
 
   modalBackgroundStyle: {
@@ -90,7 +85,6 @@ const styles = StyleSheet.create({
 
   modalStyle: {
     width: '85%',
-    // height: '10%',
     borderRadius: 20,
     padding: '5%',
     backgroundColor: '#FFFFFF',

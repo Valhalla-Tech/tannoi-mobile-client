@@ -33,6 +33,8 @@ import ProfileData from '../../../components/meComponents/ProfileData';
 import List from '../../../components/publicComponents/List';
 import NoticeModal from '../../../components/publicComponents/Modal';
 import { CalculateHeight } from '../../../helper/CalculateSize';
+import OptionButton from '../../../components/publicComponents/OptionButton';
+import Modal from '../../../components/publicComponents/Modal';
 
 //Assets
 import DiscussionEmptyStateImage from '../../../assets/communitiesAssets/empty-state-discussions.png';
@@ -44,6 +46,8 @@ const UserProfileScreen = ({ route, navigation }) => {
   const [selectedMenu, setSelectedMenu] = useState('Discussions');
   const [noticeModal, setNoticeModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [actionModal, setActionModal] = useState(false);
+  const [noticeModalMessage, setNoticeModalMessage] = useState('');
 
   const discussions = useSelector(
     (state) => state.DiscussionReducer.userDiscussion,
@@ -121,18 +125,21 @@ const UserProfileScreen = ({ route, navigation }) => {
         },
       );
     } catch (error) {
+      console.log(error);
       if (error.response.data.msg === 'You have to login first') {
         dispatch(userLogout());
       }
     }
   };
 
-  const openModal = () => {
+  const openModal = (isBlock) => {
     setNoticeModal(true);
+    setNoticeModalMessage(isBlock ? 'You have blocked this user' : "You don't have access to this discussion");
   };
 
   const closeModal = () => {
     setNoticeModal(false);
+    setNoticeModalMessage('');
   };
 
   const selectMenu = (menu) => {
@@ -143,12 +150,44 @@ const UserProfileScreen = ({ route, navigation }) => {
     setCurrentPage(input);
   };
 
+  const blockUser = async () => {
+    try {
+      let access_token = await AsyncStorage.getItem('access_token');
+
+      let blockUserRequest = await axios({
+        method: 'get',
+        url: `${BaseUrl}/users/block-user/${userId}`,
+        headers: {
+          token: access_token,
+        },
+      });
+
+      if (blockUserRequest.data) {
+        openModal(true);
+        setActionModal(false);
+        navigation.push('MainAppNavigation');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const noticeModalChild = () => {
     return (
-      <Text style={styles.noticeModalTextStyle}>
-        You don't have access to this discussion
-      </Text>
+      <Text style={styles.noticeModalTextStyle}>{noticeModalMessage}</Text>
     );
+  };
+
+  const ActionModalButton = (buttonTitle, onPress) => (
+    <TouchableOpacity
+      style={styles.actionModalButtonStyle}
+      onPress={() => blockUser()}>
+      <Text style={styles.actionModalButtonTextStyle}>{buttonTitle}</Text>
+    </TouchableOpacity>
+  );
+
+  const ActionModal = () => {
+    return <>{ActionModalButton('Block user', blockUser)}</>;
   };
 
   const renderDiscussionsDisplay = () => {
@@ -215,17 +254,22 @@ const UserProfileScreen = ({ route, navigation }) => {
           }}
         />
         {profile.isFollowing !== undefined && (
-          <TouchableOpacity onPress={() => followAccount()}>
-            <Text style={styles.followButtonTextStyle}>
-              {profile.isFollowing ? 'Unfollow' : 'Follow'}
-            </Text>
-          </TouchableOpacity>
+          // <TouchableOpacity onPress={() => followAccount()}>
+          //   <Text style={styles.followButtonTextStyle}>
+          //     {profile.isFollowing ? 'Unfollow' : 'Follow'}
+          //   </Text>
+          // </TouchableOpacity>
+          <OptionButton onPress={() => setActionModal(true)} />
         )}
       </View>
+      <View style={styles.optionButtonContainerStyle}></View>
       <ProfileData
         profile={profile}
         selectMenu={selectMenu}
         selectedMenu={selectedMenu}
+        followAccount={followAccount}
+        isFollowing={profile.isFollowing}
+        isUserProfileScreen={true}
       />
       <FlatList
         ListHeaderComponent={
@@ -243,6 +287,15 @@ const UserProfileScreen = ({ route, navigation }) => {
         closeModal={closeModal}
         child={noticeModalChild}
       />
+      <Modal
+        openModal={actionModal}
+        closeModal={() => setActionModal(false)}
+        customStyle={{
+          width: '75%',
+          alignItems: 'flex-start',
+        }}>
+        {ActionModal()}
+      </Modal>
     </ScreenContainer>
   );
 };
@@ -269,6 +322,13 @@ const styles = StyleSheet.create({
     color: '#0E4EF4',
     fontSize: 16,
     fontFamily: bold,
+  },
+
+  optionButtonContainerStyle: {
+    paddingHorizontal: '6%',
+    alignItems: 'flex-end',
+    backgroundColor: '#FFFFFF',
+    paddingVertical: '2%',
   },
 
   cardContainerStyle: {
@@ -383,6 +443,15 @@ const styles = StyleSheet.create({
     fontFamily: normal,
     fontSize: 12,
     color: '#73798C',
+  },
+
+  actionModalButtonStyle: {
+    width: '100%',
+  },
+
+  actionModalButtonTextStyle: {
+    fontSize: CalculateHeight(2),
+    fontFamily: normal,
   },
 });
 

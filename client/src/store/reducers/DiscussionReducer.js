@@ -23,6 +23,8 @@ const defaultState = {
   userInvolvedInDiscussion: [],
   isLoading: false,
   moreLoader: false,
+  isFlagged: false,
+  objectionable: false,
 };
 
 const reducer = (state = defaultState, action) => {
@@ -75,6 +77,8 @@ const reducer = (state = defaultState, action) => {
       let setIsDislike = action.payload.isDislike;
       let setType = action.payload.type;
       let setUserType = action.payload.userType;
+      let setIsFlagged = action.payload.isFlagged;
+      let setObjectionable = action.payload.objectionable;
 
       return {
         ...state,
@@ -94,6 +98,8 @@ const reducer = (state = defaultState, action) => {
         isDislike: setIsDislike,
         type: setType,
         userType: setUserType,
+        isFlagged: setIsFlagged,
+        objectionable: setObjectionable
       };
     case 'GET_USER_DISCUSSION':
       let setUserDiscussion = action.payload.discussions;

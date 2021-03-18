@@ -23,8 +23,8 @@ import { CalculateHeight } from '../../../helper/CalculateSize';
 //Component
 import Modal from '../../publicComponents/Modal';
 
-const ROLE_ALLOWED = 1
-const ROLE_UNALLOWED = 0
+const ROLE_ALLOWED = 1;
+const ROLE_UNALLOWED = 0;
 
 const OptionModal = (props) => {
   const {
@@ -45,6 +45,7 @@ const OptionModal = (props) => {
     role,
     cardOnDelete,
     isDeleting,
+    isFlagged,
   } = props;
 
   const userId = useSelector((state) => state.ProfileReducer.userProfile.id);
@@ -102,7 +103,7 @@ const OptionModal = (props) => {
   };
 
   const DeleteDiscussionOrResponse = async () => {
-    isDeleting()
+    isDeleting();
     if (cardOnDelete) {
       if (modalType === 'discussion')
         return cardOnDelete(discussionId, 'discussion');
@@ -137,22 +138,49 @@ const OptionModal = (props) => {
         }
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       if (error.response.data.msg === 'You have to login first') {
         dispatch(userLogout());
       }
     }
   };
 
-  const OptionModalButton = (buttonTitle) => {
+  const flag = async () => {
+    try {
+      const access_token = await AsyncStorage.getItem('access_token');
+
+      let flagRequest = await axios({
+        method: 'get',
+        url:
+          modalType === 'discussion'
+            ? `${BaseUrl}/discussions/flag/${discussionId}`
+            : `${BaseUrl}/responses/flag/${responseId}`,
+        headers: {
+          token: access_token,
+        },
+      });
+
+      if (flagRequest) {
+        closeOptionModal();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const OptionModalButton = (buttonTitle, customStyle) => {
     return (
       <TouchableOpacity
         onPress={() => {
           buttonTitle === 'Delete' && setDeleteOption(true);
           buttonTitle === 'Edit participant list' && openPrivateModal();
-          buttonTitle === 'Share' && shareOption();          
+          buttonTitle === 'Share' && shareOption();
+          buttonTitle === 'Flag this discussion' && flag();
+          buttonTitle === 'Flag this response' && flag();
         }}>
-        <Text style={styles.optionModalButtonTextStyle}>{buttonTitle}</Text>
+        <Text style={{ ...styles.optionModalButtonTextStyle, ...customStyle }}>
+          {buttonTitle}
+        </Text>
       </TouchableOpacity>
     );
   };
@@ -209,7 +237,11 @@ const OptionModal = (props) => {
             type === 2 &&
             modalType === 'discussion' &&
             OptionModalButton('Edit participant list')}
-          {(profileId === userId || role === ROLE_ALLOWED) && OptionModalButton('Delete')}
+          {(profileId === userId || role === ROLE_ALLOWED) &&
+            OptionModalButton('Delete')}
+          {!isFlagged &&
+            profileId !== userId &&
+            OptionModalButton(`Flag this ${modalType}`, { marginBottom: 0 })}
         </>
       ) : (
         <DeleteOption />
@@ -255,7 +287,7 @@ const styles = StyleSheet.create({
     height: undefined,
     borderRadius: 20,
     padding: '5%',
-    paddingBottom: '7%',
+    // paddingBottom: '7%',
     backgroundColor: '#FFFFFF',
     justifyContent: 'space-between',
   },
@@ -264,6 +296,7 @@ const styles = StyleSheet.create({
     fontFamily: normal,
     fontSize: CalculateHeight(2),
     color: '#464D60',
+    marginBottom: '5%',
   },
 
   deleteConfirmationButtonContainerStyle: {
@@ -278,7 +311,8 @@ const styles = StyleSheet.create({
     fontFamily: bold,
     color: '#6505E1',
     fontSize: CalculateHeight(2),
-    paddingTop: '2%',
+    marginBottom: '5%',
+    // paddingTop: '2%',
   },
 
   deleteOptionTextStyle: {

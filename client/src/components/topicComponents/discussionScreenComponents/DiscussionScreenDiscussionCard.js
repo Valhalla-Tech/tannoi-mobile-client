@@ -53,6 +53,8 @@ const DiscussionScreenCard = (props) => {
     isCommunityDiscussion,
     role,
     cardOnDelete,
+    isFlagged,
+    objectionable,
   } = props;
 
   const [optionModal, setOptionModal] = useState(false);
@@ -197,6 +199,7 @@ const DiscussionScreenCard = (props) => {
           discussionTitle={discussionTitle}
           role={role}
           cardOnDelete={cardOnDelete}
+          isFlagged={isFlagged}
         />
         {discussionType === 2 && userId === profileId && (
           <PrivateDiscussionModal
@@ -224,6 +227,7 @@ const DiscussionScreenCard = (props) => {
           </TouchableOpacity>
         </View>
         <View style={styles.discussionInfoContainerStyle}>
+          <Text style={styles.objectioableWarningStyle}>{objectionable && 'This content maybe objectionable!'}</Text>
           <Text style={styles.discussionTitleStyle}>{discussionTitle}</Text>
           <Text
             onPress={() => {
@@ -336,7 +340,6 @@ const styles = StyleSheet.create({
     fontFamily: normal,
     color: '#73798C',
     fontSize: CalculateHeight(1.5),
-    marginTop: '-5%',
   },
 
   discussionCardMenuStyle: {
@@ -365,6 +368,11 @@ const styles = StyleSheet.create({
   discussionInfoContainerStyle: {
     paddingLeft: '7.5%',
     maxWidth: '80%',
+  },
+
+  objectioableWarningStyle: {
+    fontFamily: bold,
+    color: '#ffcc00'
   },
 
   discussionTitleStyle: {

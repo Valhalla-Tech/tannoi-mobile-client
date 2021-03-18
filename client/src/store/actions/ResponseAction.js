@@ -94,6 +94,8 @@ export const getSingleResponse = (responseId, page) => {
                 responseForResponseCount: getResponseRequest.data.numOfResult,
                 discussionId: getResponseRequest.data.discussion_id,
                 responseId: getResponseRequest.data.response_id,
+                isFlagged: getResponseRequest.data.isFlagged,
+                objectionable: getResponseRequest.data.objectionable,
               },
             });
           }

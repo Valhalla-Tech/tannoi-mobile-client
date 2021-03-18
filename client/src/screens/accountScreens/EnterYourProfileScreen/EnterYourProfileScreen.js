@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Platform,
+  ScrollView,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -27,6 +28,7 @@ import ScreenContainer from '../../../components/publicComponents/ScreenContaine
 import SaveAndContinueButton from '../../../components/publicComponents/Button';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
 import FormInput from '../../../components/publicComponents/FormInput';
+import DatePicker from '../../../components/publicComponents/DatePicker';
 
 const EnterYourProfileScreen = ({ navigation }) => {
   const [profileImage, setProfileImage] = useState('');
@@ -182,22 +184,15 @@ const EnterYourProfileScreen = ({ navigation }) => {
         <Text style={{ ...styles.formInputTitleStyle, marginBottom: '8%' }}>
           Date of birth
         </Text>
-        {show ? (
-          <DateTimePicker
-            testID="dateTimePicker"
-            value={currentDate}
-            mode={mode}
-            is24Hour={true}
-            display="spinner"
-            onChange={dateInput}
-          />
-        ) : (
-          <TouchableOpacity
-            style={styles.formInputStyle}
-            onPress={showDatepicker}>
-            <Text style={{ fontSize: 16 }}>{birthDateDisplay}</Text>
-          </TouchableOpacity>
-        )}
+        <DatePicker
+          value={currentDate}
+          mode={mode}
+          onChange={dateInput}
+          dateDisplay={birthDateDisplay}
+          show={show}
+          setShow={setShow}
+          showDatepicker={showDatepicker}
+        />
       </>
     );
   };
@@ -208,14 +203,16 @@ const EnterYourProfileScreen = ({ navigation }) => {
         onPress={() => {
           Keyboard.dismiss();
         }}>
-        <View style={styles.enterYourProfileScreenContainerStyle}>
-          <Text style={styles.enterYourProfileScreenTitleStyle}>
-            Enter your profile
-          </Text>
-          <UploadPhoto />
-          {ProfileForm()}
-          <EnterYourProfileScreenButton />
-        </View>
+        <ScrollView>
+          <View style={styles.enterYourProfileScreenContainerStyle}>
+            <Text style={styles.enterYourProfileScreenTitleStyle}>
+              Enter your profile
+            </Text>
+            <UploadPhoto />
+            {ProfileForm()}
+            <EnterYourProfileScreenButton />
+          </View>
+        </ScrollView>
       </TouchableWithoutFeedback>
       {isLoading && <LoadingSpinner />}
     </ScreenContainer>
@@ -227,6 +224,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: '15%',
     paddingHorizontal: '5.5%',
+    marginBottom: '20%',
   },
 
   enterYourProfileScreenTitleStyle: {

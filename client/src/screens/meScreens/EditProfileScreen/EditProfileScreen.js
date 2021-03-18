@@ -21,8 +21,10 @@ import AsyncStorage from '@react-native-community/async-storage';
 import BaseUrl from '../../../constants/BaseUrl';
 import { ScreenHeight } from '../../../constants/Size';
 import { UploadImage } from '../../../helper/UploadImage';
+import { CalculateHeight, CalculateWidth } from '../../../helper/CalculateSize';
 
 //Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import Header from '../../../components/publicComponents/Header';
 import Card from '../../../components/publicComponents/Card';
 import BackButton from '../../../components/publicComponents/BackButton';
@@ -31,10 +33,8 @@ import ListCardPlayer from '../../../components/publicComponents/ListCardPlayer'
 import RecorderModal from '../../../components/publicComponents/RecorderModal';
 import BigButton from '../../../components/publicComponents/Button';
 import LoadingSpinner from '../../../components/publicComponents/LoadingSpinner';
-
-const calculateHeight = (input) => {
-  return (input / 100) * ScreenHeight;
-};
+import IosPicker from '../../../components/publicComponents/IosPicker';
+import DatePicker from '../../../components/publicComponents/DatePicker';
 
 const EditProfileScreen = ({ navigation }) => {
   const userProfile = useSelector((state) => state.ProfileReducer.userProfile);
@@ -104,21 +104,6 @@ const EditProfileScreen = ({ navigation }) => {
     { name: 'Female', value: 'Female' },
     { name: 'Non-binary', value: 'non-binary' },
   ];
-
-  const HeaderContent = () => {
-    return (
-      <>
-        <BackButton
-          navigation={navigation}
-          styleOption={{
-            marginTop: 0,
-            marginBottom: 0,
-          }}
-        />
-        <Text style={styles.titleTextStyle}>Edit profile</Text>
-      </>
-    );
-  };
 
   const dateInput = (event, selectedDate) => {
     const inputDate = selectedDate || currentDate;
@@ -230,7 +215,9 @@ const EditProfileScreen = ({ navigation }) => {
             type,
           });
         birthDate !== '' && formData.append('birth_date', `${birthDate}`);
-        fullName !== '' && fullName.length < 27 && formData.append('name', fullName.trim());
+        fullName !== '' &&
+          fullName.length < 27 &&
+          formData.append('name', fullName.trim());
         selectedGender !== '' && formData.append('gender', selectedGender);
         shortBio !== '' && formData.append('bio', shortBio.trim());
         location !== '' && formData.append('location', location.trim());
@@ -267,6 +254,21 @@ const EditProfileScreen = ({ navigation }) => {
       setIsLoading(false);
       console.log(error);
     }
+  };
+
+  const HeaderContent = () => {
+    return (
+      <>
+        <BackButton
+          navigation={navigation}
+          styleOption={{
+            marginTop: 0,
+            marginBottom: 0,
+          }}
+        />
+        <Text style={styles.titleTextStyle}>Edit profile</Text>
+      </>
+    );
   };
 
   const EditProfilePicture = () => {
@@ -347,53 +349,55 @@ const EditProfileScreen = ({ navigation }) => {
         )}
         {isBirthDate && (
           <>
-            {show ? (
-              <DateTimePicker
-                testID="dateTimePicker"
-                value={
-                  birthDate === '' && userProfile.birth_date !== null
-                    ? new Date(userProfile.birth_date)
-                    : currentDate
-                }
-                mode={mode}
-                is24Hour={true}
-                display="spinner"
-                onChange={dateInput}
-              />
-            ) : (
-              <TouchableOpacity
-                style={styles.formInputStyle}
-                onPress={showDatepicker}>
-                <Text style={styles.inputTextStyle}>
-                  {birthDate === '' && userProfile.birth_date !== null
-                    ? DisplayBirthDate(new Date(userProfile.birth_date))
-                    : birthDateDisplay}
-                </Text>
-              </TouchableOpacity>
-            )}
+            <DatePicker
+              value={
+                birthDate === '' && userProfile.birth_date !== null
+                  ? new Date(userProfile.birth_date)
+                  : currentDate
+              }
+              mode={mode}
+              onChange={dateInput}
+              dateDisplay={
+                birthDate === '' && userProfile.birth_date !== null
+                  ? DisplayBirthDate(new Date(userProfile.birth_date))
+                  : birthDateDisplay
+              }
+              show={show}
+              showDatepicker={showDatepicker}
+              setShow={setShow}
+              customFormInputStyle={styles.formInputStyle}
+            />
           </>
         )}
-        {isPicker && (
-          <View>
-            <Picker
-              selectedValue={
-                selectedGender === '' ? userProfile.gender : selectedGender
-              }
-              style={styles.pickerStyle}
-              onValueChange={(itemValue, itemIndex) =>
-                setSelectedGender(itemValue)
-              }>
-              <Picker.Item label={userProfile.gender ? '' : '-'} value="" />
-              {gender.map((gender, index) => (
-                <Picker.Item
-                  key={index}
-                  label={gender.name}
-                  value={gender.value}
-                />
-              ))}
-            </Picker>
-          </View>
-        )}
+        {isPicker &&
+          (Platform.OS === 'android' ? (
+            <View>
+              <Picker
+                selectedValue={
+                  selectedGender === '' ? userProfile.gender : selectedGender
+                }
+                style={styles.pickerStyle}
+                onValueChange={(itemValue, itemIndex) =>
+                  setSelectedGender(itemValue)
+                }>
+                <Picker.Item label={userProfile.gender ? '' : '-'} value="" />
+                {gender.map((gender, index) => (
+                  <Picker.Item
+                    key={index}
+                    label={gender.name}
+                    value={gender.value}
+                  />
+                ))}
+              </Picker>
+            </View>
+          ) : (
+            <IosPicker
+              data={gender}
+              onChangeValue={(value) => setSelectedGender(value)}
+              customStyle={{ marginBottom: '5%' }}
+              placeholder=" "
+            />
+          ))}
       </View>
     );
   };
@@ -437,7 +441,7 @@ const EditProfileScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.rootStyle}>
+    <ScreenContainer>
       <TouchableWithoutFeedback
         onPress={() => {
           Keyboard.dismiss();
@@ -453,7 +457,7 @@ const EditProfileScreen = ({ navigation }) => {
                     ? {
                         ...styles.cardStyle,
                         marginBottom: '2%',
-                        maxHeight: calculateHeight(5),
+                        maxHeight: CalculateHeight(5),
                         justifyContent: 'center',
                         alignItems: 'center',
                       }
@@ -467,7 +471,7 @@ const EditProfileScreen = ({ navigation }) => {
                 child={EditProfileForm}
                 customStyle={{
                   ...styles.cardStyle,
-                  minHeight: calculateHeight(20),
+                  minHeight: CalculateHeight(20),
                 }}
               />
             </View>
@@ -475,15 +479,11 @@ const EditProfileScreen = ({ navigation }) => {
           </ScrollView>
         </>
       </TouchableWithoutFeedback>
-    </View>
+    </ScreenContainer>
   );
 };
 
 const styles = StyleSheet.create({
-  rootStyle: {
-    flex: 1,
-  },
-
   headerStyle: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -502,7 +502,7 @@ const styles = StyleSheet.create({
     marginLeft: '3%',
     fontFamily: bold,
     color: '#464D60',
-    fontSize: 20,
+    fontSize: CalculateHeight(2.5),
   },
 
   cardStyle: {
@@ -513,11 +513,12 @@ const styles = StyleSheet.create({
 
   editProfileButtonStyle: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
 
   profileImageStyle: {
-    width: '9%',
-    height: '100%',
+    width: CalculateWidth(8),
+    height: CalculateWidth(8),
     borderRadius: 50,
     marginRight: '3%',
   },
@@ -525,7 +526,7 @@ const styles = StyleSheet.create({
   changeProfileTextStyle: {
     fontFamily: normal,
     color: '#464D60',
-    fontSize: 16,
+    fontSize: CalculateHeight(1.8),
   },
 
   inputTitleStyle: {
@@ -536,34 +537,34 @@ const styles = StyleSheet.create({
 
   recordBioTextStyle: {
     color: '#0E4EF4',
-    fontSize: 14,
+    fontSize: CalculateHeight(1.5),
     fontFamily: normal,
   },
 
   formContainerStyle: {
-    minHeight: calculateHeight(20),
+    minHeight: CalculateHeight(20),
+  },
+
+  selectDateButtonStyle: {
+    fontFamily: normal,
+    color: '#6505E1',
+    fontSize: CalculateHeight(2),
+    alignSelf: 'flex-end',
   },
 
   formInputStyle: {
-    height: 45,
-    borderBottomColor: 'grey',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E3E6EB',
-    fontSize: 16,
-    fontFamily: normal,
-    justifyContent: 'center',
     marginBottom: '5%',
   },
 
   inputTextStyle: {
-    fontSize: 16,
+    fontSize: CalculateHeight(1.8),
     fontFamily: normal,
   },
 
   pickerStyle: {
     height: 47,
     borderBottomColor: '#E3E6EB',
-    fontSize: 16,
+    fontSize: CalculateHeight(1.8),
     marginBottom: '5%',
     fontFamily: normal,
     color: '#73798C',

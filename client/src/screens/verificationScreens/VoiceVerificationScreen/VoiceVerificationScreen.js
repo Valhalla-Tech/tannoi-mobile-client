@@ -11,6 +11,7 @@ import { CalculateHeight } from '../../../helper/CalculateSize';
 import ScreenImage from '../../../assets/verificationAssets/Illustration-Tannoi-Apps-04.png';
 
 //Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import BigButton from '../../../components/publicComponents/Button';
 import Recorder from '../../../components/publicComponents/Recorder';
 import ErrorMessage from '../../../components/publicComponents/ErrorMessage';
@@ -104,7 +105,7 @@ const VoiceVerificationScreen = ({ navigation }) => {
   };
 
   return (
-    <>
+    <ScreenContainer isHeader={false}>
       {isLoading && <LoadingSpinner />}
       <View style={styles.voiceVerificationScreenContainerStyle}>
         <View>
@@ -153,7 +154,7 @@ const VoiceVerificationScreen = ({ navigation }) => {
           buttonFunction={nextScreen}
         />
       </View>
-    </>
+    </ScreenContainer>
   );
 };
 
@@ -186,20 +187,22 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: bold,
     fontSize: CalculateHeight(3),
-    paddingBottom: -1.5,
+    marginBottom: '5%',
+    // paddingBottom: -1.5,
   },
 
   normalTextStyle: {
     textAlign: 'center',
     fontFamily: normal,
     fontSize: CalculateHeight(2),
+    marginBottom: '10%'
   },
 
   randomWordStyle: {
     textAlign: 'center',
     fontFamily: bold,
     fontSize: CalculateHeight(4.5),
-    marginBottom: CalculateHeight(-3),
+    // marginBottom: CalculateHeight(-3),
   },
 });
 

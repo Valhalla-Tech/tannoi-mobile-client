@@ -8,7 +8,8 @@ import { CalculateHeight } from '../../../helper/CalculateSize';
 //Image
 import ScreenImage from '../../../assets/verificationAssets/Illustration-Tannoi-Apps-01.png';
 
-//Component
+//Components
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import BigButton from '../../../components/publicComponents/Button';
 
 const StartVerificationScreen = ({ navigation }) => {
@@ -19,39 +20,42 @@ const StartVerificationScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.startVerificationScreenContainerStyle}>
-      <View>
+    <ScreenContainer isHeader={false}>
+      <View style={styles.startVerificationScreenContainerStyle}>
         <View>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.goBack();
-              dispatch(deleteVerificationData());
-            }}>
-            <Text style={styles.cancelButtonTextStyle}>Cancel</Text>
-          </TouchableOpacity>
+          <View>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.goBack();
+                dispatch(deleteVerificationData());
+              }}>
+              <Text style={styles.cancelButtonTextStyle}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.imageContainerStyle}>
+            <Image source={ScreenImage} style={styles.imageStyle} />
+          </View>
+          <View style={{ paddingHorizontal: '2%' }}>
+            <Text style={styles.boldTextStyle}>
+              Become a verified tannOi user
+            </Text>
+            <Text style={styles.normalTextStyle}>
+              Participate in verified discussions and {'\n'} stand behind your
+              voice
+            </Text>
+          </View>
         </View>
-        <View style={styles.imageContainerStyle}>
-          <Image source={ScreenImage} style={styles.imageStyle} />
-        </View>
-        <View style={{paddingHorizontal: '2%'}}>
-          <Text style={styles.boldTextStyle}>
-            Become a verified tannOi user
-          </Text>
-          <Text style={styles.normalTextStyle}>
-            Participate in verified discussions and {'\n'} stand behind your voice
-          </Text>
-        </View>
+        <BigButton
+          buttonTitle="Start"
+          buttonStyle={{
+            backgroundColor: '#6505E1',
+            color: '#FFFFFF',
+            borderWidth: 0,
+          }}
+          buttonFunction={startButton}
+        />
       </View>
-      <BigButton
-        buttonTitle="Start"
-        buttonStyle={{
-          backgroundColor: '#6505E1',
-          color: '#FFFFFF',
-          borderWidth: 0,
-        }}
-        buttonFunction={startButton}
-      />
-    </View>
+    </ScreenContainer>
   );
 };
 
@@ -77,7 +81,7 @@ const styles = StyleSheet.create({
 
   imageStyle: {
     resizeMode: 'contain',
-    width: '65%'
+    width: '65%',
   },
 
   boldTextStyle: {

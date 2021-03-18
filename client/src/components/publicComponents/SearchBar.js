@@ -77,7 +77,9 @@ const SearchBar = (props) => {
     <View
       style={
         !searchBoxIsFilled
-          ? styles.searchBarContainerStyle
+          ? searchBarIsOpen
+            ? { ...styles.searchBarCardContainerStyle, paddingBottom: '3%' }
+            : styles.searchBarContainerStyle
           : { ...styles.searchBarCardContainerStyle, paddingBottom: 0 }
       }>
       <View style={searchBarStyle}>

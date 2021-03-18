@@ -265,10 +265,12 @@ class HomeListPlayerCard extends Component {
 const styles = StyleSheet.create({
   playerContainerStyle: {
     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 
   sliderStyle: {
-    width: '90%',
+    width: '80%',
   },
 });
 

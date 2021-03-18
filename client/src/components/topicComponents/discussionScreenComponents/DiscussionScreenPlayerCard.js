@@ -222,6 +222,7 @@ class DiscussionScreenPlayerCard extends Component {
               role={this.props.role}
               cardOnDelete={this.props.cardOnDelete}
               isDeleting={() => this.state.soundPlayer.stopPlaying()}
+              isFlagged={this.props.isFlagged}
             />
           )}
         </View>
@@ -274,11 +275,14 @@ class DiscussionScreenPlayerCard extends Component {
             : styles.responsePlayerContainerStyle
         }>
         <this.ProfileAndPostTime />
+        <Text style={styles.objectioableWarningStyle}>
+          {this.props.objectionable && 'This content maybe objectionable!'}
+        </Text>
         {this.props.caption !== '' && (
           <Text style={styles.captionStyle}>{this.props.caption}</Text>
         )}
         <RecordPlayer
-          onRef={ref => this.setState({...this.state, soundPlayer: ref})}
+          onRef={(ref) => this.setState({ ...this.state, soundPlayer: ref })}
           customStyle={{
             marginTop: '7%',
           }}
@@ -384,6 +388,11 @@ const styles = StyleSheet.create({
     padding: '3.5%',
     marginBottom: '2%',
     borderRadius: 8,
+  },
+
+  objectioableWarningStyle: {
+    fontFamily: bold,
+    color: '#ffcc00',
   },
 
   profileAndPostTimeContainerStyle: {

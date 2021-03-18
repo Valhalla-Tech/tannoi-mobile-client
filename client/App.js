@@ -1,5 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { useEffect } from 'react';
+import { Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Provider } from 'react-redux';
@@ -25,7 +26,7 @@ const App = () => {
     <Provider store={store}>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
-        keyboardVerticalOffset={-200}
+        keyboardVerticalOffset={Platform.OS === 'android' ? -200 : null}
         behavior="padding">
         <NavigationContainer>
           <Stack.Navigator
