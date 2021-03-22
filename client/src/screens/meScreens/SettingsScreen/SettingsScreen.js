@@ -118,7 +118,7 @@ const SettingsScreen = ({ navigation }) => {
           <Text style={styles.menuHeaderTextStyle}>Account</Text>
         </View>
         {MenuButton('Edit profile', null, 'EditProfileScreen')}
-        {MenuButton('Blocked user', null, 'BlockedUserScreen', true)}
+        {MenuButton('Blocked users', null, 'BlockedUsersScreen', true)}
         {/*
         {MenuButton('Change password')}
         {MenuButton('Log in options', null, null, true)}
@@ -149,7 +149,7 @@ const SettingsScreen = ({ navigation }) => {
       </View>
       <View style={styles.objectionableContentSwitchStyle}>
         <Text style={styles.menuButtonTextStyle}>
-          Show objectionable content
+          Hide objectionable content
         </Text>
         <Switch
           value={switchStatus}

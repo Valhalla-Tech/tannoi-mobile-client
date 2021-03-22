@@ -227,7 +227,13 @@ const DiscussionScreenCard = (props) => {
           </TouchableOpacity>
         </View>
         <View style={styles.discussionInfoContainerStyle}>
-          <Text style={styles.objectioableWarningStyle}>{objectionable && 'This content maybe objectionable!'}</Text>
+          {objectionable && (
+            <View style={styles.objectioableWarningContainerStyle}>
+              <Text style={styles.objectioableWarningStyle}>
+                This content maybe objectionable!
+              </Text>
+            </View>
+          )}
           <Text style={styles.discussionTitleStyle}>{discussionTitle}</Text>
           <Text
             onPress={() => {
@@ -370,9 +376,15 @@ const styles = StyleSheet.create({
     maxWidth: '80%',
   },
 
+  objectioableWarningContainerStyle: {
+    backgroundColor: '#ffcc00',
+    padding: '2%',
+    borderRadius: 8,
+  },
+
   objectioableWarningStyle: {
     fontFamily: bold,
-    color: '#ffcc00'
+    color: '#FFFFFF',
   },
 
   discussionTitleStyle: {
