@@ -1,5 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, FlatList, Image } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  Image,
+} from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -17,7 +24,13 @@ import { GlobalPadding } from '../../../constants/Size';
 
 //Components
 import DiscussionAndResponseList from '../../../components/topicComponents/discussionScreenComponents/DiscussionAndResponseList';
-import { TabView, RecorderModal as AddResponse, BackButton, LoadingSpinner, ScreenContainer } from '../../../components/publicComponents';
+import {
+  TabView,
+  RecorderModal as AddResponse,
+  BackButton,
+  LoadingSpinner,
+  ScreenContainer,
+} from '../../../components/publicComponents';
 
 let _isMounted = false;
 
@@ -44,7 +57,9 @@ const DiscussionScreen = ({ route, navigation }) => {
   const response = useSelector((state) => state.ResponseReducer.response);
   const userId = useSelector((state) => state.HomeReducer.user.id);
   const userType = useSelector((state) => state.HomeReducer.user.type);
-  const usersInvolved = useSelector(state => state.DiscussionReducer.userInvolvedInDiscussion);
+  const usersInvolved = useSelector(
+    (state) => state.DiscussionReducer.userInvolvedInDiscussion,
+  );
 
   const {
     discussionId,
@@ -144,11 +159,13 @@ const DiscussionScreen = ({ route, navigation }) => {
     }
   };
 
-  const renderUsersInvolved = data => {
+  const renderUsersInvolved = (data) => {
     let maxBioChara = 50;
     return (
       <TouchableOpacity
-        onPress={() => navigation.navigate('UserProfileScreen', { userId: data.item.id })}
+        onPress={() =>
+          navigation.navigate('UserProfileScreen', { userId: data.item.id })
+        }
         style={styles.memberListDataStyle}>
         <View style={styles.imageProfileAndNameStyle}>
           <Image
@@ -156,10 +173,7 @@ const DiscussionScreen = ({ route, navigation }) => {
             style={styles.profileImageStyle}
           />
           <View style={styles.profileBodyStyle}>
-            <Text 
-              style={styles.userInvolvedNameStyle}
-              numberOfLines={1}
-            >
+            <Text style={styles.userInvolvedNameStyle} numberOfLines={1}>
               {data.item.name} {data.item.bio ? '- ' + data.item.bio : null}
             </Text>
           </View>
@@ -190,13 +204,15 @@ const DiscussionScreen = ({ route, navigation }) => {
           style={styles.addResponseButtonStyle}
           onPress={() => {
             userType !== 0 || userId === profileId
-              ? (
-                activeTab === 'GET_DISCUSSIONS' ? null : tabViewRef.current.changeActiveTab('GET_DISCUSSIONS'),
-                activeTab === 'GET_DISCUSSIONS' ? null : handleTabViewEvent({id: 'GET_DISCUSSIONS'}),
+              ? (activeTab === 'GET_DISCUSSIONS'
+                  ? null
+                  : tabViewRef.current.changeActiveTab('GET_DISCUSSIONS'),
+                activeTab === 'GET_DISCUSSIONS'
+                  ? null
+                  : handleTabViewEvent({ id: 'GET_DISCUSSIONS' }),
                 setOpenAddResponseModal(true),
                 setOpenAddRespone(true),
-                setOpenModalFromHeader(true)
-                )
+                setOpenModalFromHeader(true))
               : (navigation.navigate('VerificationNavigation'),
                 setOpenAddRespone(true));
           }}>
@@ -204,14 +220,13 @@ const DiscussionScreen = ({ route, navigation }) => {
         </TouchableOpacity>
       </View>
       <TabView
-        tabViewContainerStyle = {{ marginBottom: '2%', }}
-        customButtonStyle = {{ paddingTop: '2%' }}
+        tabViewContainerStyle={{ marginBottom: '2%' }}
+        customButtonStyle={{ paddingTop: '2%' }}
         tabMenus={tabViewMenus}
         ref={tabViewRef}
-        onPress={data => handleTabViewEvent(data)}
+        onPress={(data) => handleTabViewEvent(data)}
       />
-      {
-        activeTab === 'GET_DISCUSSIONS' ?
+      {activeTab === 'GET_DISCUSSIONS' ? (
         <>
           <DiscussionAndResponseList
             changePlayer={changePlayer}
@@ -240,18 +255,26 @@ const DiscussionScreen = ({ route, navigation }) => {
             scrollDown={scrollDown}
             isCommunityDiscussion={isCommunityDiscussion}
           />
-        </> :
-        getUsersInvolvedLoading ?
-        <View style={{padding: 50}}>
-          <LoadingSpinner loadingSpinnerForComponent/>
-        </View> :
-        <FlatList
-          style={{ height: CalculateHeight(90), backgroundColor: 'white', marginHorizontal: '2%', borderRadius: 10 }}
-          keyExtractor={(item, index) => index.toString()}
-          data={usersInvolved}
-          renderItem={renderUsersInvolved}
-        />
-      }
+        </>
+      ) : getUsersInvolvedLoading ? (
+        <View style={{ padding: 50 }}>
+          <LoadingSpinner loadingSpinnerForComponent />
+        </View>
+      ) : (
+        <View>
+          <FlatList
+            style={{
+              maxHeight: CalculateHeight(90),
+              backgroundColor: 'white',
+              marginHorizontal: '2%',
+              borderRadius: 10,
+            }}
+            keyExtractor={(item, index) => index.toString()}
+            data={usersInvolved}
+            renderItem={renderUsersInvolved}
+          />
+        </View>
+      )}
     </ScreenContainer>
   );
 };
@@ -306,10 +329,10 @@ const styles = StyleSheet.create({
     marginRight: CalculateWidth(3),
   },
 
-  profileBodyStyle: { 
+  profileBodyStyle: {
     justifyContent: 'center',
     flexDirection: 'column',
-    flex: 1
+    flex: 1,
   },
 
   memberListDataStyle: {
