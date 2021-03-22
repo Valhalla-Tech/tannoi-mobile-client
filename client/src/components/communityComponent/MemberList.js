@@ -88,12 +88,9 @@ const MemberList = (props) => {
   const MemberListContent = () => {
     return (
       <FlatList
-        style={{height: CalculateHeight(57)}}
+        style={{maxHeight: CalculateHeight(57)}}
         data={memberList}
         keyExtractor={(item, index) => index.toString()}
-        ListFooterComponent={
-          <View style={{marginBottom: CalculateHeight(9)}}></View>
-        }
         ListHeaderComponent={
           <>
             <TouchableOpacity onPress={() => shareOption()} style={styles.inviteCommunityLinkContainerStyle}>
