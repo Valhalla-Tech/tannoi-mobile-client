@@ -22,7 +22,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 
-const BlockedUserScreen = ({ navigation }) => {
+const BlockedUsersScreen = ({ navigation }) => {
   const [blockedUserList, setBlockedUserList] = useState('');
   const [moreIsLoading, setMoreIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -104,6 +104,7 @@ const BlockedUserScreen = ({ navigation }) => {
           padding: 0,
           paddingHorizontal: '3%',
           paddingVertical: '2%',
+          marginBottom: 0,
         }}
         buttonTitle="Unblock"
         buttonFunction={() => unblockUser(itemData.item.id)}
@@ -115,7 +116,7 @@ const BlockedUserScreen = ({ navigation }) => {
     <ScreenContainer>
       <Header customStyle={styles.headerStyle}>
         <BackButton navigation={navigation} />
-        <Text style={styles.headerTextStyle}>Blocked user</Text>
+        <Text style={styles.headerTextStyle}>Blocked users</Text>
       </Header>
       <View style={styles.blockedUserScreenContainerStyle}>
         <Card customStyle={styles.cardStyle}>
@@ -212,4 +213,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BlockedUserScreen;
+export default BlockedUsersScreen;

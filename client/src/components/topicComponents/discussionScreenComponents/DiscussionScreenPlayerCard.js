@@ -275,9 +275,13 @@ class DiscussionScreenPlayerCard extends Component {
             : styles.responsePlayerContainerStyle
         }>
         <this.ProfileAndPostTime />
-        <Text style={styles.objectioableWarningStyle}>
-          {this.props.objectionable && 'This content maybe objectionable!'}
-        </Text>
+        {this.props.objectionable && (
+          <View style={styles.objectioableWarningContainerStyle}>
+            <Text style={styles.objectioableWarningStyle}>
+              This content maybe objectionable!
+            </Text>
+          </View>
+        )}
         {this.props.caption !== '' && (
           <Text style={styles.captionStyle}>{this.props.caption}</Text>
         )}
@@ -390,9 +394,19 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
 
+  objectioableWarningContainerStyle: {
+    backgroundColor: '#ffcc00',
+    borderRadius: 9,
+    padding: '2%',
+    width: '70%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: '2%',
+  },
+
   objectioableWarningStyle: {
     fontFamily: bold,
-    color: '#ffcc00',
+    color: '#FFFFFF',
   },
 
   profileAndPostTimeContainerStyle: {
