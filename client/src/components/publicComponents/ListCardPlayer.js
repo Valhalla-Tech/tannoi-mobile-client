@@ -104,7 +104,7 @@ class HomeListPlayerCard extends Component {
       autoDestroy: false,
     });
 
-    this.player.speed = 0.0;
+    // this.player.speed = 0.0;
 
     this.player.prepare((error) => {
       if (error) {

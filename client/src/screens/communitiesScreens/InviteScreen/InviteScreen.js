@@ -117,7 +117,8 @@ const InviteScreen = ({ navigation, route }) => {
     <>
       <TextInput
         onChangeText={(value) => searchInput(value)}
-        placeholder="Search"
+       placeholder="Search"
+       placeholderTextColor="black"
         style={styles.searchInputStyle}
       />
     </>

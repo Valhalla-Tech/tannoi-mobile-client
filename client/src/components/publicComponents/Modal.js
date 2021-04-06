@@ -42,7 +42,7 @@ const MainModal = (props) => {
     <Modal animationType={animation} transparent={true} visible={openModal}>
       <View style={{ ...styles.modalContainerStyle, ...customContainerStyle }}>
         <TouchableOpacity
-          style={{ height: '100%', width: '100%', position: 'absolute' }}
+          style={{ height: '100%', width: '100%', position: 'absolute'}}
           onPress={() => {
             closeModal();
             setResetOpacity(true);

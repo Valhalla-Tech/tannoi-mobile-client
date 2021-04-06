@@ -7,8 +7,8 @@ import {
   Platform,
 } from 'react-native';
 import Slider from '@react-native-community/slider';
-import Sound from 'react-native-sound';
-// import { Player } from '@react-native-community/audio-toolkit';
+// import Sound from 'react-native-sound';
+import { Player } from '@react-native-community/audio-toolkit';
 
 //Icons
 import PlayerSpeed from '../../assets/topicAssets/playerSpeed.svg';
@@ -30,249 +30,328 @@ class RecordPlayer extends Component {
     super(props);
 
     this.state = {
-      loading: false,
+      loading: true,
       isPlaying: false,
       progress: 0,
       isPaused: false,
-      durationLeft: '',
-      durationPlayed: '',
+      durationLeft: '0:00',
+      durationPlayed: '0:00',
     };
   }
 
-  // componentDidMount() {
-  //   this.player = null;
-  //   this._isMounted = true;
-  //   this.lastSeek = 0;
-
-  //   // this.setState()
-
-  //   this.loadPlayer();
-  // }
-
-  // updateState = () => {
-  //   if (this._isMounted) {
-  //     this.setState({
-  //       isPlaying: this.player.isPlaying ? true : false,
-  //       loading: this.player && this.player.canPlay,
-  //     });
-  //   }
-  // };
-
-  // loadPlayer = () => {
-  //   if (this.player) {
-  //     this.player.destroy();
-  //   }
-
-  //   this.player = new Player(this.props.recordingFile, {
-  //     autoDestroy: false,
-  //   });
-
-  //   this.player.speed = 0.0;
-
-  //   this.player.prepare((error) => {
-  //     if (error) {
-  //       console.log(error, '<<<<');
-  //     } else {
-  //       this.updateState();
-
-  //       this.playRecording();
-  //     }
-  //   });
-
-  //   this.player.on('ended', () => {
-  //     this.updateState();
-  //   });
-
-  //   this.player.on('pause', () => {
-  //     this.updateState();
-  //   });
-  // };
-
-  // playRecording = () => {
-  //   console.log('sini');
-  //   this.player.playPause((error) => {
-  //     if (error) {
-  //       console.log(error);
-  //     }
-
-  //     this.updateState();
-  //   });
-  // };
-
-  // seek = (percentage) => {};
-
-  // stopPlaying = () => {
-  //   this.soundPlayer.stop();
-  // };
-
   componentDidMount() {
-    this.props.onRef(this);
+    this.player = null;
     this._isMounted = true;
-    this.setState({
-      loading: true,
-    });
-    this.soundPlayer = null;
-    this.progressInterval = null;
-    this.loadPlayer();
-    this._blur = this.props.navigation.addListener('blur', () => {
-      this._isMounted = false;
-      this.soundPlayer.stop();
-      this.stopUpdateProgressBar();
-    });
+    this.lastSeek = 0;
 
-    this._unsubscribe = this.props.navigation.addListener('focus', () => {
-      this._isMounted = true;
-      this.setState({
-        isPlaying: false,
-        progress: 0,
-        durationPlayed: `0:00`,
-        durationLeft: `0:00`,
-      });
-    });
+    this.loadPlayer();
   }
 
   componentWillUnmount() {
-    this.props.onRef(undefined);
     this._isMounted = false;
-    this.soundPlayer.stop();
-    this.stopUpdateProgressBar();
-    this._blur;
-    this._unsubscribe();
+    this.player && this.player.isPlaying && this.playRecording();
   }
 
-  seek(percentage) {
-    let position = percentage * this.soundPlayer.getDuration();
-
-    this.setState({
-      progress: percentage,
-    });
-    this.soundPlayer.setCurrentTime(position);
-    Platform.OS === 'ios' && this.playRecording(false, true);
-  }
-
-  forwardTenSecond() {
-    this.soundPlayer.getCurrentTime((seconds) => {
-      this.soundPlayer.setCurrentTime(seconds + 10);
-    });
-  }
-
-  getDuration() {
-    this.soundPlayer.getCurrentTime((seconds) => {
-      let floredSecondPlayed = Math.floor(seconds);
-      let floredSecondLeft =
-        Math.floor(this.soundPlayer.getDuration()) - floredSecondPlayed;
-
-      if (floredSecondPlayed < 10) {
-        floredSecondPlayed = `0${floredSecondPlayed}`;
-      }
-
-      if (floredSecondLeft < 10) {
-        floredSecondLeft = `0${floredSecondLeft}`;
-      }
-
+  updateState = () => {
+    if (this._isMounted) {
       this.setState({
-        durationPlayed: `0:${floredSecondPlayed}`,
-        durationLeft: `0:${floredSecondLeft}`,
+        isPlaying: this.player.isPlaying ? true : false,
+        loading: this.player && this.player.canPlay ? false : true,
       });
+    }
+  };
+
+  loadPlayer = () => {
+    if (this.player) {
+      this.player.destroy();
+    }
+
+    this.player = new Player(this.props.recordingFile, {
+      autoDestroy: false,
     });
-  }
 
-  updateProgressBar() {
-    this.progressInterval = setInterval(() => {
-      this.soundPlayer.getCurrentTime((seconds) => {
-        if (this.props.isRecorderModalOpen || this.props.openAddResponse) {
-          this.playRecording(true);
-        }
+    // this.player.speed = 0.0;
 
-        if (Math.floor(seconds) === Math.floor(this.soundPlayer.getDuration())) {
-          this.stopUpdateProgressBar();
-          this.setState({
-            isPlaying: false,
-            progress: 0,
-          });
-          if (this.props.isNextPlayerAvailable) {
-            this.props.nextPlayerFunction();
-            this.props.updateFromNextPreviousButton(true);
-          }
-        }
-
-        this.getDuration();
-        let currentProgress =
-          Math.max(0, seconds) / this.soundPlayer.getDuration();
-        if (this._isMounted) {
-          this.setState({
-            progress: currentProgress,
-          });
-        }
-      });
-    }, 100);
-  }
-
-  stopUpdateProgressBar() {
-    clearInterval(this.progressInterval);
-  }
-
-  loadPlayer() {
-    this.soundPlayer = new Sound(this.props.recordingFile, '', (error) => {
+    this.player.prepare((error) => {
       if (error) {
         console.log(error);
-      }
-
-      if (this._isMounted) {
-        this.setState({
-          loading: false,
-        });
+      } else {
+        this.updateState();
         this.getDuration();
 
         if (
           this.props.cardIndex !== 'discussion' &&
-          this.props.cardIndex !== 'response'
+          this.props.cardIndex !== 'response' &&
+          this._isMounted
         ) {
           this.playRecording();
         }
-        if (this.props.fromNextPreviousButton && this._isMounted) {
-          this.playRecording();
-          this.props.updateFromNextPreviousButton(false);
-        }
       }
+    });
+
+    this.player.on('ended', () => {
+      this.updateState();
+      this.props.playCounter();
+      if (this.props.isNextPlayerAvailable) {
+        this.props.nextPlayerFunction();
+        this.props.updateFromNextPreviousButton(true);
+      }
+    });
+
+    this.player.on('pause', () => {
+      this.updateState();
+    });
+  };
+
+  playRecording = () => {
+    this.player.playPause((error) => {
+      if (error) {
+        console.log(error);
+      }
+      this.updateProgressBar();
+      this.updateState();
+    });
+  };
+
+  seek = (percentage) => {
+    if (!this.player) {
+      return;
+    }
+
+    this.lastSeek = Date.now();
+
+    let position = percentage * this.player.duration;
+
+    this.player.seek(position, () => {
+      this.updateState();
+    });
+  };
+
+  updateProgressBar = () => {
+    this.progressInterval = setInterval(() => {
+      if (this.player && this.shouldUpdateProgressBar() && this._isMounted) {
+        let currentProgress =
+          Math.max(0, this.player.currentTime) / this.player.duration;
+        if (isNaN(currentProgress)) {
+          currentProgress = 0;
+        }
+
+        if (!this.player.isPlaying) {
+          this.stopProgressInterval();
+        }
+
+        if (
+          (this.props.isRecorderModalOpen && this.player.isPlaying) ||
+          (this.props.openAddResponse && this.player.isPlaying)
+        ) {
+          this.playRecording();
+        }
+
+        this.getDuration();
+        this.setState({ progress: currentProgress });
+      }
+    }, 100);
+  };
+
+  shouldUpdateProgressBar() {
+    return Date.now() - this.lastSeek > 200;
+  }
+
+  stopProgressInterval = () => {
+    clearInterval(this.progressInterval);
+  };
+
+  stopPlaying = () => {
+    this.soundPlayer.stop();
+  };
+
+  getDuration() {
+    let floredDuration = Math.floor(this.player.duration * 0.001);
+    let floredDurationPlayed = Math.floor(this.player.currentTime * 0.001);
+    let floredDurationLeft = floredDuration - floredDurationPlayed;
+
+    this.setState({
+      durationPlayed: `0:${
+        floredDurationPlayed === -1
+          ? '00'
+          : floredDurationPlayed >= 10
+          ? floredDurationPlayed
+          : `0${floredDurationPlayed}`
+      }`,
+      durationLeft: `0:${
+        floredDurationLeft >= 10 ? floredDurationLeft : `0${floredDurationLeft}`
+      }`,
     });
   }
 
-  playRecording = async (isPlaying, fromSeek) => {
-    if (isPlaying) {
-      this.soundPlayer.pause(() => {
-        this.setState({
-          isPlaying: false,
-          isPaused: true,
-        });
-      });
-      this.stopUpdateProgressBar();
-    } else {
-      if (!this.state.isPaused) {
-        this.props.playCounter();
-      }
-      this.setState({
-        isPlaying: true,
-        isPaused: false,
-      });
-      this.updateProgressBar();
-      this.soundPlayer.play((success) => {
-        // if (!fromSeek) {
-        //   this.setState({
-        //     isPlaying: false,
-        //     progress: 0,
-        //   });
+  // componentDidMount() {
+  //   this.props.onRef(this);
+  //   this._isMounted = true;
+  //   this.setState({
+  //     loading: true,
+  //   });
+  //   this.soundPlayer = null;
+  //   this.progressInterval = null;
+  //   this.loadPlayer();
+  //   this._blur = this.props.navigation.addListener('blur', () => {
+  //     this._isMounted = false;
+  //     this.soundPlayer.stop();
+  //     this.stopUpdateProgressBar();
+  //   });
 
-        //   this.stopUpdateProgressBar();
+  //   this._unsubscribe = this.props.navigation.addListener('focus', () => {
+  //     this._isMounted = true;
+  //     this.setState({
+  //       isPlaying: false,
+  //       progress: 0,
+  //       durationPlayed: `0:00`,
+  //       durationLeft: `0:00`,
+  //     });
+  //   });
+  // }
 
-        //   if (this.props.isNextPlayerAvailable) {
-        //     this.props.nextPlayerFunction();
-        //     this.props.updateFromNextPreviousButton(true);
-        //   }
-        // }
-      });
-    }
-  };
+  // componentWillUnmount() {
+  //   this.props.onRef(undefined);
+  //   this._isMounted = false;
+  //   this.soundPlayer.stop();
+  //   this.stopUpdateProgressBar();
+  //   this._blur;
+  //   this._unsubscribe();
+  // }
+
+  // seek(percentage) {
+  //   let position = percentage * this.soundPlayer.getDuration();
+
+  //   this.setState({
+  //     progress: percentage,
+  //   });
+  //   this.soundPlayer.setCurrentTime(position);
+  //   Platform.OS === 'ios' && this.playRecording(false, true);
+  // }
+
+  // forwardTenSecond() {
+  //   this.soundPlayer.getCurrentTime((seconds) => {
+  //     this.soundPlayer.setCurrentTime(seconds + 10);
+  //   });
+  // }
+
+  // getDuration() {
+  //   this.soundPlayer.getCurrentTime((seconds) => {
+  //     let floredSecondPlayed = Math.floor(seconds);
+  //     let floredSecondLeft =
+  //       Math.floor(this.soundPlayer.getDuration()) - floredSecondPlayed;
+
+  //     if (floredSecondPlayed < 10) {
+  //       floredSecondPlayed = `0${floredSecondPlayed}`;
+  //     }
+
+  //     if (floredSecondLeft < 10) {
+  //       floredSecondLeft = `0${floredSecondLeft}`;
+  //     }
+
+  //     this.setState({
+  //       durationPlayed: `0:${floredSecondPlayed}`,
+  //       durationLeft: `0:${floredSecondLeft}`,
+  //     });
+  //   });
+  // }
+
+  // updateProgressBar() {
+  //   this.progressInterval = setInterval(() => {
+  //     this.soundPlayer.getCurrentTime((seconds) => {
+  //       if (this.props.isRecorderModalOpen || this.props.openAddResponse) {
+  //         this.playRecording(true);
+  //       }
+
+  //       if (Math.floor(seconds) === Math.floor(this.soundPlayer.getDuration())) {
+  //         this.stopUpdateProgressBar();
+  //         this.setState({
+  //           isPlaying: false,
+  //           progress: 0,
+  //         });
+  //         if (this.props.isNextPlayerAvailable) {
+  //           this.props.nextPlayerFunction();
+  //           this.props.updateFromNextPreviousButton(true);
+  //         }
+  //       }
+
+  //       this.getDuration();
+  //       let currentProgress =
+  //         Math.max(0, seconds) / this.soundPlayer.getDuration();
+  //       if (this._isMounted) {
+  //         this.setState({
+  //           progress: currentProgress,
+  //         });
+  //       }
+  //     });
+  //   }, 100);
+  // }
+
+  // stopUpdateProgressBar() {
+  //   clearInterval(this.progressInterval);
+  // }
+
+  // loadPlayer() {
+  //   this.soundPlayer = new Sound(this.props.recordingFile, '', (error) => {
+  //     if (error) {
+  //       console.log(error);
+  //     }
+
+  //     if (this._isMounted) {
+  //       this.setState({
+  //         loading: false,
+  //       });
+  //       this.getDuration();
+
+  //       if (
+  //         this.props.cardIndex !== 'discussion' &&
+  //         this.props.cardIndex !== 'response'
+  //       ) {
+  //         this.playRecording();
+  //       }
+  //       if (this.props.fromNextPreviousButton && this._isMounted) {
+  //         this.playRecording();
+  //         this.props.updateFromNextPreviousButton(false);
+  //       }
+  //     }
+  //   });
+  // }
+
+  // playRecording = async (isPlaying, fromSeek) => {
+  //   if (isPlaying) {
+  //     this.soundPlayer.pause(() => {
+  //       this.setState({
+  //         isPlaying: false,
+  //         isPaused: true,
+  //       });
+  //     });
+  //     this.stopUpdateProgressBar();
+  //   } else {
+  //     if (!this.state.isPaused) {
+  //       this.props.playCounter();
+  //     }
+  //     this.setState({
+  //       isPlaying: true,
+  //       isPaused: false,
+  //     });
+  //     this.updateProgressBar();
+  //     this.soundPlayer.play((success) => {
+  //       // if (!fromSeek) {
+  //       //   this.setState({
+  //       //     isPlaying: false,
+  //       //     progress: 0,
+  //       //   });
+
+  //       //   this.stopUpdateProgressBar();
+
+  //       //   if (this.props.isNextPlayerAvailable) {
+  //       //     this.props.nextPlayerFunction();
+  //       //     this.props.updateFromNextPreviousButton(true);
+  //       //   }
+  //       // }
+  //     });
+  //   }
+  // };
 
   render() {
     return (
@@ -309,7 +388,7 @@ class RecordPlayer extends Component {
           ) : (
             <TouchableOpacity
               onPress={() => {
-                this.playRecording(this.state.isPlaying);
+                this.playRecording();
               }}>
               {!this.state.isPlaying ? <ActivePlayButton /> : <PauseButton />}
             </TouchableOpacity>
