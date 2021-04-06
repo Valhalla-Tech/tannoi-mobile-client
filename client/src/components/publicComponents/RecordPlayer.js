@@ -81,7 +81,8 @@ class RecordPlayer extends Component {
 
         if (
           this.props.cardIndex !== 'discussion' &&
-          this.props.cardIndex !== 'response'
+          this.props.cardIndex !== 'response' &&
+          this._isMounted
         ) {
           this.playRecording();
         }
@@ -90,6 +91,11 @@ class RecordPlayer extends Component {
 
     this.player.on('ended', () => {
       this.updateState();
+      this.props.playCounter();
+      if (this.props.isNextPlayerAvailable) {
+        this.props.nextPlayerFunction();
+        this.props.updateFromNextPreviousButton(true);
+      }
     });
 
     this.player.on('pause', () => {
