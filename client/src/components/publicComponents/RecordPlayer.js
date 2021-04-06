@@ -7,7 +7,7 @@ import {
   Platform,
 } from 'react-native';
 import Slider from '@react-native-community/slider';
-import Sound from 'react-native-sound';
+// import Sound from 'react-native-sound';
 import { Player } from '@react-native-community/audio-toolkit';
 
 //Icons
