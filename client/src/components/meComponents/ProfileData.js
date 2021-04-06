@@ -116,7 +116,7 @@ const ProfileData = (props) => {
                 }
                 style={styles.profileImageStyle}
               />
-              {isUserProfileScreen && (
+              {isUserProfileScreen && profile.isFollowing !== undefined && (
                 <Button
                   buttonStyle={{
                     color: '#FFFFFF',

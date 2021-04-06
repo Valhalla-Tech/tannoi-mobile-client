@@ -354,7 +354,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
     removeMemberFromCommunity(removeMemberIdTarget);
   };
 
-  const memberDetailModal = () => {
+  const MemberDetailModal = () => {
     /* The one I commented here is for future reference, cause I want to see if I can make my own modal animation for this app */
 
     // return (
@@ -379,6 +379,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
     const {item} = memberItemModal;
     return (
       <Modal
+        openModal={memberModalMode}
         customContainerStyle={styles.communityProfileMemberModalContainerStyle}
         customStyle={
           checkEligibility('userPermissions')
@@ -486,7 +487,6 @@ const CommunityProfileScreen = ({ navigation, route }) => {
 
   return (
     <ScreenContainer>
-      {memberModalMode ? memberDetailModal() : null}
       {promptRemoveMemberMode ? promptRemoveMemberModal() : null}
       <CommunityProfile
         navigation={navigation}
@@ -533,6 +533,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
         openModal={noticeModal}
         closeModal={closeNoticeModal}
       />
+      {memberModalMode && <MemberDetailModal />}
     </ScreenContainer>
   );
 };
@@ -574,7 +575,8 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    height: CalculateHeight(70),
+    paddingBottom: '15%',
+    // height: CalculateHeight(70),
   },
 
   communityProfileMemberModalNotEligibleStyle: {
@@ -584,7 +586,8 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    height: '35%',
+    paddingBottom: '15%'
+    // height: '35%',
   },
 
   communityProfileMemberModalProfilePictureContainerStyle: {
