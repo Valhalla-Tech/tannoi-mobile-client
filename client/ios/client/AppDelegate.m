@@ -6,6 +6,7 @@
 #import <React/RCTRootView.h>
 #import "RNSplashScreen.h"
 #import <RNBranch/RNBranch.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 #ifdef FB_SONARKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
@@ -14,7 +15,6 @@
 #import <FlipperKitNetworkPlugin/FlipperKitNetworkPlugin.h>
 #import <SKIOSNetworkPlugin/SKIOSNetworkAdapter.h>
 #import <FlipperKitReactPlugin/FlipperKitReactPlugin.h>
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 static void InitializeFlipper(UIApplication *application) {
   FlipperClient *client = [FlipperClient sharedClient];
@@ -35,6 +35,9 @@ if ([FIRApp defaultApp] == nil) {
   [FIRApp configure];
 }
 
+[RNBranch initSessionWithLaunchOptions:launchOptions isReferrable:YES];
+  NSURL *jsCodeLocation;
+
 #ifdef FB_SONARKIT_ENABLED
   InitializeFlipper(application);
 #endif
@@ -51,9 +54,6 @@ if ([FIRApp defaultApp] == nil) {
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
-
-  [RNBranch initSessionWithLaunchOptions:launchOptions isReferrable:YES];
-  NSURL *jsCodeLocation;
 
   [[FBSDKApplicationDelegate sharedInstance] application:application
                            didFinishLaunchingWithOptions:launchOptions];

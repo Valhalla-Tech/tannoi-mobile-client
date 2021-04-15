@@ -8,6 +8,7 @@ import {
   Modal,
   Animated,
   ScrollView,
+  KeyboardAvoidingView,
 } from 'react-native';
 
 const MainModal = (props) => {
@@ -42,7 +43,7 @@ const MainModal = (props) => {
     <Modal animationType={animation} transparent={true} visible={openModal}>
       <View style={{ ...styles.modalContainerStyle, ...customContainerStyle }}>
         <TouchableOpacity
-          style={{ height: '100%', width: '100%', position: 'absolute'}}
+          style={{ height: '100%', width: '100%', position: 'absolute' }}
           onPress={() => {
             closeModal();
             setResetOpacity(true);
@@ -55,10 +56,12 @@ const MainModal = (props) => {
             }}
           />
         </TouchableOpacity>
-        <View style={{ ...styles.modalStyle, ...customStyle }}>
-          {children || (child && child())}
-          {modalButton && modalButton()}
-        </View>
+        <KeyboardAvoidingView behavior="padding" style={{ ...styles.modalStyle, ...customStyle }}>
+          {/* <View style={{ ...styles.modalStyle, ...customStyle }}> */}
+            {children || (child && child())}
+            {modalButton && modalButton()}
+          {/* </View> */}
+        </KeyboardAvoidingView>
       </View>
     </Modal>
   );

@@ -39,6 +39,10 @@ const NavigationIndex = () => {
   const isLoggedIn = useSelector((state) => state.LoginReducer.isLoggedIn);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    checkToken();
+  }, [isLoggedIn]);
+
   const onNotificationOpenedApp = () => {
     // If the push notification received when the app is minimize
     messaging().onNotificationOpenedApp((remoteMessage) => {
@@ -111,6 +115,7 @@ const NavigationIndex = () => {
     try {
       let getToken = await AsyncStorage.getItem('access_token');
       branch.subscribe(({ error, params, uri }) => {
+        console.log(params, '<<<<<<', error, uri)
         if (error) {
           console.error('Error from Branch: ' + error);
         }
@@ -162,10 +167,6 @@ const NavigationIndex = () => {
       SplashScreen.hide();
     }
   };
-
-  useEffect(() => {
-    checkToken();
-  }, [isLoggedIn]);
 
   return (
     <Stack.Navigator

@@ -2,10 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>aps-environment</key>
+	<string>development</string>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>tannoi.app.link</string>
-		<string>tannoi-alternate.app.link</string>
+		<string>applinks:tannoi.app.link</string>
+		<string>applinks:tannoi-alternate.app.link</string>
+		<string>applinks:tannoi.test-app.link</string>
+		<string>applinks:tannoi-alternate.test-app.link</string>
 	</array>
 </dict>
 </plist>
