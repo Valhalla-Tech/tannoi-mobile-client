@@ -115,7 +115,6 @@ const NavigationIndex = () => {
     try {
       let getToken = await AsyncStorage.getItem('access_token');
       branch.subscribe(({ error, params, uri }) => {
-        console.log(params, '<<<<<<', error, uri)
         if (error) {
           console.error('Error from Branch: ' + error);
         }
@@ -163,6 +162,7 @@ const NavigationIndex = () => {
         getInitialNotification();
       }
     } else if (!getToken) {
+      branchSubscribe();
       dispatch(userLogout());
       SplashScreen.hide();
     }

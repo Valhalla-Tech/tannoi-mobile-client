@@ -35,9 +35,6 @@ if ([FIRApp defaultApp] == nil) {
   [FIRApp configure];
 }
 
-[RNBranch initSessionWithLaunchOptions:launchOptions isReferrable:YES];
-  NSURL *jsCodeLocation;
-
 #ifdef FB_SONARKIT_ENABLED
   InitializeFlipper(application);
 #endif
@@ -55,6 +52,9 @@ if ([FIRApp defaultApp] == nil) {
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
 
+  [RNBranch initSessionWithLaunchOptions:launchOptions isReferrable:YES];
+  NSURL *jsCodeLocation;
+
   [[FBSDKApplicationDelegate sharedInstance] application:application
                            didFinishLaunchingWithOptions:launchOptions];
   return YES;
@@ -64,9 +64,11 @@ if ([FIRApp defaultApp] == nil) {
             openURL:(NSURL *)url
             options:(nonnull NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options
 {
-  [[FBSDKApplicationDelegate sharedInstance] application:application
-                                                 openURL:url
-                                                 options:options];
+  if ([RNBranch application:application openURL:url options:options])  {
+    [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                  openURL:url
+                                                  options:options];
+  }
   return YES;
 }
 
