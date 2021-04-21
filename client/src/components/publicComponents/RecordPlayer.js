@@ -184,6 +184,12 @@ class RecordPlayer extends Component {
     });
   }
 
+  forwardTenSecond = () => {
+    this.player.seek(this.player.currentTime + 10000, () => {
+      this.updateState();
+    });
+  };
+
   // componentDidMount() {
   //   this.props.onRef(this);
   //   this._isMounted = true;

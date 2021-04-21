@@ -43,6 +43,21 @@ const NavigationIndex = () => {
     checkToken();
   }, [isLoggedIn]);
 
+  const messagingPermission = async () => {
+    try {
+      const authStatus = await messaging().requestPermission();
+      const enabled =
+        authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+        authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+    
+      if (enabled) {
+        console.log('Authorization status:', authStatus);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const onNotificationOpenedApp = () => {
     // If the push notification received when the app is minimize
     messaging().onNotificationOpenedApp((remoteMessage) => {
@@ -166,6 +181,7 @@ const NavigationIndex = () => {
       dispatch(userLogout());
       SplashScreen.hide();
     }
+    messagingPermission();
   };
 
   return (

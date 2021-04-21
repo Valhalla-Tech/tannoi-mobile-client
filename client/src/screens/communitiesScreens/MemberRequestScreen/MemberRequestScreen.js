@@ -122,11 +122,8 @@ const MemberRequestScreen = ({ navigation, route }) => {
             color: '#FFFFFF',
             backgroundColor: '#5152D0',
             borderWidth: 0,
-            height: '60%',
             marginBottom: 0,
-            paddingVertical: '5%',
-            paddingHorizontal: '5%',
-            marginRight: '3%',
+            marginRight: '3%'
           }}
           buttonTitle="Confirm"
           buttonFunction={() => actionButton(itemData.item.id, false)}
@@ -135,10 +132,7 @@ const MemberRequestScreen = ({ navigation, route }) => {
           buttonStyle={{
             color: '#5152D0',
             borderColor: '#5152D0',
-            height: '60%',
             marginBottom: 0,
-            paddingVertical: '5%',
-            paddingHorizontal: '5%',
           }}
           buttonTitle="Decline"
           buttonFunction={() => actionButton(itemData.item.id, true)}

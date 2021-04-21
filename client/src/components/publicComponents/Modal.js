@@ -56,11 +56,11 @@ const MainModal = (props) => {
             }}
           />
         </TouchableOpacity>
-        <KeyboardAvoidingView behavior="padding" style={{ ...styles.modalStyle, ...customStyle }}>
-          {/* <View style={{ ...styles.modalStyle, ...customStyle }}> */}
+        <KeyboardAvoidingView behavior="padding" style={{justifyContent: 'flex-end', width: animation === 'slide' ? '100%' : undefined}}>
+          <View style={{ ...styles.modalStyle, ...customStyle }}>
             {children || (child && child())}
             {modalButton && modalButton()}
-          {/* </View> */}
+          </View>
         </KeyboardAvoidingView>
       </View>
     </Modal>
