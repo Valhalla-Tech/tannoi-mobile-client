@@ -604,7 +604,7 @@ const styles = StyleSheet.create({
   },
 
   createdAndUniqueCodeContainerStyle: {
-    marginBottom: '2%',
+    marginBottom: '5%',
   },
 
   createdAndUniqueCodeStyle: {
@@ -621,6 +621,7 @@ const styles = StyleSheet.create({
 
   countDataContainerStyle: {
     flexDirection: 'row',
+    marginBottom: '5%'
   },
 
   countDataStyle: {

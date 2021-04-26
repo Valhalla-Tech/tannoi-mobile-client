@@ -39,6 +39,25 @@ const NavigationIndex = () => {
   const isLoggedIn = useSelector((state) => state.LoginReducer.isLoggedIn);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    checkToken();
+  }, [isLoggedIn]);
+
+  const messagingPermission = async () => {
+    try {
+      const authStatus = await messaging().requestPermission();
+      const enabled =
+        authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+        authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+    
+      if (enabled) {
+        console.log('Authorization status:', authStatus);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const onNotificationOpenedApp = () => {
     // If the push notification received when the app is minimize
     messaging().onNotificationOpenedApp((remoteMessage) => {
@@ -158,14 +177,12 @@ const NavigationIndex = () => {
         getInitialNotification();
       }
     } else if (!getToken) {
+      branchSubscribe();
       dispatch(userLogout());
       SplashScreen.hide();
     }
+    messagingPermission();
   };
-
-  useEffect(() => {
-    checkToken();
-  }, [isLoggedIn]);
 
   return (
     <Stack.Navigator

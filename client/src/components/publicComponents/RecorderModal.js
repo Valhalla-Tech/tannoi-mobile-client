@@ -147,7 +147,6 @@ const RecorderModal = (props) => {
         alignItems: 'center',
         borderBottomLeftRadius: 0,
         borderBottomRightRadius: 0,
-        height: '50%',
       }}
       openModal={openModal}
       closeModal={() => onClose()}>

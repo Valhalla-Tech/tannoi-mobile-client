@@ -63,7 +63,7 @@ const OptionButton = (props) => {
         responseScreenId={responseScreenId}
         role={role}
         cardOnDelete={cardOnDelete}
-        isDeleting={isDeleting}
+        isDeleting={isDeleting ? isDeleting : () => {}}
         isFlagged={isFlagged}
       />
     </>

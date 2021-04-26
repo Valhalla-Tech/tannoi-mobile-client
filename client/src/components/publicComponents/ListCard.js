@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
   profileContainerStyle: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: '1.5%',
+    marginBottom: '5%',
   },
 
   profilePictureStyle: {
@@ -184,6 +184,7 @@ const styles = StyleSheet.create({
   topicStyle: {
     color: '#5152D0',
     fontFamily: bold,
+    marginBottom: '3%'
   },
 
   titleTextStyle: {
@@ -191,7 +192,7 @@ const styles = StyleSheet.create({
     color: '#464D60',
     fontFamily: bold,
     width: 267,
-    marginBottom: '1.5%',
+    marginBottom: '5%',
   },
 
   cardInfoContainerStyle: {
