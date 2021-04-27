@@ -20,6 +20,7 @@ import List from '../../../components/publicComponents/List';
 import SearchBar from '../../../components/publicComponents/SearchBar';
 import BackButton from '../../../components/publicComponents/BackButton';
 import NoticeModal from '../../../components/publicComponents/Modal';
+import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import { getSingleTopic } from '../../../store/actions/TopicAction';
 
 const TopicDetail = (props) => {
@@ -100,11 +101,11 @@ const TopicDetail = (props) => {
   };
 
   return (
-    <View>
+    <ScreenContainer>
+      <Header child={HeaderContent} customStyle={styles.headerStyle} />
       <FlatList
         ListHeaderComponent={
           <>
-            <Header child={HeaderContent} customStyle={styles.headerStyle} />
             <View style={styles.listContainerStyle}>
               <List
                 listTitle="Discussions"
@@ -131,7 +132,7 @@ const TopicDetail = (props) => {
           </>
         }
       />
-    </View>
+    </ScreenContainer>
   );
 };
 
