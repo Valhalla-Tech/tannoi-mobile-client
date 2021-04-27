@@ -45,11 +45,30 @@ class RecordPlayer extends Component {
     this.lastSeek = 0;
 
     this.loadPlayer();
+
+    this._blur = this.props.navigation.addListener('blur', () => {
+      this._isMounted = false;
+      this.stopProgressInterval();
+      this.player.stop((error) => console.log(error));
+    });
+
+    this._unsubscribe = this.props.navigation.addListener('focus', () => {
+      this._isMounted = true;
+      this.setState({
+        isPlaying: false,
+        progress: 0,
+        durationPlayed: `0:00`,
+        durationLeft: `0:00`,
+      });
+    });
+
+    this._focus
   }
 
   componentWillUnmount() {
     this._isMounted = false;
     this.player && this.player.isPlaying && this.playRecording();
+    this._blur;
   }
 
   updateState = () => {
@@ -105,6 +124,7 @@ class RecordPlayer extends Component {
 
   playRecording = () => {
     this.player.playPause((error) => {
+      console.log(this.player.isPlaying)
       if (error) {
         console.log(error);
       }
@@ -129,6 +149,7 @@ class RecordPlayer extends Component {
 
   updateProgressBar = () => {
     this.progressInterval = setInterval(() => {
+      console.log('1')
       if (this.player && this.shouldUpdateProgressBar() && this._isMounted) {
         let currentProgress =
           Math.max(0, this.player.currentTime) / this.player.duration;
@@ -159,10 +180,6 @@ class RecordPlayer extends Component {
 
   stopProgressInterval = () => {
     clearInterval(this.progressInterval);
-  };
-
-  stopPlaying = () => {
-    this.soundPlayer.stop();
   };
 
   getDuration() {
