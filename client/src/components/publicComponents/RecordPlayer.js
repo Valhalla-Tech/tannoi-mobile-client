@@ -48,8 +48,8 @@ class RecordPlayer extends Component {
 
     this._blur = this.props.navigation.addListener('blur', () => {
       this._isMounted = false;
-      this.stopProgressInterval();
       this.player.stop((error) => console.log(error));
+      this.stopProgressInterval();
     });
 
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
@@ -61,14 +61,13 @@ class RecordPlayer extends Component {
         durationLeft: `0:00`,
       });
     });
-
-    this._focus
   }
-
+  
   componentWillUnmount() {
     this._isMounted = false;
     this.player && this.player.isPlaying && this.playRecording();
     this._blur;
+    this._unsubscribe();
   }
 
   updateState = () => {
