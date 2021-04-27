@@ -204,7 +204,7 @@ const OptionModal = (props) => {
               borderColor: '#5152D0',
               marginRight: '2%',
               width: '35%',
-              height: modalType === 'response' ? '70%' : '60%',
+              // height: modalType === 'response' ? '70%' : '60%',
             }}
             buttonFunction={() => setDeleteOption(false)}
           />
@@ -215,7 +215,7 @@ const OptionModal = (props) => {
               borderColor: '#5152D0',
               backgroundColor: '#5152D0',
               width: '35%',
-              height: modalType === 'response' ? '70%' : '60%',
+              // height: modalType === 'response' ? '70%' : '60%',
             }}
             buttonFunction={() => DeleteDiscussionOrResponse()}
           />
@@ -259,7 +259,7 @@ const OptionModal = (props) => {
           ? {
               ...styles.modalOptionStyle,
               width: '75%',
-              height: modalType === 'response' ? '25%' : '28.5%',
+              // height: modalType === 'response' ? '25%' : '28.5%',
             }
           : styles.modalOptionStyle
       }
@@ -301,9 +301,10 @@ const styles = StyleSheet.create({
 
   deleteConfirmationButtonContainerStyle: {
     flexDirection: 'row',
-    height: '50%',
+    // height: '50%',
     paddingTop: '5%',
     justifyContent: 'flex-end',
+    width: '100%'
   },
 
   headerTextStyle: {
