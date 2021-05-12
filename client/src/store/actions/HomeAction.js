@@ -16,6 +16,7 @@ export const getHome = () => {
       });
 
       if (getHomeRequest.data) {
+        await AsyncStorage.setItem('userId', JSON.stringify(getHomeRequest.data.user.id));
         dispatch({
           type: 'GET_HOME',
           payload: {

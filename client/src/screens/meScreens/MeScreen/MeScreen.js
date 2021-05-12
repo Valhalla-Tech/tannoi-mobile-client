@@ -19,6 +19,7 @@ import {
 } from '../../../store/actions/DiscussionAction';
 import { GlobalPadding } from '../../../constants/Size';
 import AboutSection from '../../../components/meComponents/AboutSection';
+import { getUserId } from '../../../helper/Store';
 
 //Components
 import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
@@ -53,7 +54,8 @@ const MeScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const meScreenRequest = () => {
+    const meScreenRequest = async () => {
+      let userId = await getUserId();
       dispatch(clearUserProfile());
       dispatch(clearDiscussion(true));
       dispatch(getOneProfile(null, true));

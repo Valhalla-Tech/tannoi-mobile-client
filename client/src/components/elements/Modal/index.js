@@ -7,17 +7,14 @@ import {
   TouchableOpacity,
   Modal,
   Animated,
-  ScrollView,
   KeyboardAvoidingView,
 } from 'react-native';
 
 const MainModal = (props) => {
   const {
-    openModal,
+    isOpen,
     closeModal,
-    child,
     children,
-    modalButton,
     customStyle,
     customContainerStyle,
     animation = 'fade',
@@ -29,7 +26,7 @@ const MainModal = (props) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    if (openModal) {
+    if (isOpen) {
       setResetOpacity(false);
       Animated.timing(fadeAnim, {
         toValue: 1,
@@ -37,10 +34,10 @@ const MainModal = (props) => {
         useNativeDriver: true,
       }).start();
     }
-  }, [openModal]);
+  }, [isOpen]);
 
   return (
-    <Modal animationType={animation} transparent={true} visible={openModal}>
+    <Modal animationType={animation} transparent={true} visible={isOpen}>
       <View style={{ ...styles.modalContainerStyle, ...customContainerStyle }}>
         <TouchableOpacity
           style={{ height: '100%', width: '100%', position: 'absolute' }}
@@ -60,12 +57,10 @@ const MainModal = (props) => {
           behavior="padding"
           style={{
             justifyContent: 'flex-end',
-            alignItems: 'center',
             width: animation === 'slide' ? '100%' : undefined,
           }}>
           <View style={{ ...styles.modalStyle, ...customStyle }}>
-            {children || (child && child())}
-            {modalButton && modalButton()}
+            {children}
           </View>
         </KeyboardAvoidingView>
       </View>

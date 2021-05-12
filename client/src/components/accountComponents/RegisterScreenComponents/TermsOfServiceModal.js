@@ -4,6 +4,7 @@ import { bold, normal } from '../../../assets/FontSize';
 import { CalculateHeight } from '../../../helper/CalculateSize';
 import { Button } from '../../publicComponents';
 import AsyncStorage from '@react-native-community/async-storage';
+import {getCurrentTermsOfService } from '../../../helper/Store';
 
 //Components
 import CloseButton from '../../publicComponents/CloseButton';
@@ -20,7 +21,7 @@ const TermsOfServiceModal = (props) => {
   const [termsAndPolicies, setTermsAndPolicies] = useState('');
 
   const getTermsAndPolicies = async () => {
-    let termsAndPolicies = await AsyncStorage.getItem('termsAndPolicies');
+    let termsAndPolicies = await getCurrentTermsOfService();
     setTermsAndPolicies(termsAndPolicies);
   };
 
@@ -85,10 +86,9 @@ const TermsOfServiceModal = (props) => {
       animation="slide"
       customStyle={{
         width: '100%',
-        height: '85%',
+        maxHeight: '85%',
         borderBottomLeftRadius: 0,
         borderBottomRightRadius: 0,
-        position: 'absolute',
       }}
       customContainerStyle={{
         justifyContent: 'flex-end',

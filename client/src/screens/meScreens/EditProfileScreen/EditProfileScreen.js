@@ -149,7 +149,7 @@ const EditProfileScreen = ({ navigation }) => {
   };
 
   const uploadProfileImage = () => {
-    UploadImage((image) => setProfileImage(image));
+    UploadImage((image) => setProfileImage(image), setIsLoading);
   };
 
   const closeRecordingModal = () => {

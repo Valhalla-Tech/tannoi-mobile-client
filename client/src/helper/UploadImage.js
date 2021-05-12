@@ -1,34 +1,43 @@
 import ImagePicker from 'react-native-image-crop-picker';
 import ImageResizer from 'react-native-image-resizer';
 
-export const UploadImage = (setImageFile) => {
+export const UploadImage = (setImageFile, setIsLoading) => {
+  setIsLoading(true);
   ImagePicker.openPicker({
-    width: 400,
+    width: 300,
     height: 400,
     cropping: false,
   })
     .then((image) => {
-      let divider = 1;
-      if (image.size > 400000) {
-        divider = image.size / 400000;
-      }
-      ImageResizer.createResizedImage(
-        image.path,
-        image.width / divider,
-        image.height / divider,
-        'JPEG',
-        100,
-        0,
-        null,
-      ).then((resp) => {
+      let cropBuffer = setTimeout(() => {
+        setIsLoading(false);
+        clearTimeout(cropBuffer);
         ImagePicker.openCropper({
-          path: resp.uri,
+          path: image.path,
+          width: 300,
+          height: 400,
         }).then((image) => {
-          setImageFile(image.path);
+          let divider = 1;
+          if (image.size > 400000) {
+            divider = image.size / 400000;
+          }
+          ImageResizer.createResizedImage(
+            image.path,
+            image.width / divider,
+            image.height / divider,
+            'JPEG',
+            100,
+            0,
+            null,
+          ).then((resp) => {
+            setImageFile(resp.uri);
+          });
         });
-      });
+      }, 3000);
     })
     .catch((error) => {
-      console.log(error);
+      if (error.message === 'User cancelled image selection') {
+        setIsLoading(false);
+      }
     });
 };

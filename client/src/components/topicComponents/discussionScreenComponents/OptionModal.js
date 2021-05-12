@@ -103,6 +103,7 @@ const OptionModal = (props) => {
   };
 
   const DeleteDiscussionOrResponse = async () => {
+    console.log(cardOnDelete)
     isDeleting();
     if (cardOnDelete) {
       if (modalType === 'discussion')
@@ -138,7 +139,7 @@ const OptionModal = (props) => {
         }
       }
     } catch (error) {
-      console.log(error);
+      console.log(error, '<<');
       if (error.response.data.msg === 'You have to login first') {
         dispatch(userLogout());
       }
