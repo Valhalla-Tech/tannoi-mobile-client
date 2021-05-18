@@ -17,6 +17,7 @@ import IcFacebook from '../../../assets/ic_facebook.svg';
 import IcGoogle from '../../../assets/ic_google.svg';
 import WelcomeScreenBackground from '../../../assets/accountAssets/WelcomeScreen/welcomeScreenBackground.png';
 import TannoiLogo from '../../../assets/publicAssets/tannoiLogo.svg';
+import ConfirmEmailForm from '../../../components/forms/ConfirmEmailForm';
 
 const WelcomeScreen = ({ navigation }) => {
   const [registerModalIsOpen, setRegisterModalIsOpen] = useState(false);
@@ -229,7 +230,7 @@ const WelcomeScreen = ({ navigation }) => {
             borderColor: '#5152D0',
             color: '#FFFFFF',
           },
-          () => navigation.navigate('RegisterScreen'),
+          () => setRegisterModalIsOpen(true),
         )}
         {WelcomeScreenButton(
           'Continue with Facebook',
