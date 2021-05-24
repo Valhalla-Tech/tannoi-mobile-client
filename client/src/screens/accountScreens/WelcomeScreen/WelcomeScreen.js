@@ -59,13 +59,14 @@ const WelcomeScreen = ({ navigation }) => {
   };
 
   const writeTermsOfService = async () => {
+    await dispatch(getTermsOfService());
+
     let termsOfService = await getCurrentTermsOfService();
 
     setTermsOfService(termsOfService);
   };
 
   useEffect(() => {
-    dispatch(getTermsOfService());
     writeTermsOfService();
     GoogleSignin.configure({
       // scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
