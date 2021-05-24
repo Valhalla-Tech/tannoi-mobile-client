@@ -75,7 +75,6 @@ const styles = StyleSheet.create({
   eyeIconStyle: {
     borderBottomWidth: 1,
     borderBottomColor: '#E3E6EB',
-    paddingBottom: '2.5%',
   },
 });
 

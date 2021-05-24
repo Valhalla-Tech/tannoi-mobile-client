@@ -164,7 +164,7 @@ const DiscussionScreen = ({ route, navigation }) => {
     return (
       <TouchableOpacity
         onPress={() =>
-          navigation.navigate('UserProfileScreen', { userId: data.item.id })
+          navigation.push('UserProfileScreen', { userId: data.item.id })
         }
         style={styles.memberListDataStyle}>
         <View style={styles.imageProfileAndNameStyle}>

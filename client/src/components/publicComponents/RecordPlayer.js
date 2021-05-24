@@ -40,16 +40,41 @@ class RecordPlayer extends Component {
   }
 
   componentDidMount() {
+    this.props.onRef(this);
     this.player = null;
     this._isMounted = true;
     this.lastSeek = 0;
+    this.progressInterval = null;
 
     this.loadPlayer();
+
+    this._blur = this.props.navigation.addListener('blur', () => {
+      this._isMounted = false;
+      this.stopProgressInterval();
+      this.player.stop((error) => console.log(error));
+    });
+
+    this._unsubscribe = this.props.navigation.addListener('focus', () => {
+      this._isMounted = true;
+      this.setState({
+        loading: true,
+        isPlaying: false,
+        progress: 0,
+        isPaused: false,
+        durationLeft: '0:00',
+        durationPlayed: '0:00',
+      });
+      this.loadPlayer();
+    });
   }
 
   componentWillUnmount() {
+    this.props.onRef(undefined);
     this._isMounted = false;
     this.player && this.player.isPlaying && this.playRecording();
+    this._blur;
+    this.stopProgressInterval();
+    this._unsubscribe();
   }
 
   updateState = () => {
@@ -105,10 +130,12 @@ class RecordPlayer extends Component {
 
   playRecording = () => {
     this.player.playPause((error) => {
+      console.log(this.player.isPlaying);
       if (error) {
         console.log(error);
       }
-      this.updateProgressBar();
+      this.player.isPlaying && this.updateProgressBar();
+      !this.player.isPlaying && this.stopProgressInterval();
       this.updateState();
     });
   };
@@ -161,10 +188,6 @@ class RecordPlayer extends Component {
     clearInterval(this.progressInterval);
   };
 
-  stopPlaying = () => {
-    this.soundPlayer.stop();
-  };
-
   getDuration() {
     let floredDuration = Math.floor(this.player.duration * 0.001);
     let floredDurationPlayed = Math.floor(this.player.currentTime * 0.001);
@@ -188,6 +211,10 @@ class RecordPlayer extends Component {
     this.player.seek(this.player.currentTime + 10000, () => {
       this.updateState();
     });
+  };
+
+  stopPlaying = () => {
+    this.player.stop((error) => {});
   };
 
   // componentDidMount() {

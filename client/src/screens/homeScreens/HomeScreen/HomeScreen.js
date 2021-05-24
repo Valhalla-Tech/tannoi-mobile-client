@@ -80,6 +80,23 @@ const HomeScreen = ({ navigation }) => {
               />
             </View>
             <View style={styles.homeScreenCardContainerStyle}>
+              <List
+                listTitle="Trending"
+                listData={trending}
+                navigation={navigation}
+                openModal={openModal}
+                useSeeAllButton={true}
+                isUsingMoreButton={true}
+              />
+              <List
+                listTitle="Discussions of the Week"
+                listData={discussionOfTheWeek}
+                navigation={navigation}
+                openModal={openModal}
+                useSeeAllButton={true}
+                sectionQuery="discussionOfTheWeek"
+                queryId="=true"
+              />
               {requestedDiscussion.length !== 0 && (
                 <List
                   listTitle="You're Asked to Respond"
@@ -104,24 +121,9 @@ const HomeScreen = ({ navigation }) => {
                   isUsingMoreButton={true}
                 />
               )}
-              <List
-                listTitle="Discussions of the Week"
-                listData={discussionOfTheWeek}
-                navigation={navigation}
-                openModal={openModal}
-                useSeeAllButton={true}
-                sectionQuery="discussionOfTheWeek"
-                queryId="=true"
-              />
+
               <TopUsers topUserData={topUser} navigation={navigation} />
-              <List
-                listTitle="Trending"
-                listData={trending}
-                navigation={navigation}
-                openModal={openModal}
-                useSeeAllButton={true}
-                isUsingMoreButton={true}
-              />
+
               <RecommendedTopics
                 topicData={recommendedTopic}
                 navigation={navigation}

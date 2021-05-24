@@ -24,12 +24,11 @@ const FollowSomeTopicsScreen = ({ navigation }) => {
   const [selectedTopic, setSelectedTopic] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(getTopic());
   }, []);
 
+  const dispatch = useDispatch();
   const lastRow = () => {
     if (allTopics.length === 0) {
       setAllTopics(topics);
