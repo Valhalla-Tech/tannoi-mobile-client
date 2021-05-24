@@ -5,6 +5,7 @@ platform :ios, '10.0'
 
 target 'client' do
   config = use_native_modules!
+  permissions_path = '../node_modules/react-native-permissions/ios'
 
   use_react_native!(:path => config["reactNativePath"])
 
@@ -15,6 +16,8 @@ target 'client' do
   pod 'GoogleSignIn', '~> 5.0.0'
 
   pod 'react-native-branch', path: '../node_modules/react-native-branch'
+
+  pod 'Permission-Microphone', :path => "#{permissions_path}/Microphone"
 
   target 'clientTests' do
     inherit! :complete

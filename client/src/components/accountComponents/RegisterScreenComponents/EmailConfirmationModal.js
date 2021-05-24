@@ -181,9 +181,9 @@ const EmailConfirmationModal = (props) => {
       animation="slide"
       customStyle={{
         width: '100%',
-        height: '60%',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
+        // height: '60%',
+        // justifyContent: 'flex-start',
+        // alignItems: 'flex-start',
         padding: '8%',
         borderBottomLeftRadius: 0,
         borderBottomRightRadius: 0,

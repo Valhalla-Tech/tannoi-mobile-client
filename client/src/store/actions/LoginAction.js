@@ -128,16 +128,16 @@ export const FacebookSignIn = () => {
   };
 };
 
-export const getTermsAndPolicies = () => {
+export const getTermsOfService = () => {
   return async () => {
     try {
-      let getTermsAndConditionRequest = await axios({
+      let getTermsOfServiceRequest = await axios({
         method: 'get',
         url: `${BaseUrl}/terms-of-service`
       });
 
-      if (getTermsAndConditionRequest.data) {
-        await AsyncStorage.setItem('termsAndPolicies', getTermsAndConditionRequest.data.content)
+      if (getTermsOfServiceRequest.data) {
+        await AsyncStorage.setItem('termsOfService', getTermsOfServiceRequest.data.content)
       }
     } catch (error) {
       console.log(error);

@@ -14,6 +14,7 @@ import { addName } from '../../../store/actions/CreateCommunityAction';
 import { LinearTextGradient } from 'react-native-text-gradient';
 import { normal } from '../../../assets/FontSize';
 import { Mixpanel } from 'mixpanel-react-native';
+import { LoadingSpinner } from '../../../components/elements';
 
 //Icon
 import NoProfileIcon from '../../../assets/communitiesAssets/img-no-profile-pic.svg';
@@ -40,9 +41,12 @@ const CommunityNameScreen = ({ navigation, route }) => {
   } = route.params;
 
   const [communityName, setCommunityName] = useState(communityNameEdit || '');
-  const [communityProfileImage, setCommunityProfileImage] = useState(communityImagePathEdit || '');
+  const [communityProfileImage, setCommunityProfileImage] = useState(
+    communityImagePathEdit || '',
+  );
   const [textDisplay, setTextDisplay] = useState(communityNameEdit || '');
   const [editMode, setEditMode] = useState(communityNameEdit ? false : true);
+  const [isLoading, setIsLoading] = useState(false);
   const userId = useSelector((state) => state.HomeReducer.user.id);
 
   const dispatch = useDispatch();
@@ -70,7 +74,7 @@ const CommunityNameScreen = ({ navigation, route }) => {
               onPress={() =>
                 UploadImage((value) => {
                   setCommunityProfileImage(value);
-                })
+                }, setIsLoading)
               }
               style={styles.communityProfilePictureButtonStyle}>
               {communityProfileImage !== '' ? (
@@ -121,8 +125,10 @@ const CommunityNameScreen = ({ navigation, route }) => {
                   paddingVertical: '1%',
                 }}
                 buttonTitle="OK"
-                buttonFunction={async() => {
-                  dispatch(addName(communityName.trim(), communityProfileImage));
+                buttonFunction={async () => {
+                  dispatch(
+                    addName(communityName.trim(), communityProfileImage),
+                  );
                   navigation.navigate('CommunityDescriptionScreen', {
                     communityId,
                     communityGuidelinesEdit,
@@ -130,15 +136,21 @@ const CommunityNameScreen = ({ navigation, route }) => {
                     communityDescriptionEdit,
                     communityTypeEdit,
                   });
-                  const mixpanel = await Mixpanel.init("ed9818be4179a2486e41556180a65495");
-                  mixpanel.track('User Create Community - Community Name Progress', {
-                    distinct_id: userId,
-                    "Community Name": communityName,
-                  });
+                  const mixpanel = await Mixpanel.init(
+                    'ed9818be4179a2486e41556180a65495',
+                  );
+                  mixpanel.track(
+                    'User Create Community - Community Name Progress',
+                    {
+                      distinct_id: userId,
+                      'Community Name': communityName,
+                    },
+                  );
                 }}
               />
             )}
           </View>
+          {isLoading && <LoadingSpinner coverView={true} />}
         </View>
       </View>
     </TouchableWithoutFeedback>

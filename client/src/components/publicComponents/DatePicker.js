@@ -27,6 +27,7 @@ const DatePicker = (props) => {
             is24Hour={true}
             display="spinner"
             onChange={onChange}
+            textColor="blue"
           />
           {Platform.OS === 'ios' && (
             <Text

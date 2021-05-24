@@ -42,7 +42,7 @@ const EnterYourProfileScreen = ({ navigation }) => {
   const [fullNameValidation, setFullNameValidation] = useState(false);
 
   const uploadProfileImage = async () => {
-    UploadImage((image) => setProfileImage(image));
+    UploadImage((image) => setProfileImage(image), setIsLoading);
   };
 
   const enterYourProfileRequest = async () => {

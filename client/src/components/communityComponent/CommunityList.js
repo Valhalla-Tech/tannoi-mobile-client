@@ -166,6 +166,7 @@ const styles = StyleSheet.create({
   communityNameContainerStyle: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: '5%'
   },
 
   communityNameStyle: {

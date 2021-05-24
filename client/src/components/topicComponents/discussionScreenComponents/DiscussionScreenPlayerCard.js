@@ -58,7 +58,7 @@ class DiscussionScreenPlayerCard extends Component {
       getIsLikeAndIsDislike: this.props.getIsLikeAndIsDislike,
       isPaused: false,
       openAddResponse: false,
-      soundPlayer: null,
+      player: null,
     };
   }
 
@@ -221,7 +221,7 @@ class DiscussionScreenPlayerCard extends Component {
               responseScreenId={this.props.responseScreenId}
               role={this.props.role}
               cardOnDelete={this.props.cardOnDelete}
-              isDeleting={() => this.state.soundPlayer.stopPlaying()}
+              isDeleting={() => this.state.player.stopPlaying()}
               isFlagged={this.props.isFlagged}
             />
           )}
@@ -286,7 +286,7 @@ class DiscussionScreenPlayerCard extends Component {
           <Text style={styles.captionStyle}>{this.props.caption}</Text>
         )}
         <RecordPlayer
-          onRef={(ref) => this.setState({ ...this.state, soundPlayer: ref })}
+          onRef={(ref) => this.setState({ ...this.state, player: ref })}
           customStyle={{
             marginTop: '7%',
           }}

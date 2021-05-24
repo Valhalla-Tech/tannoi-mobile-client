@@ -73,22 +73,30 @@ const EditProfileScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const updateState = () => {
-    if (
-      (fullName === undefined && firstRender) ||
-      (fullName === '' && firstRender)
-    ) {
+    if (firstRender) {
       setFullName(userProfile.name);
-    } else if (
-      (location === undefined && firstRender) ||
-      (location === '' && firstRender)
-    ) {
       setLocation(userProfile.location);
-    } else if (
-      (shortBio === undefined && firstRender) ||
-      (shortBio === '' && firstRender)
-    ) {
       setShortBio(userProfile.bio);
+      // if (fullName !== '' && location !== '' && shortBio !== '') {
+      //   setFirstRender(false);
+      // }
     }
+    // if (
+    //   (fullName === undefined && firstRender) ||
+    //   (fullName === '' && firstRender)
+    // ) {
+    //   setFullName(userProfile.name);
+    // } else if (
+    //   (location === undefined && firstRender) ||
+    //   (location === '' && firstRender)
+    // ) {
+    //   setLocation(userProfile.location);
+    // } else if (
+    //   (shortBio === undefined && firstRender) ||
+    //   (shortBio === '' && firstRender)
+    // ) {
+    //   setShortBio(userProfile.bio);
+    // }
   };
 
   useEffect(() => {
@@ -100,9 +108,9 @@ const EditProfileScreen = ({ navigation }) => {
   }, [updateState]);
 
   const gender = [
-    { name: 'Male', value: 'Male' },
-    { name: 'Female', value: 'Female' },
-    { name: 'Non-binary', value: 'non-binary' },
+    { name: 'Male', value: 'Male', id: 'Male' },
+    { name: 'Female', value: 'Female', id: 'Female' },
+    { name: 'Non-binary', value: 'non-binary', id: 'non-binary' },
   ];
 
   const dateInput = (event, selectedDate) => {
@@ -126,22 +134,22 @@ const EditProfileScreen = ({ navigation }) => {
   };
 
   const inputFullName = (input) => {
-    input === '' && setFirstRender(false);
+    setFirstRender(false);
     setFullName(input);
   };
 
   const inputLocation = (input) => {
-    input === '' && setFirstRender(false);
+    setFirstRender(false);
     setLocation(input);
   };
 
   const inputShortBio = (input) => {
-    input === '' && setFirstRender(false);
+    setFirstRender(false);
     setShortBio(input);
   };
 
   const uploadProfileImage = () => {
-    UploadImage((image) => setProfileImage(image));
+    UploadImage((image) => setProfileImage(image), setIsLoading);
   };
 
   const closeRecordingModal = () => {
@@ -221,7 +229,7 @@ const EditProfileScreen = ({ navigation }) => {
         selectedGender !== '' && formData.append('gender', selectedGender);
         shortBio !== '' && formData.append('bio', shortBio.trim());
         location !== '' && formData.append('location', location.trim());
-
+        console.log(formData)
         let saveEditRequest = await axios({
           url: `${BaseUrl}/users/profile/edit`,
           method: 'put',
@@ -231,16 +239,16 @@ const EditProfileScreen = ({ navigation }) => {
           },
           data: formData,
         });
-
         if (saveEditRequest.data) {
           if (
             bioVoiceFile !== '' &&
             bioVoiceFile !== userProfile.bio_voice_path
           ) {
             editVoiceBio();
+          } else {
+            setIsLoading(false);
+            navigation.navigate('Me', { fromEditScreen: true });
           }
-          setIsLoading(false);
-          navigation.navigate('Me', { fromEditScreen: true });
         }
       } else if (
         bioVoiceFile !== '' &&
@@ -395,7 +403,10 @@ const EditProfileScreen = ({ navigation }) => {
               data={gender}
               onChangeValue={(value) => setSelectedGender(value)}
               customStyle={{ marginBottom: '5%' }}
-              placeholder=" "
+              placeholder={
+                selectedGender === '' ? userProfile.gender : selectedGender
+              }
+              value={selectedGender}
             />
           ))}
       </View>
