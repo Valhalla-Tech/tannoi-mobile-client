@@ -27,14 +27,12 @@ const Button = (props) => {
         borderWidth:
           isBackButton || isCloseButton
             ? 0
-            : customStyle !== null
-            ? customStyle.boderWidth
+            : customStyle !== undefined && customStyle.borderWidth !== undefined
+            ? customStyle.borderWidth
             : 1,
       }}
       disabled={disabled}>
-      {
-        CustomIcon && <CustomIcon style={customIconStyle} />
-      }
+      {CustomIcon && <CustomIcon style={customIconStyle} />}
       {isBackButton ? (
         <IcBack />
       ) : isCloseButton ? (
@@ -47,6 +45,10 @@ const Button = (props) => {
               customStyle !== undefined && customStyle.color !== undefined
                 ? customStyle.color
                 : null,
+            fontSize:
+              customStyle !== undefined && customStyle.fontSize !== undefined
+                ? customStyle.fontSize
+                : styles.nameStyle.fontSize,
           }}>
           {name}
         </Text>

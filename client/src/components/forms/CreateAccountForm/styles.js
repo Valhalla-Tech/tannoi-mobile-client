@@ -37,4 +37,12 @@ export default StyleSheet.create({
   errorMessageStyle: {
     marginBottom: '2%',
   },
+
+  errorMessageStyle: {
+    padding: '2%',
+    borderRadius: 10,
+    color: '#FFFFFF',
+    backgroundColor: '#fa5050',
+    marginBottom: '5%',
+  },
 });

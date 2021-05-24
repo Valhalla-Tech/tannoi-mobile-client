@@ -21,7 +21,7 @@ http.interceptors.response.use(
     }
     if (error.response.data.msg === 'jwt expired' && !originalRequest._retry) {
       originalRequest._retry = true;
-      const refreshToken = await AsyncStorage.getItem('refresh_token');
+      const refreshToken = await AsyncStorage.getItem('refresh_token'); //Change after testing
       return http
         .post(BaseUrl + '/users/refresh-token', {
           refresh_token: refreshToken,

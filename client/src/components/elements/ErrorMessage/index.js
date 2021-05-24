@@ -7,7 +7,16 @@ const ErrorMessage = (props) => {
 
   return (
     <View style={{ ...styles.errorMessageCardStyle, ...customStyle }}>
-      <Text style={styles.errorTextStyle}>{message}</Text>
+      <Text
+        style={{
+          ...styles.errorTextStyle,
+          color:
+            customStyle !== undefined && customStyle.color !== undefined
+              ? customStyle.color
+              : null,
+        }}>
+        {message}
+      </Text>
     </View>
   );
 };

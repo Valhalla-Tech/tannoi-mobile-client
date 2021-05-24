@@ -80,7 +80,7 @@ export default StyleSheet.create({
   },
 
   registrationStatusBarStyle: {
-    width: '16%',
+    width: '10%',
     height: '100%',
     borderRadius: 10,
   },
@@ -94,11 +94,31 @@ export default StyleSheet.create({
   buttonStyle: {
     width: '75%',
     height: '18%',
-    marginBottom: '2%'
+    marginBottom: '2%',
   },
 
   buttonIconStyle: {
     position: 'absolute',
     left: '5%',
+  },
+
+  joinCommunityHeaderTextStyle: {
+    fontFamily: Bold,
+    fontSize: CalculateHeight(3),
+    color: '#464D60',
+    marginBottom: '3%'
+  },
+
+  communityNameStyle: {
+    fontFamily: Bold,
+    fontSize: CalculateHeight(2.5),
+    color: '#464D60',
+    marginBottom: '8%'
+  },
+
+  joinCommunityButtonStyle: {
+    borderRadius: 50,
+    borderColor: '#7817FF',
+    color: '#7817FF',
   },
 });

@@ -6,12 +6,13 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
-import { FormInput, Button, ErrorMessage } from '../../../components/elements';
+import { Button, ErrorMessage } from '../../../components/elements';
 import validate from './validate';
 import styles from './styles';
+import { FormInput } from '../../fields';
 
 const CreateAccountForm = (props) => {
-  const { onSubmit, message, onPressTermsOfService } = props;
+  const { onSubmit, errMsg, onPressTermsOfService } = props;
 
   const [email, setEmail] = useState('');
   const [fullName, setFullName] = useState('');
@@ -30,6 +31,12 @@ const CreateAccountForm = (props) => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.rootStyle}>
         <Text style={styles.titleTextStyle}>Create account</Text>
+        {errMsg !== '' && (
+          <ErrorMessage
+            message={errMsg}
+            customStyle={styles.errorMessageStyle}
+          />
+        )}
         <View style={styles.contentContainerStyle}>
           <View>
             <FormInput
@@ -42,10 +49,10 @@ const CreateAccountForm = (props) => {
               onChangeText={(value) => setFullName(value)}
               customRootStyle={styles.formInputStyle}
             />
-            {validating && validate(validationData).password !== '' && (
+            {validating && validate(validationData).passwordErrMsg !== '' && (
               <ErrorMessage
                 customStyle={styles.errorMessageStyle}
-                message={validate(validationData).password}
+                message={validate(validationData).passwordErrMsg}
               />
             )}
             <FormInput
@@ -54,12 +61,13 @@ const CreateAccountForm = (props) => {
               customRootStyle={styles.formInputStyle}
               secureText={true}
             />
-            {validating && validate(validationData).confirmPassword !== '' && (
-              <ErrorMessage
-                customStyle={styles.errorMessageStyle}
-                message={validate(validationData).confirmPassword}
-              />
-            )}
+            {validating &&
+              validate(validationData).confirmPasswordErrMsg !== '' && (
+                <ErrorMessage
+                  customStyle={styles.errorMessageStyle}
+                  message={validate(validationData).confirmPasswordErrMsg}
+                />
+              )}
             <FormInput
               placeholder="Confirm password"
               onChangeText={(value) => setConfirmPassword(value)}
@@ -82,12 +90,18 @@ const CreateAccountForm = (props) => {
                 validate(validationData).validationStatus ? false : true
               }
               onPress={() => {
-                const { passwordErrMsg, confirmPasswordErrMsg } = validate(validationData);
+                const { passwordErrMsg, confirmPasswordErrMsg } = validate(
+                  validationData,
+                );
 
                 setValidating(true);
                 passwordErrMsg === '' &&
                   confirmPasswordErrMsg === '' &&
-                  onSubmit({ name: fullName, email: email, password: password });
+                  onSubmit({
+                    name: fullName,
+                    email: email,
+                    password: password,
+                  });
               }}
             />
             <Text style={styles.termsOfServiceTextStyle}>

@@ -14,7 +14,7 @@ import SearchReducer from './reducers/SearchReducer';
 import PlayerReducer from './reducers/PlayerReducer';
 import CreateCommunityReducer from './reducers/CreateCommunityReducer';
 import CommunitiesReducer from './reducers/CommunitiesReducer';
-import RegisterReducer from '../screens/accountScreens/WelcomeScreen/reducer';
+import RegisterReducer from './reducers/RegisterReducer';
 
 const reducer = combineReducers({
   LoginReducer,

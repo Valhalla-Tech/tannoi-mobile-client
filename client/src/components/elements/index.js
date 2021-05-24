@@ -2,7 +2,7 @@ import Button from './Button';
 import Card from './Card';
 import Header from './Header';
 import Modal from './Modal';
-import FormInput from './FormInput';
+import FormInput from '../fields/FormInput';
 import ErrorMessage from './ErrorMessage';
 import LoadingSpinner from './LoadingSpinner';
 

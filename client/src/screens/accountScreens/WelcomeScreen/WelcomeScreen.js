@@ -9,7 +9,17 @@ import {
   getTermsOfService,
 } from '../../../store/actions/LoginAction';
 import { Modal, Button, LoadingSpinner } from '../../../components/elements';
-import { createAccount } from './action';
+import {
+  createAccount,
+  confirmEmail,
+  getTopic,
+  followTopic,
+  getPeopleToHear,
+  getCommunities,
+  openJoinCommunityModal,
+  joinCommunity,
+} from '../../../store/actions/RegisterAction';
+import { userLogin } from '../../../store/actions/LoginAction';
 import { getCurrentTermsOfService } from '../../../helper/Store';
 import styles from './styles';
 import CreateAccountForm from '../../../components/forms/CreateAccountForm';
@@ -18,16 +28,27 @@ import IcGoogle from '../../../assets/ic_google.svg';
 import WelcomeScreenBackground from '../../../assets/accountAssets/WelcomeScreen/welcomeScreenBackground.png';
 import TannoiLogo from '../../../assets/publicAssets/tannoiLogo.svg';
 import ConfirmEmailForm from '../../../components/forms/ConfirmEmailForm';
+import CommunityRulesForm from '../../../components/forms/CommunityRulesForm';
+import AppPermissionForm from '../../../components/forms/AppPermissionForm';
+import TopicsToFollowForm from '../../../components/forms/TopicsToFollowForm';
+import PeopleToHearForm from '../../../components/forms/PeopleToHearForm';
+import CommunitiesToJoinForm from '../../../components/forms/CommunitiesToJoinForm';
 
 const WelcomeScreen = ({ navigation }) => {
   const [registerModalIsOpen, setRegisterModalIsOpen] = useState(false);
   const [termsOfService, setTermsOfService] = useState('');
   const [showAgreeButton, setShowAgreeButton] = useState(false);
-  const [registerPage, setRegisterPage] = useState(3);
+  const [registerPage, setRegisterPage] = useState(1);
   const [createAccountData, setCreateAccountData] = useState({});
+  const [errMsgFromServer, setErrMsgFromServer] = useState('');
 
   const dispatch = useDispatch();
-  const { isLoading } = useSelector((state) => state.RegisterReducer);
+  const {
+    isLoading,
+    topics,
+    communityFromCode,
+    joinCommunityModalIsOpen,
+  } = useSelector((state) => state.RegisterReducer);
 
   const googleSignIn = () => {
     dispatch(GoogleSignIn());
@@ -111,10 +132,12 @@ const WelcomeScreen = ({ navigation }) => {
                 createAccount(createAccountData),
               );
 
-              if (createAccountRequest) {
+              if (createAccountRequest.status) {
+                setErrMsgFromServer('');
                 setRegisterPage(3);
               } else {
-                console.log('gagal');
+                setErrMsgFromServer(createAccountRequest.msg);
+                setRegisterPage(1);
               }
             }}
           />
@@ -152,37 +175,45 @@ const WelcomeScreen = ({ navigation }) => {
         borderBottomRightRadius: 0,
       }}>
       <View style={styles.registerModalHeaderStyle}>
-        {registerPage !== 1 && (
+        {registerPage !== 1 &&
+          registerPage !== 3 &&
+          registerPage !== 4 &&
+          registerPage !== 5 && (
+            <Button
+              isBackButton={true}
+              customStyle={{ position: 'absolute', left: '1%' }}
+              onPress={() => {
+                setRegisterPage((prevState) => prevState - 1);
+              }}
+            />
+          )}
+        <Text style={styles.registerModalHeaderTextStyle}>Sing up</Text>
+        {registerPage !== 3 && registerPage !== 4 && registerPage !== 5 && (
           <Button
-            isBackButton={true}
-            customStyle={{ position: 'absolute', left: '1%' }}
+            isCloseButton={true}
+            customStyle={{ position: 'absolute', right: '1%' }}
             onPress={() => {
-              setRegisterPage((prevState) => prevState - 1);
+              setRegisterPage(1);
+              registerPage === 1
+                ? (setRegisterModalIsOpen(false), setErrMsgFromServer(''))
+                : dispatch(userLogin());
             }}
           />
         )}
-        <Text style={styles.registerModalHeaderTextStyle}>Sing up</Text>
-        <Button
-          isCloseButton={true}
-          customStyle={{ position: 'absolute', right: '1%' }}
-          onPress={() => {
-            setRegisterPage(1);
-            setRegisterModalIsOpen(false);
-          }}
-        />
       </View>
       <View style={styles.registrationStatusBarContainerStyle}>
         <View style={styles.statusBarStyle}>
           {RegistrationStatusBar(true)}
-          {RegistrationStatusBar()}
-          {RegistrationStatusBar()}
-          {RegistrationStatusBar()}
-          {RegistrationStatusBar()}
-          {RegistrationStatusBar()}
+          {RegistrationStatusBar(registerPage >= 2)}
+          {RegistrationStatusBar(registerPage >= 3)}
+          {RegistrationStatusBar(registerPage >= 4)}
+          {RegistrationStatusBar(registerPage >= 5)}
+          {RegistrationStatusBar(registerPage >= 6)}
+          {RegistrationStatusBar(registerPage >= 7)}
+          {RegistrationStatusBar(registerPage >= 8)}
         </View>
-        <Text style={styles.statusBarNumberTextStyle}>1/6</Text>
+        <Text style={styles.statusBarNumberTextStyle}>{registerPage}/8</Text>
       </View>
-      {registerPage === 2 && TermsOfServiceSection()}
       {registerPage === 1 && (
         <CreateAccountForm
           onPressTermsOfService={() => {
@@ -194,9 +225,72 @@ const WelcomeScreen = ({ navigation }) => {
             setRegisterPage(2);
             setCreateAccountData(data);
           }}
+          errMsg={errMsgFromServer}
+        />
+      )}
+      {registerPage === 2 && TermsOfServiceSection()}
+      {registerPage === 3 && (
+        <ConfirmEmailForm
+          isLoading={isLoading}
+          onSubmit={async (data) => {
+            let confirmEmailRequest = await dispatch(confirmEmail(data));
+            if (confirmEmailRequest.status) {
+              setRegisterPage(4);
+            } else {
+              setErrMsgFromServer(confirmEmailRequest.msg);
+            }
+          }}
+          errMsg={errMsgFromServer}
+        />
+      )}
+      {registerPage === 4 && (
+        <CommunityRulesForm onSubmit={() => setRegisterPage(5)} />
+      )}
+      {registerPage === 5 && (
+        <AppPermissionForm
+          onSubmit={async () => {
+            dispatch(getTopic());
+            setRegisterPage(6);
+          }}
+        />
+      )}
+      {registerPage === 6 && (
+        <TopicsToFollowForm
+          topics={topics}
+          onSkip={() => {
+            dispatch(getPeopleToHear());
+            setRegisterPage(7);
+          }}
+          onSubmit={async (data) => {
+            let followTopicRequest = await dispatch(followTopic(data));
+
+            if (followTopicRequest) {
+              dispatch(getPeopleToHear());
+              setRegisterPage(7);
+            }
+          }}
+        />
+      )}
+      {registerPage === 7 && (
+        <PeopleToHearForm
+          onSubmit={() => {
+            dispatch(getCommunities());
+            setRegisterPage(8);
+          }}
+          onSkip={() => {
+            dispatch(getCommunities());
+            setRegisterPage(8);
+          }}
+        />
+      )}
+      {registerPage === 8 && (
+        <CommunitiesToJoinForm
+          onSubmit={() => dispatch(userLogin())}
+          onSkip={() => dispatch(userLogin())}
         />
       )}
       {isLoading && <LoadingSpinner coverView={true} />}
+      {JoinCommunityModal()}
     </Modal>
   );
 
@@ -216,6 +310,46 @@ const WelcomeScreen = ({ navigation }) => {
         CustomIcon={CustomIcon}
         customIconStyle={customIconStyle}
       />
+    );
+  };
+
+  const JoinCommunityModal = () => {
+    return (
+      <Modal
+        isOpen={joinCommunityModalIsOpen}
+        closeModal={() => dispatch(openJoinCommunityModal(false))}>
+        {communityFromCode !== 'This Community is Private' &&
+        communityFromCode !== 'Community Not Found' ? (
+          <>
+            <Text style={styles.joinCommunityHeaderTextStyle}>
+              Join this community
+            </Text>
+            <Text style={styles.communityNameStyle}>
+              {communityFromCode.name}
+            </Text>
+            <Button
+              name="Join Community"
+              customStyle={styles.joinCommunityButtonStyle}
+              onPress={async () => {
+                let joinCommunityRequest = await dispatch(
+                  joinCommunity(communityFromCode.id),
+                );
+
+                if (joinCommunityRequest.status) {
+                  dispatch(openJoinCommunityModal(false));
+                } else {
+                  dispatch(openJoinCommunityModal(false));
+                  console.log(joinCommunityRequest.msg);
+                }
+              }}
+            />
+          </>
+        ) : (
+          <Text style={styles.joinCommunityHeaderTextStyle}>
+            {communityFromCode}
+          </Text>
+        )}
+      </Modal>
     );
   };
 
