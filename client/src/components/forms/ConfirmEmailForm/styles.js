@@ -23,7 +23,7 @@ export default StyleSheet.create({
   pinInputContainerStyle: {
     flexDirection: 'row',
     marginTop: '10%',
-    marginBottom: '5%'
+    marginBottom: '5%',
   },
 
   pinInputStyle: {
@@ -32,5 +32,15 @@ export default StyleSheet.create({
 
   buttonTextStyle: {
     color: '#7817FF',
-  }
+  },
+
+  errorMessageStyle: {
+    padding: '2%',
+    borderRadius: 10,
+    color: '#FFFFFF',
+    backgroundColor: '#fa5050',
+    marginBottom: '5%',
+    marginTop: '5%',
+    marginBottom: '-5%'
+  },
 });

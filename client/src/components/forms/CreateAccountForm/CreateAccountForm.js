@@ -34,7 +34,7 @@ const CreateAccountForm = (props) => {
         {errMsg !== '' && (
           <ErrorMessage
             message={errMsg}
-            customStyle={styles.errorMessageStyle}
+            customStyle={styles.errorMessageFromServerStyle}
           />
         )}
         <View style={styles.contentContainerStyle}>

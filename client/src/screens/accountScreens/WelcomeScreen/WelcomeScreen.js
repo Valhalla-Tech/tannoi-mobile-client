@@ -163,6 +163,7 @@ const WelcomeScreen = ({ navigation }) => {
         setRegisterPage(1);
         setRegisterModalIsOpen(false);
       }}
+      disableButton={true}
       animation="slide"
       customContainerStyle={{
         justifyContent: 'flex-end',
@@ -188,7 +189,7 @@ const WelcomeScreen = ({ navigation }) => {
               }}
             />
           )}
-        <Text style={styles.registerModalHeaderTextStyle}>Sing up</Text>
+        <Text style={styles.registerModalHeaderTextStyle}>Sign up</Text>
         {registerPage !== 3 && registerPage !== 4 && registerPage !== 5 && (
           <Button
             isCloseButton={true}
@@ -236,9 +237,14 @@ const WelcomeScreen = ({ navigation }) => {
           onSubmit={async (data) => {
             let confirmEmailRequest = await dispatch(confirmEmail(data));
             if (confirmEmailRequest.status) {
+              errMsgFromServer('');
               setRegisterPage(4);
             } else {
-              setErrMsgFromServer(confirmEmailRequest.msg);
+              setErrMsgFromServer(
+                confirmEmailRequest.msg === 'Token Expired'
+                  ? 'Invalid Token'
+                  : confirmEmailRequest.msg,
+              );
             }
           }}
           errMsg={errMsgFromServer}
