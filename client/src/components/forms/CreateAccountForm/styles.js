@@ -38,11 +38,16 @@ export default StyleSheet.create({
     marginBottom: '2%',
   },
 
-  errorMessageStyle: {
+  errorMessageFromServerStyle: {
     padding: '2%',
     borderRadius: 10,
     color: '#FFFFFF',
     backgroundColor: '#fa5050',
     marginBottom: '5%',
+  },
+
+  errorMessageStyle: {
+    color: 'red',
+    marginBottom: '2%',
   },
 });
