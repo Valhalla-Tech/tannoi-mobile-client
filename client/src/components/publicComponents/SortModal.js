@@ -48,11 +48,8 @@ const SortModal = (props) => {
       customStyle={{
         borderRadius: 0,
         width: '100%',
-        height: '50%',
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
       }}
       child={ModalContent}
     />
@@ -61,7 +58,6 @@ const SortModal = (props) => {
 
 const styles = StyleSheet.create({
   modalContenStyle: {
-    flex: 1,
     width: '100%',
   },
 
