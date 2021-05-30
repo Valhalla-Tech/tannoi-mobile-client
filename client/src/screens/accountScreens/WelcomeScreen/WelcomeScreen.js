@@ -232,13 +232,24 @@ const WelcomeScreen = ({ navigation }) => {
       )}
       {registerPage === 2 && TermsOfServiceSection()}
       {registerPage === 3 && (
+        <CommunityRulesForm onSubmit={() => setRegisterPage(4)} />
+      )}
+      {registerPage === 4 && (
+        <AppPermissionForm
+          onSubmit={() => {
+            setRegisterPage(5);
+          }}
+        />
+      )}
+      {registerPage === 5 && (
         <ConfirmEmailForm
           isLoading={isLoading}
           onSubmit={async (data) => {
             let confirmEmailRequest = await dispatch(confirmEmail(data));
             if (confirmEmailRequest.status) {
-              errMsgFromServer('');
-              setRegisterPage(4);
+              setErrMsgFromServer('');
+              dispatch(getTopic());
+              setRegisterPage(6);
             } else {
               setErrMsgFromServer(
                 confirmEmailRequest.msg === 'Token Expired'
@@ -248,17 +259,6 @@ const WelcomeScreen = ({ navigation }) => {
             }
           }}
           errMsg={errMsgFromServer}
-        />
-      )}
-      {registerPage === 4 && (
-        <CommunityRulesForm onSubmit={() => setRegisterPage(5)} />
-      )}
-      {registerPage === 5 && (
-        <AppPermissionForm
-          onSubmit={async () => {
-            dispatch(getTopic());
-            setRegisterPage(6);
-          }}
         />
       )}
       {registerPage === 6 && (
