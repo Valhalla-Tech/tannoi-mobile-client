@@ -163,6 +163,7 @@ const WelcomeScreen = ({ navigation }) => {
         setRegisterPage(1);
         setRegisterModalIsOpen(false);
       }}
+      disableButton={true}
       animation="slide"
       customContainerStyle={{
         justifyContent: 'flex-end',
@@ -188,7 +189,7 @@ const WelcomeScreen = ({ navigation }) => {
               }}
             />
           )}
-        <Text style={styles.registerModalHeaderTextStyle}>Sing up</Text>
+        <Text style={styles.registerModalHeaderTextStyle}>Sign up</Text>
         {registerPage !== 3 && registerPage !== 4 && registerPage !== 5 && (
           <Button
             isCloseButton={true}
@@ -231,28 +232,33 @@ const WelcomeScreen = ({ navigation }) => {
       )}
       {registerPage === 2 && TermsOfServiceSection()}
       {registerPage === 3 && (
+        <CommunityRulesForm onSubmit={() => setRegisterPage(4)} />
+      )}
+      {registerPage === 4 && (
+        <AppPermissionForm
+          onSubmit={() => {
+            setRegisterPage(5);
+          }}
+        />
+      )}
+      {registerPage === 5 && (
         <ConfirmEmailForm
           isLoading={isLoading}
           onSubmit={async (data) => {
             let confirmEmailRequest = await dispatch(confirmEmail(data));
             if (confirmEmailRequest.status) {
-              setRegisterPage(4);
+              setErrMsgFromServer('');
+              dispatch(getTopic());
+              setRegisterPage(6);
             } else {
-              setErrMsgFromServer(confirmEmailRequest.msg);
+              setErrMsgFromServer(
+                confirmEmailRequest.msg === 'Token Expired'
+                  ? 'Invalid Token'
+                  : confirmEmailRequest.msg,
+              );
             }
           }}
           errMsg={errMsgFromServer}
-        />
-      )}
-      {registerPage === 4 && (
-        <CommunityRulesForm onSubmit={() => setRegisterPage(5)} />
-      )}
-      {registerPage === 5 && (
-        <AppPermissionForm
-          onSubmit={async () => {
-            dispatch(getTopic());
-            setRegisterPage(6);
-          }}
         />
       )}
       {registerPage === 6 && (

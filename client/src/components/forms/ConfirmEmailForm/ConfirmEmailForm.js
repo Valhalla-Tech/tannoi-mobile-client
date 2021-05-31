@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { resendEmailConfirmationCode } from '../../../store/actions/RegisterAction';
 import styles from './styles';
 import { PinInput } from '../../fields';
+import { ErrorMessage } from '../../elements';
 
 const ConfirmEmailForm = (props) => {
   const { onSubmit, isLoading, errMsg } = props;
@@ -46,6 +47,12 @@ const ConfirmEmailForm = (props) => {
         <Text style={styles.normalTextStyle}>
           Enter the 4-digit code tannOi just sent to {registerData.email}
         </Text>
+        {errMsg !== '' && (
+          <ErrorMessage
+            customStyle={styles.errorMessageStyle}
+            message={errMsg}
+          />
+        )}
         <View style={styles.pinInputContainerStyle}>
           <PinInput
             autoFocus={true}
@@ -108,7 +115,9 @@ const ConfirmEmailForm = (props) => {
           Didn't get an email?{' '}
           <Text
             style={styles.buttonTextStyle}
-            onPress={() => dispatch(resendEmailConfirmationCode(registerData.id))}>
+            onPress={() =>
+              dispatch(resendEmailConfirmationCode(registerData.id))
+            }>
             Send again
           </Text>
         </Text>
