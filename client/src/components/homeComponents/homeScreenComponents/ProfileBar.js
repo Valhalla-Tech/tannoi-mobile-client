@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { bold } from '../../../assets/FontSize';
 import { CalculateHeight, CalculateWidth } from '../../../helper/CalculateSize';
+import { useDispatch } from 'react-redux';
+import { setCommunityButtonProperties } from '../../../store/actions/CoachMarkAction';
 
 //Icons
 import NoProfilePicture from '../../../assets/publicAssets/noProfilePicture.png';
@@ -12,6 +14,8 @@ import Button from '../../publicComponents/Button';
 
 const ProfileBar = (props) => {
   const { user, navigation } = props;
+  const communityBtnRef = useRef();
+  const dispatch = useDispatch()
 
   return (
     <View style={styles.profileBarContainerStyle}>
@@ -37,6 +41,19 @@ const ProfileBar = (props) => {
             buttonFunction={() => navigation.navigate('VerificationNavigation')}
           />
         )}
+        <View
+          ref={communityBtnRef}
+          onLayout={el => {
+            communityBtnRef.current.measure( (fx, fy, width, height, px, py) => {
+              dispatch(setCommunityButtonProperties({
+                x: px - 13,
+                y: py - 10,
+                width: 50,
+                height: 50,
+                borderRadius: 50,
+              }))
+            });
+          }}>
         <Button
           buttonTitle="Communities"
           buttonStyle={{
@@ -49,6 +66,7 @@ const ProfileBar = (props) => {
           }}
           buttonFunction={() => navigation.navigate('CommunitiesNavigation')}
         />
+        </View>
       </View>
     </View>
   );
