@@ -46,7 +46,6 @@ const NavigationBar = (props) => {
   const inboxMenuRef = useRef();
   const meMenuRef = useRef();
   const coachmarkRef = useRef();
-  const [offset, setOffset] = useState(0);
   const [addButonProperties, setAddButtonProperties] = useState(null);
   const [coachMarkButtonText, setCoachMarkButtonText] = useState('');
   const [tutorialStep, incrementTutorialStep] = useState(1);
@@ -118,7 +117,6 @@ const NavigationBar = (props) => {
 
   useEffect(() => {
     getTutorialStatus();
-    triggerTutorial(tutorialStep);
   }, []);
 
   return (
