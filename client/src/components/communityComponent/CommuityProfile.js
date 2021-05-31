@@ -465,6 +465,14 @@ const CommunityProfile = (props) => {
                       Created {profile.created}
                     </Text>
                   </View>
+                  <View style={styles.createdContainerStyle}>
+                    <View style={styles.calendarIconContainerStyle}>
+                      <PrivateIcon />
+                    </View>
+                    <Text style={styles.createdAndUniqueCodeStyle}>
+                      Community unique code: {profile.community_code}
+                    </Text>
+                  </View>
                   {/*
                   <View style={{flexDirection: 'row'}}>
                     <CalendarIcon/>
