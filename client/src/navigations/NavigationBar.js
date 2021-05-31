@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, findNodeHandle } from 'react-native';
 import { useSelector } from 'react-redux';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { CalculateHeight, CalculateWidth } from '../helper/CalculateSize';
@@ -46,6 +46,7 @@ const NavigationBar = (props) => {
   const inboxMenuRef = useRef();
   const meMenuRef = useRef();
   const coachmarkRef = useRef();
+  const [offset, setOffset] = useState(0);
   const [addButonProperties, setAddButtonProperties] = useState(null);
   const [coachMarkButtonText, setCoachMarkButtonText] = useState('');
   const [tutorialStep, incrementTutorialStep] = useState(1);
@@ -117,11 +118,12 @@ const NavigationBar = (props) => {
 
   useEffect(() => {
     getTutorialStatus();
+    triggerTutorial(tutorialStep);
   }, []);
 
   return (
     <>
-    {tutorial && addButonProperties && homeIconLocation && topicIconLocation && inboxIconLocation && meIconLocation && communityButtonProperties ? <CoachMark
+    {tutorial && addButonProperties && homeIconLocation && topicIconLocation && inboxIconLocation && meIconLocation && communityButtonProperties ? <CoachMark 
           holeProgression={[addButonProperties, homeIconLocation, topicIconLocation, inboxIconLocation, meIconLocation, communityButtonProperties, ]}
           ref={coachmarkRef}
         >
@@ -149,6 +151,7 @@ const NavigationBar = (props) => {
           paddingVertical: '3%',
         },
         keyboardHidesTabBar: true,
+        // ref={tabNavRef}
       }}>
       <Tab.Screen
         name="Home"
@@ -157,13 +160,19 @@ const NavigationBar = (props) => {
           tabBarLabel: '',
           tabBarIcon: ({ focused }) => (
             <MenuIcon ref={homeMenuRef} onLayout={event => {
+              console.log('here?')
+              // homeMenuRef.current.measureLayout(tabNavRef.current,(x, y, width, height) => {
+              //   console.log('a home', {x, y, width, height})
+              // })
               homeMenuRef.current.measure( (fx, fy, width, height, px, py) => {
+                console.log('home', {fx, fy, width, height, px, py}, CalculateWidth(100))
+
                 setHomeIconLocation({
-                    x: px - 13,
-                    y: py - 10,
-                    width: 50,
-                    height: 50,
-                    borderRadius: 50,
+                    x: CalculateWidth(1),
+                    y: py - 20,
+                    width: 70,
+                    height: 70,
+                    borderRadius: 35,
                   });
               });
             }}>
@@ -195,12 +204,13 @@ const NavigationBar = (props) => {
           tabBarIcon: ({ focused }) => (
             <MenuIcon ref={topicMenuRef} onLayout={event => {
               topicMenuRef.current.measure( (fx, fy, width, height, px, py) => {
+                console.log('topic', {fx, fy, width, height, px, py})
                 setTopicIconLocation({
-                    x: px - 13,
-                    y: py - 10,
-                    width: 50,
-                    height: 50,
-                    borderRadius: 50,
+                    x: CalculateWidth(20),
+                    y: py - 20,
+                    width: 70,
+                    height: 70,
+                    borderRadius: 35,
                   });
               });
             }}>
@@ -231,13 +241,14 @@ const NavigationBar = (props) => {
           tabBarLabel: '',
           tabBarIcon: () => (
             <AddDiscussionButton ref={addDiscussionButtonRef} onLayout={e => {
-              addDiscussionButtonRef.current.measure( (fx, fy, width, height, px, py) => {
+              addDiscussionButtonRef.current.measureInWindow( (x, y, width, height) => {
+                // console.log('disc', {fx, fy, width, height, px, py})
                 setAddButtonProperties({
-                  x: px,
-                  y: py,
-                  width: width,
-                  height: height,
-                  borderRadius: 30,
+                  x: CalculateWidth(39),
+                  y,
+                  height: 80,
+                  width: 80,
+                  borderRadius: 40,
                 });
               });
             }} onPress={newDiscussionScreenButton} />
@@ -255,12 +266,13 @@ const NavigationBar = (props) => {
           tabBarIcon: ({ focused }) => (
             <MenuIcon ref={inboxMenuRef} onLayout={event => {
               inboxMenuRef.current.measure( (fx, fy, width, height, px, py) => {
+                console.log('inbox', {fx, fy, width, height, px, py})
                 setInboxIconLocation({
-                    x: px - 13,
-                    y: py - 10,
-                    width: 50,
-                    height: 50,
-                    borderRadius: 50,
+                    x: CalculateWidth(60),
+                    y: py - 20,
+                    width: 70,
+                    height: 70,
+                    borderRadius: 35,
                   });
               });
             }}>
@@ -292,12 +304,13 @@ const NavigationBar = (props) => {
           tabBarIcon: ({ focused }) => (
             <MenuIcon ref={meMenuRef} onLayout={event => {
               meMenuRef.current.measure( (fx, fy, width, height, px, py) => {
+                console.log('me', {fx, fy, width, height, px, py})
                 setMeIconLocation({
-                    x: px - 13,
-                    y: py - 10,
-                    width: 50,
-                    height: 50,
-                    borderRadius: 50,
+                    x: CalculateWidth(80),
+                    y: py - 20,
+                    width: 70,
+                    height: 70,
+                    borderRadius: 35,
                   });
               });
             }}>
