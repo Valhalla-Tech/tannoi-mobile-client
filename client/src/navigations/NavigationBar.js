@@ -167,7 +167,7 @@ const NavigationBar = (props) => {
 
                 setHomeIconLocation({
                     x: CalculateWidth(1),
-                    y: py - 20,
+                    y: CalculateHeight(90),
                     width: 70,
                     height: 70,
                     borderRadius: 35,
@@ -205,7 +205,7 @@ const NavigationBar = (props) => {
                 console.log('topic', {fx, fy, width, height, px, py})
                 setTopicIconLocation({
                     x: CalculateWidth(20),
-                    y: py - 20,
+                    y: CalculateHeight(90),
                     width: 70,
                     height: 70,
                     borderRadius: 35,
@@ -243,7 +243,7 @@ const NavigationBar = (props) => {
                 // console.log('disc', {fx, fy, width, height, px, py})
                 setAddButtonProperties({
                   x: CalculateWidth(39),
-                  y,
+                  y: CalculateHeight(87),
                   height: 80,
                   width: 80,
                   borderRadius: 40,
@@ -267,7 +267,7 @@ const NavigationBar = (props) => {
                 console.log('inbox', {fx, fy, width, height, px, py})
                 setInboxIconLocation({
                     x: CalculateWidth(60),
-                    y: py - 20,
+                    y: CalculateHeight(90),
                     width: 70,
                     height: 70,
                     borderRadius: 35,
@@ -305,7 +305,7 @@ const NavigationBar = (props) => {
                 console.log('me', {fx, fy, width, height, px, py})
                 setMeIconLocation({
                     x: CalculateWidth(80),
-                    y: py - 20,
+                    y: CalculateHeight(90),
                     width: 70,
                     height: 70,
                     borderRadius: 35,

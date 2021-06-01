@@ -46,8 +46,8 @@ const ProfileBar = (props) => {
           onLayout={el => {
             communityBtnRef.current.measure( (fx, fy, width, height, px, py) => {
               dispatch(setCommunityButtonProperties({
-                x: px - 13,
-                y: py - 10,
+                x: CalculateWidth(70),
+                y: CalculateHeight(5),
                 width: 50,
                 height: 50,
                 borderRadius: 50,
