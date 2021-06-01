@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, findNodeHandle } from 'react-native';
 import { useSelector } from 'react-redux';
+import { Platform } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { CalculateHeight, CalculateWidth } from '../helper/CalculateSize';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -117,6 +118,7 @@ const NavigationBar = (props) => {
 
   useEffect(() => {
     getTutorialStatus();
+    // triggerTutorial(tutorialStep);
   }, []);
 
   return (
@@ -167,7 +169,7 @@ const NavigationBar = (props) => {
 
                 setHomeIconLocation({
                     x: CalculateWidth(1),
-                    y: py - 20,
+                    y: CalculateHeight(90),
                     width: 70,
                     height: 70,
                     borderRadius: 35,
@@ -205,7 +207,7 @@ const NavigationBar = (props) => {
                 console.log('topic', {fx, fy, width, height, px, py})
                 setTopicIconLocation({
                     x: CalculateWidth(20),
-                    y: py - 20,
+                    y:CalculateHeight(90),
                     width: 70,
                     height: 70,
                     borderRadius: 35,
@@ -243,7 +245,7 @@ const NavigationBar = (props) => {
                 // console.log('disc', {fx, fy, width, height, px, py})
                 setAddButtonProperties({
                   x: CalculateWidth(39),
-                  y,
+                  y: Platform.OS === 'android' ? CalculateHeight(90) :  CalculateHeight(87),
                   height: 80,
                   width: 80,
                   borderRadius: 40,
@@ -267,7 +269,7 @@ const NavigationBar = (props) => {
                 console.log('inbox', {fx, fy, width, height, px, py})
                 setInboxIconLocation({
                     x: CalculateWidth(60),
-                    y: py - 20,
+                    y: CalculateHeight(90),
                     width: 70,
                     height: 70,
                     borderRadius: 35,
@@ -305,7 +307,7 @@ const NavigationBar = (props) => {
                 console.log('me', {fx, fy, width, height, px, py})
                 setMeIconLocation({
                     x: CalculateWidth(80),
-                    y: py - 20,
+                    y: CalculateHeight(90),
                     width: 70,
                     height: 70,
                     borderRadius: 35,
