@@ -11,7 +11,7 @@ const reducer = (state = defaultState, action) => {
             y,
             height: height,
             width: width + 50,
-            borderRadius: 30,
+            borderRadius: 20,
         } };
       default:
         return state;
