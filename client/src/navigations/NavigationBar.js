@@ -170,9 +170,9 @@ const NavigationBar = (props) => {
                 setHomeIconLocation({
                     x: CalculateWidth(1),
                     y: CalculateHeight(90),
-                    width: 70,
-                    height: 70,
-                    borderRadius: 35,
+                    width: 80,
+                    height: 80,
+                    borderRadius: 40,
                   });
               });
             }}>
@@ -207,10 +207,10 @@ const NavigationBar = (props) => {
                 console.log('topic', {fx, fy, width, height, px, py})
                 setTopicIconLocation({
                     x: CalculateWidth(20),
-                    y:CalculateHeight(90),
-                    width: 70,
-                    height: 70,
-                    borderRadius: 35,
+                    y: CalculateHeight(90),
+                    width: 80,
+                    height: 80,
+                    borderRadius: 40,
                   });
               });
             }}>
@@ -245,8 +245,8 @@ const NavigationBar = (props) => {
                 // console.log('disc', {fx, fy, width, height, px, py})
                 setAddButtonProperties({
                   x: CalculateWidth(39),
-                  y: Platform.OS === 'android' ? CalculateHeight(90) :  CalculateHeight(87),
-                  height: 80,
+                  y: CalculateHeight(85),
+                  height: 120,
                   width: 80,
                   borderRadius: 40,
                 });
@@ -270,9 +270,9 @@ const NavigationBar = (props) => {
                 setInboxIconLocation({
                     x: CalculateWidth(60),
                     y: CalculateHeight(90),
-                    width: 70,
-                    height: 70,
-                    borderRadius: 35,
+                    width: 80,
+                    height: 80,
+                    borderRadius: 40,
                   });
               });
             }}>
@@ -308,9 +308,9 @@ const NavigationBar = (props) => {
                 setMeIconLocation({
                     x: CalculateWidth(80),
                     y: CalculateHeight(90),
-                    width: 70,
-                    height: 70,
-                    borderRadius: 35,
+                    width: 80,
+                    height: 80,
+                    borderRadius: 40,
                   });
               });
             }}>
