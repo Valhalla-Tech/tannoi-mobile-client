@@ -50,10 +50,6 @@ const WelcomeScreen = ({ navigation }) => {
     joinCommunityModalIsOpen,
   } = useSelector((state) => state.RegisterReducer);
 
-  const googleSignIn = () => {
-    dispatch(GoogleSignIn());
-  };
-
   const facebookSignIn = () => {
     dispatch(FacebookSignIn());
   };
@@ -381,7 +377,17 @@ const WelcomeScreen = ({ navigation }) => {
             borderColor: '#3B5998',
             color: '#FFFFFF',
           },
-          () => facebookSignIn(),
+          async () => {
+            dispatch(
+              FacebookSignIn((value) => {
+                if (value.openRegisterModal) {
+                  setRegisterPage(6);
+                  dispatch(getTopic());
+                  setRegisterModalIsOpen(true);
+                }
+              }),
+            );
+          },
           IcFacebook,
           styles.buttonIconStyle,
         )}
@@ -393,7 +399,15 @@ const WelcomeScreen = ({ navigation }) => {
             borderColor: '#E2E2E2',
             color: '#464D60',
           },
-          () => googleSignIn(),
+          async () => {
+            let googleSignInRequest = await dispatch(GoogleSignIn());
+
+            if (googleSignInRequest.openRegisterModal) {
+              setRegisterPage(6);
+              dispatch(getTopic());
+              setRegisterModalIsOpen(true);
+            }
+          },
           IcGoogle,
           styles.buttonIconStyle,
         )}
