@@ -251,14 +251,15 @@ class DiscussionScreenPlayerCard extends Component {
         <TouchableOpacity
           style={styles.addResponseButtonStyle}
           onPress={() => {
-            this.props.userData.type !== 0 ||
-            this.props.userData.id === this.props.profileId
-              ? this.setState({
+            // this.props.userData.type !== 0 ||
+            // this.props.userData.id === this.props.profileId
+              // ? 
+              this.setState({
                   openAddResponseModal: true,
                   openAddResponse: true,
                 })
-              : (this.props.navigation.navigate('VerificationNavigation'),
-                this.setState({ openAddResponse: true }));
+              // : (this.props.navigation.navigate('VerificationNavigation'),
+              //   this.setState({ openAddResponse: true }));
           }}>
           <Text style={styles.addResponseButtonTextStyle}>Add response</Text>
         </TouchableOpacity>

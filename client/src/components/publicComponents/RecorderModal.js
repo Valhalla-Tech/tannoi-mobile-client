@@ -109,7 +109,7 @@ const RecorderModal = (props) => {
         scrollDown && scrollDown();
       }
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data.msg);
       setIsLoading(false);
       setValidation(true);
       if (error.response.data.msg === 'You have to login first') {
