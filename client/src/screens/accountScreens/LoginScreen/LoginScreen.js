@@ -73,7 +73,17 @@ const LoginScreen = ({ navigation }) => {
           },
           null,
           'buttonFunction',
-          facebookSignIn,
+          () => {
+            dispatch(
+              FacebookSignIn((value) => {
+                if (value.openRegisterModal) {
+                  navigation.navigate('WelcomeScreen', {
+                    fromLoginScreen: true,
+                  });
+                }
+              }),
+            );
+          },
           'facebook',
         )}
         {LoginScreenButton(
@@ -87,7 +97,13 @@ const LoginScreen = ({ navigation }) => {
           },
           null,
           'buttonFunction',
-          googleSignIn,
+          async () => {
+            let googleSignInRequest = await dispatch(GoogleSignIn());
+
+            if (googleSignInRequest.openRegisterModal) {
+              navigation.push('WelcomeScreen', { fromLoginScreen: true });
+            }
+          },
           'google',
         )}
       </>

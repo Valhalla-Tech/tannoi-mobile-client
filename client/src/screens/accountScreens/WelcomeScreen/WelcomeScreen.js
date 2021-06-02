@@ -34,7 +34,7 @@ import TopicsToFollowForm from '../../../components/forms/TopicsToFollowForm';
 import PeopleToHearForm from '../../../components/forms/PeopleToHearForm';
 import CommunitiesToJoinForm from '../../../components/forms/CommunitiesToJoinForm';
 
-const WelcomeScreen = ({ navigation }) => {
+const WelcomeScreen = ({ navigation, route }) => {
   const [registerModalIsOpen, setRegisterModalIsOpen] = useState(false);
   const [termsOfService, setTermsOfService] = useState('');
   const [showAgreeButton, setShowAgreeButton] = useState(false);
@@ -50,10 +50,6 @@ const WelcomeScreen = ({ navigation }) => {
     joinCommunityModalIsOpen,
   } = useSelector((state) => state.RegisterReducer);
 
-  const facebookSignIn = () => {
-    dispatch(FacebookSignIn());
-  };
-
   const writeTermsOfService = async () => {
     await dispatch(getTermsOfService());
 
@@ -63,6 +59,16 @@ const WelcomeScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
+    if (
+      route.params !== undefined &&
+      route.params.fromLoginScreen !== undefined &&
+      route.params.fromLoginScreen
+    ) {
+      setRegisterPage(6);
+      dispatch(getTopic());
+      setRegisterModalIsOpen(true);
+    }
+
     writeTermsOfService();
     GoogleSignin.configure({
       // scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile

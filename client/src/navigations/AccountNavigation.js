@@ -15,6 +15,7 @@ import CreateNewPasswordScreen from '../screens/accountScreens/CreateNewPassword
 const Stack = createStackNavigator();
 
 const AccountNavigation = () => {
+
   return (
     <Stack.Navigator
       screenOptions={{
