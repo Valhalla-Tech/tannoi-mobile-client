@@ -275,6 +275,7 @@
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
 				0C26E6CC2116ADBE05F525F8 /* [CP] Copy Pods Resources */,
+				54029787697D7B11DD482207 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -298,6 +299,7 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				E776ED31FA7FB66F83B7295E /* [CP] Copy Pods Resources */,
 				D30016C8687A3098382A8E75 /* [CP-User] [RNFB] Core Configuration */,
+				BB6D6DD92F50B59FB9EBDAC8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -362,7 +364,7 @@
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 973FSUWXQR;
 						LastSwiftMigration = 1240;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -577,6 +579,42 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+		};
+		54029787697D7B11DD482207 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-client-clientTests/Pods-client-clientTests-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/Onfido/Onfido.framework/Onfido",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Onfido.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-client-clientTests/Pods-client-clientTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BB6D6DD92F50B59FB9EBDAC8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-client/Pods-client-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/Onfido/Onfido.framework/Onfido",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Onfido.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-client/Pods-client-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		D30016C8687A3098382A8E75 /* [CP-User] [RNFB] Core Configuration */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -844,14 +882,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = client/client.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Tannoi Ltd (973FSUWXQR)";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 13;
+				DEVELOPMENT_TEAM = 973FSUWXQR;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = client/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.11;
+				MARKETING_VERSION = 1.12;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -859,7 +897,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tannoi.tannoiapp;
 				PRODUCT_NAME = client;
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = Tannoi;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -873,13 +911,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = client/client.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Tannoi Ltd (973FSUWXQR)";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 13;
+				DEVELOPMENT_TEAM = 973FSUWXQR;
 				INFOPLIST_FILE = client/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.11;
+				MARKETING_VERSION = 1.12;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -887,7 +925,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tannoi.tannoiapp;
 				PRODUCT_NAME = client;
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = Tannoi;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
