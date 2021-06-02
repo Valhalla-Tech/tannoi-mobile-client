@@ -15,6 +15,7 @@ import PlayerReducer from './reducers/PlayerReducer';
 import CreateCommunityReducer from './reducers/CreateCommunityReducer';
 import CommunitiesReducer from './reducers/CommunitiesReducer';
 import RegisterReducer from './reducers/RegisterReducer';
+import CoachMarkReducer from './reducers/CoachMarkReducer';
 
 const reducer = combineReducers({
   LoginReducer,
@@ -30,6 +31,7 @@ const reducer = combineReducers({
   CreateCommunityReducer,
   CommunitiesReducer,
   RegisterReducer,
+  CoachMarkReducer,
 });
 
 const store = createStore(reducer, applyMiddleware(thunk));

@@ -34,7 +34,7 @@ import TopicsToFollowForm from '../../../components/forms/TopicsToFollowForm';
 import PeopleToHearForm from '../../../components/forms/PeopleToHearForm';
 import CommunitiesToJoinForm from '../../../components/forms/CommunitiesToJoinForm';
 
-const WelcomeScreen = ({ navigation }) => {
+const WelcomeScreen = ({ navigation, route }) => {
   const [registerModalIsOpen, setRegisterModalIsOpen] = useState(false);
   const [termsOfService, setTermsOfService] = useState('');
   const [showAgreeButton, setShowAgreeButton] = useState(false);
@@ -50,14 +50,6 @@ const WelcomeScreen = ({ navigation }) => {
     joinCommunityModalIsOpen,
   } = useSelector((state) => state.RegisterReducer);
 
-  const googleSignIn = () => {
-    dispatch(GoogleSignIn());
-  };
-
-  const facebookSignIn = () => {
-    dispatch(FacebookSignIn());
-  };
-
   const writeTermsOfService = async () => {
     await dispatch(getTermsOfService());
 
@@ -67,6 +59,16 @@ const WelcomeScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
+    if (
+      route.params !== undefined &&
+      route.params.fromLoginScreen !== undefined &&
+      route.params.fromLoginScreen
+    ) {
+      setRegisterPage(6);
+      dispatch(getTopic());
+      setRegisterModalIsOpen(true);
+    }
+
     writeTermsOfService();
     GoogleSignin.configure({
       // scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
@@ -232,13 +234,24 @@ const WelcomeScreen = ({ navigation }) => {
       )}
       {registerPage === 2 && TermsOfServiceSection()}
       {registerPage === 3 && (
+        <CommunityRulesForm onSubmit={() => setRegisterPage(4)} />
+      )}
+      {registerPage === 4 && (
+        <AppPermissionForm
+          onSubmit={() => {
+            setRegisterPage(5);
+          }}
+        />
+      )}
+      {registerPage === 5 && (
         <ConfirmEmailForm
           isLoading={isLoading}
           onSubmit={async (data) => {
             let confirmEmailRequest = await dispatch(confirmEmail(data));
             if (confirmEmailRequest.status) {
-              errMsgFromServer('');
-              setRegisterPage(4);
+              setErrMsgFromServer('');
+              dispatch(getTopic());
+              setRegisterPage(6);
             } else {
               setErrMsgFromServer(
                 confirmEmailRequest.msg === 'Token Expired'
@@ -248,17 +261,6 @@ const WelcomeScreen = ({ navigation }) => {
             }
           }}
           errMsg={errMsgFromServer}
-        />
-      )}
-      {registerPage === 4 && (
-        <CommunityRulesForm onSubmit={() => setRegisterPage(5)} />
-      )}
-      {registerPage === 5 && (
-        <AppPermissionForm
-          onSubmit={async () => {
-            dispatch(getTopic());
-            setRegisterPage(6);
-          }}
         />
       )}
       {registerPage === 6 && (
@@ -381,7 +383,17 @@ const WelcomeScreen = ({ navigation }) => {
             borderColor: '#3B5998',
             color: '#FFFFFF',
           },
-          () => facebookSignIn(),
+          async () => {
+            dispatch(
+              FacebookSignIn((value) => {
+                if (value.openRegisterModal) {
+                  setRegisterPage(6);
+                  dispatch(getTopic());
+                  setRegisterModalIsOpen(true);
+                }
+              }),
+            );
+          },
           IcFacebook,
           styles.buttonIconStyle,
         )}
@@ -393,7 +405,15 @@ const WelcomeScreen = ({ navigation }) => {
             borderColor: '#E2E2E2',
             color: '#464D60',
           },
-          () => googleSignIn(),
+          async () => {
+            let googleSignInRequest = await dispatch(GoogleSignIn());
+
+            if (googleSignInRequest.openRegisterModal) {
+              setRegisterPage(6);
+              dispatch(getTopic());
+              setRegisterModalIsOpen(true);
+            }
+          },
           IcGoogle,
           styles.buttonIconStyle,
         )}

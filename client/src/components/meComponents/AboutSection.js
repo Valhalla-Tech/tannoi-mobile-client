@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     fontFamily: normal,
     color: '#464D60',
     fontSize: CalculateHeight(2),
-    maxWidth: '90%',
+    maxWidth: '80%',
   },
 
   dataTitleStyle: {

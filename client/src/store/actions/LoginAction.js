@@ -61,12 +61,19 @@ export const GoogleSignIn = () => {
           'refresh_token',
           googleSigninRequest.data.refresh_token,
         );
-        dispatch({
-          type: 'LOGIN',
-          payload: {
-            loginStatus: true,
-          },
-        });
+
+        if (!googleSigninRequest.data.isRegistered) {
+          return { openRegisterModal: true };
+        } else {
+          dispatch({
+            type: 'LOGIN',
+            payload: {
+              loginStatus: true,
+            },
+          });
+
+          return { openRegisterModal: false };
+        }
       }
     } catch (error) {
       console.log(error.response.data.msg);
@@ -74,13 +81,14 @@ export const GoogleSignIn = () => {
   };
 };
 
-export const FacebookSignIn = () => {
+export const FacebookSignIn = (callback) => {
   return async (dispatch) => {
     try {
       LoginManager.logInWithPermissions(['public_profile', 'email']).then(
         function (result) {
           if (result.isCancelled) {
             console.log('Login cancelled');
+            callback({ openRegisterModal: false });
           } else {
             AccessToken.getCurrentAccessToken().then(async (data) => {
               try {
@@ -105,12 +113,19 @@ export const FacebookSignIn = () => {
                     'refresh_token',
                     facebookSigninRequest.data.refresh_token,
                   );
-                  dispatch({
-                    type: 'LOGIN',
-                    payload: {
-                      loginStatus: true,
-                    },
-                  });
+
+                  if (!facebookSigninRequest.data.isRegistered) {
+                    callback({ openRegisterModal: true });
+                  } else {
+                    dispatch({
+                      type: 'LOGIN',
+                      payload: {
+                        loginStatus: true,
+                      },
+                    });
+
+                    callback({ openRegisterModal: false });
+                  }
                 }
               } catch (error) {
                 console.log(error.response.data.msg);
@@ -133,11 +148,14 @@ export const getTermsOfService = () => {
     try {
       let getTermsOfServiceRequest = await axios({
         method: 'get',
-        url: `${BaseUrl}/terms-of-service`
+        url: `${BaseUrl}/terms-of-service`,
       });
 
       if (getTermsOfServiceRequest.data) {
-        await AsyncStorage.setItem('termsOfService', getTermsOfServiceRequest.data.content)
+        await AsyncStorage.setItem(
+          'termsOfService',
+          getTermsOfServiceRequest.data.content,
+        );
       }
     } catch (error) {
       console.log(error);
