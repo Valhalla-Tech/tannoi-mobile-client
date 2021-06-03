@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Image, Platform } from 'react-native';
 import { bold, normal } from '../../assets/FontSize';
 import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
 
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
   profileContainerStyle: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: '5%',
+    marginBottom: Platform.OS === 'android' ? 0 : '5%',
   },
 
   profilePictureStyle: {
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
   topicStyle: {
     color: '#5152D0',
     fontFamily: bold,
-    marginBottom: '3%'
+    marginBottom: Platform.OS === 'android' ? 0 : '3%'
   },
 
   titleTextStyle: {
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     color: '#464D60',
     fontFamily: bold,
     width: 267,
-    marginBottom: '5%',
+    marginBottom: Platform.OS === 'android' ? 0 : '5%',
   },
 
   cardInfoContainerStyle: {
