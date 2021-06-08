@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
 import { CalculateHeight, CalculateWidth } from '../../../helper/CalculateSize';
+import { trackWithMixPanel } from '../../../helper/Mixpanel';
 import AsyncStorage from '@react-native-community/async-storage';
 import { connect } from 'react-redux';
 import { getHome, clearHome } from '../../../store/actions/HomeAction';
@@ -87,6 +88,10 @@ class DiscussionScreenPlayerCard extends Component {
       const access_token = await AsyncStorage.getItem('access_token');
 
       if (playResponse) {
+        trackWithMixPanel('Discussion: Played A Response', {
+          distinct_id: this.props.profileId,
+          played_response: this.state.responseId,
+        });
         let responsePlayCounterRequest = await axios({
           method: 'get',
           url: `${BaseUrl}/responses/views/${this.state.responseId}`,
@@ -98,6 +103,10 @@ class DiscussionScreenPlayerCard extends Component {
         if (responsePlayCounterRequest.data) {
         }
       } else {
+        trackWithMixPanel('Discussion: Played A Discussion', {
+          distinct_id: this.props.profileId,
+          played_discussion: this.state.discussionId,
+        });
         let playCounterRequest = await axios({
           method: 'get',
           url: `${BaseUrl}/discussions/views/${this.state.discussionId}`,

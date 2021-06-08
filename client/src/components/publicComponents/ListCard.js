@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
+import { useSelector } from 'react-redux';
 import { bold, normal } from '../../assets/FontSize';
 import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
 
@@ -38,6 +39,8 @@ const HomeListCard = (props) => {
     role,
     cardOnDelete,
   } = props;
+
+  const userId = useSelector((state) => state.HomeReducer.user.id);
 
   const HomeListCardData = () => {
     return (
@@ -136,6 +139,7 @@ const HomeListCard = (props) => {
           <Image source={LockIcon} style={styles.lockIconStyle} />
         ) : (
           <HomeListCardPlayer
+            userId={userId}
             recordingFile={recordingFile}
             discussionId={discussionId}
             navigation={navigation}

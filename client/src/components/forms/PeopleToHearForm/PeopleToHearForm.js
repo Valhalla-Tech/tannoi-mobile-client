@@ -6,10 +6,11 @@ import {
   unFollowPeople,
 } from '../../../store/actions/RegisterAction';
 import { Button } from '../../elements';
+import { trackWithMixPanel } from '../../../helper/Mixpanel';
 import styles from './styles';
 
 const PeopleToHearForm = (props) => {
-  const { onSubmit, onSkip } = props;
+  const { onSubmit, onSkip, userData } = props;
 
   const [followedPeople, setFollowedPeople] = useState([]);
 
@@ -34,6 +35,10 @@ const PeopleToHearForm = (props) => {
   const addFollowedPeople = async (userId) => {
     let followPeopleRequest = await dispatch(followPeople(userId));
     if (followPeopleRequest.status) {
+      trackWithMixPanel('User: Registration - Followed Another User', {
+        distinct_id: userData.id,
+        followed_user_id: userId,
+      });
       setFollowedPeople((prevState) => [...prevState, userId]);
     } else {
       console.log(followPeopleRequest.msg);
@@ -44,6 +49,10 @@ const PeopleToHearForm = (props) => {
     let unFollowPeopleRequest = await dispatch(unFollowPeople(userId));
 
     if (unFollowPeopleRequest.status) {
+      trackWithMixPanel('User: Registration - Unfollowed Another User', {
+        distinct_id: userData.id,
+        unfollowed_user_id: userId,
+      });
       if (followedPeople.length > 1) {
         setFollowedPeople(followedPeople.filter((index) => index !== userId));
       } else {

@@ -12,7 +12,7 @@ import { addDescription } from '../../../store/actions/CreateCommunityAction';
 import { LinearTextGradient } from 'react-native-text-gradient';
 import { CalculateHeight } from '../../../helper/CalculateSize';
 import { normal } from '../../../assets/FontSize';
-import { Mixpanel } from 'mixpanel-react-native';
+import { trackWithMixPanel } from '../../../helper/Mixpanel';
 
 //Components
 import CreateCommunityHeader from '../../../components/communityComponent/CreateCommunityHeader';
@@ -108,11 +108,10 @@ const CommunityDescriptionScreen = ({ navigation, route }) => {
                     communityTopicsEdit,
                     communityTypeEdit,
                   });
-                  const mixpanel = await Mixpanel.init("ed9818be4179a2486e41556180a65495");
-                  mixpanel.track('User Create Community - Community Description Progress', {
-                    distinct_id: userId,
-                    "Community Description": description,
-                  });
+                  // trackWithMixPanel('User Create Community - Community Description Progress', {
+                  //   distinct_id: userId,
+                  //   "Community Description": description,
+                  // });
                 }}
               />
             )}

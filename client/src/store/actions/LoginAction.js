@@ -3,6 +3,7 @@ import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
+import { trackWithMixPanel } from '../../helper/Mixpanel';
 import { Platform } from 'react-native';
 
 export const userLogin = () => {
@@ -18,6 +19,10 @@ export const userLogin = () => {
 
 export const userLogout = () => {
   return async (dispatch) => {
+    let userId = await AsyncStorage.getItem('userId');
+    trackWithMixPanel('User: Logged Out', {
+      distinct_id: userId,
+    });
     const fcm_token = await AsyncStorage.getItem('fcm_token');
     if (fcm_token) {
       await axios({

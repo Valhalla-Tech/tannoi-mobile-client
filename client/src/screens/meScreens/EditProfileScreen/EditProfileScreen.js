@@ -22,6 +22,7 @@ import BaseUrl from '../../../constants/BaseUrl';
 import { ScreenHeight } from '../../../constants/Size';
 import { UploadImage } from '../../../helper/UploadImage';
 import { CalculateHeight, CalculateWidth } from '../../../helper/CalculateSize';
+import { trackWithMixPanel } from '../../../helper/Mixpanel';
 
 //Components
 import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
@@ -164,6 +165,7 @@ const EditProfileScreen = ({ navigation }) => {
   const editVoiceBio = async () => {
     try {
       let access_token = await AsyncStorage.getItem('access_token');
+      let userId = await AsyncStorage.getItem('userId');
 
       let voiceBioFormData = new FormData();
       //Recording File
@@ -249,6 +251,17 @@ const EditProfileScreen = ({ navigation }) => {
             setIsLoading(false);
             navigation.navigate('Me', { fromEditScreen: true });
           }
+          let userId = await AsyncStorage.getItem('userId');
+          trackWithMixPanel('User: Edited Profile', {
+            distinct_id: userId,
+            changed_profile_picture: profileImage !== '',
+            changed_bio_voice_file: bioVoiceFile !== '' && bioVoiceFile !== userProfile.bio_voice_path,
+            selectedGender: selectedGender,
+            birthDate: birthDate,
+            fullName: fullName.trim(),
+            shortBio: shortBio.trim(),
+            location: location.trim(),
+          });
         }
       } else if (
         bioVoiceFile !== '' &&

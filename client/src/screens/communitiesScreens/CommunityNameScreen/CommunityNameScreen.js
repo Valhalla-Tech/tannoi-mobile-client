@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addName } from '../../../store/actions/CreateCommunityAction';
 import { LinearTextGradient } from 'react-native-text-gradient';
 import { normal } from '../../../assets/FontSize';
-import { Mixpanel } from 'mixpanel-react-native';
+import { trackWithMixPanel } from '../../../helper/Mixpanel';
 import { LoadingSpinner } from '../../../components/elements';
 
 //Icon
@@ -136,16 +136,13 @@ const CommunityNameScreen = ({ navigation, route }) => {
                     communityDescriptionEdit,
                     communityTypeEdit,
                   });
-                  const mixpanel = await Mixpanel.init(
-                    'ed9818be4179a2486e41556180a65495',
-                  );
-                  mixpanel.track(
-                    'User Create Community - Community Name Progress',
-                    {
-                      distinct_id: userId,
-                      'Community Name': communityName,
-                    },
-                  );
+                  // trackWithMixPanel(
+                  //   'User Create Community - Community Name Progress',
+                  //   {
+                  //     distinct_id: userId,
+                  //     'Community Name': communityName,
+                  //   },
+                  // );
                 }}
               />
             )}

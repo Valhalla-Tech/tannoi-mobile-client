@@ -8,10 +8,11 @@ import {
   searchCommunity,
 } from '../../../store/actions/RegisterAction';
 import { Button, FormInput } from '../../elements';
+import { trackWithMixPanel } from '../../../helper/Mixpanel';
 import styles from './styles';
 
 const CommunitiesToJoin = (props) => {
-  const { onSubmit, onSkip } = props;
+  const { onSubmit, onSkip, userData } = props;
   const [joinedCommunity, setJoinedCommunity] = useState([]);
   const [communityCode, setCommunityCode] = useState('');
 
@@ -23,6 +24,10 @@ const CommunitiesToJoin = (props) => {
     let joinCommunityRequest = await dispatch(joinCommunity(communityId));
 
     if (joinCommunityRequest.status) {
+      trackWithMixPanel('User: Registration - Joined A Community', {
+        distinct_id: userData.id,
+        community_id: communityId,
+      });
       setJoinedCommunity((prevState) => [...prevState, communityId]);
     } else {
       console.log(joinCommunityRequest.msg);
@@ -33,6 +38,10 @@ const CommunitiesToJoin = (props) => {
     let leaveCommunityRequest = await dispatch(leaveCommunity(communityId));
 
     if (leaveCommunityRequest.status) {
+      trackWithMixPanel('User: Registration - Left A Community', {
+        distinct_id: userData.id,
+        community_id: communityId,
+      });
       if (joinedCommunity.length > 1) {
         setJoinedCommunity(
           joinedCommunity.filter((index) => index !== communityId),

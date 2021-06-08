@@ -20,7 +20,7 @@ import {
 } from '../../../store/actions/CreateCommunityAction';
 import { getUserCommunity, getOneCommunity } from '../../../store/actions/CommuitiesAction';
 import { LinearTextGradient } from 'react-native-text-gradient';
-import { Mixpanel } from 'mixpanel-react-native';
+import { trackWithMixPanel }  from '../../../helper/Mixpanel';
 
 //Icon
 import TopicIcon from '../../../assets/communitiesAssets/ic-topics.svg';
@@ -146,6 +146,14 @@ const CreateCommunityTopicScreen = ({ navigation, route }) => {
         dispatch(clearData());
         if (communityId) {
           await dispatch(getOneCommunity(communityId));
+          trackWithMixPanel('Community: Edited A Community', {
+            distinct_id: userId,
+            'Community Guideline': communityType,
+            'Community Type': communityType === 1 ? 'Public' : 'Private',
+            'Community Description': communityDescription,
+            'Community Name': communityName,
+            'Community Topic': topic,
+          });
           return navigation.navigate('CommunitiesNavigation', {
             screen: 'CommunityProfileScreen',
             params: {
@@ -153,19 +161,17 @@ const CreateCommunityTopicScreen = ({ navigation, route }) => {
             },
           });
         }
+        trackWithMixPanel('Community: Created A Community', {
+          distinct_id: userId,
+          'Community Guideline': communityType,
+          'Community Type': communityType === 1 ? 'Public' : 'Private',
+          'Community Description': communityDescription,
+          'Community Name': communityName,
+          'Community Topic': topic,
+        });
         dispatch(createdCommunityMessage(true));
         dispatch(getUserCommunity());
         navigation.navigate('CommunitiesScreen');
-        
-        const mixpanel = await Mixpanel.init("ed9818be4179a2486e41556180a65495");
-        mixpanel.track('User Create Community - Community Create Progress Done', {
-          distinct_id: userId,
-          "Community Guideline": communityType,
-          "Community Type": communityType === 1 ? "Public" : "Private",
-          "Community Description": communityDescription,
-          "Community Name": communityName,
-          "Community Topic": topic
-        });
       }
     } catch (error) {
       setIsLoading(false);

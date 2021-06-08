@@ -21,6 +21,7 @@ import {
 } from '../../../store/actions/RegisterAction';
 import { userLogin } from '../../../store/actions/LoginAction';
 import { getCurrentTermsOfService } from '../../../helper/Store';
+import { trackWithMixPanel } from '../../../helper/Mixpanel';
 import styles from './styles';
 import CreateAccountForm from '../../../components/forms/CreateAccountForm';
 import IcFacebook from '../../../assets/ic_facebook.svg';
@@ -136,6 +137,11 @@ const WelcomeScreen = ({ navigation, route }) => {
               );
 
               if (createAccountRequest.status) {
+                let { email, name } = createAccountData
+                trackWithMixPanel('User: Registration - Accepted Terms Of Service', {
+                  name,
+                  email,
+                })
                 setErrMsgFromServer('');
                 setRegisterPage(3);
               } else {
@@ -234,11 +240,23 @@ const WelcomeScreen = ({ navigation, route }) => {
       )}
       {registerPage === 2 && TermsOfServiceSection()}
       {registerPage === 3 && (
-        <CommunityRulesForm onSubmit={() => setRegisterPage(4)} />
+        <CommunityRulesForm onSubmit={() => {
+          let { email, name } = createAccountData;
+          trackWithMixPanel('User: Registration - Accepts Community Guildelines', {
+            email,
+            name,
+          });
+          setRegisterPage(4);
+        }} />
       )}
       {registerPage === 4 && (
         <AppPermissionForm
           onSubmit={() => {
+            let { email, name } = createAccountData;
+            trackWithMixPanel('User: Registration - Granted Permissions', {
+              email,
+              name,
+            });
             setRegisterPage(5);
           }}
         />
@@ -248,7 +266,22 @@ const WelcomeScreen = ({ navigation, route }) => {
           isLoading={isLoading}
           onSubmit={async (data) => {
             let confirmEmailRequest = await dispatch(confirmEmail(data));
+            let { email, name } = createAccountData;
             if (confirmEmailRequest.status) {
+              trackWithMixPanel('User: Registration - Verified OTP', {
+                email,
+                name,
+              });
+              setCreateAccountData({
+                name,
+                email,
+                id: confirmEmailRequest.userData.id,
+              });
+              trackWithMixPanel('User: Created An Account', {
+                email,
+                name,
+                distinct_id: confirmEmailRequest.userData.id,
+              });
               setErrMsgFromServer('');
               dispatch(getTopic());
               setRegisterPage(6);
@@ -272,8 +305,13 @@ const WelcomeScreen = ({ navigation, route }) => {
           }}
           onSubmit={async (data) => {
             let followTopicRequest = await dispatch(followTopic(data));
-
             if (followTopicRequest) {
+              data.forEach(el => {
+                trackWithMixPanel('User: Registration - Followed A Topic', {
+                  distinct_id: createAccountData.id,
+                  topic_id: el,
+                });
+              });
               dispatch(getPeopleToHear());
               setRegisterPage(7);
             }
@@ -282,6 +320,7 @@ const WelcomeScreen = ({ navigation, route }) => {
       )}
       {registerPage === 7 && (
         <PeopleToHearForm
+          userData={createAccountData}
           onSubmit={() => {
             dispatch(getCommunities());
             setRegisterPage(8);
@@ -294,8 +333,19 @@ const WelcomeScreen = ({ navigation, route }) => {
       )}
       {registerPage === 8 && (
         <CommunitiesToJoinForm
-          onSubmit={() => dispatch(userLogin())}
-          onSkip={() => dispatch(userLogin())}
+          userData={createAccountData}
+          onSubmit={() => {
+            trackWithMixPanel('User: Logged In', {
+              distinct_id: createAccountData.id,
+            });
+            dispatch(userLogin());
+          }}
+          onSkip={() => {
+            trackWithMixPanel('User: Logged In', {
+              distinct_id: createAccountData.id,
+            });
+            dispatch(userLogin());
+          }}
         />
       )}
       {isLoading && <LoadingSpinner coverView={true} />}

@@ -126,7 +126,7 @@ export const confirmEmail = (data) => {
           'refresh_token',
           confirmEmailRequest.data.refresh_token,
         );
-        return { status: true };
+        return { status: true, userData: confirmEmailRequest.data.userData };
       }
     } catch (error) {
       dispatch(loadingAction(false));

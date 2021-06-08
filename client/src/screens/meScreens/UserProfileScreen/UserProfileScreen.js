@@ -24,6 +24,7 @@ import BaseUrl from '../../../constants/BaseUrl';
 import { getHome, clearHome } from '../../../store/actions/HomeAction';
 import { GlobalPadding } from '../../../constants/Size';
 import { GenerateDeepLink } from '../../../helper/GenerateDeepLink';
+import { trackWithMixPanel } from '../../../helper/Mixpanel';
 import AboutSection from '../../../components/meComponents/AboutSection';
 
 //Components
@@ -115,6 +116,17 @@ const UserProfileScreen = ({ route, navigation }) => {
             });
 
             if (followAccountRequest) {
+              if (profile.isFollowing) {
+                trackWithMixPanel('User: Unfollows Another User', {
+                  distinct_id: followingUserId,
+                  unfollowing_id: userId,
+                });
+              } else {
+                trackWithMixPanel('User: Followed Another User', {
+                  distinct_id: followingUserId,
+                  following_id: userId,
+                });
+              }
               dispatch(getOneProfile(userId));
             }
           } catch (error) {

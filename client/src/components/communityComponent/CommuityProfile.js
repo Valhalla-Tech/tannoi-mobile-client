@@ -13,6 +13,7 @@ import {
 } from '../../store/actions/CommuitiesAction';
 import { GenerateDeepLink } from '../../helper/GenerateDeepLink';
 import Share from 'react-native-share';
+import { trackWithMixPanel } from '../../helper/Mixpanel';
 
 //Icons
 import OptionButton from '../../assets/publicAssets/optionButton.svg';
@@ -86,6 +87,7 @@ const CommunityProfile = (props) => {
   const joinCommunity = async (recordingFile) => {
     try {
       let access_token = await AsyncStorage.getItem('access_token');
+      let userId = await AsyncStorage.getItem('userId');
 
       const formData = new FormData();
 
@@ -115,9 +117,17 @@ const CommunityProfile = (props) => {
         dispatch(getUserCommunity());
 
         if (recordingFile === undefined) {
+          trackWithMixPanel('User: Joined A Community', {
+            distinct_id: userId,
+            community_id: communityId,
+          });
           inputNoticeModalMessage('You are now a member of this community');
           openNoticeModal();
         } else if (recordingFile) {
+          trackWithMixPanel('User: Requested To Join A Community', {
+            distinct_id: userId,
+            community_id: communityId,
+          });
           inputNoticeModalMessage('Request sent to the community admin');
           openNoticeModal();
         }

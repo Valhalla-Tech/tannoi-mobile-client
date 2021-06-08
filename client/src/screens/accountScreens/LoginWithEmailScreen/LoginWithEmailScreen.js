@@ -16,6 +16,7 @@ import axios from '../../../constants/ApiServices';
 import { bold, normal } from '../../../assets/FontSize';
 import { CalculateHeight } from '../../../helper/CalculateSize';
 import BaseUrl from '../../../constants/BaseUrl';
+import { trackWithMixPanel } from '../../../helper/Mixpanel';
 
 //Components
 import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
@@ -60,6 +61,9 @@ const LoginWithEmailScreen = ({ navigation }) => {
           'refresh_token',
           loginRequest.data.refresh_token,
         );
+        trackWithMixPanel('User: Logged In', {
+          distinct_id: loginRequest.data.id,
+        });
         dispatch(clearHome());
         dispatch(getHome());
         dispatch(userLogin());

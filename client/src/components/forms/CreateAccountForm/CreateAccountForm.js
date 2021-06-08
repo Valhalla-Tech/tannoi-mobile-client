@@ -10,6 +10,7 @@ import { Button, ErrorMessage } from '../../../components/elements';
 import validate from './validate';
 import styles from './styles';
 import { FormInput } from '../../fields';
+import { trackWithMixPanel } from '../../../helper/Mixpanel';
 
 const CreateAccountForm = (props) => {
   const { onSubmit, errMsg, onPressTermsOfService } = props;
@@ -39,6 +40,12 @@ const CreateAccountForm = (props) => {
         )}
         <View style={styles.contentContainerStyle}>
           <View>
+            {validating && validate(validationData).emailValidation !== '' && (
+              <ErrorMessage
+                customStyle={styles.errorMessageStyle}
+                message={validate(validationData).emailValidation}
+              />
+            )}
             <FormInput
               placeholder="Your email"
               onChangeText={(value) => setEmail(value)}
@@ -90,12 +97,18 @@ const CreateAccountForm = (props) => {
                 validate(validationData).validationStatus ? false : true
               }
               onPress={() => {
-                const { passwordErrMsg, confirmPasswordErrMsg } = validate(
+                const { passwordErrMsg, confirmPasswordErrMsg, emailValidation } = validate(
                   validationData,
                 );
 
+                trackWithMixPanel('User: Registration - Entered Account Info', {
+                  email,
+                  fullName,
+                  error: emailValidation ? emailValidation : (passwordErrMsg ? passwordErrMsg : (confirmPasswordErrMsg ? confirmPasswordErrMsg : 'None')),
+                });
+
                 setValidating(true);
-                passwordErrMsg === '' &&
+                !emailValidation && passwordErrMsg === '' &&
                   confirmPasswordErrMsg === '' &&
                   onSubmit({
                     name: fullName,

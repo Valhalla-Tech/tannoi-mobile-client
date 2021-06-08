@@ -8,6 +8,7 @@ import { changeCurrentPlayerId } from '../../store/actions/PlayerAction';
 import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
 import Slider from '@react-native-community/slider';
+import { trackWithMixPanel } from '../../helper/Mixpanel';
 
 //Icons
 import ActivePlayButton from '../../assets/homeAssets/activePlayButton.svg';
@@ -74,7 +75,11 @@ class HomeListPlayerCard extends Component {
   playCounter = async () => {
     try {
       const access_token = await AsyncStorage.getItem('access_token');
-
+      console.log('props', this.props)
+      trackWithMixPanel('Discussion: Played A Discussion', {
+        distinct_id: this.props.userId,
+        played_discussion: this.props.discussionId,
+      });
       let playCounterRequest = await axios({
         method: 'get',
         url: `${BaseUrl}/discussions/views/${this.props.discussionId}`,

@@ -1,6 +1,7 @@
 import axios from '../../constants/ApiServices';
 import AsyncStorage from '@react-native-community/async-storage';
 import BaseUrl from '../../constants/BaseUrl';
+import { trackWithMixPanel } from '../../helper/Mixpanel';
 
 export const getTopic = () => {
   return async (dispatch) => {
@@ -73,6 +74,7 @@ export const followTopic = (topicId) => {
   return async (dispatch) => {
     try {
       let access_token = await AsyncStorage.getItem('access_token');
+      let userId = await AsyncStorage.getItem('userId');
 
       let followTopicRequest = await axios({
         url: `${BaseUrl}/topics/preferred/${topicId}`,
@@ -83,6 +85,10 @@ export const followTopic = (topicId) => {
       });
 
       if (followTopicRequest.data) {
+        trackWithMixPanel('User: Followed A Topic', {
+          distinct_id: userId,
+          topic_id: topicId,
+        });
         dispatch(getTopic());
       }
     } catch (error) {
@@ -103,6 +109,7 @@ export const unfollowTopic = (topicId) => {
   return async (dispatch) => {
     try {
       let access_token = await AsyncStorage.getItem('access_token');
+      let userId = await AsyncStorage.getItem('userId');
 
       let followTopicRequest = await axios({
         url: `${BaseUrl}/topics/preferred/${topicId}`,
@@ -113,6 +120,10 @@ export const unfollowTopic = (topicId) => {
       });
 
       if (followTopicRequest.data) {
+        trackWithMixPanel('User: Unfollowed A Topic', {
+          distinct_id: userId,
+          topic_id: topicId,
+        });
         dispatch(getTopic());
       }
     } catch (error) {

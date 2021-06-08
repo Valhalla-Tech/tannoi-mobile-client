@@ -23,6 +23,7 @@ import BaseUrl from '../../../constants/BaseUrl';
 import Slider from '@react-native-community/slider';
 import { GenerateDeepLink } from '../../../helper/GenerateDeepLink';
 import { CalculateHeight } from '../../../helper/CalculateSize';
+import { trackWithMixPanel } from '../../../helper/Mixpanel';
 
 //Icon
 import EditButton from '../../../assets/topicAssets/edit.svg';
@@ -64,6 +65,7 @@ const NewDiscussionScreen = ({ navigation }) => {
   const [sliderValue, setSliderValue] = useState(5);
 
   const topics = useSelector((state) => state.TopicReducer.topics);
+  const userId = useSelector((state) => state.HomeReducer.user.id);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -176,6 +178,15 @@ const NewDiscussionScreen = ({ navigation }) => {
       });
 
       if (createNewDiscussionRequest.data) {
+
+        trackWithMixPanel('Discussion: Created A Discussion', {
+          distinct_id: userId,
+          title: discussionTitle.trim(),
+          type: selectedSwitch,
+          hashtags: hashtags.join(' '),
+          response_id: createNewDiscussionRequest.data.id,
+        });
+
         let moodRatingRequest = await axios({
           url: `${BaseUrl}/discussions/add-rating/${createNewDiscussionRequest.data.id}`,
           method: 'post',

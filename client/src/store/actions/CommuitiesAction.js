@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from '../../constants/ApiServices';
 import BaseUrl from '../../constants/BaseUrl';
+import { trackWithMixPanel } from '../../helper/Mixpanel';
 
 export const getUserCommunity = () => {
   return async (dispatch) => {
@@ -33,6 +34,7 @@ export const getOneCommunity = (communityId) => {
   return async (dispatch) => {
     try {
       let access_token = await AsyncStorage.getItem('access_token');
+      let userId = await AsyncStorage.getItem('userId');
 
       let getOneCommunityRequest = await axios({
         method: 'get',
@@ -42,6 +44,10 @@ export const getOneCommunity = (communityId) => {
         },
       });
       if (getOneCommunityRequest.data) {
+        trackWithMixPanel('Community: Viewed A Community Details', {
+          distinct_id: userId,
+          community_id: communityId,
+        });
         dispatch({
           type: 'GET_ONE_COMMUNITY',
           payload: {

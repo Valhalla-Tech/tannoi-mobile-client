@@ -10,6 +10,7 @@ import axios from '../constants/ApiServices';
 import BaseUrl from '../constants/BaseUrl';
 import { Platform } from 'react-native';
 import branch from 'react-native-branch';
+import { trackWithMixPanel } from '../helper/Mixpanel';
 
 //Navigations
 import AccountNavigation from './AccountNavigation';
@@ -178,6 +179,10 @@ const NavigationIndex = () => {
       }
     } else if (!getToken) {
       branchSubscribe();
+      let userId = await AsyncStorage.getItem('userId');
+      trackWithMixPanel('User: Logged Out', {
+        distinct_id: userId,
+      });
       dispatch(userLogout());
       SplashScreen.hide();
     }
