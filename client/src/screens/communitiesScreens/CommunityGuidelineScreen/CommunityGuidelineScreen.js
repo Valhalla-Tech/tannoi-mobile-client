@@ -58,7 +58,7 @@ const CommunityGuidelineScreen = ({ navigation, route }) => {
   const Footer = () => {
     return (
       <View style={styles.footerStyle}>
-        <View style={styles.privateOptionContainerStyle}>
+        {/* <View style={styles.privateOptionContainerStyle}>
           <Text style={styles.privateTextStyle}>Make private</Text>
           <Switch
             value={privateCommunity}
@@ -70,7 +70,7 @@ const CommunityGuidelineScreen = ({ navigation, route }) => {
         <Text style={styles.privateCommuityInstructionTextStyle}>
           When a community is set to private, members of your community can only
           view or join by invitation.
-        </Text>
+        </Text> */}
         <View style={styles.progressContainerStyle}>
           <CreateCommunityProgress stepNumber={3} />
           <Button
