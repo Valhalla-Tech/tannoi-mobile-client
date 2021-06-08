@@ -159,6 +159,11 @@ class NewDiscussionScreenRecorder extends Component {
         if (this.recorder.isRecording && this._isMounted) {
           this.stopCounter();
           this.playRecording();
+
+          this.props.addRecordingFile(
+            Platform.OS === 'ios' ? this.recorder._fsPath : '/data/user/0/tannoi.client/files/discussionRecord.mp4',
+          );
+          
         } else if (this._isMounted) {
           this.props.removeRecordingFile && this.props.removeRecordingFile();
           if (this._isMounted) {
@@ -180,10 +185,6 @@ class NewDiscussionScreenRecorder extends Component {
         recordingFile: '/data/user/0/tannoi.client/files/discussionRecord.mp4',
       });
     }
-
-    this.props.addRecordingFile(
-      Platform.OS === 'ios' ? this.recorder._fsPath : '/data/user/0/tannoi.client/files/discussionRecord.mp4',
-    );
     
     this.clearTimer();
 
