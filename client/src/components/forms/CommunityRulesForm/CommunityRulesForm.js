@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import styles from './styles';
 import { Button } from '../../elements';
 
@@ -10,6 +10,7 @@ const CommunityRulesForm = (props) => {
   const [ageVerification, setAgeVerification] = useState(false);
 
   return (
+    <ScrollView>
     <View style={styles.rootStyle}>
       <View>
         <Text style={styles.titleTextStyle}>Community Rules</Text>
@@ -66,6 +67,7 @@ const CommunityRulesForm = (props) => {
         )}
       </View>
     </View>
+    </ScrollView>
   );
 };
 
