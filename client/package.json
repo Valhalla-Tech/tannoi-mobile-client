@@ -25,7 +25,6 @@
     "@react-navigation/native": "^5.7.3",
     "@react-navigation/stack": "^5.9.0",
     "axios": "^0.21.1",
-    "i": "^0.3.6",
     "mixpanel-react-native": "^1.0.2",
     "native-base": "^2.13.14",
     "npm": "^7.16.0",
