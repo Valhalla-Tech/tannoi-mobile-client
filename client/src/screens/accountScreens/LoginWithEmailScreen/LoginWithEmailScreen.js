@@ -62,7 +62,7 @@ const LoginWithEmailScreen = ({ navigation }) => {
           loginRequest.data.refresh_token,
         );
         trackWithMixPanel('User: Logged In', {
-          distinct_id: loginRequest.data.id,
+          distinct_id: loginRequest.data.user_data.id,
         });
         dispatch(clearHome());
         dispatch(getHome());
