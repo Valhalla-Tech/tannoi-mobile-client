@@ -6,6 +6,7 @@ import {
   FlatList,
   StyleSheet,
   Image,
+  Platform,
 } from 'react-native';
 import { CalculateHeight, CalculateWidth } from '../../helper/CalculateSize';
 import { normal, bold } from '../../assets/FontSize';
@@ -166,7 +167,7 @@ const styles = StyleSheet.create({
   communityNameContainerStyle: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: '5%'
+    marginBottom: Platform.OS === 'android' ? 0 : '5%'
   },
 
   communityNameStyle: {

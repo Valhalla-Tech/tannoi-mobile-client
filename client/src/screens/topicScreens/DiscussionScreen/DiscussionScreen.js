@@ -203,8 +203,9 @@ const DiscussionScreen = ({ route, navigation }) => {
         <TouchableOpacity
           style={styles.addResponseButtonStyle}
           onPress={() => {
-            userType !== 0 || userId === profileId
-              ? (activeTab === 'GET_DISCUSSIONS'
+            // userType !== 0 || userId === profileId
+              // ? (
+                activeTab === 'GET_DISCUSSIONS'
                   ? null
                   : tabViewRef.current.changeActiveTab('GET_DISCUSSIONS'),
                 activeTab === 'GET_DISCUSSIONS'
@@ -212,9 +213,10 @@ const DiscussionScreen = ({ route, navigation }) => {
                   : handleTabViewEvent({ id: 'GET_DISCUSSIONS' }),
                 setOpenAddResponseModal(true),
                 setOpenAddRespone(true),
-                setOpenModalFromHeader(true))
-              : (navigation.navigate('VerificationNavigation'),
-                setOpenAddRespone(true));
+                setOpenModalFromHeader(true)
+                // )
+              // : (navigation.navigate('VerificationNavigation'),
+              //   setOpenAddRespone(true));
           }}>
           <Text style={styles.addResponseButtonTextStyle}>Add response</Text>
         </TouchableOpacity>

@@ -35,13 +35,13 @@ const ProfileBar = (props) => {
         )}
       </View>
       <View style={styles.profileBarButtonContainerStyle}>
-        {user !== '' && user.type !== 1 && (
+        {/* {user !== '' && user.type !== 1 && (
           <Button
             buttonTitle="Verify"
             buttonStyle={styles.verifyButtonStyle}
             buttonFunction={() => navigation.navigate('VerificationNavigation')}
           />
-        )}
+        )} */}
         <View
           ref={communityBtnRef}
           onLayout={el => {

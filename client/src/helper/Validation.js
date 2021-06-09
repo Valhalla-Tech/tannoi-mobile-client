@@ -1,1 +1,2 @@
-export const isFilled = (value) => (value.trim() !== '' ? true : false);
+export const isFilled = (value, isTrim = true) =>
+  isTrim ? value.trim() !== '' ? true : false : value !== '' ? true : false;

@@ -5,12 +5,14 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
+  Platform,
 } from 'react-native';
 import { Button, ErrorMessage } from '../../../components/elements';
 import validate from './validate';
 import styles from './styles';
-import { FormInput } from '../../fields';
 import { trackWithMixPanel } from '../../../helper/Mixpanel';
+import { FormInput, DatePicker } from '../../fields';
+import DisplayBirthDate from '../../../helper/DisplayBirthDate';
 
 const CreateAccountForm = (props) => {
   const { onSubmit, errMsg, onPressTermsOfService } = props;
@@ -20,12 +22,38 @@ const CreateAccountForm = (props) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [validating, setValidating] = useState(false);
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+  const [birthDateDisplay, setBirthDateDisplay] = useState('');
+  const [birthDate, setBirthDate] = useState('');
 
   const validationData = {
     email,
     fullName,
     password,
     confirmPassword,
+    birthDate,
+  };
+
+  const dateInput = (event, selectedDate) => {
+    const inputDate = selectedDate || currentDate;
+    setShow(Platform.OS === 'ios');
+    setBirthDate(inputDate);
+    setCurrentDate(inputDate);
+    if (selectedDate !== undefined) {
+      let birthDateDisplay = DisplayBirthDate(new Date(selectedDate));
+      setBirthDateDisplay(birthDateDisplay);
+    }
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
   };
 
   return (
@@ -55,6 +83,17 @@ const CreateAccountForm = (props) => {
               placeholder="Full name"
               onChangeText={(value) => setFullName(value)}
               customRootStyle={styles.formInputStyle}
+            />
+            <DatePicker
+              value={currentDate}
+              mode={mode}
+              onChange={dateInput}
+              dateDisplay={birthDateDisplay}
+              show={show}
+              setShow={setShow}
+              showDatepicker={showDatepicker}
+              customStyle={styles.formInputStyle}
+              placeholder="Birth date"
             />
             {validating && validate(validationData).passwordErrMsg !== '' && (
               <ErrorMessage
@@ -114,6 +153,7 @@ const CreateAccountForm = (props) => {
                     name: fullName,
                     email: email,
                     password: password,
+                    birthDate: birthDate,
                   });
               }}
             />

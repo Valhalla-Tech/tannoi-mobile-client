@@ -10,7 +10,7 @@ export default StyleSheet.create({
 
   titleTextStyle: {
     fontFamily: Bold,
-    fontSize: CalculateHeight(3.5),
+    fontSize: CalculateHeight(3),
     color: '#464D60',
     marginBottom: '5%',
   },
@@ -21,14 +21,14 @@ export default StyleSheet.create({
 
   rulesTextStyle: {
     fontFamily: Bold,
-    fontSize: CalculateHeight(2.5),
+    fontSize: CalculateHeight(2.25),
     color: '#7817FF',
     marginBottom: '2%',
   },
 
   rulesDescriptionTextStyle: {
     fontFamily: Normal,
-    fontSize: CalculateHeight(2.3),
+    fontSize: CalculateHeight(2),
     color: '#464D60',
   },
 
