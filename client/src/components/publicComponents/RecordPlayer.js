@@ -9,6 +9,7 @@ import {
 import Slider from '@react-native-community/slider';
 // import Sound from 'react-native-sound';
 import { Player } from '@react-native-community/audio-toolkit';
+import { trackWithMixPanel } from '../../helper/Mixpanel';
 
 //Icons
 import PlayerSpeed from '../../assets/topicAssets/playerSpeed.svg';
@@ -19,6 +20,7 @@ import PauseButton from '../../assets/topicAssets/pauseButton.svg';
 import ForwardTenButton from '../../assets/topicAssets/forwardTenButton.svg';
 import ActiveNextButton from '../../assets/topicAssets/activeNextButton.svg';
 import ActivePreviousButton from '../../assets/topicAssets/activePreviousButton.svg';
+import AsyncStorage from '@react-native-community/async-storage';
 
 //Component
 import LoadingSpinner from './LoadingSpinner';
@@ -36,6 +38,7 @@ class RecordPlayer extends Component {
       isPaused: false,
       durationLeft: '0:00',
       durationPlayed: '0:00',
+      isPlayedAlready: false,
     };
   }
 
@@ -129,8 +132,17 @@ class RecordPlayer extends Component {
   };
 
   playRecording = () => {
-    this.player.playPause((error) => {
+    this.player.playPause(async (error) => {
       console.log(this.player.isPlaying);
+      console.log('here?')
+      if (this.props.discussionId && this.player.isPlaying && !this.state.isPlayedAlready) {
+        let userId = await AsyncStorage.getItem('userId');
+        trackWithMixPanel('Discussion: Played A Discussion', {
+          distinct_id: userId,
+          played_discussion: this.props.discussionId,
+        });
+        this.setState({isPlayedAlready: true});
+      }
       if (error) {
         console.log(error);
       }
