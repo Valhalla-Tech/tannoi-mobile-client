@@ -328,7 +328,8 @@ class DiscussionScreenPlayerCard extends Component {
           }
           cardIndex={this.props.cardIndex}
           navigation={this.props.navigation}
-          discussionId={this.state.discussionId}
+          discussionId={this.state.responseId ? this.state.responseId : this.state.discussionId}
+          isDiscussion={this.state.responseId ? false : true}
         />
         {this.props.cardIndex !== 'discussion' &&
           this.props.cardIndex !== 'response' &&

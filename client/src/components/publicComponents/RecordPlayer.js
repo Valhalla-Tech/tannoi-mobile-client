@@ -137,11 +137,19 @@ class RecordPlayer extends Component {
       console.log('here?')
       if (this.props.discussionId && this.player.isPlaying && !this.state.isPlayedAlready) {
         let userId = await AsyncStorage.getItem('userId');
-        trackWithMixPanel('Discussion: Played A Discussion', {
-          distinct_id: userId,
-          played_discussion: this.props.discussionId,
-        });
-        this.setState({isPlayedAlready: true});
+        if(this.props.isDiscussion) {
+          trackWithMixPanel('Discussion: Played A Discussion', {
+            distinct_id: userId,
+            played_discussion: this.props.discussionId,
+          });
+          this.setState({isPlayedAlready: true});
+        } else {
+          trackWithMixPanel('Discussion: Played A Response', {
+            distinct_id: userId,
+            played_discussion: this.props.discussionId,
+          });
+          this.setState({isPlayedAlready: true});
+        }
       }
       if (error) {
         console.log(error);
