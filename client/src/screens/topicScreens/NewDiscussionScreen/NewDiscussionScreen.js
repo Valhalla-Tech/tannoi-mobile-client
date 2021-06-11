@@ -11,7 +11,7 @@ import {
   Platform,
 } from 'react-native';
 import { bold, normal } from '../../../assets/FontSize';
-import { Picker } from '@react-native-community/picker';
+import { Picker } from 'native-base';
 import AsyncStorage from '@react-native-community/async-storage';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTopic } from '../../../store/actions/TopicAction';
@@ -22,7 +22,7 @@ import axios from '../../../constants/ApiServices';
 import BaseUrl from '../../../constants/BaseUrl';
 import Slider from '@react-native-community/slider';
 import { GenerateDeepLink } from '../../../helper/GenerateDeepLink';
-import { CalculateHeight } from '../../../helper/CalculateSize';
+import { CalculateHeight, CalculateWidth } from '../../../helper/CalculateSize';
 import { trackWithMixPanel } from '../../../helper/Mixpanel';
 
 //Icon
@@ -509,9 +509,9 @@ const NewDiscussionScreen = ({ navigation }) => {
         <Text style={styles.formInputTitleStyle}>Topic</Text>
         {Platform.OS === 'android' ? (
           <Picker
+            mode="dropdown"
             selectedValue={selectedTopic}
             style={styles.topicPickerStyle}
-            selectedValue={selectedTopic}
             onValueChange={(itemValue, itemIndex) =>
               setSelectedTopic(itemValue)
             }>
@@ -655,7 +655,8 @@ const styles = StyleSheet.create({
   },
 
   topicPickerStyle: {
-    // height: 47,
+    width: CalculateWidth(90),
+    height: 47,
     borderBottomColor: '#E3E6EB',
     fontSize: CalculateHeight(1.8),
     marginBottom: '8%',

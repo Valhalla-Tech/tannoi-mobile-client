@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import { View, Text } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
 import { userLogin, userLogout } from '../store/actions/LoginAction';
@@ -11,6 +12,7 @@ import BaseUrl from '../constants/BaseUrl';
 import { Platform } from 'react-native';
 import branch from 'react-native-branch';
 import { trackWithMixPanel } from '../helper/Mixpanel';
+import TutorialComponent from '../components/publicComponents/HomeTutorial';
 
 //Navigations
 import AccountNavigation from './AccountNavigation';
@@ -190,6 +192,8 @@ const NavigationIndex = () => {
   };
 
   return (
+    <>
+    <TutorialComponent/>
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
@@ -255,6 +259,7 @@ const NavigationIndex = () => {
         <Stack.Screen name="AccountNavigation" component={AccountNavigation} />
       )}
     </Stack.Navigator>
+    </>
   );
 };
 

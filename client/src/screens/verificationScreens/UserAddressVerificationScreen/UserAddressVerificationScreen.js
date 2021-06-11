@@ -10,7 +10,7 @@ import {
   Image,
   Platform,
 } from 'react-native';
-import { Picker } from '@react-native-community/picker';
+import { Picker } from 'native-base';
 import { bold, normal } from '../../../assets/FontSize';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -158,9 +158,9 @@ const UserAddressVerificationScreen = ({ navigation }) => {
         <View>
           {Platform.OS === 'android' ? (
             <Picker
+              mode="dropdown"
               selectedValue={selectedCountry}
               style={styles.pickerStyle}
-              selectedValue={selectedCountry}
               onValueChange={(itemValue, itemIndex) =>
                 setSelectedCountry(itemValue)
               }>
@@ -319,6 +319,8 @@ const styles = StyleSheet.create({
 
   pickerStyle: {
     borderBottomColor: '#E3E6EB',
+    width: CalculateWidth(90),
+    height: 47,
     fontSize: CalculateHeight(2),
     marginLeft: CalculateWidth(-2),
     marginBottom: CalculateHeight(-1),

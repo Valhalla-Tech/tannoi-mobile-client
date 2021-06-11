@@ -14,7 +14,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { GlobalPadding } from '../../../constants/Size';
 import { CalculateHeight, CalculateWidth } from '../../../helper/CalculateSize';
 import { bold, normal } from '../../../assets/FontSize';
-import { Picker } from '@react-native-community/picker';
+import { Picker } from 'native-base';
 import { useDispatch } from 'react-redux';
 import { getOneCommunity } from '../../../store/actions/CommuitiesAction';
 import { getAllDiscussion } from '../../../store/actions/DiscussionAction';
@@ -154,9 +154,9 @@ const NewCommunityDiscussionScreen = (props) => {
           />
           {Platform.OS === 'android' ? (
             <Picker
+              mode="dropdown"
               selectedValue={selectedTopic}
               style={styles.topicPickerStyle}
-              selectedValue={selectedTopic}
               onValueChange={(itemValue, itemIndex) =>
                 setSelectedTopic(itemValue)
               }>
@@ -236,6 +236,8 @@ const styles = StyleSheet.create({
   },
 
   topicPickerStyle: {
+    width: CalculateWidth(90),
+    height: 50,
     borderBottomColor: '#E3E6EB',
     fontSize: CalculateHeight(1.5),
     marginBottom: '5%',
