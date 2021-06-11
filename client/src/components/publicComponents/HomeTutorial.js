@@ -35,7 +35,7 @@ const HomeTutorial = () => {
 
     useEffect(() => {
         getTutorialStatus();
-        triggerTutorial(tutorialStep);
+        // triggerTutorial(tutorialStep);
     }, []);
 
     useEffect(() => {
