@@ -132,8 +132,8 @@ android {
         applicationId "tannoi.client"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 14
-        versionName "1.12"
+        versionCode 15
+        versionName "2.0"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
     }
@@ -227,7 +227,7 @@ dependencies {
         exclude group:'com.facebook.flipper'
     }
 
-    compile project(':react-native-splash-screen')
+      project(':react-native-splash-screen')
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
