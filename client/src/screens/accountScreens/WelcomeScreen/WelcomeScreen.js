@@ -34,6 +34,7 @@ import AppPermissionForm from '../../../components/forms/AppPermissionForm';
 import TopicsToFollowForm from '../../../components/forms/TopicsToFollowForm';
 import PeopleToHearForm from '../../../components/forms/PeopleToHearForm';
 import CommunitiesToJoinForm from '../../../components/forms/CommunitiesToJoinForm';
+import TermsOfServiceForm from '../../../components/forms/TermsOfServiceForm';
 
 const WelcomeScreen = ({ navigation, route }) => {
   const [registerModalIsOpen, setRegisterModalIsOpen] = useState(false);
@@ -137,11 +138,14 @@ const WelcomeScreen = ({ navigation, route }) => {
               );
 
               if (createAccountRequest.status) {
-                let { email, name } = createAccountData
-                trackWithMixPanel('User: Registration - Accepted Terms Of Service', {
-                  name,
-                  email,
-                })
+                let { email, name } = createAccountData;
+                trackWithMixPanel(
+                  'User: Registration - Accepted Terms Of Service',
+                  {
+                    name,
+                    email,
+                  },
+                );
                 setErrMsgFromServer('');
                 setRegisterPage(3);
               } else {
@@ -238,16 +242,52 @@ const WelcomeScreen = ({ navigation, route }) => {
           errMsg={errMsgFromServer}
         />
       )}
-      {registerPage === 2 && TermsOfServiceSection()}
+      {/* {registerPage === 2 && TermsOfServiceSection()} */}
+      {registerPage === 2 && (
+        <TermsOfServiceForm
+          onSubmit={async (isAgree) => {
+            if (!isAgree) {
+              setRegisterPage(1);
+              setRegisterModalIsOpen(false);
+            } else {
+              let createAccountRequest = await dispatch(
+                createAccount(createAccountData),
+              );
+
+              if (createAccountRequest.status) {
+                let { email, name } = createAccountData;
+                trackWithMixPanel(
+                  'User: Registration - Accepted Terms Of Service',
+                  {
+                    name,
+                    email,
+                  },
+                );
+                setErrMsgFromServer('');
+                setRegisterPage(3);
+              } else {
+                setErrMsgFromServer(createAccountRequest.msg);
+                setRegisterPage(1);
+              }
+            }
+          }}
+          showAgreeButton={showAgreeButton}
+        />
+      )}
       {registerPage === 3 && (
-        <CommunityRulesForm onSubmit={() => {
-          let { email, name } = createAccountData;
-          trackWithMixPanel('User: Registration - Accepts Community Guildelines', {
-            email,
-            name,
-          });
-          setRegisterPage(4);
-        }} />
+        <CommunityRulesForm
+          onSubmit={() => {
+            let { email, name } = createAccountData;
+            trackWithMixPanel(
+              'User: Registration - Accepts Community Guildelines',
+              {
+                email,
+                name,
+              },
+            );
+            setRegisterPage(4);
+          }}
+        />
       )}
       {registerPage === 4 && (
         <AppPermissionForm
@@ -306,7 +346,7 @@ const WelcomeScreen = ({ navigation, route }) => {
           onSubmit={async (data) => {
             let followTopicRequest = await dispatch(followTopic(data));
             if (followTopicRequest) {
-              data.forEach(el => {
+              data.forEach((el) => {
                 trackWithMixPanel('User: Registration - Followed A Topic', {
                   distinct_id: createAccountData.id,
                   topic_id: el,

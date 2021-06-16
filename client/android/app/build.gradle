@@ -227,7 +227,7 @@ dependencies {
         exclude group:'com.facebook.flipper'
     }
 
-    compile project(':react-native-splash-screen')
+      project(':react-native-splash-screen')
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";

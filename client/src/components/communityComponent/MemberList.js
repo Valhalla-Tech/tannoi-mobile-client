@@ -57,29 +57,29 @@ const MemberList = (props) => {
 
   const shareOption = async () => {
     try {
-      GenerateDeepLink(
-        communityName,
-        'Check out this community on the tannOi app!',
-        'CommunitiesNavigation',
-        {
-          screen: 'CommunityProfileScreen',
-          params: {
-            communityId,
-          },
-        },
-        'share a community',
-        async (url) => {
-          try {
+      // GenerateDeepLink(
+      //   communityName,
+      //   'Check out this community on the tannOi app!',
+      //   'CommunitiesNavigation',
+      //   {
+      //     screen: 'CommunityProfileScreen',
+      //     params: {
+      //       communityId,
+      //     },
+      //   },
+      //   'share a community',
+      //   async (url) => {
+      //     try {
             const options = {
               title: communityName,
-              message: url,
+              message: `tannoi.app/invite?c=${community_code}`,
             };
             await Share.open(options);
-          } catch (error) {
-            console.log(error);
-          }
-        },
-      );
+      //     } catch (error) {
+      //       console.log(error);
+      //     }
+      //   },
+      // );
     } catch (err) {
       console.log(err);
     }
