@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, ScrollView, Text, Linking } from 'react-native';
+import { View, ScrollView, Text, Linking, Platform } from 'react-native';
 import { Button } from '../../elements';
+import { RadioInput } from '../../fields';
 import { Radio } from 'native-base';
 import styles from './styles';
 
@@ -23,11 +24,12 @@ const TermsOfServiceForm = (props) => {
 
   const RadioButton = (text, selected, option) => (
     <View style={styles.radioButtonContainerStyle}>
-      <Radio
+      {/* <Radio
         onPress={() => setIsAgreed(option)}
         selected={selected}
         style={styles.radioButtonStyle}
-      />
+      /> */}
+      <RadioInput onChange={() => setIsAgreed(option)} selected={selected} customStyle={styles.radioButtonStyle} />
       <Text style={styles.radioTextStyle}>{text()}</Text>
     </View>
   );

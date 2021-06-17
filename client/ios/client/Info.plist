@@ -83,7 +83,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Tannoi needs access to camera</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This app requires access to your microphone</string>
 	<key>NSPhotoLibraryUsageDescription</key>

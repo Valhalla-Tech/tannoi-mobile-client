@@ -136,18 +136,27 @@ const CreateAccountForm = (props) => {
                 validate(validationData).validationStatus ? false : true
               }
               onPress={() => {
-                const { passwordErrMsg, confirmPasswordErrMsg, emailValidation } = validate(
-                  validationData,
-                );
+                const {
+                  passwordErrMsg,
+                  confirmPasswordErrMsg,
+                  emailValidation,
+                } = validate(validationData);
 
                 trackWithMixPanel('User: Registration - Entered Account Info', {
                   email,
                   fullName,
-                  error: emailValidation ? emailValidation : (passwordErrMsg ? passwordErrMsg : (confirmPasswordErrMsg ? confirmPasswordErrMsg : 'None')),
+                  error: emailValidation
+                    ? emailValidation
+                    : passwordErrMsg
+                    ? passwordErrMsg
+                    : confirmPasswordErrMsg
+                    ? confirmPasswordErrMsg
+                    : 'None',
                 });
 
                 setValidating(true);
-                !emailValidation && passwordErrMsg === '' &&
+                !emailValidation &&
+                  passwordErrMsg === '' &&
                   confirmPasswordErrMsg === '' &&
                   onSubmit({
                     name: fullName,
@@ -163,7 +172,7 @@ const CreateAccountForm = (props) => {
                 onPress={() => onPressTermsOfService()}
                 style={styles.termsOfServiceButtonTextStyle}>
                 Terms of service and Privacy policy
-              </Text>
+              </Text>{' '}
               and to receive notice on event and services.
             </Text>
           </View>
