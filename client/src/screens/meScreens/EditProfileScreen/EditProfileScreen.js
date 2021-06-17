@@ -13,7 +13,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { getOneProfile } from '../../../store/actions/ProfileAction';
 import { bold, normal } from '../../../assets/FontSize';
-import { Picker } from '@react-native-community/picker';
+import { Picker } from 'native-base';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DisplayBirthDate from '../../../helper/DisplayBirthDate';
 import axios from '../../../constants/ApiServices';
@@ -394,6 +394,7 @@ const EditProfileScreen = ({ navigation }) => {
           (Platform.OS === 'android' ? (
             <View>
               <Picker
+                mode="dropdown"
                 selectedValue={
                   selectedGender === '' ? userProfile.gender : selectedGender
                 }
@@ -586,6 +587,7 @@ const styles = StyleSheet.create({
   },
 
   pickerStyle: {
+    width: CalculateWidth(90),
     height: 47,
     borderBottomColor: '#E3E6EB',
     fontSize: CalculateHeight(1.8),

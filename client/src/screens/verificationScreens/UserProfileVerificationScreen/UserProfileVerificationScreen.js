@@ -10,7 +10,7 @@ import {
   Image,
   Platform,
 } from 'react-native';
-import { Picker } from '@react-native-community/picker';
+import { Picker } from 'native-base';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -199,7 +199,6 @@ const UserProfileVerificationScreen = ({ navigation }) => {
             <Picker
               selectedValue={selectedGender}
               style={styles.pickerStyle}
-              selectedValue={selectedGender}
               onValueChange={(itemValue, itemIndex) =>
                 setSelectedGender(itemValue)
               }>
@@ -386,6 +385,8 @@ const styles = StyleSheet.create({
   },
 
   pickerStyle: {
+    width: CalculateWidth(90),
+    height: 47,
     borderBottomColor: '#E3E6EB',
     fontSize: CalculateHeight(2),
     marginBottom: CalculateHeight(-1),
