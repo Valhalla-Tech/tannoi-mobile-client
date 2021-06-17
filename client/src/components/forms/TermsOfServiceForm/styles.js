@@ -20,6 +20,7 @@ export default StyleSheet.create({
     fontSize: CalculateHeight(1.8),
     color: '#464D60',
     marginBottom: '5%',
+    maxWidth: '95%'
   },
 
   linkStyle: {

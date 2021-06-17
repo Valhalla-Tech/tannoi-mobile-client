@@ -208,8 +208,10 @@ const WelcomeScreen = ({ navigation, route }) => {
             customStyle={{ position: 'absolute', right: '1%' }}
             onPress={() => {
               setRegisterPage(1);
-              registerPage === 1
-                ? (setRegisterModalIsOpen(false), setErrMsgFromServer(''))
+              registerPage === 1 || registerPage === 2
+                ? (setRegisterModalIsOpen(false),
+                  setErrMsgFromServer(''),
+                  setRegisterPage(1))
                 : dispatch(userLogin());
             }}
           />

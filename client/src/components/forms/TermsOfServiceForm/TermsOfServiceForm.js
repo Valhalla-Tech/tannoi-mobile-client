@@ -62,36 +62,42 @@ const TermsOfServiceForm = (props) => {
             contact@tannoi.app but that will not affect the lawfulness of any
             processing carried out before you withdraw your consent.
           </Text>
-          {RadioButton(
-            () => (
-              <Text style={styles.radioTextStyle}>
-                <Text style={styles.radioTextStyleBold}>YES</Text>, I consent to
-                the installation of the App for the purposes set out in our
-                Privacy Policy.
-              </Text>
-            ),
-            isAgreed ? true : false,
-            true,
-          )}
-          {RadioButton(
-            () => (
-              <Text style={styles.radioTextStyle}>
-                <Text style={styles.radioTextStyleBold}>NO</Text>, I do not
-                consent to the installation of the App
-              </Text>
-            ),
-            !isAgreed ? true : false,
-            false,
+          {showAgreeButton && (
+            <>
+              {RadioButton(
+                () => (
+                  <Text style={styles.radioTextStyle}>
+                    <Text style={styles.radioTextStyleBold}>YES</Text>, I
+                    consent to the installation of the App for the purposes set
+                    out in our Privacy Policy.
+                  </Text>
+                ),
+                isAgreed ? true : false,
+                true,
+              )}
+              {RadioButton(
+                () => (
+                  <Text style={styles.radioTextStyle}>
+                    <Text style={styles.radioTextStyleBold}>NO</Text>, I do not
+                    consent to the installation of the App
+                  </Text>
+                ),
+                !isAgreed ? true : false,
+                false,
+              )}
+            </>
           )}
         </View>
-        <View>
-          <Button
-            name="Next"
-            onPress={() => onSubmit(isAgreed)}
-            customStyle={styles.nextButtonStyle}
-          />
-          <Text></Text>
-        </View>
+        {showAgreeButton && (
+          <View>
+            <Button
+              name="Next"
+              onPress={() => onSubmit(isAgreed)}
+              customStyle={styles.nextButtonStyle}
+            />
+            <Text></Text>
+          </View>
+        )}
       </View>
     </ScrollView>
   );
