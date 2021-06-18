@@ -275,7 +275,7 @@
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
 				0C26E6CC2116ADBE05F525F8 /* [CP] Copy Pods Resources */,
-				54029787697D7B11DD482207 /* [CP] Embed Pods Frameworks */,
+				6B578F256EA2E0799865BEB9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -299,7 +299,7 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				E776ED31FA7FB66F83B7295E /* [CP] Copy Pods Resources */,
 				D30016C8687A3098382A8E75 /* [CP-User] [RNFB] Core Configuration */,
-				BB6D6DD92F50B59FB9EBDAC8 /* [CP] Embed Pods Frameworks */,
+				7BCA8E8E20FAF81123691C68 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -580,7 +580,7 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
-		54029787697D7B11DD482207 /* [CP] Embed Pods Frameworks */ = {
+		6B578F256EA2E0799865BEB9 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -588,17 +588,19 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-client-clientTests/Pods-client-clientTests-frameworks.sh",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/Onfido/Onfido.framework/Onfido",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL/OpenSSL.framework/OpenSSL",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Onfido.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-client-clientTests/Pods-client-clientTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		BB6D6DD92F50B59FB9EBDAC8 /* [CP] Embed Pods Frameworks */ = {
+		7BCA8E8E20FAF81123691C68 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -606,10 +608,12 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-client/Pods-client-frameworks.sh",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/Onfido/Onfido.framework/Onfido",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL/OpenSSL.framework/OpenSSL",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Onfido.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -884,12 +888,12 @@
 				CODE_SIGN_ENTITLEMENTS = client/client.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = client/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 1.11;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -913,11 +917,11 @@
 				CODE_SIGN_ENTITLEMENTS = client/client.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = client/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 1.11;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
