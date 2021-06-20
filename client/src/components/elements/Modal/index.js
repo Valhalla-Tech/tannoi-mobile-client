@@ -8,7 +8,7 @@ import {
   Modal,
   Animated,
   KeyboardAvoidingView,
-  Platform
+  Platform,
 } from 'react-native';
 
 const MainModal = (props) => {
@@ -54,19 +54,22 @@ const MainModal = (props) => {
             }}
           />
         </TouchableOpacity>
-        {Platform.OS === 'ios' ? <KeyboardAvoidingView
-          behavior="padding"
-          style={{
-            justifyContent: 'flex-end',
-            width: animation === 'slide' ? '100%' : undefined,
-          }}>
+        {Platform.OS === 'ios' ? (
+          <KeyboardAvoidingView
+            behavior="padding"
+            style={{
+              justifyContent: 'flex-end',
+              width: animation === 'slide' ? '100%' : undefined,
+            }}>
+            <View style={{ ...styles.modalStyle, ...customStyle }}>
+              {children}
+            </View>
+          </KeyboardAvoidingView>
+        ) : (
           <View style={{ ...styles.modalStyle, ...customStyle }}>
             {children}
           </View>
-        </KeyboardAvoidingView> : 
-          <View style={{ ...styles.modalStyle, ...customStyle }}>
-            {children}
-          </View>}
+        )}
       </View>
     </Modal>
   );

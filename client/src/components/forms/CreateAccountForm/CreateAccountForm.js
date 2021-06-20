@@ -84,7 +84,7 @@ const CreateAccountForm = (props) => {
               onChangeText={(value) => setFullName(value)}
               customRootStyle={styles.formInputStyle}
             />
-            <DatePicker
+            {/* <DatePicker
               value={currentDate}
               mode={mode}
               onChange={dateInput}
@@ -94,7 +94,7 @@ const CreateAccountForm = (props) => {
               showDatepicker={showDatepicker}
               customStyle={styles.formInputStyle}
               placeholder="Birth date"
-            />
+            /> */}
             {validating && validate(validationData).passwordErrMsg !== '' && (
               <ErrorMessage
                 customStyle={styles.errorMessageStyle}
@@ -162,7 +162,7 @@ const CreateAccountForm = (props) => {
                     name: fullName,
                     email: email,
                     password: password,
-                    birthDate: birthDate,
+                    // birthDate: birthDate,
                   });
               }}
             />

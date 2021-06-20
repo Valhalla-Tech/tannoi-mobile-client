@@ -17,7 +17,7 @@ export default StyleSheet.create({
 
   normalTextStyle: {
     fontFamily: Normal,
-    fontSize: CalculateHeight(1.5),
+    fontSize: CalculateHeight(1.8),
     color: '#464D60',
     marginBottom: '5%',
     maxWidth: '95%'

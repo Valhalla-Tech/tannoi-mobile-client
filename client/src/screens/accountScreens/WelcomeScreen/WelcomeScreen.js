@@ -182,7 +182,7 @@ const WelcomeScreen = ({ navigation, route }) => {
       }}
       customStyle={{
         width: '100%',
-        justifyContent: 'flex-start',
+        // justifyContent: 'flex-start',
         alignItems: 'flex-start',
         height: '90%',
         borderBottomLeftRadius: 0,
@@ -244,7 +244,6 @@ const WelcomeScreen = ({ navigation, route }) => {
           errMsg={errMsgFromServer}
         />
       )}
-      {/* {registerPage === 2 && TermsOfServiceSection()} */}
       {registerPage === 2 && (
         <TermsOfServiceForm
           onSubmit={async (isAgree) => {
