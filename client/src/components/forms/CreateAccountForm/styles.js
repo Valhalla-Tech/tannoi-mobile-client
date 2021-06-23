@@ -4,7 +4,9 @@ import { Bold } from '../../../styles/FontSize';
 
 export default StyleSheet.create({
   rootStyle: {
-    // width: '100%',
+    width: '100%',
+    flex: 1,
+    justifyContent: 'space-between',
     // height: '100%',
     // paddingBottom: '35%',
   },
@@ -17,7 +19,7 @@ export default StyleSheet.create({
   },
 
   contentContainerStyle: {
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
     // flex: 1,
   },
 

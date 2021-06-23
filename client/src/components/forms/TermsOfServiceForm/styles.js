@@ -49,6 +49,11 @@ export default StyleSheet.create({
   radioButtonStyle: {
     marginRight: '5%',
   },
+  
+  agreeButtonStyle: {
+    borderRadius: 50,
+    marginBottom: '2%',
+  },
 
   nextButtonStyle: {
     backgroundColor: '#7817FF',

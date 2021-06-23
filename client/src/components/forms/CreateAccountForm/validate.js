@@ -11,7 +11,7 @@ export default (values, message) => {
   return {
     validationStatus:
       isFilled(fullName) &&
-      isFilled(birthDate, false) &&
+      // isFilled(birthDate, false) &&
       isFilled(password) &&
       isFilled(confirmPassword)
         ? true

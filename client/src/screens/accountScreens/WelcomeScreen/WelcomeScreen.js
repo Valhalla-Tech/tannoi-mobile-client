@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, Image, ScrollView, Platform } from 'react-native';
 import { GoogleSignin } from '@react-native-community/google-signin';
 import { useDispatch, useSelector } from 'react-redux';
 import { Bold } from '../../../styles/FontSize';
@@ -182,9 +182,10 @@ const WelcomeScreen = ({ navigation, route }) => {
       }}
       customStyle={{
         width: '100%',
-        // justifyContent: 'flex-start',
+        justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        height: '90%',
+        maxHeight: registerPage === 1 ? undefined : '90%',
+        height: Platform.OS === 'ios' && '90%',
         borderBottomLeftRadius: 0,
         borderBottomRightRadius: 0,
       }}>
