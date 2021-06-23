@@ -148,6 +148,45 @@ export const FacebookSignIn = (callback) => {
   };
 };
 
+export const appleSignIn = credential => async (dispatch) => {
+  try {
+    let request = await axios.post(
+      `${BaseUrl}/users/login/apple`,
+      {
+        identityToken: credential.identityToken,
+        appleUserId: credential.user,
+        name: credential.fullName.givenName || credential.fullName.familyName ? (credential.fullName.givenName + ' ' || '') + (credential.fullName.familyName || '') : null,
+        device: 'ios',
+      })
+      
+      if (request.data.access_token && request.data.refresh_token) {
+        await AsyncStorage.setItem(
+          'access_token',
+          request.data.access_token,
+        );
+        await AsyncStorage.setItem(
+          'refresh_token',
+          request.data.refresh_token,
+        );
+
+        if (!request.data.isRegistered) {
+          return { openRegisterModal: true };
+        } else {
+          dispatch({
+            type: 'LOGIN',
+            payload: {
+              loginStatus: true,
+            },
+          });
+
+          return { openRegisterModal: false };
+        }
+      }
+  } catch (error) {
+    console.log(error.response.data.msg);
+  }
+}
+
 export const getTermsOfService = () => {
   return async () => {
     try {
