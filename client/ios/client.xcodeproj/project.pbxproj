@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* clientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* clientTests.m */; };
+		023FC35A2680F76700258579 /* RNCSignInWithAppleButtonManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 023FC3552680F76600258579 /* RNCSignInWithAppleButtonManager.m */; };
+		023FC35B2680F76700258579 /* RNCSignInWithAppleButtonManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 023FC3552680F76600258579 /* RNCSignInWithAppleButtonManager.m */; };
+		023FC35C2680F76700258579 /* AppleAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 023FC3572680F76600258579 /* AppleAuthentication.m */; };
+		023FC35D2680F76700258579 /* AppleAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 023FC3572680F76600258579 /* AppleAuthentication.m */; };
+		023FC35E2680F76700258579 /* RNCSignInWithAppleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 023FC3582680F76600258579 /* RNCSignInWithAppleButton.m */; };
+		023FC35F2680F76700258579 /* RNCSignInWithAppleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 023FC3582680F76600258579 /* RNCSignInWithAppleButton.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -52,6 +58,11 @@
 		00E356EE1AD99517003FC87E /* clientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = clientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* clientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = clientTests.m; sourceTree = "<group>"; };
+		023FC3552680F76600258579 /* RNCSignInWithAppleButtonManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNCSignInWithAppleButtonManager.m; sourceTree = "<group>"; };
+		023FC3562680F76600258579 /* RNCSignInWithAppleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNCSignInWithAppleButton.h; sourceTree = "<group>"; };
+		023FC3572680F76600258579 /* AppleAuthentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppleAuthentication.m; sourceTree = "<group>"; };
+		023FC3582680F76600258579 /* RNCSignInWithAppleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNCSignInWithAppleButton.m; sourceTree = "<group>"; };
+		023FC3592680F76600258579 /* AppleAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppleAuthentication.h; sourceTree = "<group>"; };
 		07B15DE308913EFA05310B55 /* Pods-client-clientTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-client-clientTests.release.xcconfig"; path = "Target Support Files/Pods-client-clientTests/Pods-client-clientTests.release.xcconfig"; sourceTree = "<group>"; };
 		0B711FBA6A34477D9BDA1F58 /* SFProText-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SFProText-Regular.otf"; path = "../src/assets/fonts/SFProText-Regular.otf"; sourceTree = "<group>"; };
 		0BB12BEFBB4228681B1AC5E4 /* Pods-client-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-client-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-client-tvOSTests/Pods-client-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -91,7 +102,7 @@
 		CA1A5F0F044206EA33CD4547 /* Pods-client-clientTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-client-clientTests.debug.xcconfig"; path = "Target Support Files/Pods-client-clientTests/Pods-client-clientTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D5367DD5A379432495D5BA04 /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; };
 		D5D31978819D3645AB2BD60B /* libPods-client-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-client-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D64128F425FB618900E84D38 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D64128F425FB618900E84D38 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D669487525F8A5E500EE3256 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		D6F5D819261C045700C65227 /* client.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = client.entitlements; path = client/client.entitlements; sourceTree = "<group>"; };
 		D95B909FE78C453E77E0F518 /* Pods-client-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-client-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-client-tvOSTests/Pods-client-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -224,6 +235,11 @@
 			isa = PBXGroup;
 			children = (
 				D64128F425FB618900E84D38 /* GoogleService-Info.plist */,
+				023FC3592680F76600258579 /* AppleAuthentication.h */,
+				023FC3572680F76600258579 /* AppleAuthentication.m */,
+				023FC3562680F76600258579 /* RNCSignInWithAppleButton.h */,
+				023FC3582680F76600258579 /* RNCSignInWithAppleButton.m */,
+				023FC3552680F76600258579 /* RNCSignInWithAppleButtonManager.m */,
 				13B07FAE1A68108700A75B9A /* client */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* clientTests */,
@@ -787,7 +803,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				023FC35B2680F76700258579 /* RNCSignInWithAppleButtonManager.m in Sources */,
 				00E356F31AD99517003FC87E /* clientTests.m in Sources */,
+				023FC35F2680F76700258579 /* RNCSignInWithAppleButton.m in Sources */,
+				023FC35D2680F76700258579 /* AppleAuthentication.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -795,8 +814,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				023FC35A2680F76700258579 /* RNCSignInWithAppleButtonManager.m in Sources */,
+				023FC35C2680F76700258579 /* AppleAuthentication.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				D669487625F8A5E500EE3256 /* File.swift in Sources */,
+				023FC35E2680F76700258579 /* RNCSignInWithAppleButton.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1096,7 +1118,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
-					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
 					"\"$(inherited)\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -1149,7 +1170,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
-					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
 					"\"$(inherited)\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
