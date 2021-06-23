@@ -31,22 +31,17 @@ const HomeTutorial = () => {
     const topicButtonProperties = useSelector(state => state.CoachMarkReducer.topicButtonProperties);
     const inboxButtonProperties = useSelector(state => state.CoachMarkReducer.inboxButtonProperties);
     const meButtonProperties = useSelector(state => state.CoachMarkReducer.meButtonProperties);
-    const testState = useSelector(state => state.CoachMarkReducer)
 
     useEffect(() => {
         getTutorialStatus();
         // triggerTutorial(tutorialStep);
     }, []);
 
-    useEffect(() => {
-        console.log('TEST', {testState})
-    }, [testState])
-
     const triggerTutorial = (step) => {
         if (!tutorial) {
         setTutorial('true');
         }
-        console.log('here?????')
+        
         if (step === 1) {
         setTutorialIcon(<MicrophoneIcon/>);
         setCoachMarkButtonText('Got it');

@@ -8,7 +8,6 @@ const defaultState = {
 }
 
 const reducer = (state = defaultState, action) => {
-  console.log('ACTION', action.payload, {state})
   if (action.type && action.payload) {
     const { x, y, height, width, borderRadius = 0 } = action.payload;
     const {

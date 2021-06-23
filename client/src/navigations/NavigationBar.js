@@ -58,13 +58,7 @@ const NavigationBar = (props) => {
           tabBarLabel: '',
           tabBarIcon: ({ focused }) => (
             <MenuIcon ref={homeMenuRef} onLayout={event => {
-              console.log('here?')
-              // homeMenuRef.current.measureLayout(tabNavRef.current,(x, y, width, height) => {
-              //   console.log('a home', {x, y, width, height})
-              // })
               homeMenuRef.current.measure( async (fx, fy, width, height, px, py) => {
-                console.log('home', {fx, fy, width, height, px, py}, CalculateWidth(100))
-
                 await dispatch(setHomeButtonProperties({
                     x: CalculateWidth(1),
                     y: CalculateHeight(90),
@@ -102,7 +96,6 @@ const NavigationBar = (props) => {
           tabBarIcon: ({ focused }) => (
             <MenuIcon ref={topicMenuRef} onLayout={event => {
               topicMenuRef.current.measure( async (fx, fy, width, height, px, py) => {
-                console.log('topic', {fx, fy, width, height, px, py})
                 await dispatch(setTopicButtonProperties({
                     x: CalculateWidth(20),
                     y: CalculateHeight(90),
@@ -140,7 +133,6 @@ const NavigationBar = (props) => {
           tabBarIcon: () => (
             <AddDiscussionButton ref={addDiscussionButtonRef} onLayout={e => {
               addDiscussionButtonRef.current.measureInWindow( async (x, y, width, height) => {
-                // console.log('disc', {fx, fy, width, height, px, py})
                 await dispatch(setNewDiscussionButtonProperties({
                   x: CalculateWidth(39),
                   y: CalculateHeight(85),
@@ -164,7 +156,6 @@ const NavigationBar = (props) => {
           tabBarIcon: ({ focused }) => (
             <MenuIcon ref={inboxMenuRef} onLayout={event => {
               inboxMenuRef.current.measure( async (fx, fy, width, height, px, py) => {
-                console.log('inbox', {fx, fy, width, height, px, py})
                 await dispatch(setInboxButtonProperties({
                     x: CalculateWidth(60),
                     y: CalculateHeight(90),
@@ -202,7 +193,6 @@ const NavigationBar = (props) => {
           tabBarIcon: ({ focused }) => (
             <MenuIcon ref={meMenuRef} onLayout={event => {
               meMenuRef.current.measure( async (fx, fy, width, height, px, py) => {
-                console.log('me', {fx, fy, width, height, px, py})
                 await dispatch(setMeButtonProperties({
                     x: CalculateWidth(80),
                     y: CalculateHeight(90),

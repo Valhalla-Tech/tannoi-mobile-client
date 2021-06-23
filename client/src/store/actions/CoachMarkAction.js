@@ -1,6 +1,5 @@
 export const setCommunityButtonProperties = (data) => {
     const { x, y, width, height } = data;
-    console.log({data})
     return (dispatch) => {
       dispatch({
         type: 'SET_COMMUNITY_BUTTON_PROPERTIES',
@@ -16,7 +15,6 @@ export const setCommunityButtonProperties = (data) => {
 
 export const setNewDiscussionButtonProperties = (data) => {
   const { x, y, width, height, borderRadius } = data;
-  console.log({data})
   return (dispatch) => {
     dispatch({
       type: 'SET_NEW_DISCUSSION_BUTTON_PROPERTIES',
@@ -33,7 +31,6 @@ export const setNewDiscussionButtonProperties = (data) => {
 
 export const setTopicButtonProperties = (data) => {
   const { x, y, width, height, borderRadius } = data;
-  console.log({data})
   return (dispatch) => {
     dispatch({
       type: 'SET_TOPIC_BUTTON_PROPERTIES',
@@ -50,7 +47,6 @@ export const setTopicButtonProperties = (data) => {
 
 export const setHomeButtonProperties = (data) => {
   const { x, y, width, height, borderRadius } = data;
-  console.log({data})
   return (dispatch) => {
     dispatch({
       type: 'SET_HOME_BUTTON_PROPERTIES',
@@ -67,7 +63,6 @@ export const setHomeButtonProperties = (data) => {
 
 export const setInboxButtonProperties = (data) => {
   const { x, y, width, height, borderRadius } = data;
-  console.log({data})
   return (dispatch) => {
     dispatch({
       type: 'SET_INBOX_BUTTON_PROPERTIES',
@@ -84,7 +79,6 @@ export const setInboxButtonProperties = (data) => {
 
 export const setMeButtonProperties = (data) => {
   const { x, y, width, height, borderRadius } = data;
-  console.log({data})
   return (dispatch) => {
     dispatch({
       type: 'SET_ME_BUTTON_PROPERTIES',
