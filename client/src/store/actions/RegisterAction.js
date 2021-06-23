@@ -75,7 +75,7 @@ export const createAccount = (data) => {
   return async (dispatch) => {
     try {
       dispatch(loadingAction(true));
-      const { email, password, name, birthDate } = data;
+      const { email, password, name} = data;
       const createAccountRequestOption = {
         url: `${BaseUrl}/users/register`,
         method: 'post',
@@ -83,7 +83,7 @@ export const createAccount = (data) => {
           email: email.trim(),
           password: password,
           name: name,
-          birth_date: `${birthDate}`,
+          // birth_date: `${birthDate}`,
         },
       };
 

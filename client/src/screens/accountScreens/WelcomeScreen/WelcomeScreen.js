@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, Image, ScrollView, Platform } from 'react-native';
 import { GoogleSignin } from '@react-native-community/google-signin';
 import { useDispatch, useSelector } from 'react-redux';
 import { Bold } from '../../../styles/FontSize';
@@ -186,7 +186,8 @@ const WelcomeScreen = ({ navigation, route }) => {
         width: '100%',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        height: '90%',
+        maxHeight: registerPage === 1 ? undefined : '90%',
+        height: Platform.OS === 'ios' && '90%',
         borderBottomLeftRadius: 0,
         borderBottomRightRadius: 0,
       }}>
@@ -210,8 +211,10 @@ const WelcomeScreen = ({ navigation, route }) => {
             customStyle={{ position: 'absolute', right: '1%' }}
             onPress={() => {
               setRegisterPage(1);
-              registerPage === 1
-                ? (setRegisterModalIsOpen(false), setErrMsgFromServer(''))
+              registerPage === 1 || registerPage === 2
+                ? (setRegisterModalIsOpen(false),
+                  setErrMsgFromServer(''),
+                  setRegisterPage(1))
                 : dispatch(userLogin());
             }}
           />
@@ -244,7 +247,6 @@ const WelcomeScreen = ({ navigation, route }) => {
           errMsg={errMsgFromServer}
         />
       )}
-      {/* {registerPage === 2 && TermsOfServiceSection()} */}
       {registerPage === 2 && (
         <TermsOfServiceForm
           onSubmit={async (isAgree) => {

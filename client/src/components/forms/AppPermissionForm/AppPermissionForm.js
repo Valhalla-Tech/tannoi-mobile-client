@@ -23,7 +23,7 @@ const AppPermissionForm = (props) => {
             borderColor: permitted ? '#7817FF' : '#E3E6EB',
             color: permitted ? '#7817FF' : '#73798C',
           }}
-          name="Access Microphone"
+          name="Continue"
           onPress={async () => {
             let askPermission = await CheckPermission();
             if (askPermission) {

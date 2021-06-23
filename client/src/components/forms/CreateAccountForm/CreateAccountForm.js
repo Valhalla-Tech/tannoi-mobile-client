@@ -6,6 +6,8 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Platform,
+  KeyboardAvoidingView,
+  Linking,
 } from 'react-native';
 import { Button, ErrorMessage } from '../../../components/elements';
 import validate from './validate';
@@ -56,35 +58,48 @@ const CreateAccountForm = (props) => {
     showMode('date');
   };
 
+  const openLink = () => {
+    Linking.canOpenURL('https://www.tannoi.app/privacypolicy').then(
+      (supported) => {
+        if (supported) {
+          Linking.openURL('https://www.tannoi.app/privacypolicy');
+        } else {
+          console.log("Don't know how to open URI: " + this.props.url);
+        }
+      },
+    );
+  };
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.rootStyle}>
-        <Text style={styles.titleTextStyle}>Create account</Text>
-        {errMsg !== '' && (
-          <ErrorMessage
-            message={errMsg}
-            customStyle={styles.errorMessageFromServerStyle}
+        <View>
+          <Text style={styles.titleTextStyle}>Create account</Text>
+          {errMsg !== '' && (
+            <ErrorMessage
+              message={errMsg}
+              customStyle={styles.errorMessageFromServerStyle}
+            />
+          )}
+          {/* <View style={styles.contentContainerStyle}> */}
+          {/* <View> */}
+          {validating && validate(validationData).emailValidation !== '' && (
+            <ErrorMessage
+              customStyle={styles.errorMessageStyle}
+              message={validate(validationData).emailValidation}
+            />
+          )}
+          <FormInput
+            placeholder="Your email"
+            onChangeText={(value) => setEmail(value)}
+            customRootStyle={styles.formInputStyle}
           />
-        )}
-        <View style={styles.contentContainerStyle}>
-          <View>
-            {validating && validate(validationData).emailValidation !== '' && (
-              <ErrorMessage
-                customStyle={styles.errorMessageStyle}
-                message={validate(validationData).emailValidation}
-              />
-            )}
-            <FormInput
-              placeholder="Your email"
-              onChangeText={(value) => setEmail(value)}
-              customRootStyle={styles.formInputStyle}
-            />
-            <FormInput
-              placeholder="Full name"
-              onChangeText={(value) => setFullName(value)}
-              customRootStyle={styles.formInputStyle}
-            />
-            <DatePicker
+          <FormInput
+            placeholder="Full name"
+            onChangeText={(value) => setFullName(value)}
+            customRootStyle={styles.formInputStyle}
+          />
+          {/* <DatePicker
               value={currentDate}
               mode={mode}
               onChange={dateInput}
@@ -94,80 +109,88 @@ const CreateAccountForm = (props) => {
               showDatepicker={showDatepicker}
               customStyle={styles.formInputStyle}
               placeholder="Birth date"
+            /> */}
+          {validating && validate(validationData).passwordErrMsg !== '' && (
+            <ErrorMessage
+              customStyle={styles.errorMessageStyle}
+              message={validate(validationData).passwordErrMsg}
             />
-            {validating && validate(validationData).passwordErrMsg !== '' && (
+          )}
+          <FormInput
+            placeholder="Create password"
+            onChangeText={(value) => setPassword(value)}
+            customRootStyle={styles.formInputStyle}
+            secureText={true}
+          />
+          {validating &&
+            validate(validationData).confirmPasswordErrMsg !== '' && (
               <ErrorMessage
                 customStyle={styles.errorMessageStyle}
-                message={validate(validationData).passwordErrMsg}
+                message={validate(validationData).confirmPasswordErrMsg}
               />
             )}
-            <FormInput
-              placeholder="Create password"
-              onChangeText={(value) => setPassword(value)}
-              customRootStyle={styles.formInputStyle}
-              secureText={true}
-            />
-            {validating &&
-              validate(validationData).confirmPasswordErrMsg !== '' && (
-                <ErrorMessage
-                  customStyle={styles.errorMessageStyle}
-                  message={validate(validationData).confirmPasswordErrMsg}
-                />
-              )}
-            <FormInput
-              placeholder="Confirm password"
-              onChangeText={(value) => setConfirmPassword(value)}
-              customRootStyle={styles.formInputStyle}
-              secureText={true}
-            />
-          </View>
-          <View style={styles.actionButtonContainerStyle}>
-            <Button
-              customStyle={{
-                backgroundColor: validate(validationData).validationStatus
-                  ? '#7817FF'
-                  : '#a1a5ab',
-                borderWidth: 0,
-                marginBottom: '2.5%',
-                color: '#FFFFFF',
-              }}
-              name="Next"
-              disabled={
-                validate(validationData).validationStatus ? false : true
-              }
-              onPress={() => {
-                const { passwordErrMsg, confirmPasswordErrMsg, emailValidation } = validate(
-                  validationData,
-                );
-
-                trackWithMixPanel('User: Registration - Entered Account Info', {
-                  email,
-                  fullName,
-                  error: emailValidation ? emailValidation : (passwordErrMsg ? passwordErrMsg : (confirmPasswordErrMsg ? confirmPasswordErrMsg : 'None')),
-                });
-
-                setValidating(true);
-                !emailValidation && passwordErrMsg === '' &&
-                  confirmPasswordErrMsg === '' &&
-                  onSubmit({
-                    name: fullName,
-                    email: email,
-                    password: password,
-                    birthDate: birthDate,
-                  });
-              }}
-            />
-            <Text style={styles.termsOfServiceTextStyle}>
-              By signing up, you agree to our{' '}
-              <Text
-                onPress={() => onPressTermsOfService()}
-                style={styles.termsOfServiceButtonTextStyle}>
-                Terms of service and Privacy policy
-              </Text>
-              and to receive notice on event and services.
-            </Text>
-          </View>
+          <FormInput
+            placeholder="Confirm password"
+            onChangeText={(value) => setConfirmPassword(value)}
+            customRootStyle={styles.formInputStyle}
+            secureText={true}
+          />
+          {/* </View> */}
         </View>
+        <View style={styles.actionButtonContainerStyle}>
+          <Button
+            customStyle={{
+              backgroundColor: validate(validationData).validationStatus
+                ? '#7817FF'
+                : '#a1a5ab',
+              borderWidth: 0,
+              marginBottom: '2.5%',
+              color: '#FFFFFF',
+            }}
+            name="Next"
+            disabled={validate(validationData).validationStatus ? false : true}
+            onPress={() => {
+              const {
+                passwordErrMsg,
+                confirmPasswordErrMsg,
+                emailValidation,
+              } = validate(validationData);
+
+              trackWithMixPanel('User: Registration - Entered Account Info', {
+                email,
+                fullName,
+                error: emailValidation
+                  ? emailValidation
+                  : passwordErrMsg
+                  ? passwordErrMsg
+                  : confirmPasswordErrMsg
+                  ? confirmPasswordErrMsg
+                  : 'None',
+              });
+
+              setValidating(true);
+              !emailValidation &&
+                passwordErrMsg === '' &&
+                confirmPasswordErrMsg === '' &&
+                onSubmit({
+                  name: fullName,
+                  email: email,
+                  password: password,
+                  // birthDate: birthDate,
+                });
+            }}
+          />
+          <Text style={styles.termsOfServiceTextStyle}>
+            By signing up, you agree to our{' '}
+            <Text
+              onPress={() => openLink()}
+              style={styles.termsOfServiceButtonTextStyle}>
+              Terms of service and Privacy policy
+            </Text>{' '}
+            and to receive notice on event and services.
+          </Text>
+        </View>
+        {/* </View> */}
       </View>
     </TouchableWithoutFeedback>
   );

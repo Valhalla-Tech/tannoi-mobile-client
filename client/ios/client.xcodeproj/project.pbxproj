@@ -18,22 +18,22 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		167ABB5286F54DDE739F9228 /* libPods-client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 249F4C4DF255FDA4A6523AAF /* libPods-client.a */; };
-		210A27B250FF4025B121AB02 /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F73CE0255244CB38955F392 /* Roboto.ttf */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* clientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* clientTests.m */; };
-		71770EEB141747DA8AE6A403 /* SFProText-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 803D62D5FDAE4AD1A0D6707B /* SFProText-Medium.otf */; };
 		74D92CEA300935F7B2CB5459 /* libPods-client-clientTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E145E15C0C60F89FEEA4DE32 /* libPods-client-clientTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		99D3D60C44CC466B8C3D4C74 /* SFProDisplay-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9102731AE75D41DBAB833399 /* SFProDisplay-Bold.otf */; };
 		A43C08F7D63D6B251404F440 /* libPods-client-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D7CBC5C2D0988E963CC889 /* libPods-client-tvOSTests.a */; };
-		AB6E569E79FF462989025D69 /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 10B4371D08F84823B5A9864C /* Roboto_medium.ttf */; };
 		C9CCDAC1FAC3B9A58F59C8C0 /* libPods-client-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D5D31978819D3645AB2BD60B /* libPods-client-tvOS.a */; };
-		D1BB1D41ECC94D08A6800473 /* rubicon-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D5367DD5A379432495D5BA04 /* rubicon-icon-font.ttf */; };
 		D64128F525FB618900E84D38 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D64128F425FB618900E84D38 /* GoogleService-Info.plist */; };
 		D669487625F8A5E500EE3256 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = D669487525F8A5E500EE3256 /* File.swift */; };
-		FBD80270410442AFADD605FE /* SFProText-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0B711FBA6A34477D9BDA1F58 /* SFProText-Regular.otf */; };
+		D6E3C2B5267B282F006502A2 /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 10B4371D08F84823B5A9864C /* Roboto_medium.ttf */; };
+		D6E3C2B6267B282F006502A2 /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F73CE0255244CB38955F392 /* Roboto.ttf */; };
+		D6E3C2B7267B282F006502A2 /* rubicon-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D5367DD5A379432495D5BA04 /* rubicon-icon-font.ttf */; };
+		D6E3C2BA267B282F006502A2 /* SFProDisplay-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9102731AE75D41DBAB833399 /* SFProDisplay-Bold.otf */; };
+		D6E3C2BB267B282F006502A2 /* SFProText-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 803D62D5FDAE4AD1A0D6707B /* SFProText-Medium.otf */; };
+		D6E3C2BC267B282F006502A2 /* SFProText-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0B711FBA6A34477D9BDA1F58 /* SFProText-Regular.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -426,15 +426,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6E3C2B5267B282F006502A2 /* Roboto_medium.ttf in Resources */,
+				D6E3C2B6267B282F006502A2 /* Roboto.ttf in Resources */,
+				D6E3C2B7267B282F006502A2 /* rubicon-icon-font.ttf in Resources */,
+				D6E3C2BA267B282F006502A2 /* SFProDisplay-Bold.otf in Resources */,
+				D6E3C2BB267B282F006502A2 /* SFProText-Medium.otf in Resources */,
+				D6E3C2BC267B282F006502A2 /* SFProText-Regular.otf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				D64128F525FB618900E84D38 /* GoogleService-Info.plist in Resources */,
-				AB6E569E79FF462989025D69 /* Roboto_medium.ttf in Resources */,
-				210A27B250FF4025B121AB02 /* Roboto.ttf in Resources */,
-				D1BB1D41ECC94D08A6800473 /* rubicon-icon-font.ttf in Resources */,
-				99D3D60C44CC466B8C3D4C74 /* SFProDisplay-Bold.otf in Resources */,
-				71770EEB141747DA8AE6A403 /* SFProText-Medium.otf in Resources */,
-				FBD80270410442AFADD605FE /* SFProText-Regular.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -910,12 +910,12 @@
 				CODE_SIGN_ENTITLEMENTS = client/client.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = client/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.11;
+				MARKETING_VERSION = 2.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -939,11 +939,11 @@
 				CODE_SIGN_ENTITLEMENTS = client/client.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = client/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.11;
+				MARKETING_VERSION = 2.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

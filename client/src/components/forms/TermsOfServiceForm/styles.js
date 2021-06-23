@@ -20,6 +20,7 @@ export default StyleSheet.create({
     fontSize: CalculateHeight(1.8),
     color: '#464D60',
     marginBottom: '5%',
+    maxWidth: '95%'
   },
 
   linkStyle: {
@@ -36,6 +37,7 @@ export default StyleSheet.create({
     fontFamily: Normal,
     fontSize: CalculateHeight(1.5),
     color: '#464D60',
+    maxWidth: '80%',
   },
 
   radioButtonContainerStyle: {
@@ -45,14 +47,12 @@ export default StyleSheet.create({
   },
 
   radioButtonStyle: {
-    borderWidth: 1,
+    marginRight: '5%',
+  },
+  
+  agreeButtonStyle: {
     borderRadius: 50,
-    width: CalculateWidth(8),
-    height: CalculateWidth(8),
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: '2%',
-    borderColor: '#464D60',
+    marginBottom: '2%',
   },
 
   nextButtonStyle: {
