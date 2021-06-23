@@ -6,6 +6,7 @@ import { Bold } from '../../../styles/FontSize';
 import {
   GoogleSignIn,
   FacebookSignIn,
+  appleSignIn, 
   getTermsOfService,
 } from '../../../store/actions/LoginAction';
 import { Modal, Button, LoadingSpinner } from '../../../components/elements';
@@ -35,6 +36,7 @@ import TopicsToFollowForm from '../../../components/forms/TopicsToFollowForm';
 import PeopleToHearForm from '../../../components/forms/PeopleToHearForm';
 import CommunitiesToJoinForm from '../../../components/forms/CommunitiesToJoinForm';
 import TermsOfServiceForm from '../../../components/forms/TermsOfServiceForm';
+import { SignInWithAppleButton } from '../../../components/publicComponents/SignInWithAppleButton';
 
 const WelcomeScreen = ({ navigation, route }) => {
   const [registerModalIsOpen, setRegisterModalIsOpen] = useState(false);
@@ -452,6 +454,11 @@ const WelcomeScreen = ({ navigation, route }) => {
     );
   };
 
+  const appleSignInBtn = (result) => {
+    console.log('Resssult',result);
+    dispatch(appleSignIn(result))
+  };
+
   const WelcomeScreenButtonSection = () => {
     return (
       <View style={styles.welcomeScreenLoginButtonStyle}>
@@ -507,6 +514,20 @@ const WelcomeScreen = ({ navigation, route }) => {
           IcGoogle,
           styles.buttonIconStyle,
         )}
+        {Platform.OS === 'ios' ? SignInWithAppleButton({
+          buttonStyle: {
+            ...styles.buttonStyle,
+            backgroundColor: 'black',
+            borderRadius: 10,
+            marginBottom: '3%',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexDirection: 'row',
+            borderWidth: 1,
+          }, 
+          callBack: appleSignInBtn,
+          buttonText: "Continue With Apple",
+        }) : null}
         <WelcomeScreenLoginButton />
       </View>
     );

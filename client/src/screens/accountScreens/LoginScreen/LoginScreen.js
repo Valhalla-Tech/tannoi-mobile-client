@@ -1,17 +1,19 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Platform } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { bold } from '../../../assets/FontSize';
 import { CalculateHeight } from '../../../helper/CalculateSize';
 import {
   GoogleSignIn,
   FacebookSignIn,
+  appleSignIn,
 } from '../../../store/actions/LoginAction';
 
 //Components
 import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
 import BackButton from '../../../components/publicComponents/BackButton';
 import Button from '../../../components/publicComponents/Button';
+import { SignInWithAppleButton } from '../../../components/publicComponents/SignInWithAppleButton';
 
 const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -43,6 +45,11 @@ const LoginScreen = ({ navigation }) => {
         buttonIconTitle={iconTitle}
       />
     );
+  };
+
+  const appleSignInBtn = (result) => {
+    console.log('Resssult',result);
+    dispatch(appleSignIn(result))
   };
 
   const LoginButton = () => {
@@ -106,6 +113,21 @@ const LoginScreen = ({ navigation }) => {
           },
           'google',
         )}
+        {Platform.OS === 'ios' ? SignInWithAppleButton({
+          buttonStyle: {
+            width: '100%',
+            height: '10%',
+            backgroundColor: 'black',
+            borderRadius: 10,
+            marginBottom: '3%',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexDirection: 'row',
+            borderWidth: 1,
+          }, 
+          callBack: appleSignInBtn,
+          buttonText: "Continue With Apple",
+        }) : null}
       </>
     );
   };
