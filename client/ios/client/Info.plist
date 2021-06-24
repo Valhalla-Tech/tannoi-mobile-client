@@ -87,7 +87,9 @@
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Tannoi needs access to microphone for creating audio recording to participate in a discussion or giving a response</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Tannoi needs access to photo library to personalize user&apos;s profile picture by uploading a profile photo</string>
+	<string>Tannoi needs access to photo library to personalize user's profile picture by uploading a profile photo</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Tannoi requires your permission to track in order to improve the app.</string>
 	<key>Tannoi</key>
 	<string>Tannoi</string>
 	<key>UIAppFonts</key>
@@ -136,7 +138,5 @@
 	<string>tannoi.app.link</string>
 	<key>branch_key</key>
 	<string>key_live_hmO2tLPlllQj83KCcnBC3dfnvCihnYF2</string>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>Tannoi requires your permission to track in order to show you more relevant ads.</string>
 </dict>
 </plist>
