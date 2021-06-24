@@ -20,18 +20,26 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Card from '../publicComponents/Card';
 
 const MemberList = (props) => {
-  const { memberList, navigation, onPress, communityId, isAdmin, communityName } = props;
+  const {
+    memberList,
+    navigation,
+    onPress,
+    communityId,
+    isAdmin,
+    communityName,
+    openUrlModal,
+    openQrModal,
+  } = props;
 
   const MemberListData = (itemData) => {
     return (
       <TouchableOpacity
-        onPress={() =>{
-            if (onPress) {
-              return onPress(itemData);
-            }
-            // navigation.navigate('UserProfileScreen', { userId: itemData.item.id })
+        onPress={() => {
+          if (onPress) {
+            return onPress(itemData);
           }
-        }
+          // navigation.navigate('UserProfileScreen', { userId: itemData.item.id })
+        }}
         style={
           itemData.index + 1 !== memberList.length
             ? styles.memberListDataStyle
@@ -70,11 +78,11 @@ const MemberList = (props) => {
       //   'share a community',
       //   async (url) => {
       //     try {
-            const options = {
-              title: communityName,
-              message: `tannoi.app/invite?c=${community_code}`,
-            };
-            await Share.open(options);
+      const options = {
+        title: communityName,
+        message: `tannoi.app/invite?c=${community_code}`,
+      };
+      await Share.open(options);
       //     } catch (error) {
       //       console.log(error);
       //     }
@@ -88,16 +96,48 @@ const MemberList = (props) => {
   const MemberListContent = () => {
     return (
       <FlatList
-        style={{maxHeight: CalculateHeight(57)}}
+        style={{ maxHeight: CalculateHeight(50) }}
         data={memberList}
         keyExtractor={(item, index) => index.toString()}
         ListHeaderComponent={
           <>
-            <TouchableOpacity onPress={() => shareOption()} style={styles.inviteCommunityLinkContainerStyle}>
-              <View style={{...styles.profileImageStyle, backgroundColor: '#e5e5e5', justifyContent: 'center', alignItems: 'center'}}>
-                <Icon name="link" style={{color: '#808080', fontSize: CalculateHeight(3)}}/>
+            <TouchableOpacity
+              onPress={() => openUrlModal()}
+              style={styles.inviteCommunityLinkContainerStyle}>
+              <View
+                style={{
+                  ...styles.profileImageStyle,
+                  backgroundColor: '#e5e5e5',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Icon
+                  name="link"
+                  style={{ color: '#808080', fontSize: CalculateHeight(3) }}
+                />
               </View>
-              <Text style={styles.inviteToCommunityButtonTextStyle}>Invite to community via link</Text>
+              <Text style={styles.inviteToCommunityButtonTextStyle}>
+                Invite to community via link
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => openQrModal()}
+              style={styles.inviteCommunityLinkContainerStyle}>
+              {/* <View
+                style={{
+                  ...styles.profileImageStyle,
+                  backgroundColor: '#e5e5e5',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Icon
+                  name="link"
+                  style={{ color: '#808080', fontSize: CalculateHeight(3) }}
+                />
+              </View> */}
+              <Text style={styles.inviteToCommunityButtonTextStyle}>
+                Invite to community via QR code
+              </Text>
             </TouchableOpacity>
             {isAdmin && (
               <TouchableOpacity
@@ -125,7 +165,8 @@ const MemberList = (props) => {
   return (
     <Card
       child={MemberListContent}
-      customStyle={styles.communityMemberContainerStyle}/>
+      customStyle={styles.communityMemberContainerStyle}
+    />
   );
 };
 
@@ -153,7 +194,7 @@ const styles = StyleSheet.create({
   inviteCommunityLinkContainerStyle: {
     paddingLeft: '3.5%',
     padding: '3%',
-    alignItems:'center',
+    alignItems: 'center',
     flexDirection: 'row',
     borderBottomColor: '#f2f2f2',
     borderBottomWidth: 1,

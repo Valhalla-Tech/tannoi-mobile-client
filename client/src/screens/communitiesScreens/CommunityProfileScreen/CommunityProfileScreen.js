@@ -35,7 +35,12 @@ import RightArrowIcon from '../../../assets/communitiesAssets/rightArrow.svg';
 
 //Components
 import ScreenContainer from '../../../components/publicComponents/ScreenContainer';
-import { Card, List, LoadingSpinner, Modal } from '../../../components/publicComponents';
+import {
+  Card,
+  List,
+  LoadingSpinner,
+  Modal,
+} from '../../../components/publicComponents';
 import CommunityProfile from '../../../components/communityComponent/CommuityProfile';
 import MemberList from '../../../components/communityComponent/MemberList';
 
@@ -49,8 +54,8 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   // const [communityMember, setCommunityMember] = useState('');
   const [noticeModal, setNoticeModal] = useState(false);
   const [noticeModalMessage, setNoticeModalMessage] = useState('');
-  const [gotPermission, setGotPermission] = useState(0)
-  const [isAMember, setIsAMember] = useState(false)
+  const [gotPermission, setGotPermission] = useState(0);
+  const [isAMember, setIsAMember] = useState(false);
 
   const discussions = useSelector(
     (state) => state.DiscussionReducer.discussions,
@@ -65,7 +70,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   );
 
   const communityMembers = useSelector(
-    state => state.CommunitiesReducer.communityMembers,
+    (state) => state.CommunitiesReducer.communityMembers,
   );
 
   const dispatch = useDispatch();
@@ -78,7 +83,9 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   const [removeMemberIdTarget, setRemoveMemberIdTarget] = useState(null);
   const [promptRemoveMemberMode, setPromptRemoveMemberMode] = useState(false);
   const [removingMemberMode, setRemovingMemberMode] = useState(false);
-
+  const [urlModalIsOpen, setUrlModalIsOpen] = useState(false);
+  const [isQrCode, setIsQrCode] = useState(false);
+  console.log(communityProfile); //////////<<<<<<<<<<<<<<
   // const memberFadeIn = () => {
   //   // Will change fadeAnim value to 1 in 5 seconds
   //   Animated.timing(memberFadeAnim, {
@@ -120,13 +127,14 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   }, []);
 
   useEffect(() => {
-    if (communityProfile.community_members){
-      if (communityProfile.community_members.length){
-        setGotPermission((
-          communityProfile.community_members[0].type === 'Admin'
-          || communityProfile.community_members[0].type === 'Moderator'
-          ? 1 : 0
-        ));
+    if (communityProfile.community_members) {
+      if (communityProfile.community_members.length) {
+        setGotPermission(
+          communityProfile.community_members[0].type === 'Admin' ||
+            communityProfile.community_members[0].type === 'Moderator'
+            ? 1
+            : 0,
+        );
         setIsAMember(true);
       }
     }
@@ -188,31 +196,33 @@ const CommunityProfileScreen = ({ navigation, route }) => {
     } else if (discussions.length > 0) {
       return (
         <FlatList
-          style={{height: CalculateHeight(65)}}
+          style={{ height: CalculateHeight(65) }}
           ListHeaderComponent={
-              <List
-                navigation={navigation}
-                isHeader={false}
-                listData={discussions}
-                isCommunityDiscussion={true}
-                isMember={
-                  communityProfile.community_members !== undefined &&
-                  communityProfile.community_members.length !== 0
-                    ? communityProfile.community_members[0].type === 'Admin' ||
-                      communityProfile.community_members[0].type === 'Member' ||
-                      communityProfile.community_members[0].type === 'Moderator'
-                      ? true
-                      : false
+            <List
+              navigation={navigation}
+              isHeader={false}
+              listData={discussions}
+              isCommunityDiscussion={true}
+              isMember={
+                communityProfile.community_members !== undefined &&
+                communityProfile.community_members.length !== 0
+                  ? communityProfile.community_members[0].type === 'Admin' ||
+                    communityProfile.community_members[0].type === 'Member' ||
+                    communityProfile.community_members[0].type === 'Moderator'
+                    ? true
                     : false
-                }
-                customStyle={{marginBottom: CalculateHeight(5)}}
-                role={gotPermission}
-                openCommunityDiscussionNoticeModal={openNoticeModal}
-                inputCommunityDiscussionNoticeModalMessage={
-                  inputNoticeModalMessage
-                }
-                cardOnDelete = {(id, type) => deleteCommunityDiscussionOrResponse(id, type)}
-              />
+                  : false
+              }
+              customStyle={{ marginBottom: CalculateHeight(5) }}
+              role={gotPermission}
+              openCommunityDiscussionNoticeModal={openNoticeModal}
+              inputCommunityDiscussionNoticeModalMessage={
+                inputNoticeModalMessage
+              }
+              cardOnDelete={(id, type) =>
+                deleteCommunityDiscussionOrResponse(id, type)
+              }
+            />
           }
         />
       );
@@ -236,15 +246,14 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   const deleteCommunityDiscussionOrResponse = async (id, type) => {
     if (type === 'discussion') {
       await dispatch(deleteCommunityDiscussion(communityId, id));
-    }
-    else if (type === 'response'){
+    } else if (type === 'response') {
       await dispatch(deleteCommunityResponse(communityId, id));
     }
     await dispatch(getAllDiscussion('community_id=', communityId));
     navigation.navigate('CommunityProfileScreen', {
       communityId: communityId,
     });
-  }
+  };
 
   const renderMemberRequestsCard = () => {
     if (
@@ -263,6 +272,28 @@ const CommunityProfileScreen = ({ navigation, route }) => {
     }
   };
 
+  const CommunityUrlModal = () => {
+    return (
+      <Modal
+        openModal={urlModalIsOpen}
+        closeModal={() => (setUrlModalIsOpen(false), setIsQrCode(false))}>
+        <Text style={styles.invitationModalHeaderTextStyle}>
+          {isQrCode ? 'Invitation QR Code' : 'Invitation URL'}
+        </Text>
+        {isQrCode ? (
+          <Image
+            source={{ uri: communityProfile.invite_qr_link }}
+            style={styles.qrCodeStyle}
+          />
+        ) : (
+          <Text style={styles.invitationUrlStyle} selectable>
+            https://tannoi.app/invite?c={communityProfile.community_code}
+          </Text>
+        )}
+      </Modal>
+    );
+  };
+
   const renderMembersDisplay = () => {
     return (
       <View>
@@ -273,7 +304,9 @@ const CommunityProfileScreen = ({ navigation, route }) => {
             if (isAMember) {
               setMemberModalMode(true);
               setMemberItemModal(itemData);
-              setSelectedRoleValue(itemData.item.members[0].community_member.type);
+              setSelectedRoleValue(
+                itemData.item.members[0].community_member.type,
+              );
             }
           }}
           communityId={communityId}
@@ -287,6 +320,8 @@ const CommunityProfileScreen = ({ navigation, route }) => {
               ? true
               : false
           }
+          openUrlModal={() => setUrlModalIsOpen(true)}
+          openQrModal={() => (setUrlModalIsOpen(true), setIsQrCode(true))}
         />
       </View>
     );
@@ -309,9 +344,15 @@ const CommunityProfileScreen = ({ navigation, route }) => {
   );
 
   const checkEligibility = (type) => {
-    if (type === 'userPermissions' && communityProfile.community_members !== undefined) {
-        return communityProfile.community_members[0].type === 'Admin'
-        && userProfile.id !== memberItemModal.item.members[0].community_member.user_id;
+    if (
+      type === 'userPermissions' &&
+      communityProfile.community_members !== undefined
+    ) {
+      return (
+        communityProfile.community_members[0].type === 'Admin' &&
+        userProfile.id !==
+          memberItemModal.item.members[0].community_member.user_id
+      );
     }
   };
 
@@ -376,79 +417,126 @@ const CommunityProfileScreen = ({ navigation, route }) => {
     //     }}><Text>Test</Text></TouchableOpacity>
     //   </Animated.View>
     // )
-    const {item} = memberItemModal;
+    const { item } = memberItemModal;
     return (
       <Modal
         openModal={memberModalMode}
         customContainerStyle={styles.communityProfileMemberModalContainerStyle}
         customStyle={
           checkEligibility('userPermissions')
-          ? styles.communityProfileMemberModalEligibleStyle
-          : styles.communityProfileMemberModalNotEligibleStyle
+            ? styles.communityProfileMemberModalEligibleStyle
+            : styles.communityProfileMemberModalNotEligibleStyle
         }
         animation="slide"
         closeModal={() => {
           setMemberModalMode(false);
         }}>
-        <View style={styles.communityProfileMemberModalProfilePictureContainerStyle}>
-          <View style={styles.communityProfileMemberModalProfilePictureFrameStyle}/>
-          <TouchableOpacity onPress={() => {
-            setMemberModalMode(false);
-            navigation.navigate('UserProfileScreen', { userId: item.id });
-          }}>
+        <View
+          style={
+            styles.communityProfileMemberModalProfilePictureContainerStyle
+          }>
+          <View
+            style={styles.communityProfileMemberModalProfilePictureFrameStyle}
+          />
+          <TouchableOpacity
+            onPress={() => {
+              setMemberModalMode(false);
+              navigation.navigate('UserProfileScreen', { userId: item.id });
+            }}>
             <Image
-              source={{uri:item.profile_photo_path}} 
-              style={styles.communityProfileMemberModalProfilePictureStyle} />
+              source={{ uri: item.profile_photo_path }}
+              style={styles.communityProfileMemberModalProfilePictureStyle}
+            />
           </TouchableOpacity>
           <LinearTextGradient
-            style={{paddingTop: '2%'}}
+            style={{ paddingTop: '2%' }}
             locations={[0, 1]}
             colors={['#5051DB', '#7E37B6']}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}>
-            <Text style = {styles.communityProfileMemberModalUsernameStyle}>
+            <Text style={styles.communityProfileMemberModalUsernameStyle}>
               {item.name}
             </Text>
           </LinearTextGradient>
         </View>
-        <Text style={styles.communityProfileMemberModalRoleStyle}>{item.members[0].community_member.type}</Text>
-        {checkEligibility('userPermissions') ?
-          <View style={{width: '100%', paddingTop: '5%'}}>
+        <Text style={styles.communityProfileMemberModalRoleStyle}>
+          {item.members[0].community_member.type}
+        </Text>
+        {checkEligibility('userPermissions') ? (
+          <View style={{ width: '100%', paddingTop: '5%' }}>
             <View>
-              <Text style={styles.communityProfileMemberModalMemberRoleTitleMenuStyle}>
+              <Text
+                style={
+                  styles.communityProfileMemberModalMemberRoleTitleMenuStyle
+                }>
                 Change membership
               </Text>
-              <TouchableOpacity onPress={() => changeRoleStatus(item.members[0].community_member.user_id, 'Admin')} style={styles.communityProfileMemberModalRoleOptionStyle}>
-                <Text style={selectedRoleValue === 'Admin'
-                ? styles.communityProfileMemberModalRoleSelectedTextStyle
-                : null}>
+              <TouchableOpacity
+                onPress={() =>
+                  changeRoleStatus(
+                    item.members[0].community_member.user_id,
+                    'Admin',
+                  )
+                }
+                style={styles.communityProfileMemberModalRoleOptionStyle}>
+                <Text
+                  style={
+                    selectedRoleValue === 'Admin'
+                      ? styles.communityProfileMemberModalRoleSelectedTextStyle
+                      : null
+                  }>
                   Admin
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => changeRoleStatus(item.members[0].community_member.user_id, 'Moderator')} style={styles.communityProfileMemberModalRoleOptionStyle}>
-                <Text style={selectedRoleValue === 'Moderator'
-                ? styles.communityProfileMemberModalRoleSelectedTextStyle
-                : null}>
+              <TouchableOpacity
+                onPress={() =>
+                  changeRoleStatus(
+                    item.members[0].community_member.user_id,
+                    'Moderator',
+                  )
+                }
+                style={styles.communityProfileMemberModalRoleOptionStyle}>
+                <Text
+                  style={
+                    selectedRoleValue === 'Moderator'
+                      ? styles.communityProfileMemberModalRoleSelectedTextStyle
+                      : null
+                  }>
                   Moderator
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => changeRoleStatus(item.members[0].community_member.user_id, 'Member')} style={styles.communityProfileMemberModalRoleOptionStyle}>
-                <Text style={selectedRoleValue === 'Member'
-                ? styles.communityProfileMemberModalRoleSelectedTextStyle
-                : null}>
+              <TouchableOpacity
+                onPress={() =>
+                  changeRoleStatus(
+                    item.members[0].community_member.user_id,
+                    'Member',
+                  )
+                }
+                style={styles.communityProfileMemberModalRoleOptionStyle}>
+                <Text
+                  style={
+                    selectedRoleValue === 'Member'
+                      ? styles.communityProfileMemberModalRoleSelectedTextStyle
+                      : null
+                  }>
                   Member
                 </Text>
               </TouchableOpacity>
             </View>
             <TouchableOpacity
-            onPress={() => promptRemoveMemberFromCommunity(item.members[0].community_member.user_id)}
-            style={styles.communityProfileMemberModalRemoveMemberTitleStyle}>
-              <Text style={styles.communityProfileMemberModalRemoveMemberTextStyle}>
+              onPress={() =>
+                promptRemoveMemberFromCommunity(
+                  item.members[0].community_member.user_id,
+                )
+              }
+              style={styles.communityProfileMemberModalRemoveMemberTitleStyle}>
+              <Text
+                style={styles.communityProfileMemberModalRemoveMemberTextStyle}>
                 Remove member from community
               </Text>
             </TouchableOpacity>
           </View>
-        : null}
+        ) : null}
       </Modal>
     );
   };
@@ -457,29 +545,54 @@ const CommunityProfileScreen = ({ navigation, route }) => {
     return (
       <Modal
         closeModal={() => closePromptModal()}
-        customStyle={styles.communityProfileRemoveMemberPromptModalContainerStyle}
-      >
-        <Text style={styles.communityProfileRemoveMemberPromptModalPromptTitleTextStyle}>
+        customStyle={
+          styles.communityProfileRemoveMemberPromptModalContainerStyle
+        }>
+        <Text
+          style={
+            styles.communityProfileRemoveMemberPromptModalPromptTitleTextStyle
+          }>
           Are you sure you want to remove this member from this community?
         </Text>
-        <View style={styles.communityProfileRemoveMemberPromptModalButtonsContainerStyle}>
-          {removingMemberMode ?
-            <View style={styles.communityProfileRemoveMemberPromptModalSpinnerContainerStyle}>
+        <View
+          style={
+            styles.communityProfileRemoveMemberPromptModalButtonsContainerStyle
+          }>
+          {removingMemberMode ? (
+            <View
+              style={
+                styles.communityProfileRemoveMemberPromptModalSpinnerContainerStyle
+              }>
               <LoadingSpinner loadingSpinnerForComponent={true} />
             </View>
-            :
+          ) : (
             <>
-              <TouchableOpacity onPress={() => cancelRemoveMemberOptionModal()}
-              style={styles.communityProfileRemoveMemberPromptModalCancelButtonStyle}>
-                <Text style={styles.communityProfileRemoveMemberPromptModalCancelButtonTextStyle}>Cancel</Text>
+              <TouchableOpacity
+                onPress={() => cancelRemoveMemberOptionModal()}
+                style={
+                  styles.communityProfileRemoveMemberPromptModalCancelButtonStyle
+                }>
+                <Text
+                  style={
+                    styles.communityProfileRemoveMemberPromptModalCancelButtonTextStyle
+                  }>
+                  Cancel
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={styles.communityProfileRemoveMemberPromptModalRemoveButtonStyle}
+                style={
+                  styles.communityProfileRemoveMemberPromptModalRemoveButtonStyle
+                }
                 onPress={() => removeMemberOptionModal()}>
-                <Text style={styles.communityProfileRemoveMemberPromptModalRemoveButtonTextStyle}>Remove</Text>
+                <Text
+                  style={
+                    styles.communityProfileRemoveMemberPromptModalRemoveButtonTextStyle
+                  }>
+                  Remove
+                </Text>
               </TouchableOpacity>
             </>
-          }
+          )}
         </View>
       </Modal>
     );
@@ -534,6 +647,7 @@ const CommunityProfileScreen = ({ navigation, route }) => {
         closeModal={closeNoticeModal}
       />
       {memberModalMode && <MemberDetailModal />}
+      {CommunityUrlModal()}
     </ScreenContainer>
   );
 };
@@ -564,7 +678,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: GlobalPadding,
   },
 
-  communityProfileMemberModalContainerStyle:{
+  communityProfileMemberModalContainerStyle: {
     justifyContent: 'flex-end',
   },
 
@@ -586,7 +700,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    paddingBottom: '15%'
+    paddingBottom: '15%',
     // height: '35%',
   },
 
@@ -727,6 +841,24 @@ const styles = StyleSheet.create({
   noticeModalTextStyle: {
     fontFamily: bold,
     color: '#6505E1',
+  },
+
+  invitationModalHeaderTextStyle: {
+    color: '#7817FF',
+    fontFamily: bold,
+    marginBottom: '3%',
+    fontSize: CalculateHeight(2),
+  },
+
+  invitationUrlStyle: {
+    color: '#464D60',
+    fontFamily: bold,
+    fontSize: CalculateHeight(2),
+  },
+
+  qrCodeStyle: {
+    width: CalculateWidth(50),
+    height: CalculateWidth(50),
   },
 });
 
